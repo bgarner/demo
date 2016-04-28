@@ -13,7 +13,7 @@ use App\Models\Validation\EventValidator;
 
 class Event extends Model
 {
-	use SoftDeletes;
+	  use SoftDeletes;
     protected $table = 'events';
     protected $dates = ['deleted_at'];
     protected $fillable = ['banner_id', 'title', 'description', 'event_type', 'start', 'end'];
