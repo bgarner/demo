@@ -11,6 +11,7 @@ use App\Models\UserSelectedBanner;
 use Carbon\Carbon;
 use App\Models\Validation\EventValidator;
 use App\Models\Event\EventAttachment;
+use App\Models\Event\EventAttachment;
 
 class Event extends Model
 {
@@ -60,12 +61,12 @@ class Event extends Model
             'start' => $request['start'],
             'end' => $request['end']
 
+
     	   ]);
         
         Event::updateTargetStores($event->id, $request);
         EventAttachment::updateAttachments($event->id, $request);
         return json_encode($event);
-       
 
     }
 
