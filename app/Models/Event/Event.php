@@ -9,7 +9,7 @@ use App\Models\Banner;
 use App\Models\UserBanner;
 use App\Models\UserSelectedBanner;
 use Carbon\Carbon;
-
+use App\Models\Event\EventAttachment;
 class Event extends Model
 {
 	  use SoftDeletes;
@@ -30,9 +30,10 @@ class Event extends Model
             'description' => $desc,
             'start' => $request['start'],
             'end' => $request['end']
-    	]);
+    	  ]);
         Event::updateTargetStores($event->id, $request);
-    	return;
+        EventAttachment::updateAttachments($event->id, $request);
+    	  return;
     }
 
     public static function updateEvent($id, $request)
@@ -48,6 +49,7 @@ class Event extends Model
         $event->save();
 
         Event::updateTargetStores($id, $request);
+        EventAttachment::updateAttachments($id, $request);
         return;
 
     }

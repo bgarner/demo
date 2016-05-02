@@ -41,7 +41,7 @@ $("#allStores").change(function(){
 // });
 
 // $( "#end" ).focus(function() {
-// 	$('.event-create i').removeClass("fa-spinner faa-spin animated");
+// 	$('.event-create i').removeClass("fa-spinner faa-spin anima
 // 	$('.event-create i').addClass("fa-check");		        
 //     $('.event-create span').text(' Create New Event');
 // });
@@ -72,6 +72,7 @@ $(document).on('click','.event-create',function(){
     var tags = $('#tags').val();
     var target_stores  = $("#storeSelect").val();
     var allStores  = $("allStores:checked").val();
+    var attachments = $("#attachments").val();
 
     console.log("tags" + tags);
     if(eventTitle == '') {
@@ -119,6 +120,7 @@ $(document).on('click','.event-create',function(){
 		    	start: eventStart,
 		    	end: eventEnd,
 		    	target_stores : target_stores,
+		    	attachments : attachments
 		    },
 		    success: function(result) {
 		        console.log(result);

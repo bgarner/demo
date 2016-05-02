@@ -9,6 +9,24 @@ class EventAttachment extends Model
 {
     use SoftDeletes;
     protected $table = 'event_attachments';
-    protected $fillables = ['event_id', 'attachment_id'];
+    protected $fillable = ['event_id', 'attachment_id'];
+
+    public static function updateAttachments($id, $request)
+    {
+    	EventAttachment::where('event_id', $id)->delete();
+    	
+    	$attachments = $request['attachments'];
+    	if (isset($attachments)) {
+    		foreach ($attachments as $attachment) {
+	    		EventAttachment::create([
+	    			'event_id' => $id,
+	    			'attachment_id' => $attachment
+
+	    		]);
+    		}
+    	}
+    	
+    	return;
+    }
     
 }

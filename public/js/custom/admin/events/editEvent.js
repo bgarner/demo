@@ -30,6 +30,7 @@ $(document).on('click','.event-update',function(){
     var eventEnd = $("#end").val();
     var target_stores  = $("#storeSelect").val();
 	var allStores  = $("#allStores:checked").val();
+	var attachments = $("#attachments").val();
 	
     if(eventTitle == '') {
 		swal("Oops!", "This event needs a title.", "error"); 
@@ -70,7 +71,8 @@ $(document).on('click','.event-update',function(){
 		    	start: eventStart,
 		    	end: eventEnd,
 		    	target_stores : target_stores,
-		  		allStores : allStores
+		  		allStores : allStores,
+		  		attachments : attachments
 		    },
 		    success: function(result) {
 		      //  $('#createNewEventForm')[0].reset(); // empty the form
