@@ -157,10 +157,6 @@ $(document).on('click','.event-create',function(){
 		    	end: eventEnd,
 		    	target_stores : target_stores,
 		    	attachments : attachments
-<<<<<<< HEAD
-
-=======
->>>>>>> a6fe76a5b39a75acf18d0b6087bde53a6961bad8
 		    },
 
 		    dataType: 'json',

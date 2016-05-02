@@ -11,7 +11,6 @@ use App\Models\UserSelectedBanner;
 use Carbon\Carbon;
 use App\Models\Validation\EventValidator;
 use App\Models\Event\EventAttachment;
-use App\Models\Event\EventAttachment;
 
 class Event extends Model
 {
