@@ -22,6 +22,7 @@ $("#allStores").change(function(){
 	}
 });
 
+
 $( "#title" ).focus(function() {
 	$('.event-create i').removeClass("fa-spinner faa-spin animated");
 	$('.event-create i').addClass("fa-check");		        
@@ -58,6 +59,42 @@ $( "#storeSelect" ).focus(function() {
     $('.event-create span').text(' Create New Event');
 });
 
+// $( "#title" ).focus(function() {
+// 	$('.event-create i').removeClass("fa-spinner faa-spin animated");
+// 	$('.event-create i').addClass("fa-check");		        
+//     $('.event-create span').text(' Create New Event');
+// });
+
+// $( "#event_type" ).focus(function() {
+// 	$('.event-create i').removeClass("fa-spinner faa-spin animated");
+// 	$('.event-create i').addClass("fa-check");		        
+//     $('.event-create span').text(' Create New Event');
+// });
+
+// $( "#start" ).focus(function() {
+// 	$('.event-create i').removeClass("fa-spinner faa-spin animated");
+// 	$('.event-create i').addClass("fa-check");		        
+//     $('.event-create span').text(' Create New Event');
+// });
+
+// $( "#end" ).focus(function() {
+// 	$('.event-create i').removeClass("fa-spinner faa-spin anima
+// 	$('.event-create i').addClass("fa-check");		        
+//     $('.event-create span').text(' Create New Event');
+// });
+
+// $( "#description" ).focus(function() {
+// 	$('.event-create i').removeClass("fa-spinner faa-spin animated");
+// 	$('.event-create i').addClass("fa-check");		        
+//     $('.event-create span').text(' Create New Event');
+// });
+
+// $( "#storeSelect" ).focus(function() {
+// 	$('.event-create i').removeClass("fa-spinner faa-spin animated");
+// 	$('.event-create i').addClass("fa-check");		        
+//     $('.event-create span').text(' Create New Event');
+// });
+
 
 $(document).on('click','.event-create',function(){
   	
@@ -72,6 +109,7 @@ $(document).on('click','.event-create',function(){
     var tags = $('#tags').val();
     var target_stores  = $("#storeSelect").val();
     var allStores  = $("allStores:checked").val();
+    var attachments = $("#attachments").val();
 
     if(eventTitle == '') {
 		swal("Oops!", "This event needs a title.", "error"); 
@@ -114,10 +152,12 @@ $(document).on('click','.event-create',function(){
 		    	banner: eventBanner,
 		  		title: eventTitle,
 		  		description: eventDescription,
-			    event_type: eventType,
-			    start: eventStart,
-			    end: eventEnd,
-			    target_stores : target_stores,
+		    	event_type: eventType,
+		    	start: eventStart,
+		    	end: eventEnd,
+		    	target_stores : target_stores,
+		    	attachments : attachments
+
 		    },
 
 		    dataType: 'json',

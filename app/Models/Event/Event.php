@@ -10,6 +10,7 @@ use App\Models\UserBanner;
 use App\Models\UserSelectedBanner;
 use Carbon\Carbon;
 use App\Models\Validation\EventValidator;
+use App\Models\Event\EventAttachment;
 
 class Event extends Model
 {
@@ -58,11 +59,14 @@ class Event extends Model
             'description' => $desc,
             'start' => $request['start'],
             'end' => $request['end']
+
     	   ]);
         
-        $event = Event::updateTargetStores($event->id, $request);
+        Event::updateTargetStores($event->id, $request);
+        EventAttachment::updateAttachments($event->id, $request);
         return json_encode($event);
        
+
     }
 
     public static function updateEvent($id, $request)
@@ -83,6 +87,7 @@ class Event extends Model
         $event->save();
 
         Event::updateTargetStores($id, $request);
+        EventAttachment::updateAttachments($id, $request);
         return json_encode($event);
 
     }
