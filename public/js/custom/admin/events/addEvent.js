@@ -1,6 +1,5 @@
 $(document).ready(function(){
 	$("#allStores").click();	
-	console.log("1");
 
 });
 $("#allStores").change(function(){
@@ -20,6 +19,46 @@ $("#allStores").change(function(){
 		$("#storeSelect").chosen();
 		
 	}
+});
+
+$(".folder-checkbox").on('click', function(){
+	if($(this).is(":checked")){
+		$(this).attr('data-folderRoot', 'true')
+		 $(this).siblings('ul')
+            .find("input[type='checkbox']")
+            .prop('checked', this.checked)
+            .attr("disabled", true);
+
+	}else{
+		$(this).removeAttr('data-folderRoot')
+	    $(this).siblings('ul')
+            .find("input[type='checkbox']")
+            .prop('checked', false)
+            .attr("disabled", false);
+	}	
+});
+
+$("#add-folders").click(function(){
+	$("#folder-listing").modal('show');
+});
+
+$('#attach-selected-folders').on('click', function(){
+
+	$("#folders-selected").empty();
+	$("#folders-selected").append('<p>Folders attached :</p>');
+	$('input[name^="package_folders"]').each(function(){
+
+		console.log($(this));
+		var attr = $(this).attr('data-folderRoot');
+		
+		// For some browsers, `attr` is undefined; for others,
+		// `attr` is false.  Check for both.
+		if (typeof attr !== typeof undefined && attr !== false) {
+		    
+		    $("#folders-selected").append('<ul class="selected-folders" data-folderid='+ $(this).attr('data-folderid') +'>'+$(this).attr("data-foldername")+'</ul>')
+		}
+		
+	});
 });
 
 
@@ -59,41 +98,6 @@ $( "#storeSelect" ).focus(function() {
     $('.event-create span').text(' Create New Event');
 });
 
-// $( "#title" ).focus(function() {
-// 	$('.event-create i').removeClass("fa-spinner faa-spin animated");
-// 	$('.event-create i').addClass("fa-check");		        
-//     $('.event-create span').text(' Create New Event');
-// });
-
-// $( "#event_type" ).focus(function() {
-// 	$('.event-create i').removeClass("fa-spinner faa-spin animated");
-// 	$('.event-create i').addClass("fa-check");		        
-//     $('.event-create span').text(' Create New Event');
-// });
-
-// $( "#start" ).focus(function() {
-// 	$('.event-create i').removeClass("fa-spinner faa-spin animated");
-// 	$('.event-create i').addClass("fa-check");		        
-//     $('.event-create span').text(' Create New Event');
-// });
-
-// $( "#end" ).focus(function() {
-// 	$('.event-create i').removeClass("fa-spinner faa-spin anima
-// 	$('.event-create i').addClass("fa-check");		        
-//     $('.event-create span').text(' Create New Event');
-// });
-
-// $( "#description" ).focus(function() {
-// 	$('.event-create i').removeClass("fa-spinner faa-spin animated");
-// 	$('.event-create i').addClass("fa-check");		        
-//     $('.event-create span').text(' Create New Event');
-// });
-
-// $( "#storeSelect" ).focus(function() {
-// 	$('.event-create i').removeClass("fa-spinner faa-spin animated");
-// 	$('.event-create i').addClass("fa-check");		        
-//     $('.event-create span').text(' Create New Event');
-// });
 
 
 $(document).on('click','.event-create',function(){
@@ -109,8 +113,11 @@ $(document).on('click','.event-create',function(){
     var tags = $('#tags').val();
     var target_stores  = $("#storeSelect").val();
     var allStores  = $("allStores:checked").val();
-    var attachments = $("#attachments").val();
-
+    var attachments = [];
+   	$(".selected-folders").each(function(){
+		attachments.push($(this).attr('data-folderid'));
+	});
+ 
     if(eventTitle == '') {
 		swal("Oops!", "This event needs a title.", "error"); 
 		hasError = true;

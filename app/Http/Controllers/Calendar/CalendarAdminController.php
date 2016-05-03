@@ -15,6 +15,7 @@ use App\Models\UserBanner;
 use App\Models\UserSelectedBanner;
 use App\Models\StoreInfo;
 use App\Models\Event\EventTarget;
+use App\Models\Document\FolderStructure;
 
 
 class CalendarAdminController extends Controller
@@ -66,12 +67,14 @@ class CalendarAdminController extends Controller
         $event_types_list = ["" =>'Select one'];
         $event_types_list += EventType::where('banner_id', $banner_id)->lists('event_type', 'id')->toArray();
         $storeList = StoreInfo::getStoreListing($banner->id);
+        $folderStructure = FolderStructure::getNavigationStructure($banner->id);
 
         return view('admin.calendar.create')
             ->with('event_types_list', $event_types_list)
             ->with('banner', $banner)
             ->with('banners', $banners)
-            ->with('stores', $storeList);     
+            ->with('stores', $storeList)
+            ->with('folderStructure', $folderStructure);     
     }
 
     /**
