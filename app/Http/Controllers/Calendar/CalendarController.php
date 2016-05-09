@@ -22,6 +22,7 @@ use App\Models\Alert\Alert;
 use App\Skin;
 use App\Models\StoreInfo;
 use App\Models\Utility\Utility;
+use App\Models\Event\EventAttachment;
 
 class CalendarController extends Controller
 {
@@ -54,9 +55,17 @@ class CalendarController extends Controller
             $event->prettyDateStart = Utility::prettifyDate($event->start);
             $event->prettyDateEnd = Utility::prettifyDate($event->end);
             $event->since = Utility::getTimePastSinceDate($event->start);
+            $attachments = EventAttachment::getEventAttachments($event->id);
+            $attachment_link_string = "";
+            foreach ($attachments as $a) {
 
+                $attachment_link_string .= "<a href='/".$storeNumber."/document#!/".$a->id."'>". $a->name ."</a><br>";
+                
+            }
+            
+            $event->attachment = $attachment_link_string;
         }
-
+        
         return view('site.calendar.index')
                 ->with('skin', $skin)
                 ->with('alertCount', $alertCount)

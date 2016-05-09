@@ -76,21 +76,23 @@
             editable: true,
             eventLimit: true, // allow "more" link when too many events
             eventClick:  function(event, jsEvent, view) {
-                console.log(event.start);
+                console.log(event);
                 $('#modalTitle').html("<span class='event-title pull-left'>" + event.title +"</span>");
                 $('#modalTitle').append("<span class='event-span pull-right'>" + event.prettyStart+ " to " + event.prettyEnd + "</span>");
                 $('#modalBody').html(event.description);
+                $("#modalBody").append(event.attachment);
                 $('#fullCalModal').modal();
             },
             events: [
                 @foreach($events as $event)
                 {
-                title: "{{ $event->title }}",
-                start: "{{ $event->start }}",
-                end: "{{ $event->end }}",
-                description : '{!! $event->description !!}',
-                prettyStart : "{{$event->prettyDateStart}}",
-                prettyEnd : "{{$event->prettyDateEnd}}",
+                    title: "{{ $event->title }}",
+                    start: "{{ $event->start }}",
+                    end: "{{ $event->end }}",
+                    description : '{!! $event->description !!}',
+                    prettyStart : "{{$event->prettyDateStart}}",
+                    prettyEnd : "{{$event->prettyDateEnd}}",
+                    attachment : "{!!$event->attachment!!}"
                 },
                 @endforeach
             ]

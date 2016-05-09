@@ -130,6 +130,7 @@ class Event extends Model
     {
       $events = Event::join('events_target', 'events.id', '=', 'events_target.event_id')
                         ->where('store_id', $store_id)
+                        ->select('events.*')
                         ->get();
       return $events;
     }
