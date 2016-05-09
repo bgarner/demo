@@ -126,22 +126,66 @@
                                             </div>
 
                                         </div>
+
+                                        
                                         
 
-                                        <div class="hr-line-dashed"></div>
-
-                                        <div class="form-group">
-                                            <div class="col-sm-4 col-sm-offset-2">
-                                                <a class="btn btn-white" href="/admin/calendar"><i class="fa fa-close"></i> Cancel</a>
-                                                <button class="event-update btn btn-primary" type="submit"><i class="fa fa-check"></i> Save changes</button>
-
-                                            </div>
-                                        </div>
+                                        
                                     </form>
 
 
                                 </div>
+                            </div>
+                            <div class="ibox">
+
+                                <div class="ibox-title">
+                                    <h5> Attachments </h5>
+                                    <div class="ibox-tools">
+                                        
+                                        <div id="add-more-attachments" class="btn btn-primary btn-outline col-md-offset-8" role="button" ><i class="fa fa-plus"></i> Add More Attachments</div>
+                                    </div>
+                                </div>
+                                <div class="ibox-content">
+                                    <div class="form-group">
+                                                                        
+                                            @if( count($event_attachments) > 0)
+                                                <table class="table table-hover event-attachments-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <td>Folder</td>
+                                                            <td>Updated</td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($event_attachments as $attachment)
+                                                        
+                                                        <tr class="event-attachments">
+                                                            <td class="event-attachmentname" data-folderid = {{$attachment->global_folder_id}}><i class="fa fa-folder-o"></i> {{$attachment->name}} </td>
+                                                            <td class="attachment-updated"> {{$attachment->updated_at}} </td>
+                                                            <td><a data-folder-id="{{ $attachment->global_folder_id }}" id="folder{{$attachment->global_folder_id}}" class="remove-attachment btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>
+                                                        </tr>
+                                                        
+                                                        @endforeach
+
+                                                    </tbody>
+                                                </table>
+                                            @endif
+                                            
+
+                                    </div>
+
+                                </div>
 		                    </div>
+
+                           
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <a class="btn btn-white" href="/admin/calendar"><i class="fa fa-close"></i> Cancel</a>
+                                    <button class="event-update btn btn-primary" type="submit"><i class="fa fa-check"></i> Save changes</button>
+
+                                </div>
+                            </div>
 
 		                </div>
 

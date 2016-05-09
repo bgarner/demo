@@ -16,7 +16,7 @@ use App\Models\UserSelectedBanner;
 use App\Models\StoreInfo;
 use App\Models\Event\EventTarget;
 use App\Models\Document\FolderStructure;
-
+use App\Models\Event\EventAttachment;
 
 class CalendarAdminController extends Controller
 {
@@ -127,6 +127,7 @@ class CalendarAdminController extends Controller
             $all_stores = true;
         }
 
+        $event_attachments = EventAttachment::getEventAttachments($id);
         return view('admin.calendar.edit')
             ->with('event', $event)
             ->with('event_type', $event_type)
@@ -135,7 +136,8 @@ class CalendarAdminController extends Controller
             ->with('banners', $banners)
             ->with('storeList', $storeList)
             ->with('target_stores', $event_target_stores)
-            ->with('all_stores', $all_stores);
+            ->with('all_stores', $all_stores)
+            ->with('event_attachments', $event_attachments);
     }
 
     /**
