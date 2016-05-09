@@ -14,20 +14,41 @@ class EventAttachment extends Model
 
     public static function updateAttachments($id, $request)
     {
-    	EventAttachment::where('event_id', $id)->delete();
-    	
     	$attachments = $request['attachments'];
+        $remove_attachments = $request['remove_attachments'];
     	if (isset($attachments)) {
-    		foreach ($attachments as $attachment) {
-	    		EventAttachment::create([
-	    			'event_id' => $id,
-	    			'attachment_id' => $attachment
-
-	    		]);
-    		}
+    	   EventAttachment::addAttachments($attachments, $id);
     	}
+        if (isset($remove_attachments) && count($remove_attachments) >0) {
+            EventAttachment::removeAttachments($remove_attachments, $id);
+        }
+
     	
     	return;
+
+    }
+
+    public static function addAttachments($attachments, $event_id)
+    {
+        
+        foreach ($attachments as $attachment) {
+             EventAttachment::create([
+                 'event_id' => $event_id,
+                 'attachment_id' => $attachment
+
+             ]);
+         }
+        return;
+    }
+
+    public static function removeAttachments($attachments, $event_id)
+    {
+        
+        foreach ($attachments as $attachment) {
+            EventAttachment::where('event_id', $event_id)->where('attachment_id', intval($attachment))->delete();  
+        }
+        
+        return;
     }
 
     public static function getEventAttachments($id)

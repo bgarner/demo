@@ -17,6 +17,70 @@ $("#allStores").change(function(){
 	}
 });
 
+$("#add-more-attachments").click(function(){
+	console.log('add folders');
+	$("#folder-listing").modal('show');
+
+});
+
+$('#attach-selected-folders').on('click', function(){
+
+		console.log('attaching folders');
+		$(".selected-attachments").remove();
+		
+		$('input[name^="package_folders"]').each(function(){
+			
+			var attr = $(this).attr('data-folderRoot');
+
+			// For some browsers, `attr` is undefined; for others,
+			// `attr` is false.  Check for both.
+			if (typeof attr !== typeof undefined && attr !== false) {
+			    
+			    $(".event-attachments-table tbody").append(	'<tr class="selected-attachments"> '+
+													'<td data-attachment-id='+ $(this).val() +'><i class="fa fa-folder-o"></i> '+ $(this).attr("data-foldername") +'</td>'+
+													'<td></td>'+
+													'<td> <a data-attachment-id="'+ $(this).val()+'" id="attachment'+ $(this).val()+'" class="remove-staged-attachment btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>'+
+												 '</tr>');
+			}
+			
+		});
+	});
+$("body").on('click', ".remove-staged-attachment", function(){
+	
+	
+	var folder_id = $(this).attr('data-attachment-id');
+	$(this).closest('.selected-attachments').fadeOut(200, function(){
+		$(this).closest('.selected-attachments').remove();	
+	});
+	
+
+});
+$(".remove-attachment").on('click', function(){
+	var folder_id = $(this).attr('data-folder-id');
+	$(this).closest(".event-attachments").fadeOut(200, function(){
+		$("#attachments-staged-to-remove").append('<div class="remove_folder" data-folderid='+ folder_id +'>')	
+	});
+	
+	
+});
+
+$(".folder-checkbox").on('click', function(){
+	if($(this).is(":checked")){
+		$(this).attr('data-folderRoot', 'true')
+		 $(this).siblings('ul')
+            .find("input[type='checkbox']")
+            .prop('checked', this.checked)
+            .attr("disabled", true);
+
+	}else{
+		$(this).removeAttr('data-folderRoot')
+	    $(this).siblings('ul')
+            .find("input[type='checkbox']")
+            .prop('checked', false)
+            .attr("disabled", false);
+	}	
+});
+
 $(document).on('click','.event-update',function(){
   	
   	var hasError = false;
@@ -30,8 +94,17 @@ $(document).on('click','.event-update',function(){
     var eventEnd = $("#end").val();
     var target_stores  = $("#storeSelect").val();
 	var allStores  = $("#allStores:checked").val();
-	var attachments = $("#attachments").val();
+	var attachments = [];
+	var remove_attachments = [];
 	
+	$(".selected-attachments").each(function(){
+		attachments.push($(this).find('td:first').attr('data-attachment-id'));
+	});
+	$(".remove_folder").each(function(){
+		remove_attachments.push($(this).attr('data-folderid'));
+	});
+	
+
     if(eventTitle == '') {
 		swal("Oops!", "This event needs a title.", "error"); 
 		hasError = true;
@@ -57,7 +130,7 @@ $(document).on('click','.event-update',function(){
 		$(window).scrollTop(0);
 		return false;
 	}
-
+	console.log(attachments);
     if(hasError == false) {
 
 		$.ajax({
@@ -73,7 +146,8 @@ $(document).on('click','.event-update',function(){
 		    	end: eventEnd,
 		    	target_stores : target_stores,
 		  		allStores : allStores,
-		  		attachments : attachments
+		  		attachments : attachments,
+		  		remove_attachments : remove_attachments
 		    },
 
 		    success: function(data) {

@@ -128,6 +128,8 @@ class CalendarAdminController extends Controller
         }
 
         $event_attachments = EventAttachment::getEventAttachments($id);
+
+        $folderStructure = FolderStructure::getNavigationStructure($banner->id);
         return view('admin.calendar.edit')
             ->with('event', $event)
             ->with('event_type', $event_type)
@@ -137,7 +139,8 @@ class CalendarAdminController extends Controller
             ->with('storeList', $storeList)
             ->with('target_stores', $event_target_stores)
             ->with('all_stores', $all_stores)
-            ->with('event_attachments', $event_attachments);
+            ->with('event_attachments', $event_attachments)
+            ->with('folderStructure', $folderStructure);     
     }
 
     /**
