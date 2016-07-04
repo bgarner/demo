@@ -74,8 +74,8 @@ class UrgentNotice extends Model
     		'attachment_type_id'=>$attachment_type_id
     	]);
 
-        UrgentNoticeFolder::updateFolders($request['urgentnotice_folders'], $urgentNotice->id);
-        UrgentNoticeDocument::updateDocuments($request['urgentnotice_documents'], $urgentNotice->id);
+        UrgentNoticeFolder::addFolders($request['urgentnotice_folders'], $urgentNotice->id);
+        UrgentNoticeDocument::addDocuments($request['urgentnotice_documents'], $urgentNotice->id);
 
     	foreach ($target_stores as $store) {
     		UrgentNoticeTarget::create([
@@ -89,8 +89,7 @@ class UrgentNotice extends Model
 
     public static function updateUrgentNotice($request, $id)
     {
-    	\Log::info($request->all());
-        \Log::info(gettype($request['target_stores']));
+    
         $validate = UrgentNotice::validateUrgentNotice($request);
         if($validate['validation_result'] == 'false') {
           \Log::info($validate);
@@ -98,57 +97,26 @@ class UrgentNotice extends Model
         }
 
         $urgentNotice = UrgentNotice::find($id);
-        $attachment_type_id = $urgentNotice->attachment_type_id;
-
 
         $banner_id = $request->banner_id;
     	$title = $request->title;
     	$description = $request->description;
     	$start = $request->start;
     	$end = $request->end;	
-    	$new_attachments = $request->new_attachments;
-        $remove_attachments = $request->remove_attachments;
     	$target_stores = $request->target_stores;
         
-        
-        // $new_attachment_type_id = intval($request->new_attachment_type);
-        
-        // if($new_attachment_type_id != 3) {
-        //     if ($new_attachment_type_id != $attachment_type_id) {
-        //         $attachment_type_id = $new_attachment_type_id;
-        //         UrgentNoticeAttachment::where('urgent_notice_id', $id)->delete();
-        //     }
-        // }
-        
-        // else{
-        //     if(isset($remove_attachments)) {
-        //         foreach ($remove_attachments as $attachment) {
-        //         UrgentNoticeAttachment::where('urgent_notice_id', $id)->where('attachment_id', $attachment)->delete();
-        //         } 
-        //     }
-            
-        // } 
-        
-    	
     	$urgentNotice->update([
     		'banner_id' => $banner_id,
     		'title'		=> $title,
     		'description' => $description,
     		'start'		=> $start,
-    		'end'		=> $end,
-    		'attachment_type_id'	=> $attachment_type_id
+    		'end'		=> $end
     	]);
     	$urgentNotice->save();
 
     	
-    	// if (isset($new_attachments)) {
-     //        foreach ($new_attachments as $attachment) {
-     //        UrgentNoticeAttachment::create([
-     //            'urgent_notice_id' => $urgentNotice->id,
-     //            'attachment_id' => $attachment
-     //        ]);
-     //    }
-     //    }
+    	UrgentNoticeDocument::updateDocuments($request, $id);
+        UrgentNoticeFolder::updateFolders($request, $id);
         
         if (isset($request['target_stores']) && $request['target_stores'] != '' ) {
             UrgentNoticeTarget::where('urgent_notice_id', $id)->delete();
