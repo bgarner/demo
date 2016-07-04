@@ -91,14 +91,14 @@ $('#attach-selected-files').on('click', function(){
 });
 
 
-$(".remove-file").on('click', function(){
+$("body").on('click',".remove-file", function(){
 	var document_id = $(this).attr('data-document-id');
 	console.log(document_id);
 	$(this).closest('.urgentnotice-documents').fadeOut(200);
 	$("#files-staged-to-remove").append('<div class="remove_document" data-documentid='+ document_id +'>')
 });
 
-$(".remove-folder").on('click', function(){
+$("body").on('click',".remove-folder", function(){
 	console.log($(this));
 	var folder_id = $(this).attr('data-folder-id');
 	$(this).closest('.urgentnotice-folders').fadeOut(200);
@@ -249,6 +249,15 @@ $(document).on('click','.urgentnotice-update',function(){
 		        else{
 		        	console.log(data);
 		        	// $('#createNewUrgentNoticeForm')[0].reset(); // empty the form
+		        	$(".existing-files-container").load("/admin/urgentnotice-documents/"+urgent_notice_id);
+					$("#files-staged-to-remove").empty();
+					$("#files-selected").empty();
+					$("#document-listing").find(".document-checkbox").prop('checked', false);
+
+					$(".existing-folders-container").load("/admin/urgentnotice-folders/"+urgent_notice_id);
+					$("#folders-staged-to-remove").empty();
+					$("#folders-selected").empty();
+					$("#folder-listing").find(".folder-checkbox").prop('checked', false);
 					swal("Nice!", "'" + title +"' has been updated", "success");        
 				}
 		    }

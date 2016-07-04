@@ -24,7 +24,7 @@
 
 </table>
 @else
-<table class="table table-hover feature-folders-table hidden">
+<table class="table table-hover urgentnotice-folders-table hidden">
 	<thead>
 		<tr>
 			<th>Folder Name</th>

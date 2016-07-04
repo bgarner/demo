@@ -182,4 +182,23 @@ class UrgentNoticeAdminController extends Controller
     {
         return UrgentNotice::deleteUrgentNotice($id);
     }
+
+    public function getDocumentPartial($id)
+    {
+        $documents = UrgentNoticeDocument::join('documents', 'documents.id', '=' ,'urgent_notice_documents.document_id')
+                                        ->where('urgent_notice_documents.urgent_notice_id', $id)
+                                        ->select('documents.*')
+                                        ->get();
+        return view('admin.urgent-notice.document-partial')->with('documents', $documents);
+    }
+
+    public function getFolderPartial($id)
+    {
+        $folders = UrgentNoticeFolder::join('folder_ids', 'folder_ids.id', '=' ,'urgent_notice_folders.folder_id')
+                                        ->join('folders', 'folders.id', '=', 'folder_ids.folder_id')
+                                        ->where('urgent_notice_folders.urgent_notice_id', $id)
+                                        ->select('folders.*',  'folder_ids.id as global_folder_id')
+                                        ->get();
+        return view('admin.urgent-notice.folder-partial')->with('folders', $folders);
+    }
 }
