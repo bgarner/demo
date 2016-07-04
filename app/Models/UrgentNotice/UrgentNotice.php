@@ -28,19 +28,12 @@ class UrgentNotice extends Model
                         'end'           => $request['end'],
                         'target_stores' => $request['target_stores'],
                         'attachment_type_id' => $request['attachment_type'][0],
-                        'folder'        => '',
-                        'document'      => '',
+                        'folder'        => $request['urgentnotice_folders'],
+                        'document'      => $request['urgentnotice_documents'],
 
                       ];
       if ($request['allStores'] != NULL) {
         $validateThis['allStores'] = $request['allStores'];
-      }
-      
-      if($request['attachment_type'][0] == 1){
-        $validateThis['folder'] = $request['attachments'][0];
-      }
-      if($request['attachment_type'][0] == 2){
-        $validateThis['document'] = $request['attachments'][0];
       }
       
       \Log::info('*********');
@@ -68,8 +61,7 @@ class UrgentNotice extends Model
     	$description = $request->description;
     	$start = $request->start;
     	$end = $request->end;
-    	$attachment_type_id = $request->attachment_type;
-    	$attachments = $request->attachments;
+    	$attachment_type_id = $request->attachment_type_id;
     	$target_stores = $request->target_stores;
     	
     	
@@ -82,15 +74,8 @@ class UrgentNotice extends Model
     		'attachment_type_id'=>$attachment_type_id
     	]);
 
-    	if($attachment_type_id != 3){
-            foreach ($attachments as $attachment) {
-                UrgentNoticeAttachment::create([
-                    'urgent_notice_id' => $urgentNotice->id,
-                    'attachment_id' => $attachment
-                ]);
-            }    
-        }
-        
+        UrgentNoticeFolder::updateFolders($request['urgentnotice_folders'], $urgentNotice->id);
+        UrgentNoticeDocument::updateDocuments($request['urgentnotice_documents'], $urgentNotice->id);
 
     	foreach ($target_stores as $store) {
     		UrgentNoticeTarget::create([
@@ -126,23 +111,23 @@ class UrgentNotice extends Model
     	$target_stores = $request->target_stores;
         
         
-        $new_attachment_type_id = intval($request->new_attachment_type);
+        // $new_attachment_type_id = intval($request->new_attachment_type);
         
-        if($new_attachment_type_id != 3) {
-            if ($new_attachment_type_id != $attachment_type_id) {
-                $attachment_type_id = $new_attachment_type_id;
-                UrgentNoticeAttachment::where('urgent_notice_id', $id)->delete();
-            }
-        }
+        // if($new_attachment_type_id != 3) {
+        //     if ($new_attachment_type_id != $attachment_type_id) {
+        //         $attachment_type_id = $new_attachment_type_id;
+        //         UrgentNoticeAttachment::where('urgent_notice_id', $id)->delete();
+        //     }
+        // }
         
-        else{
-            if(isset($remove_attachments)) {
-                foreach ($remove_attachments as $attachment) {
-                UrgentNoticeAttachment::where('urgent_notice_id', $id)->where('attachment_id', $attachment)->delete();
-                } 
-            }
+        // else{
+        //     if(isset($remove_attachments)) {
+        //         foreach ($remove_attachments as $attachment) {
+        //         UrgentNoticeAttachment::where('urgent_notice_id', $id)->where('attachment_id', $attachment)->delete();
+        //         } 
+        //     }
             
-        } 
+        // } 
         
     	
     	$urgentNotice->update([
@@ -156,14 +141,14 @@ class UrgentNotice extends Model
     	$urgentNotice->save();
 
     	
-    	if (isset($new_attachments)) {
-            foreach ($new_attachments as $attachment) {
-            UrgentNoticeAttachment::create([
-                'urgent_notice_id' => $urgentNotice->id,
-                'attachment_id' => $attachment
-            ]);
-        }
-        }
+    	// if (isset($new_attachments)) {
+     //        foreach ($new_attachments as $attachment) {
+     //        UrgentNoticeAttachment::create([
+     //            'urgent_notice_id' => $urgentNotice->id,
+     //            'attachment_id' => $attachment
+     //        ]);
+     //    }
+     //    }
         
         if (isset($request['target_stores']) && $request['target_stores'] != '' ) {
             UrgentNoticeTarget::where('urgent_notice_id', $id)->delete();
@@ -178,6 +163,8 @@ class UrgentNotice extends Model
         return $urgentNotice;
 
     }
+
+
 
     public static function deleteUrgentNotice($id)
     {

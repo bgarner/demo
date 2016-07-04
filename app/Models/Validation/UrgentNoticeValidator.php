@@ -14,9 +14,8 @@ class UrgentNoticeValidator extends PortalValidator
     	'end'			=> 'required|date',
     	'target_stores'	=> "required_without:allStores|array",
     	'allStores'     => 'in:on',
-        'attachment_type_id' => 'required_with:folder,document|in:1,2,3',
-        'folder'        => 'required_if:attachment_type_id,1|exists:folder_ids,id',
-        'document'      => 'required_if:attachment_type_id,2|exists:documents,id'
+        'folder'        => 'exists:folder_ids,id',
+        'document'      => 'exists:documents,id'
             
     ];
 
@@ -25,13 +24,7 @@ class UrgentNoticeValidator extends PortalValidator
         'target_stores.array' => 'Invalid Target Stores',
         'allStores.in' => 'Invalid value in Target Stores',
         'folder.exists' => 'Invalid attachment',
-        'document.exists' => 'Invalid attachment',
-        'attachment_type_id.in' => 'Invalid attachment type',
-        'attachment_type_id.required_with' => 'Attachment type not set',
-        'folder.required_if' => 'Attachment not selected',
-        'document.required_if' => 'Attachment not selected'
-
-
+        'document.exists' => 'Invalid attachment'
 
     ];
 }   
