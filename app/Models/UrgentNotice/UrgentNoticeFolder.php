@@ -60,6 +60,6 @@ class UrgentNoticeFolder extends Model
 
     public static function deleteFolder($folder_id)
     {
-        UrgentNoticeFolder::where('folder_id', $folder)->delete();    
+        UrgentNoticeFolder::where('folder_id', $folder_id)->delete();    
     }
 }
