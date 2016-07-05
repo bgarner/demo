@@ -4,6 +4,7 @@ namespace App\Models\UrgentNotice;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Utility\Utility;
 
 class UrgentNoticeFolder extends Model
 {
@@ -38,5 +39,27 @@ class UrgentNoticeFolder extends Model
         $add_folders = $request['urgentnotice_folders'];
         UrgentNoticeFolder::addFolders($add_folders, $id);
         
+    }
+
+
+    public static function getFolders($urgent_notice_id)
+    {
+        $folders = UrgentNoticeFolder::join('folder_ids', 'folder_ids.id', '=', 'urgent_notice_folders.folder_id')
+                     ->join('folders', 'folders.id', '=', 'folder_ids.folder_id')
+                     ->where('urgent_notice_folders.urgent_notice_id', $urgent_notice_id)
+                     ->select('folders.*', 'folder_ids.id as global_folder_id')
+                     ->get()
+                     ->each(function($folder){
+                            $folder->since = Utility::getTimePastSinceDate($folder->updated_at);
+                            $folder->prettyDate = Utility::prettifyDate($folder->updated_at);
+                     });
+
+        return $folders;
+
+    }
+
+    public static function deleteFolder($folder_id)
+    {
+        UrgentNoticeFolder::where('folder_id', $folder)->delete();    
     }
 }

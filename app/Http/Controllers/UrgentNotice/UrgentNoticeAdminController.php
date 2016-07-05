@@ -14,7 +14,6 @@ use App\Models\UrgentNotice\UrgentNotice;
 use App\Models\Document\FileFolder;
 use App\Models\Document\FolderStructure;
 use App\Models\UrgentNotice\UrgentNoticeAttachmentType;
-use App\Models\UrgentNotice\UrgentNoticeAttachment;
 use App\Models\UrgentNotice\UrgentNoticeTarget;
 use App\Models\Document\Document;
 use App\Models\Document\Folder;

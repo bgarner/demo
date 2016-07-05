@@ -4,6 +4,7 @@ namespace App\Models\UrgentNotice;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Utility\Utility;
 
 class UrgentNoticeDocument extends Model
 {
@@ -40,5 +41,28 @@ class UrgentNoticeDocument extends Model
 
         UrgentNoticeDocument::addDocuments($add_documents, $id);
         
+    }
+
+    public static function getDocuments($urgent_notice_id)
+    {
+        $documents = UrgentNoticeDocument::join('documents', 'documents.id', '=' , 'urgent_notice_documents.document_id')
+                            ->where('urgent_notice_documents.urgent_notice_id', $urgent_notice_id)
+                            ->select('documents.*')
+                            ->get()
+                            ->each(function($document){
+                                $document->link = Utility::getModalLink($document->filename, $document->title, $document->original_extension, $document->id, 0);
+                                $document->link_with_icon = Utility::getModalLink($document->filename, $document->title, $document->original_extension, $document->id, 1);
+                                $document->anchor_only =  Utility::getModalLink($document->filename, $document->title, $document->original_extension, $document->id, 1, 1);
+                                $document->icon = Utility::getIcon($document->original_extension);
+                                $document->since = Utility::getTimePastSinceDate($document->updated_at);
+                                $document->prettyDate =  Utility::prettifyDate($document->updated_at);
+                            });
+
+        return $documents;
+    }
+
+    public static function deleteDocument($document_id)
+    {
+        UrgentNoticeDocument::where('document_id', $document_id)->delete();    
     }
 }

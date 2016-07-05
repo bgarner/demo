@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Validation\DocumentValidator;
 use App\Models\Feature\FeatureDocument;
 use App\Models\Communication\CommunicationDocument;
-use App\Models\UrgentNotice\UrgentNoticeAttachment;
+use App\Models\UrgentNotice\UrgentNoticeDocument;
 
 class Document extends Model
 {
@@ -235,7 +235,7 @@ class Document extends Model
         CommunicationDocument::where('document_id', $id)->delete();  
 
         //delete from Urgent Notice
-        UrgentNoticeAttachment::deleteAttachment($id, 'Document');
+        UrgentNoticeDocument::deleteDocument($id);
 
         //delete from quicklink
         $quicklink = Quicklinks::where('url', $id)->where('type', 2)->first();
