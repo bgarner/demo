@@ -6,6 +6,18 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Request as RequestFacade; 
+use DB;
+
+use App\Models\Banner;
+use App\Skin;
+use App\Models\Communication\Communication;
+use App\Models\Communication\CommunicationDocument;
+use App\Models\Communication\CommunicationPackage;
+use App\Models\Communication\CommunicationTarget;
+use App\Models\UrgentNotice\UrgentNotice;
+use App\Models\Alert\Alert;
+use App\Models\StoreInfo;
 
 class CommunityController extends Controller
 {
@@ -16,7 +28,17 @@ class CommunityController extends Controller
      */
     public function index()
     {
-        //
+        return view('site.community.index')
+            ->with('skin', $skin)
+            ->with('communicationTypes', $communicationTypes)
+            ->with('communications', $targetedCommunications)
+            ->with('communicationCount', $communicationCount)
+            ->with('alertCount', $alertCount)
+            ->with('urgentNoticeCount', $urgentNoticeCount)
+            ->with('title', $title)
+            ->with('archives', $request['archives'])
+            ->with('banner', $banner)
+            ->with('isComboStore', $isComboStore);
     }
 
     /**

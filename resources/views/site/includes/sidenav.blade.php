@@ -87,4 +87,13 @@
 
                 </li>
 
+                @if (Request::segment(2) == 'community')
+                <li class="active">
+                @else
+                <li>
+                @endif
+                    <a href="/{{ Request::segment(1) }}/community/audit"><i class="fa fa-users"></i> <span class="nav-label">Community</span></a>
+
+                </li>                
+
             </ul>
