@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Audit;
+namespace App\Http\Controllers\Community;
 
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class AuditContoller extends Controller
+class CommunityController extends Controller
 {
     /**
      * Display a listing of the resource.
