@@ -36,6 +36,10 @@ Route::get('/{storeno}/communication', array('uses' => 'Communication\Communicat
 Route::get('/{storeno}/communication/show/{id}', 'Communication\CommunicationController@show');
 Route::resource('/communication', 'Communication\CommunicationTargetController');
 
+//COMMUNITY
+Route::get('/{storeno}/community', array('uses' => 'Community\CommunityController@index'));
+Route::get('/{storeno}/community/audit', array('uses' => 'Community\Audit\AuditController@index'));
+
 //VIDEO
 Route::get('/{storeno}/video', array('uses' => 'Video\VideoController@index'));
 
