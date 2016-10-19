@@ -14,7 +14,8 @@ class CreateAuditDonationTypeTable extends Migration
     {
         Schema::create('audit_donation_types', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->string('sport');
+            $table->string('donation_type');
+            $table->text('description');
             $table->timestamps();
             $table->softDeletes();
         });

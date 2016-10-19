@@ -17,6 +17,7 @@ return array(
     'CreateAlertTypesTable' => $baseDir . '/database/migrations/2016_02_11_205551_create_alert_types_table.php',
     'CreateAlertsTable' => $baseDir . '/database/migrations/2016_02_11_205607_create_alerts_table.php',
     'CreateAlertsTargetTable' => $baseDir . '/database/migrations/2016_02_11_205948_create_alerts_target_table.php',
+    'CreateAuditDonatedItemsTable' => $baseDir . '/database/migrations/2016_10_19_104802_create_audit_donated_items_table.php',
     'CreateAuditDonationTypeTable' => $baseDir . '/database/migrations/2016_09_27_144417_create_audit_donation_type_table.php',
     'CreateAuditSportsTable' => $baseDir . '/database/migrations/2016_09_27_144238_create_audit_sports_table.php',
     'CreateAuditTable' => $baseDir . '/database/migrations/2016_09_22_161722_create_audit_table.php',
