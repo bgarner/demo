@@ -51,17 +51,6 @@ class CommunityController extends Controller
      */
     public function index()
     {
-        // return view('site.community.index')
-        //     ->with('skin', $skin)
-        //     ->with('communicationTypes', $communicationTypes)
-        //     ->with('communications', $targetedCommunications)
-        //     ->with('communicationCount', $communicationCount)
-        //     ->with('alertCount', $alertCount)
-        //     ->with('urgentNoticeCount', $urgentNoticeCount)
-        //     ->with('title', $title)
-        //     ->with('archives', $request['archives'])
-        //     ->with('banner', $banner)
-        //     ->with('isComboStore', $isComboStore);
 
         return view('site.community.audit')
             ->with('skin', $this->skin)
