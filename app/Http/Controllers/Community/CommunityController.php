@@ -21,6 +21,29 @@ use App\Models\StoreInfo;
 
 class CommunityController extends Controller
 {
+
+    public $storeNumber;
+    public $storeInfo;
+    public $storeBanner;
+    public $banner;
+    public $isComboStore;
+    public $skin;
+    public $urgentNoticeCount;
+    public $alertCount;
+    public $communicationCount;
+
+    public function __construct()
+    {
+        $this->storeNumber = RequestFacade::segment(1);
+        $storeInfo = StoreInfo::getStoreInfoByStoreId($this->storeNumber);
+        $this->storeBanner = $storeInfo->banner_id;
+        $this->banner = Banner::find($this->storeBanner);
+        $this->isComboStore = $storeInfo->is_combo_store;
+        $this->skin = Skin::getSkin($this->storeBanner);
+        $this->urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($this->storeNumber);
+        $this->alertCount = Alert::getActiveAlertCountByStore($this->storeNumber);        
+        $this->communicationCount = Communication::getActiveCommunicationCount($this->storeNumber);        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -28,17 +51,25 @@ class CommunityController extends Controller
      */
     public function index()
     {
-        return view('site.community.index')
-            ->with('skin', $skin)
-            ->with('communicationTypes', $communicationTypes)
-            ->with('communications', $targetedCommunications)
-            ->with('communicationCount', $communicationCount)
-            ->with('alertCount', $alertCount)
-            ->with('urgentNoticeCount', $urgentNoticeCount)
-            ->with('title', $title)
-            ->with('archives', $request['archives'])
-            ->with('banner', $banner)
-            ->with('isComboStore', $isComboStore);
+        // return view('site.community.index')
+        //     ->with('skin', $skin)
+        //     ->with('communicationTypes', $communicationTypes)
+        //     ->with('communications', $targetedCommunications)
+        //     ->with('communicationCount', $communicationCount)
+        //     ->with('alertCount', $alertCount)
+        //     ->with('urgentNoticeCount', $urgentNoticeCount)
+        //     ->with('title', $title)
+        //     ->with('archives', $request['archives'])
+        //     ->with('banner', $banner)
+        //     ->with('isComboStore', $isComboStore);
+
+        return view('site.community.audit')
+            ->with('skin', $this->skin)
+            ->with('communicationCount', $this->communicationCount)
+            ->with('alertCount', $this->alertCount)
+            ->with('urgentNoticeCount', $this->urgentNoticeCount)
+            ->with('banner', $this->banner)
+            ->with('isComboStore', $this->isComboStore);          
     }
 
     /**

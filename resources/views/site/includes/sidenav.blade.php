@@ -50,8 +50,6 @@
                 </li>
 
 
-
-
                 @if (Request::segment(2) == 'alerts')
                 <li class="active">
                 @else
@@ -92,7 +90,7 @@
                 @else
                 <li>
                 @endif
-                    <a href="/{{ Request::segment(1) }}/community/audit"><i class="fa fa-users"></i> <span class="nav-label">Community</span></a>
+                    <a href="/{{ Request::segment(1) }}/community"><i class="fa fa-users"></i> <span class="nav-label">Community</span></a>
 
                 </li>                
 
