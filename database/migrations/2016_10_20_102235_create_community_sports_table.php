@@ -27,6 +27,6 @@ class CreateCommunitySportsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('community_donation_sports');
     }
 }

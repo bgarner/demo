@@ -27,6 +27,6 @@ class CreateCommunityDonationTypesTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('community_donation_types');
     }
 }
