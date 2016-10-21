@@ -21,7 +21,6 @@ use App\Models\StoreInfo;
 
 class CommunityController extends Controller
 {
-
     public $storeNumber;
     public $storeInfo;
     public $storeBanner;
@@ -51,7 +50,6 @@ class CommunityController extends Controller
      */
     public function index()
     {
-
         return view('site.community.audit')
             ->with('skin', $this->skin)
             ->with('communicationCount', $this->communicationCount)
