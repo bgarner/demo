@@ -105,7 +105,7 @@
                             <div class="col-sm-10"><input type="text" class="form-control input-sm"></div>
                         </div>      
 
-                        <div class="form-group">
+{{--                         <div class="form-group">
                             <label class="col-sm-2 control-label"><small>Sport</small></label>
                             <div class="col-sm-10">
                                 <select class="form-control input-sm" name="account">
@@ -116,7 +116,7 @@
                                     <option>option 4</option>
                                 </select>
                             </div>
-                        </div>               
+                        </div>   --}}             
 
 
 
@@ -215,8 +215,8 @@
                         </div>   
 
                                                                                                                   
-{{-- 
-                        <div class="form-group">
+
+{{--                         <div class="form-group">
                             <label class="col-sm-2 control-label"><small>Gift Card Number</small></label>
                             <div class="col-sm-10"><input type="text" class="form-control input-sm"></div>
                         </div>  
