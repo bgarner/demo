@@ -23,7 +23,6 @@ $('select').on('change', function() {
 
 $(document).ready(function() {
 
-
 	//form submission:
 	$("#donationsubmit").click(function(){
 		return false;
@@ -31,45 +30,44 @@ $(document).ready(function() {
 	
 	$("#donationsubmit").click(function(){					   				   
 		$(".error").hide();
-		$("label").css('color', '#fff');
-
-
-// emp_name
-// emp_number
-// org_name
-// team_event_name
-// event_date
-// event_location
-// pickup_name
-// pickup_phone
-// pickup_email
-// pickup_date
-// donationtype
-// product_name
-// style_number
-// upc
-// product_value
-// gc_number
-// gc_value
-// notes
-// approval
-
+		//$("label").css('color', '#fff');
 
 		var hasError = false;
 		var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+
+		var emp_name = $("#").val();
+		var emp_number = $("#emp_number").val();
 		
-		var fnameVal = $("#firstname").val();
-		var lnameVal = $("#lastname").val();
-		var emailVal = $("#email").val();
-		var phoneVal = $("#phone").val();
-		var officeVal = $("#office").val();
-		var dietVal = $("#diet").val();
+		var org_name = $("#org_name").val();
+		var team_event_name = $("#team_event_name").val();
+		var event_date = $("#event_date").val();
+		var event_location = $("#event_location").val();
+
+		var pickup_name = $("#pickup_name").val();
+		var pickup_phone = $("#pickup_phone").val();
+		var pickup_email = $("#pickup_email").val();
+		var pickup_date = $("#pickup_date").val();
+
+		var donationtype = $("#donationtype").val();
+
+		var product_name = $("#product_name").val();
+		var style_number = $("#style_number").val();
+		var upc = $("#upc").val();
+		var product_value = $("#product_value").val();
+
+		var gc_number = $("#gc_number").val();
+		var gc_value = $("#gc_value").val();
+
+		var notes = $("#notes").val();
+
+		var approval = $("#approval").val();
+
 //		var flightsVal = $("#flights").val();
 //		var flightsVal = $('input[name=flights]:checked', '#regform').val()		
-		var busVal = $('#bus').val();
+		// var busVal = $('#bus').val();
 		//var activityVal = $("#activity").val();		
-		var activity1Val = $('input[name=day1]:checked', '#regform').val()
-		var activity2Val = $('input[name=day2]:checked', '#regform').val()
+		// var activity1Val = $('input[name=day1]:checked', '#regform').val()
+		// var activity2Val = $('input[name=day2]:checked', '#regform').val()
 		// var shirtVal = $("#shirtsize").val();
 		// var jacketVal = $("#jacketsize").val();
 		// var shoesVal = $("#shoesize").val();
