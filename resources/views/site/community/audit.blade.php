@@ -60,9 +60,6 @@
                     </thead>
                     <tbody>
                     
-                    
-
-                    
                     <tr class="gradeA odd" role="row">
                         <td class="">North Side Flyers AA Hockey</td>
                         <td class="">10 Nov 2016</td>
@@ -125,6 +122,6 @@
     @include('site.includes.donation-modal')
 
     <script type="text/javascript" src="/js/custom/site/community/donationform.js"></script>
-    
+
 </body>
 </html> 
