@@ -132,6 +132,7 @@
     <script src="/js/plugins/iCheck/icheck.min.js"></script>
  
     @include('site.includes.modal')
+    @include('site.includes.donation-modal')
 
 </body>
 </html> 
