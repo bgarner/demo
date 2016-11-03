@@ -111,52 +111,54 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label"><small>Type</small></label>
                             <div class="col-sm-10">
-                                <select class="form-control input-sm" name="account">
-                                    <option>Gift Card</option>
-                                    <option>Product</option>
+                                <select class="form-control input-sm" name="donationtype" id="donationtype">
+                                    <option></option>
+                                    <option value="giftcard">Gift Card</option>
+                                    <option value="product">Product</option>
                                 </select>
                             </div>
                         </div>     
 
- 
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label"><small>Product Name</small></label>
-                            <div class="col-sm-10"><input type="text" class="form-control input-sm"></div>
-                        </div>  
+                        <div id="prodcutfields">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><small>Product Name</small></label>
+                                <div class="col-sm-10"><input type="text" class="form-control input-sm"></div>
+                            </div>  
 
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label"><small>Style Number</small></label>
-                            <div class="col-sm-10"><input type="text" class="form-control input-sm"></div>
-                        </div>                          
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><small>Style Number</small></label>
+                                <div class="col-sm-10"><input type="text" class="form-control input-sm"></div>
+                            </div>                          
 
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label"><small>UPC Number</small></label>
-                            <div class="col-sm-10"><input type="text" class="form-control input-sm"></div>
-                        </div>                                                  
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><small>UPC Number</small></label>
+                                <div class="col-sm-10"><input type="text" class="form-control input-sm"></div>
+                            </div>                                                  
 
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label"><small>Value</small></label>
-                            <div class="input-group date col-sm-7" style="padding-left: 15px;">
-                                <span class="input-group-addon">$</span>
-                                <input type="text" class="form-control input-sm" value="">
-                            </div>
-                        </div>   
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><small>Value</small></label>
+                                <div class="input-group date col-sm-7" style="padding-left: 15px;">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="text" class="form-control input-sm" value="">
+                                </div>
+                            </div>   
+                        </div>
 
-                                                                                                                  
+                        <div id="giftcardfields">                                                                                                                  
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><small>Gift Card Number</small></label>
+                                <div class="col-sm-10"><input type="text" class="form-control input-sm"></div>
+                            </div>  
 
-{{--                         <div class="form-group">
-                            <label class="col-sm-2 control-label"><small>Gift Card Number</small></label>
-                            <div class="col-sm-10"><input type="text" class="form-control input-sm"></div>
-                        </div>  
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><small>Value</small></label>
+                                <div class="input-group date col-sm-7" style="padding-left: 15px;">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="text" class="form-control input-sm" value="">
+                                </div>
+                            </div>  
 
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label"><small>Value</small></label>
-                            <div class="input-group date col-sm-7" style="padding-left: 15px;">
-                                <span class="input-group-addon">$</span>
-                                <input type="text" class="form-control input-sm" value="">
-                            </div>
-                        </div>   --}}
-
+                        </div>
 
 
                         <div class="hr-line-dashed"></div>
@@ -168,15 +170,9 @@
                         <div class="hr-line-dashed"></div>
                         <h5>DISTRICT MANAGER APPROVAL</h5>
                         <div class="form-group">
-                        <div class="col-sm-10">
-                        
-                        <div class="icheckbox_square-green checked" style="position: relative;"><input type="checkbox" value="" checked="" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
-
-                         {{--                <div class="i-checks"><label class=""> <div class="icheckbox_square-green" style="position: relative;"><input type="checkbox" value="" style="position: absolute; opacity: 0;">
-                                        <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-                                        </div>  --}}
-                                        <i></i> &nbsp;&nbsp;Yes, I have approval from my District Manager for this donation.</label>
-                                    </div>
+                            <div class="col-sm-10">
+                                 <input type="checkbox" />&nbsp;&nbsp;Yes, I have approval from my District Manager for this donation.</label>
+                            </div>
                         </div>
                       
 

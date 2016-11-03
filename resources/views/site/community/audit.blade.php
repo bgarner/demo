@@ -4,6 +4,7 @@
 <head>
     @section('title', 'Community Fund Audit')
     <link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/css/custom/site/community/donations.css" rel="stylesheet">
     @include('site.includes.head')
     
 </head>	
@@ -96,22 +97,12 @@
 
                     </tbody>
 
-                    </table></div>
+                    </table>
+
+                    </div>
                         </div>
 
-                        <div class="col-md-12">
 
-{{--                                     <h3>Instructions</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> --}}
-
-
-                                  
-                                </div>
 
 
                             </div>
@@ -128,11 +119,12 @@
 
     <script type="text/javascript" src="/js/plugins/fullcalendar/moment.min.js"></script>
     @include('site.includes.scripts')
- 
-    <script src="/js/plugins/iCheck/icheck.min.js"></script>
- 
+    
+
     @include('site.includes.modal')
     @include('site.includes.donation-modal')
 
+    <script type="text/javascript" src="/js/custom/site/community/donationform.js"></script>
+    
 </body>
 </html> 
