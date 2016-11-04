@@ -1,4 +1,4 @@
-<div class="modal inmodal" id="newdonationmodal" tabindex="-1" role="event" aria-hidden="true" style="display: none;" >
+<div class="modal inmodal" id="newdonationmodal" tabindex="-1" role="event" aria-hidden="true" style="display: none;">
 
     <div class="modal-dialog">
         <div class="modal-content animated fadeInDown">
