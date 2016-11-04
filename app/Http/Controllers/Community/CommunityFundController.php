@@ -37,7 +37,7 @@ class CommunityFundController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //https://scotch.io/tutorials/simple-laravel-crud-with-resource-controllers
     }
 
     /**
