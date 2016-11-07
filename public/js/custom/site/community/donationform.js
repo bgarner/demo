@@ -141,25 +141,26 @@ $(document).ready(function() {
 			// $(this).hide();
 			// $("#sendemail").append('<img style="height: 15px; width: 128px;" src="/images/ajax-loader.gif" alt="Sending" id="sending" />');
 
-			// $.post("sendEmail.php",
-   // 				{ fname: fnameVal,
-   // 				  lname: lnameVal, 
-   // 				  email: emailVal,
-   // 				  phone: phoneVal,
-   // 				  office: officeVal,
-   // 				  diet: dietVal,
-   // 				  bus: busVal,
-   // 				  activity_1: activity1Val,   				  
-   // 				  activity_2: activity2Val
+			$.post("/savedonation",
+   				{
+   				  fname: fnameVal,
+   				  lname: lnameVal, 
+   				  email: emailVal,
+   				  phone: phoneVal,
+   				  office: officeVal,
+   				  diet: dietVal,
+   				  bus: busVal,
+   				  activity_1: activity1Val,   				  
+   				  activity_2: activity2Val
 
-   // 				},
-   // 					function(data){
-			// 			$("#regform").slideUp("normal", function() {				  						
+   				},
+   					function(data){
+						$("#regform").slideUp("normal", function() {				  						
 																					
-			// 				$("#regform").before("<h2>Thank You</h2><br /><p>Your registration has been received!</p><br />");											
-			// 			});
-   // 					}
-			// 	 );
+							$("#regform").before("<h2>Thank You</h2><br /><p>Your registration has been received!</p><br />");											
+						});
+   					}
+				 );
 		}			
 		
 		return false;

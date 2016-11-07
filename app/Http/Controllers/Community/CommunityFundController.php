@@ -8,6 +8,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Models\Community\Donation;
+use Models\Community\DonationItem;
+use Modesl\Community\Item;
 
 class CommunityFundController extends Controller
 {
@@ -39,7 +41,9 @@ class CommunityFundController extends Controller
      */
     public function store(Request $request)
     {
-        Donation::store($request);
+        $donation_id = Donation::store($request);
+        $item_id = Item::store($request);
+        DonationItem::store($donation_id, $item_id);
     }
 
     /**

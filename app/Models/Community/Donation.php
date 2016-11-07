@@ -30,16 +30,12 @@ class Donation extends Model
     		'dm_approval' => $request->dm_approval,
     		'notes' => $request->notes
 
-
-    // 		'banner' => $request->banner,	
- 			// 'user' => $request->user,
- 			// 'user_email' => $request->user_email,
- 			// 'follow_up' => $request->follow_up,
- 			// 'store_number' => $request->store_number,
- 			// 'current_url' => $request->current_url,
- 			// 'description' => $request->description
  		]);
 
  		$donation->save();
+ 		$insertedId = $donation->id;
+    	return $insertedId;
     }
+
+
 }
