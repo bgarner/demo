@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Models\Community\Donation;
+
 class CommunityFundController extends Controller
 {
     /**
@@ -37,7 +39,7 @@ class CommunityFundController extends Controller
      */
     public function store(Request $request)
     {
-        //https://scotch.io/tutorials/simple-laravel-crud-with-resource-controllers
+        Donation::store($request);
     }
 
     /**
