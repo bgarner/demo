@@ -23,14 +23,12 @@ $('select').on('change', function() {
 
 $(document).ready(function() {
 
-
 	//form submission:
 	// $("#donationsubmit").click(function(){
 	// 	return false;
 	// });
 	
 	$("#donationsubmit").click(function(){		
-
 
 		$("input[type='text']").css ('borderColor', '#e5e6e7');
 		$("select").css ('borderColor', '#e5e6e7');
@@ -66,7 +64,6 @@ $(document).ready(function() {
 		var notes = $("#notes").val();
 
 		var approval = $("#approval").is(':checked');
-
 
 		
 		//validation
@@ -136,7 +133,6 @@ $(document).ready(function() {
 
 		}
 
-
 		if(donationtype == "giftcard"){
 
 			if(gc_number == '') {
@@ -199,7 +195,7 @@ $(document).ready(function() {
 				    });     
 
 			    }
-			    
+
 			}).done(function(response){
 
 				//clear the form
