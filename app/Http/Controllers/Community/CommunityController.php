@@ -18,6 +18,9 @@ use App\Models\Communication\CommunicationTarget;
 use App\Models\UrgentNotice\UrgentNotice;
 use App\Models\Alert\Alert;
 use App\Models\StoreInfo;
+use App\Models\Community\Donation;
+use App\Models\Community\DonationItem;
+use App\Models\Community\Item;
 
 class CommunityController extends Controller
 {
@@ -50,7 +53,15 @@ class CommunityController extends Controller
      */
     public function index()
     {
+
+        $donations = Donation::getDonations($this->storeNumber);
+        $totalDonation = Donation::getTotalDonationforStore($this->storeNumber);
+
+        //dd($totalDonation);
+
         return view('site.community.audit')
+            ->with('donations', $donations)
+            ->with('totalDonation', $totalDonation)
             ->with('skin', $this->skin)
             ->with('communicationCount', $this->communicationCount)
             ->with('alertCount', $this->alertCount)
