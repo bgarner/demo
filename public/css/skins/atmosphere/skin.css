@@ -44,13 +44,19 @@ body{
 	border: none !important;
 }
 
+.nav-second-level li a{
+	font-weight: normal !important;
+	color: #fff;
+}
 
+.nav-second-level:after{
+	display: none !important;
+}
 
 .navbar-minimalize{
 	background-color: #14380C !important;
 	border: #14380C;
 }
-
 
 .metismenu .label-primary{
 	background-color: #F1CA00 !important;
