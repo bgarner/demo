@@ -57,7 +57,7 @@ class Donation extends Model
             }
 
             $donation->amount = self::getDonationValue( $donation->id );
-            $donation->amount = "$ " . money_format('%i', $donation->amount);
+            $donation->amount = "$ " . number_format(floatval($donation->amount), 2, '.', ',');
             $donation->donation_type = self::getDonationType( $donation->id );
 
             $i++;
@@ -101,7 +101,8 @@ class Donation extends Model
 
             $totalDonation = $totalDonation + $donation_value;
         }
-        $totalDonation = "$ " . money_format('%i', $totalDonation);
+        $totalDonation = "$ " . number_format($totalDonation, 2, '.', ',');
+        //$totalDonation = money_format('%i', $totalDonation);
         return $totalDonation;
     }
 

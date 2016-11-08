@@ -43,7 +43,7 @@
                             <div class="row">
                                 <div class="col-md-12">
 
-                                <h1 class="pull-left">Total Donations this Year: &nbsp;&nbsp;&nbsp; <strong>{{ $totalDonation }}</strong></h1>
+                                <h1 class="pull-left">Total Donations: &nbsp;&nbsp;&nbsp; <strong>{{ $totalDonation }}</strong></h1>
 
                                 <a href="#" class="pull-right btn btn-outline btn-primary dim" data-toggle="modal" data-target="#newdonationmodal"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;&nbsp;New Donation</a>
                                 </div>

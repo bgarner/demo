@@ -198,11 +198,21 @@ $(document).ready(function() {
 			    },
 			    success: function(result) {
 			        
+					// swal({
+				 //        title: "Thanks!",
+				 //        text: "",
+				 //        type: "success"
+				 //    });  
+				 //    
 					swal({
-				        title: "Thanks!",
-				        text: "",
-				        type: "success"
-				    });     
+						title: "Thanks!", 
+						text: "", 
+						type: "success"},
+						
+						   function(){ 
+						       location.reload();
+						   }
+					);   
 
 			    }
 
