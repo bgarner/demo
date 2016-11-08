@@ -12,19 +12,19 @@
                     <form method="get" class="form-horizontal">
                         <h5>ABOUT YOU</h5>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label"><small>Your Name</small></label>
+                            <label class="col-sm-2 control-label"><small><span class="req">*</span>Your Name</small></label>
                             <div class="col-sm-10"><input type="text" class="form-control input-sm" id="emp_name" name="emp_name"></div>
                         </div>      
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label"><small>Employee Number</small></label>
+                            <label class="col-sm-2 control-label"><small><span class="req">*</span>Employee Number</small></label>
                             <div class="col-sm-10"><input type="text" class="form-control input-sm" id="emp_number" name="emp_number"></div>
                         </div>                                               
                        
                         <div class="hr-line-dashed"></div>                       
                         <h5>ABOUT THE ORGANIZATION</h5>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label"><small>Organization Name</small></label>
+                            <label class="col-sm-2 control-label"><small><span class="req">*</span>Organization Name</small></label>
                             <div class="col-sm-10"><input type="text" class="form-control input-sm" id="org_name" name="org_name"></div>
                         </div>        
 
@@ -42,7 +42,7 @@
                                         <label class="col-sm-5 control-label"><small>Date</small></label>
                                         <div class="input-group date col-sm-7">
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                            <input type="text" class="form-control input-sm" value="11/02/2016" id="event_date" name="event_date">
+                                            <input type="text" class="form-control input-sm" value="" id="event_date" name="event_date">
                                         </div>
                                 </div>
 
@@ -57,12 +57,12 @@
                         <div class="hr-line-dashed"></div> 
                         <h5>PERSON RECIEVING DONATION</h5>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label"><small>Name</small></label>
+                            <label class="col-sm-2 control-label"><small><span class="req">*</span>Name</small></label>
                             <div class="col-sm-10"><input type="text" class="form-control input-sm" id="pickup_name" name="pickup_name"></div>
                         </div> 
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label"><small>Phone</small></label>
+                            <label class="col-sm-2 control-label"><small><span class="req">*</span>Phone</small></label>
                             <div class="col-sm-10"><input type="text" class="form-control input-sm" id="pickup_phone" name="pickup_phone"></div>
                         </div> 
 
@@ -78,7 +78,7 @@
                                         <label class="col-sm-5 control-label"><small>Pickup Date</small></label>
                                         <div class="input-group date col-sm-7">
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                            <input type="text" class="form-control input-sm" value="11/02/2016" id="pickup_date" name="pickup_date">
+                                            <input type="text" class="form-control input-sm" value="" id="pickup_date" name="pickup_date">
                                         </div>
                                 </div>
 
@@ -92,7 +92,7 @@
                         <div class="hr-line-dashed"></div>                            
                         <h5>DONATION DETAILS</h5>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label"><small>Type</small></label>
+                            <label class="col-sm-2 control-label"><small><span class="req">*</span>Type</small></label>
                             <div class="col-sm-10">
                                 <select class="form-control input-sm" name="donationtype" id="donationtype">
                                     <option></option>
@@ -104,22 +104,22 @@
 
                         <div id="prodcutfields">
                             <div class="form-group">
-                                <label class="col-sm-2 control-label"><small>Product Name</small></label>
+                                <label class="col-sm-2 control-label"><small><span class="req">*</span>Product Name</small></label>
                                 <div class="col-sm-10"><input type="text" class="form-control input-sm" id="product_name" name="product_name"></div>
                             </div>  
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label"><small>Style Number</small></label>
+                                <label class="col-sm-2 control-label"><small><span class="req">*</span>Style Number</small></label>
                                 <div class="col-sm-10"><input type="text" class="form-control input-sm" id="style_number" name="style_number"></div>
                             </div>                          
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label"><small>UPC Number</small></label>
+                                <label class="col-sm-2 control-label"><small><span class="req">*</span>UPC Number</small></label>
                                 <div class="col-sm-10"><input type="text" class="form-control input-sm" id="upc" name="upc"></div>
                             </div>                                                  
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label"><small>Value</small></label>
+                                <label class="col-sm-2 control-label"><small><span class="req">*</span>Value</small></label>
                                 <div class="input-group date col-sm-7" style="padding-left: 15px;">
                                     <span class="input-group-addon">$</span>
                                     <input type="text" class="form-control input-sm" value="" id="product_value" name="product_value">
@@ -129,12 +129,12 @@
 
                         <div id="giftcardfields">                                                                                                                  
                             <div class="form-group">
-                                <label class="col-sm-2 control-label"><small>Gift Card Number</small></label>
+                                <label class="col-sm-2 control-label"><small><span class="req">*</span>Gift Card Number</small></label>
                                 <div class="col-sm-10"><input type="text" class="form-control input-sm" id="gc_number" name="gc_number"></div>
                             </div>  
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label"><small>Value</small></label>
+                                <label class="col-sm-2 control-label"><small><span class="req">*</span>Value</small></label>
                                 <div class="input-group date col-sm-7" style="padding-left: 15px;">
                                     <span class="input-group-addon">$</span>
                                     <input type="text" class="form-control input-sm" value="" id="gc_value" name="gc_value">

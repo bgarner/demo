@@ -2,11 +2,16 @@
 <html>
 
 <head>
-    @section('title', 'Community Fund Audit')
-    <link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
-    <link href="/css/custom/site/community/donations.css" rel="stylesheet">
+    @section('title', 'Community Fund')
     @include('site.includes.head')
-    
+    <link rel="stylesheet" media="screen" href="/css/plugins/iCheck/custom.css">
+    <link rel="stylesheet" media="screen" href="/css/custom/site/community/donations.css">
+    {{-- <link rel="stylesheet" media="screen" href="/css/plugins/datapicker/datepicker3.css"> --}}
+    <link rel="stylesheet" media="screen" href="/css/vendor/bootstrap-datetimepicker.min.css">
+    <style>
+    .ui-datepicker{z-index:9999 !important;}
+    .req{ font-size: 10px; }
+    </style>    
 </head>	
 
 <body class="fixed-navigation">
@@ -120,8 +125,27 @@
 
     @include('site.includes.modal')
     @include('site.includes.donation-modal')
-
+    <script type="text/javascript" src="/js/vendor/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript" src="/js/custom/site/community/donationform.js"></script>
+
+    <script>
+
+        $(function () {
+            $('#event_date').datetimepicker({
+                format: "MM/DD/YYYY"
+            });
+
+            $('#pickup_date').datetimepicker({
+                format: "MM/DD/YYYY"
+            });
+        });
+    
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });    
+    </script>
 
 </body>
 </html> 
