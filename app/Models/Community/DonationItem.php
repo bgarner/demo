@@ -2,7 +2,9 @@
 
 namespace App\Models\Community;
 
+use DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DonationItem extends Model
 {
@@ -13,7 +15,7 @@ class DonationItem extends Model
     protected $fillable = ['donation_id', 'item_id'];
 
 
-    public function store($donation_id, $item_id)
+    public static function store($donation_id, $item_id)
     {
     	$donation_item = DonationItem::create([
 
@@ -22,6 +24,6 @@ class DonationItem extends Model
 
  		]);
 
- 		$donation->save();
+ 		$donation_item->save();
     }    
 }

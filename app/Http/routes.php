@@ -38,7 +38,8 @@ Route::resource('/communication', 'Communication\CommunicationTargetController')
 
 //COMMUNITY
 Route::get('/{storeno}/community', array('uses' => 'Community\CommunityController@index'));
-Route::post('/savedonation', '/Community\CommunityFundController@store');
+Route::resource('/savedonation', 'Community\CommunityFundController');
+//Route::post('/savedonation', '/Community\CommunityFundController@store');
 
 //VIDEO
 Route::get('/{storeno}/video', array('uses' => 'Video\VideoController@index'));

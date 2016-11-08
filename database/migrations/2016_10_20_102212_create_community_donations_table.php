@@ -23,7 +23,7 @@ class CreateCommunityDonationsTable extends Migration
             $table->string('recipient_phone')->nullable();
             $table->string('recipient_email')->nullable();
             $table->string('receipt_date');
-            $table->timestamp('event_date')->nullable();
+            $table->string('event_date')->nullable();
             $table->string('event_location')->nullable();
             $table->boolean('dm_approval');
             $table->nullableTimestamps();

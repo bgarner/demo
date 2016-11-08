@@ -2,7 +2,9 @@
 
 namespace App\Models\Community;
 
+use DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Item extends Model
 {
@@ -12,15 +14,41 @@ class Item extends Model
     protected $fillable = ['donation_type', 'title', 'description', 'value', 'style_number', 'upc'];
 
 
-    public function store()
+    public static function store($request)
     {
+    	switch($request->donationtype){
+    		case "giftcard":
+    			$type = 1;
+    			$value = $request->gc_value;
+    			$description = "giftcard";
+    			$style = $request->gc_number;
+    			$upc = "0";
+    			
+    			break;
+    		case "product":
+    			$type =2;
+    			$value = $request->product_value;
+    			$description = $request->product_name;
+    			$style = $request->style_number;
+    			$upc = $request->upc;
+    			
+    			break;
+    		default:
+    			$type=1;
+    			$value = 0;
+    			$description = "";
+    			$style = "";
+    			$upc = 0;    			
+    			break;
+    	}
+
     	$item = Item::create([
 
-    		'donation_type'  => $request->donation_type,
-    		'description' => $request->product_name,
-    		'value' => $request->value,
-    		'style_number' => $request->style_number,
-    		'upc' => $request->upc
+    		'donation_type'  => $type,
+    		'description' => $description,
+    		'value' => $value,
+    		'style_number' => $style,
+    		'upc' => $upc
 
  		]);
 

@@ -38,6 +38,8 @@ $(document).ready(function() {
 		var hasError = false;
 		var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 
+		var banner = localStorage.getItem('userBanner');
+		var store_number = $("#bugreport_store_number").val();
 		var emp_name = $("#emp_name").val();
 		var emp_number = $("#emp_number").val();
 		
@@ -164,7 +166,8 @@ $(document).ready(function() {
 			    url: '/savedonation',
 			    type: 'POST',
 			    data: {
-
+			    	banner: banner,
+			    	store_number: store_number,
 			    	emp_name: emp_name,
 					emp_number: emp_number,
 					org_name: org_name,

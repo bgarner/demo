@@ -2,7 +2,9 @@
 
 namespace App\Models\Community;
 
+use DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Donation extends Model
 {
@@ -12,22 +14,22 @@ class Donation extends Model
     protected $fillable = ['store_number', 'employee_name', 'employee_number', 'event_or_team_name', 'recipient_organization', 'recipient_name', 'recipient_phone', 'recipient_email', 'receipt_date', 'event_date', 'event_location', 'dm_approval', 'notes'];
 
 
-    public function store()
+    public static function store($request)
     {
     	$donation = Donation::create([
 
     		'store_number' => $request->store_number,
-    		'employee_name' => $request->employee_name,
-    		'employee_number' => $request->employee_number,
-    		'event_or_team_name' => $request->event_or_team_name,
-    		'recipient_organization' => $request->recipient_organization,
-    		'recipient_name' => $request->recipient_name,
-    		'recipient_phone' => $request->recipient_phone,
-    		'recipient_email' => $request->recipient_email,
-    		'receipt_date' => $request->receipt_date,
+    		'employee_name' => $request->emp_name,
+    		'employee_number' => $request->emp_number,
+    		'event_or_team_name' => $request->team_event_name,
+    		'recipient_organization' => $request->org_name,
+    		'recipient_name' => $request->pickup_name,
+    		'recipient_phone' => $request->pickup_phone,
+    		'recipient_email' => $request->pickup_email,
+    		'receipt_date' => $request->pickup_date,
     		'event_date' => $request->event_date,
     		'event_location' => $request->event_location,
-    		'dm_approval' => $request->dm_approval,
+    		'dm_approval' => $request->approval,
     		'notes' => $request->notes
 
  		]);

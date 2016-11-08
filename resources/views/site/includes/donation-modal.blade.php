@@ -163,7 +163,7 @@
                 </div>
                 <div class="modal-footer">
                     {{-- <button type="button" class="btn btn-primary btn-sm btn-outline" data-dismiss="modal"><i class="fa fa-times"></i> Close</button> --}}
-                    <button class="btn btn-primary pull-right" type="submit" id="donationsubmit">Submit</button>
+                    <button class="btn btn-primary pull-right" type="submit" id="donationsubmit" data-dismiss="modal">Submit</button>
                 </div>
         </div>
     </div>

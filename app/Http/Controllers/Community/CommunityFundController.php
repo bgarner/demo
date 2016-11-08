@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Community;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request as RequestFacade;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use Models\Community\Donation;
-use Models\Community\DonationItem;
-use Modesl\Community\Item;
+use App\Models\Community\Donation;
+use App\Models\Community\DonationItem;
+use App\Models\Community\Item;
 
 class CommunityFundController extends Controller
 {
@@ -41,12 +42,9 @@ class CommunityFundController extends Controller
      */
     public function store(Request $request)
     {
-        // $donation_id = Donation::store($request);
-        // $item_id = Item::store($request);
-        // DonationItem::store($donation_id, $item_id);
-        
-        return "hello!";
-
+        $donation_id = Donation::store($request);
+        $item_id = Item::store($request);
+        DonationItem::store($donation_id, $item_id);
     }
 
     /**
