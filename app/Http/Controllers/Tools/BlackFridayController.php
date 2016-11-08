@@ -19,6 +19,8 @@ use App\Models\UrgentNotice\UrgentNotice;
 use App\Models\Alert\Alert;
 use App\Models\StoreInfo;
 
+use App\Models\Tools\BlackFriday\BlackFriday;
+
 
 class BlackFridayController extends Controller
 {
@@ -53,7 +55,10 @@ class BlackFridayController extends Controller
      */
     public function index()
     {
+        $data = BlackFriday::getDataByStoreNumber($this->storeNumber);
+
         return view('site.tools.blackfriday.index')
+            ->with('data', $data)
             ->with('skin', $this->skin)
             ->with('communicationCount', $this->communicationCount)
             ->with('alertCount', $this->alertCount)

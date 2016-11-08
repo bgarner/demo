@@ -101,7 +101,7 @@
                 @endif
                     <a href="#"><i class="fa fa-wrench" aria-hidden="true"></i> <span class="nav-label">Tools</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse" style="height: 0px;">
-                            <li><a href="/{{ Request::segment(1) }}/tools/blackfriday">Black Friday Tracker</a></li>
+                            <li><a href="/{{ Request::segment(1) }}/tools/blackfriday">Door-Crasher Tracker</a></li>
                         </ul>
                     
                 </li>                                

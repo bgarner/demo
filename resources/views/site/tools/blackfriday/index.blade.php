@@ -4,21 +4,16 @@
 <head>
     @section('title', 'Black Friday Tracker')
     @include('site.includes.head')
-    <link rel="stylesheet" media="screen" href="/css/plugins/iCheck/custom.css">
-    <link rel="stylesheet" media="screen" href="/css/custom/site/community/donations.css">
-    {{-- <link rel="stylesheet" media="screen" href="/css/plugins/datapicker/datepicker3.css"> --}}
-    <link rel="stylesheet" media="screen" href="/css/vendor/bootstrap-datetimepicker.min.css">
-    <style>
-    .ui-datepicker{z-index:9999 !important;}
-    .req{ font-size: 10px; }
-    </style>    
+
+    <link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+    
 </head>	
 
 <body class="fixed-navigation">
     <div id="wrapper">
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
-          @include('site.includes.sidenav');
+          @include('site.includes.sidenav')
         </div>
     </nav>
 
@@ -30,7 +25,7 @@
 
        <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-12">
-                <h2>Black Friday Tracker</h2>
+                <h2>Door-Crasher Tracker</h2>
             </div>
         </div>        
 
@@ -39,13 +34,9 @@
                 <div class="row">
 
                     <div class="col-lg-12 animated fadeInRight">
-                        <div class="mail-box-header">
-                            <div class="row">
-                                <div class="col-md-12">
 
-                                <h1 class="pull-left">Another title?</h1>
-                                </div>
-                            </div>
+                        <div class="mail-box-header">
+
 
                     <div class="row">
                                 <div class="col-md-12">
@@ -55,45 +46,53 @@
 
                     <div class="table-responsive clearfix">
 
-
-                    <br />
+                    
                     <table class="table table-striped table-bordered table-hover dataTables-example dataTable" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" role="grid">
                     <thead>
                     <tr role="row">
-                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" style="width: 157px;">Organization Name</th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" style="width: 133px;">Dept</th>
 
-                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" style="width: 157px;">Event/Team Name</th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" style="width: 133px;">SubDept</th>
 
-                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 196px;">Receipt Date</th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 133px;">Class</th>
                         
-                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 176px;">Donation Type</th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 133px;">Style</th>
 
-                        <th class="sorting_desc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 133px;" aria-sort="descending">Ammount</th>
+                        <th class="sorting_desc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 157px;" aria-sort="descending">Name</th>
 
-                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 92px;">DM Approval</th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 92px;">On Hand</th>
+
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 92px;">In Transit</th>
+
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 92px;">Total</th>
+
+
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 92px;">Ad Page</th>
+
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 92px;">Ad Box</th>
+
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 92px;">Ad Min</th>                        
                     </tr>
                     </thead>
                     <tbody>
 
 
-{{--                     @foreach($donations as $donation)
-                    <tr class="gradeA {{ $donation->evenodd }}" role="row">
-                        <td class="">{{ $donation->item }} {{ $donation->recipient_organization }}</td>
-                        <td class="">{{ $donation->event_or_team_name }}</td>
-                        <td class="">{{ $donation->receipt_date }}</td>
-                        <td class="">{{ $donation->donation_type }}</td>
-                        <td class="">{{ $donation->amount }}</td>
-
-                        <td class="center">
-                            @if( $donation->dm_approval == 1)
-                            <i class="fa fa-check" aria-hidden="true"></i>
-                            @else
-                                 - 
-                            @endif
-                        </td>                    
+                    @foreach($data as $d)
+                    <tr>
+                        <td>{{ $d->dpt_name }}</td>
+                        <td>{{ $d->sdpt_name }}</td>
+                        <td>{{ $d->cls_name }}</td>
+                        <td>{{ $d->style_number }}</td>
+                        <td>{{ $d->style_name }}</td>
+                        <td>{{ $d->oh_qty }}</td>
+                        <td>{{ $d->it_qty }}</td>
+                        <td>{{ $d->total_onhand_intransit }}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         
                     </tr>           
-                    @endforeach --}}
+                    @endforeach
                     
    
 
@@ -121,12 +120,25 @@
 
     <script type="text/javascript" src="/js/plugins/fullcalendar/moment.min.js"></script>
     @include('site.includes.scripts')
-    
 
     @include('site.includes.modal')
-    @include('site.includes.donation-modal')
-    <script type="text/javascript" src="/js/vendor/bootstrap-datetimepicker.min.js"></script>
-    <script type="text/javascript" src="/js/custom/site/community/donationform.js"></script>
+
+    <script src="/js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="/js/plugins/dataTables/dataTables.tableTools.min.js"></script>
+    <script src="/js/plugins/dataTables/dataTables.responsive.js"></script>
+    <script src="/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            $('.dataTables-example').DataTable({
+    
+                responsive: true
+
+            });
+
+        });
+
+    </script>    
 
     <script>
 
