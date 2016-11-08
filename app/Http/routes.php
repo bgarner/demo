@@ -36,6 +36,11 @@ Route::get('/{storeno}/communication', array('uses' => 'Communication\Communicat
 Route::get('/{storeno}/communication/show/{id}', 'Communication\CommunicationController@show');
 Route::resource('/communication', 'Communication\CommunicationTargetController');
 
+//COMMUNITY
+Route::get('/{storeno}/community', array('uses' => 'Community\CommunityController@index'));
+Route::resource('/savedonation', 'Community\CommunityFundController');
+//Route::post('/savedonation', '/Community\CommunityFundController@store');
+
 //VIDEO
 Route::get('/{storeno}/video', array('uses' => 'Video\VideoController@index'));
 
@@ -48,13 +53,9 @@ Route::get('/{storeno}/video/watch/{id}', array('uses' => 'Video\VideoController
 Route::get('/{storeno}/video/playlist/{id}', array('uses' => 'Video\VideoController@showPlaylist'));
 Route::get('/{storeno}/video/tag/{tag}', array('uses' => 'Video\VideoController@showTag'));
 
-
 Route::post('/videocount', 'Video\VideoViewCountController@update');
 Route::post('/videolike', 'Video\LikeController@update');
 Route::post('/videodislike', 'Video\DislikeController@update');
-
-//audit
-Route::get('/{storeno}/audit', array('uses' => 'Audit\AuditController@index'));
 
 //FEATURES
 Route::get('/{storeno}/feature/show/{id}', 'Feature\FeatureController@show');

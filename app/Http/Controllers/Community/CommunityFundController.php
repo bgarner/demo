@@ -1,13 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Audit;
+namespace App\Http\Controllers\Community;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request as RequestFacade;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class AuditContoller extends Controller
+use App\Models\Community\Donation;
+use App\Models\Community\DonationItem;
+use App\Models\Community\Item;
+
+class CommunityFundController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -37,7 +42,9 @@ class AuditContoller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $donation_id = Donation::store($request);
+        $item_id = Item::store($request);
+        DonationItem::store($donation_id, $item_id);
     }
 
     /**

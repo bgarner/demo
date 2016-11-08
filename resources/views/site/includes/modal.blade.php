@@ -69,6 +69,7 @@
     </div>
 </div>
 
+
 <div class="modal inmodal" id="bugreportmodal" tabindex="-1" role="event" aria-hidden="true" style="display: none;">
 
     <div class="modal-dialog">

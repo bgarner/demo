@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAuditSportsTable extends Migration
+class CreateCommunityDonationItems extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,11 @@ class CreateAuditSportsTable extends Migration
      */
     public function up()
     {
-        Schema::create('audit_sports', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
-            $table->string('sport');
-            $table->timestamps();
+        Schema::create('community_donations_items', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->integer('donation_id');
+            $table->integer('item_id');
+            $table->nullableTimestamps();
             $table->softDeletes();
         });
     }
@@ -27,6 +28,6 @@ class CreateAuditSportsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('community_donations_items');
     }
 }

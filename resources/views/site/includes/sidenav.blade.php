@@ -50,8 +50,6 @@
                 </li>
 
 
-
-
                 @if (Request::segment(2) == 'alerts')
                 <li class="active">
                 @else
@@ -86,5 +84,14 @@
                     <a href="/{{ Request::segment(1) }}/video"><i class="fa fa-video-camera"></i> <span class="nav-label">Video Library</span></a>
 
                 </li>
+
+                @if (Request::segment(2) == 'community')
+                <li class="active">
+                @else
+                <li>
+                @endif
+                    <a href="/{{ Request::segment(1) }}/community"><i class="fa fa-users"></i> <span class="nav-label">Community</span></a>
+
+                </li>                
 
             </ul>

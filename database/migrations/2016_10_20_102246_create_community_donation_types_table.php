@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAuditDonationTypeTable extends Migration
+class CreateCommunityDonationTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,10 @@ class CreateAuditDonationTypeTable extends Migration
      */
     public function up()
     {
-        Schema::create('audit_donation_types', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
-            $table->string('sport');
-            $table->timestamps();
+        Schema::create('community_donation_types', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('donation_type');
+            $table->nullableTimestamps();
             $table->softDeletes();
         });
     }
@@ -27,6 +27,6 @@ class CreateAuditDonationTypeTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('community_donation_types');
     }
 }
