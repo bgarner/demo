@@ -67,7 +67,8 @@ $(document).ready(function() {
 
 		var approval = $("#approval").is(':checked');
 
-		
+	
+
 		//validation
 		if(emp_name == '') {
 			$("#emp_name").css('borderColor', '#c00');
@@ -105,6 +106,12 @@ $(document).ready(function() {
 			$(window).scrollTop(0);
 		}							
 
+
+		if(approval){
+			approval = 1;
+		} else {
+			approval = 0;
+		}
 
 
 		if(donationtype == "product"){
