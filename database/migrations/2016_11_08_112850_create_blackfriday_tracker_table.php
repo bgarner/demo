@@ -45,7 +45,18 @@ class CreateBlackfridayTrackerTable extends Migration
 			$table->string('oh_avg_rtl')->nullable();
 			$table->string('org_div')->nullable();
 			$table->string('org_div_style')->nullable();
-			$table->nullableTimestamps();
+            $table->string('store_format')->nullable();
+            $table->string('flyer_page_chek')->nullable();
+            $table->string('ad_box_chek')->nullable();
+            $table->string('ad_min_chek')->nullable();
+            $table->string('flyer_page_atmo')->nullable();
+            $table->string('ad_box_atmo')->nullable();
+            $table->string('ad_min_atmo')->nullable();
+            $table->string('flyer_page')->nullable();
+            $table->string('ad_box')->nullable();
+            $table->string('ad_min')->nullable();
+
+			//$table->nullableTimestamps();
 		});
     }
 
