@@ -2,11 +2,15 @@
 <html>
 
 <head>
-    @section('title', 'Black Friday Tracker')
+    @section('title', 'Door-Crasher Tracker')
     @include('site.includes.head')
 
     <link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
-    
+    <style>
+        .table td{ font-size: 11px; }
+        .table th{ font-size: 11px; }
+
+    </style>
 </head>	
 
 <body class="fixed-navigation">
@@ -49,29 +53,18 @@
                     
                     <table class="table table-striped table-bordered table-hover dataTables-example dataTable" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" role="grid">
                     <thead>
-                    <tr role="row">
-                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" style="width: 133px;">Dept</th>
-
-                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" style="width: 133px;">SubDept</th>
-
-                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 133px;">Class</th>
-                        
-                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 133px;">Style</th>
-
-                        <th class="sorting_desc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 157px;" aria-sort="descending">Name</th>
-
-                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 92px;">On Hand</th>
-
-                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 92px;">In Transit</th>
-
-                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 92px;">Total</th>
-
-
-                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 92px;">Ad Page</th>
-
-                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 92px;">Ad Box</th>
-
-                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 92px;">Ad Min</th>                        
+                    <tr>
+                        <th>Dept</th>
+                        <th>SubDept</th>
+                        <th>Class</th>
+                        <th>Style</th>
+                        <th>Name</th>
+                        <th>On Hand</th>
+                        <th>In Transit</th>
+                        <th>Total</th>
+                        <th>Ad Page</th>
+                        <th>Ad Box</th>
+                        <th>Ad Min</th>                        
                     </tr>
                     </thead>
                     <tbody>
