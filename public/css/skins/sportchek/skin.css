@@ -55,6 +55,13 @@ body{
 	background-color: #E20000 !important;
 }
 
+.nav-second-level li a{
+	font-weight: normal;
+}
+
+.nav-second-level:after{
+	display: none !important;
+}
 
 .product-price{
 
