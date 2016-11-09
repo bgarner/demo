@@ -55,9 +55,11 @@ class BlackFridayController extends Controller
      */
     public function index()
     {
+        $pages = BlackFriday::getAdPages($this->storeNumber);
         $data = BlackFriday::getDataByStoreNumber($this->storeNumber);
-
+        //dd($boxes);
         return view('site.tools.blackfriday.index')
+            ->with('pages', $pages)
             ->with('data', $data)
             ->with('skin', $this->skin)
             ->with('communicationCount', $this->communicationCount)

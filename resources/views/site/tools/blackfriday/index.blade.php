@@ -5,11 +5,11 @@
     @section('title', 'Door-Crasher Tracker')
     @include('site.includes.head')
 
-    <link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+ {{--    <link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet"> --}}
     <style>
         .table td{ font-size: 11px; }
         .table th{ font-size: 11px; }
-
+        #ad_min{ font-size: 24px; color: #c00; margin-left: 10px; }
     </style>
 </head>	
 
@@ -46,50 +46,29 @@
                                 <div class="col-md-12">
 
 
+                            <label>Flyer Page</label>
+
+                            <select id="flyerPageSelect">
+                                <option></option>
+                                @foreach($pages as $page)
+                                    <option value="{{ $page->flyer_page }}">{{ $page->flyer_page }}</option>
+                                @endforeach            
+                            </select>
 
 
+                            <label>Ad Box</label>
+                            <select id="adBoxSelect"></select>
+                    
+                            <div class="pull-right" style="padding-right: 20px;">
+                            <label>Ad Min</label>
+                            <span id="ad_min"></span>
+                            </div>
+                            <hr />
                     <div class="table-responsive clearfix">
 
-                    
-                    <table class="table table-striped table-bordered table-hover dataTables-example dataTable" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" role="grid">
-                    <thead>
-                    <tr>
-                        <th>Dept</th>
-                        <th>SubDept</th>
-                        <th>Class</th>
-                        <th>Style</th>
-                        <th>Name</th>
-                        <th>On Hand</th>
-                        <th>In Transit</th>
-                        <th>Total</th>
-                        <th>Ad Page</th>
-                        <th>Ad Box</th>
-                        <th>Ad Min</th>                        
-                    </tr>
-                    </thead>
-                    <tbody>
 
+                    <table class="table table-striped table-bordered table-hover dataTable" id="DataTables_Table_0" style="display: none;" aria-describedby="DataTables_Table_0_info" role="grid">
 
-                    @foreach($data as $d)
-                    <tr>
-                        <td>{{ $d->dpt_name }}</td>
-                        <td>{{ $d->sdpt_name }}</td>
-                        <td>{{ $d->cls_name }}</td>
-                        <td>{{ $d->style_number }}</td>
-                        <td>{{ $d->style_name }}</td>
-                        <td>{{ $d->oh_qty }}</td>
-                        <td>{{ $d->it_qty }}</td>
-                        <td>{{ $d->total_onhand_intransit }}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        
-                    </tr>           
-                    @endforeach
-                    
-   
-
-                    </tbody>
 
                     </table>
 
@@ -107,19 +86,18 @@
                 </div>
         </div>
 
-
-
     @include('site.includes.footer')       
 
     <script type="text/javascript" src="/js/plugins/fullcalendar/moment.min.js"></script>
     @include('site.includes.scripts')
 
     @include('site.includes.modal')
-
+    <script type="text/javascript" src="/js/vendor/underscore-1.8.3.js"></script>
     <script src="/js/plugins/dataTables/jquery.dataTables.js"></script>
     <script src="/js/plugins/dataTables/dataTables.tableTools.min.js"></script>
     <script src="/js/plugins/dataTables/dataTables.responsive.js"></script>
     <script src="/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script src="/js/custom/site/tools/flyerPages.js"></script>
 
     <script>
         $(document).ready(function(){
@@ -129,20 +107,6 @@
 
             });
 
-        });
-
-    </script>    
-
-    <script>
-
-        $(function () {
-            $('#event_date').datetimepicker({
-                format: "MM/DD/YYYY"
-            });
-
-            $('#pickup_date').datetimepicker({
-                format: "MM/DD/YYYY"
-            });
         });
     
         $.ajaxSetup({

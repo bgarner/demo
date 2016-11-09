@@ -42,6 +42,8 @@ Route::resource('/savedonation', 'Community\CommunityFundController');
 
 //TOOLS
 Route::get('/{storeno}/tools/blackfriday', array('uses' => 'Tools\BlackFridayController@index'));
+Route::post('/getFlyerBoxes', 'Tools\FlyerPageSelectionController@show');
+Route::post('/getFlyerBoxData', 'Tools\FlyerBoxSelectionController@show');
 
 //VIDEO
 Route::get('/{storeno}/video', array('uses' => 'Video\VideoController@index'));
