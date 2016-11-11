@@ -45,9 +45,9 @@ $( "#adBoxSelect" ).change(function() {
 		}).done(function(data){
 			
 			console.log(data);
-			$(".dataTable").empty();
+			$(".addSelector").empty();
 
-			$('.dataTable').append(
+			$('.addSelector').append(
                     "<thead>" +
                     "<tr>" +
                     "    <th>Dept</th>" +
@@ -61,7 +61,7 @@ $( "#adBoxSelect" ).change(function() {
                     "</tr>" +
                     "</thead>");
 
-			$(".dataTable").show();
+			$(".addSelector").show();
 
 
 			if(data.length > 0 ) {
@@ -71,7 +71,7 @@ $( "#adBoxSelect" ).change(function() {
 
 				_.each(data, function(i){
 
-					$('.dataTable').append(
+					$('.addSelector').append(
 						"<tr>" +
 							"<td>"+ i.dpt_name +"</td>" +
 	                        "<td>"+ i.sdpt_name +"</td>" +

@@ -23,12 +23,77 @@ class BlackFriday extends Model
 
     public static function getDataByStoreNumber($store_number)
     {
+    	// dd($store_number);
+    // 	$a = strpos($store_number, "A");
+    // 	// dd($a);
+    // 	if(  $a === 0 ){
+    // 		$store_number = ltrim($store_number, 'A');
+    // 		$store_number = ltrim($store_number, '0');
+    // 		$data = BlackFriday::where('store_number', $store_number)->get();
+    // 		foreach($data as $d){
+    // 			$d->flyer_page = $d->flyer_page_atmo;
+    // 			$d->flyer_name = "Atmo";	
+    // 		}	
+
+    // 	} else {
+    // 		$store_number = ltrim($store_number, 'A');
+    // 		$store_number = ltrim($store_number, '0');
+    // 		$data = BlackFriday::where('store_number', $store_number)->get();
+    // 		foreach($data as $d){
+				// $d->flyer_page = $d->flyer_page_atmo;
+    // 			$d->flyer_name = "Sport Chek";			
+    // 		}	    		
+    // 	}
     	//strip off the leading zero
-    	$store_number = ltrim($store_number, 'A');
-    	$store_number = ltrim($store_number, '0');
-    	$data = BlackFriday::where('store_number', $store_number)->get();
+	    $store_number = ltrim($store_number, 'A');
+		$store_number = ltrim($store_number, '0');
+		$data = BlackFriday::where('store_number', $store_number)
+				->where('flyer_page', '!=', '')
+				->whereNotNull('flyer_page')
+				->orderBy('flyer_page', 'ASC')
+				->orderBy('ad_box', 'ASC')
+				// ->groupBy('flyer_page')
+				->get();
+    	
+    	$page_and_box = "";
+    	$box_total = 0;
+
     	foreach($data as $d){
+
     		$d->total_onhand_intransit = $d->oh_qty + $d->it_qty;
+    		
+
+    		if( $page_and_box != "" ){
+
+    			if($page_and_box == $d->flyer_page ."/". $d->ad_box){
+    				//same group
+    				$d->newbox = 0;
+    				$d->page_and_box = $page_and_box;
+    				$box_total = $box_total + $d->total_onhand_intransit;
+    				$d->box_total = $box_total;
+
+    			} else {
+
+    				//new group
+    				$d->newbox = 1;
+    				$d->box_total = $box_total;
+
+    				$box_total = $d->total_onhand_intransit; //reset the box total
+    				$page_and_box = $d->flyer_page ."/". $d->ad_box;
+    				$d->page_and_box = $page_and_box;
+    				//$box_total = 0;
+
+    			}
+    			
+
+    		} else {
+    			$box_total = $d->total_onhand_intransit;
+    			$page_and_box = $d->flyer_page ."/". $d->ad_box;	
+    			$d->newbox = 1;
+    			$d->page_and_box = $page_and_box;
+    		}
+    		
+
     	}
     	return $data;
     }
