@@ -84,6 +84,8 @@
 
                             <th>Name</th>
 
+                            <th>Colour</th>
+
                             <th>On Hand</th>
 
                             <th>In Transit</th>
@@ -125,6 +127,7 @@
                                 <td>{{ $d->cls_name }}</td>
                                 <td>{{ $d->style_number }}</td>
                                 <td>{{ $d->style_name }}</td>
+                                <td>{{ $d->clr_name }}</td>
                                 <td>{{ $d->oh_qty }}</td>
                                 <td>{{ $d->it_qty }}</td>
                                 <td>{{ $d->total_onhand_intransit }}</td>  
