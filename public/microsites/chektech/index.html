@@ -77,7 +77,7 @@ function initializeCP()
 				{					
 					var script = document.createElement('script');
 					script.type = 'text/javascript';
-					script.src = 'assets/js/CPXHRLoader.js';
+					script.src = '/microsites/chektech/assets/js/CPXHRLoader.js';
 					script.defer = 'defer';
 					script.onload = function()
 					{
@@ -90,19 +90,19 @@ function initializeCP()
 								initializeCP();
 							}
 						}
-						cpXHRJSLoader.css('assets/css/CPLibraryAll.css',function() {
+						cpXHRJSLoader.css('/microsites/chektech/assets/css/CPLibraryAll.css',function() {
 							lCSSLoaded = true;
 							constructDIVs();
 						});
-						var lJSFiles = [  'assets/js/jquery-1.11.3.min.js','assets/js/CPM.js' ];
+						var lJSFiles = [  '/microsites/chektech/assets/js/jquery-1.11.3.min.js','/microsites/chektech/assets/js/CPM.js' ];
 						cpXHRJSLoader.js(lJSFiles,function()
 						{
 							//console.log("js loaded");
 
-							var imagesJSONFiles = [ 'dr/imgmd.json' ];
+							var imagesJSONFiles = [ '/microsites/chektech/dr/imgmd.json' ];
 							cpXHRJSLoader.loadImagesJSON(imagesJSONFiles,function(imageToJSONPathMap){
 								cp.imageToJSONPathMap = imageToJSONPathMap;
-								var imageJSONFiles = [ 'dr/img1.json','dr/img2.json','dr/img3.json','dr/img4.json' ];
+								var imageJSONFiles = [ '/microsites/chektech/assets/dr/img1.json','/microsites/chektech/dr/img2.json','/microsites/chektech/dr/img3.json','/microsites/chektech/dr/img4.json' ];
 								if(window.location.protocol.substr(0,4) == "file")
 									cpXHRJSLoader.preloadURLs(imageJSONFiles, constructDIVs);
 								lJSLoaded = true;
