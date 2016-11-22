@@ -86,7 +86,6 @@ class FeatureController extends Controller
 
         $feature = Feature::where('id', $id)->first();
 
-
         $selected_documents = FeatureDocument::getFeaturedDocuments($feature->id, $storeNumber);
 
         $selected_packages = FeaturePackage::getFeaturePackages($feature->id);
