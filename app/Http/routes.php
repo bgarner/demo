@@ -41,7 +41,7 @@ Route::get('/{storeno}/community', array('uses' => 'Community\CommunityControlle
 Route::resource('/savedonation', 'Community\CommunityFundController');
 
 //TOOLS
-Route::get('/{storeno}/tools/blackfriday', array('uses' => 'Tools\BlackFridayController@index'));
+Route::get('/{storeno}/tools/boxingday', array('uses' => 'Tools\BlackFridayController@index'));
 Route::post('/getFlyerBoxes', 'Tools\FlyerPageSelectionController@show');
 Route::post('/getFlyerBoxData', 'Tools\FlyerBoxSelectionController@show');
 

@@ -3,7 +3,7 @@
                 <a href="/{{ Request::segment(1) }}">
                 <li class="nav-header">
                     <!-- <div class="logo-element">
-                        
+
                     </div> -->
                 </li>
                 </a>
@@ -101,9 +101,9 @@
                 @endif
                     <a href="#"><i class="fa fa-wrench" aria-hidden="true"></i> <span class="nav-label">Tools</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse" style="height: 0px;">
-                            <li><a href="/{{ Request::segment(1) }}/tools/blackfriday">Door-Crasher Tracker</a></li>
+                            <li><a href="/{{ Request::segment(1) }}/tools/boxingday">Boxing Day Doorcrasher Tracker</a></li>
                         </ul>
-                    
-                </li>                                
+
+                </li>
 
             </ul>

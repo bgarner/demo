@@ -11,7 +11,7 @@
         .table th{ font-size: 11px; }
         #ad_min{ font-size: 24px; color: #c00; margin-left: 10px; }
     </style>
-</head>	
+</head>
 
 <body class="fixed-navigation">
     <div id="wrapper">
@@ -29,9 +29,9 @@
 
        <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-12">
-                <h2>Door-Crasher Tracker</h2>
+                <h2>Boxing Day Doorcrasher Tracker</h2>
             </div>
-        </div>        
+        </div>
 
 
         <div class="wrapper wrapper-content printable">
@@ -52,13 +52,13 @@
                                 <option></option>
                                 @foreach($pages as $page)
                                     <option value="{{ $page->flyer_page }}">{{ $page->flyer_page }}</option>
-                                @endforeach            
+                                @endforeach
                             </select>
 
 
                             <label>Ad Box</label>
                             <select id="adBoxSelect"></select>
-                    
+
                             <div class="pull-right" style="padding-right: 20px;">
                             <label>Ad Min</label>
                             <span id="ad_min"></span>
@@ -79,7 +79,7 @@
                             <th>SubDept</th>
 
                             <th>Class</th>
-                            
+
                             <th>Style</th>
 
                             <th>Name</th>
@@ -92,7 +92,7 @@
 
                             <th>Total</th>
 
-                        
+
                         </tr>
                         </thead>
 
@@ -106,7 +106,7 @@
                                 <td colspan="11" style="background-color: #eee;">
                                     <span class="pull-right">Total On Hand/In Transit for this box: &nbsp;&nbsp;<strong>{{ $d->box_total }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                 </td>
-                            </tr> 
+                            </tr>
                             @endif
 
                             <tr>
@@ -130,13 +130,13 @@
                                 <td>{{ $d->clr_name }}</td>
                                 <td>{{ $d->oh_qty }}</td>
                                 <td>{{ $d->it_qty }}</td>
-                                <td>{{ $d->total_onhand_intransit }}</td>  
+                                <td>{{ $d->total_onhand_intransit }}</td>
 
-                                
-                            </tr>           
+
+                            </tr>
                         @endforeach
 
-                        </tbody>                    
+                        </tbody>
                     </table>
 
 
@@ -157,7 +157,7 @@
                 </div>
         </div>
 
-    @include('site.includes.footer')       
+    @include('site.includes.footer')
 
     <script type="text/javascript" src="/js/plugins/fullcalendar/moment.min.js"></script>
     @include('site.includes.scripts')
@@ -179,13 +179,13 @@
         //     });
 
         // });
-    
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
-        });    
+        });
     </script>
 
 </body>
-</html> 
+</html>
