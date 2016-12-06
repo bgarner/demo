@@ -72,7 +72,8 @@ Route::get('/{storeno}/urgentnotice', array('uses' => 'UrgentNotice\UrgentNotice
 Route::get('/{storeno}/urgentnotice/show/{id}', array('uses' => 'UrgentNotice\UrgentNoticeController@show'));
 
 //Search
-Route::post('/{storeno}/search', array('uses' => 'Search\SearchController@index'));
+//Route::post('/{storeno}/search', array('uses' => 'Search\SearchController@index'));
+Route::get('/{storeno}/search', array('uses' => 'Search\SearchController@index'));
 
 //BUG REPORTER
 Route::post('/bugreport', 'BugReport\BugReportController@store');

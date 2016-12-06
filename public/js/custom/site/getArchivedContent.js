@@ -15,7 +15,7 @@ $(".archive-onoffswitch").on('transitionend webkitTransitionEnd oTransitionEnd o
 		var query = window.location.search;
 		
 		if(query.length>0) { //has query param
-			window.location = window.location.href + "&archives=true"	
+			window.location = window.location.href + "&archives=true"
 		}
 		else{
 			if (window.location.hash) { //no query present but has Hash
