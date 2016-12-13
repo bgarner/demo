@@ -140,15 +140,9 @@ class CommunicationController extends Controller
         $skin = Skin::getSkin($storeBanner);
 
         $communicationCount = Communication::getActiveCommunicationCount($storeNumber);
-        $communicationTypes = CommunicationType::where('banner_id', $storeBanner)->get();
 
         $urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($storeNumber);
-
-        $i = 0;
-        foreach($communicationTypes as $ct){
-            $communicationTypes[$i]->count = Communication::getActiveCommunicationCountByCategory($storeNumber, $ct->id);
-            $i++;
-        }
+        $communicationTypes = CommunicationType::getCommunicationTypeCount($storeNumber, $storeBanner);
 
         $communication = Communication::getCommunication($id);
 
