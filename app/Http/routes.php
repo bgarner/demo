@@ -44,6 +44,7 @@ Route::resource('/savedonation', 'Community\CommunityFundController');
 Route::get('/{storeno}/tools/blackfriday', array('uses' => 'Tools\BlackFridayController@index'));
 Route::post('/getFlyerBoxes', 'Tools\FlyerPageSelectionController@show');
 Route::post('/getFlyerBoxData', 'Tools\FlyerBoxSelectionController@show');
+Route::get('/{storeno}/tools/productlaunch', array('uses'=> 'Calendar\ProductLaunchController@index'));
 
 //VIDEO
 Route::get('/{storeno}/video', array('uses' => 'Video\VideoController@index'));
@@ -185,6 +186,12 @@ Route::resource('/utilities/ckeditorimages', 'Utilities\CkeditorImageController'
 //Store Feedback
 Route::resource('/admin/feedback' , 'StoreFeedback\FeedbackAdminController');
 Route::resource('/admin/feedback/{id}/note' , 'StoreFeedback\NotesAdminController');
+
+//Product Launch
+Route::get('/admin/productlaunch', 'Calendar\ProductLaunchAdminController@create');
+Route::post('/admin/productlaunch', 'Calendar\ProductLaunchAdminController@store');
+Route::get('admin/productlaunch/add-meta-data', 'Calendar\ProductLaunchAdminController@edit');
+
 
 /* API Routes */
 //get navigation
