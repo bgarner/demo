@@ -13,6 +13,11 @@ use App\Models\ProductLaunch\ProductLaunch;
 
 class ProductLaunchAdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin.auth');
+        $this->middleware('banner');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +25,12 @@ class ProductLaunchAdminController extends Controller
      */
     public function index()
     {
-        //
+        $banner = UserSelectedBanner::getBanner();
+        $banners = Banner::all();
+        $productLaunches = ProductLaunch::getAllProductLaunches($banner->id);
+        return view('admin.productlaunch.index')->with('productLaunches', $productLaunches)
+                                                ->with('banner', $banner)
+                                                ->with('banners', $banners);
     }
 
     /**
@@ -45,7 +55,7 @@ class ProductLaunchAdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return ProductLaunch::storeProductLaunchData($request);
     }
 
     /**
@@ -71,13 +81,8 @@ class ProductLaunchAdminController extends Controller
         $banner = UserSelectedBanner::getBanner();
         
         $banners = Banner::all();
-        
-        // $tags = Tag::where('banner_id', $banner->id)->lists('name', 'id');
-        
-        // $videos = Video::where('upload_package_id', $package)->get();
 
         return view('admin.productlaunch.add-meta-data')
-                ->with('videos', $videos)
                 ->with('banner', $banner)
                 ->with('banners', $banners)
                 ->with('tags', $tags);

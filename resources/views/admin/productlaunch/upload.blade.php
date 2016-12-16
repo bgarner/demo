@@ -34,7 +34,7 @@
                             <a href="/admin/communication">Product Launch</a>
                         </li>
                         <li class="active">
-                            <strong>Upload New Document</strong>
+                            <strong>Upload Document</strong>
                         </li>
                     </ol>
                 </div>
@@ -48,10 +48,12 @@
                         <div class="col-lg-12">
                             <div class="ibox">
                                 <div class="ibox-title">
-                                    <h5>Upload New Product Launch Document</h5>
+                                    <h5>Upload Product Launch Document</h5>
 
                                     <div class="ibox-tools">
 
+                                        <input type="radio" id="appendProductLaunch" name="uploadOptionProductLaunch" value="append"> <label for="appendProductLaunch">Append to Product Launches </label>
+                                        <input type="radio" id="clearProductLaunch" name="uploadOptionProductLaunch" value="clear"> <label for="">Clear Old Product Launches </label>
                                     </div>
                                 </div>
                                 <div class="ibox-content">
@@ -145,9 +147,6 @@
 
                                             </div>
 
-
-                                    
-
                               
                                     </div> <!-- end ibox content -->
                                 </div> <!-- ibox-content closes -->
@@ -168,7 +167,7 @@
         @include('site.includes.bugreport')
         
         <script type="text/javascript" src="/js/vendor/dropzone.js"></script>
-        <script type="text/javascript" src="/js/custom/admin/documents/uploadDocument.js"></script>
+        <script type="text/javascript" src="/js/custom/admin/productlaunch/uploadDocument.js"></script>
         
         <script type="text/javascript">
 

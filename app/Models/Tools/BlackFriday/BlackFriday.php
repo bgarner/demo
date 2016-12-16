@@ -23,27 +23,7 @@ class BlackFriday extends Model
 
     public static function getDataByStoreNumber($store_number)
     {
-    	// dd($store_number);
-    // 	$a = strpos($store_number, "A");
-    // 	// dd($a);
-    // 	if(  $a === 0 ){
-    // 		$store_number = ltrim($store_number, 'A');
-    // 		$store_number = ltrim($store_number, '0');
-    // 		$data = BlackFriday::where('store_number', $store_number)->get();
-    // 		foreach($data as $d){
-    // 			$d->flyer_page = $d->flyer_page_atmo;
-    // 			$d->flyer_name = "Atmo";	
-    // 		}	
 
-    // 	} else {
-    // 		$store_number = ltrim($store_number, 'A');
-    // 		$store_number = ltrim($store_number, '0');
-    // 		$data = BlackFriday::where('store_number', $store_number)->get();
-    // 		foreach($data as $d){
-				// $d->flyer_page = $d->flyer_page_atmo;
-    // 			$d->flyer_name = "Sport Chek";			
-    // 		}	    		
-    // 	}
     	//strip off the leading zero
 	    $store_number = ltrim($store_number, 'A');
 		$store_number = ltrim($store_number, '0');

@@ -16,6 +16,7 @@ class CreateProductlaunchTable extends Migration
             $table->bigIncrements('id');
             $table->string('store_style')->nullable();
             $table->string('store_number')->nullable();
+            $table->integer('banner_id')->unsigned();
             $table->string('store_name')->nullable();
             $table->string('dpt_number')->nullable();
             $table->string('dpt_name')->nullable();
@@ -32,6 +33,8 @@ class CreateProductlaunchTable extends Migration
             $table->string('clr_name')->nullable();
             $table->timestamp('launch_date')->nullable();
             $table->nullableTimestamps();
+            $table->foreign('banner_id')->references('id')->on('banners')->onDelete('cascade');
+
         });
     }
 

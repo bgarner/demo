@@ -188,7 +188,8 @@ Route::resource('/admin/feedback' , 'StoreFeedback\FeedbackAdminController');
 Route::resource('/admin/feedback/{id}/note' , 'StoreFeedback\NotesAdminController');
 
 //Product Launch
-Route::get('/admin/productlaunch', 'Calendar\ProductLaunchAdminController@create');
+Route::get('/admin/productlaunch', 'Calendar\ProductLaunchAdminController@index');
+Route::get('/admin/productlaunch/create', 'Calendar\ProductLaunchAdminController@create');
 Route::post('/admin/productlaunch', 'Calendar\ProductLaunchAdminController@store');
 Route::get('admin/productlaunch/add-meta-data', 'Calendar\ProductLaunchAdminController@edit');
 

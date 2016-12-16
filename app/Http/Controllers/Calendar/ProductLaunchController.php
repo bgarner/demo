@@ -6,9 +6,36 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Request as RequestFacade; 
+use App\Models\ProductLaunch\ProductLaunch;
+use App\Models\UrgentNotice\UrgentNotice;
+use App\Models\Alert\Alert;
+use App\Models\StoreInfo;
+use App\Models\Banner;
+use App\Skin;
+
+use App\Models\Communication\Communication;
 
 class ProductLaunchController extends Controller
 {
+    
+    /**
+     * Instantiate a new ProductLaunchController instance.
+     */
+    public function __construct()
+    {
+
+        $this->storeNumber = RequestFacade::segment(1);
+        $storeInfo = StoreInfo::getStoreInfoByStoreId($this->storeNumber);
+        $this->storeBanner = $storeInfo->banner_id;
+        $this->banner = Banner::find($this->storeBanner);
+        $this->isComboStore = $storeInfo->is_combo_store;
+        $this->skin = Skin::getSkin($this->storeBanner);
+        $this->urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($this->storeNumber);
+        $this->alertCount = Alert::getActiveAlertCountByStore($this->storeNumber);        
+        $this->communicationCount = Communication::getActiveCommunicationCount($this->storeNumber);        
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +43,15 @@ class ProductLaunchController extends Controller
      */
     public function index()
     {
-        var_dump("show product launch data");
+        $productLaunches =  ProductLaunch::getProductLaunchByStore($this->storeNumber);
+        return view('site.calendar.productlaunch.index')
+            ->with('productLaunches', $productLaunches)
+            ->with('skin', $this->skin)
+            ->with('communicationCount', $this->communicationCount)
+            ->with('alertCount', $this->alertCount)
+            ->with('urgentNoticeCount', $this->urgentNoticeCount)
+            ->with('banner', $this->banner)
+            ->with('isComboStore', $this->isComboStore); 
     }
 
     /**
@@ -26,7 +61,7 @@ class ProductLaunchController extends Controller
      */
     public function create()
     {
-     var_dump("show form");
+
     }
 
     /**
