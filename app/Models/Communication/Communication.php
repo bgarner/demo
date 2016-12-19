@@ -99,6 +99,7 @@ class Communication extends Model
                               ->where('store_id', $storeNumber)
                               ->where('archive_at', '<=', $now)
                               ->select('communications.*')
+                              ->orderBy('communications.send_at', 'desc')
                               ->get();
          
          foreach($comm as $c){
@@ -123,6 +124,7 @@ class Communication extends Model
                               ->where('store_id', $storeNumber)
                               ->where('archive_at', '<=', $now)
                               ->select('communications.*')
+                              ->orderBy('communications.send_at', 'desc')
                               ->get();
          
          foreach($comm as $c){
