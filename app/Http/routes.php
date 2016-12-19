@@ -30,6 +30,7 @@ Route::get('/{storeno}/folder/{id}', ['uses' => 'Document\FolderController@show'
 Route::get('/{storeno}/calendar', array('uses' => 'Calendar\CalendarController@index'));
 Route::get('/{storeno}/calendar/listevents/{yearMonth}', array('uses' => 'Calendar\CalendarController@getListofEventsByStoreAndMonth'));
 Route::get('/{storeno}/calendar/eventlistpartial/{yearMonth}', 'Calendar\CalendarController@getEventListPartial');
+Route::get('/{storeno}/calendar/productlaunch', array('uses'=> 'Calendar\ProductLaunchController@index'));
 
 //COMMUNICATIONS
 Route::get('/{storeno}/communication', array('uses' => 'Communication\CommunicationController@index'));
@@ -44,7 +45,7 @@ Route::resource('/savedonation', 'Community\CommunityFundController');
 Route::get('/{storeno}/tools/blackfriday', array('uses' => 'Tools\BlackFridayController@index'));
 Route::post('/getFlyerBoxes', 'Tools\FlyerPageSelectionController@show');
 Route::post('/getFlyerBoxData', 'Tools\FlyerBoxSelectionController@show');
-Route::get('/{storeno}/tools/productlaunch', array('uses'=> 'Calendar\ProductLaunchController@index'));
+
 
 //VIDEO
 Route::get('/{storeno}/video', array('uses' => 'Video\VideoController@index'));

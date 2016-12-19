@@ -56,7 +56,7 @@
 										<tr class="" role="row">
 											<td>{{$productLaunch->dpt_name}}</td>
 											<td>{{$productLaunch->sdpt_name}}</td>
-											<td>{{$productLaunch->launch_date}}</td>
+											<td>{{$productLaunch->prettyLaunchDate}}</td>
 											<td>{{$productLaunch->cls_name}}</td>
 											<td>{{$productLaunch->style_number}}</td>
 											<td>{{$productLaunch->style_name}}</td>
@@ -97,7 +97,8 @@
 	        $(document).ready(function(){
 	            $('.dataTable').DataTable({
 	                pageLength: 10,
-	                responsive: true
+	                responsive: true,
+	                fixedHeader: true
 
 	            });
 

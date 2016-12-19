@@ -5,6 +5,7 @@ namespace App\Models\ProductLaunch;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Document\Document;
 use League\Csv\Reader;
+use App\Models\Utility\Utility;
 
 class ProductLaunch extends Model
 {
@@ -16,13 +17,22 @@ class ProductLaunch extends Model
 
     	$storeNumber = ltrim($storeNumber, 'A');
 		$storeNumber = ltrim($storeNumber, '0');
-    	$products =  ProductLaunch::where('store_number', $storeNumber)->get();
+    	$products =  ProductLaunch::where('store_number', $storeNumber)
+
+    							->get()
+    							->each(function ($item) {
+			                        $item->prettyLaunchDate = Utility::prettifyDate($item->launch_date);                   
+			                    });
     	return ($products);
     }
 
     public static function getAllProductLaunches($banner_id)
     {
-    	return ProductLaunch::where('banner_id', $banner_id)->orderBy('launch_date', 'desc')->get();
+    	return ProductLaunch::where('banner_id', $banner_id)->orderBy('launch_date', 'desc')
+    						->get()
+    						->each(function ($item) {
+			                        $item->prettyLaunchDate = Utility::prettifyDate($item->launch_date);                   
+			                    });
     }
 
     public static function storeProductLaunchData($request)
@@ -41,7 +51,10 @@ class ProductLaunch extends Model
 
         if($upload_success){
         	$csv = Reader::createFromPath($directory. "/" . $filename);
-            \DB::table('productlaunch')->truncate();
+            if($request->uploadOption == 'clear'){
+            	ProductLaunch::truncate();	
+            }
+            
             foreach ($csv as $index => $row) {
             	if($index != 0){
              	ProductLaunch::create(

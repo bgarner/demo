@@ -33,7 +33,12 @@
                 @else
                 <li>
                 @endif
-                    <a href="/{{ Request::segment(1) }}/calendar"><i class="fa fa-calendar"></i> <span class="nav-label">Calendar</span></a>
+                    <a href="/{{ Request::segment(1) }}/calendar"><i class="fa fa-calendar"></i> <span class="nav-label">Calendar</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse" style="height: 0px;">
+                            <li><a href="/{{ Request::segment(1) }}/calendar">Calendar</a></li>
+                        
+                            <li><a href="/{{ Request::segment(1) }}/calendar/productlaunch">Product Launch</a></li>
+                        </ul>
                 </li>
 
 
