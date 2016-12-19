@@ -51,9 +51,16 @@
                                     <h5>Upload Product Launch Document</h5>
 
                                     <div class="ibox-tools">
+                                        <select name="uploadOptionProductLaunch" id="uploadOptionProductLaunch">
+                                            <option value="">Select Option</option>
+                                            <option value="append">Append to Product Launches</option>
+                                            <option value="clear">Clear Old Product Launches</option>
+                                            <option value="patch">Upload Patch</option>
 
-                                        <input type="radio" id="appendProductLaunch" name="uploadOptionProductLaunch" value="append"> <label for="appendProductLaunch">Append to Product Launches </label>
-                                        <input type="radio" id="clearProductLaunch" name="uploadOptionProductLaunch" value="clear"> <label for="">Clear Old Product Launches </label>
+                                        </select>
+
+                                        <!-- <input type="radio" id="appendProductLaunch" name="uploadOptionProductLaunch" value="append"> <label for="appendProductLaunch">Append to Product Launches </label>
+                                        <input type="radio" id="clearProductLaunch" name="uploadOptionProductLaunch" value="clear"> <label for="">Clear Old Product Launches </label> -->
                                     </div>
                                 </div>
                                 <div class="ibox-content">

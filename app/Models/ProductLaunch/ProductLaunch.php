@@ -53,14 +53,33 @@ class ProductLaunch extends Model
         $upload_success = $request->file('document')->move($directory, $filename); //move and rename file
 
         if($upload_success){
-        	$csv = Reader::createFromPath($directory. "/" . $filename);
-            if($request->uploadOption == 'clear'){
-            	ProductLaunch::truncate();	
-            }
+        	$csvFile = Reader::createFromPath($directory. "/" . $filename);
             
-            foreach ($csv as $index => $row) {
-            	if($index != 0){
-             	ProductLaunch::create(
+            switch($request->uploadOption){
+	    		case "clear":
+	    			ProductLaunch::truncate();
+	    			ProductLaunch::insertRecords($request, $csvFile);	
+	    			break;
+	    		
+	    		case "patch":
+	    			ProductLaunch::updateRecords($request, $csvFile);
+	    			break;
+
+	    		default:
+	    			ProductLaunch::insertRecords($request, $csvFile);
+	    			break;
+	    	}
+            
+            
+
+    	}	
+	}
+
+	public static function insertRecords($request, $csvFile)
+	{
+		foreach ($csvFile as $index => $row) {
+        	if($index != 0){
+	         	ProductLaunch::create(
 
 	                array(
 	                    'store_style' => (isset($row[1]) ? $row[1] : ''),
@@ -83,9 +102,37 @@ class ProductLaunch extends Model
 	                    'launch_date' => (isset($row[18]) ? $row[18] : '')
 	                )
 	            );
-             	}
-             } 
+         	}
+         } 
+	}
+	public static function updateRecords($request, $csvFile)
+	{
+		foreach ($csvFile as $index => $row) {
+		
+			if ($index != 0) {
+				$store_style = $row[1];
+				$record = ProductLaunch::where('store_style', $store_style)->first();
+				$record['store_number'] = (isset($row[2]) ? $row[2] : '');
+                $record['banner_id'] = (isset($row[3]) ? $row[3] : '');
+                $record['store_name'] = (isset($row[4]) ? $row[4] : '');
+                $record['dpt_number'] = (isset($row[5]) ? $row[5] : '');
+                $record['dpt_name'] = (isset($row[6]) ? $row[6] : '');
+                $record['sdpt_number'] = (isset($row[7]) ? $row[7] : '');
+                $record['sdpt_name'] = (isset($row[8]) ? $row[8] : '');
+                $record['cls_number'] = (isset($row[9]) ? $row[9] : '');
+                $record['cls_name'] = (isset($row[10]) ? $row[10] : '');
+                $record['scls_number'] = (isset($row[11]) ? $row[11] : '');
+                $record['scls_name'] = (isset($row[12]) ? $row[12] : '');
+                $record['brand'] = (isset($row[13]) ? $row[13] : '');
+                $record['style_number'] = (isset($row[14]) ? $row[14] : '');
+                $record['style_name'] = (isset($row[15]) ? $row[15] : '');
+                $record['clr_code'] = (isset($row[16]) ? $row[16] : '');
+                $record['clr_name'] = (isset($row[17]) ? $row[17] : '');
+                $record['launch_date'] = (isset($row[18]) ? $row[18] : '');
 
-    	}	
+                $record->save();
+
+			}
+		}
 	}
 }
