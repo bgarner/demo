@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Document\Document;
 use League\Csv\Reader;
 use App\Models\Utility\Utility;
+use Carbon\Carbon;
 
 class ProductLaunch extends Model
 {
@@ -17,8 +18,10 @@ class ProductLaunch extends Model
 
     	$storeNumber = ltrim($storeNumber, 'A');
 		$storeNumber = ltrim($storeNumber, '0');
+		$now = Carbon::now()->toDatetimeString();
+		
     	$products =  ProductLaunch::where('store_number', $storeNumber)
-
+				                ->where('productlaunch.launch_date', '>=', $now)
     							->get()
     							->each(function ($item) {
 			                        $item->prettyLaunchDate = Utility::prettifyDate($item->launch_date);                   
