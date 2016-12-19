@@ -47,13 +47,13 @@ class AdminController extends Controller
 
         $banners = Banner::all();
 
-        $trafficDaily = json_decode(file_get_contents(storage_path()."/analytics/traffic24hrs.json"));
+        $trafficDaily = Analytics::getTrafficLast24hrs();
 
-        $traffic = json_decode(file_get_contents(storage_path()."/analytics/traffic30days.json"));
+        $traffic = Analytics::getTrafficLast30Days();
 
-        $commStats = json_decode(file_get_contents(storage_path()."/analytics/communicationStats.json"));
+        $commStats = Analytics::getCommunicationStats();
         
-        $urgentNoticeStats = json_decode(file_get_contents(storage_path()."/analytics/urgentNoticeStats.json"));
+        $urgentNoticeStats = Analytics::getUrgentNoticeStats();
 
         return view('admin.index')->with('banner', $banner)
                     ->with('traffic', $traffic)

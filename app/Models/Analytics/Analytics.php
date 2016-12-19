@@ -44,6 +44,15 @@ class Analytics extends Model
 		        return Carbon::parse($date->created_at)->format('D g a');
 		    });
 
+		    $now = Carbon::now();
+		    foreach($visitorTraffic as $t){
+
+
+		   	}
+		   //	dd($now);
+          // dd($now->format("G"));
+           // dd($now->hour);
+           // dd($visitorTraffic);
         return $visitorTraffic;
     }
 
@@ -67,7 +76,10 @@ class Analytics extends Model
     		->where('send_at', '>=', Carbon::now()->subDays(7))
     		->orderBy('send_at', 'DESC')
     		->get();
-    		
+    		// ->groupBy(function($date) {
+		    //     return Carbon::parse($date->created_at)->format('D M d');
+		    // });
+
     	//figure out target stores for each
         foreach($comms as $c){
             $targetCount = DB::table('communications_target')->where('communication_id', '=', $c->id)->count();
