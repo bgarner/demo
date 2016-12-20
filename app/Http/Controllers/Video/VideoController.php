@@ -56,9 +56,9 @@ class VideoController extends Controller
     public function index(Request $request)
     {
         $featured = Video::getFeaturedVideo();
-        $mostViewed = Video::getMostViewedVideos(4);
+        $mostViewed = Video::getMostViewedVideos(12);
         $mostLiked = Video::getMostLikedVideos(4);
-        $mostRecent = Video::getMostRecentVideos(4);
+        $mostRecent = Video::getMostRecentVideos(12);
         $latestPlaylists = Playlist::getLatestPlaylists(3);
         // dd($featured);
 

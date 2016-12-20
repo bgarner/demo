@@ -61,7 +61,7 @@
 
             <br />
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
 
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
@@ -92,10 +92,10 @@
                     </div>
                 </div>
 
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h2>Latest Playlists</h2>
+                            <h2><a href="video/playlists">Latest Playlists</a></h2>
                         </div>
 
                         <div class="ibox-content clearfix playlist-container">
@@ -129,7 +129,7 @@
                             </div>
                             <div class="ibox-content clearfix">
                                 @foreach($mostRecent as $mr)
-                                    <div class="col-xs-6 col-sm-4 col-lg-3 video-list-box">
+                                    <div class="col-xs-4 col-sm-3 col-lg-2 video-list-box">
                                         <div class="embed-responsive embed-responsive-16by9">
                                         <a href="video/watch/{{$mr->id}}" class="trackclick" data-video-id="{{$mr->id}}"><img src="/video/thumbs/{{$mr->thumbnail}}" class="embed-responsive-item img-responsive" /></a>
                                         </div>
@@ -141,7 +141,7 @@
                         </div>
                     </div>
             </div>
-            
+
             <div class="row">
                     <div class="col-lg-12">
                         <div class="ibox float-e-margins">
@@ -150,7 +150,7 @@
                             </div>
                             <div class="ibox-content clearfix">
                                 @foreach($mostViewed as $mv)
-                                    <div class="col-xs-6 col-sm-4 col-lg-3 video-list-box">
+                                    <div class="col-xs-4 col-sm-3 col-lg-2 video-list-box">
                                         <div class="embed-responsive embed-responsive-16by9">
                                         <a href="video/watch/{{$mv->id}}" class="trackclick" data-video-id="{{$mv->id}}"><img src="/video/thumbs/{{$mv->thumbnail}}" class="embed-responsive-item img-responsive" /></a>
                                         </div>
