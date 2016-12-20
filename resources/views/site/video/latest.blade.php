@@ -73,7 +73,7 @@
                                         <a href="watch/{{$mr->id}}" class="trackclick" data-video-id="{{$mr->id}}"><img src="/video/thumbs/{{$mr->thumbnail}}" class="embed-responsive-item img-responsive" /></a>
                                         </div>
                                         <a href="watch/{{$mr->id}}" class="trackclick" data-video-id="{{$mr->id}}"><h4>{{$mr->title}}</h4></a>
-                                        <p>{{$mr->likes}} likes &middot; {{$mr->sinceCreated}} ago</p>
+                                        <p>{{$mr->views}} views &middot; {{$mr->sinceCreated}} ago</p>
                                     </div>
                                 @endforeach
                             </div>

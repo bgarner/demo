@@ -120,6 +120,28 @@
 
             </div>
 
+
+            <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h2><a href="video/latest">Most Recent</a></h2>
+                            </div>
+                            <div class="ibox-content clearfix">
+                                @foreach($mostRecent as $mr)
+                                    <div class="col-xs-6 col-sm-4 col-lg-3 video-list-box">
+                                        <div class="embed-responsive embed-responsive-16by9">
+                                        <a href="video/watch/{{$mr->id}}" class="trackclick" data-video-id="{{$mr->id}}"><img src="/video/thumbs/{{$mr->thumbnail}}" class="embed-responsive-item img-responsive" /></a>
+                                        </div>
+                                        <a href="video/watch/{{$mr->id}}" class="trackclick" data-video-id="{{$mr->id}}"><h4>{{$mr->title}}</h4></a>
+                                        <p>{{$mr->views}} views &middot; {{$mr->sinceCreated}} ago</p>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            
             <div class="row">
                     <div class="col-lg-12">
                         <div class="ibox float-e-margins">
@@ -142,7 +164,7 @@
                     </div>
             </div>
 
-            <div class="row">
+            <!-- <div class="row">
                     <div class="col-lg-12">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
@@ -161,29 +183,10 @@
                             </div>
                         </div>
                     </div>
-            </div>
+            </div> -->
 
 
-            <div class="row">
-                    <div class="col-lg-12">
-                        <div class="ibox float-e-margins">
-                            <div class="ibox-title">
-                                <h2><a href="video/latest">Most Recent</a></h2>
-                            </div>
-                            <div class="ibox-content clearfix">
-                                @foreach($mostRecent as $mr)
-                                    <div class="col-xs-6 col-sm-4 col-lg-3 video-list-box">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                        <a href="video/watch/{{$mr->id}}" class="trackclick" data-video-id="{{$mr->id}}"><img src="/video/thumbs/{{$mr->thumbnail}}" class="embed-responsive-item img-responsive" /></a>
-                                        </div>
-                                        <a href="video/watch/{{$mr->id}}" class="trackclick" data-video-id="{{$mr->id}}"><h4>{{$mr->title}}</h4></a>
-                                        <p>{{$mr->views}} views &middot; {{$mr->sinceCreated}} ago</p>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-            </div>
+
 
 
 

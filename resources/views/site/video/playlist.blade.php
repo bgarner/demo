@@ -82,8 +82,8 @@
                                     <h4><a href="../watch/{{$vl->id}}" class="trackclick" data-video-id="{{$vl->id}}">{{$vl->title}}</a></h4>
                                     <p>{{$vl->description}}</p>
                                     <p>{{$vl->views}} views &middot; {{$vl->sinceCreated}} ago</p>
-                                    <button class="btn btn-primary btn-outline videolikeplaylist" data-video-id="{{$vl->id}}" type="button" data-toggle="tooltip" data-placement="bottom" title="Like this"><i class="fa fa-thumbs-up"></i> {{$vl->likes}}</button>
-                                    <button class="btn btn-danger btn-outline videodislikeplaylist" data-video-id="{{$vl->id}}" type="button" data-toggle="tooltip" data-placement="bottom" title="Dislike this"><i class="fa fa-thumbs-down"></i> {{$vl->dislikes}}</button>
+                                    <!-- <button class="btn btn-primary btn-outline videolikeplaylist" data-video-id="{{$vl->id}}" type="button" data-toggle="tooltip" data-placement="bottom" title="Like this"><i class="fa fa-thumbs-up"></i> {{$vl->likes}}</button>
+                                    <button class="btn btn-danger btn-outline videodislikeplaylist" data-video-id="{{$vl->id}}" type="button" data-toggle="tooltip" data-placement="bottom" title="Dislike this"><i class="fa fa-thumbs-down"></i> {{$vl->dislikes}}</button> -->
 
                                 </div>
 
