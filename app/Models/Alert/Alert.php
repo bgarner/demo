@@ -125,7 +125,7 @@ class Alert extends Model
                             $query->where('documents.end', '>=', $now)
                                 ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
                             })
-                        ->select('alerts.*')
+                        ->select('alerts.*', 'documents.start as start', 'documents.end as end')
                         ->get();
 
         if (count($alerts) >0) {
@@ -150,7 +150,7 @@ class Alert extends Model
                                 ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
                         })
                         ->where('alert_type_id' , $alert_type)
-                        ->select('alerts.*')
+                        ->select('alerts.*', 'documents.start as start', 'documents.end as end')
                         ->get();
         
         if (count($alerts) >0) {
@@ -169,7 +169,7 @@ class Alert extends Model
                         ->where('alerts_target.store_id', '=', $store_id)
                         ->where('documents.end', '<=', $now)
                         ->where('documents.end', '!=', '0000-00-00 00:00:00')
-                        ->select('alerts.*')
+                        ->select('alerts.*', 'documents.start as start', 'documents.end as end')
                         ->get();
 
 
@@ -193,7 +193,7 @@ class Alert extends Model
                         ->where('documents.end', '<=', $now)
                         ->where('documents.end', '!=', '0000-00-00 00:00:00')
                         ->where('alert_type_id' , $alert_type)
-                        ->select('alerts.*')
+                        ->select('alerts.*', 'documents.start as start', 'documents.end as end')
                         ->get();
 
         if (count($alerts) >0) {
@@ -209,9 +209,11 @@ class Alert extends Model
     public static function addStoreViewData($alerts)
     {
         foreach($alerts as $a){
+                // dd($a);
                 
-                $a->prettyDate =  Utility::prettifyDate($a->updated_at->toDatetimeString());
-                $a->since =  Utility::getTimePastSinceDate($a->updated_at->toDatetimeString());
+
+                $a->prettyDate =  Utility::prettifyDate($a->start);
+                $a->since =  Utility::getTimePastSinceDate($a->start);
                 $doc = Document::getDocumentById($a->document_id);
                 $alertType = AlertType::find($a->alert_type_id);
 
