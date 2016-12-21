@@ -22,6 +22,37 @@
     .modal-content{ height: 100% !important;}
     .modal-body{ padding: 0; margin: 0; height: 100% !important; }
 
+
+    /* styles for '...' */
+    .video-list-box h4{
+
+
+    }
+
+
+    .giveMeEllipsis {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        /* number of lines to show */
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+
+    /* hide ... if we have text, which is less than or equal to max lines */
+
+
+    /*.video-list-box h4{
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+
+    }
+    .video-list-box h4 a{
+
+    }*/
+
     #file-table tr td:last-child {
         white-space: nowrap;
         width: 1%
@@ -105,7 +136,7 @@
                                     <a href="video/playlist/{{$lp->id}}" class="trackclick" data-playlist-id="{{$lp->id}}"><img src="/video/thumbs/{{$lp->thumbnail}}" class="img-responsive" /></a>
 
                                     <div class="playlist-meta">
-                                        <h4><a href="video/playlist/{{$lp->id}}" class="trackclick" data-playlist-id="{{$lp->id}}">{{$lp->title}}</a></h4>
+                                        <h4 class="giveMeEllipsis"><a href="video/playlist/{{$lp->id}}" class="trackclick" data-playlist-id="{{$lp->id}}">{{$lp->title}}</a></h4>
                                         {!! $lp->description !!}
                                         <p>{{$lp->count}} videos &middot; {{$lp->sinceCreated}} ago</p>
                                     </div>
@@ -133,7 +164,7 @@
                                         <div class="embed-responsive embed-responsive-16by9">
                                         <a href="video/watch/{{$mr->id}}" class="trackclick" data-video-id="{{$mr->id}}"><img src="/video/thumbs/{{$mr->thumbnail}}" class="embed-responsive-item img-responsive" /></a>
                                         </div>
-                                        <a href="video/watch/{{$mr->id}}" class="trackclick" data-video-id="{{$mr->id}}"><h4>{{$mr->title}}</h4></a>
+                                        <h4><a href="video/watch/{{$mr->id}}" class="trackclick" data-video-id="{{$mr->id}}">{{$mr->title}}</a></h4>
                                         <p>{{$mr->views}} views &middot; {{$mr->sinceCreated}} ago</p>
                                     </div>
                                 @endforeach
@@ -154,7 +185,7 @@
                                         <div class="embed-responsive embed-responsive-16by9">
                                         <a href="video/watch/{{$mv->id}}" class="trackclick" data-video-id="{{$mv->id}}"><img src="/video/thumbs/{{$mv->thumbnail}}" class="embed-responsive-item img-responsive" /></a>
                                         </div>
-                                        <a href="video/watch/{{$mv->id}}" class="trackclick" data-video-id="{{$mv->id}}"><h4>{{$mv->title}}</h4></a>
+                                        <h4><a href="video/watch/{{$mv->id}}" class="trackclick" data-video-id="{{$mv->id}}">{{$mv->title}}</a></h4>
                                         <p>{{$mv->views}} views &middot; {{$mv->sinceCreated}} ago</p>
                                     </div>
                                 @endforeach
