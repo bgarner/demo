@@ -85,23 +85,40 @@
 
 									<label class="col-sm-2 control-label">Type</label>
 										<div class="col-sm-10" id="communication-type-selector">
-											<div class="btn-group" role="group" data-toggle="buttons">
-											@foreach($communicationTypes as $ct)
 
-												@if($communication->communication_type_id == $ct->id)
-												<label class="btn btn-outline btn-default active">
-												@else
-												<label class="btn btn-outline btn-default">
-												@endif
+											<div class="btn-group">
+												<a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#">
+													@foreach($communicationTypes as $ct)
+														@if($ct->id == $communication->communication_type_id)
+															<span class="selected_comm_type">
+																<i class="fa fa-circle text-{{$ct->colour}}"></i> {{$ct->communication_type}}
+															</span>
+														@endif
+													@endforeach
+													<i class="fa fa-angle-down"></i>
+												</a>
+												<input type="text" hidden name="communication_type" value="{{$communication->communication_type_id}}">
+												<ul name="communication_type" id="" class="dropdown-menu" role="menu">
+													@foreach($communicationTypes as $ct)
 
-												@if( $ct->id == 1)
-												<input type="radio" id="" name="communication_type" value="{{ $ct->id }}"><i class="fa fa-times"></i> {{ $ct->communication_type }}
-												@else
-												<input type="radio" id="" name="communication_type" value="{{ $ct->id }}"><i class="fa fa-circle text-{{ $ct->colour }}"></i> {{ $ct->communication_type }}
-												@endif
-											</label>
+														@if( ( $banner->id==1 && $ct->id == 1 ) || ($banner->id==2 && $ct->id == 2) )
+															<li 
+																data-comm-typeid="{{$ct->id}}"
+																data-comm-type= "{{$ct->communication_type}}"
+																class="comm_type_dropdown_item" >
+																<a href=""> {{$ct->communication_type}} </a>
+															</li>
+														@else
+															<li data-comm-typeid="{{$ct->id}}" 
+																data-comm-typecolour= "{{$ct->colour}}" 
+																data-comm-type= "{{$ct->communication_type}}"
+																class="comm_type_dropdown_item" >
+																<a href="#" ><i class="fa fa-circle text-{{$ct->colour}}"></i> {{$ct->communication_type}}</a>
+															</li>
+														@endif
 
-											@endforeach
+													@endforeach
+												</ul>
 											</div>
 										</div>
 								</div>
@@ -297,6 +314,17 @@
     		});
 
 		    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
+
+		    $(".comm_type_dropdown_item").click(function(){
+
+		    	$(".selected_comm_type").empty();
+		    	var comm_typeid = $(this).attr('data-comm-typeid');
+		    	var comm_typeColour = $(this).attr('data-comm-typecolour');
+		    	var comm_type = $(this).attr('data-comm-type');
+
+		    	$("input[name='communication_type']").val(comm_typeid);
+		    	$(".selected_comm_type").append('<i class="fa fa-circle text-'+ comm_typeColour + '"> </i> '+ comm_type);
+		    })
 
 
 
