@@ -35,6 +35,7 @@ class PlaylistAdminController extends Controller
         $banners = Banner::all();
 
         $playlists =Playlist::where('banner_id', $banner->id)
+                    ->latest('created_at')
                     ->get();
 
         return view('admin.video.playlist-manager.index')
@@ -97,19 +98,14 @@ class PlaylistAdminController extends Controller
         $videos = Video::getAllVideos();
 
         $selectedVideos = PlaylistVideo::where('playlist_id', $id)->orderBy('order')->get();
-        // $selectedVideos = PlaylistVideo::join('videos', 'videos.id', '=', 'playlist_videos.video_id')
-        //                                 ->where('playlist_id', $id)
-        //                                 ->select('videos.*')
-        //                                 ->select('playlist_videos.playlist_id')
-        //                                 ->orderBy('order')
-        //                                 ->get();
+
 
         foreach($selectedVideos as $sv){
             $video_info = Video::find($sv->video_id);
             $sv->title = $video_info->title;
             $sv->thumbnail =  $video_info->thumbnail;
         }
-    //    dd($selectedVideos);
+
         return view('admin.video.playlist-manager.edit')
                 ->with('playlist', $playlist)
                 ->with('videos', $videos)
