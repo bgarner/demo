@@ -7,11 +7,13 @@ use App\Models\Document\Document;
 use League\Csv\Reader;
 use App\Models\Utility\Utility;
 use Carbon\Carbon;
+use App\Models\ProductLaunch\ProductLaunchTarget;
+use App\Models\Event\Event;
 
 class ProductLaunch extends Model
 {
     protected $table = 'productlaunch';
-    protected $fillable = [	'id','store_style','store_number','banner_id', 'store_name','dpt_number','dpt_name','sdpt_number','sdpt_name','cls_number','cls_name','scls_number','scls_name','brand','style_number','style_name','clr_code','clr_name','launch_date','created_at','updated_at'];
+    protected $fillable = [	'id','store_style','banner_id','dpt_number','dpt_name','sdpt_number','sdpt_name','cls_number','cls_name','scls_number','scls_name','brand','style_number','style_name','clr_code','clr_name','launch_date','created_at','updated_at'];
 
 
     public static function getProductLaunchByStore($storeNumber){
@@ -57,7 +59,10 @@ class ProductLaunch extends Model
             
             switch($request->uploadOption){
 	    		case "clear":
+	    			\DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+	    			ProductLaunchTarget::truncate();
 	    			ProductLaunch::truncate();
+	    			\DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 	    			ProductLaunch::insertRecords($request, $csvFile);	
 	    			break;
 	    		
@@ -79,32 +84,37 @@ class ProductLaunch extends Model
 	{
 		foreach ($csvFile as $index => $row) {
         	if($index != 0){
-	         	ProductLaunch::create(
+	         	$productLaunch = ProductLaunch::create(
 
 	                array(
 	                    'store_style' => (isset($row[1]) ? $row[1] : ''),
-	                    'store_number' => (isset($row[2]) ? $row[2] : ''),
-	                    'banner_id' => (isset($row[3]) ? $row[3] : ''),
-	                    'store_name' => (isset($row[4]) ? $row[4] : ''),
-	                    'dpt_number' => (isset($row[5]) ? $row[5] : ''),
-	                    'dpt_name' => (isset($row[6]) ? $row[6] : ''),
-	                    'sdpt_number' => (isset($row[7]) ? $row[7] : ''),
-	                    'sdpt_name' => (isset($row[8]) ? $row[8] : ''),
-	                    'cls_number' => (isset($row[9]) ? $row[9] : ''),
-	                    'cls_name' => (isset($row[10]) ? $row[10] : ''),
-	                    'scls_number' => (isset($row[11]) ? $row[11] : ''),
-	                    'scls_name' => (isset($row[12]) ? $row[12] : ''),
-	                    'brand' => (isset($row[13]) ? $row[13] : ''),
-	                    'style_number' => (isset($row[14]) ? $row[14] : ''),
-	                    'style_name' => (isset($row[15]) ? $row[15] : ''),
-	                    'clr_code' => (isset($row[16]) ? $row[16] : ''),
-	                    'clr_name' => (isset($row[17]) ? $row[17] : ''),
-	                    'launch_date' => (isset($row[18]) ? $row[18] : '')
+	                    'banner_id' => $request->banner_id,
+	                    'dpt_number' => (isset($row[3]) ? $row[3] : ''),
+	                    'dpt_name' => (isset($row[4]) ? $row[4] : ''),
+	                    'sdpt_number' => (isset($row[5]) ? $row[5] : ''),
+	                    'sdpt_name' => (isset($row[6]) ? $row[6] : ''),
+	                    'cls_number' => (isset($row[7]) ? $row[7] : ''),
+	                    'cls_name' => (isset($row[8]) ? $row[8] : ''),
+	                    'scls_number' => (isset($row[9]) ? $row[9] : ''),
+	                    'scls_name' => (isset($row[10]) ? $row[10] : ''),
+	                    'brand' => (isset($row[11]) ? $row[11] : ''),
+	                    'style_number' => (isset($row[12]) ? $row[12] : ''),
+	                    'style_name' => (isset($row[13]) ? $row[13] : ''),
+	                    'clr_code' => (isset($row[14]) ? $row[14] : ''),
+	                    'clr_name' => (isset($row[15]) ? $row[15] : ''),
+	                    'launch_date' => (isset($row[16]) ? $row[16] : '')
 	                )
 	            );
+
+	         	$target = $row[2];
+	            ProductLaunch::createProductLaunchTarget($productLaunch, $target);
+	            $productLaunchEventData = ProductLaunch::compileProductLaunchEventData($row);
+	            $productLaunchEventData['banner_id'] = $request->banner_id;
+	            Event::createProductLaunchEvent($productLaunchEventData);
          	}
          } 
 	}
+
 	public static function updateRecords($request, $csvFile)
 	{
 		foreach ($csvFile as $index => $row) {
@@ -112,27 +122,50 @@ class ProductLaunch extends Model
 			if ($index != 0) {
 				$store_style = $row[1];
 				$record = ProductLaunch::where('store_style', $store_style)->first();
-				$record['store_number'] = (isset($row[2]) ? $row[2] : '');
-                $record['banner_id'] = (isset($row[3]) ? $row[3] : '');
-                $record['store_name'] = (isset($row[4]) ? $row[4] : '');
-                $record['dpt_number'] = (isset($row[5]) ? $row[5] : '');
-                $record['dpt_name'] = (isset($row[6]) ? $row[6] : '');
-                $record['sdpt_number'] = (isset($row[7]) ? $row[7] : '');
-                $record['sdpt_name'] = (isset($row[8]) ? $row[8] : '');
-                $record['cls_number'] = (isset($row[9]) ? $row[9] : '');
-                $record['cls_name'] = (isset($row[10]) ? $row[10] : '');
-                $record['scls_number'] = (isset($row[11]) ? $row[11] : '');
-                $record['scls_name'] = (isset($row[12]) ? $row[12] : '');
-                $record['brand'] = (isset($row[13]) ? $row[13] : '');
-                $record['style_number'] = (isset($row[14]) ? $row[14] : '');
-                $record['style_name'] = (isset($row[15]) ? $row[15] : '');
-                $record['clr_code'] = (isset($row[16]) ? $row[16] : '');
-                $record['clr_name'] = (isset($row[17]) ? $row[17] : '');
-                $record['launch_date'] = (isset($row[18]) ? $row[18] : '');
+                $record['banner_id'] = $request->banner_id;
+                $record['dpt_number'] = (isset($row[3]) ? $row[3] : '');
+                $record['dpt_name'] = (isset($row[4]) ? $row[4] : '');
+                $record['sdpt_number'] = (isset($row[5]) ? $row[5] : '');
+                $record['sdpt_name'] = (isset($row[6]) ? $row[6] : '');
+                $record['cls_number'] = (isset($row[7]) ? $row[7] : '');
+                $record['cls_name'] = (isset($row[8]) ? $row[8] : '');
+                $record['scls_number'] = (isset($row[9]) ? $row[9] : '');
+                $record['scls_name'] = (isset($row[10]) ? $row[10] : '');
+                $record['brand'] = (isset($row[11]) ? $row[11] : '');
+                $record['style_number'] = (isset($row[12]) ? $row[12] : '');
+                $record['style_name'] = (isset($row[13]) ? $row[13] : '');
+                $record['clr_code'] = (isset($row[14]) ? $row[14] : '');
+                $record['clr_name'] = (isset($row[15]) ? $row[15] : '');
+                $record['launch_date'] = (isset($row[16]) ? $row[16] : '');
 
                 $record->save();
 
 			}
 		}
+	}
+
+	public static function createProductLaunchTarget($productLaunch, $targetStores)
+	{
+		$stores = explode(';', $targetStores);
+		if($stores[count($stores) -1 ] == 0){
+			array_pop($stores);
+		}
+		foreach ($stores as $key => $value) {
+			ProductLaunchTarget::create([
+					'store_id' => $value,
+					'productlaunch_id' => $productLaunch->id	
+
+				]);
+		}
+	}
+
+	public static function compileProductLaunchEventData($row)
+	{
+			$event = [];
+			$event['title'] = $row[19];
+			$event['event_type'] = $row[20];
+			$event['launch_date'] = $row[16];
+			$event['stores'] = $row[2];
+			return $event;
 	}
 }

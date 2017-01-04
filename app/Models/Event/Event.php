@@ -54,7 +54,7 @@ class Event extends Model
         $event = Event::create([
 
 
-    		    'banner_id' => $banner->id,
+    		'banner_id' => $banner->id,
             'title' => $request['title'],
             'event_type' => $request['event_type'],
             'description' => $desc,
@@ -151,6 +151,39 @@ class Event extends Model
                     });
                     
         return $events;
+    }
+
+    public static function createProductLaunchEvent($productLaunchDetails)
+    {
+        $stores = explode(';', $productLaunchDetails['stores']);
+        if($stores[count($stores) -1 ] == 0){
+            array_pop($stores);
+        }
+
+        $event_types_list = EventType::where('banner_id', $productLaunchDetails['banner_id'])->lists('event_type', 'id')->toArray();
+        $event_type_id = array_keys($event_types_list, $productLaunchDetails['event_type']);
+
+        
+        $start = Carbon::createFromFormat('Y/m/d H:i:s', $productLaunchDetails['launch_date']);
+        
+        $event = Event::create([
+            'banner_id' => $productLaunchDetails['banner_id'],
+            'title' => $productLaunchDetails['title'],
+            'event_type' => $event_type_id[0],
+            'start' => $start->toDatetimeString(),
+            'end' => $start->addDay()->toDatetimeString()
+
+        ]);
+        
+        foreach ($stores as $key => $value) {
+            EventTarget::create([
+                    'store_id' => $value,
+                    'event_id' => $event->id    
+
+                ]);
+        }
+
+        return;
     }
 
 }

@@ -13,11 +13,11 @@ class CreateProductlaunchTable extends Migration
     public function up()
     {
         Schema::create('productlaunch', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id')->unsigned();
             $table->string('store_style')->nullable();
-            $table->string('store_number')->nullable();
+            // $table->string('store_number')->nullable();
             $table->integer('banner_id')->unsigned();
-            $table->string('store_name')->nullable();
+            // $table->string('store_name')->nullable();
             $table->string('dpt_number')->nullable();
             $table->string('dpt_name')->nullable();
             $table->string('sdpt_number')->nullable();
