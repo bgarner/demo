@@ -43,7 +43,7 @@ class ProductLaunchController extends Controller
      */
     public function index()
     {
-        $productLaunches =  ProductLaunch::getProductLaunchByStore($this->storeNumber);
+        $productLaunches =  ProductLaunch::getActiveProductLaunchByStore($this->storeNumber);
         return view('site.calendar.productlaunch.index')
             ->with('productLaunches', $productLaunches)
             ->with('skin', $this->skin)

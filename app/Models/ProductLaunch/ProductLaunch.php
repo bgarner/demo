@@ -8,21 +8,21 @@ use League\Csv\Reader;
 use App\Models\Utility\Utility;
 use Carbon\Carbon;
 use App\Models\ProductLaunch\ProductLaunchTarget;
-use App\Models\Event\Event;
+use App\Models\StoreInfo;
 
 class ProductLaunch extends Model
 {
     protected $table = 'productlaunch';
-    protected $fillable = [	'id','store_style','banner_id','dpt_number','dpt_name','sdpt_number','sdpt_name','cls_number','cls_name','scls_number','scls_name','brand','style_number','style_name','clr_code','clr_name','launch_date','created_at','updated_at'];
+    protected $fillable = [	'id','store_style','banner_id','dpt_number','dpt_name','sdpt_number','sdpt_name','cls_number','cls_name','scls_number','scls_name','brand','style_number','style_name','clr_code','clr_name','launch_date','title','event_type', 'created_at','updated_at'];
 
 
-    public static function getProductLaunchByStore($storeNumber){
+    public static function getActiveProductLaunchByStore($storeNumber)
+    {
 
-    	$storeNumber = ltrim($storeNumber, 'A');
-		$storeNumber = ltrim($storeNumber, '0');
 		$now = Carbon::now()->toDatetimeString();
 		
-    	$products =  ProductLaunch::where('store_number', $storeNumber)
+    	$products =  ProductLaunch::join('productlaunch_target', 'productlaunch_target.productlaunch_id' , '=', 'productlaunch.id')
+    							->where('store_id', $storeNumber)
 				                ->where('productlaunch.launch_date', '>=', $now)
     							->get()
     							->each(function ($item) {
@@ -31,8 +31,51 @@ class ProductLaunch extends Model
     	return ($products);
     }
 
+     public static function getActiveProductLaunchByStoreForCalendar($storeNumber)
+    {
+
+		$now = Carbon::now()->toDatetimeString();
+		
+    	$products =  ProductLaunch::join('productlaunch_target', 'productlaunch_target.productlaunch_id' , '=', 'productlaunch.id')
+    							->where('store_id', $storeNumber)
+				                ->where('productlaunch.launch_date', '>=', $now)
+				                ->select('productlaunch.id', 'productlaunch.launch_date as start', 'productlaunch.title', 'productlaunch_target.store_id', 'productlaunch.event_type as event_type_name')
+    							->get()
+    							->each(function ($item) {
+			                        $item->end = Carbon::createFromFormat('Y-m-d H:i:s', $item->start)->addDay()->toDateTimeString();
+			                        
+			                    });
+    	return ($products);
+    }
+
+    public static function getActiveProductLaunchByStoreandMonth($storeNumber, $yearMonth)
+    {
+    
+        $products = ProductLaunch::join('productlaunch_target', 'productlaunch.id', '=', 'productlaunch_target.productlaunch_id')
+                    ->where('store_id', $storeNumber)
+                    ->where('launch_date', 'LIKE', $yearMonth.'%')
+                    ->orderBy('launch_date')
+                    ->select('productlaunch.id', 'productlaunch.launch_date as start', 'productlaunch.title', 'productlaunch_target.store_id', 'productlaunch.event_type as event_type_name', 'productlaunch.banner_id')
+                    ->get()
+                    ->each(function ($item) {
+                    	$item->end = Carbon::createFromFormat('Y-m-d H:i:s', $item->start)->addDay()->toDateTimeString();
+                        $item->prettyDateStart = Utility::prettifyDate($item->start);
+                        $item->prettyDateEnd = Utility::prettifyDate($item->end);
+                        $item->since = Utility::getTimePastSinceDate($item->start);
+                        // $item->event_type_name = EventType::getName($item->event_type);                        
+                    })
+                    ->groupBy(function($event) {
+                            return Carbon::parse($event->start)->format('Y-m-d');
+                    });
+                    
+        return $products;
+    
+    }
+
     public static function getAllProductLaunches($banner_id)
     {
+    	
+
     	return ProductLaunch::where('banner_id', $banner_id)->orderBy('launch_date', 'desc')
     						->get()
     						->each(function ($item) {
@@ -40,7 +83,7 @@ class ProductLaunch extends Model
 			                    });
     }
 
-    public static function storeProductLaunchData($request)
+    public static function addProductLaunchData($request)
     {
         $banner_id = $request->banner_id;
         $productLaunchDocument = $request->file('document');
@@ -59,10 +102,8 @@ class ProductLaunch extends Model
             
             switch($request->uploadOption){
 	    		case "clear":
-	    			\DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-	    			ProductLaunchTarget::truncate();
-	    			ProductLaunch::truncate();
-	    			\DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+	    			
+	    			ProductLaunch::rollbackProductLaunch();
 	    			ProductLaunch::insertRecords($request, $csvFile);	
 	    			break;
 	    		
@@ -102,15 +143,15 @@ class ProductLaunch extends Model
 	                    'style_name' => (isset($row[13]) ? $row[13] : ''),
 	                    'clr_code' => (isset($row[14]) ? $row[14] : ''),
 	                    'clr_name' => (isset($row[15]) ? $row[15] : ''),
-	                    'launch_date' => (isset($row[16]) ? $row[16] : '')
+	                    'launch_date' => (isset($row[16]) ? $row[16] : ''),
+	                    'title' => (isset($row[19])? $row[19]: ''),
+						'event_type' => (isset($row[20])? $row[20] : '')
 	                )
 	            );
 
 	         	$target = $row[2];
 	            ProductLaunch::createProductLaunchTarget($productLaunch, $target);
-	            $productLaunchEventData = ProductLaunch::compileProductLaunchEventData($row);
-	            $productLaunchEventData['banner_id'] = $request->banner_id;
-	            Event::createProductLaunchEvent($productLaunchEventData);
+
          	}
          } 
 	}
@@ -137,11 +178,21 @@ class ProductLaunch extends Model
                 $record['clr_code'] = (isset($row[14]) ? $row[14] : '');
                 $record['clr_name'] = (isset($row[15]) ? $row[15] : '');
                 $record['launch_date'] = (isset($row[16]) ? $row[16] : '');
-
+                $record['title'] = (isset($row[19])? $row[19]: '');
+				$record['event_type'] = (isset($row[20])? $row[20] : '');
                 $record->save();
 
 			}
 		}
+	}
+
+	public static function rollbackProductLaunch()
+	{
+		\DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+		ProductLaunchTarget::truncate();
+		ProductLaunch::truncate();
+		\DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
 	}
 
 	public static function createProductLaunchTarget($productLaunch, $targetStores)
@@ -150,22 +201,22 @@ class ProductLaunch extends Model
 		if($stores[count($stores) -1 ] == 0){
 			array_pop($stores);
 		}
+
+		$storeList = StoreInfo::getStoreListingForStoreNumberOffset($productLaunch->banner_id);
+		// dd($storeList);
+		
+		$banner_id = $productLaunch->banner_id;
+		
 		foreach ($stores as $key => $value) {
-			ProductLaunchTarget::create([
-					'store_id' => $value,
+			if(isset($storeList[$value])){
+				ProductLaunchTarget::create([
+					'store_id' => $storeList[$value],
 					'productlaunch_id' => $productLaunch->id	
 
-				]);
+				]);	
+			}
+			
 		}
 	}
 
-	public static function compileProductLaunchEventData($row)
-	{
-			$event = [];
-			$event['title'] = $row[19];
-			$event['event_type'] = $row[20];
-			$event['launch_date'] = $row[16];
-			$event['stores'] = $row[2];
-			return $event;
-	}
 }

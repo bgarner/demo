@@ -15,7 +15,7 @@ class CreateProductlaunchTargetTable extends Migration
         Schema::create('productlaunch_target', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('productlaunch_id')->unsigned();
-            $table->integer('store_id');
+            $table->string('store_id');
             $table->timestamps();
             $table->foreign('productlaunch_id')->references('id')->on('productlaunch')->onDelete('cascade');
         });

@@ -23,6 +23,7 @@ use App\Models\Alert\Alert;
 use App\Skin;
 use App\Models\StoreInfo;
 use App\Models\Utility\Utility;
+use App\Models\ProductLaunch\ProductLaunch;
 
 class CalendarController extends Controller
 {
@@ -56,16 +57,25 @@ class CalendarController extends Controller
         $alertCount = Alert::getActiveAlertCountByStore($storeNumber);
 
         //for the calendar view
-        $events = Event::getActiveEventsByStore($storeNumber); 
+        $events = Event::getActiveEventsByStore($storeNumber);
+        $productLaunches = ProductLaunch::getActiveProductLaunchByStoreForCalendar($storeNumber);
+        $events = $events->merge($productLaunches); 
+        
 
-        //for then list of events
+        //for the list of events
         $eventsList = Event::getActiveEventsByStoreAndMonth($storeNumber, $today);
+        $productLaunchList = ProductLaunch::getActiveProductLaunchByStoreandMonth($storeNumber, $today);
+        
+        // $eventsList = $eventsList->merge($productLaunchList);
+        // dd($eventsList);
 
         foreach ($events as $event) {
             $event->prettyDateStart = Utility::prettifyDate($event->start);
             $event->prettyDateEnd = Utility::prettifyDate($event->end);
             $event->since = Utility::getTimePastSinceDate($event->start);
-            $event->event_type_name = EventType::getName($event->event_type);
+            if(!isset($event->event_type_name)){
+                $event->event_type_name = EventType::getName($event->event_type);
+            }
         }
 
 

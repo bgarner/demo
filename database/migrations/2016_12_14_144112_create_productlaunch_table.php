@@ -15,9 +15,7 @@ class CreateProductlaunchTable extends Migration
         Schema::create('productlaunch', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('store_style')->nullable();
-            // $table->string('store_number')->nullable();
             $table->integer('banner_id')->unsigned();
-            // $table->string('store_name')->nullable();
             $table->string('dpt_number')->nullable();
             $table->string('dpt_name')->nullable();
             $table->string('sdpt_number')->nullable();
@@ -32,6 +30,8 @@ class CreateProductlaunchTable extends Migration
             $table->string('clr_code')->nullable();
             $table->string('clr_name')->nullable();
             $table->timestamp('launch_date')->nullable();
+            $table->string('title')->nullable();
+            $table->string('event_type')->nullable();
             $table->nullableTimestamps();
             $table->foreign('banner_id')->references('id')->on('banners')->onDelete('cascade');
 

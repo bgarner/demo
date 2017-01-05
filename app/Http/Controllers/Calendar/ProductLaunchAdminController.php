@@ -55,7 +55,7 @@ class ProductLaunchAdminController extends Controller
      */
     public function store(Request $request)
     {
-        return ProductLaunch::storeProductLaunchData($request);
+        return ProductLaunch::addProductLaunchData($request);
     }
 
     /**
