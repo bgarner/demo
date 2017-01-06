@@ -94,7 +94,7 @@
 
                 </li>
 
-                @if (Request::segment(2) == 'tools')
+                <!-- @if (Request::segment(2) == 'tools')
                 <li class="active">
                 @else
                 <li>
@@ -104,6 +104,6 @@
                             <li><a href="/{{ Request::segment(1) }}/tools/boxingday">Boxing Day Doorcrasher Tracker</a></li>
                         </ul>
 
-                </li>
+                </li> -->
 
             </ul>
