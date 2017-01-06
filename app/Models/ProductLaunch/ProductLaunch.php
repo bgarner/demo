@@ -50,11 +50,11 @@ class ProductLaunch extends Model
 
     public static function getActiveProductLaunchByStoreandMonth($storeNumber, $yearMonth)
     {
-    
+    	
         $products = ProductLaunch::join('productlaunch_target', 'productlaunch.id', '=', 'productlaunch_target.productlaunch_id')
-                    ->where('store_id', $storeNumber)
-                    ->where('launch_date', 'LIKE', $yearMonth.'%')
-                    ->orderBy('launch_date')
+                    ->where('productlaunch_target.store_id', $storeNumber)
+                    ->where('productlaunch.launch_date', 'LIKE', $yearMonth.'%')
+                    ->orderBy('productlaunch.launch_date')
                     ->select('productlaunch.id', 'productlaunch.launch_date as start', 'productlaunch.title', 'productlaunch_target.store_id', 'productlaunch.event_type as event_type_name', 'productlaunch.banner_id')
                     ->get()
                     ->each(function ($item) {
@@ -62,12 +62,11 @@ class ProductLaunch extends Model
                         $item->prettyDateStart = Utility::prettifyDate($item->start);
                         $item->prettyDateEnd = Utility::prettifyDate($item->end);
                         $item->since = Utility::getTimePastSinceDate($item->start);
-                        // $item->event_type_name = EventType::getName($item->event_type);                        
+                        $item->description = '';                        
                     })
                     ->groupBy(function($event) {
                             return Carbon::parse($event->start)->format('Y-m-d');
                     });
-                    
         return $products;
     
     }
