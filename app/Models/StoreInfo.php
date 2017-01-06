@@ -20,7 +20,7 @@ class StoreInfo extends Model
     public static function getStoreListing($banner_id)
     {
     	
-        $storeInfo = StoreInfo::getStoreInfo($banner_id);
+        $storeInfo = StoreInfo::getStoresInfo($banner_id);
         $storelist = StoreInfo::buildStoreList($storeInfo);
         return $storelist;
     }
