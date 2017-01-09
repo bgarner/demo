@@ -30,6 +30,8 @@
     }
 
 
+
+
     .giveMeEllipsis {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -136,7 +138,9 @@
                                     <a href="video/playlist/{{$lp->id}}" class="trackclick" data-playlist-id="{{$lp->id}}"><img src="/video/thumbs/{{$lp->thumbnail}}" class="img-responsive" /></a>
 
                                     <div class="playlist-meta">
-                                        <h4 class="giveMeEllipsis"><a href="video/playlist/{{$lp->id}}" class="trackclick" data-playlist-id="{{$lp->id}}">{{$lp->title}}</a></h4>
+                                        <h4 class="giveMeEllipsis">
+                                        <a href="video/playlist/{{$lp->id}}" class="trackclick" data-playlist-id="{{$lp->id}}">{{$lp->title}}</a>
+                                        </h4>
                                         {!! $lp->description !!}
                                         <p>{{$lp->count}} videos &middot; {{$lp->sinceCreated}} ago</p>
                                     </div>
@@ -164,10 +168,15 @@
                                         <div class="embed-responsive embed-responsive-16by9">
                                         <a href="video/watch/{{$mr->id}}" class="trackclick" data-video-id="{{$mr->id}}"><img src="/video/thumbs/{{$mr->thumbnail}}" class="embed-responsive-item img-responsive" /></a>
                                         </div>
-                                        <h4><a href="video/watch/{{$mr->id}}" class="trackclick" data-video-id="{{$mr->id}}">{{$mr->title}}</a></h4>
+                                        
+                                        <h4>
+                                            <a href="video/watch/{{$mr->id}}" class="trackclick" data-video-id="{{$mr->id}}">{{$mr->title}}</a>
+                                        </h4>
+                                        
                                         <p>{{$mr->views}} views &middot; {{$mr->sinceCreated}} ago</p>
                                     </div>
                                 @endforeach
+                                <a class="pull-right" href="video/latest">&raquo; More Recent Videos</a>
                             </div>
                         </div>
                     </div>
@@ -189,7 +198,7 @@
                                         <p>{{$mv->views}} views &middot; {{$mv->sinceCreated}} ago</p>
                                     </div>
                                 @endforeach
-
+                                <a class="pull-right" href="video/popular">&raquo; More Popular Videos</a>
                             </div>
                         </div>
                     </div>
