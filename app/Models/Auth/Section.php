@@ -17,7 +17,7 @@ class Section extends Model
                 'banner_id' => $request['banner_id']
 
             ]);
-    	GroupSection::createSectionGroups($section, $request);
+    	GroupSection::createSectionGroupPivotWithSectionId($section, $request);
     	return;
 
     }
@@ -27,7 +27,7 @@ class Section extends Model
     	$section = Section::find($id);
     	$section['section_name'] = $request['section_name'];
     	$section->save();
-    	GroupSection::editSectionGroups($request, $id);
+    	GroupSection::editSectionGroupPivotBySectionId($request, $id);
     	return $section;
     }
 
@@ -37,6 +37,10 @@ class Section extends Model
 		GroupSection::where('section_id', $id)->delete();
 	}    
 
+	public static function getSectionList($banner_id)
+    {
+    	return Section::where('banner_id', $banner_id)->get()->lists('section_name', 'id');
+    }
     
 
 

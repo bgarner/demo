@@ -4,16 +4,17 @@ $(document).ready(function(){
 			});
 });
 
-$(document).on('click','.section-create',function(){
+$(document).on('click','.group-create',function(){
   	
   	var hasError = false;
 
-    var section_name = $("#section_name").val();
-    var groups =  $("#groups").val();
+    var group_name = $("#group_name").val();
+    var sections =  $("#sections").val();
     var bannerId = localStorage.getItem('admin-banner-id');
 
-
-    if(section_name == '') {
+    console.log(group_name);
+    console.log(sections);
+    if(group_name == '') {
 		swal("Oops!", "This we need a name for this section.", "error"); 
 		hasError = true;
 		$(window).scrollTop(0);
@@ -23,13 +24,13 @@ $(document).on('click','.section-create',function(){
 
 	if(hasError == false) {
 		$.ajax({
-		    url: '/admin/section',
+		    url: '/admin/group',
 		    type: 'POST',
-		    data: { section_name: section_name, groups: groups, banner_id: bannerId },
+		    data: { group_name: group_name, sections: sections, banner_id: bannerId },
 		    success: function(result) {
 		        console.log(result);
-		        $("#section").val(""); // empty the form
-				swal("Nice!", "'" + section_name +"' has been created", "success");        
+		        $("#group").val(""); // empty the form
+				swal("Nice!", "'" + group_name +"' has been created", "success");        
 		    }
 		});
 	}

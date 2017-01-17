@@ -6,9 +6,23 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\Auth\Group;
+use App\Models\UserSelectedBanner;
+use App\Models\Banner;
+use App\Models\Auth\Section;
+use App\Models\Auth\GroupSection;
 
 class GroupAdminController extends Controller
 {
+    public $banner;
+    public $banners;
+
+    public function __construct()
+    {
+        $this->banner = UserSelectedBanner::getBanner();
+        $this->banners = Banner::all();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +30,10 @@ class GroupAdminController extends Controller
      */
     public function index()
     {
-        //
+        $groups =  Group::all();
+        return view('admin.groups.index')->with('groups', $groups)
+                        ->with('banners', $this->banners)
+                        ->with('banner', $this->banner);
     }
 
     /**
@@ -26,7 +43,11 @@ class GroupAdminController extends Controller
      */
     public function create()
     {
-        //
+        $sections = Section::getSectionList($this->banner->id);
+        // dd($sections);
+        return view('admin.groups.create')->with('banner', $this->banner)
+                                            ->with('banners', $this->banners)
+                                            ->with('sections', $sections);
     }
 
     /**
@@ -37,7 +58,8 @@ class GroupAdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $group = Group::createGroup($request);
+        return  $group;
     }
 
     /**
@@ -59,7 +81,14 @@ class GroupAdminController extends Controller
      */
     public function edit($id)
     {
-        //
+        $group = Group::find($id);
+        $sections = Section::getSectionList($this->banner->id);
+        $selected_sections = GroupSection::getSectionListByGroupId($id);
+        return view('admin.groups.edit')->with('banners', $this->banners)
+                                        ->with('banner', $this->banner)
+                                        ->with('sections', $sections)
+                                        ->with('group', $group)
+                                        ->with('selected_sections', $selected_sections);
     }
 
     /**
@@ -71,7 +100,7 @@ class GroupAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return Group::editGroup($request, $id);
     }
 
     /**
@@ -82,6 +111,6 @@ class GroupAdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Group::deleteGroup($id);
     }
 }

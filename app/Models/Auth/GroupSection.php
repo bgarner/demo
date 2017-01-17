@@ -14,8 +14,13 @@ class GroupSection extends Model
     	$groups = GroupSection::where('section_id', $id)->get()->pluck('group_id')->toArray();
     	return $groups;
     }
+    public static function getsectionListByGroupId($id)
+    {
+    	$sections = GroupSection::where('group_id', $id)->get()->pluck('section_id')->toArray();
+    	return $sections;
+    }
 
-    public static function createSectionGroups($section, $request)
+    public static function createSectionGroupPivotWithSectionId($section, $request)
     {
     	foreach ($request['groups'] as $group_id) {
     		GroupSection::create([
@@ -26,14 +31,34 @@ class GroupSection extends Model
     	}
     	
     }
+    public static function createSectionGroupPivotWithGroupId($group, $request)
+    {
+    	foreach ($request['sections'] as $section_id) {
+    		GroupSection::create([
+    			'group_id' => $group->id,
+    			'section_id' => $section_id
 
-    public static function editSectionGroups($request, $id)
+    		]);	
+    	}
+    	
+    }
+    public static function editSectionGroupPivotBySectionId($request, $id)
     {
     	GroupSection::where('section_id', $id)->delete();
     	foreach ($request['groups'] as $group_id) {
     		GroupSection::create([
     				'section_id' => $id,
     				'group_id'	=> $group_id
+    			]);
+    	}
+    }
+    public static function editSectionGroupPivotByGroupId($request, $id)
+    {
+    	GroupSection::where('group_id', $id)->delete();
+    	foreach ($request['sections'] as $section_id) {
+    		GroupSection::create([
+    				'group_id' => $id,
+    				'section_id'	=> $section_id
     			]);
     	}
     }
