@@ -5,15 +5,15 @@ $(document).ready(function(){
 });
 
 
-$(document).on('click','.group-edit',function(){
+$(document).on('click','.component-edit',function(){
   	
   	var hasError = false;
 
-  	var group_name = $("#group_name").val();
-  	var group_id = $("#groupID").val();
-    var components  = $("#components").val();
+  	var component_name = $("#component_name").val();
+  	var component_id = $("#componentID").val();
+    var groups  = $("#groups").val();
 	
-    if(group_name == '') {
+    if(component_name == '') {
 		swal("Oops!", "This event needs a title.", "error"); 
 		hasError = true;
 		$(window).scrollTop(0);
@@ -23,27 +23,27 @@ $(document).on('click','.group-edit',function(){
     if(hasError == false) {
 
 		$.ajax({
-		    url: '/admin/group/' + group_id ,
+		    url: '/admin/component/' + component_id ,
 		    type: 'PATCH',
 		    dataType: 'json',
 		    data: {
-		    	id: group_id,
-		  		group_name: group_name,
-		    	components : components
+		    	id: component_id,
+		  		component_name: component_name,
+		    	groups : groups
 		    },
 
 		    success: function(data) {
 		      console.log(data);
 		        // if(data != null && data.validation_result == 'false') {
 		        // 	var errors = data.errors;
-		        // 	if(errors.hasOwnProperty("section_name")) {
+		        // 	if(errors.hasOwnProperty("component_name")) {
 		        // 		$.each(errors.title, function(index){
-		        // 			$("#section_name").parent().append('<div class="req">' + errors.title[index]  + '</div>');	
+		        // 			$("#component_name").parent().append('<div class="req">' + errors.title[index]  + '</div>');	
 		        // 		}); 	
 		        // 	}
 		        // }
 		        // else{
-		        	swal({title:"Nice!", text: "'" + group_name +"' has been updated", type: 'success'});      	
+		        	swal({title:"Nice!", text: "'" + component_name +"' has been updated", type: 'success'});      	
 		        // }
 
 				

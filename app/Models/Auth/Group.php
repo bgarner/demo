@@ -3,7 +3,7 @@
 namespace App\Models\Auth;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Auth\GroupSection;
+use App\Models\Auth\GroupComponent;
 
 class Group extends Model
 {
@@ -17,7 +17,7 @@ class Group extends Model
                 // 'banner_id' => $request['banner_id']
 
             ]);
-    	GroupSection::createSectionGroupPivotWithGroupId($group, $request);
+    	GroupComponent::createComponentGroupPivotWithGroupId($group, $request);
     	return;
 
     }
@@ -27,14 +27,14 @@ class Group extends Model
     	$group = Group::find($id);
     	$group['name'] = $request['group_name'];
     	$group->save();
-    	GroupSection::editSectionGroupPivotByGroupId($request, $id);
+    	GroupComponent::editComponentGroupPivotByGroupId($request, $id);
     	return $group;
     }
 
 	public static function deleteGroup($id)
 	{
 		Group::find($id)->delete();
-		GroupSection::where('group_id', $id)->delete();
+		GroupComponent::where('group_id', $id)->delete();
 	}    
 
     public static function getGroupList($banner_id)
@@ -45,7 +45,7 @@ class Group extends Model
     public static function getGroupDetails()
     {
         return Group::all()->each(function($group){
-            $group->sections = GroupSection::getSectionNameListByGroupId($group->id);
+            $group->components = GroupComponent::getComponentNameListByGroupId($group->id);
         });
     }
 }

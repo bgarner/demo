@@ -191,7 +191,7 @@ Route::resource('/admin/feedback/{id}/note' , 'StoreFeedback\NotesAdminControlle
 
 //User Groups and Sections
 Route::resource('/admin/group', 'Auth\GroupAdminController');
-Route::resource('/admin/section', 'Auth\SectionAdminController');
+Route::resource('/admin/component', 'Auth\ComponentAdminController');
 
 /* API Routes */
 //get navigation

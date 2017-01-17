@@ -6,13 +6,13 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Auth\Group;
 use App\Models\UserSelectedBanner;
 use App\Models\Banner;
+use App\Models\Auth\Group;
 use App\Models\Auth\Component;
 use App\Models\Auth\GroupComponent;
 
-class GroupAdminController extends Controller
+class ComponentAdminController extends Controller
 {
     public $banner;
     public $banners;
@@ -23,6 +23,7 @@ class GroupAdminController extends Controller
         $this->banners = Banner::all();
     }
 
+
     /**
      * Display a listing of the resource.
      *
@@ -30,8 +31,8 @@ class GroupAdminController extends Controller
      */
     public function index()
     {
-        $groups =  Group::getGroupDetails();
-        return view('admin.groups.index')->with('groups', $groups)
+        $components =  Component::getComponentDetails();
+        return view('admin.components.index')->with('components', $components)
                         ->with('banners', $this->banners)
                         ->with('banner', $this->banner);
     }
@@ -43,10 +44,10 @@ class GroupAdminController extends Controller
      */
     public function create()
     {
-        $components = Component::getComponentList($this->banner->id);
-        return view('admin.groups.create')->with('banner', $this->banner)
+        $groups = Group::getGroupList($this->banner->id);
+        return view('admin.components.create')->with('banner', $this->banner)
                                             ->with('banners', $this->banners)
-                                            ->with('components', $components);
+                                            ->with('groups', $groups);
     }
 
     /**
@@ -57,8 +58,8 @@ class GroupAdminController extends Controller
      */
     public function store(Request $request)
     {
-        $group = Group::createGroup($request);
-        return  $group;
+        $component = Component::createComponent($request);
+        return  $component;
     }
 
     /**
@@ -80,14 +81,14 @@ class GroupAdminController extends Controller
      */
     public function edit($id)
     {
-        $group = Group::find($id);
-        $components = Component::getComponentList($this->banner->id);
-        $selected_components = GroupComponent::getComponentListByGroupId($id);
-        return view('admin.groups.edit')->with('banners', $this->banners)
+        $component = Component::find($id);
+        $groups = Group::getGroupList($this->banner->id);
+        $selected_groups = GroupComponent::getGroupListByComponentId($id);
+        return view('admin.components.edit')->with('banners', $this->banners)
                                         ->with('banner', $this->banner)
-                                        ->with('components', $components)
-                                        ->with('group', $group)
-                                        ->with('selected_components', $selected_components);
+                                        ->with('component', $component)
+                                        ->with('groups', $groups)
+                                        ->with('selected_groups', $selected_groups);
     }
 
     /**
@@ -99,7 +100,7 @@ class GroupAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return Group::editGroup($request, $id);
+        return Component::editComponent($request, $id);
     }
 
     /**
@@ -110,6 +111,6 @@ class GroupAdminController extends Controller
      */
     public function destroy($id)
     {
-        Group::deleteGroup($id);
+        Component::deleteComponent($id);
     }
 }

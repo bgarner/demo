@@ -29,7 +29,7 @@
                             <a href="/admin">Home</a>
                         </li>
                         <li>
-                            <a href="/admin/section">Group</a>
+                            <a href="/admin/group">Group</a>
                         </li>
                         <li class="active">
                             <strong>Edit User Group</strong>
@@ -62,10 +62,10 @@
                                         	</div>
                                         </div>
                                         <div class="form-group">
-                                        	<label class="col-sm-2 control-label"> Available Sections </label>
+                                        	<label class="col-sm-2 control-label"> Accessible Components </label>
                                         	<div class="col-sm-10">
 
-                                        		{!! Form::select('sections[]', $sections, $selected_sections, [ 'class'=>'chosen', 'id'=> 'sections', 'multiple'=>'true']) !!}
+                                        		{!! Form::select('components[]', $components, $selected_components, [ 'class'=>'chosen', 'id'=> 'components', 'multiple'=>'true']) !!}
                                         	</div>
 
                                         </div>

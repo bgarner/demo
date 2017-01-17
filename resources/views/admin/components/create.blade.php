@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    @section('title', 'Sections')
+    @section('title', 'Components')
     @include('admin.includes.head')
 	
 	<link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
@@ -25,16 +25,16 @@
 
 		<div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>Create a User Group</h2>
+                    <h2>Create a Component</h2>
                     <ol class="breadcrumb">
                         <li>
                             <a href="/admin">Home</a>
                         </li>
                         <li>
-                            <a href="/admin/group">Groups</a>
+                            <a href="/admin/component">Component</a>
                         </li>
                         <li class="active">
-                            <strong>Create a User Group</strong>
+                            <strong>Create a Component</strong>
                         </li>
                     </ol>
                 </div>
@@ -48,7 +48,7 @@
 		                <div class="col-lg-12">
 		                    <div class="ibox">
 		                        <div class="ibox-title">
-		                            <h5>New Group</h5>
+		                            <h5>New Component</h5>
 		                            <div class="ibox-tools">
                                         
 		                            </div>
@@ -56,14 +56,14 @@
 		                        <div class="ibox-content">
 
                                     <form method="get" class="form-horizontal">
-                                        <div class="form-group"><label class="col-sm-2 control-label">Group Name</label>
-                                            <div class="col-sm-10"><input type="text" class="form-control" name="group_name" id="group_name" value=""></div>
+                                        <div class="form-group"><label class="col-sm-2 control-label">Component Name</label>
+                                            <div class="col-sm-10"><input type="text" class="form-control" name="component_name" id="component_name" value=""></div>
                                         </div>
 
                                         <div class="form-group">
-                                        	<label class="col-sm-2 control-label">Accessible Components</label>
+                                        	<label class="col-sm-2 control-label">Groups</label>
                                         	<div class="col-sm-10">
-                                        		{!! Form::select('components[]', $components, null, [ 'class'=>'chosen', 'id'=> 'components', 'multiple'=>'true']) !!}
+                                        		{!! Form::select('groups[]', $groups, null, [ 'class'=>'chosen', 'id'=> 'groups', 'multiple'=>'true']) !!}
                                         		
                                         	</div>
 
@@ -73,8 +73,8 @@
 
                                         <div class="form-group">
                                             <div class="col-sm-4 col-sm-offset-2">
-                                                <a class="btn btn-white" href="/admin/group"><i class="fa fa-close"></i> Cancel</a>
-                                                <button class="group-create btn btn-primary" type="submit"><i class="fa fa-check"></i> Create New User Group</button>
+                                                <a class="btn btn-white" href="/admin/component"><i class="fa fa-close"></i> Cancel</a>
+                                                <button class="component-create btn btn-primary" type="submit"><i class="fa fa-check"></i> Create New Component</button>
 
                                             </div>
                                         </div>
@@ -105,7 +105,7 @@
 					});
 				</script>
 				<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
-				<script src="/js/custom/admin/groups/addGroup.js"></script>
+				<script src="/js/custom/admin/components/addComponent.js"></script>
 				
 				
 

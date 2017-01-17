@@ -9,13 +9,13 @@ $(document).on('click','.group-create',function(){
   	var hasError = false;
 
     var group_name = $("#group_name").val();
-    var sections =  $("#sections").val();
+    var components =  $("#components").val();
     var bannerId = localStorage.getItem('admin-banner-id');
 
     console.log(group_name);
-    console.log(sections);
+    console.log(components);
     if(group_name == '') {
-		swal("Oops!", "This we need a name for this section.", "error"); 
+		swal("Oops!", "This we need a name for this group.", "error"); 
 		hasError = true;
 		$(window).scrollTop(0);
 		return false;
@@ -26,7 +26,7 @@ $(document).on('click','.group-create',function(){
 		$.ajax({
 		    url: '/admin/group',
 		    type: 'POST',
-		    data: { group_name: group_name, sections: sections, banner_id: bannerId },
+		    data: { group_name: group_name, components: components, banner_id: bannerId },
 		    success: function(result) {
 		        console.log(result);
 		        $("#group").val(""); // empty the form

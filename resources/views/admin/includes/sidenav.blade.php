@@ -118,42 +118,21 @@
     </li>
 
     @if (Auth::user()->group_id == 1)
-        @if (Request::is('admin/user/*') || Request::is('admin/user')) 
+
+        @if ( Request::is('admin/user/*') || Request::is('admin/user')|| Request::is('admin/component/*') || Request::is('admin/component') || Request::is('admin/group/*') || Request::is('admin/group')) 
         <li class="active">
         @else
         <li>
         @endif
-            <a href="/admin/user"><i class="fa fa-user"></i> <span class="nav-label">User Management</span><span class="fa arrow"></span></a>
+            <a href="/admin/group"><i class="fa fa-users"></i> <span class="nav-label">User and Group Management</span><span class="fa arrow"></span></a>
             <ul class="nav nav-second-level collapse">
                 <li><a href="/admin/user">View Users</a></li>
-            </ul>
-        </li>
-
-        @if (Request::is('admin/section/*') || Request::is('admin/section')) 
-        <li class="active">
-        @else
-        <li>
-        @endif
-        <a href="/admin/section"><i class="fa fa-list-ul"></i> <span class="nav-label">Section Management</span><span class="fa arrow"></span></a>
-            <ul class="nav nav-second-level collapse">
-                <li><a href="/admin/section">View Sections</a></li>
-            </ul>
-        </li>
-
-        @if (Request::is('admin/group/*') || Request::is('admin/group')) 
-        <li class="active">
-        @else
-        <li>
-        @endif
-            <a href="/admin/group"><i class="fa fa-users"></i> <span class="nav-label">User Group Management</span><span class="fa arrow"></span></a>
-            <ul class="nav nav-second-level collapse">
+                <li><a href="/admin/component">View Components</a></li>
                 <li><a href="/admin/group">View User Groups</a></li>
             </ul>
         </li>
 
-    @endif
-
-    @if (Auth::user()->group_id == 1)
+    
         @if (Request::is('admin/feedback/*') || Request::is('admin/feedback')) 
         <li class="active">
         @else
