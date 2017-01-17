@@ -43,5 +43,10 @@ class Section extends Model
     }
     
 
-
+    public static function getSectionDetails()
+    {
+        return Section::all()->each(function($section){
+            $section->groups = GroupSection::getGroupNameListBySectionId($section->id);
+        });
+    }
 }

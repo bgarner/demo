@@ -41,4 +41,11 @@ class Group extends Model
     {
     	return Group::all()->lists('name', 'id');
     }
+
+    public static function getGroupDetails()
+    {
+        return Group::all()->each(function($group){
+            $group->sections = GroupSection::getSectionNameListByGroupId($group->id);
+        });
+    }
 }

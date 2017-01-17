@@ -31,7 +31,7 @@ class SectionAdminController extends Controller
      */
     public function index()
     {
-        $sections =  Section::all();
+        $sections =  Section::getSectionDetails();
         return view('admin.sections.index')->with('sections', $sections)
                         ->with('banners', $this->banners)
                         ->with('banner', $this->banner);

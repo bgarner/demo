@@ -30,7 +30,7 @@ class GroupAdminController extends Controller
      */
     public function index()
     {
-        $groups =  Group::all();
+        $groups =  Group::getGroupDetails();
         return view('admin.groups.index')->with('groups', $groups)
                         ->with('banners', $this->banners)
                         ->with('banner', $this->banner);
@@ -44,7 +44,6 @@ class GroupAdminController extends Controller
     public function create()
     {
         $sections = Section::getSectionList($this->banner->id);
-        // dd($sections);
         return view('admin.groups.create')->with('banner', $this->banner)
                                             ->with('banners', $this->banners)
                                             ->with('sections', $sections);

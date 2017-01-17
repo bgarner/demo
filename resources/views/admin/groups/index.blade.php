@@ -72,10 +72,16 @@
 
 										<tr>
 
-											<td >{{ $group->name }}</td>
-											<td ></td>
+											<td class="col-xs-2">{{ $group->name }}</td>
+											<td class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+												@foreach($group->sections as $section)
+													<span class="label">{!! $section->section_name !!}</span>
+												@endforeach		
+										
+
+											</td>
 											
-											<td>
+											<td class="col-xs-2">
 												<a href="/admin/group/{{ $group->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
 
 												<a data-groupId="{{ $group->id }}" id="group{{ $group->id }}" class="group-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>

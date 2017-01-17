@@ -73,7 +73,13 @@
 										<tr>
 
 											<td >{{ $section->section_name }}</td>
-											<td ></td>
+											<td >
+												@foreach($section->groups as $group)
+													<span class="label">{!! $group->name !!}</span>
+												@endforeach		
+										
+
+											</td>
 											
 											<td>
 												<a href="/admin/section/{{ $section->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
