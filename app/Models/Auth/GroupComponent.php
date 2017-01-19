@@ -82,4 +82,22 @@ class GroupComponent extends Model
     			]);
     	}
     }
+
+    public static function getAccessibleComponentNameList()
+    {
+        $group_id = \Auth::user()->group_id;
+        return GroupComponent::getComponentNameArrayByGroupId($group_id);
+    }
+
+    public static function getComponentNameArrayByGroupId($group_id)
+    {
+        $components = GroupComponent::join('components', 'components.id', '=', 'group_component.component_id')
+                                ->where('group_id', $group_id)
+                                ->select('components.component_name')
+                                ->get()
+                                ->pluck('component_name')
+                                ->toArray();
+                                
+        return $components;
+    }
 }

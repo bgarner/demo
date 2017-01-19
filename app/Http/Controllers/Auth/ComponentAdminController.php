@@ -14,13 +14,11 @@ use App\Models\Auth\GroupComponent;
 
 class ComponentAdminController extends Controller
 {
-    public $banner;
-    public $banners;
-
     public function __construct()
     {
-        $this->banner = UserSelectedBanner::getBanner();
-        $this->banners = Banner::all();
+        $this->middleware('admin.auth');
+        $this->middleware('superadmin.auth');
+        $this->middleware('banner');
     }
 
 
@@ -31,10 +29,12 @@ class ComponentAdminController extends Controller
      */
     public function index()
     {
+        $banner = UserSelectedBanner::getBanner();
+        $banners = Banner::all();
         $components =  Component::getComponentDetails();
         return view('admin.components.index')->with('components', $components)
-                        ->with('banners', $this->banners)
-                        ->with('banner', $this->banner);
+                        ->with('banners', $banners)
+                        ->with('banner', $banner);
     }
 
     /**
@@ -44,9 +44,11 @@ class ComponentAdminController extends Controller
      */
     public function create()
     {
-        $groups = Group::getGroupList($this->banner->id);
-        return view('admin.components.create')->with('banner', $this->banner)
-                                            ->with('banners', $this->banners)
+        $banner = UserSelectedBanner::getBanner();
+        $banners = Banner::all();
+        $groups = Group::getGroupList($banner->id);
+        return view('admin.components.create')->with('banner', $banner)
+                                            ->with('banners', $banners)
                                             ->with('groups', $groups);
     }
 
@@ -81,11 +83,13 @@ class ComponentAdminController extends Controller
      */
     public function edit($id)
     {
+        $banner = UserSelectedBanner::getBanner();
+        $banners = Banner::all();
         $component = Component::find($id);
-        $groups = Group::getGroupList($this->banner->id);
+        $groups = Group::getGroupList($banner->id);
         $selected_groups = GroupComponent::getGroupListByComponentId($id);
-        return view('admin.components.edit')->with('banners', $this->banners)
-                                        ->with('banner', $this->banner)
+        return view('admin.components.edit')->with('banners', $banners)
+                                        ->with('banner', $banner)
                                         ->with('component', $component)
                                         ->with('groups', $groups)
                                         ->with('selected_groups', $selected_groups);

@@ -16,6 +16,16 @@ use App\Models\StoreFeedback\FeedbackResponse;
 class FeedbackAdminController extends Controller
 {
     /**
+     * Instantiate a new FeedbackAdminController instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('admin.auth');
+        $this->middleware('superadmin.auth');
+        $this->middleware('banner');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

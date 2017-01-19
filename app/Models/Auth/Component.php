@@ -49,4 +49,9 @@ class Component extends Model
             $component->groups = GroupComponent::getGroupNameListBycomponentId($component->id);
         });
     }
+
+    public static function getComponentIdByComponentName($component_name)
+    {
+        return Component::where('component_name', $component_name)->first()->id;
+    }
 }

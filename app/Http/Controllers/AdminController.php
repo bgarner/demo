@@ -28,6 +28,7 @@ class AdminController extends Controller
     {
         $this->middleware('admin.auth');
         $this->middleware('banner');
+        $this->middleware('superadmin.auth');
         $this->user_id = \Auth::user()->id;
         $this->group_id = \Auth::user()->group_id;
         

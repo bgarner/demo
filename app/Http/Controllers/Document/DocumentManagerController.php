@@ -26,6 +26,7 @@ class DocumentManagerController extends Controller
     public function __construct()
     {
         $this->middleware('admin.auth');
+        $this->middleware('superadmin.auth');
         $this->middleware('banner');
         $this->user_id = \Auth::user()->id;
         $this->group_id = \Auth::user()->group_id;
