@@ -23,7 +23,7 @@ class ProductLaunch extends Model
 		
     	$products =  ProductLaunch::join('productlaunch_target', 'productlaunch_target.productlaunch_id' , '=', 'productlaunch.id')
     							->where('store_id', $storeNumber)
-				                ->where('productlaunch.launch_date', '>=', $now)
+				                // ->where('productlaunch.launch_date', '>=', $now)
 				                ->orderBy('productlaunch.launch_date')
     							->get()
     							->each(function ($item) {
@@ -39,7 +39,7 @@ class ProductLaunch extends Model
 		
     	$products =  ProductLaunch::join('productlaunch_target', 'productlaunch_target.productlaunch_id' , '=', 'productlaunch.id')
     							->where('store_id', $storeNumber)
-				                ->where('productlaunch.launch_date', '>=', $now)
+				                // ->where('productlaunch.launch_date', '>=', $now)
 				                ->select('productlaunch.id', 'productlaunch.launch_date as start', 'productlaunch_target.store_id', 'productlaunch.event_type as event_type_name', 'productlaunch.style_number', 'productlaunch.style_name', 'productlaunch.retail_price')
     							->get()
     							->each(function ($item) {
@@ -80,8 +80,8 @@ class ProductLaunch extends Model
     {
     	
 
-    	return ProductLaunch::orderBy('launch_date', 'asc')
-    						->get()
+    	return ProductLaunch::all()
+    						->sortBy('launch_date')
     						->each(function ($item) {
 			                        $item->prettyLaunchDate = Utility::prettifyDate($item->launch_date);                   
 			                    });
@@ -102,8 +102,9 @@ class ProductLaunch extends Model
 
         if($upload_success){
         	$csvFile = Reader::createFromPath($directory. "/" . $filename);
-            
+            \Log::info($request->uploadOption);
             switch($request->uploadOption){
+
 	    		case "clear":
 	    			
 	    			ProductLaunch::rollbackProductLaunch();
@@ -126,9 +127,10 @@ class ProductLaunch extends Model
 
 	public static function insertRecords($request, $csvFile)
 	{
+		$storeList = $storeList = StoreInfo::getAllStoreNumbers();
 		foreach ($csvFile as $index => $row) {
-			\Log::info($row);
         	if($index != 0){
+        		if(!empty($row[0])){
 	         	$productLaunch = ProductLaunch::create(
 	                array(
 	                    'launch_date' => (isset($row[0]) ? $row[0] : ''),
@@ -146,19 +148,20 @@ class ProductLaunch extends Model
 	            );
 
 	         	$target = $row[10];
-	            ProductLaunch::createProductLaunchTarget($productLaunch, $target);
-
+	            ProductLaunch::createProductLaunchTarget($productLaunch, $target, $storeList);
+	        	}
          	}
          } 
 	}
 
 	public static function updateRecords($request, $csvFile)
 	{
+		$storeList = $storeList = StoreInfo::getAllStoreNumbers();
 		foreach ($csvFile as $index => $row) {
-		
-			if ($index != 0) {
-				$store_style = $row[1];
-				$record = ProductLaunch::where('store_style', $store_style)->first();
+			
+			if ($index != 0 && (!empty($row[0]))) {
+				$style_number = $row[1];
+				$record = ProductLaunch::where('style_number', $style_number)->first();
 
 				$record['launch_date'] = (isset($row[0]) ? $row[0] : '');
 	            $record['style_number'] = (isset($row[1]) ? $row[1] : '');
@@ -176,6 +179,10 @@ class ProductLaunch extends Model
 
 			}
 
+			ProductLaunch::deleteProductLaunchTarget($productlaunch);
+			$target = $row[10];
+			ProductLaunch::deleteProductLaunchTarget($productlaunch, $row[10], $storeList );
+
 		}
 	}
 
@@ -188,24 +195,24 @@ class ProductLaunch extends Model
 
 	}
 
-	public static function createProductLaunchTarget($productLaunch, $targetStores)
+	public static function createProductLaunchTarget($productLaunch, $targetStores, $storeList)
 	{
 		$targetStores = preg_replace('/\s+/', '', $targetStores);
 		$targetStores = ltrim($targetStores, ",");  
 		$targetStores = rtrim($targetStores, ","); 
 		$stores = explode(',', $targetStores);
 
-		$storeList = StoreInfo::getAllStoreNumbers();
-		\Log::info(print_r($storeList, true));
+		
 		
 		foreach ($stores as $key => $value) {
-			// if(isset($storeList[$value])){
-			// 	ProductLaunchTarget::create([
-			// 		'store_id' => $storeList[$value]['store_number'],
-			// 		'productlaunch_id' => $productLaunch->id	
+			$store_number = array_search( $value, $storeList);
+			if(isset($store_number) && $store_number != '0'){
+				ProductLaunchTarget::create([
+					'store_id' => $store_number,
+					'productlaunch_id' => $productLaunch->id	
 
-			// 	]);	
-			// }
+				]);	
+			}
 			
 		}
 		ProductLaunchTarget::create([
@@ -213,6 +220,12 @@ class ProductLaunch extends Model
 			'productlaunch_id' => $productLaunch->id	
 
 		]);	
+	}
+
+	public static function deleteProductLaunchTarget($productLaunch)
+	{	
+		ProductLaunchTarget::where('productlaunch_id' , $productLaunch->id	)->delete();
+		return;
 	}
 
 }

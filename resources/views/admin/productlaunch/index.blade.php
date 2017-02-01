@@ -67,7 +67,6 @@
 	                    				<th>Style</th>
 	                    				<th>Retail Price</th>
 	                    				<th>Tracking</th>
-	                    				<th>Title</th>
 
 	                    				
 	                    			</tr>
@@ -84,7 +83,6 @@
 											<td>{{$productLaunch->style_name}}</td>
 											<td>{{$productLaunch->retail_price}}</td>
 											<td>{{$productLaunch->tracking}}</td>
-											<td>{{$productLaunch->title}}</td>
 										</tr>
 	                    			@endforeach
 				                    
@@ -100,7 +98,6 @@
 	                    				<th>Style</th>
 	                    				<th>Retail Price</th>
 	                    				<th>Tracking</th>
-	                    				<th>Title</th>
 	                    				
 			                    </tr>
 			                    </tfoot>

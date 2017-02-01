@@ -52,7 +52,18 @@ class StoreInfo extends Model
         $storeAPI = env('STORE_API_DOMAIN', false);
         $storeInfoJson = file_get_contents( $storeAPI . "/storenumbers");
         $storeInfo = json_decode($storeInfoJson);
-        return $storeInfo;
+        $storelist = [];
+        foreach ($storeInfo as $store) {
+                $storelist[$store->store_number] = $store->store_id;
+        }
+        uksort($storelist, function($a, $b) {
+           if (is_numeric($a) && is_numeric($b)) return $a - $b;
+           else if (is_numeric($a)) return -1;
+           else if (is_numeric($b)) return 1;
+           return strcmp($a, $b);
+        });
+        \Log::info(print_r($storelist, true));
+        return $storelist;
     }
 
     public static function buildStoreList($storeInfo)
