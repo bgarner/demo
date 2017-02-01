@@ -11,7 +11,8 @@
         "guzzlehttp/guzzle": "~4.0",
         "fzaninotto/faker": "^1.5",
         "doctrine/dbal": "^2.5",
-        "php-ffmpeg/php-ffmpeg": "^0.6.1"
+        "php-ffmpeg/php-ffmpeg": "^0.6.1",
+        "league/csv": "^8.1"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",

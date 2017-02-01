@@ -55,7 +55,7 @@ function getCurrentMonth(yearMonth)
 	setMonthName(yearMonth);
 	setYear(yearMonth);
 	setMonthDigits(yearMonth);
-	getListData(yearMonth);
+	// getListData(yearMonth);
 	renderList(yearMonth);
 	console.log(the_month_name, the_year);
 
