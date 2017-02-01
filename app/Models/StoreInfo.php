@@ -9,14 +9,6 @@ use App\Models\UserSelectedBanner;
 class StoreInfo extends Model
 {
     
-    public static function getStoresInfo($banner_id)
-    {
-        $storeAPI = env('STORE_API_DOMAIN', false);
-        $storeInfoJson = file_get_contents( $storeAPI . "/banner/" . $banner_id);
-        $storeInfo = json_decode($storeInfoJson);
-        return $storeInfo;
-    }
-
     public static function getStoreListing($banner_id)
     {
     	
@@ -24,16 +16,6 @@ class StoreInfo extends Model
         $storelist = StoreInfo::buildStoreList($storeInfo);
         return $storelist;
     }
-
-    public static function buildStoreList($storeInfo)
-    {
-    	$storelist = [];
-    	foreach ($storeInfo as $store) {
-    			$storelist[$store->store_number] = $store->store_id . " " . $store->name;
-    	}
-    	return $storelist;	
-    }
-
 
     public static function getComboStoreList($banner_id)
     {
@@ -48,16 +30,13 @@ class StoreInfo extends Model
         return $comboStoreList;
     }
 
-    public static function getStoreListingForStoreNumberOffset($banner_id)
+
+    public static function getStoresInfo($banner_id)
     {
-        $storeInfo = StoreInfo::getStoresInfo($banner_id);
-        $storeList = [];
-        foreach ($storeInfo as $store) {
-            
-            $storeList[$store->store_id] = $store->store_number;
-            
-        }
-        return $storeList;
+        $storeAPI = env('STORE_API_DOMAIN', false);
+        $storeInfoJson = file_get_contents( $storeAPI . "/banner/" . $banner_id);
+        $storeInfo = json_decode($storeInfoJson);
+        return $storeInfo;
     }
 
     public static function getStoreInfoByStoreId($store_id)
@@ -66,5 +45,22 @@ class StoreInfo extends Model
         $storeInfoJson = file_get_contents( $storeAPI . "/store/" . $store_id);
         $storeInfo = json_decode($storeInfoJson);
         return $storeInfo;
+    }
+
+    public static function getAllStoreNumbers()
+    {
+        $storeAPI = env('STORE_API_DOMAIN', false);
+        $storeInfoJson = file_get_contents( $storeAPI . "/storenumbers");
+        $storeInfo = json_decode($storeInfoJson);
+        return $storeInfo;
+    }
+
+    public static function buildStoreList($storeInfo)
+    {
+        $storelist = [];
+        foreach ($storeInfo as $store) {
+                $storelist[$store->store_number] = $store->store_id . " " . $store->name;
+        }
+        return $storelist;  
     }
 }

@@ -58,39 +58,49 @@
 	                    	<table class="table dataTable" id="productLaunchDataTable" >
 	                    		<thead>
 	                    			<tr role="row">
+	                    				<th>Launch Date</th>
+	                    				<th>Style Number</th>
+	                    				<th>Vendor Code</th>
 	                    				<th>Dept</th>
 	                    				<th>SubDept</th>
-	                    				<th>Launch Date</th>
 	                    				<th>Class</th>
 	                    				<th>Style</th>
-	                    				<th>Name</th>
-	                    				<th>Colour</th>
+	                    				<th>Retail Price</th>
+	                    				<th>Tracking</th>
+	                    				<th>Title</th>
+
 	                    				
 	                    			</tr>
 	                    		</thead>
 	                    		<tbody>
 	                    			@foreach($productLaunches as $productLaunch)
 										<tr class="" role="row">
+											<td>{{$productLaunch->prettyLaunchDate}}</td>
+											<td>{{$productLaunch->style_number}}</td>
+											<td>{{$productLaunch->vendor_code}}</td>
 											<td>{{$productLaunch->dpt_name}}</td>
 											<td>{{$productLaunch->sdpt_name}}</td>
-											<td>{{$productLaunch->prettyLaunchDate}}</td>
 											<td>{{$productLaunch->cls_name}}</td>
-											<td>{{$productLaunch->style_number}}</td>
 											<td>{{$productLaunch->style_name}}</td>
-											<td>{{$productLaunch->clr_name}}</td>
+											<td>{{$productLaunch->retail_price}}</td>
+											<td>{{$productLaunch->tracking}}</td>
+											<td>{{$productLaunch->title}}</td>
 										</tr>
 	                    			@endforeach
 				                    
 				                </tbody>
 			                    <tfoot>
 			                    <tr>
-									<th>Dept</th>
-                    				<th>SubDept</th>
-                    				<th>Launch Date</th>
-                    				<th>Class</th>
-                    				<th>Style</th>
-                    				<th>Name</th>
-                    				<th>Colour</th>
+									<th>Launch Date</th>
+	                    				<th>Style Number</th>
+	                    				<th>Vendor Code</th>
+	                    				<th>Dept</th>
+	                    				<th>SubDept</th>
+	                    				<th>Class</th>
+	                    				<th>Style</th>
+	                    				<th>Retail Price</th>
+	                    				<th>Tracking</th>
+	                    				<th>Title</th>
 	                    				
 			                    </tr>
 			                    </tfoot>

@@ -61,7 +61,6 @@ class CalendarController extends Controller
         $productLaunches = ProductLaunch::getActiveProductLaunchByStoreForCalendar($storeNumber);
         $events = $events->merge($productLaunches); 
         
-
         //for the list of events
         $eventsList = $this->getListofEventsByStoreAndMonth($storeNumber, $today);
         
