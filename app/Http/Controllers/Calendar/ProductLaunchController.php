@@ -43,9 +43,9 @@ class ProductLaunchController extends Controller
      */
     public function index()
     {
-        $productLaunches =  ProductLaunch::getActiveProductLaunchByStore($this->storeNumber);
+        $productLaunches = ProductLaunch::getActiveProductLaunchByStore($this->storeNumber);
         $lastUpdated ="";
-        if ( !empty($productLaunches)){
+        if ( count($productLaunches) > 0){
             $lastUpdated = ProductLaunch::getLastUpdatedTimestamp();
         }
         return view('site.calendar.productlaunch.index')
