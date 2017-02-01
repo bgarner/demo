@@ -6,6 +6,7 @@
     @include('admin.includes.head')
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
+	<link rel="stylesheet" href="/css/plugins/dataTables/datatables.min.css">
 </head>
 
 <body class="fixed-navigation adminview">
@@ -52,28 +53,28 @@
 		                        </div>
 		                        <div class="ibox-content">
 
+	                            	<table class="table datatable">
+		                            	<thead>
+		                            	<tr>
+											
+											<td>Title</td>
+											<td>Actions</td>
+										</tr>
+										</thead>
+										<tbody>
+		                            	@foreach($playlists as $playlist)
+		                            	<tr>
+		                            		
+		                            		<td>{!! $playlist->title !!}</a></td>
+		                            		<td>
+		                            			<a href="/admin/playlist/{{$playlist->id}}/edit" class=" btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+		                            			<a data-playlist="{{$playlist->id}}" id="playlist{{$playlist->id}}" class="playlist-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 
-
-		                            <div class="table-responsive">
-		                            	<table class="table table-hover issue-tracker">
-			                            	<tr>
-												
-												<td>Title</td>
-												<td>Actions</td>
-											</tr>
-			                            	@foreach($playlists as $playlist)
-			                            	<tr>
-			                            		
-			                            		<td>{!! $playlist->title !!}</a></td>
-			                            		<td>
-			                            			<a href="/admin/playlist/{{$playlist->id}}/edit" class=" btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
-			                            			<a data-playlist="{{$playlist->id}}" id="playlist{{$playlist->id}}" class="playlist-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
-
-			                            		</td>
-			                            	</tr>
-			                            	@endforeach
-		                            	</table>
-		                            </div>
+		                            		</td>
+		                            	</tr>
+		                            	@endforeach
+		                            	</tbody>
+	                            	</table>
 		                        </div>
 
 		                    </div>
@@ -87,6 +88,11 @@
 
 			    @include('admin.includes.scripts')
 
+				
+
+				<script type="text/javascript" src="/js/custom/admin/videos/playlists/deletePlaylist.js"></script>
+				<script type="text/javascript" src="/js/custom/site/launchModal.js" ></script>
+				<script type="text/javascript" src="/js/plugins/dataTables/datatables.min.js"></script>
 				<script type="text/javascript">
 					$.ajaxSetup({
 				        headers: {
@@ -94,11 +100,15 @@
 				        }
 					});
 
+					
+					$(".datatable").DataTable({
+	  	                pageLength: 10,
+	 					responsive: true,
+	 					fixedHeader: true
+	  
+	  	            });
 				</script>
 
-
-				<script type="text/javascript" src="/js/custom/admin/videos/playlists/deletePlaylist.js"></script>
-				<script type="text/javascript" src="/js/custom/site/launchModal.js" ></script>
 
 				@include('site.includes.bugreport')
 				@include('site.includes.modal')

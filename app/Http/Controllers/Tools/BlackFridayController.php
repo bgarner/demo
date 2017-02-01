@@ -45,7 +45,7 @@ class BlackFridayController extends Controller
         $this->skin = Skin::getSkin($this->storeBanner);
         $this->urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($this->storeNumber);
         $this->alertCount = Alert::getActiveAlertCountByStore($this->storeNumber);        
-        $this->communicationCount = Communication::getActiveCommunicationCount($this->storeNumber);        
+        $this->communicationCount = Communication::getActiveCommunicationCount($this->storeNumber); 
     }
 
     /**

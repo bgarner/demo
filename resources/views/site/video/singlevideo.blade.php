@@ -65,11 +65,13 @@
 
                             <div class="pull-right">
                                     <h2>{{$video[0]->views}} views</h2>
-                                    <div class="progress progress-mini" style="margin-bottom: 10px;">
+                                    <!-- <div class="progress progress-mini" style="margin-bottom: 10px;">
                                         <div style="width: {{$video[0]->ratio}}%;" class="progress-bar"></div>
-                                    </div>
+                                    </div> -->
+                                    <!--
                                     <button class="btn btn-primary btn-outline" id="videolike" type="button" data-toggle="tooltip" data-placement="bottom" title="Like this"><i class="fa fa-thumbs-up"></i> {{$video[0]->likes}}</button>
                                     <button class="btn btn-danger btn-outline" id="videodislike" type="button" data-toggle="tooltip" data-placement="bottom" title="Dislike this"><i class="fa fa-thumbs-down"></i> {{$video[0]->dislikes}}</button>
+                                    -->
                             </div>
 
                         </div>

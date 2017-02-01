@@ -33,7 +33,6 @@ $("#add-packages").click(function(){
 
 
 $('body').on('click', '#attach-selected-files', function(){
-	console.log('i am here');
 	$(".selected-files").remove();
 	$('input[name^="package_files"]').each(function(){
 		if($(this).is(":checked")){
@@ -69,7 +68,7 @@ $(document).on('click','.communication-update',function(){
  	var communicationId = $("#communicationId").val();
  	
  	var subject = $("#subject").val();
-	var communication_type_id = $("input:radio[name='communication_type']:checked").val();
+	var communication_type_id = $("input[name='communication_type']").val();
 	var body = CKEDITOR.instances['body'].getData();
 	var start = $("#send_at").val();
 	var end = $("#archive_at").val();
@@ -77,8 +76,7 @@ $(document).on('click','.communication-update',function(){
 	var target_stores  = $("#storeSelect").val();
 	var allStores  = $("#allStores:checked").val();
 
-	console.log(allStores);
-	console.log(target_stores);
+	console.log(communication_type_id);
 	
 	var importance = "1";
 	var sender = "";

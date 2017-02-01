@@ -81,7 +81,8 @@ class Video extends Model
                             $file->icon = Utility::getIcon($file->original_extension);
                             $file->prettyDateCreated = Utility::prettifyDate($file->created_at);
                             $file->prettyDateUpdated = Utility::prettifyDate($file->updated_at);
-                        });
+                        })
+                        ->sortByDesc('created_at');
         return $videos;
     }
 
