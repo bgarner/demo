@@ -68,20 +68,6 @@
 	                    			@endforeach
 				                    
 				                </tbody>
-			                    <tfoot>
-			                    <tr>
-									<th>Launch Date</th>
-	                    				<th>Style Number</th>
-	                    				<th>Vendor Code</th>
-	                    				<th>Dept</th>
-	                    				<th>SubDept</th>
-	                    				<th>Class</th>
-	                    				<th>Style</th>
-	                    				<th>Retail Price</th>
-	                    				<th>Tracking</th>
-	                    				
-			                    </tr>
-			                    </tfoot>
 			                </table>
 					               
                         </div>
