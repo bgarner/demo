@@ -158,7 +158,7 @@ class ProductLaunch extends Model
 	{
 		$storeList = $storeList = StoreInfo::getAllStoreNumbers();
 		foreach ($csvFile as $index => $row) {
-			
+			\Log::info($row);
 			if ($index != 0 && (!empty($row[0]))) {
 				$style_number = $row[1];
 				$record = ProductLaunch::where('style_number', $style_number)->first();
@@ -176,12 +176,12 @@ class ProductLaunch extends Model
 
 
                 $record->save();
-
+                ProductLaunch::deleteProductLaunchTarget($record);
+				$target = $row[10];
+				ProductLaunch::deleteProductLaunchTarget($record, $row[10], $storeList );
 			}
 
-			ProductLaunch::deleteProductLaunchTarget($productlaunch);
-			$target = $row[10];
-			ProductLaunch::deleteProductLaunchTarget($productlaunch, $row[10], $storeList );
+			
 
 		}
 	}
@@ -226,6 +226,12 @@ class ProductLaunch extends Model
 	{	
 		ProductLaunchTarget::where('productlaunch_id' , $productLaunch->id	)->delete();
 		return;
+	}
+
+	public static function getLastUpdatedTimestamp()
+	{
+		return Utility::prettifyDate(ProductLaunch::orderBy('created_at', 'desc')->first()->created_at);
+
 	}
 
 }

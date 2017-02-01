@@ -26,6 +26,7 @@
 		<div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-12">
                 <h2>Product Launches</h2>
+                <small class="pull-right"> Last Updated : {{$lastUpdated}} </small>
             </div>
         </div>        
 
@@ -42,28 +43,27 @@
 	                    		<thead>
 	                    			<tr role="row">
 	                    				<th>Launch Date</th>
+	                    				<th>Event Type</th>
 	                    				<th>Style Number</th>
 	                    				<th>Vendor Code</th>
-	                    				<th>Dept</th>
-	                    				<th>SubDept</th>
-	                    				<th>Class</th>
 	                    				<th>Style</th>
 	                    				<th>Retail Price</th>
 	                    				<th>Tracking</th>
+	                    				
 	                    			</tr>
 	                    		</thead>
 	                    		<tbody>
 	                    			@foreach($productLaunches as $productLaunch)
 										<tr class="" role="row">
 											<td>{{$productLaunch->prettyLaunchDate}}</td>
+											<td>{{$productLaunch->event_type}}</td>
 											<td>{{$productLaunch->style_number}}</td>
 											<td>{{$productLaunch->vendor_code}}</td>
-											<td>{{$productLaunch->dpt_name}}</td>
-											<td>{{$productLaunch->sdpt_name}}</td>
-											<td>{{$productLaunch->cls_name}}</td>
 											<td>{{$productLaunch->style_name}}</td>
 											<td>{{$productLaunch->retail_price}}</td>
 											<td>{{$productLaunch->tracking}}</td>
+											
+
 										</tr>
 	                    			@endforeach
 				                    

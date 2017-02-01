@@ -44,8 +44,10 @@ class ProductLaunchController extends Controller
     public function index()
     {
         $productLaunches =  ProductLaunch::getActiveProductLaunchByStore($this->storeNumber);
+        $lastUpdated = ProductLaunch::getLastUpdatedTimestamp();
         return view('site.calendar.productlaunch.index')
             ->with('productLaunches', $productLaunches)
+            ->with('lastUpdated',  $lastUpdated)
             ->with('skin', $this->skin)
             ->with('communicationCount', $this->communicationCount)
             ->with('alertCount', $this->alertCount)

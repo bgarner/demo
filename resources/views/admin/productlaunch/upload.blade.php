@@ -55,7 +55,7 @@
                                             <option value="">Select Option</option>
                                             <option value="append">Append to Product Launches</option>
                                             <option value="clear">Clear Old Product Launches</option>
-                                            <option value="patch">Upload Patch</option>
+                                            <!-- <option value="patch">Upload Patch</option> -->
 
                                         </select>
 
