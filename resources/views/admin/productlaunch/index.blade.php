@@ -114,7 +114,7 @@
 			
 	        $(document).ready(function(){
 	            $('.dataTable').DataTable({
-	                pageLength: 10,
+	                pageLength: 50,
 	                responsive: true,
 	                fixedHeader: true
 
