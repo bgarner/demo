@@ -27,7 +27,8 @@ class ProductLaunch extends Model
 				                ->orderBy('productlaunch.launch_date')
     							->get()
     							->each(function ($item) {
-			                        $item->prettyLaunchDate = Utility::prettifyDate($item->launch_date);                   
+			                        $item->prettyLaunchDate = Utility::prettifyDate($item->launch_date);
+			                        $item->launch_date = ProductLaunch::formatLaunchDate($item->launch_date);                   
 			                    });
     	return ($products);
     }
@@ -83,7 +84,8 @@ class ProductLaunch extends Model
     	return ProductLaunch::all()
     						->sortBy('launch_date')
     						->each(function ($item) {
-			                        $item->prettyLaunchDate = Utility::prettifyDate($item->launch_date);                   
+			                        $item->prettyLaunchDate = Utility::prettifyDate($item->launch_date);
+			                        $item->launch_date = ProductLaunch::formatLaunchDate($item->launch_date);                   
 			                    });
     }
 
@@ -232,6 +234,14 @@ class ProductLaunch extends Model
 	{
 		return Utility::prettifyDate(ProductLaunch::orderBy('created_at', 'desc')->first()->created_at);
 
+	}
+	public static function formatLaunchDate($date)
+	{
+		if($date == '0000-00-00 00:00:00') {
+			return "";
+		}
+		$prettyDate = Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('Y-m-d');
+		return $prettyDate;
 	}
 
 }
