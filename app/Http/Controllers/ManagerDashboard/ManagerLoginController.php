@@ -16,7 +16,7 @@ class ManagerLoginController extends Controller
      */
     public function index()
     {
-        return "this is where you login";
+        return view('manager.login');
     }
 
     /**
