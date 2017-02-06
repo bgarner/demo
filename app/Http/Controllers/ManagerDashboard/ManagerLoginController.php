@@ -6,13 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-<<<<<<< HEAD
-use App\Models\StoreInfo;
-use App\Models\ManagerDashboard\ManagerDashboard;
-=======
->>>>>>> 3ca867531... adding the first couple of controllers, alphabetizing the routes
 
-class ManagerDashboardController extends Controller
+class ManagerLoginController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,14 +16,7 @@ class ManagerDashboardController extends Controller
      */
     public function index()
     {
-<<<<<<< HEAD
-        //$stores = ManagerDashboard::compileDashboardDataByRegionId(3);
-        $region = StoreInfo::getStoresByRegionGroupedByDistrict(3);
-        return view('manager.dashboard')
-            ->with('region', $region);
-=======
-        return "this is the thing I made";
->>>>>>> 3ca867531... adding the first couple of controllers, alphabetizing the routes
+        return "this is where you login";
     }
 
     /**
@@ -60,7 +48,7 @@ class ManagerDashboardController extends Controller
      */
     public function show($id)
     {
-        
+        //
     }
 
     /**
