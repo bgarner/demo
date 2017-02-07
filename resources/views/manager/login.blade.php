@@ -28,7 +28,7 @@
 
 <body class="gray-bg">
 
-    <img src="/images/welcome-logo.png" class="animated fadeIn" style="display: block; width: 507px; margin: 0 auto; padding-top: 100px;">
+    <img src="/images/welcome-logo.png" class="animated fadeInDown" style="display: block; width: 507px; margin: 0 auto; padding-top: 100px;">
 
     <div class="middle-box text-center loginscreen animated fadeInDown">
         <div>
@@ -45,10 +45,15 @@
                 </div>
                 <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
 
+
                 <a href="#"><small>Forgot password?</small></a>
+
                 <hr />
+
                 <p class="text-muted text-center"><small>Do not have an account?</small></p>
                 <a class="btn btn-sm btn-white btn-block" href="register.html">Request an account</a>
+                <br /><br />
+                <p><a href="/"><small>Back to the Portal</small></a></p>
             </form>
          
         </div>
