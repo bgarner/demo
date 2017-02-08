@@ -34,7 +34,7 @@ class StoreInfo extends Model
     public static function getStoresInfo($banner_id)
     {
         $storeAPI = env('STORE_API_DOMAIN', false);
-        $storeInfoJson = file_get_contents( $storeAPI . "/banner/" . $banner_id);
+        $storeInfoJson = file_get_contents( $storeAPI . "/banner/" . $banner_id . "/stores");
         $storeInfo = json_decode($storeInfoJson);
         return $storeInfo;
     }
@@ -50,7 +50,7 @@ class StoreInfo extends Model
     public static function getAllStoreNumbers()
     {
         $storeAPI = env('STORE_API_DOMAIN', false);
-        $storeInfoJson = file_get_contents( $storeAPI . "/storenumbers");
+        $storeInfoJson = file_get_contents( $storeAPI . "/stores");
         $storeInfo = json_decode($storeInfoJson);
         $storelist = [];
         foreach ($storeInfo as $store) {
@@ -62,7 +62,6 @@ class StoreInfo extends Model
            else if (is_numeric($b)) return 1;
            return strcmp($a, $b);
         });
-        \Log::info(print_r($storelist, true));
         return $storelist;
     }
 
@@ -73,5 +72,13 @@ class StoreInfo extends Model
                 $storelist[$store->store_number] = $store->store_id . " " . $store->name;
         }
         return $storelist;  
+    }
+
+    public static function getStoresByDistrictId($id)
+    {
+        $storeAPI = env('STORE_API_DOMAIN', false);
+        $storeInfoJson = file_get_contents( $storeAPI . "/district/" . $id . "/stores");
+        $storeInfo = json_decode($storeInfoJson);
+        return $storeInfo;
     }
 }

@@ -385,6 +385,16 @@ class Communication extends Model
             ->where('communications.communication_type_id', $categoryId)
             ->count();
          return $count;
+      }
+
+      public static function getActiveCommunicationsByDistrict($storeNumbersArray)
+      {
+         $now = Carbon::now()->toDatetimeString();
+         $communications = Communication::join('communications_target', 'communications_target.communication_id' ,  '=', 'communications.id')
+                                       // ->whereIn('store_id', $storeNumbersArray)
+                                       // ->where('communications.send_at' , '<=', $now)
+                                       // ->where('communications.archive_at', '>=', $now)
+                                       ->get();
       }       
 
       public static function getCommunicationCategoryName($id)
