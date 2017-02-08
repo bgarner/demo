@@ -61,7 +61,7 @@ Route::get('/manager/dashboard', ['uses' => 'ManagerDashboard\ManagerDashboardCo
 Route::get('/manager/avp-dashboard', ['uses' => 'ManagerDashboard\ManagerDashboardController@avp']);
 Route::get('/manager/dm-dashboard', ['uses' => 'ManagerDashboard\ManagerDashboardController@dm']);
 
-//Search
+//SEARCH
 Route::get('/{storeno}/search', array('uses' => 'Search\SearchController@index'));
 
 //STORE SELECTOR
