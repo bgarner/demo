@@ -7,6 +7,10 @@ namespace Composer\Autoload;
 class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
 {
     public static $files = array (
+
+        '1d1b89d124cc9cb8219922c9d5569199' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest.php',
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '1d1b89d124cc9cb8219922c9d5569199' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest.php',
@@ -205,10 +209,12 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         array (
             0 => __DIR__ . '/..' . '/psy/psysh/src/Psy',
         ),
+
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
         ),
+
         'PhpParser\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
@@ -221,10 +227,12 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         array (
             0 => __DIR__ . '/..' . '/league/flysystem/src',
         ),
+
         'League\\Csv\\' => 
         array (
             0 => __DIR__ . '/..' . '/league/csv/src',
         ),
+
         'Laracasts\\Generators\\' => 
         array (
             0 => __DIR__ . '/..' . '/laracasts/generators/src',
@@ -253,18 +261,22 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         array (
             0 => __DIR__ . '/..' . '/doctrine/cache/lib/Doctrine/Common/Cache',
         ),
+
         'Doctrine\\Common\\Annotations\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/annotations/lib/Doctrine/Common/Annotations',
         ),
+
         'Doctrine\\Common\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/common/lib/Doctrine/Common',
         ),
+
         'Cron\\' => 
         array (
             0 => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron',
         ),
+
         'Collective\\Html\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravelcollective/html/src',
@@ -290,6 +302,12 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
     public static $prefixesPsr0 = array (
         'P' => 
         array (
+
+            'Psr\\Log\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/psr/log',
+            ),
+
             'Prophecy\\' => 
             array (
                 0 => __DIR__ . '/..' . '/phpspec/prophecy/src',
@@ -360,11 +378,26 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
             array (
                 0 => __DIR__ . '/..' . '/doctrine/collections/lib',
             ),
+
+            'Doctrine\\Common\\Annotations\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/annotations/lib',
+            ),
+
             'Diff' => 
             array (
                 0 => __DIR__ . '/..' . '/phpspec/php-diff/lib',
             ),
         ),
+      
+        'C' => 
+        array (
+            'Cron' => 
+            array (
+                0 => __DIR__ . '/..' . '/mtdowling/cron-expression/src',
+            ),
+        ),
+
         'A' => 
         array (
             'Alchemy' => 
@@ -381,6 +414,7 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         'AddOrderingToFeaturePackageTable' => __DIR__ . '/../..' . '/database/migrations/2016_03_17_164606_add_ordering_to_feature_package_table.php',
         'AddTypesToCommunicationTable' => __DIR__ . '/../..' . '/database/migrations/2016_02_09_175504_add_types_to_communication_table.php',
         'Addordertoplaylistvideos' => __DIR__ . '/../..' . '/database/migrations/2016_09_08_132614_addordertoplaylistvideos.php',
+        'BannerTableSeeder' => __DIR__ . '/../..' . '/database/seeds/BannerTableSeeder.php',
         'Alchemy\\BinaryDriver\\AbstractBinary' => __DIR__ . '/..' . '/alchemy/binary-driver/src/Alchemy/BinaryDriver/AbstractBinary.php',
         'Alchemy\\BinaryDriver\\BinaryDriverTestCase' => __DIR__ . '/..' . '/alchemy/binary-driver/src/Alchemy/BinaryDriver/BinaryDriverTestCase.php',
         'Alchemy\\BinaryDriver\\BinaryInterface' => __DIR__ . '/..' . '/alchemy/binary-driver/src/Alchemy/BinaryDriver/BinaryInterface.php',
@@ -618,6 +652,7 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         'CreateCommunityDonationsTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_20_102212_create_community_donations_table.php',
         'CreateCommunityItems' => __DIR__ . '/../..' . '/database/migrations/2016_10_20_102257_create_community_items.php',
         'CreateCommunitySportsTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_20_102235_create_community_sports_table.php',
+        'CreateComponentsTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_16_114508_create_components_table.php',
         'CreateContentTagPivotTable' => __DIR__ . '/../..' . '/database/migrations/2015_12_09_200212_create_content_tag_pivot_table.php',
         'CreateDashboardBrandingTable' => __DIR__ . '/../..' . '/database/migrations/2016_01_27_220050_create_dashboard_branding_table.php',
         'CreateDocumentPackagePivotTable' => __DIR__ . '/../..' . '/database/migrations/2015_11_27_175201_create_document_package_pivot_table.php',
@@ -640,6 +675,7 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         'CreateFiscalYearTable' => __DIR__ . '/../..' . '/database/migrations/2015_09_28_215143_create-fiscal-year-table.php',
         'CreateFolderIdsTable' => __DIR__ . '/../..' . '/database/migrations/2015_10_28_173427_create_folder_ids_table.php',
         'CreateFolderPackagePivot' => __DIR__ . '/../..' . '/database/migrations/2016_01_27_174427_create_folder_package_pivot.php',
+        'CreateGroupComponentPivotTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_16_115431_create_group_component_pivot_table.php',
         'CreateHoodMembersTable' => __DIR__ . '/../..' . '/database/migrations/future/2015_09_03_165002_create_hood_members_table.php',
         'CreateHoodPostRepsonsesTable' => __DIR__ . '/../..' . '/database/migrations/future/2015_09_03_165003_create_hood_post_repsonses_table.php',
         'CreateHoodPostsTable' => __DIR__ . '/../..' . '/database/migrations/future/2015_09_03_165001_create_hood_posts_table.php',
@@ -676,6 +712,11 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         'CreateVideoTable' => __DIR__ . '/../..' . '/database/migrations/2016_07_11_112252_create_video_table.php',
         'CreateVideoTagsTable' => __DIR__ . '/../..' . '/database/migrations/2016_07_11_113001_create_video_tags_table.php',
         'CreateWeeksTable' => __DIR__ . '/../..' . '/database/migrations/2015_09_28_215144_create-weeks-table.php',
+        'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
+        'DeleteAnalyticsTable' => __DIR__ . '/../..' . '/database/migrations/2016_03_28_103732_DeleteAnalyticsTable.php',
+        'Documents' => __DIR__ . '/../..' . '/database/migrations/2015_09_02_150403_documents.php',
+        'EventTypesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/EventTypesTableSeeder.php',
+        'EventsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/EventsTableSeeder.php',
         'Cron\\AbstractField' => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron/AbstractField.php',
         'Cron\\CronExpression' => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron/CronExpression.php',
         'Cron\\DayOfMonthField' => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron/DayOfMonthField.php',

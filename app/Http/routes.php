@@ -176,6 +176,7 @@ Route::resource('/admin/playlistorder', 'Video\PlaylistVideoOrderController');
 //Playlist
 Route::resource('/admin/playlist', 'Video\PlaylistAdminController');
 Route::get('/admin/playlistvideos/{playlist_id}', 'Video\PlaylistAdminController@getPlaylistVideoPartial');
+
 //Video Tags
 Route::resource('/admin/tag', 'Video\TagAdminController');
 
@@ -188,6 +189,10 @@ Route::resource('/utilities/ckeditorimages', 'Utilities\CkeditorImageController'
 //Store Feedback
 Route::resource('/admin/feedback' , 'StoreFeedback\FeedbackAdminController');
 Route::resource('/admin/feedback/{id}/note' , 'StoreFeedback\NotesAdminController');
+
+//User Groups and Sections
+Route::resource('/admin/group', 'Auth\GroupAdminController');
+Route::resource('/admin/component', 'Auth\ComponentAdminController');
 
 //Product Launch
 Route::get('/admin/productlaunch', 'Calendar\ProductLaunchAdminController@index');

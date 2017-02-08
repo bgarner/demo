@@ -22,7 +22,15 @@
         </div>
     </li>
 
+    @foreach($groupComponents as $component)
 
+        <?php 
+        $component = preg_replace('/\s+/', '', $component);
+        $partialName = 'admin.includes.sidenav-partials.' . $component; 
+         ?>
+        @include($partialName)
+        
+    @endforeach
 
     @if ( Request::is('admin') || Request::is('admin/home'))
     <li class="active">

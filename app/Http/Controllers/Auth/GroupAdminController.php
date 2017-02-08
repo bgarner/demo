@@ -1,25 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\Tag;
+namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Tag\Tag;
-use App\Models\Banner;
+use App\Models\Auth\Group;
 use App\Models\UserSelectedBanner;
+use App\Models\Banner;
+use App\Models\Auth\Component;
+use App\Models\Auth\GroupComponent;
 
-class TagAdminController extends Controller
+class GroupAdminController extends Controller
 {
-    /**
-     * Instantiate a new TagAdminController instance.
-     */
+    
     public function __construct()
     {
         $this->middleware('admin.auth');
         $this->middleware('superadmin.auth');
         $this->middleware('banner');
+
     }
 
     /**
@@ -27,15 +28,14 @@ class TagAdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-
+        $groups =  Group::getGroupDetails();
         $banner = UserSelectedBanner::getBanner();
         $banners = Banner::all();
-        $tags = Tag::where('banner_id', $banner->id)->get();
-        return view('admin.tag.index')->with('banner', $banner)
-                                    ->with('banners', $banners)
-                                    ->with('tags', $tags);
+        return view('admin.groups.index')->with('groups', $groups)
+                        ->with('banners', $banners)
+                        ->with('banner', $banner);
     }
 
     /**
@@ -43,9 +43,15 @@ class TagAdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-
+        
+        $banner = UserSelectedBanner::getBanner();
+        $banners = Banner::all();
+        $components = Component::getComponentList($banner->id);
+        return view('admin.groups.create')->with('banner', $banner)
+                                            ->with('banners', $banners)
+                                            ->with('components', $components);
     }
 
     /**
@@ -56,8 +62,8 @@ class TagAdminController extends Controller
      */
     public function store(Request $request)
     {
-        Tag::storeTag($request);
-        return ($request->all());
+        $group = Group::createGroup($request);
+        return  $group;
     }
 
     /**
@@ -79,8 +85,17 @@ class TagAdminController extends Controller
      */
     public function edit($id)
     {
-        $tag = Tag::find($id);
-        return view('admin.tag.edit')->with('tag', $tag);
+        
+        $banner = UserSelectedBanner::getBanner();
+        $banners = Banner::all();
+        $group = Group::find($id);
+        $components = Component::getComponentList($banner->id);
+        $selected_components = GroupComponent::getComponentListByGroupId($id);
+        return view('admin.groups.edit')->with('banners', $banners)
+                                        ->with('banner', $banner)
+                                        ->with('components', $components)
+                                        ->with('group', $group)
+                                        ->with('selected_components', $selected_components);
     }
 
     /**
@@ -92,8 +107,7 @@ class TagAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Tag::updateTag($id, $request);
-        return redirect()->action('Tag\TagAdminController@index');
+        return Group::editGroup($request, $id);
     }
 
     /**
@@ -104,7 +118,6 @@ class TagAdminController extends Controller
      */
     public function destroy($id)
     {
-        Tag::find($id)->delete();
-        return 'deleted';
+        Group::deleteGroup($id);
     }
 }
