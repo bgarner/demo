@@ -12,13 +12,9 @@ $(document).ready(function() {
 
         var selector = "#metadataform"+fileIdVal;
         var check = "#checkmark"+fileIdVal;
-
-        console.log(fileIdVal, titleVal, descriptionVal, selector);
-        console.log('am i even here?');
        
         $.post("/admin/video/add-meta-data",{ video_id: fileIdVal, title: titleVal, description: descriptionVal, _token:token , tags: tags})
             .done( function(data){
-                console.log(data);
                 $(check).fadeIn(1000);
                 $('.error').remove()
             });

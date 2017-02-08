@@ -14,22 +14,25 @@
 Route::pattern('storeno', '^([A-Z]?[0-9]{4})$');
 Route::pattern('id', '[0-9]+');
 
-//STORE SELECTOR
-Route::get('/', 'StoreSelectorController@index');
+//ANALYTICS
+Route::post('/clicktrack', 'Analytics\AnalyticsController@store');
 
-//DASHBOARD
-Route::get('/{storeno}', array('uses' => 'Dashboard\DashboardController@index'));
+//AUTHENTICATION
+Route::get('/admin/login', 'Auth\AuthController@getLogin');
+Route::post('/admin/login', 'Auth\AuthController@postLogin');
+Route::get('/admin/logout', 'Auth\AuthController@getLogout');
 
-//DOCUMENTS
-Route::get('/{storeno}/document', array('uses' => 'Document\DocumentController@index'));
+//ALERTS
+Route::get('/{storeno}/alerts', array('uses' => 'Alert\AlertController@index'));
 
-//FOLDER - SHOW CONTENT
-Route::get('/{storeno}/folder/{id}', ['uses' => 'Document\FolderController@show']);
+//BUG REPORTER
+Route::post('/bugreport', 'BugReport\BugReportController@store');
 
 //CALENDAR
 Route::get('/{storeno}/calendar', array('uses' => 'Calendar\CalendarController@index'));
 Route::get('/{storeno}/calendar/listevents/{yearMonth}', array('uses' => 'Calendar\CalendarController@getListofEventsByStoreAndMonth'));
 Route::get('/{storeno}/calendar/eventlistpartial/{yearMonth}', 'Calendar\CalendarController@getEventListPartial');
+Route::get('/{storeno}/calendar/productlaunch', array('uses'=> 'Calendar\ProductLaunchController@index'));
 
 //COMMUNICATIONS
 Route::get('/{storeno}/communication', array('uses' => 'Communication\CommunicationController@index'));
@@ -40,51 +43,52 @@ Route::resource('/communication', 'Communication\CommunicationTargetController')
 Route::get('/{storeno}/community', array('uses' => 'Community\CommunityController@index'));
 Route::resource('/savedonation', 'Community\CommunityFundController');
 
+//DASHBOARD
+Route::get('/{storeno}', array('uses' => 'Dashboard\DashboardController@index'));
+
+//DOCUMENTS
+Route::get('/{storeno}/document', array('uses' => 'Document\DocumentController@index'));
+
+//FEATURES
+Route::get('/{storeno}/feature/show/{id}', 'Feature\FeatureController@show');
+
+//FOLDER - SHOW CONTENT
+Route::get('/{storeno}/folder/{id}', ['uses' => 'Document\FolderController@show']);
+
+//MANAGER DASHBOARD
+Route::get('/manager', ['uses' => 'ManagerDashboard\ManagerLoginController@index']);
+Route::get('/manager/dashboard', ['uses' => 'ManagerDashboard\ManagerDashboardController@index']);
+Route::get('/manager/avp-dashboard', ['uses' => 'ManagerDashboard\ManagerDashboardController@avp']);
+Route::get('/manager/dm-dashboard', ['uses' => 'ManagerDashboard\ManagerDashboardController@dm']);
+
+//Search
+Route::get('/{storeno}/search', array('uses' => 'Search\SearchController@index'));
+
+//STORE SELECTOR
+Route::get('/', 'StoreSelectorController@index');
+
 //TOOLS
 Route::get('/{storeno}/tools/boxingday', array('uses' => 'Tools\BlackFridayController@index'));
 Route::post('/getFlyerBoxes', 'Tools\FlyerPageSelectionController@show');
 Route::post('/getFlyerBoxData', 'Tools\FlyerBoxSelectionController@show');
 
-//VIDEO
-Route::get('/{storeno}/video', array('uses' => 'Video\VideoController@index'));
-
-Route::get('/{storeno}/video/popular', array('uses' => 'Video\VideoController@mostViewed'));
-Route::get('/{storeno}/video/latest', array('uses' => 'Video\VideoController@mostRecent'));
-Route::get('/{storeno}/video/liked', array('uses' => 'Video\VideoController@mostLiked'));
-Route::get('/{storeno}/video/playlists', array('uses' => 'Video\VideoController@allPlaylists'));
-
-Route::get('/{storeno}/video/watch/{id}', array('uses' => 'Video\VideoController@show'));
-Route::get('/{storeno}/video/playlist/{id}', array('uses' => 'Video\VideoController@showPlaylist'));
-Route::get('/{storeno}/video/tag/{tag}', array('uses' => 'Video\VideoController@showTag'));
-
-Route::post('/videocount', 'Video\VideoViewCountController@update');
-Route::post('/videolike', 'Video\LikeController@update');
-Route::post('/videodislike', 'Video\DislikeController@update');
-
-//FEATURES
-Route::get('/{storeno}/feature/show/{id}', 'Feature\FeatureController@show');
-
-//ALERTS
-Route::get('/{storeno}/alerts', array('uses' => 'Alert\AlertController@index'));
-
 //URGENT NOTICES
 Route::get('/{storeno}/urgentnotice', array('uses' => 'UrgentNotice\UrgentNoticeController@index'));
 Route::get('/{storeno}/urgentnotice/show/{id}', array('uses' => 'UrgentNotice\UrgentNoticeController@show'));
 
-//Search
-//Route::post('/{storeno}/search', array('uses' => 'Search\SearchController@index'));
-Route::get('/{storeno}/search', array('uses' => 'Search\SearchController@index'));
+//VIDEO
+Route::get('/{storeno}/video', array('uses' => 'Video\VideoController@index'));
+Route::get('/{storeno}/video/popular', array('uses' => 'Video\VideoController@mostViewed'));
+Route::get('/{storeno}/video/latest', array('uses' => 'Video\VideoController@mostRecent'));
+Route::get('/{storeno}/video/liked', array('uses' => 'Video\VideoController@mostLiked'));
+Route::get('/{storeno}/video/playlists', array('uses' => 'Video\VideoController@allPlaylists'));
+Route::get('/{storeno}/video/watch/{id}', array('uses' => 'Video\VideoController@show'));
+Route::get('/{storeno}/video/playlist/{id}', array('uses' => 'Video\VideoController@showPlaylist'));
+Route::get('/{storeno}/video/tag/{tag}', array('uses' => 'Video\VideoController@showTag'));
+Route::post('/videocount', 'Video\VideoViewCountController@update');
+Route::post('/videolike', 'Video\LikeController@update');
+Route::post('/videodislike', 'Video\DislikeController@update');
 
-//BUG REPORTER
-Route::post('/bugreport', 'BugReport\BugReportController@store');
-
-//ANALYTICS
-Route::post('/clicktrack', 'Analytics\AnalyticsController@store');
-
-//Authentication Routes
-Route::get('/admin/login', 'Auth\AuthController@getLogin');
-Route::post('/admin/login', 'Auth\AuthController@postLogin');
-Route::get('/admin/logout', 'Auth\AuthController@getLogout');
 
 //Registration Routes
 // Route::get('/admin/register', 'Auth\AuthController@getRegister');
@@ -92,12 +96,10 @@ Route::get('/admin/logout', 'Auth\AuthController@getLogout');
 // Route::get('/activate/{activation_code}', 'Auth\AuthController@activateAccount');
 // Route::get('/approve/{activation_code}', 'Auth\AuthController@approveAccount');
 
-
 //Password reset routes
 // Route::controllers([
 // 	'password' => 'Auth\PasswordController',
 // ]);
-
 
 //list of admin functions
 // Route::get('/admin', function(){
@@ -188,10 +190,16 @@ Route::resource('/utilities/ckeditorimages', 'Utilities\CkeditorImageController'
 Route::resource('/admin/feedback' , 'StoreFeedback\FeedbackAdminController');
 Route::resource('/admin/feedback/{id}/note' , 'StoreFeedback\NotesAdminController');
 
-
 //User Groups and Sections
 Route::resource('/admin/group', 'Auth\GroupAdminController');
 Route::resource('/admin/component', 'Auth\ComponentAdminController');
+
+//Product Launch
+Route::get('/admin/productlaunch', 'Calendar\ProductLaunchAdminController@index');
+Route::get('/admin/productlaunch/create', 'Calendar\ProductLaunchAdminController@create');
+Route::post('/admin/productlaunch', 'Calendar\ProductLaunchAdminController@store');
+Route::get('admin/productlaunch/add-meta-data', 'Calendar\ProductLaunchAdminController@edit');
+
 
 /* API Routes */
 //get navigation
