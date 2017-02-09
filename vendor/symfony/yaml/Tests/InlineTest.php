@@ -693,6 +693,7 @@ class InlineTest extends TestCase
 
         $this->assertEquals($longStringWithQuotes, $arrayFromYaml['longStringWithQuotes']);
     }
+<<<<<<< HEAD
 
     public function testOmittedMappingKeyIsParsedAsColon()
     {
@@ -709,4 +710,6 @@ class InlineTest extends TestCase
     {
         $this->assertSame(array('' => 'foo'), Inline::parse('{ "": foo }'));
     }
+=======
+>>>>>>> 56d72c70e... composer updated
 }

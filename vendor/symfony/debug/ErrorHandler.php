@@ -401,6 +401,7 @@ class ErrorHandler
             return true;
         }
 
+<<<<<<< HEAD
         $logMessage = $this->levels[$type].': '.$message;
 
         if (null !== self::$toStringException) {
@@ -411,6 +412,12 @@ class ErrorHandler
         } else {
             if ($scope) {
                 $errorAsException = new ContextErrorException($logMessage, 0, $type, $file, $line, $context);
+=======
+        if ($throw) {
+            if ($scope && class_exists('Symfony\Component\Debug\Exception\ContextErrorException')) {
+                // Checking for class existence is a work around for https://bugs.php.net/42098
+                $throw = new ContextErrorException($this->levels[$type].': '.$message, 0, $type, $file, $line, $context);
+>>>>>>> 56d72c70e... composer updated
             } else {
                 $errorAsException = new \ErrorException($logMessage, 0, $type, $file, $line);
             }
@@ -437,6 +444,7 @@ class ErrorHandler
             }
         }
 
+<<<<<<< HEAD
         if ($throw) {
             if (E_USER_ERROR & $type) {
                 for ($i = 1; isset($backtrace[$i]); ++$i) {
@@ -473,6 +481,32 @@ class ErrorHandler
                             // Stop the process by giving back the error to the native handler.
                             return false;
                         }
+=======
+        // For duplicated errors, log the trace only once
+        $e = md5("{$type}/{$line}/{$file}\x00{$message}", true);
+        $trace = true;
+
+        if (!($this->tracedErrors & $type) || isset($this->loggedTraces[$e])) {
+            $trace = false;
+        } else {
+            $this->loggedTraces[$e] = 1;
+        }
+
+        $e = compact('type', 'file', 'line', 'level');
+
+        if ($type & $level) {
+            if ($scope) {
+                $e['scope_vars'] = $context;
+                if ($trace) {
+                    $e['stack'] = $backtrace ?: debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT);
+                }
+            } elseif ($trace) {
+                if (null === $backtrace) {
+                    $e['stack'] = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+                } else {
+                    foreach ($backtrace as &$frame) {
+                        unset($frame['args'], $frame);
+>>>>>>> 56d72c70e... composer updated
                     }
                 }
             }

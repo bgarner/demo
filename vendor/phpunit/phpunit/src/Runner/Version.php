@@ -30,7 +30,11 @@ class PHPUnit_Runner_Version
         }
 
         if (self::$version === null) {
+<<<<<<< HEAD
             $version       = new Version('5.7.19', dirname(dirname(__DIR__)));
+=======
+            $version       = new Version('4.8.35', dirname(dirname(__DIR__)));
+>>>>>>> 56d72c70e... composer updated
             self::$version = $version->getVersion();
         }
 
