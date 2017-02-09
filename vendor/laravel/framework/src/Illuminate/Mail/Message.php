@@ -28,7 +28,7 @@ class Message
     /**
      * Add a "from" address to the message.
      *
-     * @param  string  $address
+     * @param  string|array  $address
      * @param  string|null  $name
      * @return $this
      */
@@ -42,7 +42,7 @@ class Message
     /**
      * Set the "sender" of the message.
      *
-     * @param  string  $address
+     * @param  string|array  $address
      * @param  string|null  $name
      * @return $this
      */
@@ -77,7 +77,9 @@ class Message
     public function to($address, $name = null, $override = false)
     {
         if ($override) {
-            return $this->swift->setTo($address, $name);
+            $this->swift->setTo($address, $name);
+
+            return $this;
         }
 
         return $this->addAddresses($address, $name, 'To');
@@ -86,31 +88,45 @@ class Message
     /**
      * Add a carbon copy to the message.
      *
-     * @param  string  $address
+     * @param  string|array  $address
      * @param  string|null  $name
+     * @param  bool  $override
      * @return $this
      */
-    public function cc($address, $name = null)
+    public function cc($address, $name = null, $override = false)
     {
+        if ($override) {
+            $this->swift->setCc($address, $name);
+
+            return $this;
+        }
+
         return $this->addAddresses($address, $name, 'Cc');
     }
 
     /**
      * Add a blind carbon copy to the message.
      *
-     * @param  string  $address
+     * @param  string|array  $address
      * @param  string|null  $name
+     * @param  bool  $override
      * @return $this
      */
-    public function bcc($address, $name = null)
+    public function bcc($address, $name = null, $override = false)
     {
+        if ($override) {
+            $this->swift->setBcc($address, $name);
+
+            return $this;
+        }
+
         return $this->addAddresses($address, $name, 'Bcc');
     }
 
     /**
      * Add a reply to address to the message.
      *
-     * @param  string  $address
+     * @param  string|array  $address
      * @param  string|null  $name
      * @return $this
      */

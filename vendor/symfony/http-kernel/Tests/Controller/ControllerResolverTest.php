@@ -112,12 +112,12 @@ class ControllerResolverTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider      getUndefinedControllers
-     * @expectedException \InvalidArgumentException
+     * @dataProvider getUndefinedControllers
      */
-    public function testGetControllerOnNonUndefinedFunction($controller)
+    public function testGetControllerOnNonUndefinedFunction($controller, $exceptionName = null, $exceptionMessage = null)
     {
         $resolver = $this->createControllerResolver();
+        $this->setExpectedException($exceptionName, $exceptionMessage);
 
         $request = Request::create('/');
         $request->attributes->set('_controller', $controller);
@@ -127,13 +127,20 @@ class ControllerResolverTest extends \PHPUnit_Framework_TestCase
     public function getUndefinedControllers()
     {
         return array(
-            array('foo'),
-            array('oof::bar'),
-            array('stdClass'),
-            array('Symfony\Component\HttpKernel\Tests\Controller\ControllerResolverTest::bar'),
+            array(1, 'InvalidArgumentException', 'Unable to find controller "1".'),
+            array('foo', 'InvalidArgumentException', 'Unable to find controller "foo".'),
+            array('oof::bar', 'InvalidArgumentException', 'Class "oof" does not exist.'),
+            array('stdClass', 'InvalidArgumentException', 'Unable to find controller "stdClass".'),
+            array('Symfony\Component\HttpKernel\Tests\Controller\ControllerTest::staticsAction', 'InvalidArgumentException', 'The controller for URI "/" is not callable. Expected method "staticsAction" on class "Symfony\Component\HttpKernel\Tests\Controller\ControllerTest", did you mean "staticAction"?'),
+            array('Symfony\Component\HttpKernel\Tests\Controller\ControllerTest::privateAction', 'InvalidArgumentException', 'The controller for URI "/" is not callable. Method "privateAction" on class "Symfony\Component\HttpKernel\Tests\Controller\ControllerTest" should be public and non-abstract'),
+            array('Symfony\Component\HttpKernel\Tests\Controller\ControllerTest::protectedAction', 'InvalidArgumentException', 'The controller for URI "/" is not callable. Method "protectedAction" on class "Symfony\Component\HttpKernel\Tests\Controller\ControllerTest" should be public and non-abstract'),
+            array('Symfony\Component\HttpKernel\Tests\Controller\ControllerTest::undefinedAction', 'InvalidArgumentException', 'The controller for URI "/" is not callable. Expected method "undefinedAction" on class "Symfony\Component\HttpKernel\Tests\Controller\ControllerTest". Available methods: "publicAction", "staticAction"'),
         );
     }
 
+    /**
+     * @group legacy
+     */
     public function testGetArguments()
     {
         $resolver = $this->createControllerResolver();
@@ -183,15 +190,11 @@ class ControllerResolverTest extends \PHPUnit_Framework_TestCase
         $request->attributes->set('foobar', 'foobar');
         $controller = array(new self(), 'controllerMethod3');
 
-        if (PHP_VERSION_ID === 50316) {
-            $this->markTestSkipped('PHP 5.3.16 has a major bug in the Reflection sub-system');
-        } else {
-            try {
-                $resolver->getArguments($request, $controller);
-                $this->fail('->getArguments() throws a \RuntimeException exception if it cannot determine the argument value');
-            } catch (\Exception $e) {
-                $this->assertInstanceOf('\RuntimeException', $e, '->getArguments() throws a \RuntimeException exception if it cannot determine the argument value');
-            }
+        try {
+            $resolver->getArguments($request, $controller);
+            $this->fail('->getArguments() throws a \RuntimeException exception if it cannot determine the argument value');
+        } catch (\Exception $e) {
+            $this->assertInstanceOf('\RuntimeException', $e, '->getArguments() throws a \RuntimeException exception if it cannot determine the argument value');
         }
 
         $request = Request::create('/');
@@ -201,6 +204,7 @@ class ControllerResolverTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @requires PHP 5.6
+     * @group legacy
      */
     public function testGetVariadicArguments()
     {
@@ -225,6 +229,7 @@ class ControllerResolverTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \RuntimeException
+     * @group legacy
      */
     public function testIfExceptionIsThrownWhenMissingAnArgument()
     {
@@ -238,6 +243,7 @@ class ControllerResolverTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @requires PHP 7.1
+     * @group legacy
      */
     public function testGetNullableArguments()
     {
@@ -253,6 +259,7 @@ class ControllerResolverTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @requires PHP 7.1
+     * @group legacy
      */
     public function testGetNullableArgumentsWithDefaults()
     {
@@ -296,4 +303,23 @@ class ControllerResolverTest extends \PHPUnit_Framework_TestCase
 
 function some_controller_function($foo, $foobar)
 {
+}
+
+class ControllerTest
+{
+    public function publicAction()
+    {
+    }
+
+    private function privateAction()
+    {
+    }
+
+    protected function protectedAction()
+    {
+    }
+
+    public static function staticAction()
+    {
+    }
 }
