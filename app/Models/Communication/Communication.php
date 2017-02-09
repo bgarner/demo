@@ -387,14 +387,17 @@ class Communication extends Model
          return $count;
       }
 
-      public static function getActiveCommunicationsByDistrict($storeNumbersArray)
+      public static function getActiveCommunicationsForStoreList($storeNumbersArray)
       {
+         // return $storeNumbersArray;
          $now = Carbon::now()->toDatetimeString();
          $communications = Communication::join('communications_target', 'communications_target.communication_id' ,  '=', 'communications.id')
-                                       // ->whereIn('store_id', $storeNumbersArray)
-                                       // ->where('communications.send_at' , '<=', $now)
-                                       // ->where('communications.archive_at', '>=', $now)
+                                       ->whereIn('communications_target.store_id', $storeNumbersArray)
+                                       ->where('communications.send_at' , '<=', $now)
+                                       ->where('communications.archive_at', '>=', $now)
+                                       ->groupBy('communications.id')
                                        ->get();
+         return $communications;
       }       
 
       public static function getCommunicationCategoryName($id)

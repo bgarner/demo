@@ -79,6 +79,10 @@ class StoreInfo extends Model
         $storeAPI = env('STORE_API_DOMAIN', false);
         $storeInfoJson = file_get_contents( $storeAPI . "/district/" . $id . "/stores");
         $storeInfo = json_decode($storeInfoJson);
-        return $storeInfo;
+        $storeList = [];
+        foreach ($storeInfo as $store) {
+            array_push($storeList, $store->store_number);
+        }
+        return $storeList;
     }
 }
