@@ -85,4 +85,19 @@ class StoreInfo extends Model
         }
         return $storeList;
     }
+
+    public static function getStoresByRegionId($id)
+    {
+        $storeAPI = env('STORE_API_DOMAIN', false);
+        $districtInfoJson = file_get_contents( $storeAPI . "/region/" . $id . "/districts");
+        $districtInfo = json_decode($districtInfoJson);
+        $storeList = [];
+        foreach ($districtInfo as $district) {
+            $stores = $district->stores;
+            foreach($stores as $store){
+                array_push($storeList, $store->store_number);    
+            }            
+        }
+        return $storeList;
+    }
 }

@@ -14,17 +14,23 @@ class ManagerDashboard extends Model
     public static function compileDashboardDataByDistrictId($id)
     {
     	$stores = StoreInfo::getStoresByDistrictId($id);
-    	$compiledData = [];
-    	$communications = [];
-    	$alerts = [];
-    	$urgentNotices = [];
-    	$productLaunches = [];
-
-    	foreach ($stores as $store) {
-    		
-    		$communicationsByStore = CommunicationTarget::getTargetedCommunications($store->store_number);
-    		$communications                                              	
-    	}
+    	return ManagerDashboard::compileDashboardDataByStoreList($stores);
     	
+    }
+
+    public static function compileDashboardDataByRegionId($id)
+    {
+        $stores = StoreInfo::getStoresByRegionId($id);
+        return ManagerDashboard::compileDashboardDataByStoreList($stores);
+    }
+
+    public static function compileDashboardDataByStoreList($stores)
+    {
+        $compiledData = [];
+        $compiledData["communications"] = Communication::getActiveCommunicationsForStoreList($stores);
+        $compiledData["alerts"] = Alert::getActiveAlertsForStoreList($stores);
+        $compiledData["urgentNotices"] = UrgentNotice::getActiveUrgentNoticesForStoreList($stores);
+        $compiledData["productLaunches"] = ProductLaunch::getActiveProductLaunchesForStoreList($stores);
+        return $compiledData;
     }
 }

@@ -251,5 +251,38 @@ class UrgentNotice extends Model
 
     }
 
+    public static function getActiveUrgentNoticesForStoreList($storeNumbersArray)
+    {
+        $now = Carbon::now()->toDatetimeString();
+        $urgent_notices = UrgentNotice::join('urgent_notice_target', 'urgent_notice_target.urgent_notice_id' ,  '=', 'urgent_notices.id')
+                    ->whereIn('urgent_notice_target.store_id', $storeNumbersArray)
+                    ->where('urgent_notices.start', '<=', $now )
+                    ->where(function($query) use ($now) {
+                        $query->where('urgent_notices.end', '>=', $now)
+                            ->orWhere('urgent_notices.end', '=', '0000-00-00 00:00:00' ); 
+                    })
+                    ->whereNull('urgent_notices.deleted_at')
+                    ->whereNull('urgent_notice_target.deleted_at')
+                    ->select('urgent_notices.*', 'urgent_notice_target.store_id')
+                    ->get()
+                    ->toArray();
+        
+        $compiledUrgentNotices = [];
+
+        foreach ($urgent_notices as $urgent_notice) {
+        $index = array_search($urgent_notice['id'], array_column($compiledUrgentNotices, 'id'));
+        if(  $index !== false ){
+           array_push($compiledUrgentNotices[$index]->stores, $urgent_notice["store_id"]);
+        }
+        else{
+           
+           $urgent_notice["stores"] = [];
+           array_push( $urgent_notice["stores"] , $urgent_notice["store_id"]);
+           array_push( $compiledUrgentNotices , (object) $urgent_notice);
+        }
+        }
+        return (object)($compiledUrgentNotices);
+    }    
+
 
 }
