@@ -190,6 +190,9 @@ Route::resource('/utilities/ckeditorimages', 'Utilities\CkeditorImageController'
 Route::resource('/admin/feedback' , 'StoreFeedback\FeedbackAdminController');
 Route::resource('/admin/feedback/{id}/note' , 'StoreFeedback\NotesAdminController');
 
+//Tasks
+Route::resource('/admin/task', 'Task\TaskAdminController');
+
 //User Groups and Sections
 Route::resource('/admin/group', 'Auth\GroupAdminController');
 Route::resource('/admin/component', 'Auth\ComponentAdminController');

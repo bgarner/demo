@@ -220,7 +220,8 @@ return [
         'App\Http\Controllers\User\UserAdminController'                         => 'User and Group Management',
         'App\Http\Controllers\Auth\ComponentAdminController'                    => 'User and Group Management',
         'App\Http\Controllers\Auth\GroupAdminController'                        => 'User and Group Management',
-        'App\Http\Controllers\StoreFeedback\FeedbackAdminController'            => 'Store Feedback Management'
+        'App\Http\Controllers\StoreFeedback\FeedbackAdminController'            => 'Store Feedback Management',
+        'App\Http\Controllers\Task\TaskAdminController'                         => 'Task Management',
 
 
 
