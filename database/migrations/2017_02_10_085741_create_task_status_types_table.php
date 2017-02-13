@@ -14,7 +14,7 @@ class CreateTaskStatusTypesTable extends Migration
     {
         Schema::create('task_status_types', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('status_title')->unsigned();
+            $table->string('status_title');
             $table->timestamps();
             $table->softDeletes();
         });

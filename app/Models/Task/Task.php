@@ -3,6 +3,10 @@
 namespace App\Models\Task;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Validation\TaskValidator;
+use App\Models\Task\TaskTarget;
+use App\Models\Task\TaskDocument;
+use App\Models\Task\TaskStatus;
 
 class Task extends Model
 {
@@ -63,18 +67,18 @@ class Task extends Model
 			'description' 	=> $request["description"],
 			'publish_date'	=> $request["publish_date"],
 			'due_date'		=> $request["due_date"],
-			'banner_id' 	=> $request["banner_id"]
+			'banner_id' 	=> $request["banner_id"],
+			'send_reminder'	=> (bool) $request["send_reminder"]
 		]);
 
-		Task::updateTargetStores($task->id, $request);
-		Task::updateTaskDocuments($task->id, $request);
-		return $communication;
+		TaskTarget::updateTargetStores($task->id, $request);
+		TaskDocument::updateTaskDocuments($task->id, $request);
+		return $task;
 	}
 
-	public static function updateCommunication($id, $request)
+	public static function updateTask($id, $request)
 	{
 	 
-
 		\Log::info($request->all());
 		$validate = Task::validateEditTask($request);
 
@@ -88,25 +92,25 @@ class Task extends Model
 
 		$task["title"] = $request["title"];
 		$task["description"] = $request["description"];
-		
-		if (isset($request['communication_type_id'])) {
-			$task["communication_type_id"] = $request["communication_type_id"];
-		}
-		
 		$task["due_date"] = $request["due_date"];
 		$task["publish_date"] = $request["publish_date"];
+		$task["send_reminder"]	= (bool) $request["send_reminder"];
 
 		$task->save();
 
-		Task::updateTargetStores($task->id, $request);
-		Task::updateTaskDocuments($task->id, $request);
+		TaskTarget::updateTargetStores($task->id, $request);
+		TaskDocument::updateTaskDocuments($task->id, $request);
+		TaskStatus::updateTaskStatusType($task->id, $request);
 
 		return $task;
 
 	}
 
-		
-
+	public static function deleteTask($id)
+	{
+		Task::find($id)->delete();
+	}
+	
 
 
 }

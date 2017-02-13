@@ -617,6 +617,7 @@ return array(
     'SebastianBergmann\\RecursionContext\\InvalidArgumentException' => $vendorDir . '/sebastian/recursion-context/src/InvalidArgumentException.php',
     'SebastianBergmann\\Version' => $vendorDir . '/sebastian/version/src/Version.php',
     'SessionHandlerInterface' => $vendorDir . '/symfony/http-foundation/Resources/stubs/SessionHandlerInterface.php',
+    'TaskStatusTypesSeeder' => $baseDir . '/database/seeds/TaskStatusTypesSeeder.php',
     'TestCase' => $baseDir . '/tests/TestCase.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
     'UpdateAlertsTableAddSoftDeletes' => $baseDir . '/database/migrations/2016_03_28_104855_update_alerts_table_addSoftDeletes.php',

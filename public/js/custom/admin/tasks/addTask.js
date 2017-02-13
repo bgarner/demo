@@ -50,8 +50,10 @@ $(document).on('click','.task-create',function(){
 	var banner_id = $("input[name='banner_id']").val();
 	var target_stores  = $("#storeSelect").val();
 	var task_documents = [];
-	var allStores  = $("allStores:checked").val();
+	var allStores  = $("#allStores:checked").val();
+	var send_reminder = ($("#send_reminder").prop('checked') === true)?1:0;
 
+	console.log(send_reminder);
 
 	$(".selected-files").each(function(){
 		task_documents.push($(this).attr('data-fileid'));
@@ -85,7 +87,8 @@ $(document).on('click','.task-create',function(){
 		  		due_date : due_date,
 		  		banner_id : banner_id,
 		  		target_stores : target_stores,
-		  		task_documents : task_documents
+		  		task_documents : task_documents,
+		  		send_reminder : send_reminder
 		    },
 		    success: function(result) {
 		    	console.log(result);

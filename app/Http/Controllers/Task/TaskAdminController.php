@@ -12,8 +12,9 @@ use App\Models\StoreInfo;
 use App\Models\Task\Task;
 use App\Models\UserSelectedBanner;
 use App\Models\Document\FileFolder;
-
-
+use App\Models\Task\TaskDocument;
+use App\Models\Task\TaskTarget;
+use App\Models\Task\TaskStatusTypes;
 
 class TaskAdminController extends Controller
 {
@@ -89,7 +90,31 @@ class TaskAdminController extends Controller
      */
     public function edit($id)
     {
-        //
+        $banner = UserSelectedBanner::getBanner();
+        $banners = Banner::all();
+        
+        $task_target_stores = TaskTarget::getTargetStoresByTaskId($id);
+        // store list would depend on the Auth::user type and id 
+        $storeList = StoreInfo::getStoreListing($banner->id);
+        $all_stores = false;
+        if (count($storeList) == count($task_target_stores)) {
+            $all_stores = true;
+        }
+
+        $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
+        $task = Task::find($id);
+        $task_documents  = TaskDocument::getDocumentsByTaskId($id);
+        $task_status_list = TaskStatusTypes::getTaskStatusList();
+        
+        return view('admin.task.edit')->with('task', $task)
+                                        ->with('task_documents', $task_documents)
+                                        ->with('banner', $banner)
+                                        ->with('storeList', $storeList)
+                                        ->with('banners', $banners)
+                                        ->with('navigation', $fileFolderStructure)
+                                        ->with('target_stores', $task_target_stores)
+                                        ->with('task_status_list', $task_status_list)
+                                        ->with('all_stores', $all_stores);
     }
 
     /**
@@ -101,7 +126,7 @@ class TaskAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return Task::updateTask($id, $request);
     }
 
     /**
@@ -112,6 +137,6 @@ class TaskAdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Task::deleteTask($id);
     }
 }

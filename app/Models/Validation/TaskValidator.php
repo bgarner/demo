@@ -9,8 +9,8 @@ class TaskValidator extends PortalValidator
 {
     protected $rules = [
     			    'title' 		=> 'required',
-			    	'publish_date'	=> 'date|before:due_date',
-			    	'due_date'		=> 'date|after:publish_date',
+			    	'publish_date'	=> 'date',
+			    	'due_date'		=> 'sometimes|date|after:publish_date',
 			    	'target_stores'	=> "required_without:allStores",
 			        'allStores'     => 'in:on',
 			        'documents'		=> 'sometimes|exists:documents,id',

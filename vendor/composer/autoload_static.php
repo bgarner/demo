@@ -986,6 +986,7 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         'SebastianBergmann\\RecursionContext\\InvalidArgumentException' => __DIR__ . '/..' . '/sebastian/recursion-context/src/InvalidArgumentException.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
         'SessionHandlerInterface' => __DIR__ . '/..' . '/symfony/http-foundation/Resources/stubs/SessionHandlerInterface.php',
+        'TaskStatusTypesSeeder' => __DIR__ . '/../..' . '/database/seeds/TaskStatusTypesSeeder.php',
         'TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
         'UpdateAlertsTableAddSoftDeletes' => __DIR__ . '/../..' . '/database/migrations/2016_03_28_104855_update_alerts_table_addSoftDeletes.php',
