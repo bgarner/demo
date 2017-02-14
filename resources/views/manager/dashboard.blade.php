@@ -48,11 +48,14 @@
 		background-image: radial-gradient(45px 45px 45deg, circle cover, #666666 0%, #111111 100%, red 95%);    	
     }
     .profile-circle{
-        color: #333;
+        color: #ccc;
         background-color: #fafafa;
-        font-size: 40px;
-                height: 80px;
+        letter-spacing: -6px;
+        font-size: 50px;
+        height: 80px;
         width: 80px;
+        padding: 5px;
+        margin: 5px;        
     }
     .atmo{
 
