@@ -385,6 +385,35 @@ class Communication extends Model
             ->where('communications.communication_type_id', $categoryId)
             ->count();
          return $count;
+      }
+
+      public static function getActiveCommunicationsForStoreList($storeNumbersArray)
+      {
+         $now = Carbon::now()->toDatetimeString();
+         $communications = Communication::join('communications_target', 'communications_target.communication_id' ,  '=', 'communications.id')
+                                       ->whereIn('communications_target.store_id', $storeNumbersArray)
+                                       ->where('communications.send_at' , '<=', $now)
+                                       ->where('communications.archive_at', '>=', $now)
+                                       ->whereNull('communications.deleted_at')
+                                       ->whereNull('communications_target.deleted_at')
+                                       ->select('communications.*', 'communications_target.store_id')
+                                       ->get()
+                                       ->toArray();
+         $compiledComm = [];
+
+         foreach ($communications as $communication) {
+            $index = array_search($communication['id'], array_column($compiledComm, 'id'));
+            if(  $index !== false ){
+               array_push($compiledComm[$index]->stores, $communication["store_id"]);
+            }
+            else{
+               
+               $communication["stores"] = [];
+               array_push( $communication["stores"] , $communication["store_id"]);
+               array_push( $compiledComm , (object) $communication);
+            }
+         }
+         return (object)($compiledComm);
       }       
 
       public static function getCommunicationCategoryName($id)

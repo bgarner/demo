@@ -206,6 +206,40 @@ class Alert extends Model
         return $alerts;
     }
 
+    public static function getActiveAlertsForStoreList($storeNumbersArray)
+      {
+         $now = Carbon::now()->toDatetimeString();
+         $alerts = Alert::join('alerts_target', 'alerts_target.alert_id' ,  '=', 'alerts.id')
+                        ->join('documents', 'documents.id', '=', 'alerts.document_id')
+                        ->join('alert_types', 'alerts.alert_type_id', '=', 'alert_types.id') 
+                        ->whereIn('alerts_target.store_id', $storeNumbersArray)
+                        ->where('documents.start', '<=', $now )
+                        ->where(function($query) use ($now) {
+                            $query->where('documents.end', '>=', $now)
+                                ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+                        })
+                        ->whereNull('alerts.deleted_at')
+                        ->whereNull('documents.deleted_at')
+                        ->select('documents.*', 'alerts_target.store_id', 'alert_types.name')
+                       ->get()
+                       ->toArray();
+         $compiledAlerts = [];
+
+         foreach ($alerts as $alert) {
+            $index = array_search($alert['id'], array_column($compiledAlerts, 'id'));
+            if(  $index !== false ){
+               array_push($compiledAlerts[$index]->stores, $alert["store_id"]);
+            }
+            else{
+               
+               $alert["stores"] = [];
+               array_push( $alert["stores"] , $alert["store_id"]);
+               array_push( $compiledAlerts , (object) $alert);
+            }
+         }
+         return (object)($compiledAlerts);
+      }       
+
     public static function addStoreViewData($alerts)
     {
         foreach($alerts as $a){

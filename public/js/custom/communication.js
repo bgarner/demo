@@ -84,52 +84,6 @@ $(".delete-communication").click(function(){
     return false;
 });
 
-// var getStoreNumbers = function(){
-// 	$("#storeSelect").empty();	
-// 	$("#storeSelect").append("<option></option>");
-// 	var banner = localStorage.getItem('admin-banner-id');
-// 	var jqxhr = $.getJSON( STORE_API_DOMAIN + "/banner/" + banner, function(json) {
- 	
-//  		var target_stores = $(".target_stores");
-//         var target = [];
-// 		if (! (typeof target_stores  == "undefined") ) {
-// 			$.each(target_stores ,function (index, element){
-// 				target.push(element.value);
-// 			});
-// 		}
-
-//     	var i=0;
-//     	console.log(target.length);
-//     	console.log(json.length);
-//         if ( (target.length - 1) == json.length){
-//         	$("#allStores").prop('checked', true);
-//         	$.each(json, function(index, element) {
-//         		$("#storeSelect").append("<option value='"+ element.store_number +"'>"+ element.id + " " + element.name +"</option>");	
-//         	});
-//         }
-//         else{
-//         	$.each(json, function(index, element) {
-        	
-//             if(  target.indexOf(element.store_number) >= 0) {
-//             	$("#storeSelect").append("<option value='"+ element.store_number +"' selected>"+ element.id + " " + element.name +"</option>");
-//             }
-//             else{
-//             	$("#storeSelect").append("<option value='"+ element.store_number +"'>"+ element.id + " " + element.name +"</option>");	
-//             }
-            
-//             i++;
-//         });
-//         }
-        
-//         $("#storeSelect").chosen({
-//         	width:"50%"
-//         });		
-        
-//     });
-
-    
-// }
-
 
 $("#allStores").change(function(){
 
