@@ -19,9 +19,9 @@ class ManagerDashboardController extends Controller
     public function index()
     {
         //$stores = ManagerDashboard::compileDashboardDataByRegionId(3);
-        $stores = StoreInfo::getStoresByRegionGroupedByDistrict(3);
+        $region = StoreInfo::getStoresByRegionGroupedByDistrict(3);
         return view('manager.dashboard')
-            ->with('stores', $stores);
+            ->with('region', $region);
     }
 
     /**
