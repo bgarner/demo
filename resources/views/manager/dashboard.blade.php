@@ -12,10 +12,16 @@
 
     <link rel="stylesheet" type="text/css" media="all" href="/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" media="all" href="/fonts/font-awesome/css/font-awesome.css">
+
     <link rel="stylesheet" type="text/css" media="print" href="/css/print.css">
+    
     <link rel="stylesheet" type="text/css" media="screen" href="/css/plugins/sweetalert/sweetalert.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/plugins/fullcalendar/fullcalendar.css">
+    <link rel="stylesheet" type="text/css" media="print" href="/css/plugins/fullcalendar/fullcalendar.print.css">
+
     <link rel="stylesheet" type="text/css" media="screen" href="/css/animate.css">
     <link rel="stylesheet" type="text/css" media="screen" href="/css/app.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/skins/manager/skin.css">
 
     <style type="text/css">
     
@@ -37,8 +43,31 @@
 		background-image: -webkit-radial-gradient(45px 45px, circle cover, #666666, #111111);
 		background-image: radial-gradient(45px 45px 45deg, circle cover, #666666 0%, #111111 100%, red 95%);    	
     }
+    .profile-circle{
+        color: #333;
+        background-color: #fafafa;
+        font-size: 35px;
+    }
     .atmo{
 
+    }
+
+    .profile-name{
+        color: #fafafa;
+    }
+    #nav-header-content{
+        /*border: thin solid lime;*/
+    }
+    .nav-header{
+        
+    }
+
+    #nav-header-content a{
+        border: none !important;
+        background: none !important;
+    }
+    #nav-header-content a:hover{
+        color: #fff;
     }
 
 	
@@ -56,13 +85,20 @@
         <div class="sidebar-collapse">
             <ul class="nav metismenu" id="side-menu">
                 <li class="nav-header">
-                    <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" src="img/profile_small.jpg" />
-                             </span>
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">Dax Brewster</strong>
-                             </span> <span class="text-muted text-xs block">AVP - West</span> </span> </a>
-                       
+                    <div id="nav-header-content">
+                        <div class="circle profile-circle">
+                            DB
+                        </div>
+                
+                        <span class="clear"> 
+                            <span class="block m-t-xs"> 
+                                <strong class="font-bold profile-name">Dax Brewster</strong>
+                            </span> 
+                            <span class="text-muted text-xs block">AVP - West</span> 
+                            <a href="/manager" class="no-style">
+                                <i class="fa fa-sign-out"></i> Log out
+                            </a>
+                        </span>
                     </div>
 
                 </li>

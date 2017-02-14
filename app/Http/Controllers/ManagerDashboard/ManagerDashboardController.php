@@ -16,17 +16,7 @@ class ManagerDashboardController extends Controller
      */
     public function index()
     {
-        return view('manager.login');
-    }
-
-    public function dm()
-    {
-        return view('manager.dmdashboard');
-    }
-
-    public function avp()
-    {
-        return view('manager.avpdashboard');
+        return view('manager.dashboard');
     }
 
     /**
