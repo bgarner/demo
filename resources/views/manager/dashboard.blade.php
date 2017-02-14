@@ -27,16 +27,20 @@
     
     .circle{
 	    border-radius: 50%;
-		width: 70px;
-		height: 70px; 
+		width: 42px;
+		height: 42px; 
 		font-size: 8px;
 		text-align: center;
-		padding: 10px;
-		margin: 5px;
+		padding: 2px;
+		margin: 3px;
 		display: inline-block;
     }	
 
-    .store-number{ font-weight: bold; font-size: 11px;}
+    .profile-circle{
+
+    }
+
+    .store-number{ font-weight: normal; font-size: 13px; position: relative; top: 8px;}
     .sc{
     	color: #fff;
 		background-image: -moz-radial-gradient(45px 45px 45deg, circle cover, #666666 0%, #111111 100%, red 95%);
@@ -46,7 +50,9 @@
     .profile-circle{
         color: #333;
         background-color: #fafafa;
-        font-size: 35px;
+        font-size: 40px;
+                height: 80px;
+        width: 80px;
     }
     .atmo{
 
@@ -203,16 +209,14 @@
                         </div>
                         <div class="ibox-content">
                             <div class="team-members">
-                                <a href=""><div class="circle sc"><span class="store-number">314</span><br /><span class="store-name">West Edmonton Mall</span></div></a>
-                                <div class="circle sc"><span class="store-number">314</span><br /><span class="store-name">West Edmonton Mall</span></div>
-                                <div class="circle sc"><span class="store-number">314</span><br /><span class="store-name">West Edmonton Mall</span></div>
-                                <div class="circle sc"><span class="store-number">314</span><br /><span class="store-name">West Edmonton Mall</span></div>
-                                <div class="circle sc"><span class="store-number">314</span><br /><span class="store-name">West Edmonton Mall</span></div>
-                                <div class="circle sc"><span class="store-number">314</span><br /><span class="store-name">West Edmonton Mall</span></div>
-                                <div class="circle sc"><span class="store-number">314</span><br /><span class="store-name">West Edmonton Mall</span></div>
-                                <div class="circle sc"><span class="store-number">314</span><br /><span class="store-name">West Edmonton Mall</span></div>
-                                <div class="circle sc"><span class="store-number">314</span><br /><span class="store-name">West Edmonton Mall</span></div>
-                                <div class="circle sc"><span class="store-number">314</span><br /><span class="store-name">West Edmonton Mall</span></div>
+                                <a href=""><div class="circle sc"><span class="store-number">314</span></div></a>
+                                <a href=""><div class="circle sc"><span class="store-number">314</span></div></a>
+                                <a href=""><div class="circle sc"><span class="store-number">314</span></div></a>
+                                <a href=""><div class="circle sc"><span class="store-number">314</span></div></a>
+                                <a href=""><div class="circle sc"><span class="store-number">314</span></div></a>
+                                <a href=""><div class="circle sc"><span class="store-number">314</span></div></a>
+                                <a href=""><div class="circle sc"><span class="store-number">314</span></div></a>
+                                <a href=""><div class="circle sc"><span class="store-number">314</span></div></a>
                             </div>
                             <h4>Info about Design Team</h4>
                             <p>
