@@ -15,7 +15,6 @@ class ManagerDashboard extends Model
     {
     	$stores = StoreInfo::getStoresByDistrictId($id);
     	return ManagerDashboard::compileDashboardDataByStoreList($stores);
-    	
     }
 
     public static function compileDashboardDataByRegionId($id)
