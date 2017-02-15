@@ -18,9 +18,15 @@ Route::pattern('id', '[0-9]+');
 Route::post('/clicktrack', 'Analytics\AnalyticsController@store');
 
 //AUTHENTICATION
-Route::get('/admin/login', 'Auth\AuthController@getLogin');
-Route::post('/admin/login', 'Auth\AuthController@postLogin');
-Route::get('/admin/logout', 'Auth\AuthController@getLogout');
+Route::get('/admin/login', 'Auth\AdminAuthController@getLogin');
+Route::post('/admin/login', 'Auth\AdminAuthController@postLogin');
+Route::get('/admin/logout', 'Auth\AdminAuthController@getLogout');
+
+Route::get('/manager/login', 'Auth\ManagerAuthController@getLogin');
+Route::post('/manager/login', 'Auth\ManagerAuthController@postLogin');
+Route::get('/manager/logout', 'Auth\ManagerAuthController@getLogout');
+
+
 
 //ALERTS
 Route::get('/{storeno}/alerts', array('uses' => 'Alert\AlertController@index'));
@@ -55,11 +61,11 @@ Route::get('/{storeno}/feature/show/{id}', 'Feature\FeatureController@show');
 //FOLDER - SHOW CONTENT
 Route::get('/{storeno}/folder/{id}', ['uses' => 'Document\FolderController@show']);
 
-//MANAGER DASHBOARD
+// //MANAGER DASHBOARD
 Route::get('/manager', ['uses' => 'ManagerDashboard\ManagerLoginController@index']);
-Route::get('/manager/dashboard', ['uses' => 'ManagerDashboard\ManagerDashboardController@index']);
-Route::get('/manager/avp-dashboard', ['uses' => 'ManagerDashboard\ManagerDashboardController@avp']);
-Route::get('/manager/dm-dashboard', ['uses' => 'ManagerDashboard\ManagerDashboardController@dm']);
+// Route::get('/manager/dashboard', ['uses' => 'ManagerDashboard\ManagerDashboardController@index']);
+// Route::get('/manager/avp-dashboard', ['uses' => 'ManagerDashboard\ManagerDashboardController@avp']);
+// Route::get('/manager/dm-dashboard', ['uses' => 'ManagerDashboard\ManagerDashboardController@dm']);
 
 //SEARCH
 Route::get('/{storeno}/search', array('uses' => 'Search\SearchController@index'));
