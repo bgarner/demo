@@ -8,6 +8,10 @@ $( document ).ready(function() {
 
     if(storeNum.length < 4){
         storeNum = "0"+storeNum;
+<<<<<<< HEAD
+=======
+        console.log("added a zero: " + storeNum);
+>>>>>>> 37530f4b7... deep link adds 0 to 3 digit store numbers
     }
 
     var store = (function () {
