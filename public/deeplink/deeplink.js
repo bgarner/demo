@@ -8,7 +8,6 @@ $( document ).ready(function() {
 
     if(storeNum.length < 4){
         storeNum = "0"+storeNum;
-        console.log("added a zero: " + storeNum);
     }
 
     var store = (function () {
