@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Validator;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
-use Mail;
 use Illuminate\Support\Facades\Auth;
+
+use App\User;
+use App\Models\Auth\Group;
 use App\Models\UserSelectedBanner;
 
 class AuthController extends Controller
@@ -29,7 +31,7 @@ class AuthController extends Controller
     * Properties | define all the properties here 
     * to overwrite the laravel default properties such as routes.
     */
-    // private $redirectTo = '/admin/home';
+
 
 
     /**
@@ -60,7 +62,17 @@ class AuthController extends Controller
         return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
     }
 
+    public function authenticated(Request $request, User $user)
+    {
+        $group_id = $user->group_id;
+        $group = Group::where('id', $group_id)->first()->name;
+        if( in_array( $group, $this->allowedGroups) ){
+            return redirect()->intended($this->redirectPath());    
+        }
+        Auth::logout();
+        return redirect( $this->alternateLogin );   
 
+    }
 
 
 }
