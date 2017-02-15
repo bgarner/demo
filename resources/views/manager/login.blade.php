@@ -7,10 +7,17 @@
         <meta name="csrf-token" content="{!! csrf_token() !!}"/>
         <link rel="stylesheet" type="text/css" media="all" href="/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" media="all" href="/fonts/font-awesome/css/font-awesome.css">
+
+        <?php
+        $dir = "../public/images/loginbackground/";
+        $images = scandir($dir);
+        $i = rand(2, sizeof($images)-1);
+        ?>
+
         <!-- Theme style -->
         <style>
         .lockscreen {
-          background: url(../img/golf2.jpg) repeat center center fixed;
+          background: url('/images/loginbackground/<?php echo $images[$i]; ?>') repeat center center fixed;
           -webkit-background-size: cover;
           -moz-background-size: cover;
           -o-background-size: cover;
