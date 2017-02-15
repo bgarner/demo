@@ -204,10 +204,10 @@
 
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
-                <div class="col-lg-4">
+                
 
                 @foreach($region->districts as $district)
-
+                <div class="col-lg-4">
                     <div class="ibox">
                         <div class="ibox-title">
                             {{-- <span class="label label-primary pull-right">NEW</span> --}}
@@ -218,48 +218,51 @@
                             @foreach($district->stores as $store)
                                 <a href=""><div class="circle sc"><span class="store-number">{{ $store->store_number }}</span></div></a>
                             @endforeach
-{{--                                 <a href=""><div class="circle sc"><span class="store-number">314</span></div></a>
-                                <a href=""><div class="circle sc"><span class="store-number">314</span></div></a>
-                                <a href=""><div class="circle sc"><span class="store-number">314</span></div></a>
-                                <a href=""><div class="circle sc"><span class="store-number">314</span></div></a>
-                                <a href=""><div class="circle sc"><span class="store-number">314</span></div></a>
-                                <a href=""><div class="circle sc"><span class="store-number">314</span></div></a>
-                                <a href=""><div class="circle sc"><span class="store-number">314</span></div></a>
-                                <a href=""><div class="circle sc"><span class="store-number">314</span></div></a> --}}
+
                             </div>
-                            <h4>Info about Design Team</h4>
+{{--                             <h4>Info about Design Team</h4>
                             <p>
                                 It is a long established fact that a reader will be distracted by the readable content
                                 of a page when looking at its layout. The point of using Lorem Ipsum is that it has.
-                            </p>
+                            </p> --}}
                             <div>
-                                <span>Status of current project:</span>
+                                <span>Comp Sales YTD:</span>
+                                <div class="stat-percent">89%</div>
+                                <div class="progress progress-mini">
+                                    <div style="width: 89%;" class="progress-bar"></div>
+                                </div>
+                                <span>Budget Sales YTD:</span>
+                                <div class="stat-percent">86%</div>
+                                <div class="progress progress-mini">
+                                    <div style="width: 86%;" class="progress-bar"></div>
+                                </div>                                
+                                <span>Payroll YTD:</span>
                                 <div class="stat-percent">48%</div>
                                 <div class="progress progress-mini">
                                     <div style="width: 48%;" class="progress-bar"></div>
                                 </div>
-                            </div>
+                            </div>                            
                             <div class="row  m-t-sm">
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <div class="font-bold">PROJECTS</div>
                                     12
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <div class="font-bold">RANKING</div>
                                     4th
                                 </div>
-                                <div class="col-sm-4 text-right">
+                                <div class="col-sm-6 text-right">
                                     <div class="font-bold">BUDGET</div>
-                                    $200,913 <i class="fa fa-level-up text-navy"></i>
+                                    $200,913 <i class="fa fa-level-up text-navy"></i> <small>(+8%)</small>
                                 </div>
                             </div>
 
                         </div>
                     </div>
-
+                    </div>
                     @endforeach
                 
-                </div>
+                
             </div>
 
 
