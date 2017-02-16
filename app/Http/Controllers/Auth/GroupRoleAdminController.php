@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\ManagerDashboard;
+namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\Auth\GroupRole;
 
-class ManagerDashboardController extends Controller
+class GroupRoleAdminController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +17,7 @@ class ManagerDashboardController extends Controller
      */
     public function index()
     {
-        return view('manager.avpdashboard');
+        //
     }
 
     /**
@@ -48,7 +49,7 @@ class ManagerDashboardController extends Controller
      */
     public function show($id)
     {
-        
+        return GroupRole::getRolesByGroupId($id);
     }
 
     /**

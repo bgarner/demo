@@ -62,10 +62,7 @@ Route::get('/{storeno}/feature/show/{id}', 'Feature\FeatureController@show');
 Route::get('/{storeno}/folder/{id}', ['uses' => 'Document\FolderController@show']);
 
 // //MANAGER DASHBOARD
-Route::get('/manager', ['uses' => 'ManagerDashboard\ManagerLoginController@index']);
-// Route::get('/manager/dashboard', ['uses' => 'ManagerDashboard\ManagerDashboardController@index']);
-// Route::get('/manager/avp-dashboard', ['uses' => 'ManagerDashboard\ManagerDashboardController@avp']);
-// Route::get('/manager/dm-dashboard', ['uses' => 'ManagerDashboard\ManagerDashboardController@dm']);
+Route::get('/manager', ['uses' => 'ManagerDashboard\ManagerDashboardController@index']);
 
 //SEARCH
 Route::get('/{storeno}/search', array('uses' => 'Search\SearchController@index'));
@@ -198,6 +195,8 @@ Route::resource('/admin/feedback/{id}/note' , 'StoreFeedback\NotesAdminControlle
 
 //User Groups and Sections
 Route::resource('/admin/group', 'Auth\GroupAdminController');
+Route::get('/admin/group/{id}/roles', 'Auth\GroupRoleAdminController@show');
+Route::get('/admin/role/{id}/resources', 'Auth\RoleResourceAdminController@show');
 Route::resource('/admin/component', 'Auth\ComponentAdminController');
 
 //Product Launch

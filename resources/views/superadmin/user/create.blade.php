@@ -78,6 +78,19 @@
                                             </div>
                                         </div>
 
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Role</label>
+                                            <div class="col-sm-10">
+                                                <select name="role" id="select-role" class="form-control"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Resource</label>
+                                            <div class="col-sm-10">
+                                                <select name="role" id="select-resource" class="form-control"></select>
+                                            </div>
+                                        </div>
+
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Password</label>

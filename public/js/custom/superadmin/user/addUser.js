@@ -1,4 +1,61 @@
 $(document).ready(function(){
+
+	$("#select-role").closest('.form-group').hide();
+	$("#select-resource").closest('.form-group').hide();
+
+	$("#select-group").change(function(){
+		var group = $('#select-group option:selected').val();
+		$.ajax({
+			    url: '/admin/group/' + group + '/roles',
+			    type: 'GET',
+			    dataType: 'json',
+			    success: function(result) {
+			        console.log(result.length);
+			    	if( result.length >0 ) {
+			    		$("#select-role option").remove();
+						for (var i = 0; i < result.length ; i++) {
+							$('<option>').val(result[i].id).text(result[i].role_name).appendTo('#select-role');
+						}
+						$("#select-role").closest('.form-group').show();
+			        }
+			        else{
+			        	$("#select-role").closest('.form-group').hide();
+			        }
+			        
+			    }
+			}).done(function(data){
+				console.log(data);
+			});    
+	});
+
+	$("#select-role").change(function(){
+		var role = $('#select-role option:selected').val();
+		$.ajax({
+			    url: '/admin/role/' + role + '/resources',
+			    type: 'GET',
+			    dataType: 'json',
+			    success: function(result) {
+			        
+			        console.log(result.length);
+			    	if( result.length >0 ) {
+			    		$("#select-resource option").remove();
+						for (var i = 0; i < result.length ; i++) {
+							$('<option>').val(result[i].id)
+										 .text(result[i].resource_name + "/" + result[i].resource_id )
+										 .appendTo('#select-resource');
+						}
+						$("#select-resource").closest('.form-group').show();
+			        }
+			        else{
+			        	$("#select-resource").closest('.form-group').hide();
+			        }
+			        
+			    }
+			}).done(function(data){
+				console.log(data);
+			});    
+	});
+
 	$(".user-create").click(function(){
 		var firstname = $('input[name="firstname"]').val();
 		var lastname = $('input[name="lastname"]').val();
