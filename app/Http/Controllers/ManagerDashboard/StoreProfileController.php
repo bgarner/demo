@@ -10,6 +10,7 @@ use App\Models\StoreInfo;
 use App\Models\Communication\Communication;
 use App\Models\UrgentNotice\UrgentNotice;
 use App\Models\Alert\Alert;
+use App\Models\ProductLaunch\ProductLaunch;
 
 class StoreProfileController extends Controller
 {
@@ -65,7 +66,7 @@ class StoreProfileController extends Controller
             $alerts = Alert::getActiveAlertsByStore($id);
         }
 
-
+        $productLaunches = ProductLaunch::getActiveProductLaunchByStore($id);
 
         $communications = Communication::getActiveCommunicationsByStoreNumber($id);
         $storeInfo = StoreInfo::getStoreInfoByStoreId($id);
@@ -75,6 +76,7 @@ class StoreProfileController extends Controller
             ->with("urgentNotices", $urgentNotices)
             ->with("alertCount", $alertCount)
             ->with("alerts", $alerts)
+            ->with("productLaunches", $productLaunches)
             ->with("storeInfo", $storeInfo)
             ->with("communications", $communications);
     }

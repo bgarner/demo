@@ -204,12 +204,13 @@
                     </div>
                     @endif
 
+                    @if( count($productLaunches) >0 )
                     <div class="ibox">
                         <div class="ibox-content">
                             <h3>Upcoming Product Launches</h3>
                         </div>
                     </div>
-
+                    @endif
 
                 </div>
 
