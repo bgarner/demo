@@ -58,8 +58,7 @@ Route::get('/{storeno}/folder/{id}', ['uses' => 'Document\FolderController@show'
 //MANAGER DASHBOARD
 Route::get('/manager', ['uses' => 'ManagerDashboard\ManagerLoginController@index']);
 Route::get('/manager/dashboard', ['uses' => 'ManagerDashboard\ManagerDashboardController@index']);
-Route::get('/manager/avp-dashboard', ['uses' => 'ManagerDashboard\ManagerDashboardController@avp']);
-Route::get('/manager/dm-dashboard', ['uses' => 'ManagerDashboard\ManagerDashboardController@dm']);
+Route::get('/manager/store/{storeno}', 'ManagerDashboard\StoreProfileController@show');
 
 //SEARCH
 Route::get('/{storeno}/search', array('uses' => 'Search\SearchController@index'));
