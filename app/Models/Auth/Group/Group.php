@@ -33,8 +33,9 @@ class Group extends Model
 
 	public static function deleteGroup($id)
 	{
-		Group::find($id)->delete();
 		GroupComponent::where('group_id', $id)->delete();
+        Group::find($id)->delete();
+		
 	}    
 
     public static function getGroupList($banner_id)

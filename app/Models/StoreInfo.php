@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Request as RequestFacade; 
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 
 class StoreInfo extends Model
 {

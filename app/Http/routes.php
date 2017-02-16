@@ -165,6 +165,7 @@ Route::resource('/admin/quicklink', 'Dashboard\QuicklinksAdminController');
 Route::resource('/admin/urgentnotice', 'UrgentNotice\UrgentNoticeAdminController');
 
 Route::resource('/admin/alert', 'Alert\AlertAdminController' );
+
 //Users
 Route::resource('/admin/user', 'User\UserAdminController');
 
@@ -193,11 +194,18 @@ Route::resource('/utilities/ckeditorimages', 'Utilities\CkeditorImageController'
 Route::resource('/admin/feedback' , 'StoreFeedback\FeedbackAdminController');
 Route::resource('/admin/feedback/{id}/note' , 'StoreFeedback\NotesAdminController');
 
-//User Groups and Sections
-Route::resource('/admin/group', 'Auth\GroupAdminController');
-Route::get('/admin/group/{id}/roles', 'Auth\GroupRoleAdminController@show');
-Route::get('/admin/role/{id}/resources', 'Auth\RoleResourceAdminController@show');
-Route::resource('/admin/component', 'Auth\ComponentAdminController');
+//User Groups
+Route::resource('/admin/group', 'Auth\Group\GroupAdminController');
+Route::get('/admin/group/{id}/roles', 'Auth\Group\GroupRoleAdminController@show');
+
+//User Roles
+Route::resource('/admin/role', 'Auth\Role\RoleAdminController');
+Route::get('/admin/role/{id}/resources', 'Auth\Role\RoleResourceAdminController@show');
+
+// Role Resources
+
+//Components
+Route::resource('/admin/component', 'Auth\Component\ComponentAdminController');
 
 //Product Launch
 Route::get('/admin/productlaunch', 'Calendar\ProductLaunchAdminController@index');
