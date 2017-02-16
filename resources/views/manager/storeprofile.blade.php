@@ -21,6 +21,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="/css/animate.css">
     <link rel="stylesheet" type="text/css" media="screen" href="/css/app.css">
     <link rel="stylesheet" type="text/css" media="screen" href="/css/skins/manager/skin.css">
+    <link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
 
     <style>
     .circle{
@@ -29,7 +30,7 @@
         height: 15px;
         font-size: 8px;
         text-align: center;
-        padding: 0px;
+        padding: 1px;
         margin: 3px;
         display: inline-block;
         color: #fff;
@@ -173,275 +174,84 @@
             </div>
             <div class="row">
 
-                <div class="col-lg-5 col-md-5">
+                <div class="col-lg-4 col-md-4">
 
                     <div class="ibox">
                         <div class="ibox-content">
-                                <h3>About Alex Smith</h3>
+                            <h2>Urgent Notices</h2>
+                        </div>
+                    </div>
 
-                            <p class="small">
-                                There are many variations of passages of Lorem Ipsum available, but the majority have
-                                suffered alteration in some form, by injected humour, or randomised words which don't.
-                                <br/>
-                                <br/>
-                                If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't
-                                anything embarrassing
-                            </p>
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <h2>Alerts</h2>
+                        </div>
+                    </div>
 
-                            <p class="small font-bold">
-                                <span><i class="fa fa-circle text-navy"></i> Online status</span>
-                                </p>
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <h2>Upcoming Product Launches</h2>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="col-lg-4 col-md-4">
+
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <h2>Current Communications</h2>
+
+
 
                         </div>
                     </div>
 
                     <div class="ibox">
                         <div class="ibox-content">
-                            <h3>Followers and friends</h3>
-                            <p class="small">
-                                If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't
-                                anything embarrassing
-                            </p>
-                            <div class="user-friends">
-                                <a href=""><img alt="image" class="img-circle" src="img/a3.jpg"></a>
-                                <a href=""><img alt="image" class="img-circle" src="img/a1.jpg"></a>
-                                <a href=""><img alt="image" class="img-circle" src="img/a2.jpg"></a>
-                                <a href=""><img alt="image" class="img-circle" src="img/a4.jpg"></a>
-                                <a href=""><img alt="image" class="img-circle" src="img/a5.jpg"></a>
-                                <a href=""><img alt="image" class="img-circle" src="img/a6.jpg"></a>
-                                <a href=""><img alt="image" class="img-circle" src="img/a7.jpg"></a>
-                                <a href=""><img alt="image" class="img-circle" src="img/a8.jpg"></a>
-                                <a href=""><img alt="image" class="img-circle" src="img/a2.jpg"></a>
-                                <a href=""><img alt="image" class="img-circle" src="img/a1.jpg"></a>
-                            </div>
-                        </div>
-                    </div>
+                            <h2>Tasks</h2>
 
-                    <div class="ibox">
-                        <div class="ibox-content">
-                            <h3>Personal friends</h3>
-                            <ul class="list-unstyled file-list">
-                                <li><a href=""><i class="fa fa-file"></i> Project_document.docx</a></li>
-                                <li><a href=""><i class="fa fa-file-picture-o"></i> Logo_zender_company.jpg</a></li>
-                                <li><a href=""><i class="fa fa-stack-exchange"></i> Email_from_Alex.mln</a></li>
-                                <li><a href=""><i class="fa fa-file"></i> Contract_20_11_2014.docx</a></li>
-                                <li><a href=""><i class="fa fa-file-powerpoint-o"></i> Presentation.pptx</a></li>
-                                <li><a href=""><i class="fa fa-file"></i> 10_08_2015.docx</a></li>
+                            <ul class="todo-list m-t ui-sortable">
+                                <li>
+                                    <div class="icheckbox_square-green" style="position: relative;"><input type="checkbox" value="" name="" class="i-checks" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                    <span class="m-l-xs">Buy a milk</span>
+                                    <small class="label label-primary"><i class="fa fa-clock-o"></i> 1 mins</small>
+                                </li>
+                                <li>
+                                    <div class="icheckbox_square-green checked" style="position: relative;"><input type="checkbox" value="" name="" class="i-checks" checked="" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                    <span class="m-l-xs">Go to shop and find some products.</span>
+                                    <small class="label label-info"><i class="fa fa-clock-o"></i> 3 mins</small>
+                                </li>
+                                <li>
+                                    <div class="icheckbox_square-green" style="position: relative;"><input type="checkbox" value="" name="" class="i-checks" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                    <span class="m-l-xs">Send documents to Mike</span>
+                                    <small class="label label-warning"><i class="fa fa-clock-o"></i> 2 mins</small>
+                                </li>
+                                <li>
+                                    <div class="icheckbox_square-green" style="position: relative;"><input type="checkbox" value="" name="" class="i-checks" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                    <span class="m-l-xs">Go to the doctor dr Smith</span>
+                                    <small class="label label-danger"><i class="fa fa-clock-o"></i> 42 mins</small>
+                                </li>
                             </ul>
-                        </div>
-                    </div>
-
-                    <div class="ibox">
-                        <div class="ibox-content">
-                            <h3>Private message</h3>
-
-                            <p class="small">
-                                Send private message to Alex Smith
-                            </p>
-
-                            <div class="form-group">
-                                <label>Subject</label>
-                                <input type="email" class="form-control" placeholder="Message subject">
-                            </div>
-                            <div class="form-group">
-                                <label>Message</label>
-                                <textarea class="form-control" placeholder="Your message" rows="3"></textarea>
-                            </div>
-                            <button class="btn btn-primary btn-block">Send</button>
 
                         </div>
                     </div>
 
                 </div>
+                <div class="col-lg-4 col-md-4">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <h2>Activity Timeline</h2>
 
-                <div class="col-lg-5 col-md-5">
 
-                    <div class="social-feed-box">
-
-                        <div class="pull-right social-action dropdown">
-                            <button data-toggle="dropdown" class="dropdown-toggle btn-white">
-                                <i class="fa fa-angle-down"></i>
-                            </button>
-                            <ul class="dropdown-menu m-t-xs">
-                                <li><a href="#">Config</a></li>
-                            </ul>
+                            <div class="circle bg-primary"><i class="fa fa-video-camera"></i></div><br />
+                            <div class="circle bg-primary"><i class="fa fa-bullhorn"></i></div><br />
+                            <div class="circle bg-primary"><i class="fa fa-bell"></i></div><br />
+                            <div class="circle bg-primary"><i class="fa fa-book"></i></div><br />
                         </div>
-                        <div class="social-avatar">
-                            <a href="" class="pull-left">
-                                <img alt="image" src="img/a1.jpg">
-                            </a>
-                            <div class="media-body">
-                                <a href="#">
-                                    Andrew Williams
-                                </a>
-                                <small class="text-muted">Today 4:21 pm - 12.06.2014</small>
-                            </div>
-                        </div>
-                        <div class="social-body">
-                            <p>
-                                Many desktop publishing packages and web page editors now use Lorem Ipsum as their
-                                default model text, and a search for 'lorem ipsum' will uncover many web sites still
-                                in their infancy. Packages and web page editors now use Lorem Ipsum as their
-                                default model text.
-                            </p>
-
-                            <div class="btn-group">
-                                <button class="btn btn-white btn-xs"><i class="fa fa-thumbs-up"></i> Like this!</button>
-                                <button class="btn btn-white btn-xs"><i class="fa fa-comments"></i> Comment</button>
-                                <button class="btn btn-white btn-xs"><i class="fa fa-share"></i> Share</button>
-                            </div>
-                        </div>
-                        <div class="social-footer">
-                            <div class="social-comment">
-                                <a href="" class="pull-left">
-                                    <img alt="image" src="img/a1.jpg">
-                                </a>
-                                <div class="media-body">
-                                    <a href="#">
-                                        Andrew Williams
-                                    </a>
-                                    Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words.
-                                    <br/>
-                                    <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 26 Like this!</a> -
-                                    <small class="text-muted">12.06.2014</small>
-                                </div>
-                            </div>
-
-                            <div class="social-comment">
-                                <a href="" class="pull-left">
-                                    <img alt="image" src="img/a2.jpg">
-                                </a>
-                                <div class="media-body">
-                                    <a href="#">
-                                        Andrew Williams
-                                    </a>
-                                    Making this the first true generator on the Internet. It uses a dictionary of.
-                                    <br/>
-                                    <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 11 Like this!</a> -
-                                    <small class="text-muted">10.07.2014</small>
-                                </div>
-                            </div>
-
-                            <div class="social-comment">
-                                <a href="" class="pull-left">
-                                    <img alt="image" src="img/a3.jpg">
-                                </a>
-                                <div class="media-body">
-                                    <textarea class="form-control" placeholder="Write comment..."></textarea>
-                                </div>
-                            </div>
-
-                        </div>
-
                     </div>
 
-                    <div class="social-feed-box">
-
-                        <div class="pull-right social-action dropdown">
-                            <button data-toggle="dropdown" class="dropdown-toggle btn-white">
-                                <i class="fa fa-angle-down"></i>
-                            </button>
-                            <ul class="dropdown-menu m-t-xs">
-                                <li><a href="#">Config</a></li>
-                            </ul>
-                        </div>
-                        <div class="social-avatar">
-                            <a href="" class="pull-left">
-                                <img alt="image" src="img/a6.jpg">
-                            </a>
-                            <div class="media-body">
-                                <a href="#">
-                                    Andrew Williams
-                                </a>
-                                <small class="text-muted">Today 4:21 pm - 12.06.2014</small>
-                            </div>
-                        </div>
-                        <div class="social-body">
-                            <p>
-                                Many desktop publishing packages and web page editors now use Lorem Ipsum as their
-                                default model text, and a search for 'lorem ipsum' will uncover many web sites still
-                                in their infancy. Packages and web page editors now use Lorem Ipsum as their
-                                default model text.
-                            </p>
-                            <p>
-                                Lorem Ipsum as their
-                                default model text, and a search for 'lorem ipsum' will uncover many web sites still
-                                in their infancy. Packages and web page editors now use Lorem Ipsum as their
-                                default model text.
-                            </p>
-                            <img src="img/gallery/3.jpg" class="img-responsive">
-                            <div class="btn-group">
-                                <button class="btn btn-white btn-xs"><i class="fa fa-thumbs-up"></i> Like this!</button>
-                                <button class="btn btn-white btn-xs"><i class="fa fa-comments"></i> Comment</button>
-                                <button class="btn btn-white btn-xs"><i class="fa fa-share"></i> Share</button>
-                            </div>
-                        </div>
-                        <div class="social-footer">
-                            <div class="social-comment">
-                                <a href="" class="pull-left">
-                                    <img alt="image" src="img/a1.jpg">
-                                </a>
-                                <div class="media-body">
-                                    <a href="#">
-                                        Andrew Williams
-                                    </a>
-                                    Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words.
-                                    <br/>
-                                    <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 26 Like this!</a> -
-                                    <small class="text-muted">12.06.2014</small>
-                                </div>
-                            </div>
-
-                            <div class="social-comment">
-                                <a href="" class="pull-left">
-                                    <img alt="image" src="img/a2.jpg">
-                                </a>
-                                <div class="media-body">
-                                    <a href="#">
-                                        Andrew Williams
-                                    </a>
-                                    Making this the first true generator on the Internet. It uses a dictionary of.
-                                    <br/>
-                                    <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 11 Like this!</a> -
-                                    <small class="text-muted">10.07.2014</small>
-                                </div>
-                            </div>
-
-                            <div class="social-comment">
-                                <a href="" class="pull-left">
-                                    <img alt="image" src="img/a8.jpg">
-                                </a>
-                                <div class="media-body">
-                                    <a href="#">
-                                        Andrew Williams
-                                    </a>
-                                    Making this the first true generator on the Internet. It uses a dictionary of.
-                                    <br/>
-                                    <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 11 Like this!</a> -
-                                    <small class="text-muted">10.07.2014</small>
-                                </div>
-                            </div>
-
-                            <div class="social-comment">
-                                <a href="" class="pull-left">
-                                    <img alt="image" src="img/a3.jpg">
-                                </a>
-                                <div class="media-body">
-                                    <textarea class="form-control" placeholder="Write comment..."></textarea>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-
-
-                </div>
-                <div class="col-lg-2 col-md-2" style="border: thin solid red;">
-
-                    <div class="circle bg-primary"><i class="fa fa-check"></i></div>
                 </div>
 
             </div>
@@ -462,33 +272,18 @@
 
 
     <!-- Mainly scripts -->
-    <script src="js/jquery-2.1.1.js"></script>
-    <script src="js/bootstrap.js"></script>
-    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/js/env.js"></script>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
     <!-- Custom and plugin javascript -->
-    <script src="js/inspinia.js"></script>
-    <script src="js/plugins/pace/pace.min.js"></script>
+    <script src="/js/inspinia.js"></script>
+    <script src="/js/plugins/pace/pace.min.js"></script>
 
-    <!-- Sparkline -->
-    <script src="js/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <script src="/js/plugins/iCheck/icheck.min.js"></script>
 
-    <script>
-        $(document).ready(function() {
-
-
-            $("#sparkline1").sparkline([34, 43, 43, 35, 44, 32, 44, 48], {
-                type: 'line',
-                width: '100%',
-                height: '50',
-                lineColor: '#1ab394',
-                fillColor: "transparent"
-            });
-
-
-        });
-    </script>
 
 </body>
 
