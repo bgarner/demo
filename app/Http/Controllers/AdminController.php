@@ -12,8 +12,8 @@ use App\Models\Document\Folder;
 use App\Models\Document\Package;
 use App\Models\Communication\Communication;
 use App\User;
-use App\Models\UserBanner;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Analytics\Analytics;
 
 class AdminController extends Controller

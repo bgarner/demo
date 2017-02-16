@@ -74,7 +74,7 @@
 
                                         <div class="form-group"><label class="col-sm-2 control-label">Group</label>
                                             <div class="col-sm-10">
-                                                {!! Form::select('group', $groups , null, ['class'=>'form-control', 'id'=>'select-group']) !!}
+                                                {!! Form::select('group', $group_names , "", ['class'=>'form-control', 'id'=>'select-group']) !!}
                                             </div>
                                         </div>
 

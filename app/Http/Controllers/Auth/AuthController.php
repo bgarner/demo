@@ -10,8 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\User;
-use App\Models\Auth\Group;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\Group\Group;
+use App\Models\Auth\User\UserSelectedBanner;
 
 class AuthController extends Controller
 {

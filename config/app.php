@@ -214,6 +214,8 @@ return [
         'App\Http\Controllers\Communication\CommunicationAdminController'       => 'Communications',
         'App\Http\Controllers\Communication\CommunicationTypesAdminController'  => 'Communications',
         'App\Http\Controllers\Document\DocumentManagerController'               => 'Library',
+        'App\Http\Controllers\Document\FolderAdminController'                   => 'Library',
+        'App\Http\Controllers\Document\DocumentAdminController'                   => 'Library',
         'App\Http\Controllers\Video\VideoAdminController'                       => 'Videos',
         'App\Http\Controllers\Video\TagAdminController'                         => 'Videos',
         'App\Http\Controllers\Video\PlaylistAdminController'                    => 'Videos',

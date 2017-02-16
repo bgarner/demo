@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Auth\Group;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\Group\Group;
+use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Banner;
-use App\Models\Auth\Component;
-use App\Models\Auth\GroupComponent;
+use App\Models\Auth\Component\Component;
+use App\Models\Auth\Group\GroupComponent;
 
 class GroupAdminController extends Controller
 {
