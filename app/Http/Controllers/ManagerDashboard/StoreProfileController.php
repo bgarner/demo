@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\StoreInfo;
+use App\Models\Communication\Communication;
 
 class StoreProfileController extends Controller
 {
@@ -49,6 +50,7 @@ class StoreProfileController extends Controller
      */
     public function show($id)
     {
+        $communications = Communication::getActiveCommunicationsByStoreNumber($id);
         $storeInfo = StoreInfo::getStoreInfoByStoreId($id);
         //dd($storeInfo);
         return view('manager.storeprofile')
