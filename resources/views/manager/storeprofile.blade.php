@@ -197,13 +197,42 @@
 
                 </div>
 
-                <div class="col-lg-4 col-md-4">
+                <div class="col-lg-5 col-md-5">
 
                     <div class="ibox">
                         <div class="ibox-content">
                             <h2>Current Communications</h2>
 
+                            <div class="mail-box">
 
+
+                                <table class="table table-hover table-mail">
+                                    <tbody>
+
+                                    @foreach($communications as $communication)
+
+
+                                    <tr class= "unread" >
+                                        <td class="check-mail">
+                                            <i class="fa fa-envelope-o"></i>
+                                        </td>
+
+                                        <td class="mail-subject communication-name col-lg-4 col-md-4 col-sm-4 col-xs-5">
+                                            <a class="comm_category_link" data-comm-id="{{ $communication->id }}" href="communication/show/{{ $communication->id }}?">{{ $communication->subject }}</a>
+                                        </td>
+
+                                        <td class="mail-preview col-lg-5 col-md-4 hidden-sm hidden-xs"><a href="communication/show/{{ $communication->id }}">{!! $communication->trunc !!}</a></td>
+                                        <td class=""><!-- <i class="fa fa-paperclip"></i> --></td>
+                                        <td class="text-right mail-date col-lg-3 col-md-2 col-sm-4 col-xs-2">{{ $communication->prettyDate }}<!--  <small style="font-weight: normal;padding-left: 10px;">({{ $communication->since }} ago)</small> --></td>
+                                    </tr>
+
+                                    @endforeach
+
+                                    </tbody>
+                                </table>
+
+
+                            </div>
 
                         </div>
                     </div>
@@ -239,7 +268,7 @@
                     </div>
 
                 </div>
-                <div class="col-lg-4 col-md-4">
+                <div class="col-lg-3 col-md-3">
                     <div class="ibox">
                         <div class="ibox-content">
                             <h2>Activity Timeline</h2>

@@ -54,7 +54,8 @@ class StoreProfileController extends Controller
         $storeInfo = StoreInfo::getStoreInfoByStoreId($id);
         //dd($storeInfo);
         return view('manager.storeprofile')
-            ->with("storeInfo", $storeInfo);
+            ->with("storeInfo", $storeInfo)
+            ->with("communications", $communications);
     }
 
     /**
