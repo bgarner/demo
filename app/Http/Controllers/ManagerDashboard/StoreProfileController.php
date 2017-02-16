@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\StoreInfo;
 use App\Models\Communication\Communication;
 use App\Models\UrgentNotice\UrgentNotice;
+use App\Models\Alert\Alert;
 
 class StoreProfileController extends Controller
 {
@@ -51,12 +52,20 @@ class StoreProfileController extends Controller
      */
     public function show($id)
     {
+        $urgentNotices = [];
+        $alerts = [];
+
         $urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($id);
         if($urgentNoticeCount > 0){
             $urgentNotices = UrgentNotice::getActiveUrgentNoticesByStore($id);
-        } else {
-            $urgentNotices = [];
         }
+
+        $alertCount = Alert::getActiveAlertCountByStore($id);
+        if($alertCount > 0){
+            $alerts = Alert::getActiveAlertsByStore($id);
+        }
+
+
 
         $communications = Communication::getActiveCommunicationsByStoreNumber($id);
         $storeInfo = StoreInfo::getStoreInfoByStoreId($id);
@@ -64,6 +73,8 @@ class StoreProfileController extends Controller
         return view('manager.storeprofile')
             ->with("urgentNoticeCount", $urgentNoticeCount)
             ->with("urgentNotices", $urgentNotices)
+            ->with("alertCount", $alertCount)
+            ->with("alerts", $alerts)
             ->with("storeInfo", $storeInfo)
             ->with("communications", $communications);
     }

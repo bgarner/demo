@@ -187,11 +187,22 @@
                     </div>
                     @endif
 
+                    @if($alertCount >0)
                     <div class="ibox">
                         <div class="ibox-content">
                             <h3>Alerts</h3>
+                            @foreach($alerts as $alert)
+                            title: {{ $alert->title }} <br />
+                            id: {{ $alert->id }} <br />
+                            document_id: {{ $alert->document_id }} <br />
+                            alert_type_id: {{ $alert->alert_type_id }} <br />
+                            since: {{ $alert->since }}<br />
+                            link_with_icon: {{ $alert->link_with_icon }} <br />
+                            <hr />
+                            @endforeach
                         </div>
                     </div>
+                    @endif
 
                     <div class="ibox">
                         <div class="ibox-content">
