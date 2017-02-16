@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" media="all" href="/fonts/font-awesome/css/font-awesome.css">
 
     <link rel="stylesheet" type="text/css" media="print" href="/css/print.css">
-    
+
     <link rel="stylesheet" type="text/css" media="screen" href="/css/plugins/sweetalert/sweetalert.css">
     <link rel="stylesheet" type="text/css" media="screen" href="/css/plugins/fullcalendar/fullcalendar.css">
     <link rel="stylesheet" type="text/css" media="print" href="/css/plugins/fullcalendar/fullcalendar.print.css">
@@ -24,17 +24,17 @@
     <link rel="stylesheet" type="text/css" media="screen" href="/css/skins/manager/skin.css">
 
     <style type="text/css">
-    
+
     .circle{
 	    border-radius: 50%;
 		width: 42px;
-		height: 42px; 
+		height: 42px;
 		font-size: 8px;
 		text-align: center;
 		padding: 2px;
 		margin: 3px;
 		display: inline-block;
-    }	
+    }
 
     .profile-circle{
 
@@ -45,7 +45,7 @@
     	color: #fff;
 		background-image: -moz-radial-gradient(45px 45px 45deg, circle cover, #666666 0%, #111111 100%, red 95%);
 		background-image: -webkit-radial-gradient(45px 45px, circle cover, #666666, #111111);
-		background-image: radial-gradient(45px 45px 45deg, circle cover, #666666 0%, #111111 100%, red 95%);    	
+		background-image: radial-gradient(45px 45px 45deg, circle cover, #666666 0%, #111111 100%, red 95%);
     }
     .profile-circle{
         color: #ccc;
@@ -55,7 +55,7 @@
         height: 80px;
         width: 80px;
         padding: 5px;
-        margin: 5px;        
+        margin: 5px;
     }
     .atmo{
 
@@ -68,7 +68,7 @@
         /*border: thin solid lime;*/
     }
     .nav-header{
-        
+
     }
 
     #nav-header-content a{
@@ -79,9 +79,9 @@
         color: #fff;
     }
 
-	
 
-	
+
+
     </style>
 
 </head>
@@ -98,12 +98,12 @@
                         <div class="circle profile-circle">
                             DB
                         </div>
-                
-                        <span class="clear"> 
-                            <span class="block m-t-xs"> 
+
+                        <span class="clear">
+                            <span class="block m-t-xs">
                                 <strong class="font-bold profile-name">Dax Brewster</strong>
-                            </span> 
-                            <span class="text-muted text-xs block">AVP - West</span> 
+                            </span>
+                            <span class="text-muted text-xs block">AVP - West</span>
                             <a href="/manager" class="no-style">
                                 <i class="fa fa-sign-out"></i> Log out
                             </a>
@@ -111,7 +111,7 @@
                     </div>
 
                 </li>
-                
+
                 <li>
                     <a href="#"><i class="fa fa-diamond"></i> <span class="nav-label">Thing 1</span></a>
                 </li>
@@ -204,7 +204,7 @@
 
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
-                
+
 
                 @foreach($region->districts as $district)
                 <div class="col-lg-4">
@@ -216,7 +216,7 @@
                         <div class="ibox-content">
                             <div class="team-members">
                             @foreach($district->stores as $store)
-                                <a href=""><div class="circle sc"><span class="store-number">{{ $store->store_number }}</span></div></a>
+                                <a href="/manager/store/{{ $store->store_number }}"><div class="circle sc"><span class="store-number">{{ $store->store_number }}</span></div></a>
                             @endforeach
 
                             </div>
@@ -235,13 +235,13 @@
                                 <div class="stat-percent">86%</div>
                                 <div class="progress progress-mini">
                                     <div style="width: 86%;" class="progress-bar"></div>
-                                </div>                                
+                                </div>
                                 <span>Payroll YTD:</span>
                                 <div class="stat-percent">48%</div>
                                 <div class="progress progress-mini">
                                     <div style="width: 48%;" class="progress-bar"></div>
                                 </div>
-                            </div>                            
+                            </div>
                             <div class="row  m-t-sm">
                                 <div class="col-sm-3">
                                     <div class="font-bold">PROJECTS</div>
@@ -261,8 +261,8 @@
                     </div>
                     </div>
                     @endforeach
-                
-                
+
+
             </div>
 
 

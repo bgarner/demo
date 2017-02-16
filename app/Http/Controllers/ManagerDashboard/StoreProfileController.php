@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\StoreInfo;
 
 class StoreProfileController extends Controller
 {
@@ -48,7 +49,10 @@ class StoreProfileController extends Controller
      */
     public function show($id)
     {
-        return view('manager.storeprofile'); 
+        $storeInfo = StoreInfo::getStoreInfoByStoreId($id);
+        //dd($storeInfo);
+        return view('manager.storeprofile')
+            ->with("storeInfo", $storeInfo);
     }
 
     /**
