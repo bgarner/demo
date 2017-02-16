@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\StoreInfo;
 use App\Models\Communication\Communication;
+use App\Models\UrgentNotice\UrgentNotice;
 
 class StoreProfileController extends Controller
 {
@@ -50,10 +51,19 @@ class StoreProfileController extends Controller
      */
     public function show($id)
     {
+        $urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($id);
+        if($urgentNoticeCount > 0){
+            $urgentNotices = UrgentNotice::getActiveUrgentNoticesByStore($id);
+        } else {
+            $urgentNotices = [];
+        }
+
         $communications = Communication::getActiveCommunicationsByStoreNumber($id);
         $storeInfo = StoreInfo::getStoreInfoByStoreId($id);
         //dd($storeInfo);
         return view('manager.storeprofile')
+            ->with("urgentNoticeCount", $urgentNoticeCount)
+            ->with("urgentNotices", $urgentNotices)
             ->with("storeInfo", $storeInfo)
             ->with("communications", $communications);
     }

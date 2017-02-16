@@ -35,6 +35,9 @@
         display: inline-block;
         color: #fff;
     }
+    .table-mail td{
+        font-size: 12px;
+    }
     </style>
 </head>
 
@@ -176,21 +179,23 @@
 
                 <div class="col-lg-4 col-md-4">
 
+                    @if($urgentNoticeCount > 0)
                     <div class="ibox">
                         <div class="ibox-content">
-                            <h2>Urgent Notices</h2>
+                            <h3>Urgent Notices</h3>
+                        </div>
+                    </div>
+                    @endif
+
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <h3>Alerts</h3>
                         </div>
                     </div>
 
                     <div class="ibox">
                         <div class="ibox-content">
-                            <h2>Alerts</h2>
-                        </div>
-                    </div>
-
-                    <div class="ibox">
-                        <div class="ibox-content">
-                            <h2>Upcoming Product Launches</h2>
+                            <h3>Upcoming Product Launches</h3>
                         </div>
                     </div>
 
@@ -201,7 +206,7 @@
 
                     <div class="ibox">
                         <div class="ibox-content">
-                            <h2>Current Communications</h2>
+                            <h3>Current Communications</h3>
 
                             <div class="mail-box">
 
@@ -211,19 +216,21 @@
 
                                     @foreach($communications as $communication)
 
-
                                     <tr class= "unread" >
                                         <td class="check-mail">
                                             <i class="fa fa-envelope-o"></i>
                                         </td>
 
-                                        <td class="mail-subject communication-name col-lg-4 col-md-4 col-sm-4 col-xs-5">
-                                            <a class="comm_category_link" data-comm-id="{{ $communication->id }}" href="communication/show/{{ $communication->id }}?">{{ $communication->subject }}</a>
+                                        <td class="">
+                                            <a class="" href="#">{{ $communication->subject }}</a><br />
+                                            <small>{!! $communication->trunc !!}</small>
                                         </td>
 
-                                        <td class="mail-preview col-lg-5 col-md-4 hidden-sm hidden-xs"><a href="communication/show/{{ $communication->id }}">{!! $communication->trunc !!}</a></td>
-                                        <td class=""><!-- <i class="fa fa-paperclip"></i> --></td>
-                                        <td class="text-right mail-date col-lg-3 col-md-2 col-sm-4 col-xs-2">{{ $communication->prettyDate }}<!--  <small style="font-weight: normal;padding-left: 10px;">({{ $communication->since }} ago)</small> --></td>
+                                        <td class="text-right">
+                                            <small>
+                                                {{ $communication->prettyDate }}<!--  <small style="font-weight: normal;padding-left: 10px;">({{ $communication->since }} ago)</small> -->
+                                            </small>
+                                        </td>
                                     </tr>
 
                                     @endforeach
@@ -239,7 +246,7 @@
 
                     <div class="ibox">
                         <div class="ibox-content">
-                            <h2>Tasks</h2>
+                            <h3>Tasks</h3>
 
                             <ul class="todo-list m-t ui-sortable">
                                 <li>
@@ -271,7 +278,7 @@
                 <div class="col-lg-3 col-md-3">
                     <div class="ibox">
                         <div class="ibox-content">
-                            <h2>Activity Timeline</h2>
+                            <h3>Activity Timeline</h3>
 
 
                             <div class="circle bg-primary"><i class="fa fa-video-camera"></i></div><br />
