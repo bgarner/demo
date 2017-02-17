@@ -182,8 +182,15 @@
                 <div class="col-lg-6 col-md-6">
 
                     <div class="ibox">
+                        <div class="ibox-title">
+                            <h2>Current Communications</h2>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
                         <div class="ibox-content">
-                            <h3>Current Communications</h3>
 
                             <div class="mail-box">
 
@@ -229,16 +236,32 @@
 
                     @if($urgentNoticeCount > 0)
                     <div class="ibox">
+                        <div class="ibox-title">
+                            <h2>Urgent Notices</h2>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
                         <div class="ibox-content">
-                            <h3>Urgent Notices</h3>
+
                         </div>
                     </div>
                     @endif
 
                     @if($alertCount >0)
                     <div class="ibox">
+                        <div class="ibox-title">
+                            <h2>Alerts</h2>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
                         <div class="ibox-content">
-                            <h3>Alerts</h3>
+
                             @foreach($alerts as $alert)
                             title: {{ $alert->title }} <br />
                             id: {{ $alert->id }} <br />
@@ -254,8 +277,16 @@
 
                     @if( count($productLaunches) >0 )
                     <div class="ibox">
+                        <div class="ibox-title">
+                            <h2>Product Launches</h2>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
                         <div class="ibox-content">
-                            <h3>Upcoming Product Launches</h3>
+
                         </div>
                     </div>
                     @endif
@@ -266,48 +297,72 @@
 
                 <div class="col-lg-3 col-md-3">
 
-                    <div class="ibox">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h2>Tasks</h2>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
                         <div class="ibox-content">
-                            <h3>Tasks</h3>
 
-                            <ul class="todo-list m-t ui-sortable">
+
+                            <ul class="todo-list m-t small-list">
                                 <li>
-                                    <div class="icheckbox_square-green" style="position: relative;"><input type="checkbox" value="" name="" class="i-checks" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
-                                    <span class="m-l-xs">Buy a milk</span>
+                                    <a href="#" class="check-link"><i class="fa fa-check-square"></i> </a>
+                                    <span class="m-l-xs todo-completed">Buy a milk</span>
+
+                                </li>
+                                <li>
+                                    <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
+                                    <span class="m-l-xs">Go to shop and find some products.</span>
+
+                                </li>
+                                <li>
+                                    <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
+                                    <span class="m-l-xs">Send documents to Mike</span>
                                     <small class="label label-primary"><i class="fa fa-clock-o"></i> 1 mins</small>
                                 </li>
                                 <li>
-                                    <div class="icheckbox_square-green checked" style="position: relative;"><input type="checkbox" value="" name="" class="i-checks" checked="" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
-                                    <span class="m-l-xs">Go to shop and find some products.</span>
-                                    <small class="label label-info"><i class="fa fa-clock-o"></i> 3 mins</small>
-                                </li>
-                                <li>
-                                    <div class="icheckbox_square-green" style="position: relative;"><input type="checkbox" value="" name="" class="i-checks" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
-                                    <span class="m-l-xs">Send documents to Mike</span>
-                                    <small class="label label-warning"><i class="fa fa-clock-o"></i> 2 mins</small>
-                                </li>
-                                <li>
-                                    <div class="icheckbox_square-green" style="position: relative;"><input type="checkbox" value="" name="" class="i-checks" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                    <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
                                     <span class="m-l-xs">Go to the doctor dr Smith</span>
-                                    <small class="label label-danger"><i class="fa fa-clock-o"></i> 42 mins</small>
+                                </li>
+                                <li>
+                                    <a href="#" class="check-link"><i class="fa fa-check-square"></i> </a>
+                                    <span class="m-l-xs todo-completed">Plan vacation</span>
+                                </li>
+                                <li>
+                                    <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
+                                    <span class="m-l-xs">Create new stuff</span>
+                                </li>
+                                <li>
+                                    <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
+                                    <span class="m-l-xs">Call to Anna for dinner</span>
                                 </li>
                             </ul>
 
                         </div>
                     </div>
-                                        
-                    <div class="ibox">
+
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h2>Activity Timeline</h2>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
                         <div class="ibox-content">
-                            <h3>Activity Timeline</h3>
-
-
-                            <div class="circle bg-primary"><i class="fa fa-video-camera"></i></div><br />
+                            <!-- <div class="circle bg-primary"><i class="fa fa-video-camera"></i></div><br />
                             <div class="circle bg-primary"><i class="fa fa-bullhorn"></i></div><br />
                             <div class="circle bg-primary"><i class="fa fa-bell"></i></div><br />
-                            <div class="circle bg-primary"><i class="fa fa-book"></i></div><br />
+                            <div class="circle bg-primary"><i class="fa fa-book"></i></div><br /> -->
 
                             @foreach($activities as $activity)
-                                {{$activity->device }}<br />
+                                <div class="circle bg-primary"><i class="fa fa-book"></i></div> {{$activity->device }}<br />
                             @endforeach
 
                         </div>
