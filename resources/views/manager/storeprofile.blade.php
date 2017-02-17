@@ -177,44 +177,9 @@
             </div>
             <div class="row">
 
-                <div class="col-lg-4 col-md-4">
 
-                    @if($urgentNoticeCount > 0)
-                    <div class="ibox">
-                        <div class="ibox-content">
-                            <h3>Urgent Notices</h3>
-                        </div>
-                    </div>
-                    @endif
 
-                    @if($alertCount >0)
-                    <div class="ibox">
-                        <div class="ibox-content">
-                            <h3>Alerts</h3>
-                            @foreach($alerts as $alert)
-                            title: {{ $alert->title }} <br />
-                            id: {{ $alert->id }} <br />
-                            document_id: {{ $alert->document_id }} <br />
-                            alert_type_id: {{ $alert->alert_type_id }} <br />
-                            since: {{ $alert->since }}<br />
-                            link_with_icon: {{ $alert->link_with_icon }} <br />
-                            <hr />
-                            @endforeach
-                        </div>
-                    </div>
-                    @endif
-
-                    @if( count($productLaunches) >0 )
-                    <div class="ibox">
-                        <div class="ibox-content">
-                            <h3>Upcoming Product Launches</h3>
-                        </div>
-                    </div>
-                    @endif
-
-                </div>
-
-                <div class="col-lg-5 col-md-5">
+                <div class="col-lg-6 col-md-6">
 
                     <div class="ibox">
                         <div class="ibox-content">
@@ -256,6 +221,51 @@
                         </div>
                     </div>
 
+
+
+                </div>
+
+                <div class="col-lg-3 col-md-3">
+
+                    @if($urgentNoticeCount > 0)
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <h3>Urgent Notices</h3>
+                        </div>
+                    </div>
+                    @endif
+
+                    @if($alertCount >0)
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <h3>Alerts</h3>
+                            @foreach($alerts as $alert)
+                            title: {{ $alert->title }} <br />
+                            id: {{ $alert->id }} <br />
+                            document_id: {{ $alert->document_id }} <br />
+                            alert_type_id: {{ $alert->alert_type_id }} <br />
+                            since: {{ $alert->since }}<br />
+                            link_with_icon: {{ $alert->link_with_icon }} <br />
+                            <hr />
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
+
+                    @if( count($productLaunches) >0 )
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <h3>Upcoming Product Launches</h3>
+                        </div>
+                    </div>
+                    @endif
+
+
+
+                </div>
+
+                <div class="col-lg-3 col-md-3">
+
                     <div class="ibox">
                         <div class="ibox-content">
                             <h3>Tasks</h3>
@@ -285,9 +295,7 @@
 
                         </div>
                     </div>
-
-                </div>
-                <div class="col-lg-3 col-md-3">
+                                        
                     <div class="ibox">
                         <div class="ibox-content">
                             <h3>Activity Timeline</h3>
