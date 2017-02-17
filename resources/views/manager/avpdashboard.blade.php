@@ -152,7 +152,7 @@
 
 
                 <li>
-                    <a href="/manager">
+                    <a href="/manager/logout">
                         <i class="fa fa-sign-out"></i> Log out
                     </a>
                 </li>
