@@ -297,6 +297,11 @@
                             <div class="circle bg-primary"><i class="fa fa-bullhorn"></i></div><br />
                             <div class="circle bg-primary"><i class="fa fa-bell"></i></div><br />
                             <div class="circle bg-primary"><i class="fa fa-book"></i></div><br />
+
+                            @foreach($activities as $activity)
+                                {{$activity->device }}<br />
+                            @endforeach
+
                         </div>
                     </div>
 

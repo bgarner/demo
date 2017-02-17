@@ -10,6 +10,7 @@ use App\Models\StoreInfo;
 use App\Models\Communication\Communication;
 use App\Models\UrgentNotice\UrgentNotice;
 use App\Models\Alert\Alert;
+use App\Models\Analytics\Analytics;
 use App\Models\ProductLaunch\ProductLaunch;
 
 class StoreProfileController extends Controller
@@ -60,25 +61,24 @@ class StoreProfileController extends Controller
         if($urgentNoticeCount > 0){
             $urgentNotices = UrgentNotice::getActiveUrgentNoticesByStore($id);
         }
-
         $alertCount = Alert::getActiveAlertCountByStore($id);
         if($alertCount > 0){
             $alerts = Alert::getActiveAlertsByStore($id);
         }
-
         $productLaunches = ProductLaunch::getActiveProductLaunchByStore($id);
-
         $communications = Communication::getActiveCommunicationsByStoreNumber($id);
         $storeInfo = StoreInfo::getStoreInfoByStoreId($id);
-        //dd($storeInfo);
+        $activities = Analytics::getLastXActivitiesByStore($id);
+
         return view('manager.storeprofile')
+            ->with("storeInfo", $storeInfo)
             ->with("urgentNoticeCount", $urgentNoticeCount)
             ->with("urgentNotices", $urgentNotices)
             ->with("alertCount", $alertCount)
             ->with("alerts", $alerts)
             ->with("productLaunches", $productLaunches)
-            ->with("storeInfo", $storeInfo)
-            ->with("communications", $communications);
+            ->with("communications", $communications)
+            ->with("activities", $activities);
     }
 
     /**

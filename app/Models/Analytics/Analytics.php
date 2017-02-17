@@ -117,4 +117,13 @@ class Analytics extends Model
 
     	return $notices;
     }
+
+    public static function getLastXActivitiesByStore($storeNumber, $fetch=50)
+    {
+        $activities = Analytics::where('store_number', '=', $storeNumber)
+                                ->orderBy('created_at', 'desc')
+                                ->take($fetch)
+                                ->get();
+        return $activities;
+    }
 }
