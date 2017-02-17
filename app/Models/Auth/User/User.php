@@ -67,7 +67,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public static function getAdminUsers()
     {
-        $users = User::whereIn('group_id', [1,2])->get();
+        $users = User::whereIn('group_id', [1,2,3])->get();
         foreach ($users as $user) {
             $banners = UserBanner::where('user_id', $user->id)->get();
             $user["banners"] = $banners;

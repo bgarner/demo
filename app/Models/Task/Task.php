@@ -7,6 +7,9 @@ use App\Models\Validation\TaskValidator;
 use App\Models\Task\TaskTarget;
 use App\Models\Task\TaskDocument;
 use App\Models\Task\TaskStatus;
+use App\Models\Auth\Role\Role;
+use App\Models\Auth\User\UserResource;
+use App\Models\StoreInfo;
 
 class Task extends Model
 {
@@ -73,6 +76,7 @@ class Task extends Model
 
 		TaskTarget::updateTargetStores($task->id, $request);
 		TaskDocument::updateTaskDocuments($task->id, $request);
+		TaskCreator::updateTaskCreator($task->id, \Auth::user()->id);
 		return $task;
 	}
 
@@ -111,6 +115,84 @@ class Task extends Model
 		Task::find($id)->delete();
 	}
 	
+	public static function getActiveTasksByUserId($user_id)
+	{
+		$role = Role::getRoleByUserId($user_id);
 
+		switch ($role) {
+			case 'dm':
+				$tasks = Task::getActiveTasksByDistrictManagerId($user_id);
+				break;
+			case 'avp':
+				$tasks = Task::getActiveTasksByAvpId($user_id);
+				break;
+			case 'exec':
+				$tasks = Task::getActiveTasksByExecId($user_id);
+				break;
+			default:
+				$tasks = [];
+				break;
+		}
+		return $tasks;
+	}
+
+	public static function getActiveTasksByDistrictManagerId($user_id)
+	{
+		
+		$district_id = UserResource::join('resources', 'resources.id', '=', 'user_resource.resource_id')
+									->where('user_id', $user_id)
+									->first()->resource_id;
+
+		$stores = StoreInfo::getStoresByDistrictId($district_id);
+		
+
+		return Task::compileTasksByStores($stores);
+		
+	}
+
+	public static function getActiveTasksByAvpId($user_id)
+	{
+		$region_id = UserResource::join('resources', 'resources.id', '=', 'user_resource.resource_id')
+									->where('user_id', $user_id)
+									->first()->resource_id;
+
+		$stores = StoreInfo::getStoresByRegionId($region_id);
+		
+		return Task::compileTasksByStores($stores);
+	}
+
+	public static function getActiveTasksByExecId($user_id)
+	{
+
+	}
+
+	public static function compileTasksByStores($stores)
+	{
+		$tasks = Task::getTasksByStoreList($stores);
+
+		$compiledTasks = [];
+		foreach ($tasks as $task) {
+	        $index = array_search($task['id'], array_column($compiledTasks, 'id'));
+	        if(  $index !== false ){
+	           array_push($compiledTasks[$index]->stores, $task["store_id"]);
+	        }
+	        else{
+	           
+	           $task["stores"] = [];
+	           array_push( $task["stores"] , $task["store_id"]);
+	           array_push( $compiledTasks , (object) $task);
+	        }
+        }
+
+		return $compiledTasks;
+	}
+
+	public static function getTasksByStoreList($stores)
+	{
+		return Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
+								->whereIn('store_id', $stores)
+								->select('tasks.*', 'tasks_target.store_id')
+								->get()->toArray();
+	}
 
 }
