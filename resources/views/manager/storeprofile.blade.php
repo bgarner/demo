@@ -323,7 +323,7 @@
                                 <li>
                                     <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
                                     <span class="m-l-xs">Send documents to Mike</span>
-                                    <small class="label label-primary"><i class="fa fa-clock-o"></i> 1 mins</small>
+                                    
                                 </li>
                                 <li>
                                     <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
