@@ -22,7 +22,6 @@ class TaskManagerController extends Controller
         $user_id = \Auth::user()->id;
         $storeList = StoreInfo::getStoreListingByManagerId($user_id);
         $tasks = Task::getActiveTasksByUserId($user_id);
-        dd($tasks);
         return view('manager.task.index')->with('tasks', $tasks);
     }
 

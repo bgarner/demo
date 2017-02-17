@@ -144,9 +144,12 @@ class Task extends Model
 									->first()->resource_id;
 
 		$stores = StoreInfo::getStoresByDistrictId($district_id);
-		
 
-		return Task::compileTasksByStores($stores);
+		$tasks = $tasks = Task::getTasksByStoreList($stores);
+
+		$compiledTasks =  Task::compileTasksByStores($tasks);
+
+		return $compiledTasks;
 		
 	}
 
@@ -157,19 +160,28 @@ class Task extends Model
 									->first()->resource_id;
 
 		$stores = StoreInfo::getStoresByRegionId($region_id);
+
+		$tasks = $tasks = Task::getTasksByStoreList($stores);
 		
-		return Task::compileTasksByStores($stores);
+		$compiledTasks = Task::compileTasksByStores($tasks);
+
+		return $compiledTasks;
 	}
 
 	public static function getActiveTasksByExecId($user_id)
 	{
+		
+		$tasks = Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
+								->select('tasks.*', 'tasks_target.store_id')
+								->get()->toArray();
 
+		$compiledTasks = Task::compileTasksByStores($tasks);
+
+		return $compiledTasks;
 	}
 
-	public static function compileTasksByStores($stores)
+	public static function compileTasksByStores($tasks)
 	{
-		$tasks = Task::getTasksByStoreList($stores);
-
 		$compiledTasks = [];
 		foreach ($tasks as $task) {
 	        $index = array_search($task['id'], array_column($compiledTasks, 'id'));
