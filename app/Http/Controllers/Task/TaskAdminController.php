@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use App\Models\StoreInfo;
 use App\Models\Task\Task;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Document\FileFolder;
 use App\Models\Task\TaskDocument;
 use App\Models\Task\TaskTarget;

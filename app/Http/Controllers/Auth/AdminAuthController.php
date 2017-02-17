@@ -18,7 +18,7 @@ class AdminAuthController extends AuthController
     protected $redirectPath = '/admin/';
     protected $redirectAfterLogout = '/admin/login';
     protected $alternateLogin = '/manager/login';
-    protected $allowedGroups = ['admin', 'users'];
+    protected $allowedGroups = ['admin', 'users', 'manager'];
     
     /**
      * Show the application login form.
