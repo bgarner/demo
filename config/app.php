@@ -222,9 +222,11 @@ return [
         'App\Http\Controllers\Video\TagAdminController'                         => 'Videos',
         'App\Http\Controllers\Video\PlaylistAdminController'                    => 'Videos',
         'App\Http\Controllers\User\UserAdminController'                         => 'User and Group Management',
-        'App\Http\Controllers\Auth\Component\ComponentAdminController'          => 'User and Group Management',
-        'App\Http\Controllers\Auth\Group\GroupAdminController'                  => 'User and Group Management',
-        'App\Http\Controllers\StoreFeedback\FeedbackAdminController'            => 'Store Feedback Management'
+        'App\Http\Controllers\Auth\ComponentAdminController'                    => 'User and Group Management',
+        'App\Http\Controllers\Auth\GroupAdminController'                        => 'User and Group Management',
+        'App\Http\Controllers\StoreFeedback\FeedbackAdminController'            => 'Store Feedback Management',
+        'App\Http\Controllers\Task\TaskAdminController'                         => 'Task Management'
+
 
 
 
