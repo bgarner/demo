@@ -14,7 +14,7 @@ use App\Models\Document\Document;
 use App\Models\Banner;
 use App\Models\Tag\Tag;
 use App\Models\Tag\ContentTag;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 
 class FolderAdminController extends Controller
 {

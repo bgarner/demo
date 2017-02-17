@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models\Auth;
+namespace App\Models\Auth\Group;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Auth\GroupComponent;
+use App\Models\Auth\Group\GroupComponent;
 
 class Group extends Model
 {
@@ -33,8 +33,9 @@ class Group extends Model
 
 	public static function deleteGroup($id)
 	{
-		Group::find($id)->delete();
 		GroupComponent::where('group_id', $id)->delete();
+        Group::find($id)->delete();
+		
 	}    
 
     public static function getGroupList($banner_id)

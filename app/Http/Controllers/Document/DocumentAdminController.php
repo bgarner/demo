@@ -13,7 +13,7 @@ use App\Models\Document\FolderStructure;
 use App\Models\Banner;
 use App\Models\Tag\Tag;
 use App\Models\Tag\ContentTag;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\StoreInfo;
 use App\Models\Alert\Alert;
 use App\Models\Document\DocumentTarget;

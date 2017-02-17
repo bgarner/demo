@@ -9,7 +9,7 @@ use DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Document\FileFolder;
 use App\Models\Document\Package;
 use App\Models\Communication\Communication;

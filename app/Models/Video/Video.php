@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Document\Document;
 use App\Models\Validation\VideoValidator;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use Illuminate\Http\Request;
 use App\Models\Video\VideoTag;
 use App\Models\Utility\Utility;

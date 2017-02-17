@@ -7,13 +7,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Dashboard\Quicklinks;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Banner;
 use App\Models\Document\Folder;
 use App\Models\Document\FileFolder;
 use App\Models\Document\FolderStructure;
 use App\Models\Document\FolderPackage;
-use App\Models\UserBanner;
+use App\Models\Auth\User\UserBanner;
 use App\Models\Dashboard\QuicklinkTypes;
 
 class QuicklinksAdminController extends Controller

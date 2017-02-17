@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\ManagerDashboard;
+namespace App\Http\Controllers\Auth\Role;
 
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\Auth\Role\RoleResource;
 
-class ManagerLoginController extends Controller
+class RoleResourceAdminController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +17,7 @@ class ManagerLoginController extends Controller
      */
     public function index()
     {
-        return view('manager.login');
+        //
     }
 
     /**
@@ -48,7 +49,7 @@ class ManagerLoginController extends Controller
      */
     public function show($id)
     {
-        //
+        return RoleResource::getResourcesByRoleId($id);
     }
 
     /**

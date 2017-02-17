@@ -214,6 +214,10 @@ return [
         'App\Http\Controllers\Communication\CommunicationAdminController'       => 'Communications',
         'App\Http\Controllers\Communication\CommunicationTypesAdminController'  => 'Communications',
         'App\Http\Controllers\Document\DocumentManagerController'               => 'Library',
+        'App\Http\Controllers\Document\FolderAdminController'                   => 'Library',
+        'App\Http\Controllers\Document\DocumentAdminController'                 => 'Library',
+        'App\Http\Controllers\Alert\AlertAdminController'                       => 'Alerts and Notices',
+        'App\Http\Controllers\UrgentNotice\UrgentNoticeAdminController'         => 'Alerts and Notices',
         'App\Http\Controllers\Video\VideoAdminController'                       => 'Videos',
         'App\Http\Controllers\Video\TagAdminController'                         => 'Videos',
         'App\Http\Controllers\Video\PlaylistAdminController'                    => 'Videos',
@@ -221,7 +225,8 @@ return [
         'App\Http\Controllers\Auth\ComponentAdminController'                    => 'User and Group Management',
         'App\Http\Controllers\Auth\GroupAdminController'                        => 'User and Group Management',
         'App\Http\Controllers\StoreFeedback\FeedbackAdminController'            => 'Store Feedback Management',
-        'App\Http\Controllers\Task\TaskAdminController'                         => 'Task Management',
+        'App\Http\Controllers\Task\TaskAdminController'                         => 'Task Management'
+
 
 
 

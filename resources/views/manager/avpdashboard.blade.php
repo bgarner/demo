@@ -152,7 +152,7 @@
 
 
                 <li>
-                    <a href="/manager">
+                    <a href="/manager/logout">
                         <i class="fa fa-sign-out"></i> Log out
                     </a>
                 </li>
@@ -190,7 +190,7 @@
                         </div>
                         <div class="ibox-content">
                             <div class="team-members">
-                                <div class="circle sc"><span class="store-number">314</span><br /><span class="store-name">West Edmonton Mall</span></div>
+                                <a href=""><div class="circle sc"><span class="store-number">314</span><br /><span class="store-name">West Edmonton Mall</span></div></a>
                                 <div class="circle sc"><span class="store-number">314</span><br /><span class="store-name">West Edmonton Mall</span></div>
                                 <div class="circle sc"><span class="store-number">314</span><br /><span class="store-name">West Edmonton Mall</span></div>
                                 <div class="circle sc"><span class="store-number">314</span><br /><span class="store-name">West Edmonton Mall</span></div>

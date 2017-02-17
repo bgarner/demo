@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Auth\User;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Banner;
 
 class UserSelectedBanner extends Model
 {

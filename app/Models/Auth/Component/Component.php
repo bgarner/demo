@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models\Auth;
+namespace App\Models\Auth\Component;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Auth\GroupComponent;
+use App\Models\Auth\Group\GroupComponent;
 
 class Component extends Model
 {
