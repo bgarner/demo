@@ -10,7 +10,7 @@ use App\Models\Task\TaskStatus;
 use App\Models\Auth\Role\Role;
 use App\Models\Auth\User\UserResource;
 use App\Models\StoreInfo;
-
+use Carbon\Carbon;
 class Task extends Model
 {
     protected $table = 'tasks';
@@ -64,11 +64,21 @@ class Task extends Model
 			\Log::info($validate);
 			return json_encode($validate);
 		}  
+
+		$description = '';
+		if(isset($request['description'])) {
+			$description = $request['description'];
+		}
+
+		$publish_date = Carbon::now();
+		if(isset($request['publish_date'])) {
+			$publish_date = $request['publish_date'];
+		}
 		
 		$task = Task::create([
 			'title' 		=> $request["title"],
-			'description' 	=> $request["description"],
-			'publish_date'	=> $request["publish_date"],
+			'description' 	=> $description,
+			'publish_date'	=> $publish_date,
 			'due_date'		=> $request["due_date"],
 			'banner_id' 	=> $request["banner_id"],
 			'send_reminder'	=> (bool) $request["send_reminder"]
@@ -94,8 +104,13 @@ class Task extends Model
 
 		$task = Task::find($id);
 
+		$description = '';
+		if(isset($request['description'])) {
+			$description = $request['description'];
+		}
+
 		$task["title"] = $request["title"];
-		$task["description"] = $request["description"];
+		$task["description"] = $description;
 		$task["due_date"] = $request["due_date"];
 		$task["publish_date"] = $request["publish_date"];
 		$task["send_reminder"]	= (bool) $request["send_reminder"];
@@ -174,6 +189,7 @@ class Task extends Model
 		$tasks = Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
 								->select('tasks.*', 'tasks_target.store_id')
 								->get()->toArray();
+
 
 		$compiledTasks = Task::compileTasksByStores($tasks);
 

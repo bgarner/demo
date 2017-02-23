@@ -22,7 +22,8 @@ class TaskManagerController extends Controller
         $user_id = \Auth::user()->id;
         $storeList = StoreInfo::getStoreListingByManagerId($user_id);
         $tasks = Task::getActiveTasksByUserId($user_id);
-        return view('manager.task.index')->with('tasks', $tasks);
+        return view('manager.task.index')->with('tasks', $tasks)
+                                        ->with('stores', $storeList);
     }
 
     /**
@@ -43,7 +44,7 @@ class TaskManagerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Task::createTask($request);
     }
 
     /**
