@@ -4,6 +4,13 @@ $(document).ready(function(){
 	$(".chosen").chosen({
 		width : '100%'
 	});
+	$(".project-row-detail td").hide();
+	$(".project-row-detail").hide();
+	$(".updated_due_date_selector").datetimepicker({
+	
+		format: 'YYYY-MM-DD',
+
+	})
 });
 
 $("#allStores").click(function(){
@@ -84,12 +91,16 @@ $("#confirm-store-select").click(function(){
 	$("#store_select_popover i").removeClass('task-element-in-process').addClass('task-element-selected');
 });
 
-$("#send_reminder").click(function(){
+$("#storeSelect").click(function(){
 	$(this).find('i').toggleClass('fa fa-check-square-o').toggleClass('fa fa-square-o');
-	$(this).attr('data-state',$(this).attr('data-state')==0?1:1);
+	$(this).attr('data-state',$(this).attr('data-state') == 0?1:1);
 });
 
-
+$(".edit-task").click(function(){
+	$taskId = $(this).attr('data-task-id');
+	console.log($taskId);
+	$("#edit-task-modal").modal('show');
+});
 
 $(document).on('click','.task-create',function(){
   	
@@ -144,7 +155,6 @@ $(document).on('click','.task-create',function(){
 			        }
 		        }
 		        else{
-		        	// $('#createNewTaskForm')[0].reset(); // empty the form
 		        	swal({
 		        		title : 'Nice!',
 		        		text : title + " has been created",

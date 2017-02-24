@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\StoreInfo;
 use App\Models\Task\Task;
+use App\Models\Task\TaskTarget;
 
 class TaskManagerController extends Controller
 {
@@ -66,7 +67,12 @@ class TaskManagerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user_id = \Auth::user()->id;
+        $task = Task::find($id);
+        $task["stores"] = TaskTarget::where('task_id', $id)->get()->pluck('store_id')->toArray();
+        $storeList = StoreInfo::getStoreListingByManagerId($user_id);
+        return view('manager.task.edit')->with('task', $task)
+                                        ->with('stores', $storeList);
     }
 
     /**
@@ -78,7 +84,10 @@ class TaskManagerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        \Log::info('********');
+        \Log::info($id);
+        \Log::info($request);
+        \Log::info('********');
     }
 
     /**

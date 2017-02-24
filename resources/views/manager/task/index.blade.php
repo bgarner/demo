@@ -27,13 +27,16 @@
 			line-height: 0px;
 		}
 		.task-element-selected{
-			color:#23c6c8;
+			color: green;
 		}
 		.task-element-in-process{
 			color:#3276b1;
 		}
 		#due_date_popover, #store_select_popover, .task-create{
 			cursor: pointer;
+		}
+		.project-row-detail{
+			background-color: #e7eaec;
 		}
 
 
@@ -73,18 +76,13 @@
 		<div class="wrapper wrapper-content  animated fadeInRight">
 	        <div class="row">
 	            <div class="col-lg-12">
-	                <div class="ibox">
-	                    <div class="ibox-title">
-	                        <h5>All Tasks</h5>
-
-	                        <div class="ibox-tools">
-
-	                        </div>
-	                    </div>
-	                    <div class="ibox-content">
-							<div class="project-list">
-								
-								<form class="form-inline">
+	            	
+	            	<div class="ibox">
+	            		<div class="ibox-title">
+	            			<h5>Add New Task</h5>
+	            		</div>
+	            		<div class="ibox-content">
+	            			<form class="form-inline">
 									
 										<div class="input-group" style="width:100%;">
 											<input type="text" class="form-control" id="title" name="title">
@@ -143,13 +141,29 @@
 						                </div>
 
 								</div>
+								<hr>
+	            		</div><!-- ibox content -->
 
+	            	</div> <!-- ibox ends -->
+
+
+	                <div class="ibox">
+	                    <div class="ibox-title">
+	                        <h5>All Tasks</h5>
+
+	                        <div class="ibox-tools">
+
+	                        </div>
+	                    </div>
+	                   
+	                    <div class="ibox-content">
+							<div class="project-list">
                                 <table class="table table-hover">
                                     <tbody>
                                     @foreach($tasks as $task)
-                                    <tr>
+                                    <tr class="project-row">
                                         <td class="project-status">
-                                            <span class="label label-info">Status</span>
+                                            <span class="label label-primary">Status</span>
                                         </td>
                                         <td class="project-title">
                                             {{$task->title}}
@@ -159,20 +173,22 @@
                                         <td class="project-completion">
                                                 <small>Completion with: 48%</small>
                                                 <div class="progress progress-mini">
-                                                    <div style="width: 48%;" class="progress-bar progress-bar-info"></div>
+                                                    <div style="width: 48%;" class="progress-bar progress-bar-primary"></div>
                                                 </div>
                                         </td>
                                         <td class="project-people">
                                         	@foreach($task->stores as $store)
-                                            <a href="" class="text-info">{{$store}}</a>
+                                            <span class=""><a href="" class="text-primary">{{$store}}</a></span>
                                             @endforeach
                                             
                                         </td>
                                         <td class="project-actions">
                                             <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                            <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                                            <a href="#" class="btn btn-white btn-sm edit-task" data-task-id="{{$task->id}}" ><i class="fa fa-pencil"></i> Edit </a>
                                         </td>
-                                    </tr>                                    
+
+                                    </tr>
+                                    
                                     @endforeach
                                     </tbody>
                                 </table>
@@ -185,6 +201,7 @@
 
 
         </div>
+        @include('manager.task.edit')
 
 		@include('site.includes.footer')
 
