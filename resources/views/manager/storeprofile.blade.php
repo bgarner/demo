@@ -207,7 +207,7 @@
 
                                         <td class="">
                                             <a class="" href="#">{{ $communication->subject }}</a><br />
-                                            <small>{!! $communication->trunc !!}</small>
+                                            <small style="font-weight: normal;">{!! $communication->trunc !!}</small>
                                         </td>
 
                                         <td class="text-right">
@@ -323,7 +323,7 @@
                                 <li>
                                     <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
                                     <span class="m-l-xs">Send documents to Mike</span>
-                                    
+
                                 </li>
                                 <li>
                                     <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
