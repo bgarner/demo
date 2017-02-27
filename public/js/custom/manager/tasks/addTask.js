@@ -13,6 +13,62 @@ $(document).ready(function(){
 	})
 });
 
+var toggleSendReminder = function(element){
+	
+	var state = $(element).attr('data-state');
+	if(state == 1){
+		$(element).attr('data-state', 0);
+		$(element).find('i').removeClass('fa fa-check-square-o').addClass('fa fa-square-o');
+
+	}
+	else if(state == 0){
+		$(element).attr('data-state', 1);
+		$(element).find('i').removeClass('fa fa-square-o').addClass('fa fa-check-square-o');	
+	}
+}
+
+
+$('#due_date_popover').click( function() {
+	$("#due_date_popover i").toggleClass('task-element-in-process');
+	$("#due_date_ibox").slideToggle();
+});
+
+$("#due_date_selector").datetimepicker({
+	
+	format: 'YYYY-MM-DD',
+	inline: true
+
+}).on('dp.change', function(e){ 
+
+	var selected_date = e.date.format("YYYY-MM-DD");
+	var due_date = $("#due_date").val();
+	if( selected_date != due_date ){
+		
+		$("#due_date").val( selected_date );
+		$("#due_date_popover i").removeClass('task-element-in-process').addClass('task-element-selected');	
+	}
+	$("#due_date_ibox").delay(5000).slideUp();
+
+});
+
+$("#clear_due_date").click(function(){
+	$("#due_date").val('');
+	$("#due_date_popover i").removeClass('task-element-selected');
+	$("#due_date_ibox").clearQueue();
+});
+
+$("#send_reminder").click(function(){
+
+	toggleSendReminder($(this));
+	
+});
+
+$("#store_select_popover").click(function(){
+
+	$("#store_select_popover i").toggleClass('task-element-in-process');
+	$("#store_selector_ibox").slideToggle();
+})
+
 $("#allStores").click(function(){
 
 	var state = $(this).attr('data-state');
@@ -51,55 +107,52 @@ $("#allStores").click(function(){
 
 });
 
-$("#due_date_selector").datetimepicker({
-	
-	format: 'YYYY-MM-DD',
-	inline: true
-
-}).on('dp.change', function(e){ 
-
-	var selected_date = e.date.format("YYYY-MM-DD");
-	var due_date = $("#due_date").val();
-	if( selected_date != due_date ){
-		
-		$("#due_date").val( selected_date );
-		$("#due_date_popover i").removeClass('task-element-in-process').addClass('task-element-selected');	
-	}
-	$("#due_date_ibox").delay(5000).slideUp();
-
-});
-
-$('#due_date_popover').click( function() {
-	$("#due_date_popover i").toggleClass('task-element-in-process');
-	$("#due_date_ibox").slideToggle();
-});
-
-$("#store_select_popover").click(function(){
-
-	$("#store_select_popover i").toggleClass('task-element-in-process');
-	$("#store_selector_ibox").slideToggle();
-})
-
-$("#clear_due_date").click(function(){
-	$("#due_date").val('');
-	$("#due_date_popover i").removeClass('task-element-selected');
-	$("#due_date_ibox").clearQueue();
-});
 
 $("#confirm-store-select").click(function(){
 	$("#store_selector_ibox").slideToggle();
 	$("#store_select_popover i").removeClass('task-element-in-process').addClass('task-element-selected');
 });
 
-$("#storeSelect").click(function(){
-	$(this).find('i').toggleClass('fa fa-check-square-o').toggleClass('fa fa-square-o');
-	$(this).attr('data-state',$(this).attr('data-state') == 0?1:1);
+
+// $("#storeSelect").click(function(){
+// 	$(this).find('i').toggleClass('fa fa-check-square-o').toggleClass('fa fa-square-o');
+// 	$(this).attr('data-state',$(this).attr('data-state') == 0?1:1);
+// });
+
+$(".edit-task").click(function(e){
+
+	var modal = $('#edit-task-modal');
+	var modalBody = $('#edit-task-modal .modal-content');
+	modalBody.empty();
+
+	var taskId = $(this).attr('data-task-id');
+	var taskEditLink = e.delegateTarget.href;
+
+	modal
+	    .on('show.bs.modal', function() {
+	        
+	        modalBody.load(taskEditLink);
+
+	        
+	    })
+	    .modal({show:true})
+	    .on('shown.bs.modal', function () {
+	        $('input[name="title"]' ).focus();
+	        $('.chosen', this).chosen({
+	        	width:'90%'
+	        });
+	        $(".due_date_selector").datetimepicker({
+				format: 'YYYY-MM-DD'
+	        })
+	    });
+	e.preventDefault();
 });
 
-$(".edit-task").click(function(){
-	$taskId = $(this).attr('data-task-id');
-	console.log($taskId);
-	$("#edit-task-modal").modal('show');
+$("body").on('click', '.send_reminder', function(){
+	toggleSendReminder($(this));
+	var task_id = $(this).attr('data-task-id');
+	console.log($(this).attr('data-state'));
+	$("body #send_reminder_" + task_id).attr('value', $(this).attr('data-state'));
 });
 
 $(document).on('click','.task-create',function(){

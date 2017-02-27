@@ -84,10 +84,9 @@ class TaskManagerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        \Log::info('********');
-        \Log::info($id);
-        \Log::info($request);
-        \Log::info('********');
+        Task::updateTask($id, $request);
+        return redirect('/manager/task/');
+
     }
 
     /**

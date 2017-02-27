@@ -125,18 +125,18 @@
 									
 										<div class="row">
 										
-							                <div class="col-sm-8 col-md-8">
+							                <div class="input-group">
 							                    {!! Form::select('stores', $stores, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
-							                </div>
+							                
 							                
 							                    
-						                    <span  class="btn btn-white" id="allStores" data-state="0">
+						                    <span  class="btn btn-white input-group-addon" id="allStores" data-state="0">
 												<i class="fa fa-square-o"></i>
 												All Stores
 											</span>
 						                
-						                    <span class="btn btn-white" id="confirm-store-select" > Done </span>
-							                
+						                    <span class="btn btn-white input-group-addon" id="confirm-store-select" > Done </span>
+							                </div>
 							                
 						                </div>
 
@@ -184,7 +184,7 @@
                                         </td>
                                         <td class="project-actions">
                                             <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                            <a href="#" class="btn btn-white btn-sm edit-task" data-task-id="{{$task->id}}" ><i class="fa fa-pencil"></i> Edit </a>
+                                            <a href="/manager/task/{{$task->id}}/edit" class="btn btn-white btn-sm edit-task" data-task-id="{{$task->id}}" ><i class="fa fa-pencil"></i> Edit </a>
                                         </td>
 
                                     </tr>
@@ -201,7 +201,7 @@
 
 
         </div>
-        @include('manager.task.edit')
+        @include('manager.task.editmodal')
 
 		@include('site.includes.footer')
 

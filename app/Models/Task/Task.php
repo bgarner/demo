@@ -104,16 +104,16 @@ class Task extends Model
 
 		$task = Task::find($id);
 
-		$description = '';
+		$task["title"] = $request["title"];
+		$task["due_date"] = $request["due_date"];
+		$task["send_reminder"]	= (bool) $request["send_reminder"];
 		if(isset($request['description'])) {
-			$description = $request['description'];
+			$task["description"] = $request['description'];
 		}
 
-		$task["title"] = $request["title"];
-		$task["description"] = $description;
-		$task["due_date"] = $request["due_date"];
-		$task["publish_date"] = $request["publish_date"];
-		$task["send_reminder"]	= (bool) $request["send_reminder"];
+		if(isset($request['publish_date'])) {
+			$task["publish_date"] = $request['publish_date'];
+		}
 
 		$task->save();
 

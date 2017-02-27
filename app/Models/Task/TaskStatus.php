@@ -12,12 +12,15 @@ class TaskStatus extends Model
 
     public static function updateTaskStatusType($id, $request)
     {
-    	TaskStatus::where('task_id', $id)->first()->delete();
+    	if(isset($request->status_type_id)){
+            
+            TaskStatus::where('task_id', $id)->first()->delete();
 
-    	TaskStatus::create([
-    		'task_id' => $id,
-    		'status_type_id' => $request['status_type_id']
-    	]);	
+        	TaskStatus::create([
+        		'task_id' => $id,
+        		'status_type_id' => $request['status_type_id']
+        	]);	
+        }
 
     	
     }
