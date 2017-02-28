@@ -340,7 +340,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="ibox-content">
+                        <div class="ibox-content" style="height: 220px; overflow-y: scroll; overflow-x: hidden;">
                             <!-- <div class="circle bg-primary"><i class="fa fa-video-camera"></i></div><br />
                             <div class="circle bg-primary"><i class="fa fa-bullhorn"></i></div><br />
                             <div class="circle bg-primary"><i class="fa fa-bell"></i></div><br />
@@ -355,18 +355,15 @@
                                             </div>
                                         </td>
                                         <td style="font-size: 11px;">
-                                        {{ $activity->title }}
-                                    {{$activity->since}} ago<br />
-                                    {{ $activity->type }}
-                                    
-                                    {{$activity->device }}
+                                            <strong>{{ $activity->title }}</strong><br />
+                                            <em>{{$activity->since}} ago &middot; {{$activity->device }}</em>
+                                            {{ $activity->id }}
                                         </td>
                                     </tr>
-
                                 </table>
  
                                 
-                                <hr style="clear: both;" />
+                                <hr style="clear: both; margin-bottom: 8px; margin-top: 8px;" />
                             @endforeach
 
                         </div>

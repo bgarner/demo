@@ -165,14 +165,19 @@ class Analytics extends Model
                     $icon = "fa-link";
                     $title = $quicklinks['link_name'];
                     break;
-
+                
                 default:
                     $title = "";
                     break;
             }
+
             $a->title = $title;
             $a->icon = $icon;
             $a->since = Utility::getTimePastSinceDate($a->created_at); 
+            if($a->device == "Android"){
+                $a->device = "Tablet";
+            }
+
         }
 
         return $activities;
