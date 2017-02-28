@@ -1,26 +1,27 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth\Group;
 
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\Group\Group;
+use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Banner;
-use App\Models\Auth\Group;
-use App\Models\Auth\Component;
-use App\Models\Auth\GroupComponent;
+use App\Models\Auth\Component\Component;
+use App\Models\Auth\Group\GroupComponent;
 
-class ComponentAdminController extends Controller
+class GroupAdminController extends Controller
 {
+    
     public function __construct()
     {
         $this->middleware('admin.auth');
         $this->middleware('superadmin.auth');
         $this->middleware('banner');
-    }
 
+    }
 
     /**
      * Display a listing of the resource.
@@ -29,10 +30,10 @@ class ComponentAdminController extends Controller
      */
     public function index()
     {
+        $groups =  Group::getGroupDetails();
         $banner = UserSelectedBanner::getBanner();
         $banners = Banner::all();
-        $components =  Component::getComponentDetails();
-        return view('admin.components.index')->with('components', $components)
+        return view('admin.groups.index')->with('groups', $groups)
                         ->with('banners', $banners)
                         ->with('banner', $banner);
     }
@@ -44,12 +45,13 @@ class ComponentAdminController extends Controller
      */
     public function create()
     {
+        
         $banner = UserSelectedBanner::getBanner();
         $banners = Banner::all();
-        $groups = Group::getGroupList($banner->id);
-        return view('admin.components.create')->with('banner', $banner)
+        $components = Component::getComponentList($banner->id);
+        return view('admin.groups.create')->with('banner', $banner)
                                             ->with('banners', $banners)
-                                            ->with('groups', $groups);
+                                            ->with('components', $components);
     }
 
     /**
@@ -60,8 +62,8 @@ class ComponentAdminController extends Controller
      */
     public function store(Request $request)
     {
-        $component = Component::createComponent($request);
-        return  $component;
+        $group = Group::createGroup($request);
+        return  $group;
     }
 
     /**
@@ -83,16 +85,17 @@ class ComponentAdminController extends Controller
      */
     public function edit($id)
     {
+        
         $banner = UserSelectedBanner::getBanner();
         $banners = Banner::all();
-        $component = Component::find($id);
-        $groups = Group::getGroupList($banner->id);
-        $selected_groups = GroupComponent::getGroupListByComponentId($id);
-        return view('admin.components.edit')->with('banners', $banners)
+        $group = Group::find($id);
+        $components = Component::getComponentList($banner->id);
+        $selected_components = GroupComponent::getComponentListByGroupId($id);
+        return view('admin.groups.edit')->with('banners', $banners)
                                         ->with('banner', $banner)
-                                        ->with('component', $component)
-                                        ->with('groups', $groups)
-                                        ->with('selected_groups', $selected_groups);
+                                        ->with('components', $components)
+                                        ->with('group', $group)
+                                        ->with('selected_components', $selected_components);
     }
 
     /**
@@ -104,7 +107,7 @@ class ComponentAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return Component::editComponent($request, $id);
+        return Group::editGroup($request, $id);
     }
 
     /**
@@ -115,6 +118,6 @@ class ComponentAdminController extends Controller
      */
     public function destroy($id)
     {
-        Component::deleteComponent($id);
+        Group::deleteGroup($id);
     }
 }

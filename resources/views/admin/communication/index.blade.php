@@ -39,81 +39,76 @@
 		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
-		            <div class="row">
-		                <div class="col-lg-12">
-		                    <div class="ibox">
-		                        <div class="ibox-title">
-		                            <h5>All Communications</h5>
+        	<div class="row">
+	            <div class="col-lg-12">
+	                <div class="ibox">
+	                    <div class="ibox-title">
+	                        <h5>All Communications</h5>
 
-		                            <div class="ibox-tools">
+	                        <div class="ibox-tools">
 
-		                                <a href="/admin/communication/create" class="btn btn-primary btn"><i class="fa fa-plus"></i> New Communication</a>
-		                            </div>
-		                        </div>
-		                        <div class="ibox-content">
+	                            <a href="/admin/communication/create" class="btn btn-primary btn"><i class="fa fa-plus"></i> New Communication</a>
+	                        </div>
+	                    </div>
+	                    <div class="ibox-content">
 
+	                        <div class="table-responsive">
 
+								<table class="table table-hover issue-tracker">
 
-		                            <div class="table-responsive">
+									<tr>
+										<td>Subject</td>
+										
+										<td>Start</td>
+										<td>Action</td>
+									</tr>
 
-										<table class="table table-hover issue-tracker">
+									@foreach($communications as $communication)
+									<tr>
 
-										<tr>
-											<td>Subject</td>
-											
-											<td>Start</td>
-											<td>Action</td>
-										</tr>
+										<td>{{ $communication->subject }}</td>
+										
+										<td>{{ $communication->prettySentAtDate }}</td>
+										
+										<td>
+											<a href="/admin/communication/{{ $communication->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+											<a data-communication="{{ $communication->id }}" id="communication{{ $communication->id }}" class="delete-communication btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 
-										@foreach($communications as $communication)
-										<tr>
+										</td>
+									</tr>
+									@endforeach
 
-											<!-- <td><a href="/admin/communication/{{ $communication->id }}/edit">{{ $communication->subject }}</a></td> -->
-											<td>{{ $communication->subject }}</td>
-											
-											<td>{{ $communication->prettySentAtDate }}</td>
-											
-											<td>
-												<a href="/admin/communication/{{ $communication->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
-												<a data-communication="{{ $communication->id }}" id="communication{{ $communication->id }}" class="delete-communication btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+								</table>
 
-											</td>
-										</tr>
-										@endforeach
+	                        </div>
+                    </div>
 
-										</table>
-
-{{-- 										{!! $events->render() !!} --}}
-
-		                            </div>
-		                        </div>
-
-		                    </div>
-		                </div>
-		            </div>
+                </div>
+            </div>
+        </div>
 
 
-		        </div>
+    </div>
 
-				@include('site.includes.footer')
+	@include('site.includes.footer')
 
-			    @include('admin.includes.scripts')
+    @include('admin.includes.scripts')
 
-				<script type="text/javascript">
-					$.ajaxSetup({
-				        headers: {
-				            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				        }
-					});
+	<script type="text/javascript">
+		$.ajaxSetup({
+	        headers: {
+	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	        }
+		});
 
-				</script>
+	</script>
 
-				<script type="text/javascript" src="/js/custom/admin/communications/deleteCommunication.js"></script>
-				
+	<script type="text/javascript" src="/js/custom/admin/communications/deleteCommunication.js"></script>
+	
 
-				@include('site.includes.bugreport')
+	@include('site.includes.bugreport')
 
 
 
-			</body>
-			</html>
+</body>
+</html>

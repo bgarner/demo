@@ -56,10 +56,7 @@
 		                        </div>
 		                        <div class="ibox-content">
 
-
-
 									<form class="form-horizontal" id="createNewCommunicationForm">
-
 
 										<input type="hidden" name="banner_id" value={{$banner->id}} >
 

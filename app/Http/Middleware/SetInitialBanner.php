@@ -3,8 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Models\UserBanner;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 
 class SetInitialBanner
 {

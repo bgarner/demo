@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Auth\User;
 
 use Hash;
 use Illuminate\Auth\Authenticatable;
@@ -9,8 +9,10 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use App\Models\Profile\Profile;
-use App\Models\UserBanner;
+use App\Models\Auth\User\UserBanner;
 use App\Models\Validation\UserValidator;
+use App\Models\Auth\User\UserRole;
+use App\Models\Auth\User\UserResource;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
@@ -65,7 +67,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public static function getAdminUsers()
     {
-        $users = User::whereIn('group_id', [1,2])->get();
+        $users = User::whereIn('group_id', [1,2,3])->get();
         foreach ($users as $user) {
             $banners = UserBanner::where('user_id', $user->id)->get();
             $user["banners"] = $banners;
@@ -108,6 +110,21 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
                 'banner_id' => $banner
             ]);
         }
+
+        if(isset($request["resource"])){
+            UserResource::create([
+                    'user_id' => $user->id,
+                    'resource_id' => $request["resource"]
+                ]);
+        }
+
+        if(isset($request["role"])){
+            UserRole::create([
+                    'user_id' => $user->id,
+                    'role_id' => $request["role"]
+                ]);
+        }
+
 
         \Log::info($user);
         return $user;

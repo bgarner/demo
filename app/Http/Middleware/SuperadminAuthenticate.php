@@ -4,8 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
-use App\Models\Auth\Component;
-use App\Models\Auth\GroupComponent;
+use App\Models\Auth\Component\Component;
+use App\Models\Auth\Group\GroupComponent;
 
 class SuperadminAuthenticate
 {

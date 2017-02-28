@@ -72,7 +72,7 @@ $(document).on('click','.communication-create',function(){
 	var sender = "";
 	var communication_packages = [];
 	var communication_documents = [];
-	var allStores  = $("allStores:checked").val();
+	var allStores  = $("#allStores:checked").val();
 
 	console.log(communication_type_id);
 	if(!communication_type_id){

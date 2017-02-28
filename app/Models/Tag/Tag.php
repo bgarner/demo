@@ -3,7 +3,8 @@
 namespace App\Models\Tag;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserSelectedBanner;
+
 class Tag extends Model
 {
     protected $table = 'tags';

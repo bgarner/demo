@@ -10,7 +10,7 @@ use DB;
 use App\Models\Utility\Utility;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Validation\UrgentNoticeValidator;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 
 
 class UrgentNotice extends Model

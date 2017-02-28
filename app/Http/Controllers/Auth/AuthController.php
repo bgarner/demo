@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\User;
-use Validator;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
-use Mail;
 use Illuminate\Support\Facades\Auth;
-use App\Models\UserSelectedBanner;
+
+use App\User;
+use App\Models\Auth\Group\Group;
+use App\Models\Auth\User\UserSelectedBanner;
 
 class AuthController extends Controller
 {
@@ -30,10 +31,8 @@ class AuthController extends Controller
     * Properties | define all the properties here 
     * to overwrite the laravel default properties such as routes.
     */
-    private $redirectTo = '/admin/home';
-    private $loginPath = '/admin/login';
-    private $redirectPath = '/admin/home';
-    private $redirectAfterLogout = '/admin/login';
+
+
 
     /**
      * Create a new authentication controller instance.
@@ -45,62 +44,6 @@ class AuthController extends Controller
         $this->middleware('guest', ['except' => 'getLogout']);
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'firstname' => 'required',
-            'lastname'  => 'required',
-            'email'     => 'required|email|max:255|unique:users',
-            'password'  => 'required|confirmed|min:6',
-        ]);
-    }
-
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'group_id'  => '2',
-            'firstname' => $data['firstname'],
-            'lastname'  => $data['lastname'],
-            'email'     => $data['email'],
-            'password'  => bcrypt($data['password']),
-            
-        ]);
-
-
-    }
-
-
-    /* postRegister method overwriting the vendor method*/
-    public function postRegister(Request $request)
-    {
-        
-        $validator = $this->validator($request->all());
-
-        if ($validator->fails()) {
-            $this->throwValidationException(
-                $request, $validator
-            );
-        }
-
-        
-        $user = $this->create($request->all());
-        Auth::login($user);
-
-        return redirect($this->redirectPath());
-
-    }
 
     public function getLogout()
     {
@@ -117,6 +60,18 @@ class AuthController extends Controller
         Auth::logout();
 
         return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
+    }
+
+    public function authenticated(Request $request, User $user)
+    {
+        $group_id = $user->group_id;
+        $group = Group::where('id', $group_id)->first()->name;
+        if( in_array( $group, $this->allowedGroups) ){
+            return redirect()->intended($this->redirectPath());    
+        }
+        Auth::logout();
+        return redirect( $this->alternateLogin );   
+
     }
 
 

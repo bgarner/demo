@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Models\Auth\GroupComponent;
+use App\Models\Auth\Group\GroupComponent;
 
 class AdminViewComposerServiceProvider extends ServiceProvider
 {
@@ -15,7 +15,7 @@ class AdminViewComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer('admin.includes.sidenav', function($view){
-            $view->with('groupComponents', \App\Models\Auth\GroupComponent::getAccessibleComponentNameList());
+            $view->with('groupComponents', \App\Models\Auth\Group\GroupComponent::getAccessibleComponentNameList());
         });
     }
 
