@@ -7,54 +7,7 @@
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 	<link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
-	<style>
-		
-		.bootstrap-datetimepicker-widget.dropdown-menu.bottom {
-		    top: 26px !important;
-		    right:10px;
-			width:23em !important;
-			left: auto !important;
-    		right: -45px !important;
-		}
-
-		.bootstrap-datetimepicker-widget.dropdown-menu.bottom:before {
-			left: 210px;
-		}
-		.bootstrap-datetimepicker-widget.dropdown-menu.bottom:after {
-			left: 211px;
-		}
-		.bootstrap-datetimepicker-widget table td.day{
-			line-height: 0px;
-		}
-		.task-element-selected{
-			color: green;
-		}
-		.task-element-in-process{
-			color:#3276b1;
-		}
-		#due_date_popover, #store_select_popover, .task-create, .project-completion{
-			cursor: pointer;
-		}
-		.project-row-detail{
-			background-color: #e7eaec;
-		}
-		td{
-			/*border: thin solid lime;*/
-		}
-		.project-list table tr td{
-			vertical-align: top !important;	
-		}
-		.done{
-			float:right;
-			padding-right: 20px; 
-		}
-		.not-done{
-			float: left;
-			padding-left: 20px;
-		}
-
-
-	</style>
+	
 </head>
 
 <body class="fixed-navigation adminview">
@@ -207,13 +160,13 @@
 	                                    	<div class="task_status_box" id="task_status_box_{{$task->id}}">
 	                                    	
 
-	                                        	<span class="not-done">
+	                                        	<span class="task-not-done">
 	                                        		@foreach($task->stores_done as $store)
 	                                        		<span><i class="fa fa-check"></i> {{$store}}</span>	
 	                                        		<br>
 	                                        		@endforeach
 	                                        	</span>
-	                                        	<span class="done">
+	                                        	<span class="task-done">
 	                                        		@foreach($task->stores_not_done as $store)
 	                                        		<span><i class="fa fa-times"></i> {{$store}}</span>
 	                                        		<br>
