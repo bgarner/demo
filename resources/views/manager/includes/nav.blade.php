@@ -1,7 +1,6 @@
 <li>
     <a href="#"><i class="fa fa-diamond"></i> <span class="nav-label">Communications</span></a>
 </li>
-
 <li>
     <a href="#"> <span class="nav-label">Alerts</span></a>
 </li>
