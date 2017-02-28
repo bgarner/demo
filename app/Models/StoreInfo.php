@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Request as RequestFacade; 
 use App\Models\Auth\User\UserSelectedBanner;
+use App\Models\Auth\User\UserResource;
+use App\Models\Auth\Resource\Resource;
 
 class StoreInfo extends Model
 {
@@ -124,4 +126,28 @@ class StoreInfo extends Model
         }
         return $regionList;   
     }
+
+    public static function getStoreListingByManagerId($user_id)
+    {
+        $storeAPI = env('STORE_API_DOMAIN', false);
+        $resource_id = UserResource::where('user_id', $user_id)->first()->resource_id;
+
+        $resource = Resource::find($resource_id);
+
+        $storeApiEndpoint = $storeAPI ."/stores";
+        if( $resource->resource_id != NULL ) {
+            $storeApiEndpoint = $storeAPI ."/". $resource->resource_name . "/" . $resource->resource_id . "/stores" ;    
+        }
+        
+        $storeInfoJson = file_get_contents( $storeApiEndpoint);
+        $storeInfo = json_decode($storeInfoJson);
+        $storeList = [];
+        foreach ($storeInfo as $store) {
+            $storeList[$store->store_number] = $store->store_number . " - " . $store->name;
+        }
+        return $storeList ;
+    }
+
+    
+
 }

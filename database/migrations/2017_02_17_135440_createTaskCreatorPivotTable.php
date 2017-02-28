@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTasksTargetTable extends Migration
+class CreateTaskCreatorPivotTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,14 @@ class CreateTasksTargetTable extends Migration
      */
     public function up()
     {
-        Schema::create('tasks_target', function (Blueprint $table) {
+        Schema::create('task_creator', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('creator_id')->unsigned();
             $table->integer('task_id')->unsigned();
-            $table->string('store_id', 10);
             $table->timestamps();
+            $table->foreign('creator_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
+
         });
     }
 
@@ -28,6 +30,6 @@ class CreateTasksTargetTable extends Migration
      */
     public function down()
     {
-        Schema::drop('tasks_target');
+        Schema::drop('task_creator');
     }
 }

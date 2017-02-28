@@ -223,6 +223,11 @@ Route::post('/admin/productlaunch', 'Calendar\ProductLaunchAdminController@store
 Route::get('admin/productlaunch/add-meta-data', 'Calendar\ProductLaunchAdminController@edit');
 
 
+
+/* Manager Routes */
+Route::resource('/manager/task', 'Task\TaskManagerController');
+
+
 /* API Routes */
 //get navigation
 Route::get('/api/v1/banner/{id}/navigation', 'Api\V1\ApiController@getNavigation');
