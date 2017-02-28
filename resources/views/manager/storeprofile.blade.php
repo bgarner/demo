@@ -348,6 +348,9 @@
 
                             @foreach($activities as $activity)
                                 <div class="circle bg-primary"><i class="fa fa-book"></i></div> {{$activity->device }}<br />
+                                {{ $activity->type }}
+                                {{ $activity->title }}
+                                <hr />
                             @endforeach
 
                         </div>

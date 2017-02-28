@@ -9,10 +9,12 @@ use DB;
 use App\Models\Communication\Communication;
 use App\Models\Communication\CommunicationTarget;
 use App\Models\Communication\CommunicationType;
-
 use App\Models\UrgentNotice\UrgentNotice;
 use App\Models\UrgentNotice\UrgentNoticeTarget;
-
+use App\Models\Document\Document;
+use App\Models\Video\Video;
+use App\Models\Video\Playlist;
+use App\Models\Dashboard\Quicklinks;
 
 class Analytics extends Model
 {
@@ -124,6 +126,46 @@ class Analytics extends Model
                                 ->orderBy('created_at', 'desc')
                                 ->take($fetch)
                                 ->get();
+        foreach($activities as $a){
+
+            switch($a->type){
+                case "file":
+                    $file = Document::find($a->resource_id);
+                    $title = $file['title'];
+                    break;
+
+                case "communication":
+                    $communication = Communication::find($a->resource_id);
+                    $title = $communication['subject'];
+                    break;
+
+                case "urgentnotice":
+                    $urgentnotice = Urgentnotice::find($a->resource_id);
+                    $title = $urgentnotice['title'];
+                    break;                    
+
+                case "video":
+                    $video = Video::find($a->resource_id);
+                    $title = $video['title'];
+                    break;
+
+                case "playlist":
+                    $playlist = Playlist::find($a->resource_id);
+                    $title = $playlist['title'];
+                    break;                    
+                
+                case "external_url":
+                    $quicklinks = Quicklinks::find($a->resource_id);
+                    $title = $quicklinks['link_name'];
+                    break;
+
+                default:
+                    $title = "";
+                    break;
+            }
+            $a->title = $title;
+        }
+
         return $activities;
     }
 }
