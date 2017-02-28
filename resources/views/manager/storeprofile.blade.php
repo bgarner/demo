@@ -67,25 +67,10 @@
 
                     </li>
 
-                    <li>
-                        <a href="#"><i class="fa fa-diamond"></i> <span class="nav-label">Thing 1</span></a>
-                    </li>
 
-                    <li>
-                        <a href="#"><i class="fa fa-pie-chart"></i> <span class="nav-label">Thing 2</span>  </a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-flask"></i> <span class="nav-label">Thing 3</span></a>
-                    </li>
-
-                    <li>
-                        <a href="#"><i class="fa fa-laptop"></i> <span class="nav-label">Thing 4</span></a>
-                    </li>
+                    @include('manager.includes.nav')
 
 
-                    <li>
-                        <a href="#"><i class="fa fa-magic"></i> <span class="nav-label">Thing 5 </span><span class="label label-info pull-right">62</span></a>
-                    </li>
 
                 </ul>
 

@@ -96,12 +96,12 @@
                 <li class="nav-header">
                     <div id="nav-header-content">
                         <div class="circle profile-circle">
-                            DB
+                            TP
                         </div>
 
                         <span class="clear">
                             <span class="block m-t-xs">
-                                <strong class="font-bold profile-name">Dax Brewster</strong>
+                                <strong class="font-bold profile-name">Test Person</strong>
                             </span>
                             <span class="text-muted text-xs block">AVP - West</span>
                             <a href="/manager" class="no-style">
