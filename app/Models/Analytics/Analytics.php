@@ -5,7 +5,7 @@ namespace App\Models\Analytics;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use DB;
-
+use App\Models\Utility\Utility;
 use App\Models\Communication\Communication;
 use App\Models\Communication\CommunicationTarget;
 use App\Models\Communication\CommunicationType;
@@ -130,32 +130,39 @@ class Analytics extends Model
 
             switch($a->type){
                 case "file":
+                    $type = "File Opened";
                     $file = Document::find($a->resource_id);
+                    $icon = "fa-book";
                     $title = $file['title'];
                     break;
 
                 case "communication":
                     $communication = Communication::find($a->resource_id);
+                    $icon = "fa-bullhorn";
                     $title = $communication['subject'];
                     break;
 
                 case "urgentnotice":
                     $urgentnotice = Urgentnotice::find($a->resource_id);
+                    $icon = "fa-bolt";
                     $title = $urgentnotice['title'];
                     break;                    
 
                 case "video":
                     $video = Video::find($a->resource_id);
+                    $icon = "fa-video-camera";
                     $title = $video['title'];
                     break;
 
                 case "playlist":
                     $playlist = Playlist::find($a->resource_id);
+                    $icon = "fa-list";
                     $title = $playlist['title'];
                     break;                    
                 
                 case "external_url":
                     $quicklinks = Quicklinks::find($a->resource_id);
+                    $icon = "fa-link";
                     $title = $quicklinks['link_name'];
                     break;
 
@@ -164,6 +171,8 @@ class Analytics extends Model
                     break;
             }
             $a->title = $title;
+            $a->icon = $icon;
+            $a->since = Utility::getTimePastSinceDate($a->created_at); 
         }
 
         return $activities;

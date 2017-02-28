@@ -26,9 +26,9 @@
     <style>
     .circle{
         border-radius: 50%;
-        width: 15px;
-        height: 15px;
-        font-size: 8px;
+        width: 20px;
+        height: 20px;
+        font-size: 12px;
         text-align: center;
         padding: 1px;
         margin: 3px;
@@ -347,10 +347,26 @@
                             <div class="circle bg-primary"><i class="fa fa-book"></i></div><br /> -->
 
                             @foreach($activities as $activity)
-                                <div class="circle bg-primary"><i class="fa fa-book"></i></div> {{$activity->device }}<br />
-                                {{ $activity->type }}
-                                {{ $activity->title }}
-                                <hr />
+                                <table style="padding: 0; margin: 0;">
+                                    <tr>
+                                        <td valign="top" style="padding-right: 5px;">
+                                            <div class="circle bg-primary">
+                                                <i class="fa {{$activity->icon}}"></i>
+                                            </div>
+                                        </td>
+                                        <td style="font-size: 11px;">
+                                        {{ $activity->title }}
+                                    {{$activity->since}} ago<br />
+                                    {{ $activity->type }}
+                                    
+                                    {{$activity->device }}
+                                        </td>
+                                    </tr>
+
+                                </table>
+ 
+                                
+                                <hr style="clear: both;" />
                             @endforeach
 
                         </div>
