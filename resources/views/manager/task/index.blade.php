@@ -32,11 +32,25 @@
 		.task-element-in-process{
 			color:#3276b1;
 		}
-		#due_date_popover, #store_select_popover, .task-create{
+		#due_date_popover, #store_select_popover, .task-create, .project-completion{
 			cursor: pointer;
 		}
 		.project-row-detail{
 			background-color: #e7eaec;
+		}
+		td{
+			/*border: thin solid lime;*/
+		}
+		.project-list table tr td{
+			vertical-align: top !important;	
+		}
+		.done{
+			float:right;
+			padding-right: 20px; 
+		}
+		.not-done{
+			float: left;
+			padding-left: 20px;
 		}
 
 
@@ -51,7 +65,7 @@
 	        </div>
 	    </nav>
 
-	<div id="page-wrapper" class="gray-bg" >
+	<div id="page-wrapper" class="gray-bg">
 		<div class="row border-bottom">
 			
         </div>
@@ -161,32 +175,53 @@
                                 <table class="table table-hover">
                                     <tbody>
                                     @foreach($tasks as $task)
-                                    <tr class="project-row">
-                                        <td class="project-status">
+                                    <tr class="project-row" data-task-id="{{$task->id}}">
+                                        <td class="project-status" rowspan="2">
                                             <span class="label label-primary">Status</span>
                                         </td>
-                                        <td class="project-title">
+                                        <td class="project-title" rowspan="2">
                                             {{$task->title}}
                                             <br>
                                             <small>Created {{$task->created_at}}</small>
                                         </td>
                                         <td class="project-completion">
-                                                <small>Completion with: 48%</small>
+                                                <small>Completion with: {{$task->percentage_done}}%</small>
                                                 <div class="progress progress-mini">
-                                                    <div style="width: 48%;" class="progress-bar progress-bar-primary"></div>
+                                                    <div style="width: {{$task->percentage_done}}%;" class="progress-bar progress-bar-primary"></div>
                                                 </div>
                                         </td>
-                                        <td class="project-people">
-                                        	@foreach($task->stores as $store)
-                                            <span class=""><a href="" class="text-primary">{{$store}}</a></span>
-                                            @endforeach
+                                        <td class="project-people" rowspan="2">
+                                        	
+                                            <span> {{count($task->stores)}} Stores </span>
+                                            
                                             
                                         </td>
-                                        <td class="project-actions">
+                                        <td class="project-actions" rowspan="2">
                                             <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
                                             <a href="/manager/task/{{$task->id}}/edit" class="btn btn-white btn-sm edit-task" data-task-id="{{$task->id}}" ><i class="fa fa-pencil"></i> Edit </a>
                                         </td>
+									</tr>
+									<tr>
+										<td class="task-status" id="task_status_{{$task->id}}">
+	                                    	<div class="task_status_box" id="task_status_box_{{$task->id}}">
+	                                    	
 
+	                                        	<span class="not-done">
+	                                        		@foreach($task->stores_done as $store)
+	                                        		<span><i class="fa fa-check"></i> {{$store}}</span>	
+	                                        		<br>
+	                                        		@endforeach
+	                                        	</span>
+	                                        	<span class="done">
+	                                        		@foreach($task->stores_not_done as $store)
+	                                        		<span><i class="fa fa-times"></i> {{$store}}</span>
+	                                        		<br>
+	                                        		@endforeach
+	                                        	</span>
+
+	                                        
+	                                    	</div>
+	                                	</td>
                                     </tr>
                                     
                                     @endforeach

@@ -12,9 +12,10 @@ class CreateTaskStatusPivotTable extends Migration
      */
     public function up()
     {
-        Schema::create('task_status', function (Blueprint $table) {
+        Schema::create('task_store_status', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('task_id')->unsigned();
+            $table->string('store_id', 10);
             $table->integer('status_type_id')->unsigned();
             $table->timestamps();
             $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
@@ -29,6 +30,6 @@ class CreateTaskStatusPivotTable extends Migration
      */
     public function down()
     {
-        Schema::drop('task_status');
+        Schema::drop('task_store_status');
     }
 }

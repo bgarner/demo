@@ -1,6 +1,8 @@
 $(document).ready(function(){
 	$("#due_date_ibox").slideUp();
 	$("#store_selector_ibox").slideUp();
+	$(".task_status_box").slideUp();
+	$(".task-status").hide();
 	$(".chosen").chosen({
 		width : '100%'
 	});
@@ -113,12 +115,6 @@ $("#confirm-store-select").click(function(){
 	$("#store_select_popover i").removeClass('task-element-in-process').addClass('task-element-selected');
 });
 
-
-// $("#storeSelect").click(function(){
-// 	$(this).find('i').toggleClass('fa fa-check-square-o').toggleClass('fa fa-square-o');
-// 	$(this).attr('data-state',$(this).attr('data-state') == 0?1:1);
-// });
-
 $(".edit-task").click(function(e){
 
 	var modal = $('#edit-task-modal');
@@ -148,10 +144,27 @@ $(".edit-task").click(function(e){
 	e.preventDefault();
 });
 
+
+$(".project-completion").click(function(){
+	
+	var taskId = $(this).parent().attr('data-task-id');
+	
+	if($("#task_status_" + taskId).is(':visible')) {
+		$("#task_status_box_" + taskId ).slideUp(800, function(){
+			$("#task_status_" + taskId).slideUp(800);	
+		}); 	
+	}
+	else{
+		$("#task_status_" + taskId).toggle();
+		$("#task_status_box_" + taskId ).slideDown(800);
+	}
+	
+	
+})
+
 $("body").on('click', '.send_reminder', function(){
 	toggleSendReminder($(this));
 	var task_id = $(this).attr('data-task-id');
-	console.log($(this).attr('data-state'));
 	$("body #send_reminder_" + task_id).attr('value', $(this).attr('data-state'));
 });
 

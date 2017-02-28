@@ -119,7 +119,7 @@ class Task extends Model
 
 		TaskTarget::updateTargetStores($task->id, $request);
 		TaskDocument::updateTaskDocuments($task->id, $request);
-		TaskStatus::updateTaskStatusType($task->id, $request);
+		// TaskStoreStatus::updateTaskStatusType($task->id, $request);
 
 		return $task;
 
@@ -181,6 +181,7 @@ class Task extends Model
 		$compiledTasks = Task::compileTasksByStores($tasks);
 
 		return $compiledTasks;
+
 	}
 
 	public static function getActiveTasksByExecId($user_id)
@@ -198,6 +199,7 @@ class Task extends Model
 
 	public static function compileTasksByStores($tasks)
 	{
+		
 		$compiledTasks = [];
 		foreach ($tasks as $task) {
 	        $index = array_search($task['id'], array_column($compiledTasks, 'id'));
@@ -210,17 +212,28 @@ class Task extends Model
 	           array_push( $task["stores"] , $task["store_id"]);
 	           array_push( $compiledTasks , (object) $task);
 	        }
+
         }
 
+        foreach ($compiledTasks as $task) {
+        	$task->stores_done = TaskStoreStatus::getStoresDone($task->id);
+        	$task->stores_not_done = TaskStoreStatus::getStoresNotDone($task->id);
+        	$task->percentage_done = round( ((count($task->stores) - count($task->stores_not_done))/count($task->stores))*100 );
+        }
 		return $compiledTasks;
 	}
 
 	public static function getTasksByStoreList($stores)
 	{
-		return Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
+		$tasks =  Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
 								->whereIn('store_id', $stores)
 								->select('tasks.*', 'tasks_target.store_id')
 								->get()->toArray();
+		
+		return $tasks;
+		
 	}
+
+
 
 }

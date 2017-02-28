@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\StoreInfo;
 use App\Models\Task\Task;
 use App\Models\Task\TaskTarget;
+use App\Models\Task\TaskStoreStatus;
 
 class TaskManagerController extends Controller
 {
