@@ -197,8 +197,9 @@
                                             
                                         </td>
                                         <td class="project-actions" rowspan="2">
-                                            <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
+                                           
                                             <a href="/manager/task/{{$task->id}}/edit" class="btn btn-white btn-sm edit-task" data-task-id="{{$task->id}}" ><i class="fa fa-pencil"></i> Edit </a>
+                                             <a class="btn btn-white btn-sm delete-task" data-task-id="{{$task->id}}"><i class="fa fa-trash"></i> Delete </a>
                                         </td>
 									</tr>
 									<tr>
@@ -251,7 +252,6 @@
 
 		</script>
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
-		<script type="text/javascript" src="/js/custom/admin/tasks/deleteTask.js"></script>
 		<script type="text/javascript" src="/js/custom/manager/tasks/addTask.js"></script>
 		<script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
 

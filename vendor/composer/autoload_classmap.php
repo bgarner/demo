@@ -659,6 +659,7 @@ return array(
     'UpdatePlaylistTableAddDescription' => $baseDir . '/database/migrations/2016_08_05_160241_update_playlist_table_add_description.php',
     'UpdateQuicklinksTable' => $baseDir . '/database/migrations/2016_01_28_180958_update_quicklinks_table.php',
     'UpdateQuicklinksTypesTable' => $baseDir . '/database/migrations/2016_01_27_231623_update_quicklinks_types_table.php',
+    'UpdateTasksTable' => $baseDir . '/database/migrations/2017_02_28_131811_update_tasks_table.php',
     'UpdateUrgentNoticeTargetAddStoreIdString' => $baseDir . '/database/migrations/2016_06_21_114555_update_urgent_notice_target_add_Store_id_string.php',
     'UpdateUrgentNoticeTargetRemoveStoreId' => $baseDir . '/database/migrations/2016_06_21_114542_update_urgent_notice_target_remove_Store_id.php',
     'UpdateUrgentNoticesTableAddSoftDeletes' => $baseDir . '/database/migrations/2016_03_29_154257_update_urgent_notices_table_add_soft_deletes.php',

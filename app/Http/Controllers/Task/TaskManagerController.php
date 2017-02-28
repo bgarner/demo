@@ -98,6 +98,6 @@ class TaskManagerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Task::deleteTask($id);
     }
 }

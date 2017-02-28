@@ -10,7 +10,7 @@ $(document).ready(function(){
 	$(".project-row-detail").hide();
 	$(".updated_due_date_selector").datetimepicker({
 	
-		format: 'YYYY-MM-DD',
+		format: 'YYYY-MM-DD'
 
 	})
 });
@@ -121,7 +121,9 @@ $('.chosen').on('change', function(event, params) {
 });
 
 $("#confirm-store-select").click(function(){
+	
 	$("#store_selector_ibox").slideToggle();
+
 });
 
 $(".edit-task").click(function(e){
@@ -249,6 +251,38 @@ $(document).on('click','.task-create',function(){
 		});    	
     }
 
+
+    return false;
+});
+
+$(".delete-task").click(function(){
+
+	var task = $(this).attr('data-task-id');
+	var selector = ".project-row[data-task-id=" + task + "]";
+	console.log(selector);
+
+	swal({
+		title: "Are you sure?",
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonColor: "#DD6B55",
+		confirmButtonText: "Yes, delete it!",
+		closeOnConfirm: false
+    	}, function () {
+	    
+		$.ajax({
+		    url: '/manager/task/'+ task,
+		    type: 'DELETE',
+
+		    success: function(result) {
+		    	console.log($(selector));
+		        $(selector).fadeOut(1000);
+		        swal("Deleted!", "This task has been deleted.", "success");
+		    }
+
+		});
+        
+    });
 
     return false;
 });

@@ -80,7 +80,6 @@ class Task extends Model
 			'description' 	=> $description,
 			'publish_date'	=> $publish_date,
 			'due_date'		=> $request["due_date"],
-			'banner_id' 	=> $request["banner_id"],
 			'send_reminder'	=> (bool) $request["send_reminder"]
 		]);
 
@@ -196,12 +195,12 @@ class Task extends Model
 			$task->status = 'Upcoming';
 			$task->status_color = TaskStatusTypes::where('status_title', 'Upcoming')->first()->css_class;
 		}
-		if($today > $publish_date && $today < $due_date)
+		if($today > $publish_date && ($today < $due_date || $due_date == '0000-00-00 00:00:00'))
 		{
 			$task->status = 'Active';
 			$task->status_color = TaskStatusTypes::where('status_title', 'Active')->first()->css_class;
 		}
-		if($today > $due_date)
+		if( ($due_date != '0000-00-00 00:00:00') && $today > $due_date)
 		{
 			$task->status = 'Passed';
 			$task->status_color = TaskStatusTypes::where('status_title', 'Passed')->first()->css_class;
