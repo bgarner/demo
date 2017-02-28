@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTaskStatusPivotTable extends Migration
+class CreateTaskStoreStatusPivotTable extends Migration
 {
     /**
      * Run the migrations.
@@ -19,7 +19,7 @@ class CreateTaskStatusPivotTable extends Migration
             $table->integer('status_type_id')->unsigned();
             $table->timestamps();
             $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
-            $table->foreign('status_type_id')->references('id')->on('task_status_types')->onDelete('cascade');
+            $table->foreign('status_type_id')->references('id')->on('task_store_status_types')->onDelete('cascade');
         });
     }
 

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTaskStatusTypesTable extends Migration
+class CreateTaskStoreStatusTypes extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateTaskStatusTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('task_status_types', function (Blueprint $table) {
+        Schema::create('task_store_status_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('status_title');
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateTaskStatusTypesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('task_status_types');
+        Schema::drop('task_store_status_types');
     }
 }

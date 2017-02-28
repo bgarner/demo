@@ -177,7 +177,7 @@
                                     @foreach($tasks as $task)
                                     <tr class="project-row" data-task-id="{{$task->id}}">
                                         <td class="project-status" rowspan="2">
-                                            <span class="label label-primary">Status</span>
+                                            <span class="label {{$task->status_color}}">{{$task->status}}</span>
                                         </td>
                                         <td class="project-title" rowspan="2">
                                             {{$task->title}}

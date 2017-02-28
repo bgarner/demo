@@ -28,11 +28,10 @@ class TaskStoreStatus extends Model
 
     public static function getStoresDone($task_id)
     {
-        $storesDone = TaskStoreStatus::join('task_status_types', 'task_status_types.id' , '=', 'task_store_status.status_type_id')
+        $storesDone = TaskStoreStatus::join('task_store_status_types', 'task_store_status_types.id' , '=', 'task_store_status.status_type_id')
                        ->where('task_id', $task_id)
-                       ->where('task_status_types.status_title', 'done')
+                       ->where('task_store_status_types.status_title', 'done')
                        ->get()->pluck('store_id')->toArray();
-        // dd($storesDone);
         return $storesDone;
 
     } 
@@ -42,7 +41,7 @@ class TaskStoreStatus extends Model
         $storesDone = TaskStoreStatus::getStoresDone($task_id);
         $taskStores = TaskTarget::where('task_id', $task_id)->get()->pluck('store_id')->toArray();
         $storesNotDone = array_diff($taskStores, $storesDone );
-        // dd($storesNotDone);
         return $storesNotDone;
     } 
+
 }

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Validation\TaskValidator;
 use App\Models\Task\TaskTarget;
 use App\Models\Task\TaskDocument;
-use App\Models\Task\TaskStatus;
+use App\Models\Task\TaskStatusTypes;
 use App\Models\Auth\Role\Role;
 use App\Models\Auth\User\UserResource;
 use App\Models\StoreInfo;
@@ -119,7 +119,6 @@ class Task extends Model
 
 		TaskTarget::updateTargetStores($task->id, $request);
 		TaskDocument::updateTaskDocuments($task->id, $request);
-		// TaskStoreStatus::updateTaskStatusType($task->id, $request);
 
 		return $task;
 
@@ -132,72 +131,31 @@ class Task extends Model
 	
 	public static function getActiveTasksByUserId($user_id)
 	{
-		$role = Role::getRoleByUserId($user_id);
-
-		switch ($role) {
-			case 'dm':
-				$tasks = Task::getActiveTasksByDistrictManagerId($user_id);
-				break;
-			case 'avp':
-				$tasks = Task::getActiveTasksByAvpId($user_id);
-				break;
-			case 'exec':
-				$tasks = Task::getActiveTasksByExecId($user_id);
-				break;
-			default:
-				$tasks = [];
-				break;
-		}
+		$stores = array_keys(StoreInfo::getStoreListingByManagerId($user_id));
+		$tasks = Task::getTasksByStoreList($stores);
 		return $tasks;
-	}
-
-	public static function getActiveTasksByDistrictManagerId($user_id)
-	{
-		
-		$district_id = UserResource::join('resources', 'resources.id', '=', 'user_resource.resource_id')
-									->where('user_id', $user_id)
-									->first()->resource_id;
-
-		$stores = StoreInfo::getStoresByDistrictId($district_id);
-
-		$tasks = $tasks = Task::getTasksByStoreList($stores);
-
-		$compiledTasks =  Task::compileTasksByStores($tasks);
-
-		return $compiledTasks;
 		
 	}
 
-	public static function getActiveTasksByAvpId($user_id)
+
+	public static function getTasksByStoreList($stores)
 	{
-		$region_id = UserResource::join('resources', 'resources.id', '=', 'user_resource.resource_id')
-									->where('user_id', $user_id)
-									->first()->resource_id;
-
-		$stores = StoreInfo::getStoresByRegionId($region_id);
-
-		$tasks = $tasks = Task::getTasksByStoreList($stores);
-		
-		$compiledTasks = Task::compileTasksByStores($tasks);
-
-		return $compiledTasks;
-
-	}
-
-	public static function getActiveTasksByExecId($user_id)
-	{
-		
-		$tasks = Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
+		$tasks =  Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
+								->whereIn('store_id', $stores)
 								->select('tasks.*', 'tasks_target.store_id')
 								->get()->toArray();
+	
+		$tasks = Task::groupTasksByStores($tasks);
 
-
-		$compiledTasks = Task::compileTasksByStores($tasks);
-
-		return $compiledTasks;
+		foreach ($tasks as $task) {
+			Task::getTaskCompletionStatistics($task);
+			Task::getTaskStatus($task);
+		}
+		return $tasks;
+		
 	}
 
-	public static function compileTasksByStores($tasks)
+	public static function groupTasksByStores($tasks)
 	{
 		
 		$compiledTasks = [];
@@ -214,26 +172,44 @@ class Task extends Model
 	        }
 
         }
-
-        foreach ($compiledTasks as $task) {
-        	$task->stores_done = TaskStoreStatus::getStoresDone($task->id);
-        	$task->stores_not_done = TaskStoreStatus::getStoresNotDone($task->id);
-        	$task->percentage_done = round( ((count($task->stores) - count($task->stores_not_done))/count($task->stores))*100 );
-        }
+        
 		return $compiledTasks;
 	}
 
-	public static function getTasksByStoreList($stores)
-	{
-		$tasks =  Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
-								->whereIn('store_id', $stores)
-								->select('tasks.*', 'tasks_target.store_id')
-								->get()->toArray();
-		
-		return $tasks;
-		
+	public static function getTaskCompletionStatistics($task)
+	{	
+    	$task->stores_done = TaskStoreStatus::getStoresDone($task->id);
+    	$task->stores_not_done = TaskStoreStatus::getStoresNotDone($task->id);
+    	$task->percentage_done = round( ((count($task->stores) - count($task->stores_not_done))/count($task->stores))*100 );
+    
+        return $task;
 	}
 
+	public static function getTaskStatus($task)
+	{
+		
+		$publish_date = $task->publish_date;
+		$due_date = $task->due_date;
+		$today = Carbon::now();
+
+		if($today < $publish_date){
+			$task->status = 'Upcoming';
+			$task->status_color = TaskStatusTypes::where('status_title', 'Upcoming')->first()->css_class;
+		}
+		if($today > $publish_date && $today < $due_date)
+		{
+			$task->status = 'Active';
+			$task->status_color = TaskStatusTypes::where('status_title', 'Active')->first()->css_class;
+		}
+		if($today > $due_date)
+		{
+			$task->status = 'Passed';
+			$task->status_color = TaskStatusTypes::where('status_title', 'Passed')->first()->css_class;
+		}
+		return $task;
+
+
+	}
 
 
 }

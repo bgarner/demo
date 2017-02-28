@@ -109,10 +109,19 @@ $("#allStores").click(function(){
 
 });
 
+$('.chosen').on('change', function(event, params) {
+	var selectedStores = $("#storeSelect").val();
+	console.log(selectedStores);
+	if( selectedStores !== null && selectedStores.length > 0) {
+		$("#store_select_popover i").removeClass('task-element-in-process').addClass('task-element-selected');	
+	}
+	else{
+		$("#store_select_popover i").addClass('task-element-in-process').removeClass('task-element-selected');		
+	}
+});
 
 $("#confirm-store-select").click(function(){
 	$("#store_selector_ibox").slideToggle();
-	$("#store_select_popover i").removeClass('task-element-in-process').addClass('task-element-selected');
 });
 
 $(".edit-task").click(function(e){
@@ -150,13 +159,13 @@ $(".project-completion").click(function(){
 	var taskId = $(this).parent().attr('data-task-id');
 	
 	if($("#task_status_" + taskId).is(':visible')) {
-		$("#task_status_box_" + taskId ).slideUp(800, function(){
-			$("#task_status_" + taskId).slideUp(800);	
+		$("#task_status_box_" + taskId ).slideUp(600, function(){
+			$("#task_status_" + taskId).hide();	
 		}); 	
 	}
 	else{
 		$("#task_status_" + taskId).toggle();
-		$("#task_status_box_" + taskId ).slideDown(800);
+		$("#task_status_box_" + taskId ).slideDown(600);
 	}
 	
 	
@@ -184,10 +193,10 @@ $(document).on('click','.task-create',function(){
 		return false;
 	}
 	
-	if( target_stores == null && typeof allStores === 'undefined' ) {
+	if( target_stores == null) {
 		swal("Oops!", "Target stores not selected.", "error"); 
 		hasError = true;
-		$(window).scrollTop(0);
+		$("#store_selector_ibox").slideDown(800);
 		return false;
 	}
 
@@ -218,6 +227,7 @@ $(document).on('click','.task-create',function(){
 			        	$.each(errors.target_stores, function(index){
 			        		$("#storeSelect").parent().append('<div class="req">' + errors.target_stores[index]  + '</div>');	
 			        	});
+			        	$("#store_selector_ibox").slideDown(800);
 			        }
 		        }
 		        else{
