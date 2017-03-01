@@ -168,6 +168,7 @@ class Analytics extends Model
                 
                 default:
                     $title = "";
+                    $icon ="";
                     break;
             }
 
