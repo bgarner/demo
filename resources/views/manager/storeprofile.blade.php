@@ -271,7 +271,13 @@
                             </div>
                         </div>
                         <div class="ibox-content">
-
+                            @foreach($launches as $launch)
+                                {{$launch->prettyLaunchDate}}
+                                {{$launch->style_number}}
+                                {{$launch->style_name}}<br />
+                                <img src="http://fgl.scene7.com/is/image/FGLSportsLtd/{{$launch->style_number}}_99_a?fmt=jpeg&hei=150" />
+                                <hr />
+                            @endforeach
                         </div>
                     </div>
                     @endif

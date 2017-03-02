@@ -69,7 +69,7 @@ class StoreProfileController extends Controller
         $communications = Communication::getActiveCommunicationsByStoreNumber($id);
         $storeInfo = StoreInfo::getStoreInfoByStoreId($id);
         $activities = Analytics::getLastXActivitiesByStore($id);
-
+        $launches = ProductLaunch::getActiveProductLaunchByStore($id);
         return view('manager.storeprofile')
             ->with("storeInfo", $storeInfo)
             ->with("urgentNoticeCount", $urgentNoticeCount)
@@ -78,6 +78,7 @@ class StoreProfileController extends Controller
             ->with("alerts", $alerts)
             ->with("productLaunches", $productLaunches)
             ->with("communications", $communications)
+            ->with("launches", $launches)
             ->with("activities", $activities);
     }
 
