@@ -16,7 +16,7 @@ class Role extends Model
     {
     	return Role::join('user_role', 'user_role.role_id', '=', 'roles.id')
     		->where('user_id', $user_id)
-    		->first()->role_name;
+    		->first();
     }
 
     public static function getRoleDetails()

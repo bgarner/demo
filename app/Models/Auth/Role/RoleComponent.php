@@ -86,4 +86,21 @@ class RoleComponent extends Model
                 ]);
         }
     }
+    public static function getAccessibleComponentNameList()
+    {
+        $role = Role::getRoleByUserId(\Auth::user()->id);
+        return RoleComponent::getRoleNameArrayByRoleId($role->role_id);
+    }
+
+    public static function getRoleNameArrayByRoleId($role_id)
+    {
+        $components = RoleComponent::join('components', 'components.id', '=', 'role_component.component_id')
+                                ->where('role_id', $role_id)
+                                ->select('components.component_name')
+                                ->get()
+                                ->pluck('component_name')
+                                ->toArray();
+                                
+        return $components;
+    }
 }
