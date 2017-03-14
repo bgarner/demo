@@ -1,4 +1,74 @@
 $(document).ready(function(){
+
+	$("#select-role").closest('.form-group').hide();
+	$("#select-resource").closest('.form-group').hide();
+
+	$("#select-group").change(function(){
+		
+		var group = $('#select-group option:selected').val();
+		console.log('/admin/group/' + group + '/roles');
+		$.ajax({
+			    url: '/admin/group/' + group + '/roles',
+			    type: 'GET',
+			    dataType: 'json',
+			    success: function(result) {
+			    	console.log(result);
+			    	if( result.length >0 ) {
+			    		$("#select-role option").remove();
+			    		$('<option>').val("")
+			    					 .text("Select one")
+			    					 .appendTo('#select-role');
+						for (var i = 0; i < result.length ; i++) {
+							
+							$('<option>').val(result[i].id)
+										 .text(result[i].role_name)
+										 .appendTo('#select-role');
+						}
+						$("#select-role").closest('.form-group').show();
+			        }
+			        else{
+			        	$("#select-role").closest('.form-group').hide();
+			        }
+			        
+			    }
+			}).done(function(data){
+				console.log(data);
+			});    
+	});
+
+	$("#select-role").change(function(){
+		
+		var role = $('#select-role option:selected').val();
+		$.ajax({
+			    url: '/admin/role/' + role + '/resources',
+			    type: 'GET',
+			    dataType: 'json',
+			    success: function(result) {
+			        
+			    	if( result.length >0 ) {
+			    		
+			    		$("#select-resource option").remove();
+			    		$('<option>').val("")
+			    					.text("Select one")
+			    					.appendTo('#select-resource');
+
+						for (var i = 0; i < result.length ; i++) {
+							$('<option>').val(result[i].id)
+										 .text(result[i].resource_name)
+										 .appendTo('#select-resource');
+						}
+						$("#select-resource").closest('.form-group').show();
+			        }
+			        else{
+			        	$("#select-resource").closest('.form-group').hide();
+			        }
+			        
+			    }
+			}).done(function(data){
+				console.log(data);
+			});    
+	});
+
 	$(".user-create").click(function(){
 		var firstname = $('input[name="firstname"]').val();
 		var lastname = $('input[name="lastname"]').val();
@@ -7,10 +77,14 @@ $(document).ready(function(){
 		var password = $('input[name="password"]').val();
 		var confirm_password = $('input[name="confirm_password"]').val();
 		var group = $('#select-group option:selected').val();
+		var role = $("#select-role option:selected").val();
+		var resource = $("#select-resource option:selected").val();
 		var groupname = $('#select-group option:selected').text();
 		var banners = [];
 		$('#select-banner option:selected').each(function(){ banners.push($(this).val()); });
 
+
+		console.log(firstname, lastname, email, group, role, resource);
 		var hasError = false;
 		if(firstname == '') {
 			swal("Oops!", "Need a first name.", "error"); 
@@ -67,6 +141,8 @@ $(document).ready(function(){
 			    	lastname : lastname,
 			    	email : email,
 			    	group : group,
+			    	role : role,
+			    	resource : resource,
 			    	banners : banners,
 			    	password : password,
 			    	confirm_password : confirm_password

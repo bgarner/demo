@@ -14,11 +14,11 @@ use App\Models\Banner;
 use App\Models\Document\DocumentPackage;
 use App\Models\Tag\Tag;
 use App\Models\Tag\ContentTag;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Document\Folder;
 use App\Models\Document\FolderPackage;
 use App\Models\Feature\FeaturePackage;
-use App\Models\UserBanner;
+use App\Models\Auth\User\UserBanner;
 
 class PackageAdminController extends Controller
 {
@@ -28,6 +28,7 @@ class PackageAdminController extends Controller
     public function __construct()
     {
         $this->middleware('admin.auth');
+        $this->middleware('superadmin.auth');
         $this->middleware('banner');
     }
 

@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Models\Banner;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Feature\Feature;
 use App\Models\Document\FileFolder;
 use App\Models\Document\Package;
@@ -22,6 +22,7 @@ class FeatureAdminController extends Controller
     public function __construct()
     {
         $this->middleware('admin.auth');
+        $this->middleware('superadmin.auth');
         $this->middleware('banner');
     }
     /**

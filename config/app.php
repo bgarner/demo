@@ -177,6 +177,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        App\Providers\AdminViewComposerServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
+
+
+
     ],
 
     /*
@@ -227,5 +232,37 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
+
+    'controllerComponentMap' => [
+
+        'App\Http\Controllers\AdminController'                                  => 'Home',
+        'App\Http\Controllers\Dashboard\DashboardAdminController'               => 'Dashboard',
+        'App\Http\Controllers\Document\PackageAdminController'                  => 'Featured Content',
+        'App\Http\Controllers\Feature\FeatureAdminController'                   => 'Featured Content',
+        'App\Http\Controllers\Calendar\CalendarAdminController'                 => 'Calendar',
+        'App\Http\Controllers\Calendar\EventTypesAdminController'               => 'Calendar',
+        'App\Http\Controllers\Communication\CommunicationAdminController'       => 'Communications',
+        'App\Http\Controllers\Communication\CommunicationTypesAdminController'  => 'Communications',
+        'App\Http\Controllers\Document\DocumentManagerController'               => 'Library',
+        'App\Http\Controllers\Document\FolderAdminController'                   => 'Library',
+        'App\Http\Controllers\Document\DocumentAdminController'                 => 'Library',
+        'App\Http\Controllers\Alert\AlertAdminController'                       => 'Alerts and Notices',
+        'App\Http\Controllers\UrgentNotice\UrgentNoticeAdminController'         => 'Alerts and Notices',
+        'App\Http\Controllers\Video\VideoAdminController'                       => 'Videos',
+        'App\Http\Controllers\Video\TagAdminController'                         => 'Videos',
+        'App\Http\Controllers\Video\PlaylistAdminController'                    => 'Videos',
+        'App\Http\Controllers\User\UserAdminController'                         => 'User and Group Management',
+        'App\Http\Controllers\Auth\Group\GroupAdminController'                  => 'User and Group Management',
+        'App\Http\Controllers\Auth\Role\RoleAdminController'                    => 'User and Group Management',
+        'App\Http\Controllers\Auth\Resource\ResourceAdminController'            => 'User and Group Management',
+        'App\Http\Controllers\Auth\Component\ComponentAdminController'          => 'User and Group Management',
+        'App\Http\Controllers\StoreFeedback\FeedbackAdminController'            => 'Store Feedback Management',
+        'App\Http\Controllers\Task\TaskAdminController'                         => 'Task Management'
+
+
+
+
+    ],
+
 
 ];

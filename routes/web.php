@@ -191,6 +191,10 @@ Route::resource('/utilities/ckeditorimages', 'Utilities\CkeditorImageController'
 Route::resource('/admin/feedback' , 'StoreFeedback\FeedbackAdminController');
 Route::resource('/admin/feedback/{id}/note' , 'StoreFeedback\NotesAdminController');
 
+//User Groups and Sections
+Route::resource('/admin/group', 'Auth\GroupAdminController');
+Route::resource('/admin/component', 'Auth\ComponentAdminController');
+
 //Product Launch
 Route::get('/admin/productlaunch', 'Calendar\ProductLaunchAdminController@index');
 Route::get('/admin/productlaunch/create', 'Calendar\ProductLaunchAdminController@create');

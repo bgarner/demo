@@ -12,8 +12,8 @@ use App\Models\Document\Folder;
 use App\Models\Document\Package;
 use App\Models\Communication\Communication;
 use App\User;
-use App\Models\UserBanner;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Analytics\Analytics;
 
 
@@ -29,9 +29,16 @@ class AdminController extends Controller
     {
         $this->middleware('admin.auth');
         $this->middleware('banner');
+<<<<<<< HEAD
+        $this->middleware('superadmin.auth');
+        $this->user_id = \Auth::user()->id;
+        $this->group_id = \Auth::user()->group_id;
+        
+=======
         $this->user_id = Auth::user()->id;
         $this->group_id = Auth::user()->group_id;
 
+>>>>>>> develop
     }
 
 

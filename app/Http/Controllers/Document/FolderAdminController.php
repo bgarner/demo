@@ -14,7 +14,7 @@ use App\Models\Document\Document;
 use App\Models\Banner;
 use App\Models\Tag\Tag;
 use App\Models\Tag\ContentTag;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 
 class FolderAdminController extends Controller
 {
@@ -25,6 +25,7 @@ class FolderAdminController extends Controller
     public function __construct()
     {
         $this->middleware('admin.auth');
+        $this->middleware('superadmin.auth');
         $this->middleware('banner');
     }
 
