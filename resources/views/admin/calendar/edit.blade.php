@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/css/plugins/fullcalendar/fullcalendar.css">
     <link rel="stylesheet" type="text/css" href="/css/plugins/fullcalendar/fullcalendar.print.css">
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
+    <link rel="stylesheet" type="text/css" href="/css/custom/tree.css">
 	<script type="text/javascript">
 		function convertDate(t)
 		{
@@ -126,22 +127,66 @@
                                             </div>
 
                                         </div>
-
-
-                                        <div class="hr-line-dashed"></div>
-
-                                        <div class="form-group">
-                                            <div class="col-sm-4 col-sm-offset-2">
-                                                <a class="btn btn-white" href="/admin/calendar"><i class="fa fa-close"></i> Cancel</a>
-                                                <button class="event-update btn btn-primary" type="submit"><i class="fa fa-check"></i> Save changes</button>
-
-                                            </div>
-                                        </div>
+                                        
                                     </form>
 
 
                                 </div>
+                            </div>
+                            <div class="ibox">
+
+                                <div class="ibox-title">
+                                    <h5> Attachments </h5>
+                                    <div class="ibox-tools">
+                                        
+                                        <div id="add-more-attachments" class="btn btn-primary btn-outline col-md-offset-8" role="button" ><i class="fa fa-plus"></i> Add More Attachments</div>
+                                    </div>
+                                </div>
+                                <div class="ibox-content">
+                                    <div class="form-group">
+                                                                        
+                                            
+                                                <table class="table table-hover event-attachments-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <td>Folder</td>
+                                                            <td>Updated</td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($event_attachments as $attachment)
+                                                        
+                                                        <tr class="event-attachments">
+                                                            <td class="event-attachmentname" data-folderid = {{$attachment->global_folder_id}}><i class="fa fa-folder-o"></i> {{$attachment->name}} </td>
+                                                            <td class="attachment-updated"> {{$attachment->updated_at}} </td>
+                                                            <td><a data-folder-id="{{ $attachment->global_folder_id }}" id="folder{{$attachment->global_folder_id}}" class="remove-attachment btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>
+                                                        </tr>
+                                                        
+                                                        @endforeach
+
+                                                    </tbody>
+                                                </table>
+                                            
+                                            
+
+                                    </div>
+                                  
+                                    <div id="attachments-staged-to-remove">
+
+                                    </div>
+
+                                </div>
 		                    </div>
+
+                           
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <a class="btn btn-white" href="/admin/calendar"><i class="fa fa-close"></i> Cancel</a>
+                                    <button class="event-update btn btn-primary" type="submit"><i class="fa fa-check"></i> Save changes</button>
+
+                                </div>
+                            </div>
 
 		                </div>
 
@@ -151,6 +196,34 @@
 
 
 		        </div>
+                <div id="folder-listing" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Select Folders</h4>
+                            </div>
+                            <div class="modal-body">
+                                <ul class="tree">
+                                @foreach ($folderStructure as $folder)
+                                
+                                    @if (isset($folder["is_child"]) && ($folder["is_child"] == 0) )
+                                        
+                                        @include('admin.package.folder-structure-partial', ['folderStructure' =>$folderStructure, 'currentnode' => $folder])
+                                        
+                                    @endif
+
+
+                                @endforeach
+                                </ul>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id="attach-selected-folders">Select Folders</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 				@include('site.includes.footer')
 
@@ -158,6 +231,8 @@
 
                 <script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
                 <script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
+                <script type="text/javascript" src="/js/custom/tree.js"></script>
+                <script src="/js/custom/admin/events/editEvent.js"></script>
                 <script type="text/javascript" src="/js/custom/admin/events/editEvent.js"></script>
                 <script type="text/javascript" src="/js/custom/datetimepicker.js"></script>
                 <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
@@ -172,9 +247,13 @@
                         width:'75%'
                     });
 
+                    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});   
+
+
                     CKEDITOR.replace('description', {
                         filebrowserUploadUrl: "{{route('utilities.ckeditorimages.store',['_token' => csrf_token() ])}}"
                     });
+
 
 				</script>
 

@@ -11,12 +11,12 @@ use App\Models\UserSelectedBanner;
 use App\Models\Event\EventType;
 use Carbon\Carbon;
 use App\Models\Validation\EventValidator;
+use App\Models\Event\EventAttachment;
 use App\Models\Utility\Utility;
-
 
 class Event extends Model
 {
-	use SoftDeletes;
+	  use SoftDeletes;
     protected $table = 'events';
     protected $dates = ['deleted_at'];
     protected $fillable = ['banner_id', 'title', 'description', 'event_type', 'start', 'end'];
@@ -61,11 +61,14 @@ class Event extends Model
             'description' => $desc,
             'start' => $request['start'],
             'end' => $request['end']
+
+
     	   ]);
         
-        $event = Event::updateTargetStores($event->id, $request);
+        Event::updateTargetStores($event->id, $request);
+        EventAttachment::updateAttachments($event->id, $request);
         return json_encode($event);
-       
+
     }
 
     public static function updateEvent($id, $request)
@@ -86,6 +89,7 @@ class Event extends Model
         $event->save();
 
         Event::updateTargetStores($id, $request);
+        EventAttachment::updateAttachments($id, $request);
         return json_encode($event);
 
     }
@@ -128,6 +132,7 @@ class Event extends Model
     {
       $events = Event::join('events_target', 'events.id', '=', 'events_target.event_id')
                         ->where('store_id', $store_id)
+                        ->select('events.*')
                         ->orderBy('start')
                         ->get();
       return $events;

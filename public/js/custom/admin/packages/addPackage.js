@@ -44,7 +44,7 @@ $('#attach-selected-folders').on('click', function(){
 
 
 		var attr = $(this).attr('data-folderRoot');
-
+		
 		// For some browsers, `attr` is undefined; for others,
 		// `attr` is false.  Check for both.
 		if (typeof attr !== typeof undefined && attr !== false) {
