@@ -38,7 +38,7 @@ class Group extends Model
 		
 	}    
 
-    public static function getGroupList($banner_id)
+    public static function getGroupList()
     {
     	return Group::all()->lists('name', 'id');
     }

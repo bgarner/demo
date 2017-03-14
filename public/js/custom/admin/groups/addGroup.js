@@ -9,11 +9,10 @@ $(document).on('click','.group-create',function(){
   	var hasError = false;
 
     var group_name = $("#group_name").val();
-    var roles =  $("#roles").val();
+    var roles = [];
+    roles =  $("#roles").val();
     var bannerId = localStorage.getItem('admin-banner-id');
 
-    console.log(group_name);
-    console.log(roles);
     if(group_name == '') {
 		swal("Oops!", "This we need a name for this group.", "error"); 
 		hasError = true;

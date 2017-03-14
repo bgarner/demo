@@ -11,7 +11,8 @@ use App\Models\Auth\Role\Role;
 use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Banner;
 use App\Models\Auth\Component\Component;
-use App\Models\Auth\Group\GroupComponent;
+use App\Models\Auth\Group\GroupRole;
+use App\Models\Auth\Role\RoleComponent;
 
 class RoleAdminController extends Controller
 {
@@ -47,9 +48,11 @@ class RoleAdminController extends Controller
     {
         $banner = UserSelectedBanner::getBanner();
         $banners = Banner::all();
+        $groups = Group::getGroupList();
         $components = Component::getComponentList($banner->id);
         return view('admin.roles.create')->with('banner', $banner)
                                             ->with('banners', $banners)
+                                            ->with('groups', $groups)
                                             ->with('components', $components);
     }
 
@@ -61,7 +64,8 @@ class RoleAdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $role = Role::createRole($request);
+        return  $role;
     }
 
     /**
@@ -83,7 +87,20 @@ class RoleAdminController extends Controller
      */
     public function edit($id)
     {
-        //
+        $banner = UserSelectedBanner::getBanner();
+        $banners = Banner::all();
+        $role = Role::find($id);
+        $groups = Group::getGroupList($banner->id);
+        $components = Component::getComponentList($banner->id);
+        $selected_groups = GroupRole::getGroupListByRoleId($id);
+        $selected_components = RoleComponent::getComponentListByRoleId($id);
+        return view('admin.roles.edit')->with('banners', $banners)
+                                        ->with('banner', $banner)
+                                        ->with('role', $role)
+                                        ->with('groups', $groups)
+                                        ->with('components', $components)
+                                        ->with('selected_groups', $selected_groups)
+                                        ->with('selected_components', $selected_components);
     }
 
     /**
@@ -95,7 +112,7 @@ class RoleAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return Role::editRole($request, $id);
     }
 
     /**
@@ -106,6 +123,6 @@ class RoleAdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Role::deleteRole($id);
     }
 }

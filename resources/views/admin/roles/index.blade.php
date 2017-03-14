@@ -74,7 +74,7 @@
 										<tr>
 
 											<td class="col-xs-2">{{ $role->role_name }}</td>
-											<td class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+											<td class="col-xs-2">
 												
 												@foreach($role->groups as $group)
 													<span class="label"> {!! $group->name !!} </span>
@@ -82,10 +82,10 @@
 										
 
 											</td>
-											<td>
-												{{-- @foreach($role->components as $component)
+											<td class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+												@foreach($role->components as $component)
 													<span class="label">{!! $component->component_name !!}</span>
-												@endforeach --}}
+												@endforeach
 											</td>
 											
 											<td class="col-xs-2">

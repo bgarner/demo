@@ -454,6 +454,7 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         'CreateQuicklinksTable' => __DIR__ . '/../..' . '/database/migrations/2016_01_27_214111_create_quicklinks_table.php',
         'CreateQuicklinksTypeTable' => __DIR__ . '/../..' . '/database/migrations/2016_01_26_220505_create_quicklinks_type_table.php',
         'CreateResourcesTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_15_132414_create_resources_table.php',
+        'CreateRoleComponentPivot' => __DIR__ . '/../..' . '/database/migrations/2017_03_14_112654_create_role_component_pivot.php',
         'CreateRoleResourcePivot' => __DIR__ . '/../..' . '/database/migrations/2017_02_15_132713_create_role_resource_pivot.php',
         'CreateRolesTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_15_125134_create_roles_table.php',
         'CreateSubscriptionGroupsTable' => __DIR__ . '/../..' . '/database/migrations/future/2015_08_18_222608_create_subscription_groups_table.php',
