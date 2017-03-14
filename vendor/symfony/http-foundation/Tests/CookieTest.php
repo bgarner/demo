@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\HttpFoundation\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Cookie;
 
 /**
@@ -21,7 +22,7 @@ use Symfony\Component\HttpFoundation\Cookie;
  *
  * @group time-sensitive
  */
-class CookieTest extends \PHPUnit_Framework_TestCase
+class CookieTest extends TestCase
 {
     public function invalidNames()
     {
@@ -164,5 +165,16 @@ class CookieTest extends \PHPUnit_Framework_TestCase
 
         $cookie = new Cookie('foo', 'bar', 0, '/', '');
         $this->assertEquals('foo=bar; path=/; httponly', (string) $cookie);
+    }
+
+    public function testRawCookie()
+    {
+        $cookie = new Cookie('foo', 'b a r', 0, '/', null, false, false);
+        $this->assertFalse($cookie->isRaw());
+        $this->assertEquals('foo=b+a+r; path=/', (string) $cookie);
+
+        $cookie = new Cookie('foo', 'b+a+r', 0, '/', null, false, false, true);
+        $this->assertTrue($cookie->isRaw());
+        $this->assertEquals('foo=b+a+r; path=/', (string) $cookie);
     }
 }

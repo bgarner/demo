@@ -32,7 +32,11 @@ class PHPUnit_Runner_Version
         }
 
         if (self::$version === null) {
+<<<<<<< HEAD
+            $version       = new Version('5.7.15', dirname(dirname(__DIR__)));
+=======
             $version       = new Version('4.8.35', dirname(dirname(__DIR__)));
+>>>>>>> origin/develop
             self::$version = $version->getVersion();
         }
 
@@ -47,8 +51,7 @@ class PHPUnit_Runner_Version
     public static function series()
     {
         if (strpos(self::id(), '-')) {
-            $tmp     = explode('-', self::id());
-            $version = $tmp[0];
+            $version = explode('-', self::id())[0];
         } else {
             $version = self::id();
         }
@@ -67,7 +70,7 @@ class PHPUnit_Runner_Version
     /**
      * @return string
      *
-     * @since  Method available since Release 4.0.0
+     * @since Method available since Release 4.0.0
      */
     public static function getReleaseChannel()
     {

@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \App\Console\Commands\Inspire::class,
+        //
     ];
 
     /**
@@ -24,24 +24,17 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('inspire')
-                 ->hourly();
+        // $schedule->command('inspire')
+        //          ->hourly();
     }
 
     /**
-     * OVERRIDING PARENT CLASS
-     * The bootstrap classes for the application.
+     * Register the Closure based commands for the application.
      *
-     * @var array
+     * @return void
      */
-    protected $bootstrappers = [
-        'Illuminate\Foundation\Bootstrap\DetectEnvironment',
-        'Illuminate\Foundation\Bootstrap\LoadConfiguration',
-        'Illuminate\Foundation\Bootstrap\HandleExceptions',
-        'Illuminate\Foundation\Bootstrap\RegisterFacades',
-        'Illuminate\Foundation\Bootstrap\SetRequestForConsole',
-        'Illuminate\Foundation\Bootstrap\RegisterProviders',
-        'Illuminate\Foundation\Bootstrap\BootProviders',
-        'Bootstrap\ConfigureLogging' // custom logger bootstrapper
-    ];
+    protected function commands()
+    {
+        require base_path('routes/console.php');
+    }
 }
