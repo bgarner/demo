@@ -600,7 +600,6 @@ class Table
                     continue;
                 }
 
-<<<<<<< HEAD
                 foreach ($row as $i => $cell) {
                     if ($cell instanceof TableCell) {
                         $textLength = Helper::strlenWithoutDecoration($this->output->getFormatter(), $cell);
@@ -609,15 +608,6 @@ class Table
                             foreach ($contentColumns as $position => $content) {
                                 $row[$i + $position] = $content;
                             }
-=======
-            foreach ($row as $i => $cell) {
-                if ($cell instanceof TableCell) {
-                    $textLength = Helper::strlenWithoutDecoration($this->output->getFormatter(), $cell);
-                    if ($textLength > 0) {
-                        $contentColumns = str_split($cell, ceil($textLength / $cell->getColspan()));
-                        foreach ($contentColumns as $position => $content) {
-                            $row[$i + $position] = $content;
->>>>>>> origin/develop
                         }
                     }
                 }

@@ -93,30 +93,6 @@ abstract class AbstractDumper implements DataDumperInterface, DumperInterface
 
         $this->charset = $charset;
 
-        if ($prev === $charset) {
-            return $prev;
-        }
-        $this->charsetConverter = 'fallback';
-        $supported = true;
-        set_error_handler(function () use (&$supported) { $supported = false; });
-
-        if (function_exists('mb_encoding_aliases') && mb_encoding_aliases($charset)) {
-            $this->charset = $charset;
-            $this->charsetConverter = 'mbstring';
-        } elseif (function_exists('iconv')) {
-            $supported = true;
-            iconv($charset, 'UTF-8', '');
-            if ($supported) {
-                $this->charset = $charset;
-                $this->charsetConverter = 'iconv';
-            }
-        }
-        if ('fallback' === $this->charsetConverter) {
-            $this->charset = 'ISO-8859-1';
-        }
-        restore_error_handler();
-
-
         return $prev;
     }
 
@@ -205,19 +181,8 @@ abstract class AbstractDumper implements DataDumperInterface, DumperInterface
         if (preg_match('//u', $s)) {
             return $s;
         }
-
         if (false !== $c = @iconv($this->charset, 'UTF-8', $s)) {
             return $c;
-
-        if ('iconv' === $this->charsetConverter) {
-            $valid = true;
-            set_error_handler(function () use (&$valid) { $valid = false; });
-            $c = iconv($this->charset, 'UTF-8', $s);
-            restore_error_handler();
-            if ($valid) {
-                return $c;
-            }
-
         }
         if ('CP1252' !== $this->charset && false !== $c = @iconv('CP1252', 'UTF-8', $s)) {
             return $c;

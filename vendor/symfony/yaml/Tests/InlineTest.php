@@ -694,7 +694,6 @@ class InlineTest extends TestCase
         $this->assertEquals($longStringWithQuotes, $arrayFromYaml['longStringWithQuotes']);
     }
 
-
     public function testOmittedMappingKeyIsParsedAsColon()
     {
         $this->assertSame(array(':' => 'foo'), Inline::parse('{: foo}'));
@@ -710,5 +709,4 @@ class InlineTest extends TestCase
     {
         $this->assertSame(array('' => 'foo'), Inline::parse('{ "": foo }'));
     }
-
 }
