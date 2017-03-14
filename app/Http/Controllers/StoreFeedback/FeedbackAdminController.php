@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Models\Banner;
 use App\Http\Controllers\Controller;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\BugReport\BugReport;
 use App\Models\StoreFeedback\FeedbackCategoryTypes;
 use App\Models\StoreFeedback\FeedbackStatusTypes;

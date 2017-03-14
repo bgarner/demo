@@ -63,7 +63,7 @@
 											<thead>
 												<tr>
 													<td>Components</td>
-													<td>Groups</td>
+													<td>Roles</td>
 													<td class="actions">Action</td>
 												</tr>
 											</thead>
@@ -74,8 +74,8 @@
 
 											<td >{{ $component->component_name }}</td>
 											<td >
-												@foreach($component->groups as $group)
-													<span class="label">{!! $group->name !!}</span>
+												@foreach($component->roles as $role)
+													<span class="label">{!! $role->role_name !!}</span>
 												@endforeach		
 										
 

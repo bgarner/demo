@@ -1,0 +1,38 @@
+<?php
+
+namespace App\Models\Task;
+
+use Illuminate\Database\Eloquent\Model;
+
+class TaskTarget extends Model
+{
+    protected $table = 'tasks_target';
+
+    protected $fillable = ['task_id', 'store_id'];
+
+    public static function getTargetStoresByTaskId($id)
+    {
+    	return TaskTarget::where('task_id', $id)->get()->pluck('store_id')->toArray();
+    }
+
+    public static function updateTargetStores($id, $request)
+	{	
+		$target_stores = $request['target_stores'];
+		$allStores = $request['allStores'];
+
+		if (!( $target_stores == '' && $allStores == 'on' )) {
+			TaskTarget::where('task_id', $id)->delete();
+			if (count($target_stores) > 0) {
+				foreach ($target_stores as $store) {
+					TaskTarget::create([
+						'task_id'   => $id,
+						'store_id'  => $store
+					]);
+
+				} 
+			}            
+		}
+
+		return;	
+	}
+}

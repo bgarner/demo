@@ -12,6 +12,7 @@ class ComponentsTableSeeder extends Seeder
         ['component_name' =>'Calendar','banner_id' => 1],
         ['component_name' =>'Communications','banner_id' => 1],
         ['component_name' =>'Library','banner_id' => 1],
+        ['component_name' =>'Alerts and Notices' , 'banner_id' => 1],
         ['component_name' =>'Videos','banner_id' => 1],
         ['component_name' =>'User and Group Management','banner_id' => 1],
         ['component_name' =>'Store Feedback Management','banner_id' => 1],

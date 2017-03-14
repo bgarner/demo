@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\UserSelectedBanner;
-use App\Models\UserBanner;
+use App\Models\Auth\User\UserSelectedBanner;
+use App\Models\Auth\User\UserBanner;
 use App\Models\Banner;
 use App\Models\StoreInfo;
 use App\Models\UrgentNotice\UrgentNotice;

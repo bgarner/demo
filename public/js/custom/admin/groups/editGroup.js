@@ -11,7 +11,7 @@ $(document).on('click','.group-edit',function(){
 
   	var group_name = $("#group_name").val();
   	var group_id = $("#groupID").val();
-    var components  = $("#components").val();
+    var roles  = $("#roles").val();
 	
     if(group_name == '') {
 		swal("Oops!", "This event needs a title.", "error"); 
@@ -29,7 +29,7 @@ $(document).on('click','.group-edit',function(){
 		    data: {
 		    	id: group_id,
 		  		group_name: group_name,
-		    	components : components
+		    	roles : roles
 		    },
 
 		    success: function(data) {

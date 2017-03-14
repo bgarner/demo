@@ -6,7 +6,8 @@
     <a href="/admin/group"><i class="fa fa-users"></i> <span class="nav-label">User and Group Management</span><span class="fa arrow"></span></a>
     <ul class="nav nav-second-level collapse">
         <li><a href="/admin/user">View Users</a></li>
+        <li><a href="/admin/group">View Groups</a></li>
+        <li><a href="/admin/role">View Roles</a></li>
         <li><a href="/admin/component">View Components</a></li>
-        <li><a href="/admin/group">View User Groups</a></li>
     </ul>
 </li>

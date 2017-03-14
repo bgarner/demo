@@ -20,7 +20,7 @@ class Communication extends Model
     protected $table = 'communications';
     protected $fillable = ['subject', 'body', 'sender', 'importance', 'communication_type_id', 'send_at', 'archive_at', 'is_draft', 'banner_id'];
 
-   	
+
       public static function validateCreateCommunication($request)
       {
          $validateThis =  [
@@ -54,10 +54,10 @@ class Communication extends Model
             'remove_document' =>$request['remove_document']
 
          ];
-       
+
          \Log::info($validateThis);
          $v = new CommunicationValidator();
-         return $v->validate($validateThis);  
+         return $v->validate($validateThis);
       }
 
       public static function getAllCommunication($banner_id)
@@ -69,9 +69,9 @@ class Communication extends Model
          return $communicatons;
       }
 
-      public static function getActiveCommunicationsByStoreNumber($storeNumber, $maxToFetch)
+      public static function getActiveCommunicationsByStoreNumber($storeNumber, $maxToFetch=100)
       {
-        
+
          $now = Carbon::now();
          $comm = DB::table('communications_target')->where('store_id', $storeNumber)
                             ->join('communications', 'communications.id', '=', 'communications_target.communication_id')
@@ -88,7 +88,7 @@ class Communication extends Model
             $c->trunc = Communication::truncateHtml($preview_string);
          }
          return $comm;
-         
+
       }
 
       public static function getArchivedCommunicationsByStore($storeNumber)
@@ -101,7 +101,7 @@ class Communication extends Model
                               ->select('communications.*')
                               ->orderBy('communications.send_at', 'desc')
                               ->get();
-         
+
          foreach($comm as $c){
             $c->archived = true;
             $c->since = Utility::getTimePastSinceDate($c->send_at);
@@ -112,7 +112,7 @@ class Communication extends Model
             $c->label_colour = Communication::getCommunicationCategoryColour($c->communication_type_id);
             $c->has_attachments = Communication::hasAttachments($c->id);
          }
-         return $comm;               
+         return $comm;
       }
       public static function getArchivedCommunicationsByCategory($category, $storeNumber)
       {
@@ -126,7 +126,7 @@ class Communication extends Model
                               ->select('communications.*')
                               ->orderBy('communications.send_at', 'desc')
                               ->get();
-         
+
          foreach($comm as $c){
             $c->archived = true;
             $c->since = Utility::getTimePastSinceDate($c->send_at);
@@ -137,7 +137,7 @@ class Communication extends Model
             $c->label_colour = Communication::getCommunicationCategoryColour($c->communication_type_id);
             $c->has_attachments = Communication::hasAttachments($c->id);
          }
-         return $comm;               
+         return $comm;
       }
 
 
@@ -158,7 +158,7 @@ class Communication extends Model
          if($validate['validation_result'] == 'false') {
            \Log::info($validate);
            return json_encode($validate);
-         }  
+         }
          $is_draft = 0;
    		if ($request["send_at"]>Carbon::now()) {
    			$is_draft = 1;
@@ -183,19 +183,19 @@ class Communication extends Model
 
       public static function updateCommunication($id, $request)
       {
-         
+
 
          \Log::info($request->all());
          $validate = Communication::validateEditCommunication($request);
-        
+
          if($validate['validation_result'] == 'false') {
            \Log::info($validate);
            return json_encode($validate);
-         } 
+         }
 
 
          $communication = Communication::find($id);
-         
+
          $communication["subject"] = $request["subject"];
          $communication["body"] = $request["body"];
          if (isset($request['communication_type_id'])) {
@@ -211,7 +211,7 @@ class Communication extends Model
          else {
             $communication["is_draft"] = 0;
          }
-         
+
          $communication->save();
 
          Communication::updateTargetStores($communication->id, $request);
@@ -226,7 +226,7 @@ class Communication extends Model
       {
          $target_stores = $request['target_stores'];
          $allStores = $request['allStores'];
-         
+
          if (!( $target_stores == '' && $allStores == 'on' )) {
              CommunicationTarget::where('communication_id', $id)->delete();
              if (count($target_stores) > 0) {
@@ -235,11 +235,11 @@ class Communication extends Model
                         'communication_id'   => $id,
                         'store_id'           => $store
                      ]);
-               
-                  } 
-             }            
+
+                  }
+             }
          }
-         
+
          return;
       }
 
@@ -301,7 +301,7 @@ class Communication extends Model
       public static function getPackageDetails($id)
       {
          $communication_package_list = CommunicationPackage::where('communication_id', $id)->get();
-         
+
          $packages = [];
          foreach ($communication_package_list as $list_item) {
             $package = Package::find($list_item->package_id);
@@ -325,7 +325,7 @@ class Communication extends Model
                ]);
             }
          }
-         
+
          return;
       }
 
@@ -359,8 +359,8 @@ class Communication extends Model
          $communicationCount = DB::table('communications_target')
             ->join('communications', 'communications_target.communication_id', '=', 'communications.id')
             ->where('store_id', $storeNumber)
-            ->count();     
-         return $communicationCount;    
+            ->count();
+         return $communicationCount;
       }
 
       public static function getActiveCommunicationCountByCategory($storeNumber, $categoryId)
@@ -375,7 +375,7 @@ class Communication extends Model
             ->where('communications.archive_at', '>=', $now)
             ->count();
          return $count;
-      } 
+      }
 
       public static function getAllCommunicationCountByCategory($storeNumber, $categoryId)
       {
@@ -385,7 +385,36 @@ class Communication extends Model
             ->where('communications.communication_type_id', $categoryId)
             ->count();
          return $count;
-      }       
+      }
+
+      public static function getActiveCommunicationsForStoreList($storeNumbersArray)
+      {
+         $now = Carbon::now()->toDatetimeString();
+         $communications = Communication::join('communications_target', 'communications_target.communication_id' ,  '=', 'communications.id')
+                                       ->whereIn('communications_target.store_id', $storeNumbersArray)
+                                       ->where('communications.send_at' , '<=', $now)
+                                       ->where('communications.archive_at', '>=', $now)
+                                       ->whereNull('communications.deleted_at')
+                                       ->whereNull('communications_target.deleted_at')
+                                       ->select('communications.*', 'communications_target.store_id')
+                                       ->get()
+                                       ->toArray();
+         $compiledComm = [];
+
+         foreach ($communications as $communication) {
+            $index = array_search($communication['id'], array_column($compiledComm, 'id'));
+            if(  $index !== false ){
+               array_push($compiledComm[$index]->stores, $communication["store_id"]);
+            }
+            else{
+
+               $communication["stores"] = [];
+               array_push( $communication["stores"] , $communication["store_id"]);
+               array_push( $compiledComm , (object) $communication);
+            }
+         }
+         return (object)($compiledComm);
+      }
 
       public static function getCommunicationCategoryName($id)
       {
@@ -395,7 +424,7 @@ class Communication extends Model
       public static function getCommunicationCategoryColour($id)
       {
          return CommunicationType::where('id', $id)->first()->colour;
-      }    
+      }
 
 
       public static function hasAttachments($id)
@@ -405,10 +434,10 @@ class Communication extends Model
 
          if( count($hasAttachments)>0 || count($hasPackages) >0 ){
             return true;
-         } 
+         }
 
          return false;
-      } 
+      }
 
      public static function truncateHtml($text, $length = 100, $ending = '...', $exact = false, $considerHtml = true) {
          if ($considerHtml) {

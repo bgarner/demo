@@ -10,7 +10,7 @@ use App\Models\Document\DocumentPackage;
 use Carbon\Carbon;
 use App\Models\Tag\Tag;
 use App\Models\Tag\ContentTag;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use DB;
 use App\Models\Alert\Alert;
 use App\Models\Utility\Utility;

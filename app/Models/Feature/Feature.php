@@ -4,7 +4,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Feature\FeatureDocument;
 use App\Models\Feature\FeaturePackage;
 use App\Http\Requests;

@@ -12,13 +12,8 @@
 
     <link rel="stylesheet" type="text/css" media="all" href="/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" media="all" href="/fonts/font-awesome/css/font-awesome.css">
-
     <link rel="stylesheet" type="text/css" media="print" href="/css/print.css">
-    
     <link rel="stylesheet" type="text/css" media="screen" href="/css/plugins/sweetalert/sweetalert.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/plugins/fullcalendar/fullcalendar.css">
-    <link rel="stylesheet" type="text/css" media="print" href="/css/plugins/fullcalendar/fullcalendar.print.css">
-
     <link rel="stylesheet" type="text/css" media="screen" href="/css/animate.css">
     <link rel="stylesheet" type="text/css" media="screen" href="/css/app.css">
 
@@ -152,7 +147,7 @@
 
 
                 <li>
-                    <a href="/manager">
+                    <a href="/manager/logout">
                         <i class="fa fa-sign-out"></i> Log out
                     </a>
                 </li>
@@ -190,7 +185,7 @@
                         </div>
                         <div class="ibox-content">
                             <div class="team-members">
-                                <div class="circle sc"><span class="store-number">314</span><br /><span class="store-name">West Edmonton Mall</span></div>
+                                <a href=""><div class="circle sc"><span class="store-number">314</span><br /><span class="store-name">West Edmonton Mall</span></div></a>
                                 <div class="circle sc"><span class="store-number">314</span><br /><span class="store-name">West Edmonton Mall</span></div>
                                 <div class="circle sc"><span class="store-number">314</span><br /><span class="store-name">West Edmonton Mall</span></div>
                                 <div class="circle sc"><span class="store-number">314</span><br /><span class="store-name">West Edmonton Mall</span></div>

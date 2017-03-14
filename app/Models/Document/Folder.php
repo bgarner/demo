@@ -10,7 +10,7 @@ use App\Models\Document\FolderStructure;
 use App\Models\Tag\Tag;
 use App\Models\Tag\ContentTag;
 use Carbon\Carbon;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use DB;
 use App\Models\Dashboard\Quicklinks;
 use Illuminate\Database\Eloquent\SoftDeletes;
