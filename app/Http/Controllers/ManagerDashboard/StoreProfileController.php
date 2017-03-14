@@ -7,9 +7,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\StoreInfo;
-use App\Models\ManagerDashboard\ManagerDashboard;
+use App\Models\Communication\Communication;
+use App\Models\UrgentNotice\UrgentNotice;
+use App\Models\Alert\Alert;
+use App\Models\Analytics\Analytics;
+use App\Models\ProductLaunch\ProductLaunch;
 
-class ManagerDashboardController extends Controller
+class StoreProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,10 +22,7 @@ class ManagerDashboardController extends Controller
      */
     public function index()
     {
-        //$stores = ManagerDashboard::compileDashboardDataByRegionId(3);
-        $region = StoreInfo::getStoresByRegionGroupedByDistrict(3);
-        return view('manager.dashboard')
-            ->with('region', $region);
+
     }
 
     /**
@@ -42,7 +43,7 @@ class ManagerDashboardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -53,7 +54,32 @@ class ManagerDashboardController extends Controller
      */
     public function show($id)
     {
-        
+        $urgentNotices = [];
+        $alerts = [];
+
+        $urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($id);
+        if($urgentNoticeCount > 0){
+            $urgentNotices = UrgentNotice::getActiveUrgentNoticesByStore($id);
+        }
+        $alertCount = Alert::getActiveAlertCountByStore($id);
+        if($alertCount > 0){
+            $alerts = Alert::getActiveAlertsByStore($id);
+        }
+        $productLaunches = ProductLaunch::getActiveProductLaunchByStore($id);
+        $communications = Communication::getActiveCommunicationsByStoreNumber($id);
+        $storeInfo = StoreInfo::getStoreInfoByStoreId($id);
+        $activities = Analytics::getLastXActivitiesByStore($id);
+        $launches = ProductLaunch::getActiveProductLaunchByStore($id);
+        return view('manager.storeprofile')
+            ->with("storeInfo", $storeInfo)
+            ->with("urgentNoticeCount", $urgentNoticeCount)
+            ->with("urgentNotices", $urgentNotices)
+            ->with("alertCount", $alertCount)
+            ->with("alerts", $alerts)
+            ->with("productLaunches", $productLaunches)
+            ->with("communications", $communications)
+            ->with("launches", $launches)
+            ->with("activities", $activities);
     }
 
     /**

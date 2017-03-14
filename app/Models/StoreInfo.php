@@ -10,10 +10,10 @@ use App\Models\Auth\Resource\Resource;
 
 class StoreInfo extends Model
 {
-    
+
     public static function getStoreListing($banner_id)
     {
-    	
+
         $storeInfo = StoreInfo::getStoresInfo($banner_id);
         $storelist = StoreInfo::buildStoreList($storeInfo);
         return $storelist;
@@ -73,7 +73,7 @@ class StoreInfo extends Model
         foreach ($storeInfo as $store) {
                 $storelist[$store->store_number] = $store->store_id . " " . $store->name;
         }
-        return $storelist;  
+        return $storelist;
     }
 
     public static function getStoresByDistrictId($id)
@@ -88,6 +88,14 @@ class StoreInfo extends Model
         return $storeList;
     }
 
+    public static function getStoresByRegionGroupedByDistrict($id)
+    {
+        $storeAPI = env('STORE_API_DOMAIN', false);
+        $districtInfoJson = file_get_contents( $storeAPI . "/region/" . $id );
+        $districtInfo = json_decode($districtInfoJson);
+        return $districtInfo;
+    }
+
     public static function getStoresByRegionId($id)
     {
         $storeAPI = env('STORE_API_DOMAIN', false);
@@ -97,8 +105,8 @@ class StoreInfo extends Model
         foreach ($districtInfo as $district) {
             $stores = $district->stores;
             foreach($stores as $store){
-                array_push($storeList, $store->store_number);    
-            }            
+                array_push($storeList, $store->store_number);
+            }
         }
         return $storeList;
     }

@@ -3746,14 +3746,22 @@ code {
   border-style: solid solid none;
   border-width: 3px 0 0;
   color: inherit;
-  margin-bottom: 0;
+  margin-bottom: 0px;
   /*padding: 14px 15px 7px;*/
   /*padding: 4px 20px 1px;*/
   padding: 5px 20px 3px;
-  min-height: 20px;
+  /*min-height: 20px;*/
+  min-height: 48px;
 }
 
-.ibox-title h2{ font-size: 18px; font-weight: 500; }
+.ibox-title h2{
+    font-size: 18px;
+    font-weight: 500;
+    /*border: thin solid lime;*/
+    float: left;
+    position: relative;
+
+}
 
 body.adminview .ibox-title{
     padding: 14px 15px 7px !important;
@@ -3775,6 +3783,7 @@ body.adminview .ibox-title h5{
   border-image: none;
   border-style: solid solid none;
   border-width: 1px 0px;
+  clear: both;
 }
 .ibox-footer {
   color: inherit;

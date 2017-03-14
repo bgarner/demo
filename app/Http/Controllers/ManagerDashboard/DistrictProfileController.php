@@ -6,10 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\StoreInfo;
-use App\Models\ManagerDashboard\ManagerDashboard;
 
-class ManagerDashboardController extends Controller
+class DistrictProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,10 +16,7 @@ class ManagerDashboardController extends Controller
      */
     public function index()
     {
-        //$stores = ManagerDashboard::compileDashboardDataByRegionId(3);
-        $region = StoreInfo::getStoresByRegionGroupedByDistrict(3);
-        return view('manager.dashboard')
-            ->with('region', $region);
+        //
     }
 
     /**
@@ -53,7 +48,7 @@ class ManagerDashboardController extends Controller
      */
     public function show($id)
     {
-        
+        //
     }
 
     /**
