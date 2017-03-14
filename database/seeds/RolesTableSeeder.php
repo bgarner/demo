@@ -6,9 +6,10 @@ class RolesTableSeeder extends Seeder
 {
     
     private $roles = [
-    	[ 'role_name' => 'dm' ],
-    	[ 'role_name' => 'avp' ],
-		[ 'role_name' => 'exec' ]
+        [ 'role_name' => 'Store Manager'],
+    	[ 'role_name' => 'District Manager' ],
+    	[ 'role_name' => 'AVP' ],
+		[ 'role_name' => 'Exec' ]
 
     ];
     /**

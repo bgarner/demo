@@ -4,20 +4,20 @@ namespace App\Models\Auth\Group;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Auth\Group\GroupComponent;
+use App\Models\Auth\Group\GroupRole;
 
 class Group extends Model
 {
-    protected $table = 'user_groups';
+    protected $table = 'groups';
     protected $fillable = ['name'];
 
     public static function createGroup($request)
     {
     	$group = Group::create([
                 'name' => $request['group_name']
-                // 'banner_id' => $request['banner_id']
 
             ]);
-    	GroupComponent::createComponentGroupPivotWithGroupId($group, $request);
+    	GroupRole::createRoleGroupPivotWithGroupId($group, $request);
     	return;
 
     }
@@ -27,18 +27,18 @@ class Group extends Model
     	$group = Group::find($id);
     	$group['name'] = $request['group_name'];
     	$group->save();
-    	GroupComponent::editComponentGroupPivotByGroupId($request, $id);
+        GroupRole::editRoleGroupPivotByGroupId($request, $id);
     	return $group;
     }
 
 	public static function deleteGroup($id)
 	{
-		GroupComponent::where('group_id', $id)->delete();
+		GroupRole::where('group_id', $id)->delete();
         Group::find($id)->delete();
 		
 	}    
 
-    public static function getGroupList($banner_id)
+    public static function getGroupList()
     {
     	return Group::all()->lists('name', 'id');
     }
@@ -46,7 +46,17 @@ class Group extends Model
     public static function getGroupDetails()
     {
         return Group::all()->each(function($group){
-            $group->components = GroupComponent::getComponentNameListByGroupId($group->id);
+
+            $group->roles = GroupRole::getRoleNameListByGroupId($group->id);
+
         });
+    }
+
+    public static function getGroupNamesList()
+    {
+        $defaultSelection = [''=>'Select one'];
+        $group_names = $defaultSelection + Group::all()->lists('name', 'id')->toArray();
+        return $group_names;
+
     }
 }

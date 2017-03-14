@@ -5,7 +5,8 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use App\Models\Auth\Component\Component;
-use App\Models\Auth\Group\GroupComponent;
+use App\Models\Auth\Role\RoleComponent;
+use App\Models\Auth\User\UserRole;
 
 class SuperadminAuthenticate
 {
@@ -40,13 +41,13 @@ class SuperadminAuthenticate
         $controllerAction = $request->route()->getActionName();
         $controller = preg_split('/@/',  $controllerAction)[0];
         
-        // $controllerComponentMap = config('app.controllerComponentMap');
         $componentName = config('app.controllerComponentMap')[$controller];
         $component_id = Component::getComponentIdByComponentName($componentName);
 
-        $group_ids = GroupComponent::getGroupListByComponentId($component_id);
+        $role_ids = RoleComponent::getRoleListByComponentId($component_id);
+        $role_id = UserRole::where('user_id', $this->user->id)->first()->role_id;
 
-        if(! in_array($this->user->group_id, $group_ids)) {
+        if(! in_array($role_id, $role_ids)) {
 
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);

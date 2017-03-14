@@ -21,17 +21,25 @@ class RoleResource extends Model
     	$resourceType = $resources[0]->resource_type;
     	$districtNamesList = [];
 
+        if ( $resourceType == 'store') {
+            $districtNamesList = StoreInfo::getStoreNamesList();
+            foreach ($resources as $resource) {
+               $resource->resource_name = $resource['resource_id'] . " - " . $districtNamesList[$resource['resource_id']];
+            }
+        }
     	if ( $resourceType == 'district') {
     		$districtNamesList = StoreInfo::getDistrictNamesList();
     	}
     	if ( $resourceType == 'region') {
     		$districtNamesList = StoreInfo::getRegionNamesList();
     	}
-        if($resourceType == 'region' || $resourceType == 'district'){
+        if($resourceType == 'region' || $resourceType == 'district' ){
             foreach ($resources as $resource) {
 		  	   $resource->resource_name = $districtNamesList[$resource['resource_id']];
     		}
         }
+
+
     	
     	return $resources;
     }

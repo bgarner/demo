@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Auth\User\User;
 use App\Models\Banner;
 use App\Models\StoreInfo;
-use App\Models\Auth\User\UserGroup;
+use App\Models\Auth\Group\Group;
 use App\Models\Auth\User\UserBanner;
 use App\Models\Auth\User\UserSelectedBanner;
 
@@ -62,7 +62,7 @@ class UserAdminController extends Controller
 
         $banners_list = Banner::all()->lists('name', 'id');
 
-        $groups = UserGroup::getGroupNamesList();
+        $groups = Group::getGroupNamesList();
         $district_name_list = StoreInfo::getDistrictNamesList();
         $region_name_list = StoreInfo::getRegionNamesList();
 
@@ -119,7 +119,7 @@ class UserAdminController extends Controller
         $selected_banner_ids = UserBanner::where('user_id', $id)->get()->pluck('banner_id');
         $selected_banners = Banner::findMany($selected_banner_ids)->pluck('id')->toArray();
 
-        $groups = UserGroup::lists('name', 'id');
+        $groups = Group::lists('name', 'id');
         
         return view('superadmin.user.edit')->with('user', $user)
                                             ->with('banners', $banners)

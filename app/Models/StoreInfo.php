@@ -103,6 +103,18 @@ class StoreInfo extends Model
         return $storeList;
     }
 
+    public static function getStoreNamesList()
+    {
+        $storeAPI = env('STORE_API_DOMAIN', false);
+        $storeInfoJson = file_get_contents( $storeAPI . "/stores");
+        $storeInfo = json_decode($storeInfoJson);
+        $storeList = [];
+        foreach ($storeInfo as $store) {
+            $storeList[$store->store_id] = $store->name;
+        }
+        return $storeList;   
+    }
+
     public static function getDistrictNamesList()
     {
         $storeAPI = env('STORE_API_DOMAIN', false);
