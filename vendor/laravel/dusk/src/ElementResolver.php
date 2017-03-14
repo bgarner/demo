@@ -255,7 +255,7 @@ class ElementResolver
      */
     protected function findById($selector)
     {
-        if (Str::startsWith($selector, '#')) {
+        if (preg_match('/^#[\w\-]+$/', $selector)) {
             return $this->driver->findElement(WebDriverBy::id(substr($selector, 1)));
         }
     }
@@ -302,6 +302,10 @@ class ElementResolver
      */
     public function findOrFail($selector)
     {
+        if (! is_null($element = $this->findById($selector))) {
+            return $element;
+        }
+
         return $this->driver->findElement(
             WebDriverBy::cssSelector($this->format($selector))
         );
@@ -334,8 +338,12 @@ class ElementResolver
      */
     public function format($selector)
     {
+        $sortedElements = collect($this->elements)->sortByDesc(function($element, $key){
+            return strlen($key);
+        })->toArray();
+
         $selector = str_replace(
-            array_keys($this->elements), array_values($this->elements), $selector
+            array_keys($sortedElements), array_values($sortedElements), $selector
         );
 
         return trim($this->prefix.' '.$selector);

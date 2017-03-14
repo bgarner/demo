@@ -42,18 +42,54 @@ class InstallCommand extends Command
         }
 
         if (! is_dir(base_path('tests/Browser/screenshots'))) {
-            mkdir(base_path('tests/Browser/screenshots'), 0755, true);
+            $this->createScreenshotsDirectory();
         }
 
-        copy(__DIR__.'/../../stubs/ExampleTest.php', base_path('tests/Browser/ExampleTest.php'));
-        copy(__DIR__.'/../../stubs/HomePage.php', base_path('tests/Browser/Pages/HomePage.php'));
-        copy(__DIR__.'/../../stubs/DuskTestCase.php', base_path('tests/DuskTestCase.php'));
-        copy(__DIR__.'/../../stubs/Page.php', base_path('tests/Browser/Pages/Page.php'));
+        if (! is_dir(base_path('tests/Browser/console'))) {
+            $this->createConsoleDirectory();
+        }
+
+        $subs = [
+            'ExampleTest.stub' => base_path('tests/Browser/ExampleTest.php'),
+            'HomePage.stub' => base_path('tests/Browser/Pages/HomePage.php'),
+            'DuskTestCase.stub' => base_path('tests/DuskTestCase.php'),
+            'Page.stub' => base_path('tests/Browser/Pages/Page.php'),
+        ];
+
+        foreach ($subs as $stub => $file) {
+            if (! is_file($file)) {
+                copy(__DIR__.'/../../stubs/'.$stub, $file);
+            }
+        }
+
+        $this->info('Dusk scaffolding installed successfully.');
+    }
+
+    /**
+     * Create the screenshots directory.
+     *
+     * @return void
+     */
+    protected function createScreenshotsDirectory()
+    {
+        mkdir(base_path('tests/Browser/screenshots'), 0755, true);
 
         file_put_contents(base_path('tests/Browser/screenshots/.gitignore'), '*
 !.gitignore
 ');
+    }
 
-        $this->info('Dusk scaffolding installed successfully.');
+    /**
+     * Create the console directory.
+     *
+     * @return void
+     */
+    protected function createConsoleDirectory()
+    {
+        mkdir(base_path('tests/Browser/console'), 0755, true);
+
+        file_put_contents(base_path('tests/Browser/console/.gitignore'), '*
+!.gitignore
+');
     }
 }
