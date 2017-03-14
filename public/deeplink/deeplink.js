@@ -6,6 +6,10 @@ $( document ).ready(function() {
     var urlParams = new URLSearchParams(window.location.search);
     var storeNum = urlParams.get('store');
 
+    if(storeNum.length < 4){
+        storeNum = "0"+storeNum;
+    }
+
     var store = (function () {
         $.ajax({
             'async': false,

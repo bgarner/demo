@@ -32,7 +32,11 @@ class PHPUnit_Runner_Version
         }
 
         if (self::$version === null) {
+<<<<<<< HEAD
             $version       = new Version('5.7.15', dirname(dirname(__DIR__)));
+=======
+            $version       = new Version('4.8.35', dirname(dirname(__DIR__)));
+>>>>>>> origin/develop
             self::$version = $version->getVersion();
         }
 
