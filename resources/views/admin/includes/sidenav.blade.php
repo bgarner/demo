@@ -21,8 +21,8 @@
             F
         </div>
     </li>
-
-    @foreach($groupComponents as $component)
+    
+    @foreach($roleComponents as $component)
 
         <?php 
         $component = preg_replace('/\s+/', '', $component);

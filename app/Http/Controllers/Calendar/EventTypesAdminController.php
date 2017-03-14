@@ -11,8 +11,8 @@ use App\Models\Event\Event;
 use App\Models\Event\EventType;
 
 use App\Models\Banner;
-use App\Models\UserBanner;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 
 class EventTypesAdminController extends Controller
 {

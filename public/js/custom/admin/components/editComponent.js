@@ -11,7 +11,7 @@ $(document).on('click','.component-edit',function(){
 
   	var component_name = $("#component_name").val();
   	var component_id = $("#componentID").val();
-    var groups  = $("#groups").val();
+    var roles  = $("#roles").val();
 	
     if(component_name == '') {
 		swal("Oops!", "This event needs a title.", "error"); 
@@ -29,7 +29,7 @@ $(document).on('click','.component-edit',function(){
 		    data: {
 		    	id: component_id,
 		  		component_name: component_name,
-		    	groups : groups
+		    	roles : roles
 		    },
 
 		    success: function(data) {

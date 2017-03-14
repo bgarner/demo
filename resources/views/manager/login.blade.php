@@ -247,12 +247,13 @@
             <h3>Manager Login</h3>
 
             <p></p>
-            <form class="m-t" role="form" action="index.html">
+            <form class="m-t" role="form" method="POST" action="{{ url('/manager/login') }}" autocomplete="off">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="form-group">
-                    <input type="email" class="form-control" placeholder="Username" required="">
+                    <input type="email" name="email" class="form-control" placeholder="Username" required="">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Password" required="">
+                    <input type="password" name="password" class="form-control" placeholder="Password" required="">
                 </div>
                 <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
 

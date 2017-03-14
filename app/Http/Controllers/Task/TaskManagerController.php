@@ -1,13 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\ManagerDashboard;
+namespace App\Http\Controllers\Task;
 
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\StoreInfo;
+use App\Models\Task\Task;
+use App\Models\Task\TaskTarget;
+use App\Models\Task\TaskStoreStatus;
 
-class ManagerLoginController extends Controller
+class TaskManagerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +20,12 @@ class ManagerLoginController extends Controller
      */
     public function index()
     {
-        return view('manager.login');
+        
+        $user_id = \Auth::user()->id;
+        $storeList = StoreInfo::getStoreListingByManagerId($user_id);
+        $tasks = Task::getActiveTasksByUserId($user_id);
+        return view('manager.task.index')->with('tasks', $tasks)
+                                        ->with('stores', $storeList);
     }
 
     /**
@@ -37,7 +46,7 @@ class ManagerLoginController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Task::createTask($request);
     }
 
     /**
@@ -59,7 +68,12 @@ class ManagerLoginController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user_id = \Auth::user()->id;
+        $task = Task::find($id);
+        $task["stores"] = TaskTarget::where('task_id', $id)->get()->pluck('store_id')->toArray();
+        $storeList = StoreInfo::getStoreListingByManagerId($user_id);
+        return view('manager.task.edit')->with('task', $task)
+                                        ->with('stores', $storeList);
     }
 
     /**
@@ -71,7 +85,9 @@ class ManagerLoginController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Task::updateTask($id, $request);
+        return redirect('/manager/task/');
+
     }
 
     /**
@@ -82,6 +98,6 @@ class ManagerLoginController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Task::deleteTask($id);
     }
 }

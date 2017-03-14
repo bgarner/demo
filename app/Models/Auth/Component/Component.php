@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models\Auth;
+namespace App\Models\Auth\Component;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Auth\GroupComponent;
+use App\Models\Auth\Role\RoleComponent;
 
 class Component extends Model
 {
@@ -17,7 +17,7 @@ class Component extends Model
                 'banner_id' => $request['banner_id']
 
             ]);
-    	GroupComponent::createComponentGroupPivotWithComponentId($component, $request);
+    	RoleComponent::createRoleComponentPivotWithComponentId($component, $request);
     	return;
 
     }
@@ -27,14 +27,14 @@ class Component extends Model
     	$component = Component::find($id);
     	$component['component_name'] = $request['component_name'];
     	$component->save();
-    	GroupComponent::editComponentGroupPivotBycomponentId($request, $id);
+    	RoleComponent::editRoleComponentPivotByComponentId($request, $id);
     	return $component;
     }
 
 	public static function deleteComponent($id)
 	{
 		Component::find($id)->delete();
-		GroupComponent::where('component_id', $id)->delete();
+		RoleComponent::where('component_id', $id)->delete();
 	}    
 
 	public static function getComponentList($banner_id)
@@ -46,7 +46,7 @@ class Component extends Model
     public static function getComponentDetails()
     {
         return Component::all()->each(function($component){
-            $component->groups = GroupComponent::getGroupNameListBycomponentId($component->id);
+            $component->roles = RoleComponent::getRoleNameListByComponentId($component->id);
         });
     }
 

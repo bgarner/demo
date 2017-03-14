@@ -18,9 +18,15 @@ Route::pattern('id', '[0-9]+');
 Route::post('/clicktrack', 'Analytics\AnalyticsController@store');
 
 //AUTHENTICATION
-Route::get('/admin/login', 'Auth\AuthController@getLogin');
-Route::post('/admin/login', 'Auth\AuthController@postLogin');
-Route::get('/admin/logout', 'Auth\AuthController@getLogout');
+Route::get('/admin/login', 'Auth\AdminAuthController@getLogin');
+Route::post('/admin/login', 'Auth\AdminAuthController@postLogin');
+Route::get('/admin/logout', 'Auth\AdminAuthController@getLogout');
+
+Route::get('/manager/login', 'Auth\ManagerAuthController@getLogin');
+Route::post('/manager/login', 'Auth\ManagerAuthController@postLogin');
+Route::get('/manager/logout', 'Auth\ManagerAuthController@getLogout');
+
+
 
 //ALERTS
 Route::get('/{storeno}/alerts', array('uses' => 'Alert\AlertController@index'));
@@ -55,10 +61,12 @@ Route::get('/{storeno}/feature/show/{id}', 'Feature\FeatureController@show');
 //FOLDER - SHOW CONTENT
 Route::get('/{storeno}/folder/{id}', ['uses' => 'Document\FolderController@show']);
 
+
 //MANAGER DASHBOARD
 Route::get('/manager', ['uses' => 'ManagerDashboard\ManagerLoginController@index']);
 Route::get('/manager/dashboard', ['uses' => 'ManagerDashboard\ManagerDashboardController@index']);
 Route::get('/manager/store/{storeno}', 'ManagerDashboard\StoreProfileController@show');
+
 
 //SEARCH
 Route::get('/{storeno}/search', array('uses' => 'Search\SearchController@index'));
@@ -161,6 +169,7 @@ Route::resource('/admin/quicklink', 'Dashboard\QuicklinksAdminController');
 Route::resource('/admin/urgentnotice', 'UrgentNotice\UrgentNoticeAdminController');
 
 Route::resource('/admin/alert', 'Alert\AlertAdminController' );
+
 //Users
 Route::resource('/admin/user', 'User\UserAdminController');
 
@@ -189,15 +198,38 @@ Route::resource('/utilities/ckeditorimages', 'Utilities\CkeditorImageController'
 Route::resource('/admin/feedback' , 'StoreFeedback\FeedbackAdminController');
 Route::resource('/admin/feedback/{id}/note' , 'StoreFeedback\NotesAdminController');
 
+//Tasks
+Route::resource('/admin/task', 'Task\TaskAdminController');
+Route::get('/admin/task/{task_id}/documents', 'Task\TaskDocumentController@show');
+
 //User Groups and Sections
 Route::resource('/admin/group', 'Auth\GroupAdminController');
 Route::resource('/admin/component', 'Auth\ComponentAdminController');
+
+//User Groups
+Route::resource('/admin/group', 'Auth\Group\GroupAdminController');
+Route::get('/admin/group/{id}/roles', 'Auth\Group\GroupRoleAdminController@show');
+
+//User Roles
+Route::resource('/admin/role', 'Auth\Role\RoleAdminController');
+Route::get('/admin/role/{id}/resources', 'Auth\Role\RoleResourceAdminController@show');
+
+// Role Resources
+
+//Components
+Route::resource('/admin/component', 'Auth\Component\ComponentAdminController');
+
 
 //Product Launch
 Route::get('/admin/productlaunch', 'Calendar\ProductLaunchAdminController@index');
 Route::get('/admin/productlaunch/create', 'Calendar\ProductLaunchAdminController@create');
 Route::post('/admin/productlaunch', 'Calendar\ProductLaunchAdminController@store');
 Route::get('admin/productlaunch/add-meta-data', 'Calendar\ProductLaunchAdminController@edit');
+
+
+
+/* Manager Routes */
+Route::resource('/manager/task', 'Task\TaskManagerController');
 
 
 /* API Routes */

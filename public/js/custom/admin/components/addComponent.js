@@ -9,7 +9,7 @@ $(document).on('click','.component-create',function(){
   	var hasError = false;
 
     var component_name = $("#component_name").val();
-    var groups =  $("#groups").val();
+    var roles =  $("#roles").val();
     var bannerId = localStorage.getItem('admin-banner-id');
 
 
@@ -25,7 +25,7 @@ $(document).on('click','.component-create',function(){
 		$.ajax({
 		    url: '/admin/component',
 		    type: 'POST',
-		    data: { component_name: component_name, groups: groups, banner_id: bannerId },
+		    data: { component_name: component_name, roles: roles, banner_id: bannerId },
 		    success: function(result) {
 		        console.log(result);
 		        $("#section").val(""); // empty the form

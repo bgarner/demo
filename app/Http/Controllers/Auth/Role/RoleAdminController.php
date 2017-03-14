@@ -1,20 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth\Role;
 
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Auth\Group;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\Group\Group;
+use App\Models\Auth\Role\Role;
+use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Banner;
-use App\Models\Auth\Component;
-use App\Models\Auth\GroupComponent;
+use App\Models\Auth\Component\Component;
+use App\Models\Auth\Group\GroupRole;
+use App\Models\Auth\Role\RoleComponent;
 
-class GroupAdminController extends Controller
+class RoleAdminController extends Controller
 {
-    
     public function __construct()
     {
         $this->middleware('admin.auth');
@@ -30,10 +31,10 @@ class GroupAdminController extends Controller
      */
     public function index()
     {
-        $groups =  Group::getGroupDetails();
+        $roles =  Role::getRoleDetails();
         $banner = UserSelectedBanner::getBanner();
         $banners = Banner::all();
-        return view('admin.groups.index')->with('groups', $groups)
+        return view('admin.roles.index')->with('roles', $roles)
                         ->with('banners', $banners)
                         ->with('banner', $banner);
     }
@@ -45,12 +46,13 @@ class GroupAdminController extends Controller
      */
     public function create()
     {
-        
         $banner = UserSelectedBanner::getBanner();
         $banners = Banner::all();
+        $groups = Group::getGroupList();
         $components = Component::getComponentList($banner->id);
-        return view('admin.groups.create')->with('banner', $banner)
+        return view('admin.roles.create')->with('banner', $banner)
                                             ->with('banners', $banners)
+                                            ->with('groups', $groups)
                                             ->with('components', $components);
     }
 
@@ -62,8 +64,8 @@ class GroupAdminController extends Controller
      */
     public function store(Request $request)
     {
-        $group = Group::createGroup($request);
-        return  $group;
+        $role = Role::createRole($request);
+        return  $role;
     }
 
     /**
@@ -85,16 +87,19 @@ class GroupAdminController extends Controller
      */
     public function edit($id)
     {
-        
         $banner = UserSelectedBanner::getBanner();
         $banners = Banner::all();
-        $group = Group::find($id);
+        $role = Role::find($id);
+        $groups = Group::getGroupList($banner->id);
         $components = Component::getComponentList($banner->id);
-        $selected_components = GroupComponent::getComponentListByGroupId($id);
-        return view('admin.groups.edit')->with('banners', $banners)
+        $selected_groups = GroupRole::getGroupListByRoleId($id);
+        $selected_components = RoleComponent::getComponentListByRoleId($id);
+        return view('admin.roles.edit')->with('banners', $banners)
                                         ->with('banner', $banner)
+                                        ->with('role', $role)
+                                        ->with('groups', $groups)
                                         ->with('components', $components)
-                                        ->with('group', $group)
+                                        ->with('selected_groups', $selected_groups)
                                         ->with('selected_components', $selected_components);
     }
 
@@ -107,7 +112,7 @@ class GroupAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return Group::editGroup($request, $id);
+        return Role::editRole($request, $id);
     }
 
     /**
@@ -118,6 +123,6 @@ class GroupAdminController extends Controller
      */
     public function destroy($id)
     {
-        Group::deleteGroup($id);
+        Role::deleteRole($id);
     }
 }

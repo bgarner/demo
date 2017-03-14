@@ -16,7 +16,7 @@ use App\Models\Communication\CommunicationPackage;
 use App\Models\Communication\CommunicationType;
 use App\Models\Tag\Tag;
 use App\Models\Tag\ContentTag;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Communication\CommunicationTarget;
 
 class CommunicationAdminController extends Controller
