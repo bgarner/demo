@@ -8,23 +8,35 @@ use App\Models\UserSelectedBanner;
 
 class StoreInfo extends Model
 {
+    
     public static function getStoreListing($banner_id)
     {
     	
-  		$storeAPI = env('STORE_API_DOMAIN', false);
-        $storeInfoJson = file_get_contents( $storeAPI . "/banner/" . $banner_id);
-        $storeInfo = json_decode($storeInfoJson);
+        $storeInfo = StoreInfo::getStoresInfo($banner_id);
         $storelist = StoreInfo::buildStoreList($storeInfo);
         return $storelist;
     }
 
-    public static function buildStoreList($storeInfo)
+    public static function getComboStoreList($banner_id)
     {
-    	$storelist = [];
-    	foreach ($storeInfo as $store) {
-    			$storelist[$store->store_number] = $store->id . " " . $store->name;
-    	}
-    	return $storelist;	
+        $storeInfo = StoreInfo::getStoresInfo($banner_id);
+        $comboStoreList = [];
+        foreach ($storeInfo as $store) {
+            if($store->is_combo_store == 1) {
+                $comboStoreList[$store->store_id] = $store->store_number;
+            }
+        }
+
+        return $comboStoreList;
+    }
+
+
+    public static function getStoresInfo($banner_id)
+    {
+        $storeAPI = env('STORE_API_DOMAIN', false);
+        $storeInfoJson = file_get_contents( $storeAPI . "/banner/" . $banner_id);
+        $storeInfo = json_decode($storeInfoJson);
+        return $storeInfo;
     }
 
     public static function getStoreInfoByStoreId($store_id)
@@ -33,5 +45,33 @@ class StoreInfo extends Model
         $storeInfoJson = file_get_contents( $storeAPI . "/store/" . $store_id);
         $storeInfo = json_decode($storeInfoJson);
         return $storeInfo;
+    }
+
+    public static function getAllStoreNumbers()
+    {
+        $storeAPI = env('STORE_API_DOMAIN', false);
+        $storeInfoJson = file_get_contents( $storeAPI . "/storenumbers");
+        $storeInfo = json_decode($storeInfoJson);
+        $storelist = [];
+        foreach ($storeInfo as $store) {
+                $storelist[$store->store_number] = $store->store_id;
+        }
+        uksort($storelist, function($a, $b) {
+           if (is_numeric($a) && is_numeric($b)) return $a - $b;
+           else if (is_numeric($a)) return -1;
+           else if (is_numeric($b)) return 1;
+           return strcmp($a, $b);
+        });
+        \Log::info(print_r($storelist, true));
+        return $storelist;
+    }
+
+    public static function buildStoreList($storeInfo)
+    {
+        $storelist = [];
+        foreach ($storeInfo as $store) {
+                $storelist[$store->store_number] = $store->store_id . " " . $store->name;
+        }
+        return $storelist;  
     }
 }

@@ -49,7 +49,7 @@ $("#add-more-folders").on('click', function(){
 	$("#folder-listing").modal('show');
 })
 
-$(".remove-file").on('click', function(){
+$("body").on('click', ".remove-file", function(){
 	var document_id = $(this).attr('data-document-id');
 	$(this).parent().fadeOut(200);
 	$("#files-staged-to-remove").append('<div class="remove_document"  data-documentid='+ document_id +'>')
@@ -72,7 +72,7 @@ $("body").on('click', ".remove-staged-folder", function(){
 
 });
 
-$(".remove-folder").on('click', function(){
+$("body").on('click', ".remove-folder", function(){
 	var folder_id = $(this).attr('data-folder-id');
 	console.log(folder_id);
 	$(this).parent().fadeOut(200);
@@ -206,6 +206,17 @@ $(".package-update").on('click', function(){
 		    }
 		}).done(function(response){
 			console.log(response);
+			$(".existing-files-container").load("/admin/packagedocuments/"+packageID);
+			$(".existing-folders-container").load("/admin/packagefolders/"+packageID);
+
+			$("#files-staged-to-remove").empty();
+ 			$("#files-selected").empty();
+ 			$("#document-listing").find(".document-checkbox").prop('checked', false);
+
+ 			$("#folders-staged-to-remove").empty();
+ 			$("#folders-selected").empty();
+ 			$("#folder-listing").find(".folder-checkbox").prop('checked', false);
+ 			$("#folder-listing").find(".folder-checkbox").removeAttr('data-folderroot');
 		});    	
     }
 

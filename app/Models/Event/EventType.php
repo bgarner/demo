@@ -22,4 +22,10 @@ class EventType extends Model
     	$v = new EventTypeValidator();
 		return $v->validate($validateThis);
     }
+
+    public static function getName($id)
+    {   
+        $event_type = EventType::find($id);
+        return $event_type->event_type;
+    }
 }

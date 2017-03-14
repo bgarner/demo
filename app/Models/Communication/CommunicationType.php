@@ -12,20 +12,33 @@ class CommunicationType extends Model
     protected $dates = ['deleted_at'];
     protected $fillable = ['communication_type', 'banner_id', 'colour'];
 
-    public static function getCommunicationTypeCount($storeNumber)
+    public static function getCommunicationTypeCount($storeNumber, $storeBanner)
     {
-    	$communicationTypes = CommunicationType::all();
-    	 foreach($communicationTypes as $ct){
-            $ct->count = Communication::getActiveCommunicationCountByCategory($storeNumber, $ct->id);
+    	$communicationTypes = CommunicationType::where('banner_id', $storeBanner)->get();
+    	foreach($communicationTypes as $key=>$ct){
+
+            $count = Communication::getActiveCommunicationCountByCategory($storeNumber, $ct->id);
+            if($count > 0) {
+                $ct->count = $count;
+            }
+            else{
+                $communicationTypes->forget($key);
+            }
         }
         return $communicationTypes;	
     }
 
-    public static function getCommunicationTypeCountAllMessages($storeNumber)
+    public static function getCommunicationTypeCountAllMessages($storeNumber, $storeBanner)
     {
-        $communicationTypes = CommunicationType::all();
-         foreach($communicationTypes as $ct){
-            $ct->count = Communication::getAllCommunicationCountByCategory($storeNumber, $ct->id);
+        $communicationTypes = CommunicationType::where('banner_id', $storeBanner)->get();
+         foreach($communicationTypes as $key=>$ct){
+            $count = Communication::getAllCommunicationCountByCategory($storeNumber, $ct->id);
+            if($count > 0) {
+                $ct->count = $count;
+            }
+            else{
+                $communicationTypes->forget($key);
+            }
         }
         return $communicationTypes; 
     }    

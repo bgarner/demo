@@ -11,6 +11,7 @@ use App\Models\UserSelectedBanner;
 use App\Models\Utility\Utility;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Validation\PackageValidator;
+use Carbon\Carbon;
 
 class Package extends Model
 {
@@ -108,12 +109,17 @@ class Package extends Model
     	return $packages;
     }
 
-    public static function getPackageDetails($id)
+    public static function getPackageDetails($id, $forStores = null)
     {
         $package = Package::find($id);
-        $package["package_documents"] = Package::getPackageDocumentDetails($id);
-        $package["package_folders"] = Package::getPackageFolderDetails($id);
-        
+        if($forStores) {
+            $package["package_documents"] = Package::getPackageDocumentDetails($id, true);
+        }
+        else{
+            $package["package_documents"] = Package::getPackageDocumentDetails($id);
+        }
+
+        $package["package_folders"] = Package::getPackageFolderDetails($id);    
         
         $tree = Array();
 
@@ -126,23 +132,36 @@ class Package extends Model
         return $package;
     }
 
-    public static function getPackageDocumentDetails($id)
+    public static function getPackageDocumentDetails($id, $forStores = null)
     {
+        $now = Carbon::now()->toDatetimeString();
 
-    	$document_package_list = DocumentPackage::where('package_id', $id)->get();
-    	$documents = [];
-    	foreach ($document_package_list as $list_item) {
-    		$document = Document::where('id', $list_item->document_id)->first();
-    		$path = Document::getFolderPathForDocument($document->id); 
-    		$document["folder_path"] = $path;
-            $document->link = Utility::getModalLink($document->filename, $document->title, $document->original_extension, 0);
-            $document->link_with_icon = Utility::getModalLink($document->filename, $document->title, $document->original_extension, 1);
-            $document->icon = Utility::getIcon($document->original_extension);
-            $document->prettyDate = Utility::prettifyDate($document->start);
-            $document->since = Utility::getTimePastSinceDate($document->start);
-    		array_push($documents, $document);
-    	}
-    	return ( $documents );
+
+
+        $query = DocumentPackage::join('documents', 'document_package.document_id', '=', 'documents.id')
+                                    ->where('document_package.package_id', $id);
+        
+        if($forStores) {
+            $query->where('documents.start', '<=', $now )
+                ->where(function($query) use ($now) {
+                    $query->where('documents.end', '>=', $now)
+                        ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+                });
+        }
+
+
+                                   
+        $documents = $query->select('documents.*')
+                            ->get()
+                            ->each(function($document){
+                                $document["folder_path"] = Document::getFolderPathForDocument($document->id);
+                                $document->link = Utility::getModalLink($document->filename, $document->title, $document->original_extension, 0);
+                                $document->link_with_icon = Utility::getModalLink($document->filename, $document->title, $document->original_extension, 1);
+                                $document->icon = Utility::getIcon($document->original_extension);
+                                $document->prettyDate = Utility::prettifyDate($document->start);
+                                $document->since = Utility::getTimePastSinceDate($document->start);
+                            });
+        return $documents;  
     }
 
     public static function updatepackage(Request $request, $id)

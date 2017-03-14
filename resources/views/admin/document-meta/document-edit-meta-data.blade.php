@@ -86,9 +86,9 @@
                                       <div class="col-sm-10">
                                           <div class="input-daterange input-group" id="datepicker">
                                               
-                                              <input type="text" class="input-sm form-control" name="document_start" id="document_start" value="{{$document->start}}" />
+                                              <input type="text" class="input-sm form-control datetimepicker-start" name="document_start" id="document_start" value="{{$document->start}}" />
                                               <span class="input-group-addon">to</span>
-                                              <input type="text" class="input-sm form-control" name="document_end" id="document_end" value="{{$document->end}}" />
+                                              <input type="text" class="input-sm form-control datetimepicker-end" name="document_end" id="document_end" value="{{$document->end}}" />
                                               
                                           </div>
                                       </div>
@@ -184,6 +184,8 @@
 
           @include('admin.includes.scripts')
 
+          <script src="/js/custom/datetimepicker.js"></script>
+          
         <script type="text/javascript">
           $.ajaxSetup({
                 headers: {
@@ -197,15 +199,16 @@
             $(".chosen").chosen({
               width:'75%'
             });
-            $('.input-daterange').datepicker({
-                format: 'yyyy-mm-dd',
-                keyboardNavigation: false,
-                forceParse: false,
-                autoclose: true
-            });             
+            // $('.input-daterange').datepicker({
+            //     format: 'yyyy-mm-dd',
+            //     keyboardNavigation: false,
+            //     forceParse: false,
+            //     autoclose: true
+            // });             
 
         </script>
         <script type="text/javascript" src="/js/custom/admin/alerts/createAlert.js"></script>
+        <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
         @include('site.includes.bugreport')
 
 

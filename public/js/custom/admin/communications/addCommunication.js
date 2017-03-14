@@ -22,6 +22,8 @@ $("#allStores").change(function(){
 	}
 });
 
+
+
 $("#add-documents").click(function(){
 	$("#document-listing").modal('show');
 });
@@ -53,12 +55,14 @@ $('body').on('click', '#attach-selected-packages', function(){
 	});
 });
 
+
+
 $(document).on('click','.communication-create',function(){
   	
   	var hasError = false;
  
 	var subject = $("#subject").val();
-	var communication_type_id = $("input:radio[name='communication_type']:checked").val();
+	var communication_type_id = $("input[name='communication_type']").val();
 	var body = CKEDITOR.instances['body'].getData();
 	var start = $("#send_at").val();
 	var end = $("#archive_at").val();
@@ -70,13 +74,11 @@ $(document).on('click','.communication-create',function(){
 	var communication_documents = [];
 	var allStores  = $("allStores:checked").val();
 
-	console.log(target_stores);
-	console.log(allStores);
 	console.log(communication_type_id);
 	if(!communication_type_id){
-		communication_type_id = 1; // no category
+		communication_type_id = $("#default_communication_type").val(); // no category
+
 	}
-	console.log(communication_type_id);
 
 	$(".selected-files").each(function(){
 		communication_documents.push($(this).attr('data-fileid'));
@@ -126,7 +128,6 @@ $(document).on('click','.communication-create',function(){
 		  		
 		    },
 		    success: function(result) {
-		        console.log(result);
 		        if(result.validation_result == 'false') {
 		        	var errors = result.errors;
 		        	if(errors.hasOwnProperty("subject")) {
@@ -166,12 +167,22 @@ $(document).on('click','.communication-create',function(){
 		        }
 		        else{
 		        	$('#createNewCommunicationForm')[0].reset(); // empty the form
-					swal("Nice!", "'" + subject +"' has been created", "success");        
+		        	swal({
+		        		title : 'Nice!',
+		        		text : subject + " has been created",
+		        		type : 'success',
+
+		        	},
+		        	function(){
+		        		window.location.reload();
+		        	})
+					// swal("Nice!", "'" + subject +"' has been created", "success");        
 		        }
 		        
 		    }
 		}).done(function(response){
-			//console.log(response);
+			$(".search-field").find('input').val('');
+			processStorePaste();
 		});    	
     }
 

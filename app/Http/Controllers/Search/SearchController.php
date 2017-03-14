@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Search;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Request as RequestFacade; 
+use Illuminate\Support\Facades\Request as RequestFacade;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -15,6 +15,7 @@ use App\Models\Utility\Utility;
 use App\Models\Search\Search;
 use App\Models\Communication\Communication;
 use App\Models\Alert\Alert;
+use App\Models\Banner;
 
 class SearchController extends Controller
 {
@@ -30,24 +31,30 @@ class SearchController extends Controller
         $store = RequestFacade::segment(1);
 
         $alertCount = Alert::getActiveAlertCountByStore($store);
-        $communicationCount = Communication::getActiveCommunicationCount($store); 
-        
+        $communicationCount = Communication::getActiveCommunicationCount($store);
+
         $docs = [];
         $folders = [];
         $communications = [];
         $alerts = [];
+        $events = [];
+        $videos = [];
 
+        $query = ltrim(rtrim($query));
         if ( isset($query) && ($query != '')){
             $docs = Search::searchDocuments($query, $store);
             $folders = Search::searchFolders($query);
             $communications = Search::searchCommunications($query, $store);
             $alerts = Search::searchAlerts($query, $store);
+            $events = Search::searchEvents($query, $store);
+            $videos = Search::searchVideos($query);
 
             if( isset($request['archives']) && $request['archives'])
             {
                 $docs = $docs->merge(Search::searchArchivedDocuments($query, $store));
                 $communications = $communications->merge(Search::searchArchivedCommunications($query, $store));
                 $alerts = $alerts->merge(Search::searchArchivedAlerts($query, $store));
+                $events = $events->merge(Search::searchArchivedEvents($query, $store));
             }
         }
 
@@ -56,6 +63,10 @@ class SearchController extends Controller
         $storeInfo = StoreInfo::getStoreInfoByStoreId($storeNumber);
 
         $storeBanner = $storeInfo->banner_id;
+
+        $banner = Banner::find($storeBanner);
+
+        $isComboStore = $storeInfo->is_combo_store;
 
         $skin = Skin::getSkin($storeBanner);
 
@@ -68,8 +79,12 @@ class SearchController extends Controller
             ->with('folders', $folders)
             ->with('communications', $communications)
             ->with('alerts', $alerts)
+            ->with('events', $events)
+            ->with('videos', $videos)
             ->with('communicationCount', $communicationCount)
-            ->with('alertCount', $alertCount)               
+            ->with('isComboStore', $isComboStore)
+            ->with('banner', $banner)
+            ->with('alertCount', $alertCount)
             ->with('query', $query)
             ->with('archives', $request['archives']);
     }

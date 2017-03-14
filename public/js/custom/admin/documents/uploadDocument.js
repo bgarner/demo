@@ -109,15 +109,7 @@ myDropzone.on('removedfile', function(file) {
     $('#actions .cancel').addClass('disabled');
   }
 });
-
-
-$('.input-daterange').datepicker({
-    format: 'yyyy-mm-dd',
-    keyboardNavigation: false,
-    forceParse: false,
-    autoclose: true
-});  
-               
+        
 
 $(document).ready(function() {
 

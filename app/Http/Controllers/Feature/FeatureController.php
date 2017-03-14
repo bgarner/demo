@@ -12,13 +12,16 @@ use App\Models\Notification\Notification;
 use App\Skin;
 use App\Models\Feature\FeatureDocument;
 use App\Models\Feature\FeaturePackage;
+use App\Models\Feature\FeatureCommunication;
 use App\Models\Communication\Communication;
+use App\Models\Communication\CommunicationTarget;
 use App\Models\Document\Document;
 use App\Models\Document\Package;
 use App\Models\StoreInfo;
 use App\Models\UrgentNotice\UrgentNotice;
 use App\Models\Alert\Alert;
 use App\Models\Utility\Utility;
+use App\Models\Banner;
 
 class FeatureController extends Controller
 {
@@ -73,39 +76,28 @@ class FeatureController extends Controller
 
         $storeBanner = $storeInfo->banner_id;
 
+        $banner = Banner::find($storeBanner);
+
+        $isComboStore = $storeInfo->is_combo_store;
+
         $skin = Skin::getSkin($storeBanner);
 
         $id = $request->id;		
 
         $feature = Feature::where('id', $id)->first();
 
-        $feature_documents = FeatureDocument::where('feature_id', $id)->get()->pluck('document_id');
-        $selected_documents = array();
-        foreach ($feature_documents as $doc_id) {
-            
-            $doc                = Document::find($doc_id);
-            $doc->folder_path   = Document::getFolderPathForDocument($doc_id);
-            $doc->link          = Utility::getModalLink($doc->filename, $doc->title, $doc->original_extension, 0);
-            $doc->link_with_icon= Utility::getModalLink($doc->filename, $doc->title, $doc->original_extension, 1);
-            $doc->icon          = Utility::getIcon($doc->original_extension);
+        $selected_documents = FeatureDocument::getFeaturedDocuments($feature->id, $storeNumber);
 
-            $doc->prettyDate = Utility::prettifyDate($doc->updated_at);
-            $doc->since = Utility::getTimePastSinceDate($doc->updated_at);
-            array_push($selected_documents, $doc );
-        }
+        $selected_packages = FeaturePackage::getFeaturePackages($feature->id);
         
-        $feature_packages = FeaturePackage::where('feature_id', $id)->orderBy('order')->get()->pluck('package_id');
-        $selected_packages = [];
-        foreach ($feature_packages as $package_id) {
-            $package = Package::find($package_id);
-            $package_details = Package::getPackageDetails($package_id);
-            $package['details'] = $package_details;
-            array_push($selected_packages, $package);
+        $feature_communcation_type_id = FeatureCommunication::getCommunicationTypeId($id);
 
-        }
+        $feature_communcations = CommunicationTarget::getTargetedCommunicationsByCategory($storeNumber, $feature_communcation_type_id);
 
-		$notifications = Notification::getNotificationsByFeature($storeInfo->banner_id, $feature->update_type_id, $feature->update_frequency, $feature->id);
+		$notifications = Notification::getNotificationsByFeature($feature->id, $storeNumber);
+
         $urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($storeNumber);
+
         return view('site.feature.index')
             ->with('skin', $skin)
             ->with('urgentNoticeCount', $urgentNoticeCount)
@@ -115,7 +107,10 @@ class FeatureController extends Controller
             ->with('feature', $feature)
             ->with('feature_documents', $selected_documents)
             ->with('feature_packages', $selected_packages)
-            ->with('urgentNoticeCount', $urgentNoticeCount);
+            ->with('feature_communcations', $feature_communcations)
+            ->with('urgentNoticeCount', $urgentNoticeCount)
+            ->with('banner', $banner)
+            ->with('isComboStore', $isComboStore);
     }
 
     /**

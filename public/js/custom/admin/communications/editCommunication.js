@@ -22,6 +22,7 @@ $("#allStores").change(function(){
 	}
 });
 
+
 $("#add-documents").click(function(){
 	$("#document-listing").modal('show');
 });
@@ -32,7 +33,6 @@ $("#add-packages").click(function(){
 
 
 $('body').on('click', '#attach-selected-files', function(){
-	console.log('i am here');
 	$(".selected-files").remove();
 	$('input[name^="package_files"]').each(function(){
 		if($(this).is(":checked")){
@@ -46,7 +46,7 @@ $('body').on('click', '#attach-selected-files', function(){
 });
 
 
-$(".remove-file").on('click', function(){
+$('body').on('click', ".remove-file", function(){
 	var document_id = $(this).attr('data-document-id');
 	$(this).parent().fadeOut(200);
 	$("#files-staged-to-remove").append('<div class="remove_document"  data-documentid='+ document_id +'>')
@@ -68,7 +68,7 @@ $(document).on('click','.communication-update',function(){
  	var communicationId = $("#communicationId").val();
  	
  	var subject = $("#subject").val();
-	var communication_type_id = $("input:radio[name='communication_type']:checked").val();
+	var communication_type_id = $("input[name='communication_type']").val();
 	var body = CKEDITOR.instances['body'].getData();
 	var start = $("#send_at").val();
 	var end = $("#archive_at").val();
@@ -76,8 +76,7 @@ $(document).on('click','.communication-update',function(){
 	var target_stores  = $("#storeSelect").val();
 	var allStores  = $("#allStores:checked").val();
 
-	console.log(allStores);
-	console.log(target_stores);
+	console.log(communication_type_id);
 	
 	var importance = "1";
 	var sender = "";
@@ -200,6 +199,10 @@ $(document).on('click','.communication-update',function(){
 		    }
 		}).done(function(response){
 			console.log(response);
+			$(".existing-files-container").load("/admin/communicationdocuments/"+communicationId);
+			$("#files-staged-to-remove").empty();
+			$("#files-selected").empty();
+			$("#document-listing").find(".document-checkbox").prop('checked', false);
 		});    	
     }
 

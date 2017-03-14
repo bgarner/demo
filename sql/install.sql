@@ -1,16 +1,3 @@
-/*
- Navicat MySQL Data Transfer
-
- Source Server         : true-local
- Source Server Version : 50625
- Source Host           : localhost
- Source Database       : fglportal
-
- Target Server Version : 50625
- File Encoding         : utf-8
-
- Date: 04/19/2016 09:44:36 AM
-*/
 
 SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
@@ -192,7 +179,7 @@ CREATE TABLE `users` (
 --  Records of `users`
 -- ----------------------------
 BEGIN;
-INSERT INTO `users` VALUES ('3', 'Brent', 'Garner', 'brent.garner@fglsports.com', '$2y$10$BGSXvZRXl9LCtcscaK288u9WpzzFv3O79lttw6/hDAf3n.y4l3B/m', '2', '', '1', '1', '1', '0000-00-00 00:00:00', 'Q5xHJOhMtJuyp6466sE08gVm29ijKXZabZdlO9ONW7iRyfv0E9NVEYHpAYSm', '0000-00-00 00:00:00', '2016-04-07 15:42:48');
+INSERT INTO `users` VALUES ('3', 'Brent', 'Garner', 'brent.garner@fglsports.com', '$2y$10$BGSXvZRXl9LCtcscaK288u9WpzzFv3O79lttw6/hDAf3n.y4l3B/m', '1', '', '1', '1', '1', '0000-00-00 00:00:00', 'Q5xHJOhMtJuyp6466sE08gVm29ijKXZabZdlO9ONW7iRyfv0E9NVEYHpAYSm', '0000-00-00 00:00:00', '2016-04-07 15:42:48'), ('4', 'Muhammad', 'Gagan', 'Muhammad.Gagan@fglsports.com', '$2y$10$ssP6iKRQX6SMevNqBaOZFOYkhceWZ2O83Mt0./EeFFClc76yNE.ZW', '2', '', '1', '1', '1', '0000-00-00 00:00:00', null, '2016-05-02 13:13:26', '2016-05-02 13:13:26');
 COMMIT;
 
 -- ----------------------------

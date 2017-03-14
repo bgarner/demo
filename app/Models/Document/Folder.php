@@ -16,6 +16,8 @@ use App\Models\Dashboard\Quicklinks;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Document\GlobalFolder;
 use App\Models\Validation\FolderValidator;
+use App\Models\Document\FolderPackage;
+use App\Models\UrgentNotice\UrgentNoticeAttachment;
 
 class Folder extends Model
 {
@@ -146,6 +148,14 @@ class Folder extends Model
 
         GlobalFolder::where('folder_id', $folder_id)->where('folder_type', 'folder')->delete();
 
+        
+        //delete from packages
+        FolderPackage::where('folder_id', $id)->delete();
+
+        //delete from urgent notices
+        UrgentNoticeAttachment::deleteAttachment($id, 'Folder');
+
+        //delete from Quicklink
         $quicklink = Quicklinks::where('url', $id)->where('type', 1)->first();
         if ($quicklink) {
             $quicklink->delete();

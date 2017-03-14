@@ -77,7 +77,7 @@
 											<td></td>
 										</tr>
 										@foreach($communicationtypes as $ct)
-											@if($ct->id !="1") 
+											@if ( ($banner->id == 1 && $ct->id !="1")  || ($banner->id == 2 && $ct->id !="2") )
 										<tr>
 
 

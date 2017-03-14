@@ -54,7 +54,7 @@
 		                        </div>
 		                        <div class="ibox-content">
 
-                                    <form method="get" class="form-horizontal">
+                                    <form method="get" class="form-horizontal" autocomplete="off">
                                         <input type="hidden" name="userId" id="userId" value="{{ $user->id }}">
                                          
                                         <div class="form-group"><label class="col-sm-2 control-label">Name</label>

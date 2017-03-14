@@ -1,6 +1,6 @@
 <div class="modal inmodal" id="fileviewmodal" tabindex="-1" role="document" aria-hidden="true" style="display: none;">
 
-    <i class="fa fa-times-circle-o pull-right" data-dismiss="modal" style="font-size: 40px !important; color: #fff; cursor: pointer; padding: 20px;"></i>
+    <i class="fa fa-times-circle-o pull-right" id="dismissmodal" data-dismiss="modal" style="font-size: 40px !important; color: #fff; cursor: pointer; padding: 20px;"></i>
 
     <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -14,7 +14,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="modal inmodal" id="videomodal" tabindex="-1" role="video" aria-hidden="true" style="display: none;">
 
@@ -70,6 +69,7 @@
     </div>
 </div>
 
+
 <div class="modal inmodal" id="bugreportmodal" tabindex="-1" role="event" aria-hidden="true" style="display: none;">
 
     <div class="modal-dialog">
@@ -77,8 +77,8 @@
 
             <div class="modal-header clearfix">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                <i class="fa fa-bug modal-icon"></i>
-                <h4 class="modal-title">Report a Bug</h4>
+                <i class="fa fa-comment-o modal-icon"></i>
+                <h4 class="modal-title">Feedback</h4>
   <!--               <small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small> -->
             </div>
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Request as RequestFacade; 
+use Illuminate\Support\Facades\Request as RequestFacade;
 use DB;
 
 use App\Http\Requests;
@@ -26,6 +26,7 @@ use App\Models\UrgentNotice\UrgentNotice;
 use App\Models\Alert\Alert;
 use App\Skin;
 use App\Models\StoreInfo;
+use App\Models\Video\Video;
 
 class DashboardController extends Controller
 {
@@ -37,12 +38,14 @@ class DashboardController extends Controller
 
         $storeInfo = StoreInfo::getStoreInfoByStoreId($storeNumber);
 
+        $isComboStore = $storeInfo->is_combo_store;
+
         $storeBanner = $storeInfo->banner_id;
 
         $banner = Banner::find($storeBanner);
-    
+
         $skin = Skin::getSkin($storeBanner);
-        
+
         $features = Feature::getActiveFeatureByBannerId($storeBanner);
 
         $quicklinks = Quicklinks::getLinks($storeBanner, $storeNumber);
@@ -56,7 +59,9 @@ class DashboardController extends Controller
         $alertCount = Alert::getActiveAlertCountByStore($storeNumber);
 
         $communications = Communication::getActiveCommunicationsByStoreNumber($storeNumber, 3);
-    
+
+        $featuredVideo = Video::getFeaturedVideo();
+
         return view('site.dashboard.index')
             ->with('banner', $banner)
             ->with('skin', $skin)
@@ -66,7 +71,9 @@ class DashboardController extends Controller
             ->with('communications', $communications)
             ->with('features', $features)
             ->with('notifications', $notifications)
-            ->with('urgentNoticeCount', $urgentNoticeCount);
+            ->with('urgentNoticeCount', $urgentNoticeCount)
+            ->with('featuredVideo', $featuredVideo)
+            ->with('isComboStore', $isComboStore);
     }
 
 

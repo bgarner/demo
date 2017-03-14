@@ -30,13 +30,15 @@
 
 <div class="wrapper wrapper-content">
         <div class="row">
-            <div class="col-lg-2">
+            <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
 
             @include('site.communications.commsidebar')
 
             </div>
 
-<div class="col-lg-10 animated fadeInRight">
+            
+            <div class="col-lg-10 col-md-9 col-sm-8 col-xs-8 animated fadeInRight printable">
+
             <div class="mail-box-header">
 
                 <h2>
@@ -203,6 +205,12 @@
                    $(this).attr('href', href.replace(/&?archives=\d+/, ''));
                 });                                 
             }
+
+            $(".inline-folder-link").click(function(){
+                var folderId = $(this).data('folderid');
+                var storeNumber = localStorage.getItem('userStoreNumber');
+                window.location = "/"+storeNumber+"/document#!/"+folderId;
+            });
         });
 
  

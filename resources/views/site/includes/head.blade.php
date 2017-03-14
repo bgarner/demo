@@ -4,15 +4,20 @@
 
     <title> @yield('title') </title>
 
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/fonts/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" media="all" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="all" href="/fonts/font-awesome/css/font-awesome.css">
 
-    <link rel="stylesheet" type="text/css" href="/css/plugins/sweetalert/sweetalert.css">
-    <link rel="stylesheet" type="text/css" href="/css/plugins/fullcalendar/fullcalendar.css">
-    <link rel="stylesheet" type="text/css" href="/css/plugins/fullcalendar/fullcalendar.print.css" media='print'>
+    <link rel="stylesheet" type="text/css" media="print" href="/css/print.css">
+    
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/plugins/sweetalert/sweetalert.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/plugins/fullcalendar/fullcalendar.css">
+    <link rel="stylesheet" type="text/css" media="print" href="/css/plugins/fullcalendar/fullcalendar.print.css">
 
-    <link rel="stylesheet" type="text/css" href="/css/animate.css">
-    <link rel="stylesheet" type="text/css" href="/css/app.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/animate.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/app.css">
+
+    
+
 
     @unless ( Request::is('admin') || Request::is('admin/*') )
     {!! $skin !!}

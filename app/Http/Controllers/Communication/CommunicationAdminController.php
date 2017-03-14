@@ -57,7 +57,8 @@ class CommunicationAdminController extends Controller
         $banner = UserSelectedBanner::getBanner();
         $banners = Banner::all();
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
-        $communicationTypes = CommunicationType::all();
+        $communicationTypes = CommunicationType::where('banner_id', $banner->id)->get();
+        
         $packages = Package::where('banner_id',$banner->id)->get();
         $storeList = StoreInfo::getStoreListing($banner->id);
         return view('admin.communication.create')->with('banner', $banner)
@@ -123,7 +124,7 @@ class CommunicationAdminController extends Controller
         $communication = Communication::find($id);
         $communication_documents  = Communication::getDocumentDetails($id);
         $communication_packages  = Communication::getPackageDetails($id);
-        $communicationTypes = CommunicationType::all();
+        $communicationTypes = CommunicationType::where('banner_id', $banner->id)->get();
         
         $communication_target_stores = CommunicationTarget::where('communication_id', $id)->get()->pluck('store_id')->toArray();
         $storeList = StoreInfo::getStoreListing($banner->id);

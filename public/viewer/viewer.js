@@ -333,6 +333,9 @@ var PDFViewerApplication = {
     var canvas = document.createElement('canvas');
     var value = 'mozPrintCallback' in canvas;
 
+    //going to put a hack here to always send true: we need to always show the print button
+    value = true;
+    
     return PDFJS.shadow(this, 'supportsPrinting', value);
   },
 
@@ -1458,11 +1461,11 @@ function webViewerInitialized() {
   document.getElementById('presentationMode').addEventListener('click',
     SecondaryToolbar.presentationModeClick.bind(SecondaryToolbar));
 
-  document.getElementById('openFile').addEventListener('click',
-    SecondaryToolbar.openFileClick.bind(SecondaryToolbar));
+  // document.getElementById('openFile').addEventListener('click',
+  //   SecondaryToolbar.openFileClick.bind(SecondaryToolbar));
 
-  document.getElementById('print').addEventListener('click',
-    SecondaryToolbar.printClick.bind(SecondaryToolbar));
+  // document.getElementById('print').addEventListener('click',
+  //   SecondaryToolbar.printClick.bind(SecondaryToolbar));
 
   document.getElementById('download').addEventListener('click',
     SecondaryToolbar.downloadClick.bind(SecondaryToolbar));
@@ -1644,10 +1647,10 @@ window.addEventListener('updateviewarea', function (evt) {
       // unable to write to storage
     });
   });
-  var href =
-    PDFViewerApplication.pdfLinkService.getAnchorUrl(location.pdfOpenParams);
-  document.getElementById('viewBookmark').href = href;
-  document.getElementById('secondaryViewBookmark').href = href;
+  // var href =
+  //   PDFViewerApplication.pdfLinkService.getAnchorUrl(location.pdfOpenParams);
+  // document.getElementById('viewBookmark').href = href;
+  // document.getElementById('secondaryViewBookmark').href = href;
 
   // Update the current bookmark in the browsing history.
   PDFViewerApplication.pdfHistory.updateCurrentBookmark(location.pdfOpenParams,

@@ -92,7 +92,7 @@ var getFolderDocuments = function(global_folder_id, packageId) {
 $(".folder-item").on('click', function(e){
 	e.stopPropagation(e);
 	console.log($(e.target).find('i.indicator').first());
-	$(e.target).find('i.indicator').first().addClass('fa-folder-open');
+	// $(e.target).find('i.indicator').first().addClass('fa-folder-open');
 	var global_folder_id = $(this).attr('id');
 	var packageid = $(this).closest('.package-folder-listing').attr('data-packageid')
 	getFolderDocuments(global_folder_id, packageid);

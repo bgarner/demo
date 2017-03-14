@@ -16,15 +16,17 @@ class Utility extends Model
 			case "jpg":
 			case "gif":
 			case "bmp":
-				$icon = "<i class='fa fa-file-image-o'></i>";				
+				$icon = "<i class='fa fa-file-image-o'></i>";
 				break;
 
 			case "pdf":
+			case "PDF":
 				$icon = "<i class='fa fa-file-pdf-o'></i>";
 				break;
 
 			case "xls":
 			case "xlsx":
+			case "xlsm":
 				$icon = "<i class='fa fa-file-excel-o'></i>";
 				break;
 
@@ -58,10 +60,10 @@ class Utility extends Model
 			case "js":
 				$icon = "<i class='fa fa-file-code-o'></i>";
 				break;
-				
-			default: 
+
+			default:
 				$icon = "<i class='fa fa-file-o'></i>";
-				break;                                        	
+				break;
 		}
 		return $icon;
 	}
@@ -69,27 +71,29 @@ class Utility extends Model
 	public static function getModalLink($file, $anchortext, $extension, $id, $withIcon=null, $justAnchor=null)
 	{
 		if($withIcon){
-			$icon = Utility::getIcon($extension). " ";	
+			$icon = Utility::getIcon($extension). " ";
 		} else {
 			$icon = "";
 		}
-		
+
 		switch($extension){
 			case "png":
 			case "jpg":
 			case "gif":
-			case "bmp":				
+			case "bmp":
 				$class = 'launchImageViewer';
 				$modalTarget = '#imageviewmodal';
 				break;
 
 			case "pdf":
+			case "PDF":
 				$class = 'launchPDFViewer';
 				$modalTarget = '#fileviewmodal';
 				break;
 
 			case "xls":
 			case "xlsx":
+			case "xlsm":
 				$class = 'download';
 				$modalTarget = 'ExcelDownload';
 				break;
@@ -97,8 +101,9 @@ class Utility extends Model
 			case "mp4":
 			case "avi":
 			case "mov":
+			case "webm":
 				$class = 'launchVideoViewer';
-				$modalTarget = '#videomodal';			
+				$modalTarget = '#videomodal';
 				break;
 
 			case "doc":
@@ -128,25 +133,27 @@ class Utility extends Model
 				$class = 'newwindow';
 				$modalTarget = '#';
 				break;
-				
+
 			case "css":
-			case "js":				
-			default: 
+			case "js":
+			default:
 				$class = 'nolink';
 				$modalTarget = '#';
-				break;                                        	
+				break;
 		}
 
 		switch($class){
-
+			
 			case "launchImageViewer":
 				$link = '<a href="#">'.$icon.$anchortext.'</a>';
-				$anchorOnly = "<a href=''>";	
+				$anchorOnly = "<a href=''>";
 				break;
 
-			case  "launchPDFViewer":
+			case "launchPDFViewer":
 				$link = '<a href="#" class="launchPDFViewer trackclick" data-res-id="'.$id.'" data-toggle="modal" data-file="/viewer/?file=/files/'.$file.'" data-target="#fileviewmodal">'.$icon.$anchortext.'</a>';
-				$anchorOnly = '<a href="#" class="launchPDFViewer trackclick" data-res-id="'.$id.'" data-toggle="modal" data-file="/viewer/?file=/files/'.$file.'" data-target="#fileviewmodal">';	
+				$anchorOnly = '<a href="#" class="launchPDFViewer trackclick" data-res-id="'.$id.'" data-toggle="modal" data-file="/viewer/?file=/files/'.$file.'" data-target="#fileviewmodal">';
+				// $link = '<a href="#" class="launchPDFViewer trackclick" data-res-id="'.$id.'" data-toggle="modal" data-file="/files/'.$file.'" data-target="#fileviewmodal">'.$icon.$anchortext.'</a>';
+				// $anchorOnly = '<a href="#" class="launchPDFViewer trackclick" data-res-id="'.$id.'" data-toggle="modal" data-file="/viewer/?file=/files/'.$file.'" data-target="#fileviewmodal">';
 				break;
 
 			case "launchVideoViewer":
@@ -162,7 +169,7 @@ class Utility extends Model
 			case "newwindow":
 				$link = '<a href="/files/'.$file.'" class="trackclick" target="_blank">'.$icon.$anchortext.'</a>';
 				$anchorOnly = '<a href="/files/'.$file.'" class="trackclick" target="_blank">';
-				break;	
+				break;
 
 			case "nolink":
 				$link = '<a href="#">'.$icon.$anchortext.'</a>';
@@ -177,7 +184,7 @@ class Utility extends Model
 		if($justAnchor){
 			return $anchorOnly;
 		}
-						
+
 		return $link;
 	}
 

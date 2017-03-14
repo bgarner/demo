@@ -7,23 +7,6 @@ body{
 	margin: 20px 0px;
 }
 
-/*.nav > li.active{
-	border-left: 4px solid #F1CA00 !important;
-    background: #7F9A82 !important;
-}
-
-.metismenu > li a:hover{
-	border-left: 4px solid #F1CA00 !important;
-    background: #7F9A82 !important;
-}
-*/
-.navbar-minimalize{
-	background-color: #14380C !important;
-	border: #14380C;
-}
-
-
-
 .metismenu > li.active{
 	border: none !important;
 }
@@ -42,7 +25,6 @@ body{
 	border-left: 4px solid #F1CA00 !important;
 }
 
-
 .metismenu > li a:hover{
 	border-left: 4px solid #F1CA00 !important;	
 	background: #7F9A82 !important;
@@ -50,6 +32,30 @@ body{
 
 .metismenu > li.active a:hover{
 	border-left: none;
+}
+
+.metismenu li.urgetnNoticeNav {
+	border: none !important;
+	background-color: #F1CA00; 
+	color: white;
+}
+
+.metismenu li.urgetnNoticeNav a{
+	border: none !important;
+}
+
+.nav-second-level li a{
+	font-weight: normal !important;
+	color: #fff;
+}
+
+.nav-second-level:after{
+	display: none !important;
+}
+
+.navbar-minimalize{
+	background-color: #14380C !important;
+	border: #14380C;
 }
 
 .metismenu .label-primary{
@@ -72,3 +78,14 @@ body{
 	background: transparent url('/images/2B2B2B-0.6.png') top left repeat;
 
 }
+
+.product-box{ padding: 1px !important; margin: 10px !important; height: 168px; width: 168px; float: left;}
+
+body.mini-navbar .logo-element {
+  background:  #14380C;
+}
+
+/*body.mini-navbar .nav-header{
+	background: #14380C url('/images/skin/atmo.png') top center no-repeat !important;
+	margin: 20px 0px;
+}*/

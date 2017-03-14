@@ -31,6 +31,8 @@ class UrgentNoticeController extends Controller
         $storeNumber = RequestFacade::segment(1);
         $storeInfo = StoreInfo::getStoreInfoByStoreId($storeNumber);
         $storeBanner = $storeInfo->banner_id;
+        $banner = Banner::find($storeBanner);
+        $isComboStore = $storeInfo->is_combo_store;
         $skin = Skin::getSkin($storeBanner);
 
         $urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($storeNumber);
@@ -39,7 +41,9 @@ class UrgentNoticeController extends Controller
         return view('site.urgentnotices.index')
             ->with('skin', $skin)
             ->with('urgentNoticeCount', $urgentNoticeCount)
-            ->with('notices', $urgentNotices);      
+            ->with('notices', $urgentNotices)
+            ->with('banner', $banner)
+            ->with('isComboStore', $isComboStore);      
     }
 
     /**
@@ -74,6 +78,8 @@ class UrgentNoticeController extends Controller
         $storeNumber = RequestFacade::segment(1);
         $storeInfo = StoreInfo::getStoreInfoByStoreId($storeNumber);
         $storeBanner = $storeInfo->banner_id;
+        $banner = Banner::find($storeBanner);
+        $isComboStore = $storeInfo->is_combo_store;
 
         $skin = Skin::getSkin($storeBanner);
 
@@ -133,7 +139,9 @@ class UrgentNoticeController extends Controller
             ->with('urgentNoticeCount', $urgentNoticeCount)
             ->with('attached_folders', $attached_folders)
             ->with('attached_documents', $attached_documents)
-            ->with('attachment_types', $attachment_types);
+            ->with('attachment_types', $attachment_types)
+            ->with('banner', $banner)
+            ->with('isComboStore', $isComboStore);
     }
 
     /**

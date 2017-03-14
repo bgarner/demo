@@ -120,7 +120,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         
         \Log::info('******************');
         \Log::info('User profile update requested');
-        \Log::info( $request->all() );
+       // \Log::info( $request->all() );
+        \Log::info( $request['firstname'] . ' ' . $request['lastname'] . ' was updated.');
         \Log::info('IP address : ' . $request->server('HTTP_USER_AGENT'));
         \Log::info(\Request::getClientIp());
 
@@ -142,7 +143,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
         $validate = $v->validate($validateThis);
         if($validate['validation_result'] == 'false') {
-            \Log::info($validate);
+            \Log::info($validate);        
             return json_encode($validate);
         }
 
@@ -150,7 +151,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
         $user['firstname'] = $request['firstname'];
         $user['lastname']  = $request['lastname'];
-        $user['email']     = $request['email'];
         $user['group_id']  = intval($request['group']);
 
         if(isset($request['password']) && $request['password'] != ''){

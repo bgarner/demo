@@ -11,4 +11,10 @@ class FolderPackage extends Model
     protected $table = 'folder_package';
     protected $fillable = ['folder_id', 'package_id'];
     protected $dates = ['deleted_at'];
+
+
+    public static function getFolderArrayInPackage($package_id)
+    {
+    	return self::where('package_id', $package_id)->get()->pluck('folder_id')->toArray();
+    }
 }

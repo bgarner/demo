@@ -25,8 +25,9 @@
 
 @else
 	<li class="folder-item" id={{$folder["id"]}} data-isWeek = false>
-		<input type="checkbox" class="folder-checkbox" name = "package_folders[]" value = {{$folder["id"]}} data-folderid = {{$folder["id"]}} data-foldername = 
-		"{{$folder["label"]}}"> {{ $folder["label"] }} 
+
+		<input type="checkbox" class="folder-checkbox" name = "package_folders[]" value = {{$folder["id"]}} data-folderid = {{$folder["id"]}} data-foldername = "{{$folder["label"]}}"> {{ $folder["label"] }} 
+
 		<ul>
 		</ul>
 	</li>

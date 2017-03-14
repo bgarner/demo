@@ -8,9 +8,11 @@ use App\Models\Tag\ContentTag;
 use App\Models\Banner;
 use App\Models\UserBanner;
 use App\Models\UserSelectedBanner;
+use App\Models\Event\EventType;
 use Carbon\Carbon;
 use App\Models\Validation\EventValidator;
 use App\Models\Event\EventAttachment;
+use App\Models\Utility\Utility;
 
 class Event extends Model
 {
@@ -53,7 +55,7 @@ class Event extends Model
         $event = Event::create([
 
 
-    		    'banner_id' => $banner->id,
+    		'banner_id' => $banner->id,
             'title' => $request['title'],
             'event_type' => $request['event_type'],
             'description' => $desc,
@@ -131,8 +133,30 @@ class Event extends Model
       $events = Event::join('events_target', 'events.id', '=', 'events_target.event_id')
                         ->where('store_id', $store_id)
                         ->select('events.*')
+                        ->orderBy('start')
                         ->get();
       return $events;
+    }
+
+    public static function getActiveEventsByStoreAndMonth($store_id, $yearMonth)
+    {
+        $events = Event::join('events_target', 'events.id', '=', 'events_target.event_id')
+                    ->where('store_id', $store_id)
+                    ->where('start', 'LIKE', $yearMonth.'%')
+                    
+                    ->orderBy('start')
+                    ->get()
+                    ->each(function ($item) {
+                        $item->prettyDateStart = Utility::prettifyDate($item->start);
+                        $item->prettyDateEnd = Utility::prettifyDate($item->end);
+                        $item->since = Utility::getTimePastSinceDate($item->start);
+                        $item->event_type_name = EventType::getName($item->event_type);                        
+                    })
+                    ->groupBy(function($event) {
+                            return Carbon::parse($event->start)->format('Y-m-d');
+                    });
+                    
+        return $events;
     }
 
 }

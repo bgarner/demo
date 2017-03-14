@@ -28,6 +28,7 @@
 
 				$("#delete-folder").removeClass('hidden').addClass('visible');
 				$("#delete-folder").attr('data-folderId', data.folder.global_folder_id );
+
 				$("#folder-title").attr('data-isWeekFolder', true);
 			}	
 		}
@@ -51,6 +52,16 @@
 
 				$("#delete-folder").removeClass('hidden').addClass('visible');
 				$("#delete-folder").attr('data-folderId', data.folder.global_folder_id );
+
+				$("#copy-folder").removeClass('hidden').addClass('visible');
+				$("#copy-folder").attr('data-folderId', data.folder.global_folder_id );				
+				$("#copy-folder").attr('data-folderName', data.folder.name)
+				var folderPath = '';
+				$.each( data.folder.folder_path, function( index, value ){
+				    console.log(value);
+				    folderPath += value.name + "/";
+				});
+ 				$("#copy-folder").attr('data-folderPath', folderPath);
 				$("#folder-title").attr('data-isWeekFolder', false);
 			} else{
 
@@ -87,7 +98,9 @@
 												' <td>'+ i.prettyDateEnd +'</td>' +
 												' <td class="action"> '+
 													'<a class="btn btn-xs btn-primary" href="/admin/document/'+ i.id +'/edit"><i class="fa fa-pencil"></i></a> '+
+													'<button type="button" class="btn btn-xs btn-primary" id="copy-document" data-documentTitle="'+ i.title +'" data-documentName= "'+ i.filename +'" data-fileid="'+ i.id + '"><i class="fa fa-clipboard"></i></button> '+
 													'<a class="deleteFile btn btn-xs btn-danger" data-fileid="'+ i.id +'" id="file'+ i.id +'" ><i class="fa fa-trash"></i></a>'+
+
 												'</td> </tr>')
 				});
 				$('#file-table').append('</tbody>');

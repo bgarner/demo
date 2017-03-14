@@ -268,21 +268,21 @@ class Feature extends Model
     }
 
     //return ALL documents in a feature : independent documents , docs in packages included , docs in folders in package included
-    public static function getDocumentsIdsByFeatureId($id)
+    public static function getDocumentsIdsByFeatureId($id, $store_number)
     {
-        $feature_docs = FeatureDocument::where('feature_id', $id)->get()->pluck('document_id')->toArray();
+        $feature_docs = FeatureDocument::getFeaturedDocumentArray($id, $store_number);
         
-        $feature_packages = FeaturePackage::where('feature_id', $id)->get()->pluck('package_id')->toArray();
+        $feature_packages = FeaturePackage::getFeaturePackagesArray($id);
 
         $feature_folders = [];
         
         foreach ($feature_packages as $package_id) {
           
-          $package_docs =  DocumentPackage::where('package_id', $package_id )->get()->pluck('document_id')->toArray();
+          $package_docs =  DocumentPackage::getDocumentArrayInPackage($package_id, $store_number);
           $feature_docs = array_merge_recursive($feature_docs, $package_docs);
           unset($package_docs);
 
-          $package_folders = FolderPackage::where('package_id', $package_id)->get()->pluck('folder_id')->toArray();
+          $package_folders = FolderPackage::getFolderArrayInPackage($package_id);
           
 
           foreach ($package_folders as $folderTreeRootId) {
@@ -297,15 +297,15 @@ class Feature extends Model
           }
           
         }
-
+        
         foreach ($feature_folders as $folder_id) {
-          $docs = FileFolder::where('folder_id', $folder_id)->get()->pluck('document_id')->toArray();
+          $docs = FileFolder::getDocumentArrayInFolder($folder_id, $store_number);
           $feature_docs = array_merge_recursive($feature_docs, $docs);
         }
         $feature_docs = array_unique($feature_docs);
         
         return $feature_docs;
-
+        
 
     }
 
@@ -324,9 +324,23 @@ class Feature extends Model
 
     public static function deleteFeature($id)
     {
-      Feature::find($id)->delete();
-      FeaturePackage::where('feature_id', $id)->delete();
-      FeatureDocument::where('feature_id', $id)->delete();
-      return;
+        Feature::find($id)->delete();
+        FeaturePackage::where('feature_id', $id)->delete();
+        FeatureDocument::where('feature_id', $id)->delete();
+        return;
+    }
+
+    public static function getTopListedDocumentsByFeatureId($feature_id)
+    {
+        $documents =  FeatureDocument::join('documents', 'feature_document.document_id', '=', 'documents.id')
+                                    ->where('feature_id', $feature_id)->get();
+        return $documents; 
+    }
+
+    public static function getPackageDetailsByFeatureId($feature_id)
+    {
+        $packages = FeaturePackage::join('packages', 'feature_package.package_id', '=', 'packages.id')
+                                ->where('feature_package.feature_id', '=', $feature_id)->get();
+        return $packages;
     }
 }

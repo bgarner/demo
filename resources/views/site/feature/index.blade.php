@@ -153,6 +153,68 @@
 
                             </div>
                         </div>
+
+                        @if( count($feature_communcations) > 0 )
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="ibox float-e-margins">
+                                    <div class="ibox-title">
+                                        <h2>{{ $feature->title }} Communications </h2>
+                                    </div>
+                              
+                                    <div class="mail-box">
+                                        <table class="table table-hover table-mail">
+                                        <tbody>
+                                            @foreach($feature_communcations as $communication)
+
+                                            <?php $tr_class="" ?>
+                                            @if( $communication->is_read == 1)
+                                                <?php $tr_class = "unread";?>
+                                            @else
+                                                <?php $tr_class = "unread"; ?>
+                                            @endif
+
+                                            <?php $icon_class="fa fa-envelope-o" ?>
+                                            @if($communication->archived)
+                                                <?php $tr_class .= " archived"; ?>
+                                            @endif
+
+                                            <tr class= "{{ $tr_class }}" >
+                                                <td class="check-mail">
+                                                    
+                                                    <i class="{{$icon_class}}"></i>
+                                                </td>
+
+                                                @if( $communication->communication_type_id == "1" ||  $communication->communication_type_id == "2" )
+                                                    <td class="mail-subject communication-name">
+                                                        @if($communication->has_attachments == true)
+                                                            <i class="fa fa-paperclip"></i>
+                                                        @endif
+                                                        <a class="comm_category_link trackclick" data-comm-id="{{ $communication->id }}" href="../../communication/show/{{ $communication->id }}?">{{ $communication->subject }}</a>
+                                                    </td>
+                                                @else
+                                                    <td class="mail-subject communication-name">
+                                                        @if($communication->has_attachments == true)
+                                                            <i class="fa fa-paperclip"></i>
+                                                        @endif
+                                                        <a class="comm_category_link trackclick" data-comm-id="{{ $communication->id }}" href="../../communication/show/{{ $communication->id }}?">{{ $communication->subject }}</a> <span class="label label-sm label-{!! $communication->label_colour !!}">{!! $communication->label_name !!}</span></td>
+                                                @endif
+                                                
+                                                <td class="mail-preview"><a href="../../communication/show/{{ $communication->id }}">{!! $communication->trunc !!}</a></td>
+                                                <td class=""><!-- <i class="fa fa-paperclip"></i> --></td>
+                                                <td class="text-right mail-date">{{ $communication->prettyDate }}<!--  <small style="font-weight: normal;padding-left: 10px;">({{ $communication->since }} ago)</small> --></td>
+                                            </tr>                                             
+
+                                            @endforeach
+                                        </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        @endif
+
                     </div>
 
                     <div class="col-lg-4">
@@ -162,7 +224,7 @@
                             <div class="col-lg-12">
                                 <div class="ibox float-e-margins">
                                     <div class="ibox-title">
-                                        <h2>Notifications</h2>
+                                        <h2>Recent Uploads</h2>
                                     </div>
                                     <div class="ibox-content" style="max-height: 550px; overflow: auto;">
 
@@ -174,12 +236,25 @@
                                                     @foreach($notifications as $n)
                                                         
                                                         <div class="feed-element">                                           
+                                                            {{-- <div class="media-body">
+                                                                    <span class="pull-left" style="padding: 0px 10px 0px 0px;">
+                                                                        <h2 style="padding: 0; margin: 0;">{!! $n->linkedIcon !!}</h2>
+                                                                    </span>
+                                                                    <small class="pull-right" style="padding-left: 10px;">{{ $n->since }} ago</small>
+                                                                    <strong>{!! $n->link !!}</strong> 
+                                                                </div>
+                                                            --}}
+
+
                                                             <div class="media-body">
                                                                 <span class="pull-left" style="padding: 0px 10px 0px 0px;">
                                                                     <h2 style="padding: 0; margin: 0;">{!! $n->linkedIcon !!}</h2>
-                                                                </span>
+                                                                </span>                                                    
                                                                 <small class="pull-right" style="padding-left: 10px;">{{ $n->since }} ago</small>
-                                                                <strong>{!! $n->link !!}</strong> 
+                                                                     <strong>{!! $n->link !!}</strong> 
+                                                                    @if($n->count > 1)
+                                                                    with <strong>{!! $n->count -1 !!}</strong> other documents
+                                                                    @endif
                                                             </div>
                                                         </div>
                                                     @endforeach

@@ -21,11 +21,16 @@
 
 <body class="gray-bg">
 
+                <center>
+                <h1 class="animated fadeInDown" style="padding-top: 100px;">
+                    <img src="/images/welcome-logo.png" />
+                </h1>
+                </center>
     <div class="middle-box text-center loginscreen animated fadeInDown">
         <div>
             <div>
 
-                <h1 class="logo-name">MW</h1>
+                
 
             </div>
             <h3>Welcome!</h3>

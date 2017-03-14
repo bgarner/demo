@@ -26,6 +26,7 @@ $("#allStores").change(function(){
 	}
 });
 
+
 $(document).on('click','.alert-create',function(){
   	
   	var hasError = false;

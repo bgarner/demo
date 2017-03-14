@@ -1,15 +1,20 @@
 
 $("body").on("click", ".folder", function(e){
 	
-	console.log(e);
-	console.log(this.id);
 	e.stopPropagation();
-	var id = e.target.id;
+	console.log( "Mouse event : " +e.hasOwnProperty('originalEvent'));
+	console.log(this.id);
 
-	if(id){
-		getFolderDocuments(e.target.id);
-	} else {
-		getFolderDocuments(this.id);
+	if (e.hasOwnProperty('originalEvent')) {
+	
+		var id = e.target.id;
+
+		if(id){
+			getFolderDocuments(e.target.id);
+		} else {
+			getFolderDocuments(this.id);
+		}	
+
 	}
 
 });
@@ -34,10 +39,7 @@ var getFolderDocuments = function(id){
 		$("#allChildFolderCount").val(data.folder.allChildFolderCount);
 		$("#allDocumentsInFolderCount").val(data.folder.allDocumentsInFolderCount);
 		$("#folderNameForDeleteModal").val(data.folder.name);
-		console.log("**************");
-		console.log($("#allChildFolderCount"));
-		console.log($("#allDocumentsInFolderCount"));
-		console.log("**************");
+		
 	});
 }
 
@@ -46,7 +48,8 @@ var checkDeepLink = function(){
 		folderId = window.location.hash.substr(3);
 		$("li#"+folderId).parents('.parent-folder').click();
 		$("li#" + folderId).click();
-		//getFolderDocuments(folderId);
+		getFolderDocuments(folderId);
+
 	}
 }
 var setDeepLink = function(data){

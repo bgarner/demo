@@ -69,9 +69,9 @@
 
                                                 <div class="col-sm-10">
                                                     <div class="input-daterange input-group" id="datepicker">
-                                                        <input type="text" class="input-sm form-control" name="start" id="start" value="" />
+                                                        <input type="text" class="input-sm form-control datetimepicker-start" name="start" id="start" value="" />
                                                         <span class="input-group-addon">to</span>
-                                                        <input type="text" class="input-sm form-control" name="end" id="end" value="" />
+                                                        <input type="text" class="input-sm form-control datetimepicker-end" name="end" id="end" value="" />
                                                     </div>
                                                 </div>
                                         </div>
@@ -253,7 +253,8 @@
 
 				<script type="text/javascript" src="/js/custom/admin/features/addFeature.js"></script>
 				<script type="text/javascript" src="/js/custom/tree.js"></script>
-
+				<script src="/js/custom/datetimepicker.js"></script>
+				
 				<script type="text/javascript">
 					$.ajaxSetup({
 				        headers: {
@@ -261,12 +262,7 @@
 				        }
 					});
 
-					$('.input-daterange').datepicker({
-                         format: 'yyyy-mm-dd',
-                        keyboardNavigation: false,
-                        forceParse: false,
-                        autoclose: true
-                    });
+					
                     $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
 
 				</script>

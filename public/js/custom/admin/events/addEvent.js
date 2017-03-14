@@ -1,6 +1,5 @@
 $(document).ready(function(){
 	$("#allStores").click();	
-
 });
 $("#allStores").change(function(){
 
@@ -9,14 +8,14 @@ $("#allStores").change(function(){
 		$("#storeSelect option").each(function(index){			
 			$(this).attr('selected', 'selected');
 		});
-		$("#storeSelect").chosen();
+		$("#storeSelect").chosen({width:'75%'});
 		
 	}
 	else if ($("#allStores").not(":checked")) {
 		$("#storeSelect option").each(function(){
 			$(this).removeAttr('selected');
 		});
-		$("#storeSelect").chosen();
+		$("#storeSelect").chosen({width:'75%'});
 		
 	}
 });
@@ -98,8 +97,6 @@ $( "#storeSelect" ).focus(function() {
     $('.event-create span').text(' Create New Event');
 });
 
-
-
 $(document).on('click','.event-create',function(){
   	
   	var hasError = false;
@@ -112,6 +109,7 @@ $(document).on('click','.event-create',function(){
     var eventEnd = $("#end").val();
     var tags = $('#tags').val();
     var target_stores  = $("#storeSelect").val();
+    console.log(target_stores);
     var allStores  = $("allStores:checked").val();
     var attachments = [];
    	$(".selected-folders").each(function(){
@@ -204,6 +202,10 @@ $(document).on('click','.event-create',function(){
 			        $('#createNewEventForm')[0].reset(); // empty the form
 			        CKEDITOR.instances['description'].setData('');
 			        $('#datepicker').find('input').datepicker('setDate', null);
+			        
+			        $(".search-field").find('input').val('');
+			        processStorePaste();
+					// $("#storeSelect").chosen("destroy");
 			        $("#allStores").click();
 
 					$('.event-create i').removeClass("fa-spinner faa-spin animated");

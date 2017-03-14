@@ -72,11 +72,11 @@
                               <td><input type="text" style="width: 500px;" class="form-control" name="title{{ $doc->id }}" id="title{{ $doc->id }}" value="{{$doc->title}}"></td>
                 		      
                               <td>
-
+                                
                                 <div class="input-daterange input-group" id="datepicker">
-                                    <input type="text" class="input-sm form-control" name="start" id="start{{$doc->id}}" value={{$doc->start}} />
+                                    <input type="text" class="input-sm form-control datetimepicker-start" name="start" id="start{{$doc->id}}" value="{{$doc->start}}" />
                                     <span class="input-group-addon">to</span>
-                                    <input type="text" class="input-sm form-control" name="end" id="end{{$doc->id}}" value={{$doc->end}} />
+                                    <input type="text" class="input-sm form-control datetimepicker-end" name="end" id="end{{$doc->id}}" value="{{$doc->end}}" />
                                 </div>
                               
                               </td>
@@ -124,20 +124,11 @@
             <script type="text/javascript" src="/js/vendor/dropzone.js"></script>
             <script type="text/javascript" src="/js/vendor/tablesorter.min.js"></script>
             <script type="text/javascript" src="/js/vendor/lightbox.min.js"></script>
-
             <script type="text/javascript" src="/js/plugins/steps/jquery.steps.min.js"></script>
-
-{{--             <script type="text/javascript" src="/js/custom/admin/folders/documentUploadFolderStructure.js" ></script> --}}
-{{--             <script type="text/javascript" src="/js/custom/admin/documents/fileTable.js"></script> --}}
-{{--             <script type="text/javascript" src="/js/custom/admin/documents/deleteFile.js"></script> --}}
-{{--             <script type="text/javascript" src="/js/custom/admin/documents/getPackages.js"></script>
-            <script type="text/javascript" src="/js/custom/admin/documents/deletePackage.js"></script>
-            <script type="text/javascript" src="/js/custom/admin/documents/showPackage.js"></script> --}}
             <script type="text/javascript" src="/js/custom/admin/documents/breadcrumb.js"></script>
-{{--             <script type="text/javascript" src="/js/custom/admin/documents/uploadDocument.js"></script> --}}
             <script type="text/javascript" src="/js/custom/tree.js"></script>
             <script type="text/javascript" src="/js/custom/submitmetadata.js"></script>
-
+            <script src="/js/custom/datetimepicker.js"></script>
         
                 <script type="text/javascript">
 
@@ -209,16 +200,6 @@
                         //     }
                         });
 
-
-
-                         $(function () {
-                            $('.input-daterange').datepicker({
-                               format: 'yyyy-mm-dd',
-                              keyboardNavigation: false,
-                              forceParse: false,
-                              autoclose: true
-                          }); 
-                        });
 
                         var defaultFolderId = getParameterByName('parent');
                         console.log("defautl folder id: " + defaultFolderId);

@@ -142,7 +142,7 @@
       <script type="text/javascript" src="/js/custom/admin/documents/uploadDocument.js"></script>
       <script type="text/javascript" src="/js/vendor/tablesorter.min.js"></script>
       <script type="text/javascript" src="/js/vendor/lightbox.min.js"></script>        
-
+      
         <script type="text/javascript">
           $.ajaxSetup({
                 headers: {

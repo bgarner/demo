@@ -3,6 +3,9 @@
 namespace App\Models\BugReport;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\StoreFeedback\FeedbackCategory;
+use App\Models\StoreFeedback\FeedbackResponse;
+use App\Models\StoreFeedback\FeedbackNotes;
 
 class BugReport extends Model
 {
@@ -23,4 +26,27 @@ class BugReport extends Model
 
  		$bug->save();
     }
+
+    public static function getAllBugReports($banner_id)
+    {
+    	$reports = BugReport::where('banner', $banner_id)
+    						->orderBy('created_at','desc')
+    						->get()
+    						->each(function($report){
+    							$report->feedback_code = FeedbackCategory::getFeedbackCategory($report->id);
+                                $report->response = FeedbackResponse::getFeedbackResponse($report->id);
+    						});
+    	return $reports;    
+    }
+
+    public static function getBugReportById($id)
+    {
+        $report = BugReport::find($id);
+        $report->response = FeedbackResponse::getFeedbackResponse($id);
+        $report->notes = FeedbackNotes::getFeedbackNotesByFeedbackId($id);
+        $report->category = FeedbackCategory::getFeedbackCategory($id);
+        return $report;    
+    }
+
+    
 }

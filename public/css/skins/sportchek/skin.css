@@ -2,13 +2,10 @@ body{
 	background-color: #2B2B2B !important;
 }
 
-
 .nav-header{
 	background: #2B2B2B url('/images/skin/sc.png') top center no-repeat !important;
 	margin: 20px 0px;
 }
-
-
 
 .metismenu > li.active{
 	border: none !important;
@@ -58,6 +55,13 @@ body{
 	background-color: #E20000 !important;
 }
 
+.nav-second-level li a{
+	font-weight: normal;
+}
+
+.nav-second-level:after{
+	display: none !important;
+}
 
 .product-price{
 
@@ -80,6 +84,11 @@ body{
 
 .product-box{ padding: 1px !important; margin: 10px !important; height: 168px; width: 168px; float: left;}
 
+body.mini-navbar .logo-element {
+  background:  #2B2B2B;
+}
 
-
-
+/*.nav-header{
+	background: #2B2B2B url('/images/skin/sc.png') top center no-repeat !important;
+	margin: 20px 0px;
+}*/

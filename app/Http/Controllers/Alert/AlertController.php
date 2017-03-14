@@ -33,10 +33,10 @@ class AlertController extends Controller
         $storeInfo = StoreInfo::getStoreInfoByStoreId($storeNumber);
         $storeBanner = $storeInfo->banner_id;
         $communicationCount = Communication::getActiveCommunicationCount($storeNumber);
-        $storeBanner = $storeInfo->banner_id;
 
         $skin = Skin::getSkin($storeBanner);
         $banner = Banner::find($storeInfo->banner_id);
+        $isComboStore = $storeInfo->is_combo_store;
 
         $urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($storeNumber);
 
@@ -93,7 +93,9 @@ class AlertController extends Controller
             ->with('alertCount', $alertCount)
             ->with('title', $title)
             ->with('urgentNoticeCount', $urgentNoticeCount)
-            ->with('archives', $request['archives']);
+            ->with('archives', $request['archives'])
+            ->with('banner', $banner)
+            ->with('isComboStore', $isComboStore);
     }
 
     /**

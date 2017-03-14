@@ -8,7 +8,6 @@ $("#attachment-Folder").click(function(){
 	$("#folder-listing").modal('show');
 });
 
-
 $(".folder-checkbox").on('click', function(){
 	if($(this).is(":checked")){
 		$(this).attr('data-folderRoot', 'true')
@@ -182,7 +181,11 @@ $(document).on('click','.urgentnotice-create',function(){
 
 		        }
 		        else{
+		        	
 		        	$('#createNewUrgentNoticeForm')[0].reset(); // empty the form
+		        	CKEDITOR.instances['description'].setData('');
+		        	$(".search-field").find('input').val('');
+			        processStorePaste();
 					swal("Nice!", "'" + title +"' has been created", "success");        
 				}
 		    }

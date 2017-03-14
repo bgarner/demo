@@ -39,6 +39,10 @@ class DocumentController extends Controller
 
         $storeBanner = $storeInfo->banner_id;
 
+        $banner = Banner::find($storeBanner);
+
+        $isComboStore = $storeInfo->is_combo_store;
+
         $skin = Skin::getSkin($storeBanner);
 
         $communicationCount = DB::table('communications_target')
@@ -71,7 +75,9 @@ class DocumentController extends Controller
             ->with('communicationCount', $communicationCount)
             ->with('alertCount', $alertCount)
             ->with('defaultFolder' , $defaultFolder)
-            ->with('urgentNoticeCount', $urgentNoticeCount);
+            ->with('urgentNoticeCount', $urgentNoticeCount)
+            ->with('banner', $banner)
+            ->with('isComboStore', $isComboStore);
 
     }
 

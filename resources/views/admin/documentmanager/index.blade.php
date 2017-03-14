@@ -93,7 +93,9 @@
                                              <a id="add-files" class="hidden" data-folderId="" href="/admin/document/create"><button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Add Files </i></button></a>
                                              <a id="add-folder" href="/admin/folder/create"><button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> <i class="fa fa-folder-o"></i></button></a>
                                              <a id="edit-folder" class="hidden" href=""><button type="button" class="btn btn-primary"><i class="fa fa-pencil"></i></button></a>
+                                             <button type="button" class="btn btn-primary hidden" id="copy-folder" ><i class="fa fa-clipboard"></i></button>
                                              <a id="delete-folder" class="hidden" href=""><button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button></a>
+
 
                                         </div>
                                     </div>
@@ -160,6 +162,8 @@
     <script type="text/javascript" src="/js/custom/admin/documents/editFolder.js"></script>
     <script type="text/javascript" src="/js/custom/admin/documents/addFolder.js"></script>
     <script type="text/javascript" src="/js/custom/admin/documents/deleteFolder.js"></script>
+    <script type="text/javascript" src="/js/custom/admin/documents/copyFolder.js"></script>
+    <script type="text/javascript" src="/js/custom/admin/documents/copyDocument.js"></script>
     <script type="text/javascript" src="/js/custom/site/launchModal.js" ></script>
 
 

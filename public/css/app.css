@@ -2243,7 +2243,7 @@ a.DTTT_button:hover:not(.DTTT_disabled) {
   background: #f5f5f5;
   border-radius: 3px;
   box-sizing: border-box;
-  -moz-box-sizing: border-box;  
+  -moz-box-sizing: border-box;
 }
 .dd-handle {
   position: relative;
@@ -2258,7 +2258,7 @@ a.DTTT_button:hover:not(.DTTT_disabled) {
   border-radius: 3px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
- 
+
 }
 .dd-handle span {
   font-weight: bold;
@@ -3399,12 +3399,12 @@ video {
 }
 .modal-body {
   padding: 20px 30px 30px 30px;
-  background: transparent url('/images/FFFFFF-0.0.png') top left repeat !important; 
+  background: transparent url('/images/FFFFFF-0.0.png') top left repeat !important;
 }
 
 .modal-content-video .modal-body{
   padding: 0;
-  
+
 }
 
 .modal-backdrop
@@ -3414,7 +3414,7 @@ video {
 
 .inmodal .modal-body {
   /*background: #f8fafb;*/
-  background: transparent url('/images/FFFFFF-0.0.png') top left repeat !important; 
+  background: transparent url('/images/FFFFFF-0.0.png') top left repeat !important;
 }
 .inmodal .modal-header {
   padding: 30px 15px;
@@ -3758,7 +3758,7 @@ code {
 body.adminview .ibox-title{
     padding: 14px 15px 7px !important;
       min-height: 60px;
-} 
+}
 
 body.adminview .ibox-title h5{
   padding: 4px 0px 0px 10px;
@@ -3803,7 +3803,7 @@ table.table-mail tr td {
 }
 
 .unread td.mail-preview a{
-  font-weight: normal !important; 
+  font-weight: normal !important;
 }
 
 .unread td a,
@@ -4908,7 +4908,7 @@ a.compose-mail {
 }
 
 .mail-subject{
- 
+
   padding: 10px 5px;
 }
 
@@ -5267,7 +5267,7 @@ del {
 .product-box img{
   height:164px;
   width: auto;
-  overflow:hidden; 
+  overflow:hidden;
 }
 .product-box:hover,
 .product-box.active {
@@ -5287,7 +5287,7 @@ del {
 .product-desc {
 /*  padding: 20px;*/
   position: relative;
-  
+
   bottom: 164px;
   height: 164px;
 }
@@ -8269,13 +8269,13 @@ body.md-skin {
   color: #337ab7;
 }
 
-.onoffswitch-switch, 
-.onoffswitch-label 
+.onoffswitch-switch,
+.onoffswitch-label
 {
       border: 1px solid #337ab7;
 }
 .onoffswitch-inner:before{
-  background-color: #337ab7 
+  background-color: #337ab7
 }
 
 .communication-name{
@@ -8305,3 +8305,146 @@ body.md-skin {
 }
 #loading img{ height: 32px; width: 32px;}
 
+
+.timeline-item .event{
+  margin-bottom: 15px;
+}
+
+.comboStoreSwitch{
+  display: inline-block;
+  position:relative;
+  top:10px;
+}
+  .comboStoreSwitch .onoffswitch-label,.comboStoreSwitch .onoffswitch-switch {
+    border:1px solid #676a6c;
+  }
+  .comboStoreSwitch .onoffswitch-switch {
+    width: 15px;
+    right: 40px;
+  }
+  .comboStoreSwitch .onoffswitch-inner:before {
+    content: "SC";
+    background-color: #FFFFFF;
+    color: #676a6c;
+    text-align: left;
+    font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 10px;
+    font-weight: normal;
+    padding-left: 10px;
+
+  }
+  .comboStoreSwitch .onoffswitch-inner:after {
+    content: "ATMO";
+    background-color: #FFFFFF;
+    color: #676a6c;
+    text-align: right;
+    font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 10px;
+    font-weight: normal;
+    padding-left: 15px;
+  }
+
+.inline-folder-link{
+  color: #337ab7;
+  cursor: pointer;
+}
+
+@media (max-width : 950px) and (min-width:880px) {
+    #navigation-structure .folder{
+    display:inline-block;
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    }
+}
+
+
+
+@media (max-width : 879px) and (min-width:768px) {
+    #navigation-structure .folder{
+        display:inline-block;
+        width: 100px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+@media (max-width : 620px) and (min-width:490px) {
+    #navigation-structure .folder{
+    display:inline-block;
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    }
+}
+
+@media (max-width : 490px) {
+    #navigation-structure .folder{
+        display:inline-block;
+        width: 80px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+
+.alert-title{
+    display:inline-block;
+    width: 80px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+  .video-list-box{
+      padding: 5px;
+      float: left;
+      /*border: thin solid lime;*/
+      min-height: 150px;
+  }
+    .video-list-box h4{
+        font-size: 12px;
+        padding: 2px 0px;
+        margin: 0px;
+        /*min-height: 30px;
+        max-height: 30px;*/
+        text-overflow: ellipsis;
+        /* Required for text-overflow to do anything */
+        white-space: nowrap;
+        overflow: hidden;
+    }
+    .video-list-box p{
+        text-align: left;
+        font-size: 10px;
+        padding-top: 3px;
+
+    }
+
+    .video-playlist-box{
+        padding: 5px;
+        float: left;
+        /*border: thin solid lime;*/
+        min-height: 150px;
+        clear: both;
+    }
+
+    .video-playlist-box img{
+        float: left;
+        width: 50%;
+    }
+
+    .video-playlist-box .video-container{
+        float: left;
+        width: 50%;
+    }
+
+    .playlist-meta{
+        float: left;
+        width: 50%;
+        padding: 0px 0px 0px 20px;
+    }

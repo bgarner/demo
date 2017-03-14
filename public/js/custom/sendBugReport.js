@@ -29,7 +29,7 @@ $(document).ready(function() {
 		  		current_url: current_url,
 		  		description: description,
 		  		user_email: user_email,
-		  		follow_up: follow_up 		
+		  		follow_up: follow_up	
 		    },
 		    success: function(result) {
 		        

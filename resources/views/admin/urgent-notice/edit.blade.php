@@ -76,9 +76,9 @@
 
                                                 <div class="col-sm-10">
                                                     <div class="input-daterange input-group" id="datepicker">
-                                                        <input type="text" class="input-sm form-control" name="start" id="start" value="{{$urgent_notice->start}}" />
+                                                        <input type="text" class="input-sm form-control datetimepicker-start" name="start" id="start" value="{{$urgent_notice->start}}" />
                                                         <span class="input-group-addon">to</span>
-                                                        <input type="text" class="input-sm form-control" name="end" id="end" value="{{$urgent_notice->end}}" />
+                                                        <input type="text" class="input-sm form-control datetimepicker-end" name="end" id="end" value="{{$urgent_notice->end}}" />
                                                     </div>
                                                 </div>
                                         </div>
@@ -282,18 +282,16 @@
 	<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>	
 	<script type="text/javascript" src="/js/custom/admin/urgent-notices/editUrgentNotice.js"></script>
 	<script type="text/javascript" src="/js/custom/tree.js"></script>
+	<script src="/js/custom/datetimepicker.js"></script>
+	<script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
 	<script type="text/javascript">
 		$(".chosen").chosen({
 	        width:'75%'
-	    })
-	    $('.input-daterange').datepicker({
-	         format: 'yyyy-mm-dd',
-	        keyboardNavigation: false,
-	        forceParse: false,
-	        autoclose: true
-	    });            
+	    });          
 
-	    CKEDITOR.replace('description');
+	    CKEDITOR.replace('description', {
+            filebrowserUploadUrl: "{{route('utilities.ckeditorimages.store',['_token' => csrf_token() ])}}"
+        });
 	    
 	    CKEDITOR.instances['description'].setData($("textarea").attr('value'));
 	    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});            

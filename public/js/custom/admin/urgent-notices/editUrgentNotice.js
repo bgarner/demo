@@ -22,6 +22,7 @@ $("#allStores").change(function(){
 	}
 });
 
+
 $("body").on('click', "#add-more-documents", function(){
 	$("#document-listing").modal('show');
 });

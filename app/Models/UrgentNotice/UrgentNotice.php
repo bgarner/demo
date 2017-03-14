@@ -82,12 +82,15 @@ class UrgentNotice extends Model
     		'attachment_type_id'=>$attachment_type_id
     	]);
 
-    	foreach ($attachments as $attachment) {
-    		UrgentNoticeAttachment::create([
-    			'urgent_notice_id' => $urgentNotice->id,
-    			'attachment_id' => $attachment
-    		]);
-    	}
+    	if($attachment_type_id != 3){
+            foreach ($attachments as $attachment) {
+                UrgentNoticeAttachment::create([
+                    'urgent_notice_id' => $urgentNotice->id,
+                    'attachment_id' => $attachment
+                ]);
+            }    
+        }
+        
 
     	foreach ($target_stores as $store) {
     		UrgentNoticeTarget::create([
@@ -125,10 +128,13 @@ class UrgentNotice extends Model
         
         $new_attachment_type_id = intval($request->new_attachment_type);
         
-        if ($new_attachment_type_id != $attachment_type_id) {
-            $attachment_type_id = $new_attachment_type_id;
-            UrgentNoticeAttachment::where('urgent_notice_id', $id)->delete();
+        if($new_attachment_type_id != 3) {
+            if ($new_attachment_type_id != $attachment_type_id) {
+                $attachment_type_id = $new_attachment_type_id;
+                UrgentNoticeAttachment::where('urgent_notice_id', $id)->delete();
+            }
         }
+        
         else{
             if(isset($remove_attachments)) {
                 foreach ($remove_attachments as $attachment) {
@@ -177,6 +183,7 @@ class UrgentNotice extends Model
     {
         UrgentNotice::find($id)->delete();
         UrgentNoticeTarget::where('urgent_notice_id', $id)->delete();
+        UrgentNoticeAttachment::where('urgent_notice_id', $id)->delete();
     }
 
     public static function getUrgentNoticeCount($storeNumber)
@@ -194,8 +201,8 @@ class UrgentNotice extends Model
     public static function getUrgentNotice($id)
     {    
          $notice = UrgentNotice::find($id);
-         $notice->prettyDate = Utility::prettifyDate($notice->updated_at);
-         $notice->since = Utility::getTimePastSinceDate($notice->updated_at);
+         $notice->prettyDate = Utility::prettifyDate($notice->start);
+         $notice->since = Utility::getTimePastSinceDate($notice->start);
          return $notice;
     }
 
@@ -214,8 +221,8 @@ class UrgentNotice extends Model
                         
         foreach($notices as $n){
             
-            $n->since =  Utility::getTimePastSinceDate($n->updated_at);
-            $n->prettyDate =  Utility::prettifyDate($n->updated_at);
+            $n->since =  Utility::getTimePastSinceDate($n->start);
+            $n->prettyDate =  Utility::prettifyDate($n->start);
             $preview_string = strip_tags($n->description);
             $n->trunc = Communication::truncateHtml($preview_string);
         }
@@ -235,8 +242,8 @@ class UrgentNotice extends Model
 
         foreach($notices as $n){
             $n->archived= true;
-            $n->since =  Utility::getTimePastSinceDate($n->updated_at);
-            $n->prettyDate =  Utility::prettifyDate($n->updated_at);
+            $n->since =  Utility::getTimePastSinceDate($n->start);
+            $n->prettyDate =  Utility::prettifyDate($n->start);
             $preview_string = strip_tags($n->description);
             $n->trunc = Communication::truncateHtml($preview_string);
         }

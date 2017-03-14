@@ -14,7 +14,7 @@ class UrgentNoticeValidator extends PortalValidator
     	'end'			=> 'required|date',
     	'target_stores'	=> "required_without:allStores|array",
     	'allStores'     => 'in:on',
-        'attachment_type_id' => 'required_with:folder,document|in:1,2',
+        'attachment_type_id' => 'required_with:folder,document|in:1,2,3',
         'folder'        => 'required_if:attachment_type_id,1|exists:folder_ids,id',
         'document'      => 'required_if:attachment_type_id,2|exists:documents,id'
             

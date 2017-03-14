@@ -51,7 +51,7 @@ class FeatureAdminController extends Controller
         $banner = UserSelectedBanner::getBanner();
         $banners = Banner::all();
 
-        $packages = Package::all();
+        $packages = Package::where('banner_id', $banner->id)->get();
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
         return view('admin.feature.create')
                 ->with('banner', $banner)
@@ -105,7 +105,7 @@ class FeatureAdminController extends Controller
             
         }
 
-        $packages = Package::all();
+        $packages = Package::where('banner_id', $banner->id)->get();
         $feature_packages = FeaturePackage::where('feature_id', $id)->get()->pluck('package_id');
         $selected_packages = [];
         foreach ($feature_packages as $package_id) {
@@ -149,5 +149,18 @@ class FeatureAdminController extends Controller
     {
         Feature::deleteFeature($id);
         return;
+    }
+
+    public function getFeatureDocumentPartial($feature_id)
+    {
+        $documents = Feature::getTopListedDocumentsByFeatureId($feature_id);
+        return view('admin.feature.feature-documents-partial')->with('documents', $documents);
+    }
+
+    public function getFeaturePackagePartial($feature_id)
+    {
+        $packages = Feature::getPackageDetailsByFeatureId($feature_id);
+
+        return view('admin.feature.feature-packages-partial')->with('packages', $packages);
     }
 }

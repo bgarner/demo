@@ -26,27 +26,13 @@
 <!-- jQuery UI -->
 <script src="/js/plugins/jquery-ui/jquery-ui.min.js"></script>
 
-<!-- Jvectormap -->
-{{-- <script src="/js/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js"></script>
-<script src="/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script> --}}
-
-<!-- Sparkline -->
-{{-- <script src="/js/plugins/sparkline/jquery.sparkline.min.js"></script> --}}
-
-<!-- Sparkline demo data  -->
-{{-- <script src="/js/demo/sparkline-demo.js"></script> --}}
-
-<!-- ChartJS-->
-{{-- <script src="/js/plugins/chartJs/Chart.min.js"></script> --}}
-
 <script src="/js/plugins/sweetalert/sweetalert.min.js"></script>
 
 <!-- date range picker -->
 <script src="/js/vendor/moment.js"></script>
-<script src="/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+<!-- <script src="/js/plugins/datapicker/bootstrap-datepicker.js"></script> -->
 <script src="/js/vendor/bootstrap-datetimepicker.min.js"></script>
 <script src="/js/custom/sendBugReportAdmin.js"></script>
 
 <!-- editor -->
 {{-- <script src="/js/plugins/summernote/summernote.min.js"></script> --}}
-

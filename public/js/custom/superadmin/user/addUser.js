@@ -59,7 +59,7 @@ $(document).ready(function(){
 	    if(hasError == false) {
 	    	
 			$.ajax({
-			    url: '/admin/user/',
+			    url: '/admin/user',
 			    type: 'POST',
 			    dataType: 'json',
 			    data: {

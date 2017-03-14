@@ -60,7 +60,7 @@
 		                            <h5>Edit Event: {{ $event->title }}</h5>
 		                            <div class="ibox-tools">
 		                                {{-- <a href="/admin/calendar/create" class="btn btn-primary" role="button"><i class="fa fa-plus"></i> Add New Event</a> --}}
-                                        
+
 		                            </div>
 		                        </div>
 		                        <div class="ibox-content">
@@ -86,7 +86,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                        </div>                                        
+                                        </div>
 
                                         {{-- <div class="summernote"></div> --}}
 
@@ -96,9 +96,9 @@
 
                                                 <div class="col-sm-10">
                                                     <div class="input-daterange input-group" id="datepicker">
-                                                        <input type="text" class="input-sm form-control" name="start" id="start" value="{{ $event->start }}" />
+                                                        <input type="text" class="input-sm form-control datetimepicker-start" name="start" id="start" value="{{ $event->start }}" />
                                                         <span class="input-group-addon">to</span>
-                                                        <input type="text" class="input-sm form-control" name="end" id="end" value="{{ $event->end }}" />
+                                                        <input type="text" class="input-sm form-control datetimepicker-end" name="end" id="end" value="{{ $event->end }}" />
                                                     </div>
                                                 </div>
                                         </div>
@@ -106,13 +106,13 @@
                                         <div class="form-group"><label class="col-sm-2 control-label">Description</label>
                                             <div class="col-sm-10">
                                                 <textarea class="form-control" rows="5" id="description" name="description">{{ $event->description }}</textarea>
-                                                
+
                                             </div>
                                         </div>
 
-                                        
+
                                         <div class="form-group">
-                                                                        
+
                                             <label class="col-sm-2 control-label">Stores <span class="req">*</span></label>
                                             <div class="col-sm-10">
                                                 @if($all_stores)
@@ -127,10 +127,6 @@
                                             </div>
 
                                         </div>
-
-                                        
-                                        
-
                                         
                                     </form>
 
@@ -237,6 +233,9 @@
                 <script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
                 <script type="text/javascript" src="/js/custom/tree.js"></script>
                 <script src="/js/custom/admin/events/editEvent.js"></script>
+                <script type="text/javascript" src="/js/custom/admin/events/editEvent.js"></script>
+                <script type="text/javascript" src="/js/custom/datetimepicker.js"></script>
+                <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
                 <script type="text/javascript">
 					$.ajaxSetup({
 				        headers: {
@@ -244,22 +243,22 @@
 				        }
 					});
 
-                    $('.input-daterange').datepicker({
-                         format: 'yyyy-mm-dd',
-                        keyboardNavigation: false,
-                        forceParse: false,
-                        autoclose: true
-                    });
                     $(".chosen").chosen({
                         width:'75%'
                     });
-                    CKEDITOR.replace('description');
+
                     $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});   
+
+
+                    CKEDITOR.replace('description', {
+                        filebrowserUploadUrl: "{{route('utilities.ckeditorimages.store',['_token' => csrf_token() ])}}"
+                    });
+
 
 				</script>
 
 
-				
+
 
 				@include('site.includes.bugreport')
 

@@ -1,0 +1,55 @@
+.visible-print {
+    display: block !important;
+}
+
+.hidden-print {
+    display: none !important;
+}
+
+
+  * {
+    visibility: hidden;
+  }
+
+  body{ 
+    visibility: visible;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+     margin:0 !important; 
+     padding:0 !important; 
+     width: 100%;
+  }
+
+
+  .printable {
+    visibility: visible;
+     float: left !important;
+
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+
+
+     margin:0 !important; 
+     padding:0 !important; 
+
+     width: 99% !important; 
+  
+  }
+
+
+  .printable *{
+    visibility: visible;
+  }
+
+  h2{ font-size: 18px !important; display: block; float: left !important; font-weight: bold; }
+  h2 span{ font-size: 10px !important; float: right !important; float: left !important;}
+  .mail-box-header{ display: block; min-height: 60px; padding:  0px 0px 30px 0px; margin-bottom: 20px; !important; clear: both; border-bottom: thin solid black; }
+  
+
+  h3{ font-size: 16px !important; }
+
+.timeline-item{
+  page-break-inside: avoid;
+}

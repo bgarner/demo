@@ -49,7 +49,7 @@
 		                        <div class="ibox-title">
 		                            <h5>New Urgent Notice</h5>
 		                            <div class="ibox-tools">
-                                        
+
 		                            </div>
 		                        </div>
 		                        <div class="ibox-content">
@@ -62,9 +62,9 @@
                                             </ul>
                                         </div>
                                     @endif
-                                    
+
                                     <form method="get" class="form-horizontal" id="createNewUrgentNoticeForm">
-                                        
+
                                         <input type="hidden" name="banner_id" value="{{$banner->id}}">
                                         <div class="form-group"><label class="col-sm-2 control-label">Title</label>
                                             <div class="col-sm-10"><input type="text" id="title" name="title" class="form-control" value=""></div>
@@ -85,7 +85,7 @@
 
                                         <div class="form-group hidden"><label class="col-sm-2 control-label">Attachment Selected</label>
                                             <div class="col-md-10" id="attachment-selected">
-                                               
+
                                             </div>
                                         </div>
 
@@ -96,9 +96,9 @@
 
                                                 <div class="col-sm-10">
                                                     <div class="input-daterange input-group" id="datepicker">
-                                                        <input type="text" class="input-sm form-control" name="start" id="start" value="" />
+                                                        <input type="text" class="input-sm form-control datetimepicker-start" name="start" id="start" value="" />
                                                         <span class="input-group-addon">to</span>
-                                                        <input type="text" class="input-sm form-control" name="end" id="end" value="" />
+                                                        <input type="text" class="input-sm form-control datetimepicker-end" name="end" id="end" value="" />
                                                     </div>
                                                 </div>
                                         </div>
@@ -106,7 +106,7 @@
                                         <div class="hr-line-dashed"></div>
 
                                         <div class="form-group">
-                                            
+
                                             <label class="col-sm-2 control-label">Target Stores</label>
                                             <div class="col-sm-10">
                                                 {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
@@ -125,7 +125,7 @@
 
                                             </div>
                                         </div>
-                                        
+
                                     </form>
 
 
@@ -140,12 +140,12 @@
 							            </div>
 							            <div class="modal-body">
                                             <ul class="tree">
-							            	@foreach ($navigation as $nav) 
-											
+							            	@foreach ($navigation as $nav)
+
 												@if (isset($nav["is_child"]) && ($nav["is_child"] == 0) )
-													
+
 													@include('admin.package.file-folder-structure-partial', ['navigation' =>$navigation, 'currentnode' => $nav])
-													
+
 												@endif
 
 											@endforeach
@@ -169,11 +169,11 @@
 							            <div class="modal-body">
                                             <ul class="tree">
 							            	@foreach ($folderStructure as $folder)
-											
+
 												@if (isset($folder["is_child"]) && ($folder["is_child"] == 0) )
-													
+
 													@include('admin.package.folder-structure-partial', ['folderStructure' =>$folderStructure, 'currentnode' => $folder])
-													
+
 												@endif
 
 
@@ -206,9 +206,11 @@
 
 
 <script type="text/javascript" src="/js/custom/admin/urgent-notices/addUrgentNotice.js"></script>
-<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>	
-<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>	
+<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
+<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
 <script type="text/javascript" src="/js/custom/tree.js"></script>
+<script type="text/javascript" src="/js/custom/datetimepicker.js"></script>
+<script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
 <script type="text/javascript">
     $.ajaxSetup({
         headers: {
@@ -218,23 +220,20 @@
     $(".chosen").chosen({
         width:'75%'
     })
-    $('.input-daterange').datepicker({
-         format: 'yyyy-mm-dd',
-        keyboardNavigation: false,
-        forceParse: false,
-        autoclose: true
-    });            
-    CKEDITOR.replace('description');  
-    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});              
+    // $('.input-daterange').datepicker({
+    //      format: 'yyyy-mm-dd',
+    //     keyboardNavigation: false,
+    //     forceParse: false,
+    //     autoclose: true
+    // });
+    CKEDITOR.replace('description', {
+        filebrowserUploadUrl: "{{route('utilities.ckeditorimages.store',['_token' => csrf_token() ])}}"
+    });
+
+    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
 
 </script>
 
 
 </body>
 </html>
-
-			
-	
-
-
-
