@@ -49,7 +49,7 @@ class GroupRoleAdminController extends Controller
      */
     public function show($id)
     {
-        return GroupRole::getRolesByGroupId($id);
+        return GroupRole::getRoleNameListByGroupId($id);
     }
 
     /**

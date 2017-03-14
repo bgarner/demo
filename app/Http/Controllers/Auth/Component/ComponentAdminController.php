@@ -8,9 +8,9 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Banner;
-use App\Models\Auth\Group\Group;
+use App\Models\Auth\Role\Role;
 use App\Models\Auth\Component\Component;
-use App\Models\Auth\Group\GroupComponent;
+use App\Models\Auth\Role\RoleComponent;
 
 class ComponentAdminController extends Controller
 {
@@ -46,10 +46,10 @@ class ComponentAdminController extends Controller
     {
         $banner = UserSelectedBanner::getBanner();
         $banners = Banner::all();
-        $groups = Group::getGroupList($banner->id);
+        $roles = Role::getRoleList($banner->id);
         return view('admin.components.create')->with('banner', $banner)
                                             ->with('banners', $banners)
-                                            ->with('groups', $groups);
+                                            ->with('roles', $roles);
     }
 
     /**
@@ -86,13 +86,13 @@ class ComponentAdminController extends Controller
         $banner = UserSelectedBanner::getBanner();
         $banners = Banner::all();
         $component = Component::find($id);
-        $groups = Group::getGroupList($banner->id);
-        $selected_groups = GroupComponent::getGroupListByComponentId($id);
+        $roles = Role::getRoleList($banner->id);
+        $selected_roles = RoleComponent::getRoleListByComponentId($id);
         return view('admin.components.edit')->with('banners', $banners)
                                         ->with('banner', $banner)
                                         ->with('component', $component)
-                                        ->with('groups', $groups)
-                                        ->with('selected_groups', $selected_groups);
+                                        ->with('roles', $roles)
+                                        ->with('selected_roles', $selected_roles);
     }
 
     /**

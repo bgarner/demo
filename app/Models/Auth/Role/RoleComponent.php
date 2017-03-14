@@ -18,11 +18,26 @@ class RoleComponent extends Model
                             ->get();
         return $components;
     }
+    public static function getRoleNameListByComponentId($id)
+    {
+        $roles = RoleComponent::join('roles', 'role_component.role_id', '=', 'roles.id' )
+                            ->where('role_component.component_id', $id)
+                            ->select('roles.id', 'roles.role_name')
+                            ->get();
+        return $roles;
+    }
+
 
     public static function getComponentListByRoleId($id)
     {
     	$components = RoleComponent::where('role_id', $id)->get()->pluck('component_id')->toArray();
     	return $components;
+    }
+
+    public static function getRoleListByComponentId($id)
+    {
+        $roles = RoleComponent::where('component_id', $id)->get()->pluck('role_id')->toArray();
+        return $roles;
     }
 
 
@@ -38,6 +53,18 @@ class RoleComponent extends Model
         
     }
 
+    public static function createRoleComponentPivotWithComponentId($component, $request)
+    {
+        foreach ($request['roles'] as $role_id) {
+            RoleComponent::create([
+                'component_id' => $component->id,
+                'role_id' => $role_id
+
+            ]); 
+        }
+        
+    }
+
     public static function editRoleComponentPivotByRoleId($request, $id)
     {
         RoleComponent::where('role_id', $id)->delete();
@@ -45,6 +72,17 @@ class RoleComponent extends Model
             RoleComponent::create([
                     'role_id' => $id,
                     'component_id'  => $component_id
+                ]);
+        }
+    }
+
+    public static function editRoleComponentPivotByComponentId($request, $id)
+    {
+        RoleComponent::where('component_id', $id)->delete();
+        foreach ($request['roles'] as $role_id) {
+            RoleComponent::create([
+                    'role_id' => $role_id,
+                    'component_id'  => $id
                 ]);
         }
     }

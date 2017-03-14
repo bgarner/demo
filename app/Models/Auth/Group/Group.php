@@ -51,4 +51,12 @@ class Group extends Model
 
         });
     }
+
+    public static function getGroupNamesList()
+    {
+        $defaultSelection = [''=>'Select one'];
+        $group_names = $defaultSelection + Group::all()->lists('name', 'id')->toArray();
+        return $group_names;
+
+    }
 }
