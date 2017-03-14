@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Search;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Request as RequestFacade; 
+use Illuminate\Support\Facades\Request as RequestFacade;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -31,13 +31,14 @@ class SearchController extends Controller
         $store = RequestFacade::segment(1);
 
         $alertCount = Alert::getActiveAlertCountByStore($store);
-        $communicationCount = Communication::getActiveCommunicationCount($store); 
-        
+        $communicationCount = Communication::getActiveCommunicationCount($store);
+
         $docs = [];
         $folders = [];
         $communications = [];
         $alerts = [];
         $events = [];
+        $videos = [];
 
         $query = ltrim(rtrim($query));
         if ( isset($query) && ($query != '')){
@@ -46,6 +47,7 @@ class SearchController extends Controller
             $communications = Search::searchCommunications($query, $store);
             $alerts = Search::searchAlerts($query, $store);
             $events = Search::searchEvents($query, $store);
+            $videos = Search::searchVideos($query);
 
             if( isset($request['archives']) && $request['archives'])
             {
@@ -78,10 +80,11 @@ class SearchController extends Controller
             ->with('communications', $communications)
             ->with('alerts', $alerts)
             ->with('events', $events)
+            ->with('videos', $videos)
             ->with('communicationCount', $communicationCount)
             ->with('isComboStore', $isComboStore)
             ->with('banner', $banner)
-            ->with('alertCount', $alertCount)               
+            ->with('alertCount', $alertCount)
             ->with('query', $query)
             ->with('archives', $request['archives']);
     }

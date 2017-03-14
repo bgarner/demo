@@ -67,6 +67,7 @@
         <ul class="nav nav-second-level collapse">
             <li><a href="/admin/calendar">Manage Events</a></li>
             <li><a href="/admin/eventtypes">Manage Event Types</a></li>
+            <li><a href="/admin/productlaunch">Manage Product Launches</a></li>
         </ul>
     </li>
 
@@ -104,6 +105,18 @@
             <li><a href="/admin/urgentnotice">Manage Urgent Notices</a></li>
         </ul>
     </li>
+    @if (Request::is('admin/video/*') || Request::is('admin/video') || Request::is('admin/tag') || Request::is('admin/tag/*') || Request::is('admin/playlist') || Request::is('admin/playlist/*') ) 
+    <li class="active">
+    @else
+    <li>
+    @endif
+        <a href="/admin/video"><i class="fa fa-film"></i> <span class="nav-label">Videos</span><span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level collapse">
+            <li><a href="/admin/video">Manage Videos</a></li>
+            <li><a href="/admin/tag">Manage Tags</a></li>
+            <li><a href="/admin/playlist">Manage Playlists</a></li>
+        </ul>
+    </li>
 
     @if (Auth::user()->group_id == 1)
         @if (Request::is('admin/user/*') || Request::is('admin/user')) 
@@ -118,6 +131,18 @@
         </li>
     @endif
 
+    @if (Auth::user()->group_id == 1)
+        @if (Request::is('admin/feedback/*') || Request::is('admin/feedback')) 
+        <li class="active">
+        @else
+        <li>
+        @endif
+            <a href="/admin/feedback"><i class="fa fa-comment"></i> <span class="nav-label">Store Feedback Management</span><span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level collapse">
+                <li><a href="/admin/feedback">View Feedback</a></li>
+            </ul>
+        </li>
+    @endif
 
 
     {{-- <li>

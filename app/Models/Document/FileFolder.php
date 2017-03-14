@@ -31,4 +31,13 @@ class FileFolder extends Model
         }
        return ($folderStructure);
     }
+
+    public static function getDocumentArrayInFolder($folder_id, $store_number)
+    {
+        return self::join('document_target', 'document_target.document_id', '=', 'file_folder.document_id')
+                        ->where('folder_id', $folder_id)
+                        ->where('document_target.store_id', $store_number)
+                        ->where('document_target.deleted_at', null)
+                        ->get()->pluck('document_id')->toArray();
+    }
 }

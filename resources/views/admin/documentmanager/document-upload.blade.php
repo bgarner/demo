@@ -60,7 +60,7 @@
 
                     <div class="form-container">
 
-                        <div class="upload-form select-stores-form" style="padding-bottom: 10px;">                                    
+                        <div class="upload-form select-stores-form" style="padding-bottom: 10px;">
                             <label class="col-sm-2 control-label">Target Stores</label>
                             <div class="col-sm-10">
                                 {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
@@ -81,7 +81,7 @@
                                     </div>
                                 </div>
                         </div>
-                        
+
 
                     </div>
 
@@ -102,12 +102,12 @@
 
 					            <div>
 					                <p style="display: inline;"class="name" data-dz-name></p> ( <p style="display: inline;" class="size" data-dz-size></p> )
-                                    
+
 					                <strong class="error text-danger" data-dz-errormessage></strong>
 					            </div>
 
 					            <div>
-					                  
+
 					                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" style="width: 200px;">
 					                  <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
 					                </div>
@@ -168,14 +168,14 @@
                                 <i class="glyphicon glyphicon-ban-circle"></i>
                                 <span>Cancel upload</span>
                             </button>
-                          </div>                          
+                          </div>
 
                         </div>
 
 
 				</div>
 
-          
+
                 </div> <!-- end ibox content -->
                 </div> <!-- end ibox -->
 
@@ -185,16 +185,16 @@
 
 		</div>
 
-                    
+
 
 	</div>
 </div>
 
-{{-- 
+{{--
             @include('site.includes.modal') --}}
 
             @include('site.includes.footer')
-        
+
             @include('admin.includes.scripts')
 
             <script type="text/javascript" src="/js/vendor/underscore-1.8.3.js"></script>
@@ -211,8 +211,10 @@
             <script type="text/javascript" src="/js/custom/admin/documents/showPackage.js"></script>
             <script type="text/javascript" src="/js/custom/admin/documents/breadcrumb.js"></script>
             <script type="text/javascript" src="/js/custom/admin/documents/uploadDocument.js"></script>
+            <script type="text/javascript" src="/js/custom/datetimepicker.js"></script>
             <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
             
+
             <script type="text/javascript">
             $.ajaxSetup({
                 headers: {

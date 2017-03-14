@@ -62,7 +62,7 @@
 							<form class="form-horizontal" id="updateCommunicationForm">
 
 								<input type="hidden" name="banner_id" value={{$banner->id}} >
-								<input type="hidden" id="communicationId" name="communicationId" value={{$communication->id}}> 
+								<input type="hidden" id="communicationId" name="communicationId" value={{$communication->id}}>
 
 								<div class="form-group">
 									<label class="col-sm-2 control-label">Title</label>
@@ -85,23 +85,40 @@
 
 									<label class="col-sm-2 control-label">Type</label>
 										<div class="col-sm-10" id="communication-type-selector">
-											<div class="btn-group" role="group" data-toggle="buttons">
-											@foreach($communicationTypes as $ct)
 
-												@if($communication->communication_type_id == $ct->id)
-												<label class="btn btn-outline btn-default active">
-												@else 
-												<label class="btn btn-outline btn-default">
-												@endif
+											<div class="btn-group">
+												<a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#">
+													@foreach($communicationTypes as $ct)
+														@if($ct->id == $communication->communication_type_id)
+															<span class="selected_comm_type">
+																<i class="fa fa-circle text-{{$ct->colour}}"></i> {{$ct->communication_type}}
+															</span>
+														@endif
+													@endforeach
+													<i class="fa fa-angle-down"></i>
+												</a>
+												<input type="text" hidden name="communication_type" value="{{$communication->communication_type_id}}">
+												<ul name="communication_type" id="" class="dropdown-menu" role="menu">
+													@foreach($communicationTypes as $ct)
 
-												@if( $ct->id == 1)
-												<input type="radio" id="" name="communication_type" value="{{ $ct->id }}"><i class="fa fa-times"></i> {{ $ct->communication_type }}
-												@else 
-												<input type="radio" id="" name="communication_type" value="{{ $ct->id }}"><i class="fa fa-circle text-{{ $ct->colour }}"></i> {{ $ct->communication_type }}
-												@endif
-											</label>	
+														@if( ( $banner->id==1 && $ct->id == 1 ) || ($banner->id==2 && $ct->id == 2) )
+															<li 
+																data-comm-typeid="{{$ct->id}}"
+																data-comm-type= "{{$ct->communication_type}}"
+																class="comm_type_dropdown_item" >
+																<a href=""> {{$ct->communication_type}} </a>
+															</li>
+														@else
+															<li data-comm-typeid="{{$ct->id}}" 
+																data-comm-typecolour= "{{$ct->colour}}" 
+																data-comm-type= "{{$ct->communication_type}}"
+																class="comm_type_dropdown_item" >
+																<a href="#" ><i class="fa fa-circle text-{{$ct->colour}}"></i> {{$ct->communication_type}}</a>
+															</li>
+														@endif
 
-											@endforeach
+													@endforeach
+												</ul>
 											</div>
 										</div>
 								</div>
@@ -113,7 +130,7 @@
 												{{ $communication->body }}
 
 											</textarea>
-												
+
 										</div>
 								</div>
 
@@ -123,37 +140,37 @@
 										<label class="col-sm-2 control-label">Attachments</label>
 										<div class="existing-files-container col-md-10">
 											@include('admin.communication.document-partial', ['communication_documents'=>$communication_documents])
-											
-												
+
+
 										</div>
 
 
 									</div>
 								<!-- </div> -->
 								<div id="files-staged-to-remove"></div>
-								<div id="files-selected" class="row"></div>		
+								<div id="files-selected" class="row"></div>
 
 								<!-- <div class="existing-folders row"> -->
 									{{-- <div class="form-group">
 											<label class="col-sm-2 control-label">Packages Attached</label>
 											<div class="existing-folders-container col-md-10" >
-												
+
 												@foreach($communication_packages as $package)
 												<div class="row">
 													<div class="communication_packages col-md-8">
 														<div class="feature-packagename" data-folderid = {{$package->id}}> <i class="fa fa-folder-o"></i> {{$package->package_name}} </div>
-														
+
 														<div class="package-timestamp"> Updated At : {{$package->updated_at}}</div>
 													</div>
-	
-													
+
+
 													<a data-package-id="{{ $package->id }}" id="package{{$package->id}}" class="remove-package btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 												</div>
 												@endforeach
-												
-												
+
+
 											</div>
-											
+
 										</div> --}}
 								<!-- </div>	 -->
 								<div id="packages-selected" class="row"></div>
@@ -171,7 +188,7 @@
 								</div>
 
 								<div class="form-group">
-						                                            
+
 						                <label class="col-sm-2 control-label">Target Stores</label>
 						                <div class="col-sm-10">
 						                	@if($all_stores)
@@ -221,12 +238,12 @@
 		            </div>
 		            <div class="modal-body">
 		            	<ul class="tree">
-		            	@foreach ($navigation as $nav) 
-						
+		            	@foreach ($navigation as $nav)
+
 							@if (isset($nav["is_child"]) && ($nav["is_child"] == 0) )
-								
+
 								@include('admin.package.file-folder-structure-partial', ['navigation' =>$navigation, 'currentnode' => $nav])
-								
+
 							@endif
 
 						@endforeach
@@ -240,7 +257,7 @@
 		    </div>
 		</div>
 
-		
+
 
 		<div id="package-listing" class="modal fade">
 		    <div class="modal-dialog">
@@ -276,7 +293,9 @@
 		<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 		<script type="text/javascript" src="/js/custom/tree.js"></script>
+		<script type="text/javascript" src="/js/custom/datetimepicker.js"></script>
 		<script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
+
 
 		<script type="text/javascript">
 			$.ajaxSetup({
@@ -296,13 +315,20 @@
 
 		    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
 
+		    $(".comm_type_dropdown_item").click(function(){
+
+		    	$(".selected_comm_type").empty();
+		    	var comm_typeid = $(this).attr('data-comm-typeid');
+		    	var comm_typeColour = $(this).attr('data-comm-typecolour');
+		    	var comm_type = $(this).attr('data-comm-type');
+
+		    	$("input[name='communication_type']").val(comm_typeid);
+		    	$(".selected_comm_type").append('<i class="fa fa-circle text-'+ comm_typeColour + '"> </i> '+ comm_type);
+		    })
+
 
 
 		</script>
 
 	</body>
 	</html>
-
-
-
-

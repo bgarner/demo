@@ -16,7 +16,7 @@ function updateQuicklinksOrder(data){
 			    data: {
 			  		order: i
 			    }
-			});             
+			});
         }
     }
 

@@ -42,8 +42,10 @@ CKEDITOR.dialog.add( 'folderlinkDialog', function( editor ) {
         onOk: function() {
             var dialog = this;
 
-            var link = editor.document.createElement( 'a' );
-            link.setAttribute( 'href',  "/"+localStorage.getItem('userStoreNumber')+'/document#!/'+dialog.getValueOf( 'tab-basic', 'folderlink_folderid' ) );
+            var link = editor.document.createElement( 'div' );
+            
+            link.setAttribute( 'data-folderid',  dialog.getValueOf( 'tab-basic', 'folderlink_folderid' ) );
+            link.setAttribute('class', 'inline-folder-link');
             link.setText( dialog.getValueOf( 'tab-basic', 'folderlink_foldername' ) );
             editor.insertElement( link );
         },

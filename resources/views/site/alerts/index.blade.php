@@ -14,119 +14,121 @@
 
 <body class="fixed-navigation">
     <div id="wrapper">
-    <nav class="navbar-default navbar-static-side" role="navigation">
-        <div class="sidebar-collapse">
-           @include('site.includes.sidenav')
-        </div>
-    </nav>
-
-    <div id="page-wrapper" class="gray-bg">
-        <div class="row border-bottom">
-              @include('site.includes.topbar') 
-        </div>
-
-
-<div class="wrapper wrapper-content">
-        <div class="row">
-            <div class="col-lg-2">
-
-            @include('site.alerts.alertssidebar')
-
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+               @include('site.includes.sidenav')
             </div>
-            <div class="col-lg-10 animated fadeInRight">
-            <div class="mail-box-header">
+        </nav>
 
+        <div id="page-wrapper" class="gray-bg">
+            <div class="row border-bottom">
+                  @include('site.includes.topbar') 
+            </div>
+
+
+            <div class="wrapper wrapper-content">
                 <div class="row">
-                    <div class="col-md-6">
-                        <h2>
-                        	@if($title == "")
-                        		All Alerts 
-                        	@else
-                        		{{ $title }}
-                        	@endif
+                    <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3">
 
-                        </h2>
+                        @include('site.alerts.alertssidebar')
+
                     </div>
+                    <div class="col-lg-10 col-md-9 col-sm-9 col-xs-9 animated fadeInRight">
+                        <div class="mail-box-header">
 
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h2>
+                                    	@if($title == "")
+                                    		All Alerts 
+                                    	@else
+                                    		{{ $title }}
+                                    	@endif
 
-            <div class="col-lg-4 col-lg-offset-2" id="archive-switch">
-                <form class="form-inline" >
-                    <div class="pull-right">
-                        
-                        <small style="font-weight: bold; padding-right: 5px;">Show Archive</small>
-                            
-                            <div class="switch pull-right">
-                                <div class="archive-onoffswitch onoffswitch">
-                                    
-                                    @if($archives)
-                                        <input type="checkbox" checked="" class="onoffswitch-checkbox" id="archives" name="archives">
-                                    @else
-                                        <input type="checkbox" class="onoffswitch-checkbox" id="archives" name="archives">
-                                    @endif
-                                    
-                                    <label class="onoffswitch-label" for="archives">
-                                        <span class="onoffswitch-inner"></span>
-                                        <span class="onoffswitch-switch"></span>
-                                    </label>
+                                    </h2>
                                 </div>
+
+
+                                <div class="col-lg-4 col-lg-offset-2" id="archive-switch">
+                                    <form class="form-inline" >
+                                        <div class="pull-right">
+                                            
+                                            <small style="font-weight: bold; padding-right: 5px;">Show Archive</small>
+                                                
+                                                <div class="switch pull-right">
+                                                    <div class="archive-onoffswitch onoffswitch">
+                                                        
+                                                        @if($archives)
+                                                            <input type="checkbox" checked="" class="onoffswitch-checkbox" id="archives" name="archives">
+                                                        @else
+                                                            <input type="checkbox" class="onoffswitch-checkbox" id="archives" name="archives">
+                                                        @endif
+                                                        
+                                                        <label class="onoffswitch-label" for="archives">
+                                                            <span class="onoffswitch-inner"></span>
+                                                            <span class="onoffswitch-switch"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                           
+                                        </div>
+                                    </form>
+                                </div>
+
+
+
                             </div>
-                       
+
+
+                        </div>
+                        <div class="mail-box">
+
+
+                            <table class="table table-hover table-mail alert-table">
+                            
+                                <thead>
+                                    <tr> 
+                                        
+                                        <th> Type</th>
+                                        <th> Title </th>
+                                        <!-- <th> Description </th> -->
+                                        <th> Date </th> 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+
+                                @foreach($alerts as $alert)
+                                
+
+                                @if(isset($alert->archived))
+                                <tr class="unread archived">
+                                @else
+                                <tr class="unread">
+                                @endif    
+                                    <td class="check-mail col-lg-1 col-md-1 col-sm-2 col-xs-1 ">
+                                        <i class="fa fa-bell-o"></i><span class="label">{{ $alert->alertTypeName }}</span>
+                                    </td>
+                                
+                                    <td class="mail-subject col-lg-8 col-md-7 col-sm-3 col-xs-5 ">{!! $alert->link_with_icon !!}</td>
+                                    <!-- <td class="mail-preview">{{ $alert->description }}</td> -->
+                                    
+                                    <td class="mail-date col-lg-3 col-md-4 col-sm-4 col-xs-2">{{ $alert->prettyDate }}<!--  <small style="font-weight: normal;padding-left: 10px;">({{ $alert->since }} ago)</small> --></td>
+                                </tr>                
+
+                                @endforeach
+                                 
+                                </tbody>
+                            </table>
+
+
+                        </div>
                     </div>
-                </form>
-            </div>
-
-
-
-                </div>
-
-
-            </div>
-                <div class="mail-box">
-
-
-                <table class="table table-hover table-mail alert-table">
-                <tbody>
-                    <thead>
-                        <tr> 
-                            <th>&nbsp;</th>
-                            <th> Type</th>
-                            <th> Title </th>
-                            <!-- <th> Description </th> -->
-                            <th> Date </th> 
-                        </tr>
-                    </thead>
-
-                @foreach($alerts as $alert)
-                
-
-                @if(isset($alert->archived))
-                <tr class="unread archived">
-                @else
-                <tr class="unread">
-                @endif    
-                    <td class="check-mail">
-                        <i class="fa fa-bell-o"></i>
-                    </td>
-                
-                    <td><span class="label label pull-left">{{ $alert->alertTypeName }}</span></td>
-                    <td class="mail-subject">{!! $alert->link_with_icon !!}</td>
-                    <!-- <td class="mail-preview">{{ $alert->description }}</td> -->
-                    
-                    <td class="mail-date">{{ $alert->prettyDate }}<!--  <small style="font-weight: normal;padding-left: 10px;">({{ $alert->since }} ago)</small> --></td>
-                </tr>                
-
-                @endforeach
-                 
-                </tbody>
-                </table>
-
-
                 </div>
             </div>
-        </div>
-        </div>
 
-
+        </div>
+    </div>
 
     @include('site.includes.footer')       
   

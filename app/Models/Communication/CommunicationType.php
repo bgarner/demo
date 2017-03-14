@@ -15,8 +15,15 @@ class CommunicationType extends Model
     public static function getCommunicationTypeCount($storeNumber, $storeBanner)
     {
     	$communicationTypes = CommunicationType::where('banner_id', $storeBanner)->get();
-    	foreach($communicationTypes as $ct){
-            $ct->count = Communication::getActiveCommunicationCountByCategory($storeNumber, $ct->id);
+    	foreach($communicationTypes as $key=>$ct){
+
+            $count = Communication::getActiveCommunicationCountByCategory($storeNumber, $ct->id);
+            if($count > 0) {
+                $ct->count = $count;
+            }
+            else{
+                $communicationTypes->forget($key);
+            }
         }
         return $communicationTypes;	
     }
@@ -24,8 +31,14 @@ class CommunicationType extends Model
     public static function getCommunicationTypeCountAllMessages($storeNumber, $storeBanner)
     {
         $communicationTypes = CommunicationType::where('banner_id', $storeBanner)->get();
-         foreach($communicationTypes as $ct){
-            $ct->count = Communication::getAllCommunicationCountByCategory($storeNumber, $ct->id);
+         foreach($communicationTypes as $key=>$ct){
+            $count = Communication::getAllCommunicationCountByCategory($storeNumber, $ct->id);
+            if($count > 0) {
+                $ct->count = $count;
+            }
+            else{
+                $communicationTypes->forget($key);
+            }
         }
         return $communicationTypes; 
     }    

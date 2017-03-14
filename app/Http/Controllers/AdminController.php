@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
@@ -14,10 +14,12 @@ use App\Models\Communication\Communication;
 use App\User;
 use App\Models\UserBanner;
 use App\Models\UserSelectedBanner;
+use App\Models\Analytics\Analytics;
+
 
 class AdminController extends Controller
 {
-    
+
     private $group_id;
     private $user_id;
      /**
@@ -27,9 +29,9 @@ class AdminController extends Controller
     {
         $this->middleware('admin.auth');
         $this->middleware('banner');
-        $this->user_id = \Auth::user()->id;
-        $this->group_id = \Auth::user()->group_id;
-        
+        $this->user_id = Auth::user()->id;
+        $this->group_id = Auth::user()->group_id;
+
     }
 
 
@@ -40,16 +42,27 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-
-        $banner_id = UserSelectedBanner::where('user_id', \Auth::user()->id)->first()->selected_banner_id;
+        $banner_id = UserSelectedBanner::where('user_id', Auth::user()->id)->first()->selected_banner_id;
 
         $banner  = Banner::find($banner_id);
 
         $banners = Banner::all();
 
+        $trafficDaily = Analytics::getTrafficLast24hrs();
+
+        $traffic = Analytics::getTrafficLast30Days();
+
+        $commStats = Analytics::getCommunicationStats();
+
+        $urgentNoticeStats = Analytics::getUrgentNoticeStats();
+
         return view('admin.index')->with('banner', $banner)
+                    ->with('traffic', $traffic)
+                    ->with('trafficDaily', $trafficDaily)
+                    ->with('commStats', $commStats)
+                    ->with('urgentNoticeStats', $urgentNoticeStats)
                     ->with('banners', $banners);
-        
+
     }
 
     /**

@@ -59,7 +59,7 @@
 		                            <h5>Edit Event: {{ $event->title }}</h5>
 		                            <div class="ibox-tools">
 		                                {{-- <a href="/admin/calendar/create" class="btn btn-primary" role="button"><i class="fa fa-plus"></i> Add New Event</a> --}}
-                                        
+
 		                            </div>
 		                        </div>
 		                        <div class="ibox-content">
@@ -85,7 +85,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                        </div>                                        
+                                        </div>
 
                                         {{-- <div class="summernote"></div> --}}
 
@@ -105,13 +105,13 @@
                                         <div class="form-group"><label class="col-sm-2 control-label">Description</label>
                                             <div class="col-sm-10">
                                                 <textarea class="form-control" rows="5" id="description" name="description">{{ $event->description }}</textarea>
-                                                
+
                                             </div>
                                         </div>
 
-                                        
+
                                         <div class="form-group">
-                                                                        
+
                                             <label class="col-sm-2 control-label">Stores <span class="req">*</span></label>
                                             <div class="col-sm-10">
                                                 @if($all_stores)
@@ -126,7 +126,7 @@
                                             </div>
 
                                         </div>
-                                        
+
 
                                         <div class="hr-line-dashed"></div>
 
@@ -158,7 +158,8 @@
 
                 <script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
                 <script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
-                <script src="/js/custom/admin/events/editEvent.js"></script>
+                <script type="text/javascript" src="/js/custom/admin/events/editEvent.js"></script>
+                <script type="text/javascript" src="/js/custom/datetimepicker.js"></script>
                 <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
                 <script type="text/javascript">
 					$.ajaxSetup({
@@ -170,7 +171,7 @@
                     $(".chosen").chosen({
                         width:'75%'
                     });
-                    
+
                     CKEDITOR.replace('description', {
                         filebrowserUploadUrl: "{{route('utilities.ckeditorimages.store',['_token' => csrf_token() ])}}"
                     });
@@ -178,7 +179,7 @@
 				</script>
 
 
-				
+
 
 				@include('site.includes.bugreport')
 

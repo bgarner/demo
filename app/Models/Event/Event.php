@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use App\Models\Validation\EventValidator;
 use App\Models\Utility\Utility;
 
+
 class Event extends Model
 {
 	use SoftDeletes;
@@ -54,7 +55,7 @@ class Event extends Model
         $event = Event::create([
 
 
-    		    'banner_id' => $banner->id,
+    		'banner_id' => $banner->id,
             'title' => $request['title'],
             'event_type' => $request['event_type'],
             'description' => $desc,

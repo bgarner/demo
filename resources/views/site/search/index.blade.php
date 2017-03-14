@@ -293,6 +293,50 @@
 
                 </div> 
 
+                <div class="row">
+
+                    <div class="col-lg-12 animated fadeInRight">
+                        <div class="search-box-header">
+                            <h2>Videos <small>{{ count($videos) }} results</small></h2>
+                        </div>
+                        @if( count($videos) > 0)
+                        <div class="mail-box">
+
+
+                            <table class="table table-hover table-mail">
+
+                                <thead>
+                                    <tr> 
+                                        <th></th>
+                                        <th> Title </th> 
+                                        <th> Thumbnail </th>
+                                        <th> Desctiption </th> 
+                                        <th> Last Updated </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    @foreach($videos as $v)
+                                    <tr>
+                                        <td class="check-mail"><i class="fa fa-film"></i></td>
+                                        
+                                        <td>{{ $v->title }}</td>
+                                        <td><a href="/{{ Request::segment(1) }}/video/watch/{{$v->id}}"> <img src="/video/thumbs/{!! $v->thumbnail !!}"  height="75" width="125"></a></td>
+                                        <td>{{ $v->description }} </td>
+                                        <td>{{ $v->since }}</td>
+                                    </tr>                
+                                    @endforeach
+                                                 
+                                </tbody>
+                            </table>
+
+                        </div>
+                        @endif
+                    </div>
+
+                </div> 
+
    
 
                             

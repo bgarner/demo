@@ -77,10 +77,14 @@ class Notification extends Model
     	return $notifications;
     }
 
-    public static function getNotificationsByFeature($bannerId, $windowType, $windowSize, $featureId)
+    public static function getNotificationsByFeature($featureId, $storeNumber)
     {
+        $feature = Feature::find($featureId);
+        $windowType = $feature->update_type_id;
+        $windowSize = $feature->update_frequency;
         $now = Carbon::now()->toDatetimeString();
-        $documentIdArray = Feature::getDocumentsIdsByFeatureId($featureId);
+
+        $documentIdArray = Feature::getDocumentsIdsByFeatureId($featureId, $storeNumber);
         $documentIdArray = array_values($documentIdArray);
 
         switch($windowType){

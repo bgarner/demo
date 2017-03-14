@@ -26,19 +26,6 @@
 <!-- jQuery UI -->
 <script src="/js/plugins/jquery-ui/jquery-ui.min.js"></script>
 
-<!-- Jvectormap -->
-{{-- <script src="/js/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js"></script>
-<script src="/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script> --}}
-
-<!-- Sparkline -->
-{{-- <script src="/js/plugins/sparkline/jquery.sparkline.min.js"></script> --}}
-
-<!-- Sparkline demo data  -->
-{{-- <script src="/js/demo/sparkline-demo.js"></script> --}}
-
-<!-- ChartJS-->
-{{-- <script src="/js/plugins/chartJs/Chart.min.js"></script> --}}
-
 <script src="/js/plugins/sweetalert/sweetalert.min.js"></script>
 
 <!-- date range picker -->
@@ -49,20 +36,3 @@
 
 <!-- editor -->
 {{-- <script src="/js/plugins/summernote/summernote.min.js"></script> --}}
-
-<script type="text/javascript">
-	$('.datetimepicker-start').datetimepicker({
-        format: 'YYYY-MM-DD HH:mm:ss'
-    });
-    $('.datetimepicker-end').datetimepicker({
-        format: 'YYYY-MM-DD HH:mm:ss',
-        useCurrent: false 
-    });
-     $(".datetimepicker-start").on("dp.change", function (e) {
-        $('.datetimepicker-end').data("DateTimePicker").minDate(e.date);
-    });
-    $(".datetimepicker-end").on("dp.change", function (e) {
-        $('.datetimepicker-start').data("DateTimePicker").maxDate(e.date);
-    });
-    $(".datetimepicker-start").data('DateTimePicker').defaultDate(new Date());
-</script>

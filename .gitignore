@@ -1,4 +1,5 @@
 /public/files
+/public/video
 /public/images/documents/thumb
 /public/images/featured-backgrounds
 /public/images/featured-covers
@@ -15,3 +16,5 @@ Homestead.json
 .flooignore
 /public/js/env.js
 .catapult
+.vscode
+.idea

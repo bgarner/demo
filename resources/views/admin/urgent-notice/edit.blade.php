@@ -268,6 +268,7 @@
 	<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>	
 	<script type="text/javascript" src="/js/custom/admin/urgent-notices/editUrgentNotice.js"></script>
 	<script type="text/javascript" src="/js/custom/tree.js"></script>
+	<script src="/js/custom/datetimepicker.js"></script>
 	<script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
 	<script type="text/javascript">
 		$(".chosen").chosen({

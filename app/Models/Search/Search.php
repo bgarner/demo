@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Log;
 use Illuminate\Database\Eloquent\Collection as Collection;
 use App\Models\Event\Event;
+use App\Models\Video\Video;
 
 class Search extends Model
 {
@@ -373,6 +374,64 @@ class Search extends Model
         }
 
         $ranked_results = Search::rankSearchResults($events);
+
+        $ranked_results = $ranked_results->sortBy(function($sort){
+                    return $sort->rank;
+                })->reverse();
+        return $ranked_results;
+    }
+
+    public static function searchVideos($query)
+    {
+        $videos = collect();
+
+        $query_terms = explode(' ', $query);
+
+        foreach ($query_terms as $term) {
+
+            //search title
+            $videos = $videos->merge(
+                    
+                    Video::where('title', 'LIKE', '%'.$term.'%')
+                        ->where('videos.deleted_at', '=', null)
+                        ->select('videos.*')
+                        ->get()
+                        ->each(function($video){
+                            $video->rank = 1;
+                            $video->since = Utility::getTimePastSinceDate($video->updated_at);
+                        })
+
+                );
+
+            //search desription
+            $videos = $videos->merge(
+                     Video::where('description', 'LIKE', '%'.$term.'%')
+                    ->where('videos.deleted_at', '=', null)
+                    ->select('videos.*')
+                    ->get()
+                    ->each(function($video){
+                        $video->rank = 1;
+                        $video->since = Utility::getTimePastSinceDate($video->updated_at);
+                    })
+                );
+
+            //search tags
+            $videos = $videos->merge(
+                    Video::join('video_tags', 'video_tags.video_id', '=', 'videos.id')
+                    ->join('tags', 'tags.id', '=', 'video_tags.tag_id')
+                    ->where('tags.name','LIKE', '%'.$term.'%')
+                    ->where('video_tags.deleted_at', '=', null)
+                    ->where('tags.deleted_at', '=', null)
+                    ->select('videos.*')
+                    ->get()
+                    ->each(function($video){
+                        $video->rank = 1;
+                        $video->since = Utility::getTimePastSinceDate($video->updated_at);
+                    })
+                );
+        }
+        
+        $ranked_results = Search::rankSearchResults($videos);
 
         $ranked_results = $ranked_results->sortBy(function($sort){
                     return $sort->rank;

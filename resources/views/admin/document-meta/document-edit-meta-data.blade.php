@@ -184,6 +184,8 @@
 
           @include('admin.includes.scripts')
 
+          <script src="/js/custom/datetimepicker.js"></script>
+          
         <script type="text/javascript">
           $.ajaxSetup({
                 headers: {

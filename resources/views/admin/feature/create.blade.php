@@ -253,7 +253,8 @@
 
 				<script type="text/javascript" src="/js/custom/admin/features/addFeature.js"></script>
 				<script type="text/javascript" src="/js/custom/tree.js"></script>
-
+				<script src="/js/custom/datetimepicker.js"></script>
+				
 				<script type="text/javascript">
 					$.ajaxSetup({
 				        headers: {

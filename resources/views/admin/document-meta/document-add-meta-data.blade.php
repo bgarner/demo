@@ -128,7 +128,7 @@
             <script type="text/javascript" src="/js/custom/admin/documents/breadcrumb.js"></script>
             <script type="text/javascript" src="/js/custom/tree.js"></script>
             <script type="text/javascript" src="/js/custom/submitmetadata.js"></script>
-
+            <script src="/js/custom/datetimepicker.js"></script>
         
                 <script type="text/javascript">
 

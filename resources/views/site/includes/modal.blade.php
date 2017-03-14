@@ -1,6 +1,6 @@
 <div class="modal inmodal" id="fileviewmodal" tabindex="-1" role="document" aria-hidden="true" style="display: none;">
 
-    <i class="fa fa-times-circle-o pull-right" data-dismiss="modal" style="font-size: 40px !important; color: #fff; cursor: pointer; padding: 20px;"></i>
+    <i class="fa fa-times-circle-o pull-right" id="dismissmodal" data-dismiss="modal" style="font-size: 40px !important; color: #fff; cursor: pointer; padding: 20px;"></i>
 
     <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -14,7 +14,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="modal inmodal" id="videomodal" tabindex="-1" role="video" aria-hidden="true" style="display: none;">
 
@@ -69,6 +68,7 @@
         </div>
     </div>
 </div>
+
 
 <div class="modal inmodal" id="bugreportmodal" tabindex="-1" role="event" aria-hidden="true" style="display: none;">
 

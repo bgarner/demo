@@ -28,6 +28,8 @@
 	<link href="/css/custom/document-upload.css" rel="stylesheet">
 	<link href="/css/custom/package.css" rel="stylesheet">
 
+	<link href="/css/print.css" rel="stylesheet" media="print">
+
 	<style>
 		.modal-lg{ height: 95%; width: 80% !important; padding: 0; }
 		.modal-content{ height: 100% !important;}

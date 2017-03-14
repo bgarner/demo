@@ -30,7 +30,7 @@
 
 	   <div class="row wrapper border-bottom white-bg page-heading">
 
-            <div class="col-lg-8 col-md-8 col-sm-6">
+            <div class="col-lg-8 col-md-8 col-sm-6 col-xs-6">
                 <h2>Library</h2>
 
                 <ol class="breadcrumb">
@@ -39,7 +39,7 @@
                 </ol>
             </div>
 
-            <div class="col-lg-2 col-md-4 col-sm-6 col-lg-offset-2 hidden document-archive" id="archive-switch">
+            <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 col-lg-offset-2 document-archive" id="archive-switch">
                 <form class="form-inline" >
                     <div class="pull-right">
                         
@@ -65,7 +65,7 @@
 
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                     <div class="ibox float-e-margins">
                         <div class="ibox-content">
                             <div class="file-manager">
@@ -90,7 +90,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-8 animated fadeInRight">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 animated fadeInRight">
                     
                     <div class="row">
 

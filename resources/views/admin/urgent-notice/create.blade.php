@@ -49,7 +49,7 @@
 		                        <div class="ibox-title">
 		                            <h5>New Urgent Notice</h5>
 		                            <div class="ibox-tools">
-                                        
+
 		                            </div>
 		                        </div>
 		                        <div class="ibox-content">
@@ -62,9 +62,9 @@
                                             </ul>
                                         </div>
                                     @endif
-                                    
+
                                     <form method="get" class="form-horizontal" id="createNewUrgentNoticeForm">
-                                        
+
                                         <input type="hidden" name="banner_id" value="{{$banner->id}}">
                                         <div class="form-group"><label class="col-sm-2 control-label">Title</label>
                                             <div class="col-sm-10"><input type="text" id="title" name="title" class="form-control" value=""></div>
@@ -85,7 +85,7 @@
 
                                         <div class="form-group hidden"><label class="col-sm-2 control-label">Attachment Selected</label>
                                             <div class="col-md-10" id="attachment-selected">
-                                               
+
                                             </div>
                                         </div> -->
 
@@ -106,7 +106,7 @@
                                         <div class="hr-line-dashed"></div>
 
                                         <div class="form-group">
-                                            
+
                                             <label class="col-sm-2 control-label">Target Stores</label>
                                             <div class="col-sm-10">
                                                 {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
@@ -118,8 +118,19 @@
 
 
 
+<<<<<<< HEAD
                                        
                                         
+=======
+                                        <div class="form-group">
+                                            <div class="col-sm-10 col-sm-offset-2">
+                                                <a class="btn btn-white" href="/admin/urgentnotice"><i class="fa fa-close"></i> Cancel</a>
+                                                <button class="urgentnotice-create btn btn-primary" type="submit"><i class="fa fa-check"></i> Create New Urgent Notice</button>
+
+                                            </div>
+                                        </div>
+
+>>>>>>> develop
                                     </form>
 
 
@@ -199,12 +210,12 @@
 							            </div>
 							            <div class="modal-body">
                                             <ul class="tree">
-							            	@foreach ($navigation as $nav) 
-											
+							            	@foreach ($navigation as $nav)
+
 												@if (isset($nav["is_child"]) && ($nav["is_child"] == 0) )
-													
+
 													@include('admin.package.file-folder-structure-partial', ['navigation' =>$navigation, 'currentnode' => $nav])
-													
+
 												@endif
 
 											@endforeach
@@ -228,11 +239,11 @@
 							            <div class="modal-body">
                                             <ul class="tree">
 							            	@foreach ($folderStructure as $folder)
-											
+
 												@if (isset($folder["is_child"]) && ($folder["is_child"] == 0) )
-													
+
 													@include('admin.package.folder-structure-partial', ['folderStructure' =>$folderStructure, 'currentnode' => $folder])
-													
+
 												@endif
 
 
@@ -265,9 +276,10 @@
 
 
 <script type="text/javascript" src="/js/custom/admin/urgent-notices/addUrgentNotice.js"></script>
-<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>	
-<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>	
+<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
+<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
 <script type="text/javascript" src="/js/custom/tree.js"></script>
+<script type="text/javascript" src="/js/custom/datetimepicker.js"></script>
 <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
 <script type="text/javascript">
     $.ajaxSetup({
@@ -283,21 +295,15 @@
     //     keyboardNavigation: false,
     //     forceParse: false,
     //     autoclose: true
-    // });            
+    // });
     CKEDITOR.replace('description', {
         filebrowserUploadUrl: "{{route('utilities.ckeditorimages.store',['_token' => csrf_token() ])}}"
-    }); 
+    });
 
-    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});              
+    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
 
 </script>
 
 
 </body>
 </html>
-
-			
-	
-
-
-

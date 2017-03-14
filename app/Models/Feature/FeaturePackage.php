@@ -26,4 +26,9 @@ class FeaturePackage extends Model
 
         return $selected_packages;
     }
+
+    public static function getFeaturePackagesArray($feature_id)
+    {
+        return FeaturePackage::where('feature_id', $feature_id)->get()->pluck('package_id')->toArray();
+    }
 }

@@ -44,13 +44,19 @@ body{
 	border: none !important;
 }
 
+.nav-second-level li a{
+	font-weight: normal !important;
+	color: #fff;
+}
 
+.nav-second-level:after{
+	display: none !important;
+}
 
 .navbar-minimalize{
 	background-color: #14380C !important;
 	border: #14380C;
 }
-
 
 .metismenu .label-primary{
 	background-color: #F1CA00 !important;
@@ -74,3 +80,12 @@ body{
 }
 
 .product-box{ padding: 1px !important; margin: 10px !important; height: 168px; width: 168px; float: left;}
+
+body.mini-navbar .logo-element {
+  background:  #14380C;
+}
+
+/*body.mini-navbar .nav-header{
+	background: #14380C url('/images/skin/atmo.png') top center no-repeat !important;
+	margin: 20px 0px;
+}*/

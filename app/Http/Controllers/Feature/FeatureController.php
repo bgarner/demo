@@ -86,8 +86,7 @@ class FeatureController extends Controller
 
         $feature = Feature::where('id', $id)->first();
 
-
-        $selected_documents = FeatureDocument::getFeaturedDocuments($feature->id);
+        $selected_documents = FeatureDocument::getFeaturedDocuments($feature->id, $storeNumber);
 
         $selected_packages = FeaturePackage::getFeaturePackages($feature->id);
         
@@ -95,7 +94,7 @@ class FeatureController extends Controller
 
         $feature_communcations = CommunicationTarget::getTargetedCommunicationsByCategory($storeNumber, $feature_communcation_type_id);
 
-		$notifications = Notification::getNotificationsByFeature($storeInfo->banner_id, $feature->update_type_id, $feature->update_frequency, $feature->id);
+		$notifications = Notification::getNotificationsByFeature($feature->id, $storeNumber);
 
         $urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($storeNumber);
 

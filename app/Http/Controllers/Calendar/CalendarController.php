@@ -23,6 +23,7 @@ use App\Models\Alert\Alert;
 use App\Skin;
 use App\Models\StoreInfo;
 use App\Models\Utility\Utility;
+use App\Models\ProductLaunch\ProductLaunch;
 
 class CalendarController extends Controller
 {
@@ -56,19 +57,22 @@ class CalendarController extends Controller
         $alertCount = Alert::getActiveAlertCountByStore($storeNumber);
 
         //for the calendar view
-        $events = Event::getActiveEventsByStore($storeNumber); 
-
-        //for then list of events
-        $eventsList = Event::getActiveEventsByStoreAndMonth($storeNumber, $today);
-
+        $events = Event::getActiveEventsByStore($storeNumber);
+        $productLaunches = ProductLaunch::getActiveProductLaunchByStoreForCalendar($storeNumber);
+        $events = $events->merge($productLaunches); 
+        
+        //for the list of events
+        $eventsList = $this->getListofEventsByStoreAndMonth($storeNumber, $today);
+        
         foreach ($events as $event) {
             $event->prettyDateStart = Utility::prettifyDate($event->start);
             $event->prettyDateEnd = Utility::prettifyDate($event->end);
             $event->since = Utility::getTimePastSinceDate($event->start);
-            $event->event_type_name = EventType::getName($event->event_type);
+            if(!isset($event->event_type_name)){
+                $event->event_type_name = EventType::getName($event->event_type);
+            }
         }
-
-
+        
         return view('site.calendar.index')
                 ->with('skin', $skin)
                 ->with('alertCount', $alertCount)
@@ -148,14 +152,34 @@ class CalendarController extends Controller
         //
     }
 
+    public function getEventListPartial($storeNumber, $yearMonth)
+    {
+        $eventsList = $this->getListofEventsByStoreAndMonth($storeNumber, $yearMonth);
+        return view('site.calendar.event-list-partial')->with('eventsList', $eventsList);
+
+    }
+
     public function getListofEventsByStoreAndMonth($storeNumber, $yearMonth)
     {
         $eventsList = Event::getActiveEventsByStoreAndMonth($storeNumber, $yearMonth);
+        $productLaunchList = ProductLaunch::getActiveProductLaunchByStoreandMonth($storeNumber, $yearMonth);
+        
+        foreach ($productLaunchList as $key => $value) {
+            
+            if(array_key_exists($key, $eventsList)){
+
+                $value = $value->merge($eventsList[$key]);
+            }
+            else{
+                $eventsList->put($key, $value);
+            }
+            
+        }
+        $eventsList = $eventsList->toArray();
+        ksort($eventsList);
+        $eventsList = json_decode(json_encode($eventsList));
+
         return $eventsList;
     }
-    public function getEventListPartial($storeNumber, $yearMonth)
-    {
-        $events = Event::getActiveEventsByStoreAndMonth($storeNumber, $yearMonth);
-        return view('site.calendar.event-list-partial')->with('eventsList', $events);
-    }
+
 }
