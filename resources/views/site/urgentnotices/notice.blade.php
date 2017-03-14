@@ -47,10 +47,10 @@
                 </div>
 
 
-                @if($notice->attachment_type_id == 1) {{-- folders --}}
+                @if(count($attached_folders) > 0)
                 <div class="mail-attachment">
                     <h3>
-                        <span><i class="fa fa-paperclip"></i> {{ count($attached_folders) }} attachments</span>
+                        <span><i class="fa fa-paperclip"></i> {{ count($attached_folders) }} folders</span>
                     </h3>
                     @foreach($attached_folders as $folder)
 
@@ -76,47 +76,46 @@
                     <div class="clearfix"></div>
                 </div>
                 @endif
+                @if(count($attached_documents) > 0)
+               <div class="mail-attachment">
+                    <h3>
+                        <span><i class="fa fa-paperclip"></i> {{ count($attached_documents) }} documents</span>
+                    </h3>
 
-                @if($notice->attachment_type_id == 2) {{-- files --}}
+                    <div class="attachment">
 
-                   <div class="mail-attachment">
-                        <h3>
-                            <span><i class="fa fa-paperclip"></i> {{ count($attached_documents) }} attachments</span>
-                        </h3>
+                    	@foreach($attached_documents as $doc)
+                   	    
+                            <div class="file-box">
+                                <div class="file">
+                                    {!! $doc->anchor_only !!}
 
-                        <div class="attachment">
-
-                        	@foreach($attached_documents as $doc)
-                       	    
-                                <div class="file-box">
-                                    <div class="file">
-                                        {!! $doc->anchor_only !!}
-
-    										<div class="icon">
-                                                {!! $doc->icon !!}
-                                            </div>
+										<div class="icon">
+                                            {!! $doc->icon !!}
+                                        </div>
 
 
-                                            <div class="file-name">
-                                                <div style="font-size: 16px; padding-bottom: 10px;"> {{ $doc->title }}</div>
-                                                
-                                                <small class="clearfix"><span class="text-muted pull-left">{{ $doc->prettyDate }}</span> <span class="text-muted pull-right">{{ $doc->since }} ago</span></small>
+                                        <div class="file-name">
+                                            <div style="font-size: 16px; padding-bottom: 10px;"> {{ $doc->title }}</div>
+                                            
+                                            <small class="clearfix"><span class="text-muted pull-left">{{ $doc->prettyDate }}</span> <span class="text-muted pull-right">{{ $doc->since }} ago</span></small>
 
-                                            </div>
-                                        </a>
-                                        
-                                    </div>
-
+                                        </div>
+                                    </a>
+                                    
                                 </div>
 
-                            @endforeach
+                            </div>
 
-        
-                            <div class="clearfix"></div>
-                        </div>
-					</div>
+                        @endforeach
 
-                @endif 
+    
+                        <div class="clearfix"></div>
+                    </div>
+				</div>
+                @endif
+
+               
 
 
             </div>            

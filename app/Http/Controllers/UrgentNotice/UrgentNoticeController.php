@@ -13,11 +13,13 @@ use App\Models\StoreInfo;
 use App\Models\Communication\Communication;
 use App\Models\UrgentNotice\UrgentNotice;
 use App\Models\UrgentNotice\UrgentNoticeAttachmentType;
-use App\Models\UrgentNotice\UrgentNoticeAttachment;
 use App\Models\UrgentNotice\UrgentNoticeTarget;
 use App\Models\Document\Document;
 use App\Models\Document\Folder;
 use App\Models\Utility\Utility;
+use App\Models\UrgentNotice\UrgentNoticeDocument;
+use App\Models\UrgentNotice\UrgentNoticeFolder;
+
 
 class UrgentNoticeController extends Controller
 {
@@ -91,47 +93,10 @@ class UrgentNoticeController extends Controller
 
         $attachment_types = UrgentNoticeAttachmentType::all();
 
-        $urgent_notice_attachment_ids = UrgentNoticeAttachment::where('urgent_notice_id', $id)->get()->pluck('attachment_id');
+        $attached_documents = UrgentNoticeDocument::getDocuments($id);
 
-        $attached_folders = [];
-        $attached_documents = [];
+        $attached_folders = UrgentNoticeFolder::getFolders($id);
 
-        if ($notice->attachment_type_id == 1) { //folder
-            
-            foreach ($urgent_notice_attachment_ids as $key=>$global_folder_id) {
-                $folder_id = \DB::table('folder_ids')->where('id', $global_folder_id)->first()->folder_id;
-                $folder = Folder::find($folder_id);
-                $folder->global_folder_id = $global_folder_id;
-
-                $folder->since = Utility::getTimePastSinceDate($folder->updated_at);
-                $folder->prettyDate = Utility::prettifyDate($folder->updated_at);
-
-                array_push($attached_folders, $folder);
-                unset($folder);
-            }
-        }
-        else if ($notice->attachment_type_id == 2 ) { //document
-            
-            foreach ($urgent_notice_attachment_ids as $document_id) {
-                
-                $document = Document::find($document_id);
-
-                $document->link = Utility::getModalLink($document->filename, $document->title, $document->original_extension, $document->id, 0);
-                $document->link_with_icon = Utility::getModalLink($document->filename, $document->title, $document->original_extension, $document->id, 1);
-                $document->anchor_only =  Utility::getModalLink($document->filename, $document->title, $document->original_extension, $document->id, 1, 1);
-                $document->icon = Utility::getIcon($document->original_extension);
-
-                array_push($attached_documents, $document);
-                unset($document);
-            }
-        } 
-
-         foreach($attached_documents as $doc){
-            
-            $doc->since = Utility::getTimePastSinceDate($doc->updated_at);
-            $doc->prettyDate =  Utility::prettifyDate($doc->updated_at);
-         }
-         
         return view('site.urgentnotices.notice')
             ->with('skin', $skin)
             ->with('notice', $notice)

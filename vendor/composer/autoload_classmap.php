@@ -159,6 +159,8 @@ return array(
     'App\\Models\\UrgentNotice\\UrgentNotice' => $baseDir . '/app/Models/UrgentNotice/UrgentNotice.php',
     'App\\Models\\UrgentNotice\\UrgentNoticeAttachment' => $baseDir . '/app/Models/UrgentNotice/UrgentNoticeAttachment.php',
     'App\\Models\\UrgentNotice\\UrgentNoticeAttachmentType' => $baseDir . '/app/Models/UrgentNotice/UrgentNoticeAttachmentType.php',
+    'App\\Models\\UrgentNotice\\UrgentNoticeDocument' => $baseDir . '/app/Models/UrgentNotice/UrgentNoticeDocument.php',
+    'App\\Models\\UrgentNotice\\UrgentNoticeFolder' => $baseDir . '/app/Models/UrgentNotice/UrgentNoticeFolder.php',
     'App\\Models\\UrgentNotice\\UrgentNoticeTarget' => $baseDir . '/app/Models/UrgentNotice/UrgentNoticeTarget.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Models\\UserBanner' => $baseDir . '/app/Models/UserBanner.php',
@@ -259,6 +261,8 @@ return array(
     'CreatePackageTable' => $baseDir . '/database/migrations/2015_11_27_172830_create_package_table.php'
     'Carbon\\Exceptions\\InvalidDateException' => $vendorDir . '/nesbot/carbon/src/Carbon/Exceptions/InvalidDateException.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
+    'CreateUrgentNoticeDocumentsTable' => $baseDir . '/database/migrations/2016_07_04_102925_create__urgent_notice_documents_table.php',
+    'CreateUrgentNoticeFoldersTable' => $baseDir . '/database/migrations/2016_07_04_102940_create__urgent_notice_folders_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
     'Cron\\AbstractField' => $vendorDir . '/mtdowling/cron-expression/src/Cron/AbstractField.php',
     'Cron\\CronExpression' => $vendorDir . '/mtdowling/cron-expression/src/Cron/CronExpression.php',

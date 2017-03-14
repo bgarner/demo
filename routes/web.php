@@ -160,6 +160,8 @@ Route::resource('/admin/quicklink', 'Dashboard\QuicklinksAdminController');
 
 //Urgent Notices
 Route::resource('/admin/urgentnotice', 'UrgentNotice\UrgentNoticeAdminController');
+Route::get('/admin/urgentnotice-documents/{urgent_notice_id}', 'UrgentNotice\UrgentNoticeAdminController@getDocumentPartial');
+Route::get('/admin/urgentnotice-folders/{urgent_notice_id}', 'UrgentNotice\UrgentNoticeAdminController@getFolderPartial');
 
 Route::resource('/admin/alert', 'Alert\AlertAdminController' );
 //Users
