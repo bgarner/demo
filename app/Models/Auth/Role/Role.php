@@ -26,4 +26,9 @@ class Role extends Model
 
         });
     }
+
+    public static function getRoleList()
+    {
+		return Role::all()->lists('role_name', 'id');    	
+    }
 }

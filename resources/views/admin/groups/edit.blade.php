@@ -62,10 +62,10 @@
                                         	</div>
                                         </div>
                                         <div class="form-group">
-                                        	<label class="col-sm-2 control-label"> Accessible Components </label>
+                                        	<label class="col-sm-2 control-label"> Roles Associated </label>
                                         	<div class="col-sm-10">
 
-                                        		{!! Form::select('components[]', $components, $selected_components, [ 'class'=>'chosen', 'id'=> 'components', 'multiple'=>'true']) !!}
+                                        		{!! Form::select('roles[]', $roles, $selected_roles, [ 'class'=>'chosen', 'id'=> 'roles', 'multiple'=>'true']) !!}
                                         	</div>
 
                                         </div>

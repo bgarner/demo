@@ -61,9 +61,9 @@
                                         </div>
 
                                         <div class="form-group">
-                                        	<label class="col-sm-2 control-label">Accessible Components</label>
+                                        	<label class="col-sm-2 control-label">Roles Available to Group</label>
                                         	<div class="col-sm-10">
-                                        		{!! Form::select('components[]', $components, null, [ 'class'=>'chosen', 'id'=> 'components', 'multiple'=>'true']) !!}
+                                        		{!! Form::select('roles[]', $roles, null, [ 'class'=>'chosen', 'id'=> 'roles', 'multiple'=>'true']) !!}
                                         		
                                         	</div>
 

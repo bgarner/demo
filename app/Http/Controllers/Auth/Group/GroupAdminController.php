@@ -9,8 +9,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Auth\Group\Group;
 use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Banner;
-use App\Models\Auth\Component\Component;
-use App\Models\Auth\Group\GroupComponent;
+// use App\Models\Auth\Component\Component;
+// use App\Models\Auth\Group\GroupComponent;
+use App\Models\Auth\Role\Role;
+use App\Models\Auth\Group\GroupRole;
 
 class GroupAdminController extends Controller
 {
@@ -48,11 +50,10 @@ class GroupAdminController extends Controller
         
         $banner = UserSelectedBanner::getBanner();
         $banners = Banner::all();
-        // $components = Component::getComponentList($banner->id);
-        // add roles here
+        $roles = Role::getRoleList();
         return view('admin.groups.create')->with('banner', $banner)
                                             ->with('banners', $banners)
-                                            ->with('components', $components);
+                                            ->with('roles', $roles);
     }
 
     /**
@@ -90,13 +91,13 @@ class GroupAdminController extends Controller
         $banner = UserSelectedBanner::getBanner();
         $banners = Banner::all();
         $group = Group::find($id);
-        $components = Component::getComponentList($banner->id);
-        $selected_components = GroupComponent::getComponentListByGroupId($id);
+        $roles = Role::getRoleList($banner->id);
+        $selected_roles = GroupRole::getRoleListByGroupId($id);
         return view('admin.groups.edit')->with('banners', $banners)
                                         ->with('banner', $banner)
-                                        ->with('components', $components)
+                                        ->with('roles', $roles)
                                         ->with('group', $group)
-                                        ->with('selected_components', $selected_components);
+                                        ->with('selected_roles', $selected_roles);
     }
 
     /**

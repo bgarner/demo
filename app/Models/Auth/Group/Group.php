@@ -17,7 +17,7 @@ class Group extends Model
                 'name' => $request['group_name']
 
             ]);
-    	GroupComponent::createComponentGroupPivotWithGroupId($group, $request);
+    	GroupRole::createRoleGroupPivotWithGroupId($group, $request);
     	return;
 
     }
@@ -27,13 +27,13 @@ class Group extends Model
     	$group = Group::find($id);
     	$group['name'] = $request['group_name'];
     	$group->save();
-    	GroupComponent::editComponentGroupPivotByGroupId($request, $id);
+        GroupRole::editRoleGroupPivotByGroupId($request, $id);
     	return $group;
     }
 
 	public static function deleteGroup($id)
 	{
-		GroupComponent::where('group_id', $id)->delete();
+		GroupRole::where('group_id', $id)->delete();
         Group::find($id)->delete();
 		
 	}    

@@ -9,11 +9,11 @@ $(document).on('click','.group-create',function(){
   	var hasError = false;
 
     var group_name = $("#group_name").val();
-    var components =  $("#components").val();
+    var roles =  $("#roles").val();
     var bannerId = localStorage.getItem('admin-banner-id');
 
     console.log(group_name);
-    console.log(components);
+    console.log(roles);
     if(group_name == '') {
 		swal("Oops!", "This we need a name for this group.", "error"); 
 		hasError = true;
@@ -26,7 +26,7 @@ $(document).on('click','.group-create',function(){
 		$.ajax({
 		    url: '/admin/group',
 		    type: 'POST',
-		    data: { group_name: group_name, components: components, banner_id: bannerId },
+		    data: { group_name: group_name, roles: roles, banner_id: bannerId },
 		    success: function(result) {
 		        console.log(result);
 		        $("#group").val(""); // empty the form

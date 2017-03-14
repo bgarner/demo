@@ -28,4 +28,32 @@ class GroupRole extends Model
         return $groups;   
     }
 
+    public static function createRoleGroupPivotWithGroupId($group, $request)
+    {
+        foreach ($request['roles'] as $role_id) {
+            GroupRole::create([
+                'group_id' => $group->id,
+                'role_id' => $role_id
+
+            ]); 
+        }
+    }
+
+    public static function getRoleListByGroupId($id)
+    {
+        $roles = GroupRole::where('group_id', $id)->get()->pluck('role_id')->toArray();
+        return $roles;
+    }
+
+    public static function editRoleGroupPivotByGroupId($request, $id)
+    {
+        GroupRole::where('group_id', $id)->delete();
+        foreach ($request['roles'] as $role_id) {
+            GroupRole::create([
+                    'group_id' => $id,
+                    'role_id'  => $role_id
+                ]);
+        }
+    }
+
 }
