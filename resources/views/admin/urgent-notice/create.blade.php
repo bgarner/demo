@@ -73,13 +73,13 @@
                                             <div class="col-sm-10"><textarea id="description" name="description" class="form-control" value=""></textarea></div>
                                         </div>
 
-                                        <div class="hr-line-dashed"></div>
+                                        <!-- <div class="hr-line-dashed"></div>
                                          <div class="form-group"><label class="col-sm-2 control-label">Attachment Type</label>
                                             <div class="col-md-10">
-                                               @foreach($attachment_types as $atype)
-                                               <?php $id = "attachment-" . $atype->name ?>
-                                               	<div>{!! Form::input('radio', 'attachment_type', $atype->id , ['id'=> $id ]) !!} {{$atype->name}}</div>
-                                               @endforeach
+                                               {{-- @foreach($attachment_types as $atype)
+                                                <?php $id = "attachment-" . $atype->name ?>
+                                                     <div>{!! Form::input('radio', 'attachment_type', $atype->id , ['id'=> $id ]) !!} {{$atype->name}}</div>
+                                                 @endforeach --}}
                                             </div>
                                         </div>
 
@@ -87,7 +87,7 @@
                                             <div class="col-md-10" id="attachment-selected">
 
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
@@ -118,6 +118,10 @@
 
 
 
+<<<<<<< HEAD
+                                       
+                                        
+=======
                                         <div class="form-group">
                                             <div class="col-sm-10 col-sm-offset-2">
                                                 <a class="btn btn-white" href="/admin/urgentnotice"><i class="fa fa-close"></i> Cancel</a>
@@ -126,11 +130,77 @@
                                             </div>
                                         </div>
 
+>>>>>>> develop
                                     </form>
 
 
                                 </div>
+
+                                <div class="ibox">
+                                <div class="ibox-title">
+                                    <h5>Documents</h5>
+
+                                    <div class="ibox-tools">
+                                        <div class="btn btn-primary btn-outline" type="button" role="button" id="add-documents" > <i class="fa fa-plus"></i> Add Documents </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="ibox-content">
+                                    
+                                    <div id="files-selected">
+                                        <table class="table table-hover urgentnotice-documents-table hidden ">
+                                            <thead>
+                                                <tr>
+                                                    <td>Title</td>
+                                                    <td></td>
+                                                    <td>Action</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                             <div class="ibox">
+                                <div class="ibox-title">
+                                    <h5>Folders</h5>
+
+                                    <div class="ibox-tools">
+                                        <div class="btn btn-primary btn-outline" type="button" id="add-folders" role="button"><i class="fa fa-plus"></i> Add Folders </div>
+                                    </div>
+                                </div>
+                                <div class="ibox-content">
+                                    
+                                    <div id="folders-selected">
+                                        <table class="table table-hover urgentnotice-folders-table hidden">
+                                            <thead>
+                                                <tr>
+                                                    <td>Folders</td>
+                                                    <td></td>
+                                                    <td>Action</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
 		                    </div>
+
+                             <div class="form-group">
+                                <div class="col-sm-10 col-sm-offset-2">
+                                    <a class="btn btn-white" href="/admin/urgentnotice"><i class="fa fa-close"></i> Cancel</a>
+                                    <button class="urgentnotice-create btn btn-primary" type="submit"><i class="fa fa-check"></i> Create New Urgent Notice</button>
+
+                                </div>
+                            </div>
 		                    <div id="document-listing" class="modal fade">
 							    <div class="modal-dialog">
 							        <div class="modal-content">

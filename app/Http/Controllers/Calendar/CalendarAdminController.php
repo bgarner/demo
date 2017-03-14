@@ -15,7 +15,8 @@ use App\Models\UserBanner;
 use App\Models\UserSelectedBanner;
 use App\Models\StoreInfo;
 use App\Models\Event\EventTarget;
-
+use App\Models\Document\FolderStructure;
+use App\Models\Event\EventAttachment;
 
 class CalendarAdminController extends Controller
 {
@@ -67,12 +68,14 @@ class CalendarAdminController extends Controller
         $event_types_list = ["" =>'Select one'];
         $event_types_list += EventType::where('banner_id', $banner_id)->lists('event_type', 'id')->toArray();
         $storeList = StoreInfo::getStoreListing($banner->id);
+        $folderStructure = FolderStructure::getNavigationStructure($banner->id);
 
         return view('admin.calendar.create')
             ->with('event_types_list', $event_types_list)
             ->with('banner', $banner)
             ->with('banners', $banners)
-            ->with('stores', $storeList);     
+            ->with('stores', $storeList)
+            ->with('folderStructure', $folderStructure);     
     }
 
     /**
@@ -125,6 +128,9 @@ class CalendarAdminController extends Controller
             $all_stores = true;
         }
 
+        $event_attachments = EventAttachment::getEventAttachments($id);
+
+        $folderStructure = FolderStructure::getNavigationStructure($banner->id);
         return view('admin.calendar.edit')
             ->with('event', $event)
             ->with('event_type', $event_type)
@@ -133,7 +139,9 @@ class CalendarAdminController extends Controller
             ->with('banners', $banners)
             ->with('storeList', $storeList)
             ->with('target_stores', $event_target_stores)
-            ->with('all_stores', $all_stores);
+            ->with('all_stores', $all_stores)
+            ->with('event_attachments', $event_attachments)
+            ->with('folderStructure', $folderStructure);     
     }
 
     /**

@@ -14,10 +14,11 @@ use App\Models\UrgentNotice\UrgentNotice;
 use App\Models\Document\FileFolder;
 use App\Models\Document\FolderStructure;
 use App\Models\UrgentNotice\UrgentNoticeAttachmentType;
-use App\Models\UrgentNotice\UrgentNoticeAttachment;
 use App\Models\UrgentNotice\UrgentNoticeTarget;
 use App\Models\Document\Document;
 use App\Models\Document\Folder;
+use App\Models\UrgentNotice\UrgentNoticeDocument;
+use App\Models\UrgentNotice\UrgentNoticeFolder;
 
 class UrgentNoticeAdminController extends Controller
 {
@@ -119,31 +120,22 @@ class UrgentNoticeAdminController extends Controller
         $banners = Banner::all();
 
         $urgent_notice = UrgentNotice::find($id);
-
-        $urgent_notice_attachment_ids = UrgentNoticeAttachment::where('urgent_notice_id', $id)->get()->pluck('attachment_id');
         
         $attached_folders = [];
         $attached_documents = [];
 
-        if ($urgent_notice->attachment_type_id == 1) { //folder
-            
-            foreach ($urgent_notice_attachment_ids as $key=>$global_folder_id) {
-                $folder_id = \DB::table('folder_ids')->where('id', $global_folder_id)->first()->folder_id;
-                $folder = Folder::find($folder_id);
-                array_push($attached_folders, $folder);
-                unset($folder);
-            }
-        }
-        else if ( $urgent_notice->attachment_type_id == 2 ) { //document
-            
-            foreach ($urgent_notice_attachment_ids as $document_id) {
-                
-                $document = Document::find($document_id);
-                array_push($attached_documents, $document);
-                unset($document);
-            }
-        }
-        
+
+        $attached_documents = UrgentNoticeDocument::join('documents', 'documents.id' ,'=', 'urgent_notice_documents.document_id')
+                                                ->where('urgent_notice_id', $id)
+                                                ->select('documents.*')
+                                                ->get();
+
+        $attached_folders = UrgentNoticeFolder::join('folder_ids', 'folder_ids.id' ,'=', 'urgent_notice_folders.folder_id')
+                                                ->join('folders', 'folders.id', '=', 'folder_ids.folder_id')
+                                                ->where('urgent_notice_id', $id)
+                                                ->select('folders.*', 'folder_ids.id as global_folder_id')
+                                                ->get();
+
         $storeList = StoreInfo::getStoreListing($banner->id);
         $target_stores = UrgentNoticeTarget::where('urgent_notice_id', $id)->get()->pluck('store_id')->toArray();
         $all_stores = false;
@@ -161,7 +153,6 @@ class UrgentNoticeAdminController extends Controller
                                             ->with('urgent_notice', $urgent_notice)
                                             ->with('attached_folders', $attached_folders)
                                             ->with('attached_documents', $attached_documents)
-                                            ->with('attachment_types', $attachment_types)
                                             ->with('target_stores', $target_stores)
                                             ->with('storeList', $storeList)
                                             ->with('all_stores', $all_stores)
@@ -178,7 +169,6 @@ class UrgentNoticeAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
         return UrgentNotice::updateUrgentNotice($request, $id);
     }
 
@@ -191,5 +181,24 @@ class UrgentNoticeAdminController extends Controller
     public function destroy($id)
     {
         return UrgentNotice::deleteUrgentNotice($id);
+    }
+
+    public function getDocumentPartial($id)
+    {
+        $documents = UrgentNoticeDocument::join('documents', 'documents.id', '=' ,'urgent_notice_documents.document_id')
+                                        ->where('urgent_notice_documents.urgent_notice_id', $id)
+                                        ->select('documents.*')
+                                        ->get();
+        return view('admin.urgent-notice.document-partial')->with('documents', $documents);
+    }
+
+    public function getFolderPartial($id)
+    {
+        $folders = UrgentNoticeFolder::join('folder_ids', 'folder_ids.id', '=' ,'urgent_notice_folders.folder_id')
+                                        ->join('folders', 'folders.id', '=', 'folder_ids.folder_id')
+                                        ->where('urgent_notice_folders.urgent_notice_id', $id)
+                                        ->select('folders.*',  'folder_ids.id as global_folder_id')
+                                        ->get();
+        return view('admin.urgent-notice.folder-partial')->with('folders', $folders);
     }
 }
