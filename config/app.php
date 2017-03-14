@@ -178,9 +178,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         App\Providers\AdminViewComposerServiceProvider::class,
-        Collective\Html\HtmlServiceProvider::class,
-
-
+        //Collective\Html\HtmlServiceProvider::class,
 
     ],
 
