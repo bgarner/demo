@@ -955,6 +955,7 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         'PHP_Token_XOR_EQUAL' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD_FROM' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
+        'RenameUserGroupsTable' => __DIR__ . '/../..' . '/database/migrations/2017_03_14_095128_rename_user_groups_table.php',
         'ResourcesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/ResourcesTableSeeder.php',
         'RoleResourcesPivotSeeder' => __DIR__ . '/../..' . '/database/seeds/RoleResourcesPivotSeeder.php',
         'RolesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/RolesTableSeeder.php',

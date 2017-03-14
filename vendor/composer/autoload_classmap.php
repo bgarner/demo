@@ -586,6 +586,7 @@ return array(
     'PHP_Token_XOR_EQUAL' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_YIELD' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_YIELD_FROM' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
+    'RenameUserGroupsTable' => $baseDir . '/database/migrations/2017_03_14_095128_rename_user_groups_table.php',
     'ResourcesTableSeeder' => $baseDir . '/database/seeds/ResourcesTableSeeder.php',
     'RoleResourcesPivotSeeder' => $baseDir . '/database/seeds/RoleResourcesPivotSeeder.php',
     'RolesTableSeeder' => $baseDir . '/database/seeds/RolesTableSeeder.php',

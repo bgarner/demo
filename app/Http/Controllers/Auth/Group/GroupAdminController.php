@@ -48,7 +48,8 @@ class GroupAdminController extends Controller
         
         $banner = UserSelectedBanner::getBanner();
         $banners = Banner::all();
-        $components = Component::getComponentList($banner->id);
+        // $components = Component::getComponentList($banner->id);
+        // add roles here
         return view('admin.groups.create')->with('banner', $banner)
                                             ->with('banners', $banners)
                                             ->with('components', $components);

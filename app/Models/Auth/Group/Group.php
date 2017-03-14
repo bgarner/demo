@@ -4,17 +4,17 @@ namespace App\Models\Auth\Group;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Auth\Group\GroupComponent;
+use App\Models\Auth\Group\GroupRole;
 
 class Group extends Model
 {
-    protected $table = 'user_groups';
+    protected $table = 'groups';
     protected $fillable = ['name'];
 
     public static function createGroup($request)
     {
     	$group = Group::create([
                 'name' => $request['group_name']
-                // 'banner_id' => $request['banner_id']
 
             ]);
     	GroupComponent::createComponentGroupPivotWithGroupId($group, $request);
@@ -46,7 +46,9 @@ class Group extends Model
     public static function getGroupDetails()
     {
         return Group::all()->each(function($group){
-            $group->components = GroupComponent::getComponentNameListByGroupId($group->id);
+
+            $group->roles = GroupRole::getRoleNameListByGroupId($group->id);
+
         });
     }
 }

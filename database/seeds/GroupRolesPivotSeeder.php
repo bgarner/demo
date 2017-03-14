@@ -8,7 +8,8 @@ class GroupRolesPivotSeeder extends Seeder
     	
     	['group_id' => 3, 'role_id' => 1],
     	['group_id' => 3, 'role_id' => 2],
-    	['group_id' => 3, 'role_id' => 3]
+    	['group_id' => 3, 'role_id' => 3],
+        ['group_id' => 3, 'role_id' => 4],
 
 
     ];
