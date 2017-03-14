@@ -26,6 +26,7 @@
 		<div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-12">
                 <h2>Product Launches</h2>
+                
                 <small class="pull-right"> Last Updated : {{$lastUpdated}} </small>
             </div>
         </div>        
@@ -35,11 +36,12 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="ibox">
-                        
-                        <div class="ibox-content">
-							
-			                    	
-	                    	<table class="table dataTable" id="productLaunchDataTable" >
+                    
+                         <p class="pull-right"><a href="#" data-toggle="modal" data-target="#productLaunchModal"><i class="fa fa-question-circle" aria-hidden="true"></i> Footwear Release vs. Footwear Launch</a></p>
+
+                        <div class="ibox-content">       	
+			                    
+	                    	<table class="table dataTable" id="productLaunchDataTable">
 	                    		<thead>
 	                    			<tr role="row">
 	                    				<th>Launch Date</th>
@@ -101,7 +103,31 @@
 
 		@include('site.includes.modal')
 
+	 <div class="modal inmodal" id="productLaunchModal" tabindex="-1" role="event" aria-hidden="true" style="display: none;" >
 
+	    <div class="modal-dialog">
+	        <div class="modal-content animated bounceInRight">
+	<!--                 <div class="modal-header clearfix">
+	                    <h4 id="modalTitle" class="modal-title">What's New?</h4>
+	                </div> -->
+	                <div id="modalBody" class="modal-body event-modal-body" style="padding: 20px;">
+	                    
+<h4>What is the difference between Footwear Release and Footwear Launch?</h4>
+
+<p><em>Footwear Launch</em> – A true launch product has a hard date for availability to the public and cannot be sold, displayed or even socialized (pictures) prior to that date. The vendor typically creates some hype around launch products with marketing and social media leading up to the date. It is the expectation that launch product is to be in all applicable stores for the launch date, even if the vendor has to expedite the product to stores at their own cost to hit the launch. <strong>We will send a communication to stores if this product is late or is not expected to arrive.</strong></p>
+
+
+<p><em>Footwear Release</em> – Styles with a release date cannot be sold before that specific date. There is not typically the same type of hype created by the vendor around the release and <strong>stores are not guaranteed to have product in time for the release.</strong> If a store receives the product in advance, they cannot sell before release date. <strong>We will not send communications to stores if this product is late or is not expected to arrive.</strong></p>
+
+
+
+	                </div>
+	                <div class="modal-footer">
+	                    <button type="button" class="btn btn-primary btn-sm btn-outline" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+	                </div>
+	        </div>
+	    </div>
+	</div>
 
 	</body>
 	</html>
