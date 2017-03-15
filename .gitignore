@@ -7,14 +7,9 @@
 /public/images/communication-images
 /public/images/ckeditor-images
 /public/js/custom/ckeditor-imagebrowser/images_list.json
-/node_modules
+/public/js/env.js
 /storage/logs
 Homestead.yaml
 Homestead.json
 .env
-.floo
-.flooignore
-/public/js/env.js
 .catapult
-.vscode
-.idea
