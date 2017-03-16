@@ -168,6 +168,9 @@ return [
          */
         Laravel\Tinker\TinkerServiceProvider::class,
 
+
+        App\Providers\RouteServiceProvider::class,
+        Laravel\Dusk\DuskServiceProvider::class,
         /*
          * Application Service Providers...
          */
