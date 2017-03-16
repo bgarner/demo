@@ -93,7 +93,7 @@ class DocumentAdminController extends Controller
 
         $parent = $request->get('parent');
         
-        $tags = Tag::where('banner_id', $banner->id)->lists('name', 'id');
+        $tags = Tag::where('banner_id', $banner->id)->pluck('name', 'id');
         $documents = Document::where('upload_package_id', $package)->get();
 
         return view('admin.document-meta.document-add-meta-data')
@@ -149,7 +149,7 @@ class DocumentAdminController extends Controller
         }
         
         $alert_types = ["" =>'Select one'];
-        $alert_types += \DB::table('alert_types')->lists('name', 'id');
+        $alert_types += \DB::table('alert_types')->pluck('name', 'id')->toArray();
         
         $alert_details = [];
         if( Alert::where('document_id', $id)->first()) {

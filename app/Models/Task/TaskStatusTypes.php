@@ -12,6 +12,6 @@ class TaskStatusTypes extends Model
 
     public static function getTaskStatusList()
     {
-    	return TaskStatusTypes::all()->lists('status_title', 'id');
+    	return TaskStatusTypes::all()->pluck('status_title', 'id');
     }
 }

@@ -98,7 +98,7 @@ class CommunicationAdminController extends Controller
         $communication = Communication::find($id);
         $communication_documents  = Communication::getDocumentDetails($id);
         $communication_packages  = Communication::getPackageDetails($id);
-        $importance = \DB::table('communication_importance_levels')->lists('name', 'id');
+        $importance = \DB::table('communication_importance_levels')->pluck('name', 'id');
 
         return view('admin.communication.view')->with('communication', $communication)
                                             ->with('communication_packages', $communication_packages)

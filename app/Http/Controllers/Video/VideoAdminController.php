@@ -83,7 +83,7 @@ class VideoAdminController extends Controller
         
         $banners = Banner::all();
         
-        $tags = Tag::where('banner_id', $banner->id)->lists('name', 'id');
+        $tags = Tag::where('banner_id', $banner->id)->pluck('name', 'id');
         
         $videos = Video::where('upload_package_id', $package)->get();
 
@@ -137,7 +137,7 @@ class VideoAdminController extends Controller
                                 ->get()
                                 ->pluck('id')->toArray();
                                         
-        $tags = Tag::where('banner_id', $banner->id)->lists('name', 'id');
+        $tags = Tag::where('banner_id', $banner->id)->pluck('name', 'id');
         return view('admin.video.video-manager.edit')->with('video', $video)
                                                     ->with('banner', $banner)
                                                     ->with('banners', $banners)

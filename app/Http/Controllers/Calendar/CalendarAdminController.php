@@ -66,7 +66,7 @@ class CalendarAdminController extends Controller
         $banner  = Banner::find($banner_id);
 
         $event_types_list = ["" =>'Select one'];
-        $event_types_list += EventType::where('banner_id', $banner_id)->lists('event_type', 'id')->toArray();
+        $event_types_list += EventType::where('banner_id', $banner_id)->pluck('event_type', 'id')->toArray();
         $storeList = StoreInfo::getStoreListing($banner->id);
         $folderStructure = FolderStructure::getNavigationStructure($banner->id);
 
@@ -118,7 +118,7 @@ class CalendarAdminController extends Controller
         $event = Event::find($id);
         $event_type = EventType::find($id);
         $event_types_list = ["" =>'Select one'];
-        $event_types_list += EventType::where('banner_id', $banner_id)->lists('event_type', 'id')->toArray();
+        $event_types_list += EventType::where('banner_id', $banner_id)->pluck('event_type', 'id')->toArray();
         $banner = UserSelectedBanner::getBanner();
         
         $event_target_stores = EventTarget::where('event_id', $id)->get()->pluck('store_id')->toArray();

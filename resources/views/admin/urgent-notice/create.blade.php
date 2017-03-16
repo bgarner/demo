@@ -116,21 +116,6 @@
 
                                         </div>
 
-
-
-<<<<<<< HEAD
-                                       
-                                        
-=======
-                                        <div class="form-group">
-                                            <div class="col-sm-10 col-sm-offset-2">
-                                                <a class="btn btn-white" href="/admin/urgentnotice"><i class="fa fa-close"></i> Cancel</a>
-                                                <button class="urgentnotice-create btn btn-primary" type="submit"><i class="fa fa-check"></i> Create New Urgent Notice</button>
-
-                                            </div>
-                                        </div>
-
->>>>>>> develop
                                     </form>
 
 

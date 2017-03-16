@@ -111,7 +111,7 @@ class FolderAdminController extends Controller
         $banner = UserSelectedBanner::getBanner();
         $banners = Banner::all();
 
-        $tags = Tag::where('banner_id', $banner->id)->lists('name', 'id');
+        $tags = Tag::where('banner_id', $banner->id)->pluck('name', 'id');
         $tag_ids = ContentTag::where('content_id', $id)->where('content_type', 'folder')->get()->pluck('tag_id');
         $selected_tags = Tag::findMany($tag_ids)->pluck('id')->toArray();
 

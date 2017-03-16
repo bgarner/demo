@@ -39,7 +39,7 @@ class Component extends Model
 
 	public static function getComponentList($banner_id)
     {
-    	return Component::where('banner_id', $banner_id)->get()->lists('component_name', 'id');
+    	return Component::where('banner_id', $banner_id)->get()->pluck('component_name', 'id');
     }
     
 

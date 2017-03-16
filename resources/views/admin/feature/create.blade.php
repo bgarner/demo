@@ -96,7 +96,9 @@
 		                            <h5>Documents</h5>
 
 		                            <div class="ibox-tools">
-		                            	<div class="btn btn-primary btn-outline" type="button" role="button" id="add-documents" > <i class="fa fa-plus"></i> Add Documents </div>
+		                            	<div class="btn btn-primary btn-outline" type="button" role="button" id="add-documents" > 
+		                            		<i class="fa fa-plus"></i> Add Documents 
+		                            	</div>
 		                                
 		                            </div>
 		                        </div>
@@ -156,28 +158,23 @@
 		                        	
                                     <div class="form-group">
                                     	<div class="row">
-                                    	<label class="col-sm-2 control-label">Latest Updates</label>
+                                    		<label class="col-sm-2 control-label">Latest Updates</label>
 										
-										<div class="latest-updates-container col-sm-10">
-											<div class="latest-update-option ">
-												{!! Form::radio('latest_updates_option', '1') !!} By Days
-												{!! Form::input('text', 'update_frequency', null, [ 'class' => 'update_frequency', 'disabled'=> 'disabled', 'placeholder'=>'Number of Days']) !!}
+											<div class="latest-updates-container col-sm-10">
+												<div class="latest-update-option ">
+													{!! Form::radio('latest_updates_option', '1') !!} By Days
+													{!! Form::input('text', 'update_frequency', null, [ 'class' => 'update_frequency', 'disabled'=> 'disabled', 'placeholder'=>'Number of Days']) !!}
+												</div>
+												<div class="latest-update-option ">
+													{!! Form::radio('latest_updates_option', '2') !!} By Documents
+													{!! Form::input('text', 'update_frequency', null, [ 'class' => 'update_frequency','disabled'=> 'disabled', 'placeholder'=>'Number of Documents']) !!}
+												</div>
+												
 											</div>
-											<div class="latest-update-option ">
-												{!! Form::radio('latest_updates_option', '2') !!} By Documents
-												{!! Form::input('text', 'update_frequency', null, [ 'class' => 'update_frequency','disabled'=> 'disabled', 'placeholder'=>'Number of Documents']) !!}
-											</div>
-											
-										</div>
 										
 									</div>
 		                        </div>
 		                    </div>
-
-										
-							
-								
-
 
                             <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-2">
@@ -191,6 +188,7 @@
 		            </div>
 
 
+		        </div>
 		        </div>
 
 				@include('site.includes.footer')

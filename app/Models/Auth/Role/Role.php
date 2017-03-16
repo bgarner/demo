@@ -31,7 +31,7 @@ class Role extends Model
 
     public static function getRoleList()
     {
-		return Role::all()->lists('role_name', 'id');    	
+		return Role::all()->pluck('role_name', 'id');    	
     }
 
    	public static function createRole($request)

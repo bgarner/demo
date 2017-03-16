@@ -40,7 +40,7 @@ class Group extends Model
 
     public static function getGroupList()
     {
-    	return Group::all()->lists('name', 'id');
+    	return Group::all()->pluck('name', 'id');
     }
 
     public static function getGroupDetails()
@@ -55,7 +55,7 @@ class Group extends Model
     public static function getGroupNamesList()
     {
         $defaultSelection = [''=>'Select one'];
-        $group_names = $defaultSelection + Group::all()->lists('name', 'id')->toArray();
+        $group_names = $defaultSelection + Group::all()->pluck('name', 'id')->toArray();
         return $group_names;
 
     }

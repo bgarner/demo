@@ -60,7 +60,7 @@ class UserAdminController extends Controller
         $banner_id = UserSelectedBanner::where('user_id', \Auth::user()->id)->first()->selected_banner_id;
         $banner  = Banner::find($banner_id);
 
-        $banners_list = Banner::all()->lists('name', 'id');
+        $banners_list = Banner::all()->pluck('name', 'id');
 
         $groups = Group::getGroupNamesList();
         $district_name_list = StoreInfo::getDistrictNamesList();
@@ -111,7 +111,7 @@ class UserAdminController extends Controller
         
         $banner_ids = UserBanner::where('user_id', \Auth::user()->id)->get()->pluck('banner_id');
         $banners = Banner::whereIn('id', $banner_ids)->get();    
-        $banners_list = Banner::all()->lists('name', 'id');
+        $banners_list = Banner::all()->pluck('name', 'id');
 
         $banner_id = UserSelectedBanner::where('user_id', \Auth::user()->id)->first()->selected_banner_id;
         $banner  = Banner::find($banner_id);
@@ -119,7 +119,7 @@ class UserAdminController extends Controller
         $selected_banner_ids = UserBanner::where('user_id', $id)->get()->pluck('banner_id');
         $selected_banners = Banner::findMany($selected_banner_ids)->pluck('id')->toArray();
 
-        $groups = Group::lists('name', 'id');
+        $groups = Group::pluck('name', 'id');
         
         return view('superadmin.user.edit')->with('user', $user)
                                             ->with('banners', $banners)

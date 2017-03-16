@@ -36,7 +36,7 @@ class Alert extends Model
 
     	foreach ($alerts as $alert) {
 
-    		$target_stores = \DB::table('alerts_target')->where('alert_id', $alert->id)->lists('store_id');
+    		$target_stores = \DB::table('alerts_target')->where('alert_id', $alert->id)->pluck('store_id')->toArray();
     		$alert->count_target_stores = count($target_stores);
     		$alert->target_stores = implode( ", ", $target_stores );
     		unset($target_stores);
@@ -270,7 +270,7 @@ class Alert extends Model
 
     	if ($alert) {
     		$alert_id = $alert->id;
-    		return \DB::table('alerts_target')->where('alert_id', $alert_id)->lists('store_id', 'id');
+    		return \DB::table('alerts_target')->where('alert_id', $alert_id)->pluck('store_id', 'id');
     	}
     	
     	return [];
