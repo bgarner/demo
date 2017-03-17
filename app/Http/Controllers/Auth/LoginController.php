@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Http\Controllers\Controller;
+use App\Models\Auth\Group\Group;
 
 class LoginController extends Controller
 {
@@ -47,14 +48,19 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        dd($request->all());
         $group_id = $user->group_id;
         $group = Group::where('id', $group_id)->first()->name;
-        if( in_array( $group, $this->allowedGroups) ){
-            return redirect()->intended($this->redirectPath());    
-        }
-        Auth::logout();
-        return redirect( $this->alternateLogin );   
+        
+        $this->redirectTo = strtolower($group);
+
+        return redirect("/". $this->redirectTo);
+
+        // if( in_array( $group, $this->allowedGroups) ){
+        //     return redirect()->intended($this->redirectPath());    
+        // }
+        // Auth::logout();
+        // return redirect( $this->alternateLogin );   
 
     }    
+
 }
