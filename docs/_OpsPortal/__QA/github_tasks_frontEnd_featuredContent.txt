@@ -1,0 +1,42 @@
+### Front-End - Featured Content - Featured Documents
+
+Reference Image (label 1): 
+![user-feature-landing](https://cloud.githubusercontent.com/assets/830373/13556582/68a511ee-e39a-11e5-8ae2-8953c75842bf.png)
+
+- [ ] Increase listed files/links to 14px (global impact ok)
+- [ ] Remove unlabeled *Ago* column (e.g. contains "1 day ago")
+- [ ] Remove *Description* column
+- [ ] Rename *Last Updated* column to *Added*
+  - [ ] *Added* column should feature only the day-date-time stamp (global impact ok)
+
+### Front-End - Featured Content - Packages
+
+Reference Image (label 2): 
+![user-feature-landing](https://cloud.githubusercontent.com/assets/830373/13556582/68a511ee-e39a-11e5-8ae2-8953c75842bf.png)
+
+- [ ] Rename section header *Packages* to *Additional Dcouments*
+* Section should behave like file/folde browsing in the Document Library:
+  - [ ] _Package_ links should use a prepended closed folder icon (fa-folder)
+  * When a folder icon is clicked:
+    - [ ] the folder should expand (i.e. subfolders should be revealed underneath)
+    - [ ] the folder icon should change to expanded (fa-folder-open)
+  * When a folder name is clicked:
+    - [ ] the folder's name should be displayed on the right side of the section
+    - [ ] the folder name should be prepended by an open folder outline icon (fa-folder-open-o)
+    - [ ] the files within the folder should be listed.
+      * two columns only
+        - [ ] Title
+        - [ ] Added (date/time the document was added *to the library* )
+      - [ ] both the icon and the file/link text should trigger document view/download (depending on file type)
+
+
+### Front-End - Featured Content - Latest Updates
+
+Reference Image (label 3): 
+![user-feature-landing](https://cloud.githubusercontent.com/assets/830373/13556582/68a511ee-e39a-11e5-8ae2-8953c75842bf.png)
+
+- [ ] Remove date/time stamp
+- [ ] Remove update details (e.g. was added in...)
+- [ ] Tighten up whitespace within rows (gloabl impact ok)
+- [ ] Ensure document icon is clickable
+- [ ] Set max-height of container to ~500px with overflow set to auto

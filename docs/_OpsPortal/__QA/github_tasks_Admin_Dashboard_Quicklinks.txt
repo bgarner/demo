@@ -1,0 +1,71 @@
+#### Dashboard Section: Quicklinks
+
+##### Create New Quicklinks
+* LAYOUT REFERENCE FILE: Admin-Dashboard-Form-Create-Quicklinks.png
+- [ ] required field **Name** needs asterisk
+- [ ] remove dashed hr tags between fields
+* Quicklink Type
+  - [ ] Rename required field **Quicklink type** and add asterisk (consistency)
+  - [ ] Rename **file** to **document**
+  - [ ] should default to document
+  - [ ] reorder as: document, folder, external
+  * fields/Selectors should be adjacent to their respective radio buttons
+    - [ ] if a field’s respective radio button is active, its action button (see below) is disabled
+    - [ ] selecting a radio button should not trigger a selection modal
+    * types folder and file
+      - [ ] readonly field displaying selected folder name/path or the file name
+      - [ ] adjacent Select… button which triggers the folder/file select modal
+    * type external
+      - [ ] editable field which validates for URL
+      - [ ] adjacent **Test** button which opens entered URL in a new tab when clicked
+      - [ ] **Test** is disabled when the URL is badly formed or the field is empty
+  * Folder selection modal
+    *  LAYOUT REFERENCE FILE: Admin-Dashboard-Form-Create-Quicklinks-Folder-Select.png
+    - [ ] The icon next to an expanded folder should always be the open folder icon.
+    - [ ] Clicking on the folder icon should expand/collapse that folder.
+    - [ ] Clicking on a selected folder checkbox or name should de-select it and vice versa.
+    - [ ] When a folder is selected, the full path of the selected folder should be indicated within a readonly *Selected:* field at the bottom left of the modal.
+    - [ ] When no folder is selected, the Selected: field should be empty.
+    - [ ] Rename button **Select Folder** as **Select folder** (consistency)
+    - [ ] button **Select folder** should be disabled unless a folder is selected.
+    - [ ] Rename **Close** button as **Cancel** and add cancel icon.
+    - [ ] Successfully selecting a folder should close the modal.
+  * Document selection modal
+    * LAYOUT REFERENCE FILE: Admin-Dashboard-Form-Create-Quicklinks-Document-Select.png
+    - [ ] the icon next to any expanded folder should always be the open folder icon
+    * Folder selection and the files within and given folder need to be displayed/interacted with separately (see layout reference).
+      - [ ] When users select a folder on the left, files within that folder are displayed on the right.
+      - [ ] Clicking on a selected file checkbox or name should de-select it and vice versa.
+      - [ ] Clicking on a folder icon should select that folder and toggle it expansion state.
+      - [ ] Clicking on a folder name should only select it (i.e. list its files on the right)
+      - [ ] When a file is selected, the file name and its folder path should be displayed within a readonly Selected: field at the bottom left of the modal (see layout reference).
+      - [ ] When no file is selected, the Selected: field should be empty
+- [ ] Remove field **Quicklink URL**
+* Controls
+  - [ ] Move Create/Cancel buttons to bottom right of section (consistency)
+  - [ ] Button Create New Quicklink should be disabled until all required fields have a valid selections
+  - [ ] Upon success, the modal should read as follows:<br />*Quicklink_type Quicklink created* (where Quicklink_type is Document, Folder, or External)<br/>*Quicklink_detail* (where Quicklink_detail is the document title, folder name, or external URL)
+  * Buttons should be:
+    - [ ] **Back to Dashboard** with left-arrow (back) icon
+    - [ ] **Create another Quicklink** with + icon
+- [ ] Created Quicklinks should always be added to the bottom of the current quicklink listing
+
+##### Quicklink Management
+* LAYOUT REFERENCE FILE: Admin-Dashboard-Form-Quicklink-Management.png
+- [ ] Rename Section **Quicklinks Management**
+- [ ] Rename button **Create New Quicklink** as **Create new Quicklink** (consistency)
+- [ ] Add functional copy above listing: *Drag Quicklinks to reorder.*
+- [ ] Re-ordering should not auto-save
+  - [ ] add controls like those for branding
+    - [ ] **Save changes** should not be enabled unless changes have been made
+    - [ ] **Unde changes** should revert to the currently saved order
+- [ ] Removing items should not auto-save
+  - [ ] Replace the trashcan with Remove checkboxes (see layout reference)
+  - [ ] If any remove checkboxes are checked when Save changes is clicked, prompt to confirm, listing each affected item.
+  - [ ] Confirm removal, modal copy:<br /> *Really delete the following Quicklinks?* <br/> *Quicklink A* <br/> *Quicklink B* <br/> *etc.*
+  - [ ] Confirm buttons: *Cancel* and  *Yes, delete*
+* Clicking *Undo changes* should:
+  - [ ] return listed quicklinks to their original order
+  - [ ] uncheck an quicklinks checked as Remove
+  - [ ] disable **Save changes** button
+
