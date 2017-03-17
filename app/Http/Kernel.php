@@ -58,6 +58,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'banner' => \App\Http\Middleware\SetInitialBanner::class,
         'admin.auth' => \App\Http\Middleware\AdminAuthenticate::class,
-        'superadmin.auth'   => \App\Http\Middleware\SuperadminAuthenticate::class
+        'componentaccess'   => \App\Http\Middleware\RoleComponentAccess::class
     ];
 }
