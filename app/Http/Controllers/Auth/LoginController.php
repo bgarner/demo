@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -25,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/admin';
 
     /**
      * Create a new controller instance.
@@ -36,4 +37,24 @@ class LoginController extends Controller
     {
         $this->middleware('guest', ['except' => 'logout']);
     }
+
+    /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        dd($request->all());
+        $group_id = $user->group_id;
+        $group = Group::where('id', $group_id)->first()->name;
+        if( in_array( $group, $this->allowedGroups) ){
+            return redirect()->intended($this->redirectPath());    
+        }
+        Auth::logout();
+        return redirect( $this->alternateLogin );   
+
+    }    
 }
