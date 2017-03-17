@@ -1,0 +1,42 @@
+#### Document Library
+
+### Admin - Documents - Manage Folders - General
+
+
+
+* When a user is in this are, the left nave should reflect this:
+  - [ ] the Documents tab should be expanded
+  - [ ] the Manage Folders item should be highlighted/Active (e.g. white, bold font)
+
+* Folder interaction
+  - [ ] Add a placeholding, uneditable, top-level folder for the banner (e.g. Sport Chek).
+  - [ ] By default, this root/banner folder should be expanded so all its first-level child folders are visible.
+  - [ ] the folder icon should consistently reflect whether a folder is expanded or not
+  - [ ] The Edit icon for any visible folder should be visible 100% of the time
+  - [ ] Folder names should exactly reflect the capitalization used when entered (i.e. do not apply CSS rules like capitalize to folder names in any context)
+  - [ ] Adjacent to each folder icon, name, and edit icon, add an Add subfolder button
+      - [ ] this new button triggers a modal where a folder name is entered and the user simply confirms or cancels this
+
+  * Editing folders
+    * Modal: Edit Folder
+      * LAYOUT REFERENCE FILE: Admin-Documents-Manage-Folders-Edit-Folder.png
+      - [ ] Rename field Folder Name to Folder name* (consistency and required field)
+      - [ ] Remove Tags. No request was made for this functionality.
+      - [ ] Remove readonly Child Folders field
+      - [ ] Remove Add folder functionality (see below for revised implementation).
+      - [ ] Rename Delete Folder button to Delete folder (consistency)
+      - [ ] Enable Delete folder functionality at all times, with a warning/confirmation modal whenever it’s clicked.
+        - [ ] the modal should indicate whether the folder is empty, or
+        - [ ] the number of folders and files within it that will be impacted.
+        - [ ] Modal copy:<br />*Really delete folder folder Name?*<br />*This folder is empty.* or<br />*This folder contains X subfolders and Y total files.*<br/>Cancel | Yes, delete
+      - [ ] Change Save changes button icon to a save icon
+      - [ ] Change Cancel button icon to fa-ban
+      - [ ] Enlarge top-left close icon and reposition (see revised layout below)
+  * Adding subfolders
+    * Modal: Add subfolder
+      ![admin-documents-manage-folders-add-subfolder](https://cloud.githubusercontent.com/assets/830373/13556662/e2b1c390-e39c-11e5-9b93-6b97a995422d.png)
+      
+      - [ ] After a new subfolder is added, the redrawn folder tree should be expanded to the point where the newly created subfolder is visible.
+
+
+* LAYOUT REFERENCE FILE: Admin-Documents-Manage-Folders.png

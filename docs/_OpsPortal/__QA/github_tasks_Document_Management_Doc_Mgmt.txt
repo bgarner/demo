@@ -1,0 +1,81 @@
+#### Document Library
+
+##### Document Manager
+* When a user is in this are, the left nave should reflect this:
+  - [ ] the Documents tab should be expanded
+  - [ ] the Document Manager item should be highlighted/Active (e.g. white, bold font)
+- [ ] This interface should be housed within a fixed-width container with min-width of at least 1040px
+* Folder interaction (left column)
+  - [ ] Add a top level, placeholding, banner folder (e.g. Sport Chek) at the top of the tree.
+    - [ ] The banner folder should be expanded by default, so the top-level folders are visible.
+  - [ ] If a folder is expanded/collapsed, its folder icon should always reflect this.
+  - [ ] Clicking on a folder icon should toggle its expand/collapse state.
+  - [ ] Clicking on a folder name should list the folder’s contents in the right-hand column of the interface.
+
+###### File interaction (right column)
+* File listing
+  - [ ] Remove buttons **Add Sub Folder** and **Edit this Folder**
+  - [ ] Rename button **Add Files** to **Add documents** 
+  - [ ] Remove File listing column **Description**
+  - [ ] The title for any listed document should be clickable, triggering either a modal/view of the document (e.g. video, image, PDF) or a download (e.g. XLSX, DOCX).
+  - [ ] The title string should use CSS ellipsis when its width is constrained.
+  - [ ] Rename column **Uploaded At** to **Uploaded**
+  - [ ] If an date/time value is null/undefined, simply display a dash ( - ) instead of an all-zeroes timestamp
+  - [ ] The **Action** column requires a fixed width so the action icons never wrap.
+  - [ ] Delete file should use a modal, not a JS alert dialog
+
+###### Workflow: Adding documents
+- [ ] When a document is added, upon returning to the Document Manager page, the folder tree should be expanded to show the currently open folder. (i.e. the folder to which documents have just been added)
+- [ ] Rename header Upload Files to Upload Documents: File Selection
+- [ ] Update breadcrumbs to read Home \ Document Manager \ Upload Documents
+- [ ] Fix error messaging during Start Upload
+- [ ] Remove the Next Step button. Successful upload(s) should automatically take users to the Review documents step. The user should only be stuck here if something goes wrong.
+* Review documents
+  * LAYOUT REFERENCE FILE: Admin-Documents-Manage-Docs-Add-Files-Review.png
+  - [ ] BUG: If you abandon the workflow at this point without clicking Done, the documents are not assigned a folder in the database, which breaks things on the front end.
+  - [ ] Replace header copy Update Meta Data with Upload Documents: Review
+  - [ ] Update breadcrumbs to read Home \ Document Manager \ Upload Documents
+  - [ ] Replace Functional copy *View or Edit files just uploaded* with *Optionally edit document Title and Start/End* and remove bolding.
+  - [ ] Shift table to line up underneath the lead-in copy above.
+  - [ ] Remove Description column/fields
+  - [ ] File name strings should use CSS ellipsis when constrained (and the containing element should use a title tag so users can hover to see the whole file name)
+  - [ ] File names should be in bold.
+  * Auto-population of Document Title rules as follows:
+    - [ ] replace file name's dashes/underscores with spaces
+    - [x] remove file extension (already works this way)
+  - [ ] Remove single line **Update** buttons and the **Update All**  button.
+  - [ ] Clicking **Done** will apply both pre-populated and changed values within the form to the affected documents
+  - [ ] **Done** button should be disabled if any title/start fields are empty.
+  - [ ] Add checkmark icon to **Done** button and change its colour to the blue we use elsewhere.
+
+###### Page: Editing documents
+* LAYOUT REFERENCE FILE: Admin-Documents-Manage-Docs-Edit-Document.png
+- [ ] When a document is edited, upon returning to the Document Manager page, the folder tree should be expanded to show the currently open folder (i.e. the folder to which the edited document belongs)
+- [ ] Header should read Edit Document
+- [ ] Breadcrumbs should reflect both the function (Edit) and the document title (prior to editing).
+* Edit Document
+  - [ ] Rename section Edit Document to Document details
+  - [ ] Title field label needs an asterisk.
+  - [ ] Replace Description field with a readonly field labeled File name (which displays the original upload filename).
+  - [ ] the filen ame displayed in the File name field should be a link which triggers either the viewing modal (PDF, MP4, PNG, JPG) or initiates a download (XLS, DOC)
+  - [ ] Start/End Date/Time controls are missing the date/time widget used elsewhere.
+  * Target Stores
+    - [ ] Move **Target Stores** field into Document Details after Start & End
+    - [ ] Rename **Target Stores** to just **Stores**
+    - [ ] Rename Or select all stores checkbox to All stores
+    - [ ] Move All stores checkbox above the store selection field
+    - [ ] Add a Clear button to the right of the store selector that empties the field when clicked.
+    - [ ] Constrain the Stores field to a max height of ~100px, with a vertical scroll bar as needed
+  * Mark as alert 
+    - [ ] Rename field **This document is an alert** to **Alert**
+    - [ ] **Alert** field should be a radio button with options **Yes** and **No** (No is the default)
+    - [ ] Rename **Alert Type** to **Alert type** with an asterisk (consistency and required field)
+    - [ ] Alert type field/value should be hidden unless Alert is set to Yes
+    - [ ] Remove redundant Alert Start/End field
+  - [ ] Final field order in Document details
+    1. Title*
+    2. File name
+    3. Start & End
+    4. Stores
+    5. Alert
+    6. Alert Type*

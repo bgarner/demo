@@ -1,0 +1,40 @@
+**Reference image**
+![admin-documents-manage-docs-edit-document](https://cloud.githubusercontent.com/assets/830373/13557526/2bb1e568-e3af-11e5-905a-123a5bf697e4.png)
+
+**Header Area**
+- [ ] Header should read: *Edit Document*
+- [ ] Breadcrumbs should reflect both the function (Edit) and the document Title (prior to edit)
+
+**Edit document Area**
+- [ ] Rename section **Edit document** to **Document details**
+- [ ] *Title* field needs an asterisk
+- [ ] Replace **Description** field with a field labeled **File name**
+  - [ ] File name should show the originally uploaded file name, including its extension
+  - [ ] File name (and its icon) should be clickable, triggering either the view modal (video, PDF, image) or download (doc, xls)
+- [ ] Start/End date/time fields should use the widget used elsewhere
+
+**Mark Document as Alert**
+- [ ] Merge this section in to the **Document details** section
+* Target stores
+  - [ ] Rename field label **Target Stores** to **Stores**
+    - [ ] Rewrite *Or select all stores* to *All stores*
+    - [ ] Move **All stores** checkbox above the store selection field
+    - [ ] Add a **Clear** button to the right of the store selector
+    - [ ] Constrain the stores field to a max height of ~150px with overflow: auto
+  - [ ] Rename field **This document is an alert** to just **Alert**
+    - [ ] **Alert** field should contain a radio selector with Yes/No
+    - [ ] *No* should be selected by default
+    - [ ] Rename **Alert Type** to **Alert type** and add an asterisk
+    - [ ] Remove fields **Start & End**
+
+**Controls (buttons)**
+- [ ] move **Cancel** and **Save changes** buttons to right side
+- [ ] change **Cancel** icon to fa-ban
+- [ ] change **Save changes** icon to save/disk icon
+- [ ] disable **Save changes** button unless
+  - [ ] Title field contains a non-whitespace value
+  - [ ] Title field contains a unique value (case-sensitive)
+  - [ ] Start/End dates are valid
+  - [ ] more 0 stores are selected
+  - [ ] **Alert** is checked but no **Alert type** is set
+- [ ] Clicking **Save Changes** should commit any changes and return the user to the Document Manager, with the correct folder expanded and its files listed

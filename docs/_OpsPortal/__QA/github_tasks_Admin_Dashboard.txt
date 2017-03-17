@@ -1,0 +1,38 @@
+### Section Order
+- [ ] Section order should be as follows:
+  * Branding (see below)
+  * Featured Content
+  * Quicklinks
+  * Notification Preferences
+
+
+#### Dashboard Title and Branding
+- [ ] Merge these two sections into the Branding section, with 3 fields:
+  * Title
+  * Subtitle
+  * Background
+
+##### Update Title and Subtitle fields
+- [ ] Required field Title field needs asterisk
+- [ ] Subtitle field should not be required. (i.e. Layout on the front end should adjust accordingly.)
+- [ ] Removing focus from either the Title field when it’s empty should:
+  - [ ] cause the field to be outlined in red
+  - [ ] cause the Save changes button to be disabled
+
+##### Background image selection
+- [ ] Thumbnail should be much smaller (constrain to 200px)
+- [ ] Add functional copy adjacent to background selection:<br/>**For best results, background images should have an aspect ratio of X:Y  and be at least XXX pixels wide.**
+
+##### Controls
+- [ ] Rename button **Cancel** to **Undo changes**
+- [ ] Change **Undo changes** icon from cancel/close to the undo icon
+  - [ ] **Undo changes** should be disabled when no changes have been initiated
+  - [ ] Undo functionality otherwise unchanged (i.e. clicking it restores the last saved Title, Subtitle and background image values)
+- [ ] button **Save changes** should use a save icon
+- [ ] **Save changes** should be disabled when:
+  - [ ] no changes are pending (e.g. page load or immediately following save)
+  - [ ] changes are invalid (e.g. either/both required fields are empty)
+- [ ] Saving changes should not generate a modal.
+  - [ ] display text preceded by checkmark icon just above the button
+  - [ ] button reverts to disabled state
+  - [ ] message fades out after 
