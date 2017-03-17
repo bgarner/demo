@@ -22,7 +22,7 @@
             {{-- <p>Admin Login</p> --}}
 
             <p>&nbsp;</p>
-            <form class="m-t" role="form" method="POST" action="{{ url('/admin/login') }}" autocomplete="off">
+            <form class="m-t" role="form" method="POST" action="{{ url('/login') }}" autocomplete="off">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 @if (count($errors))
                     <ul>

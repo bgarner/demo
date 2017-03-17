@@ -84,9 +84,9 @@ Route::post('/bugreport', 'BugReport\BugReportController@store');
 Route::post('/clicktrack', 'Analytics\AnalyticsController@store');
 
 //Authentication Routes
-Route::get('/admin/login', 'Auth\AuthController@getLogin');
-Route::post('/admin/login', 'Auth\AuthController@postLogin');
-Route::get('/admin/logout', 'Auth\AuthController@getLogout');
+// Route::get('/admin/login', 'Auth\AuthController@getLogin');
+// Route::post('/admin/login', 'Auth\AuthController@postLogin');
+// Route::get('/admin/logout', 'Auth\AuthController@getLogout');
 
 //Registration Routes
 // Route::get('/admin/register', 'Auth\AuthController@getRegister');

@@ -21,7 +21,7 @@ class SetInitialBanner
         $default_banner_id = UserBanner::where('user_id', $user_id)->first()->banner_id;
         
         if ( $default_banner_id == null ) {
-            return redirect('/admin/login')->withErrors();
+            return redirect('/login')->withErrors();
         }
 
         $exists = UserSelectedBanner::where('user_id', $user_id)->get();
