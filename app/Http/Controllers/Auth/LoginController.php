@@ -29,7 +29,6 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        \Log::info("in the LoginController class");
         $this->middleware('guest', ['except' => 'logout']);
     }
 
@@ -46,12 +45,6 @@ class LoginController extends Controller
         $group = Group::where('id', $group_id)->first()->name;
 
         return redirect("/". strtolower($group));
-        // if( in_array( $group, $this->allowedGroups) ){
-        //     return redirect()->intended($this->redirectPath());
-        // }
-        // Auth::logout();
-        // return redirect( $this->alternateLogin );
-
     }
 
 }

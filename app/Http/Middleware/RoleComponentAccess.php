@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Auth\Component\Component;
 use App\Models\Auth\Role\RoleComponent;
 use App\Models\Auth\User\UserRole;
@@ -25,7 +26,7 @@ class RoleComponentAccess
      */
     public function __construct()
     {
-        $this->user = \Auth::user();
+        $this->user = Auth::user();
     }
 
     /**
@@ -37,10 +38,9 @@ class RoleComponentAccess
      */
     public function handle($request, Closure $next)
     {
-        
         $controllerAction = $request->route()->getActionName();
         $controller = preg_split('/@/',  $controllerAction)[0];
-        
+
         $componentName = config('app.controllerComponentMap')[$controller];
         $component_id = Component::getComponentIdByComponentName($componentName);
 
@@ -55,7 +55,7 @@ class RoleComponentAccess
                 return redirect()->guest('admin/home');
             }
         }
-        
+
         return $next($request);
     }
 }
