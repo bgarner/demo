@@ -21,12 +21,9 @@ class RedirectIfAuthenticated
         if (Auth::guard($guard)->check()) {
             $group_id = Auth::user()->group_id;
             $group = Group::where('id', $group_id)->first()->name;
-                   
-           return redirect("/". strtolower($group));                    
-            
-            //return redirect('/home');
+            return redirect("/". strtolower($group));
         }
-
+        
         return $next($request);
     }
 }

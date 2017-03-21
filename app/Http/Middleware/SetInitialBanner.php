@@ -19,16 +19,16 @@ class SetInitialBanner
     {
         $user_id = \Auth::user()->id;
         $default_banner_id = UserBanner::where('user_id', $user_id)->first()->banner_id;
-        
-        if ( $default_banner_id == null ) {
-            return redirect('/login')->withErrors();
-        }
+
+        // if ( $default_banner_id == null ) {
+        //     return redirect('/login')->withErrors();
+        // }
 
         $exists = UserSelectedBanner::where('user_id', $user_id)->get();
         if (count($exists) == 0) {
-            
+
             UserSelectedBanner::create(['user_id' => $user_id, 'selected_banner_id' => $default_banner_id]);
-        }        
+        }
 
         return $next($request);
     }

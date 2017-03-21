@@ -23,19 +23,13 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/admin';
-
-    /**
      * Create a new controller instance.
      *
      * @return void
      */
     public function __construct()
     {
+        \Log::info("in the LoginController class");
         $this->middleware('guest', ['except' => 'logout']);
     }
 
@@ -50,17 +44,14 @@ class LoginController extends Controller
     {
         $group_id = $user->group_id;
         $group = Group::where('id', $group_id)->first()->name;
-        
-        $this->redirectTo = strtolower($group);
 
-        return redirect("/". $this->redirectTo);
-
+        return redirect("/". strtolower($group));
         // if( in_array( $group, $this->allowedGroups) ){
-        //     return redirect()->intended($this->redirectPath());    
+        //     return redirect()->intended($this->redirectPath());
         // }
         // Auth::logout();
-        // return redirect( $this->alternateLogin );   
+        // return redirect( $this->alternateLogin );
 
-    }    
+    }
 
 }

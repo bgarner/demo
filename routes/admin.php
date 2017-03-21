@@ -1,9 +1,4 @@
 <?php
-Route::get('/stuff', function(){
-	return "hello out there!";
-});
-
-
 /* Admin Routes Begin 	*/
 //Route::get('/admin',  ['middleware' => 'admin.auth', 'uses' =>'AdminController@index' ] );
 Route::get('/admin', 'AdminController@index');

@@ -27,11 +27,9 @@ class AdminController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin.auth');
+        // $this->middleware('admin.auth');
         $this->middleware('componentaccess');
         $this->middleware('banner');
-        
-        
     }
 
 
@@ -42,8 +40,8 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-        $this->user_id = \Auth::user()->id;
-        $this->group_id = \Auth::user()->group_id;
+        $this->user_id = Auth::user()->id;
+        $this->group_id = Auth::user()->group_id;
 
         $banner_id = UserSelectedBanner::where('user_id', Auth::user()->id)->first()->selected_banner_id;
 
