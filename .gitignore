@@ -11,5 +11,6 @@
 /storage/logs
 Homestead.yaml
 Homestead.json
+.node_modules
 .env
 .catapult
