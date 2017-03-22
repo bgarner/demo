@@ -17,10 +17,7 @@ class GroupAdminController extends Controller
     
     public function __construct()
     {
-        $this->middleware('admin.auth');
-        $this->middleware('superadmin.auth');
-        $this->middleware('banner');
-
+        //
     }
 
     /**
