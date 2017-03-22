@@ -18,7 +18,7 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        //Auth::logout();
+        // Auth::logout(); 
         if (Auth::guard($guard)->check()) {
             $group_id = Auth::user()->group_id;
             $group = Group::where('id', $group_id)->first()->name;

@@ -3,8 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Auth\User\UserBanner;
 use App\Models\Auth\User\UserSelectedBanner;
+
 
 class SetInitialBanner
 {
@@ -17,7 +19,7 @@ class SetInitialBanner
      */
     public function handle($request, Closure $next)
     {
-        $user_id = \Auth::user()->id;
+        $user_id = Auth::user()->id;
         $default_banner_id = UserBanner::where('user_id', $user_id)->first()->banner_id;
 
         // if ( $default_banner_id == null ) {

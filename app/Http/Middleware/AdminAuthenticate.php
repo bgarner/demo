@@ -35,11 +35,13 @@ class AdminAuthenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->check()) {
+        if(!Auth::user()){
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
-                return redirect()->guest('/login');
+                \Log::info('not authorized : AdminAuthenticate');
+                Auth::logout();
+                return redirect()->to('/login');
             }
         }
         return $next($request);

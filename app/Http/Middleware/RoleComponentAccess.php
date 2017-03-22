@@ -53,6 +53,7 @@ class RoleComponentAccess
                 return response('Unauthorized.', 401);
             } else {
                 return redirect()->guest('admin/home');
+                \Log::info('not authorized : RoleComponentAccess');
             }
         }
 
