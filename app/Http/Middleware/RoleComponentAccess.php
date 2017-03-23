@@ -4,11 +4,12 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Auth\Component\Component;
 use App\Models\Auth\Role\RoleComponent;
 use App\Models\Auth\User\UserRole;
 
-class SuperadminAuthenticate
+class RoleComponentAccess
 {
     /**
      * The Guard implementation.
@@ -25,7 +26,7 @@ class SuperadminAuthenticate
      */
     public function __construct()
     {
-        $this->user = \Auth::user();
+        $this->user = Auth::user();
     }
 
     /**
@@ -37,10 +38,9 @@ class SuperadminAuthenticate
      */
     public function handle($request, Closure $next)
     {
-        
         $controllerAction = $request->route()->getActionName();
         $controller = preg_split('/@/',  $controllerAction)[0];
-        
+
         $componentName = config('app.controllerComponentMap')[$controller];
         $component_id = Component::getComponentIdByComponentName($componentName);
 
@@ -53,9 +53,10 @@ class SuperadminAuthenticate
                 return response('Unauthorized.', 401);
             } else {
                 return redirect()->guest('admin/home');
+                \Log::info('not authorized : RoleComponentAccess');
             }
         }
-        
+
         return $next($request);
     }
 }
