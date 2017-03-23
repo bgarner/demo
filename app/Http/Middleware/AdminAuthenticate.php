@@ -40,7 +40,6 @@ class AdminAuthenticate
                 return response('Unauthorized.', 401);
             } else {
                 \Log::info('not authorized : AdminAuthenticate');
-                Auth::logout();
                 return redirect()->to('/login');
             }
         }

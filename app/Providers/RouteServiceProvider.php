@@ -78,7 +78,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapManagerRoutes()
     {
-        Route::middleware(['web','admin.auth', 'componentaccess', 'banner'])
+        Route::middleware(['web','admin.auth', 'banner'])
              ->namespace($this->namespace)
              ->group(base_path('routes/manager.php'));
     }
