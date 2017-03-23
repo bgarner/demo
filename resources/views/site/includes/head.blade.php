@@ -19,7 +19,7 @@
     
 
 
-    @unless ( Request::is('admin') || Request::is('admin/*') )
+    @unless ( Request::is('admin') || Request::is('admin/*') || Request::is('login'))
     {!! $skin !!}
     @endunless
 

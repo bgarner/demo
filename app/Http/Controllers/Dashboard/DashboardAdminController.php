@@ -18,9 +18,9 @@ class DashboardAdminController extends Controller
 
     public function __construct()
     {
-        $this->middleware('admin.auth');
-        $this->middleware('superadmin.auth');
-        $this->middleware('banner');
+        // $this->middleware('admin.auth');
+        // $this->middleware('componentaccess');
+        // $this->middleware('banner');
     }
     /**
      * Display a listing of the resource.
@@ -31,7 +31,7 @@ class DashboardAdminController extends Controller
     {
         $user_id = \Auth::user()->id;
         $banner_ids = UserBanner::where('user_id', $user_id)->get()->pluck('banner_id');
-        $banners = Banner::whereIn('id', $banner_ids)->get();        
+        $banners = Banner::whereIn('id', $banner_ids)->get();
         $banner_id = UserSelectedBanner::where('user_id', \Auth::user()->id)->first()->selected_banner_id;
         $banner  = Banner::find($banner_id);
 
@@ -47,7 +47,7 @@ class DashboardAdminController extends Controller
                 // ->with('oldBackgrounds', $oldBackgrounds)
                 ->with('banners', $banners)
                 ->with('features', $features)
-                ->with('quicklinks', $quicklinks);  
+                ->with('quicklinks', $quicklinks);
     }
 
     /**

@@ -25,12 +25,7 @@ class DocumentManagerController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin.auth');
-        $this->middleware('superadmin.auth');
-        $this->middleware('banner');
-        $this->user_id = \Auth::user()->id;
-        $this->group_id = \Auth::user()->group_id;
-        
+        //
     }
 
     /**
@@ -40,6 +35,10 @@ class DocumentManagerController extends Controller
      */
     public function index(Request $request)
     {
+        $this->user_id = \Auth::user()->id;
+        
+        $this->group_id = \Auth::user()->group_id;
+
         $banner_id = UserSelectedBanner::where('user_id', \Auth::user()->id)->first()->selected_banner_id;
 
         $banner  = Banner::find($banner_id);
