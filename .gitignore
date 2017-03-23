@@ -9,6 +9,7 @@
 /public/js/custom/ckeditor-imagebrowser/images_list.json
 /public/js/env.js
 /storage/logs
+/node_modules
 Homestead.yaml
 Homestead.json
 .node_modules
