@@ -210,5 +210,45 @@ class Task extends Model
 
 	}
 
+	public static function getAllIncompleteTasksByStoreId($store_id)
+	{
+		$tasks = Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
+					->join('task_store_status', 'task_store_status.task_id', '=', 'tasks.id' )
+					->join('task_store_status_types', 'task_store_status.status_type_id', '=', 'task_store_status_types.id')
+					->where('tasks_target.store_id', $store_id)
+					->where('task_store_status_types.status_title', 'done')
+					->select('tasks.*', 'tasks_target.store_id', 'task_store_status_types.id as task_status_id', 'task_store_status_types.status_title')
+					->get();
+		return $tasks;
+
+	}
+
+	public static function getTaskDueTodaybyStoreId($store_id)
+	{
+		$today = Carbon::today();
+		$today->hour = 23;
+		$today->minute = 59;
+		$today->second = 59;
+		$today_formatted = $today->format('Y-m-d H:i:s');
+
+		$tasks = Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
+					->where('tasks_target.store_id', $store_id)
+					->where('due_date' , "<", $today_formatted)
+					->select('tasks.*', 'tasks_target.store_id')
+					->get()
+					->each(function($task){
+						if(TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', "!=", '2' )->first()){
+							$task->task_status_id = TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', "!=", '2' )->first()->status_type_id;
+							$task->status_title = TaskStoreStatus::join('task_store_status_types', 'task_store_status_types.id', '=', 'task_store_status.task_id')
+																->where('task_id', $task->id)
+																->select('task_store_status_types.status_title')
+																->first();
+
+						}
+					});
+
+		return $tasks;
+	}
+
 
 }
