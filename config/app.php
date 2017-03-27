@@ -180,7 +180,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        App\Providers\AdminViewComposerServiceProvider::class,
+        App\Providers\AdminSidenavServiceProvider::class,
+        App\Providers\StoreSidenavServiceProvider::class,
+        App\Providers\StoreTopbarServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
 
     ],

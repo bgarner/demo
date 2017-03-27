@@ -24,7 +24,6 @@ use App\Models\UrgentNotice\UrgentNoticeFolder;
 class UrgentNoticeController extends Controller
 {
     /**
-     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -33,19 +32,13 @@ class UrgentNoticeController extends Controller
         $storeNumber = RequestFacade::segment(1);
         $storeInfo = StoreInfo::getStoreInfoByStoreId($storeNumber);
         $storeBanner = $storeInfo->banner_id;
-        $banner = Banner::find($storeBanner);
-        $isComboStore = $storeInfo->is_combo_store;
         $skin = Skin::getSkin($storeBanner);
 
-        $urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($storeNumber);
         $urgentNotices = UrgentNotice::getActiveUrgentNoticesByStore($storeNumber);
 
         return view('site.urgentnotices.index')
             ->with('skin', $skin)
-            ->with('urgentNoticeCount', $urgentNoticeCount)
-            ->with('notices', $urgentNotices)
-            ->with('banner', $banner)
-            ->with('isComboStore', $isComboStore);      
+            ->with('notices', $urgentNotices);      
     }
 
     /**
@@ -80,8 +73,6 @@ class UrgentNoticeController extends Controller
         $storeNumber = RequestFacade::segment(1);
         $storeInfo = StoreInfo::getStoreInfoByStoreId($storeNumber);
         $storeBanner = $storeInfo->banner_id;
-        $banner = Banner::find($storeBanner);
-        $isComboStore = $storeInfo->is_combo_store;
 
         $skin = Skin::getSkin($storeBanner);
 
@@ -104,9 +95,7 @@ class UrgentNoticeController extends Controller
             ->with('urgentNoticeCount', $urgentNoticeCount)
             ->with('attached_folders', $attached_folders)
             ->with('attached_documents', $attached_documents)
-            ->with('attachment_types', $attachment_types)
-            ->with('banner', $banner)
-            ->with('isComboStore', $isComboStore);
+            ->with('attachment_types', $attachment_types);
     }
 
     /**
