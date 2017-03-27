@@ -121,10 +121,10 @@
             <div class="taskbell">
                 <ul class="nav navbar-top-links navbar-right">
                     <li class="dropdown">
-                                    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                                    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#" style="width: 60px; height: 10px;">
                                         <i class="fa fa-bell"></i>
-                                        <span class="label label-primary" style="float: left;">8</span>
-                                        <span class="label label-warning" style="float: left; margin-right: 20px;">8</span>
+                                        <span class="label label-default" style="margin-right: 17px;">8</span>
+                                        <span class="label label-danger" style="">2</span>
                                     </a>
                                     <ul class="dropdown-menu dropdown-alerts">
                                         <li>
@@ -156,8 +156,8 @@
                                         <li class="divider"></li>
                                         <li>
                                             <div class="text-center link-block">
-                                                <a href="notifications.html">
-                                                    <strong>See All Alerts</strong>
+                                                <a href="#">
+                                                    <strong>See All Tasks</strong>
                                                     <i class="fa fa-angle-right"></i>
                                                 </a>
                                             </div>
