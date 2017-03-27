@@ -8,7 +8,6 @@ use DB;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Banner;
 use App\Models\Document\FileFolder;
 use App\Models\Document\Package;
 use App\Models\Communication\Communication;
@@ -16,8 +15,6 @@ use App\Models\Communication\CommunicationDocument;
 use App\Models\Communication\CommunicationPackage;
 use App\Models\Communication\CommunicationTarget;
 use App\Models\Communication\CommunicationType;
-use App\Models\UrgentNotice\UrgentNotice;
-use App\Models\Alert\Alert;
 use App\Models\Tag\Tag;
 use App\Models\Tag\ContentTag;
 use App\Skin;

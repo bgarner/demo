@@ -28,12 +28,7 @@ class ProductLaunchController extends Controller
         $this->storeNumber = RequestFacade::segment(1);
         $storeInfo = StoreInfo::getStoreInfoByStoreId($this->storeNumber);
         $this->storeBanner = $storeInfo->banner_id;
-        $this->banner = Banner::find($this->storeBanner);
-        $this->isComboStore = $storeInfo->is_combo_store;
         $this->skin = Skin::getSkin($this->storeBanner);
-        $this->urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($this->storeNumber);
-        $this->alertCount = Alert::getActiveAlertCountByStore($this->storeNumber);        
-        $this->communicationCount = Communication::getActiveCommunicationCount($this->storeNumber);        
     }
 
     /**
@@ -51,12 +46,7 @@ class ProductLaunchController extends Controller
         return view('site.calendar.productlaunch.index')
             ->with('productLaunches', $productLaunches)
             ->with('lastUpdated',  $lastUpdated)
-            ->with('skin', $this->skin)
-            ->with('communicationCount', $this->communicationCount)
-            ->with('alertCount', $this->alertCount)
-            ->with('urgentNoticeCount', $this->urgentNoticeCount)
-            ->with('banner', $this->banner)
-            ->with('isComboStore', $this->isComboStore); 
+            ->with('skin', $this->skin); 
     }
 
     /**

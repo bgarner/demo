@@ -6,13 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as RequestFacade; 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Communication\Communication;
-use App\Models\Communication\CommunicationDocument;
-use App\Models\Communication\CommunicationPackage;
-use App\Models\Communication\CommunicationTarget;
 use App\Models\Notification\Notification;
-use App\Models\UrgentNotice\UrgentNotice;
-use App\Models\Banner;
 use App\Models\StoreInfo;
 use App\Skin;
 use App\Models\Alert\Alert;
@@ -34,8 +28,6 @@ class AlertController extends Controller
         $storeBanner = $storeInfo->banner_id;
 
         $skin = Skin::getSkin($storeBanner);
-        $banner = Banner::find($storeInfo->banner_id);
-        $isComboStore = $storeInfo->is_combo_store;
 
         $alertTypes = AlertType::all();
         $alertCount = Alert::getActiveAlertCountByStore($storeNumber);

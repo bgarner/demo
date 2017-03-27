@@ -8,11 +8,9 @@ use DB;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Banner;
 use App\Skin;
 
-use App\Models\UrgentNotice\UrgentNotice;
-use App\Models\Alert\Alert;
+
 use App\Models\StoreInfo;
 
 use App\Models\Video\Video;
@@ -37,15 +35,7 @@ class VideoController extends Controller
         $this->storeNumber = RequestFacade::segment(1);
         $this->storeInfo = StoreInfo::getStoreInfoByStoreId($this->storeNumber);
         $this->storeBanner = $this->storeInfo->banner_id;
-        $this->banner = Banner::find($this->storeBanner);
-        $this->isComboStore = $this->storeInfo->is_combo_store;
         $this->skin = Skin::getSkin($this->storeBanner);
-        $this->urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($this->storeNumber);
-        $this->alertCount = Alert::getActiveAlertCountByStore($this->storeNumber);
-        $this->communicationCount = DB::table('communications_target')
-            ->where('store_id', $this->storeNumber)
-            ->whereNull('is_read')
-            ->count();
     }
 
     /**
@@ -68,11 +58,7 @@ class VideoController extends Controller
             ->with('mostViewed', $mostViewed)
             ->with('latestPlaylists', $latestPlaylists)
             ->with('featured', $featured)
-            ->with('skin', $this->skin)
-            ->with('banner', $this->banner)
-            ->with('communicationCount', $this->communicationCount)
-            ->with('urgentNoticeCount', $this->urgentNoticeCount)
-            ->with('isComboStore', $this->isComboStore);
+            ->with('skin', $this->skin);
     }
 
     public function show(Request $request)
@@ -83,11 +69,7 @@ class VideoController extends Controller
         return view('site.video.singlevideo')
             ->with('video', $video)
             ->with('playlists', $playlists)
-            ->with('skin', $this->skin)
-            ->with('banner', $this->banner)
-            ->with('communicationCount', $this->communicationCount)
-            ->with('urgentNoticeCount', $this->urgentNoticeCount)
-            ->with('isComboStore', $this->isComboStore);
+            ->with('skin', $this->skin);
     }
 
     public function allPlaylists()
@@ -95,11 +77,7 @@ class VideoController extends Controller
         $playlists = Playlist::getLatestPlaylists();
         return view('site.video.allPlaylists')
             ->with('playlists', $playlists)
-            ->with('skin', $this->skin)
-            ->with('banner', $this->banner)
-            ->with('communicationCount', $this->communicationCount)
-            ->with('urgentNoticeCount', $this->urgentNoticeCount)
-            ->with('isComboStore', $this->isComboStore);
+            ->with('skin', $this->skin);
     }
 
     public function showPlaylist(Request $request)
@@ -110,21 +88,13 @@ class VideoController extends Controller
         return view('site.video.playlist')
             ->with('playlistMeta', $playlistMeta)
             ->with('videoList', $videoList)
-            ->with('skin', $this->skin)
-            ->with('banner', $this->banner)
-            ->with('communicationCount', $this->communicationCount)
-            ->with('urgentNoticeCount', $this->urgentNoticeCount)
-            ->with('isComboStore', $this->isComboStore);
+            ->with('skin', $this->skin);
     }
 
     public function showTag($tag)
     {
         return view('site.video.tag')
-            ->with('skin', $this->skin)
-            ->with('banner', $this->banner)
-            ->with('communicationCount', $this->communicationCount)
-            ->with('urgentNoticeCount', $this->urgentNoticeCount)
-            ->with('isComboStore', $this->isComboStore);
+            ->with('skin', $this->skin);
     }
 
     public function mostViewed()
@@ -132,10 +102,6 @@ class VideoController extends Controller
         $mostViewed = Video::getMostViewedVideos();
         return view('site.video.popular')
             ->with('skin', $this->skin)
-            ->with('banner', $this->banner)
-            ->with('communicationCount', $this->communicationCount)
-            ->with('urgentNoticeCount', $this->urgentNoticeCount)
-            ->with('isComboStore', $this->isComboStore)
             ->with('mostViewed', $mostViewed);
     }
     public function mostRecent()
@@ -143,10 +109,6 @@ class VideoController extends Controller
         $mostRecent = Video::getMostRecentVideos();
         return view('site.video.latest')
             ->with('skin', $this->skin)
-            ->with('banner', $this->banner)
-            ->with('communicationCount', $this->communicationCount)
-            ->with('urgentNoticeCount', $this->urgentNoticeCount)
-            ->with('isComboStore', $this->isComboStore)
             ->with('mostRecent', $mostRecent);
 
     }
@@ -155,10 +117,6 @@ class VideoController extends Controller
         $mostLiked = Video::getMostLikedVideos();
         return view('site.video.liked')
             ->with('skin', $this->skin)
-            ->with('banner', $this->banner)
-            ->with('communicationCount', $this->communicationCount)
-            ->with('urgentNoticeCount', $this->urgentNoticeCount)
-            ->with('isComboStore', $this->isComboStore)
             ->with('mostLiked', $mostLiked);
     }
 

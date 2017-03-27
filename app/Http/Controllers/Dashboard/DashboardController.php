@@ -22,8 +22,6 @@ use App\Models\Feature\Feature;
 use App\Models\Dashboard\Quicklinks;
 use App\Models\Dashboard\DashboardBranding;
 use App\Models\Notification\Notification;
-use App\Models\UrgentNotice\UrgentNotice;
-use App\Models\Alert\Alert;
 use App\Skin;
 use App\Models\StoreInfo;
 use App\Models\Video\Video;
@@ -33,12 +31,10 @@ class DashboardController extends Controller
 
     public function index(Request $request)
     {
-        // dd($request->all());
+
     	$storeNumber = RequestFacade::segment(1);
 
         $storeInfo = StoreInfo::getStoreInfoByStoreId($storeNumber);
-
-        $isComboStore = $storeInfo->is_combo_store;
 
         $storeBanner = $storeInfo->banner_id;
 
@@ -52,28 +48,19 @@ class DashboardController extends Controller
 
         $notifications = Notification::getAllNotifications($storeInfo->banner_id, $storeNumber, $banner->update_type_id, $banner->update_window_size);
 
-        $urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($storeNumber);
-
-        $communicationCount = Communication::getActiveCommunicationCount($storeNumber);
-
-        $alertCount = Alert::getActiveAlertCountByStore($storeNumber);
 
         $communications = Communication::getActiveCommunicationsByStoreNumber($storeNumber, 3);
 
         $featuredVideo = Video::getFeaturedVideo();
 
         return view('site.dashboard.index')
-            ->with('banner', $banner)
             ->with('skin', $skin)
+            ->with('banner', $banner)
             ->with('quicklinks', $quicklinks)
-        	->with('communicationCount', $communicationCount)
-            ->with('alertCount', $alertCount)
             ->with('communications', $communications)
             ->with('features', $features)
             ->with('notifications', $notifications)
-            ->with('urgentNoticeCount', $urgentNoticeCount)
-            ->with('featuredVideo', $featuredVideo)
-            ->with('isComboStore', $isComboStore);
+            ->with('featuredVideo', $featuredVideo);
     }
 
 

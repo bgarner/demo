@@ -12,14 +12,6 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Event\Event;
 use App\Models\Event\EventType;
-use App\Models\Banner;
-
-use App\Models\Communication\Communication;
-use App\Models\Communication\CommunicationDocument;
-use App\Models\Communication\CommunicationPackage;
-use App\Models\Communication\CommunicationTarget;
-use App\Models\UrgentNotice\UrgentNotice;
-use App\Models\Alert\Alert;
 use App\Skin;
 use App\Models\StoreInfo;
 use App\Models\Utility\Utility;
@@ -45,17 +37,7 @@ class CalendarController extends Controller
 
         $storeBanner = $storeInfo->banner_id;
 
-        $banner = Banner::find($storeBanner);
-
-        $isComboStore = $storeInfo->is_combo_store;
-
         $skin = Skin::getSkin($storeBanner);
-
-        $communicationCount = Communication::getActiveCommunicationCount($storeNumber);
-
-        $urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($storeNumber);
-
-        $alertCount = Alert::getActiveAlertCountByStore($storeNumber);
 
         //for the calendar view
         $events = Event::getActiveEventsByStore($storeNumber);
@@ -85,15 +67,9 @@ class CalendarController extends Controller
         
         return view('site.calendar.index')
                 ->with('skin', $skin)
-                ->with('alertCount', $alertCount)
-                ->with('communicationCount', $communicationCount)
                 ->with('events', $events)
-                ->with('urgentNoticeCount', $urgentNoticeCount)
-                ->with('isComboStore', $isComboStore)
-                ->with('banner', $banner)
                 ->with('eventsList', $eventsList)
-                ->with('today', $today)
-                ->with('urgentNoticeCount', $urgentNoticeCount);
+                ->with('today', $today);
     }
 
     /**
