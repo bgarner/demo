@@ -126,38 +126,65 @@
                                         <span class="label label-default" style="margin-right: 17px;">8</span>
                                         <span class="label label-danger" style="">2</span>
                                     </a>
-                                    <ul class="dropdown-menu dropdown-alerts">
-                                        <li>
-                                            <a href="mailbox.html">
-                                                <div>
-                                                    <i class="fa fa-envelope fa-fw"></i> You have 16 messages
-                                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li>
-                                            <a href="profile.html">
-                                                <div>
-                                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                                    <span class="pull-right text-muted small">12 minutes ago</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li>
-                                            <a href="grid_options.html">
-                                                <div>
-                                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                                </div>
-                                            </a>
-                                        </li>
+                                    <ul class="dropdown-menu dropdown-alerts" style="width: 450px !important;">
+                                        <h4>Current Tasks</h4>
+                                        <ul class="todo-list m-t small-list">
+                                            <li>
+                                                <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
+                                                <span class="m-l-xs todo text-danger">
+                                                    <strong>!!</strong>
+                                                    Buy some milk and cookies
+                                                </span>
+                                                <small class="label label-danger"><i class="fa fa-clock-o"></i> 2 days ago</small>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
+                                                <span class="m-l-xs text-danger">
+                                                    <strong>!!</strong>
+                                                    Go to shop and find some products.
+                                                </span>
+                                                <small class="label label-danger"><i class="fa fa-clock-o"></i> 1 day ago</small>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
+                                                <span class="m-l-xs">
+                                                    Send documents to Mike
+                                                    <small class="label label-success"><i class="fa fa-clock-o"></i> Tomorrow</small>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
+                                                <span class="m-l-xs">
+                                                    Go to the doctor dr Smith
+                                                    <small class="label label-default"><i class="fa fa-clock-o"></i> in 3 days</small>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
+                                                <span class="m-l-xs todo">
+                                                    Plan vacation
+                                                    <small class="label label-default"><i class="fa fa-clock-o"></i> May 15</small>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
+                                                <span class="m-l-xs">Create new stuff</span>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
+                                                <span class="m-l-xs">Call to Anna for dinner</span>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
+                                                <span class="m-l-xs">Some other task</span>
+                                            </li>
+                                        </ul>
+
                                         <li class="divider"></li>
                                         <li>
                                             <div class="text-center link-block">
                                                 <a href="#">
-                                                    <strong>See All Tasks</strong>
+                                                    <strong>Go to Tasks</strong>
                                                     <i class="fa fa-angle-right"></i>
                                                 </a>
                                             </div>
