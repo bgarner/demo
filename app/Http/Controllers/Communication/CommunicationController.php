@@ -168,8 +168,6 @@ class CommunicationController extends Controller
             $communicationTypes = CommunicationType::getCommunicationTypeCountAllMessages($storeNumber , $storeBanner);
         }
 
-        $alertCount = Alert::getActiveAlertCountByStore($storeNumber);
-
         return view('site.communications.message')
             ->with('skin', $skin)
             ->with('communicationTypes', $communicationTypes)

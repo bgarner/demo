@@ -8,10 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Request as RequestFacade; 
 use App\Models\ProductLaunch\ProductLaunch;
-use App\Models\UrgentNotice\UrgentNotice;
-use App\Models\Alert\Alert;
 use App\Models\StoreInfo;
-use App\Models\Banner;
 use App\Skin;
 
 use App\Models\Communication\Communication;
