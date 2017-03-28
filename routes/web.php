@@ -35,7 +35,6 @@ Route::get('/{storeno}/calendar/productlaunch', array('uses'=> 'Calendar\Product
 //COMMUNICATIONS
 Route::get('/{storeno}/communication', array('uses' => 'Communication\CommunicationController@index'));
 Route::get('/{storeno}/communication/show/{id}', 'Communication\CommunicationController@show');
-Route::resource('/communication', 'Communication\CommunicationTargetController');
 
 //COMMUNITY
 Route::get('/{storeno}/community', array('uses' => 'Community\CommunityController@index'));
