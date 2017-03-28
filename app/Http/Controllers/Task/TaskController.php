@@ -17,6 +17,7 @@ class TaskController extends Controller
     {
         // get tasks due today for store
         //get tasks due for store arranged reverese chronologically
+        return view('site.tasks.index');
     }
 
     /**
@@ -59,7 +60,7 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        // remove this method 
+        // remove this method
     }
 
     /**

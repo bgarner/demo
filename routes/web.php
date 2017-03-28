@@ -17,14 +17,14 @@ Route::pattern('id', '[0-9]+');
 //STORE SELECTOR
 Route::get('/', 'StoreSelectorController@index');
 
-//DASHBOARD
-Route::get('/{storeno}', array('uses' => 'Dashboard\DashboardController@index'));
+//ALERTS
+Route::get('/{storeno}/alerts', array('uses' => 'Alert\AlertController@index'));
 
-//DOCUMENTS
-Route::get('/{storeno}/document', array('uses' => 'Document\DocumentController@index'));
+//ANALYTICS
+Route::post('/clicktrack', 'Analytics\AnalyticsController@store');
 
-//FOLDER - SHOW CONTENT
-Route::get('/{storeno}/folder/{id}', ['uses' => 'Document\FolderController@show']);
+//BUGREPORTER
+Route::post('/bugreport', 'BugReport\BugReportController@store');
 
 //CALENDAR
 Route::get('/{storeno}/calendar', array('uses' => 'Calendar\CalendarController@index'));
@@ -41,51 +41,49 @@ Route::resource('/communication', 'Communication\CommunicationTargetController')
 Route::get('/{storeno}/community', array('uses' => 'Community\CommunityController@index'));
 Route::resource('/savedonation', 'Community\CommunityFundController');
 
+//DASHBOARD
+Route::get('/{storeno}', array('uses' => 'Dashboard\DashboardController@index'));
+
+//DOCUMENTS
+Route::get('/{storeno}/document', array('uses' => 'Document\DocumentController@index'));
+
+//FEATURES
+Route::get('/{storeno}/feature/show/{id}', 'Feature\FeatureController@show');
+
+//FOLDER - SHOW CONTENT
+Route::get('/{storeno}/folder/{id}', ['uses' => 'Document\FolderController@show']);
+
+//SEARCH
+//Route::post('/{storeno}/search', array('uses' => 'Search\SearchController@index'));
+Route::get('/{storeno}/search', array('uses' => 'Search\SearchController@index'));
+
+//TASKS
+Route::get('/{storeno}/tasks', 'Task\TaskController@index');
+
 //TOOLS
 Route::get('/{storeno}/tools/boxingday', array('uses' => 'Tools\BlackFridayController@index'));
 Route::post('/getFlyerBoxes', 'Tools\FlyerPageSelectionController@show');
 Route::post('/getFlyerBoxData', 'Tools\FlyerBoxSelectionController@show');
 
-
-//VIDEO
-Route::get('/{storeno}/video', array('uses' => 'Video\VideoController@index'));
-
-Route::get('/{storeno}/video/popular', array('uses' => 'Video\VideoController@mostViewed'));
-Route::get('/{storeno}/video/latest', array('uses' => 'Video\VideoController@mostRecent'));
-Route::get('/{storeno}/video/liked', array('uses' => 'Video\VideoController@mostLiked'));
-Route::get('/{storeno}/video/playlists', array('uses' => 'Video\VideoController@allPlaylists'));
-
-Route::get('/{storeno}/video/watch/{id}', array('uses' => 'Video\VideoController@show'));
-Route::get('/{storeno}/video/playlist/{id}', array('uses' => 'Video\VideoController@showPlaylist'));
-Route::get('/{storeno}/video/tag/{tag}', array('uses' => 'Video\VideoController@showTag'));
-
-Route::post('/videocount', 'Video\VideoViewCountController@update');
-Route::post('/videolike', 'Video\LikeController@update');
-Route::post('/videodislike', 'Video\DislikeController@update');
-
-//FEATURES
-Route::get('/{storeno}/feature/show/{id}', 'Feature\FeatureController@show');
-
-//ALERTS
-Route::get('/{storeno}/alerts', array('uses' => 'Alert\AlertController@index'));
-
 //URGENT NOTICES
 Route::get('/{storeno}/urgentnotice', array('uses' => 'UrgentNotice\UrgentNoticeController@index'));
 Route::get('/{storeno}/urgentnotice/show/{id}', array('uses' => 'UrgentNotice\UrgentNoticeController@show'));
 
-//Search
-//Route::post('/{storeno}/search', array('uses' => 'Search\SearchController@index'));
-Route::get('/{storeno}/search', array('uses' => 'Search\SearchController@index'));
+//VIDEO
+Route::get('/{storeno}/video', array('uses' => 'Video\VideoController@index'));
+Route::get('/{storeno}/video/popular', array('uses' => 'Video\VideoController@mostViewed'));
+Route::get('/{storeno}/video/latest', array('uses' => 'Video\VideoController@mostRecent'));
+Route::get('/{storeno}/video/liked', array('uses' => 'Video\VideoController@mostLiked'));
+Route::get('/{storeno}/video/playlists', array('uses' => 'Video\VideoController@allPlaylists'));
+Route::get('/{storeno}/video/watch/{id}', array('uses' => 'Video\VideoController@show'));
+Route::get('/{storeno}/video/playlist/{id}', array('uses' => 'Video\VideoController@showPlaylist'));
+Route::get('/{storeno}/video/tag/{tag}', array('uses' => 'Video\VideoController@showTag'));
+Route::post('/videocount', 'Video\VideoViewCountController@update');
+Route::post('/videolike', 'Video\LikeController@update');
+Route::post('/videodislike', 'Video\DislikeController@update');
 
-//BUG REPORTER
-Route::post('/bugreport', 'BugReport\BugReportController@store');
-
-//ANALYTICS
-Route::post('/clicktrack', 'Analytics\AnalyticsController@store');
 
 //list of admin functions
 // Route::get('/admin', function(){
 // //	return view('admin.index');
 // });
-
-
