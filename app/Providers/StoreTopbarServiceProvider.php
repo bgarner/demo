@@ -3,9 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Models\Auth\Role\RoleComponent;
 
-class AdminViewComposerServiceProvider extends ServiceProvider
+class StoreTopbarServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -14,9 +13,7 @@ class AdminViewComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer('admin.includes.sidenav', function($view){
-            $view->with('roleComponents', \App\Models\Auth\Role\RoleComponent::getAccessibleComponentNameList());
-        });
+        view()->composer('site.includes.topbar', '\App\Http\ViewCreators\StoreTopbarCreator');
     }
 
     /**

@@ -8,7 +8,6 @@ use DB;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Banner;
 use App\Models\Document\FileFolder;
 use App\Models\Document\Package;
 use App\Models\Communication\Communication;
@@ -16,10 +15,6 @@ use App\Models\Communication\CommunicationDocument;
 use App\Models\Communication\CommunicationPackage;
 use App\Models\Communication\CommunicationTarget;
 use App\Models\Communication\CommunicationType;
-use App\Models\UrgentNotice\UrgentNotice;
-use App\Models\Alert\Alert;
-use App\Models\Tag\Tag;
-use App\Models\Tag\ContentTag;
 use App\Skin;
 use App\Models\StoreInfo;
 use App\Models\Document\Document;
@@ -41,16 +36,6 @@ class CommunicationController extends Controller
         $storeInfo = StoreInfo::getStoreInfoByStoreId($storeNumber);
 
         $storeBanner = $storeInfo->banner_id;
-
-        $banner = Banner::find($storeBanner);
-
-        $isComboStore = $storeInfo->is_combo_store;
-
-        $skin = Skin::getSkin($storeBanner);
-
-        $urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($storeNumber);
-
-        $alertCount = Alert::getActiveAlertCountByStore($storeNumber);
 
         $communicationTypes = CommunicationType::getCommunicationTypeCount($storeNumber, $storeBanner);
 
@@ -89,16 +74,11 @@ class CommunicationController extends Controller
         }
 
         return view('site.communications.index')
-            ->with('skin', $skin)
             ->with('communicationTypes', $communicationTypes)
             ->with('communications', $targetedCommunications)
             ->with('communicationCount', $communicationCount)
-            ->with('alertCount', $alertCount)
-            ->with('urgentNoticeCount', $urgentNoticeCount)
             ->with('title', $title)
-            ->with('archives', $request['archives'])
-            ->with('banner', $banner)
-            ->with('isComboStore', $isComboStore);
+            ->with('archives', $request['archives']);
 
     }
 
@@ -134,14 +114,11 @@ class CommunicationController extends Controller
         $storeNumber = RequestFacade::segment(1);
         $storeInfo = StoreInfo::getStoreInfoByStoreId($storeNumber);
         $storeBanner = $storeInfo->banner_id;
-        $banner = Banner::find($storeBanner);
-        $isComboStore = $storeInfo->is_combo_store;
 
         $skin = Skin::getSkin($storeBanner);
 
         $communicationCount = Communication::getActiveCommunicationCount($storeNumber);
 
-        $urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($storeNumber);
         $communicationTypes = CommunicationType::getCommunicationTypeCount($storeNumber, $storeBanner);
 
         $communication = Communication::getCommunication($id);
@@ -186,19 +163,13 @@ class CommunicationController extends Controller
             $communicationTypes = CommunicationType::getCommunicationTypeCountAllMessages($storeNumber , $storeBanner);
         }
 
-        $alertCount = Alert::getActiveAlertCountByStore($storeNumber);
-
         return view('site.communications.message')
             ->with('skin', $skin)
             ->with('communicationTypes', $communicationTypes)
             ->with('communicationCount', $communicationCount)
             ->with('communication', $communication)
             ->with('communication_documents', $selected_documents)
-            ->with('communication_packages', $selected_packages)
-            ->with('urgentNoticeCount', $urgentNoticeCount)
-            ->with('alertCount', $alertCount)
-            ->with('banner', $banner)
-            ->with('isComboStore', $isComboStore);
+            ->with('communication_packages', $selected_packages);
 
     }
 

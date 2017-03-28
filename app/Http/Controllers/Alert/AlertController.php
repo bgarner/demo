@@ -6,19 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as RequestFacade; 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Communication\Communication;
-use App\Models\Communication\CommunicationDocument;
-use App\Models\Communication\CommunicationPackage;
-use App\Models\Communication\CommunicationTarget;
-use App\Models\Notification\Notification;
-use App\Models\UrgentNotice\UrgentNotice;
-use App\Models\Banner;
-use App\Models\StoreInfo;
-use App\Skin;
 use App\Models\Alert\Alert;
 use App\Models\Alert\AlertType;
-use App\Models\Document\Document;
-use App\Models\Utility\Utility;
 
 class AlertController extends Controller
 {
@@ -30,15 +19,6 @@ class AlertController extends Controller
     public function index(request $request)
     {
         $storeNumber = RequestFacade::segment(1);
-        $storeInfo = StoreInfo::getStoreInfoByStoreId($storeNumber);
-        $storeBanner = $storeInfo->banner_id;
-        $communicationCount = Communication::getActiveCommunicationCount($storeNumber);
-
-        $skin = Skin::getSkin($storeBanner);
-        $banner = Banner::find($storeInfo->banner_id);
-        $isComboStore = $storeInfo->is_combo_store;
-
-        $urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($storeNumber);
 
         $alertTypes = AlertType::all();
         $alertCount = Alert::getActiveAlertCountByStore($storeNumber);
@@ -87,15 +67,11 @@ class AlertController extends Controller
 
         return view('site.alerts.index')
             ->with('skin', $skin)
-            ->with('communicationCount', $communicationCount)
             ->with('alerts', $alerts)
             ->with('alertTypes', $alertTypes)
             ->with('alertCount', $alertCount)
             ->with('title', $title)
-            ->with('urgentNoticeCount', $urgentNoticeCount)
-            ->with('archives', $request['archives'])
-            ->with('banner', $banner)
-            ->with('isComboStore', $isComboStore);
+            ->with('archives', $request['archives']);
     }
 
     /**
