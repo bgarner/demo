@@ -13,8 +13,6 @@ use App\Models\Document\FolderStructure;
 use App\Models\Document\Week;
 use App\Models\Document\FileFolder;
 use App\Models\Document\Document;
-use App\Models\Banner;
-use App\Skin;
 use App\Models\StoreInfo;
 
 class DocumentController extends Controller
@@ -32,11 +30,7 @@ class DocumentController extends Controller
 
         $storeBanner = $storeInfo->banner_id;
 
-        $banner = Banner::find($storeBanner);
-
-        $skin = Skin::getSkin($storeBanner);
-
-        $navigation = FolderStructure::getNavigationStructure($banner->id);
+        $navigation = FolderStructure::getNavigationStructure($storeBanner);
 
         $folders = Folder::all();
 
@@ -47,7 +41,6 @@ class DocumentController extends Controller
         }
         
         return view('site.documents.index')
-            ->with('skin', $skin)
             ->with('navigation', $navigation)
             ->with('folders', $folders)
             ->with('defaultFolder' , $defaultFolder);

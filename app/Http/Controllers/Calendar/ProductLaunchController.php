@@ -8,10 +8,6 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Request as RequestFacade; 
 use App\Models\ProductLaunch\ProductLaunch;
-use App\Models\StoreInfo;
-use App\Skin;
-
-use App\Models\Communication\Communication;
 
 class ProductLaunchController extends Controller
 {
@@ -22,10 +18,6 @@ class ProductLaunchController extends Controller
     public function __construct()
     {
 
-        $this->storeNumber = RequestFacade::segment(1);
-        $storeInfo = StoreInfo::getStoreInfoByStoreId($this->storeNumber);
-        $this->storeBanner = $storeInfo->banner_id;
-        $this->skin = Skin::getSkin($this->storeBanner);
     }
 
     /**
@@ -42,8 +34,7 @@ class ProductLaunchController extends Controller
         }
         return view('site.calendar.productlaunch.index')
             ->with('productLaunches', $productLaunches)
-            ->with('lastUpdated',  $lastUpdated)
-            ->with('skin', $this->skin); 
+            ->with('lastUpdated',  $lastUpdated); 
     }
 
     /**

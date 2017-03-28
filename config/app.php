@@ -183,6 +183,7 @@ return [
         App\Providers\AdminSidenavServiceProvider::class,
         App\Providers\StoreSidenavServiceProvider::class,
         App\Providers\StoreTopbarServiceProvider::class,
+        App\Providers\StoreSkinProvider::class,
         Collective\Html\HtmlServiceProvider::class,
 
     ],

@@ -15,8 +15,6 @@ use App\Models\Communication\CommunicationDocument;
 use App\Models\Communication\CommunicationPackage;
 use App\Models\Communication\CommunicationTarget;
 use App\Models\Communication\CommunicationType;
-use App\Models\Tag\Tag;
-use App\Models\Tag\ContentTag;
 use App\Skin;
 use App\Models\StoreInfo;
 use App\Models\Document\Document;
@@ -38,8 +36,6 @@ class CommunicationController extends Controller
         $storeInfo = StoreInfo::getStoreInfoByStoreId($storeNumber);
 
         $storeBanner = $storeInfo->banner_id;
-
-        $skin = Skin::getSkin($storeBanner);
 
         $communicationTypes = CommunicationType::getCommunicationTypeCount($storeNumber, $storeBanner);
 
@@ -78,7 +74,6 @@ class CommunicationController extends Controller
         }
 
         return view('site.communications.index')
-            ->with('skin', $skin)
             ->with('communicationTypes', $communicationTypes)
             ->with('communications', $targetedCommunications)
             ->with('communicationCount', $communicationCount)

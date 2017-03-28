@@ -9,20 +9,11 @@ use DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
-use App\Models\Auth\User\UserSelectedBanner;
-use App\Models\Document\FileFolder;
-use App\Models\Document\Package;
 use App\Models\Communication\Communication;
-use App\Models\Communication\CommunicationDocument;
-use App\Models\Communication\CommunicationPackage;
-use App\Models\Communication\CommunicationTarget;
-use App\Models\Tag\Tag;
-use App\Models\Tag\ContentTag;
 use App\Models\Feature\Feature;
 use App\Models\Dashboard\Quicklinks;
 use App\Models\Dashboard\DashboardBranding;
 use App\Models\Notification\Notification;
-use App\Skin;
 use App\Models\StoreInfo;
 use App\Models\Video\Video;
 
@@ -40,8 +31,6 @@ class DashboardController extends Controller
 
         $banner = Banner::find($storeBanner);
 
-        $skin = Skin::getSkin($storeBanner);
-
         $features = Feature::getActiveFeatureByBannerId($storeBanner);
 
         $quicklinks = Quicklinks::getLinks($storeBanner, $storeNumber);
@@ -54,7 +43,6 @@ class DashboardController extends Controller
         $featuredVideo = Video::getFeaturedVideo();
 
         return view('site.dashboard.index')
-            ->with('skin', $skin)
             ->with('banner', $banner)
             ->with('quicklinks', $quicklinks)
             ->with('communications', $communications)

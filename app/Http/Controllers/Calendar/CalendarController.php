@@ -6,14 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as RequestFacade; 
 use DB;
 use Carbon\Carbon;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 use App\Models\Event\Event;
 use App\Models\Event\EventType;
-use App\Skin;
-use App\Models\StoreInfo;
 use App\Models\Utility\Utility;
 use App\Models\Event\EventAttachment;
 use App\Models\ProductLaunch\ProductLaunch;
@@ -32,12 +28,6 @@ class CalendarController extends Controller
         $today = (string) $today; 
 
         $storeNumber = RequestFacade::segment(1);
-
-        $storeInfo = StoreInfo::getStoreInfoByStoreId($storeNumber);
-
-        $storeBanner = $storeInfo->banner_id;
-
-        $skin = Skin::getSkin($storeBanner);
 
         //for the calendar view
         $events = Event::getActiveEventsByStore($storeNumber);
@@ -66,7 +56,6 @@ class CalendarController extends Controller
         }
         
         return view('site.calendar.index')
-                ->with('skin', $skin)
                 ->with('events', $events)
                 ->with('eventsList', $eventsList)
                 ->with('today', $today);

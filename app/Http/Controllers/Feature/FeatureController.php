@@ -9,16 +9,11 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Feature\Feature;
 use App\Models\Notification\Notification;
-use App\Skin;
 use App\Models\Feature\FeatureDocument;
 use App\Models\Feature\FeaturePackage;
 use App\Models\Feature\FeatureCommunication;
-use App\Models\Communication\Communication;
 use App\Models\Communication\CommunicationTarget;
-use App\Models\Document\Document;
 use App\Models\Document\Package;
-use App\Models\StoreInfo;
-use App\Models\Utility\Utility;
 
 class FeatureController extends Controller
 {
@@ -63,12 +58,6 @@ class FeatureController extends Controller
     {
         $storeNumber = RequestFacade::segment(1);
 
-        $storeInfo = StoreInfo::getStoreInfoByStoreId($storeNumber);
-
-        $storeBanner = $storeInfo->banner_id;
-
-        $skin = Skin::getSkin($storeBanner);
-
         $id = $request->id;		
 
         $feature = Feature::where('id', $id)->first();
@@ -84,7 +73,6 @@ class FeatureController extends Controller
 		$notifications = Notification::getNotificationsByFeature($feature->id, $storeNumber);
 
         return view('site.feature.index')
-            ->with('skin', $skin)
 			->with('notifications', $notifications)
             ->with('feature', $feature)
             ->with('feature_documents', $selected_documents)

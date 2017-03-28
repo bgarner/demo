@@ -6,13 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as RequestFacade; 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Notification\Notification;
-use App\Models\StoreInfo;
-use App\Skin;
 use App\Models\Alert\Alert;
 use App\Models\Alert\AlertType;
-use App\Models\Document\Document;
-use App\Models\Utility\Utility;
 
 class AlertController extends Controller
 {
@@ -24,10 +19,6 @@ class AlertController extends Controller
     public function index(request $request)
     {
         $storeNumber = RequestFacade::segment(1);
-        $storeInfo = StoreInfo::getStoreInfoByStoreId($storeNumber);
-        $storeBanner = $storeInfo->banner_id;
-
-        $skin = Skin::getSkin($storeBanner);
 
         $alertTypes = AlertType::all();
         $alertCount = Alert::getActiveAlertCountByStore($storeNumber);

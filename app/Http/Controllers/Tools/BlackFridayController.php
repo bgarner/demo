@@ -9,10 +9,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Request as RequestFacade; 
 use DB;
 
-use App\Skin;
-
-use App\Models\StoreInfo;
-
 use App\Models\Tools\BlackFriday\BlackFriday;
 
 
@@ -26,9 +22,6 @@ class BlackFridayController extends Controller
     public function __construct()
     {
         $this->storeNumber = RequestFacade::segment(1);
-        $storeInfo = StoreInfo::getStoreInfoByStoreId($this->storeNumber);
-        $this->storeBanner = $storeInfo->banner_id;
-        $this->skin = Skin::getSkin($this->storeBanner);
     }
 
     /**
@@ -40,11 +33,9 @@ class BlackFridayController extends Controller
     {
         $pages = BlackFriday::getAdPages($this->storeNumber);
         $data = BlackFriday::getDataByStoreNumber($this->storeNumber);
-        //dd($boxes);
         return view('site.tools.blackfriday.index')
             ->with('pages', $pages)
-            ->with('data', $data)
-            ->with('skin', $this->skin);
+            ->with('data', $data);;
     }
 
     /**
