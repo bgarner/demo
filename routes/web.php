@@ -57,6 +57,9 @@ Route::get('/{storeno}/folder/{id}', ['uses' => 'Document\FolderController@show'
 //Route::post('/{storeno}/search', array('uses' => 'Search\SearchController@index'));
 Route::get('/{storeno}/search', array('uses' => 'Search\SearchController@index'));
 
+//TASKS
+Route::get('/{storeno}/tasks', 'Task/TaskController@index');
+
 //TOOLS
 Route::get('/{storeno}/tools/boxingday', array('uses' => 'Tools\BlackFridayController@index'));
 Route::post('/getFlyerBoxes', 'Tools\FlyerPageSelectionController@show');
