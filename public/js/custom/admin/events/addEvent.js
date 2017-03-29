@@ -116,7 +116,6 @@ $(document).on('click','.event-create',function(){
 		attachments.push($(this).attr('data-folderid'));
 	});
  	
- 	console.log(attachments);
     if(eventTitle == '') {
 		swal("Oops!", "This event needs a title.", "error"); 
 		hasError = true;
