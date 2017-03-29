@@ -1850,7 +1850,9 @@ a.DTTT_button:hover:not(.DTTT_disabled) {
   margin-left: 10px;
 }
 .check-link {
-  font-size: 16px;
+  font-size: 24px;
+  position: relative;
+  top: 5px;
 }
 .todo-completed {
   text-decoration: line-through;
