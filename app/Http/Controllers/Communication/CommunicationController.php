@@ -76,7 +76,7 @@ class CommunicationController extends Controller
 
         $communicationCount = Communication::getCommunicationCountByStoreNumber($request, $storeNumber);
 
-        $communication = Communication::getCommunication($id);
+        $communication = Communication::getCommunicationById($id);
 
         $communicationPackages = Communication::getPackageDetails($id);
         $communicationDocuments = Communication::getDocumentDetails($id);

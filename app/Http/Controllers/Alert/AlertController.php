@@ -20,53 +20,17 @@ class AlertController extends Controller
     {
         $storeNumber = RequestFacade::segment(1);
 
-        $alertTypes = AlertType::all();
-        $alertCount = Alert::getActiveAlertCountByStore($storeNumber);
+    
+        $alertTypes = AlertType::getAlertTypesByStoreNumber($request, $storeNumber);
 
-        $alerts = Alert::getActiveAlertsByStore($storeNumber);
+        $title = Alert::getAlertCategoryName($request['type']);
 
+        $alertCount = Alert::getAlertCountByStoreNumber($request, $storeNumber); 
 
-        foreach($alertTypes as $at){
-            $at->count = Alert::getActiveAlertCountByCategory($storeNumber, $at->id);
-        }  
-
-        $title ="";
-        if(isset($request['type'])){
-            $alerts = Alert::getActiveAlertsByCategory($request['type'], $storeNumber);
-            $title = AlertType::where('id','=',$request['type'])->pluck('name');
-        }
-        else{
-            $alerts = Alert::getActiveAlertsByStore($storeNumber);
-        }
-
-        if (isset($request['archives']) && $request['archives']) {
-
-            $alertCount = Alert::getAllAlertCountByStore($storeNumber);
-
-            foreach($alertTypes as $at){
-                $at->count = Alert::getAllAlertCountByCategory($storeNumber, $at->id);
-            }  
-            
-            if(isset($request['type'])){
-                $archivedAlerts = Alert::getArchivedAlertsByCategory($request['type'], $storeNumber);
-                foreach ($archivedAlerts as $aa) {
-                    $alerts->add($aa);
-                }
-            }
-            else{
-
-                $archivedAlerts = Alert::getArchivedAlertsByStore($storeNumber);
-                foreach ($archivedAlerts as $aa) {
-                    $alerts->add($aa);
-                }
-            }
-        }
-
-        
+        $alerts = Alert::getAlertsByStoreNumber($request, $storeNumber);        
  
 
         return view('site.alerts.index')
-            ->with('skin', $skin)
             ->with('alerts', $alerts)
             ->with('alertTypes', $alertTypes)
             ->with('alertCount', $alertCount)

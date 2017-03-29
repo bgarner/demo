@@ -56,5 +56,15 @@ class CommunicationType extends Model
             }
         }
         return $communicationTypes; 
-    }    
+    } 
+
+    public static function isValidCommunicationType($id)
+    {
+        if(isset($id) && !empty($id) && CommunicationType::find($id)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }   
 }

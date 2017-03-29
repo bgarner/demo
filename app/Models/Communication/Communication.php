@@ -72,7 +72,8 @@ class Communication extends Model
 	  public static function getCommunicationByStoreNumber($request, $storeNumber)
 	  {
 		 
-		if (isset($request['type']) && $request['type'] !== "" && CommunicationType::find($request['type'])) {
+		$isValidCommunicationType = CommunicationType::isValidCommunicationType($request['type']);
+		if ($isValidCommunicationType) {
 			
             $targetedCommunications = CommunicationTarget::getTargetedCommunicationsByCategory($storeNumber, $request['type']);
         }
@@ -81,9 +82,9 @@ class Communication extends Model
         
         }
 
-		if (isset($request['archives']) && $request['archives']) {
+		if (isset($request['archives']) && !empty($request['archives'])) {
 
-            if(isset($request['type']) && $request['type'] !== ""){
+            if($isValidCommunicationType){
                 $archivedCommunication = Communication::getArchivedCommunicationsByCategory($request['type'], $storeNumber);
                 foreach ($archivedCommunication as $ac) {
                     $targetedCommunications->add($ac);
@@ -175,7 +176,7 @@ class Communication extends Model
 	  }
 
 
-	  public static function getCommunication($id)
+	  public static function getCommunicationById($id)
 	  {
 		 $communication = Communication::find($id);
 		 $communication->since = Utility::getTimePastSinceDate($communication->send_at);

@@ -57,6 +57,17 @@ class Alert extends Model
     	return $alerts;
     }
 
+    public static function getAlertCountByStoreNumber($request, $storeNumber)
+    {
+        
+        if (isset($request['archives']) && $request['archives']) {
+            return Alert::getAllAlertCountByStore($storeNumber);
+        }
+        else{
+            return Alert::getActiveAlertCountByStore($storeNumber);    
+        }
+    }
+
     public static function getActiveAlertCountByStore($store_id)
     {
         $now = Carbon::now()->toDatetimeString();
@@ -110,6 +121,40 @@ class Alert extends Model
            ->where('alerts.alert_type_id', $alertId)
            ->count();
          return $count;
+    }
+
+
+    public static function getAlertsByStoreNumber($request, $storeNumber)
+    {
+        $isValidAlertType = AlertType::isValidAlertType($request['type']);
+
+        $alerts = [];
+        if($isValidAlertType){
+            $alerts = Alert::getActiveAlertsByCategory($request['type'], $storeNumber);
+        
+        }
+        else{
+            $alerts = Alert::getActiveAlertsByStore($storeNumber);
+        }
+
+        if (isset($request['archives']) && $request['archives']) {
+            
+            if($isValidAlertType){
+                $archivedAlerts = Alert::getArchivedAlertsByCategory($request['type'], $storeNumber);
+                foreach ($archivedAlerts as $aa) {
+                    $alerts->add($aa);
+                }
+            }
+            else{
+
+                $archivedAlerts = Alert::getArchivedAlertsByStore($storeNumber);
+                foreach ($archivedAlerts as $aa) {
+                    $alerts->add($aa);
+                }
+            }
+        }
+
+        return $alerts;
     }
     
     public static function getActiveAlertsByStore($store_id)
@@ -343,6 +388,16 @@ class Alert extends Model
             \DB::table('alerts_target')->where('alert_id', $alert->id)->delete();
         }
         return;
+    }
+
+    public static function getAlertCategoryName($id)
+    {
+        if(isset($id) && !empty($id)){
+
+            if( AlertType::find($id) ){
+                return AlertType::where('id', $id)->first()->name;   
+            }
+         }
     }
 
 }
