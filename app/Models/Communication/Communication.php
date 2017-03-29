@@ -72,7 +72,8 @@ class Communication extends Model
 	  public static function getCommunicationByStoreNumber($request, $storeNumber)
 	  {
 		 
-		if (isset($request['type']) && $request['type'] !== "") {
+		if (isset($request['type']) && $request['type'] !== "" && CommunicationType::find($request['type'])) {
+			
             $targetedCommunications = CommunicationTarget::getTargetedCommunicationsByCategory($storeNumber, $request['type']);
         }
         else {
@@ -470,7 +471,10 @@ class Communication extends Model
 	  public static function getCommunicationCategoryName($id)
 	  {
 		 if(isset($id) && !empty($id)){
-			return CommunicationType::where('id', $id)->first()->communication_type;   
+
+		 	if( CommunicationType::find($id) ){
+				return CommunicationType::where('id', $id)->first()->communication_type;   
+			}
 		 }
 		 
 	  }
