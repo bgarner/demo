@@ -22,6 +22,16 @@
         </div>
 
 
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>Tasks</h2>
+
+            </div>
+            <div class="col-lg-2">
+
+            </div>
+        </div>
+
     <div class="wrapper wrapper-content">
         <div class="row">
             <!-- <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
@@ -30,16 +40,8 @@
 
             </div> -->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 animated fadeInRight">
-                <div class="mail-box-header">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h2>Tasks</h2>
-                        </div>
-                    </div>
 
-                </div>
-                <div class="mail-box">
-                    <ul class="todo-list m-t ui-sortable">
+                    <ul class="todo-list m-t">
                         <li>
                             <div class="icheckbox_square-green" style="position: relative;"><input type="checkbox" value="" name="" class="i-checks" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
                             <span class="m-l-xs"><strong>Buy a milk</strong></span>
@@ -68,7 +70,7 @@
                             <small class="label label-danger"><i class="fa fa-clock-o"></i> 42 mins</small>
                         </li>
                     </ul>
-                </div>
+
             </div>
         </div>
     </div>
