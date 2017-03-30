@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Task;
 use App\Models\Task\Task;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
+use Illuminate\Support\Facades\Request as RequestFacade;
+use DB;
+
+use App\Models\StoreInfo;
 
 class TaskController extends Controller
 {
@@ -17,6 +22,10 @@ class TaskController extends Controller
     {
         // get tasks due today for store
         //get tasks due for store arranged reverese chronologically
+        $storeNumber = RequestFacade::segment(1);
+        $storeInfo = StoreInfo::getStoreInfoByStoreId($storeNumber);
+        $storeBanner = $storeInfo->banner_id;
+
         return view('site.tasks.index');
     }
 
