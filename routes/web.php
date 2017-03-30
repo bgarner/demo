@@ -28,7 +28,7 @@ Route::post('/bugreport', 'BugReport\BugReportController@store');
 
 //CALENDAR
 Route::get('/{storeno}/calendar', array('uses' => 'Calendar\CalendarController@index'));
-Route::get('/{storeno}/calendar/listevents/{yearMonth}', array('uses' => 'Calendar\CalendarController@getListofEventsByStoreAndMonth'));
+// Route::get('/{storeno}/calendar/listevents/{yearMonth}', array('uses' => 'Calendar\CalendarController@getListofEventsByStoreAndMonth'));
 Route::get('/{storeno}/calendar/eventlistpartial/{yearMonth}', 'Calendar\CalendarController@getEventListPartial');
 Route::get('/{storeno}/calendar/productlaunch', array('uses'=> 'Calendar\ProductLaunchController@index'));
 
