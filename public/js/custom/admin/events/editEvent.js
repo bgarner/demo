@@ -130,7 +130,6 @@ $(document).on('click','.event-update',function(){
 		$(window).scrollTop(0);
 		return false;
 	}
-	console.log(attachments);
     if(hasError == false) {
 
 		$.ajax({

@@ -53,7 +53,7 @@ class EventAttachment extends Model
 
     public static function getEventAttachments($id)
     {
-        $event_attachment_ids = EventAttachment::where('event_id', $id)->get()->pluck('attachment_id');
+        $event_attachment_ids = EventAttachment::where('event_id', $id)->where('deleted_at', null)->get()->pluck('attachment_id');
         
         $event_attachments = [];
         foreach ($event_attachment_ids as $attachment_id) {

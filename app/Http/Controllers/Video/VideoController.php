@@ -8,14 +8,11 @@ use DB;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Skin;
-
 
 use App\Models\Video\Video;
 use App\Models\Video\Tag;
 use App\Models\Video\VideoTag;
 use App\Models\Video\Playlist;
-use App\Models\Video\PlaylistVideo;
 
 
 class VideoController extends Controller
@@ -57,46 +54,11 @@ class VideoController extends Controller
             ->with('playlists', $playlists);
     }
 
-    public function allPlaylists()
-    {
-        $playlists = Playlist::getLatestPlaylists();
-        return view('site.video.allPlaylists')
-            ->with('playlists', $playlists);
-    }
-
-    public function showPlaylist(Request $request)
-    {
-        $videoList = PlaylistVideo::getPlaylistVideos($request->id);
-        $playlistMeta = Playlist::getPlaylistMetaData($request->id);
-
-        return view('site.video.playlist')
-            ->with('playlistMeta', $playlistMeta)
-            ->with('videoList', $videoList);
-    }
 
     public function showTag($tag)
     {
         return view('site.video.tag');
     }
 
-    public function mostViewed()
-    {
-        $mostViewed = Video::getMostViewedVideos();
-        return view('site.video.popular')
-            ->with('mostViewed', $mostViewed);
-    }
-    public function mostRecent()
-    {
-        $mostRecent = Video::getMostRecentVideos();
-        return view('site.video.latest')
-            ->with('mostRecent', $mostRecent);
-
-    }
-    public function mostLiked()
-    {
-        $mostLiked = Video::getMostLikedVideos();
-        return view('site.video.liked')
-            ->with('mostLiked', $mostLiked);
-    }
 
 }

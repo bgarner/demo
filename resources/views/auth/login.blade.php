@@ -3,7 +3,7 @@
 
 <head>
     @section('title', 'Admin Login')
-    @include('site.includes.head')
+    @include('admin.includes.head')
 </head>
 
 <body class="gray-bg">

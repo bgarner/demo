@@ -28,14 +28,13 @@ Route::post('/bugreport', 'BugReport\BugReportController@store');
 
 //CALENDAR
 Route::get('/{storeno}/calendar', array('uses' => 'Calendar\CalendarController@index'));
-Route::get('/{storeno}/calendar/listevents/{yearMonth}', array('uses' => 'Calendar\CalendarController@getListofEventsByStoreAndMonth'));
+// Route::get('/{storeno}/calendar/listevents/{yearMonth}', array('uses' => 'Calendar\CalendarController@getListofEventsByStoreAndMonth'));
 Route::get('/{storeno}/calendar/eventlistpartial/{yearMonth}', 'Calendar\CalendarController@getEventListPartial');
 Route::get('/{storeno}/calendar/productlaunch', array('uses'=> 'Calendar\ProductLaunchController@index'));
 
 //COMMUNICATIONS
 Route::get('/{storeno}/communication', array('uses' => 'Communication\CommunicationController@index'));
 Route::get('/{storeno}/communication/show/{id}', 'Communication\CommunicationController@show');
-Route::resource('/communication', 'Communication\CommunicationTargetController');
 
 //COMMUNITY
 Route::get('/{storeno}/community', array('uses' => 'Community\CommunityController@index'));
@@ -71,12 +70,15 @@ Route::get('/{storeno}/urgentnotice/show/{id}', array('uses' => 'UrgentNotice\Ur
 
 //VIDEO
 Route::get('/{storeno}/video', array('uses' => 'Video\VideoController@index'));
-Route::get('/{storeno}/video/popular', array('uses' => 'Video\VideoController@mostViewed'));
-Route::get('/{storeno}/video/latest', array('uses' => 'Video\VideoController@mostRecent'));
-Route::get('/{storeno}/video/liked', array('uses' => 'Video\VideoController@mostLiked'));
-Route::get('/{storeno}/video/playlists', array('uses' => 'Video\VideoController@allPlaylists'));
 Route::get('/{storeno}/video/watch/{id}', array('uses' => 'Video\VideoController@show'));
-Route::get('/{storeno}/video/playlist/{id}', array('uses' => 'Video\VideoController@showPlaylist'));
+
+Route::get('/{storeno}/video/popular', array('uses' => 'Video\MostViewedVideoController'));
+Route::get('/{storeno}/video/latest', array('uses' => 'Video\MostRecentVideoController'));
+Route::get('/{storeno}/video/liked', array('uses' => 'Video\MostLikedVideoController'));
+
+Route::get('/{storeno}/video/playlists', array('uses' => 'Video\PlaylistController@index'));
+Route::get('/{storeno}/video/playlist/{id}', array('uses' => 'Video\PlaylistController@show'));
+
 Route::get('/{storeno}/video/tag/{tag}', array('uses' => 'Video\VideoController@showTag'));
 Route::post('/videocount', 'Video\VideoViewCountController@update');
 Route::post('/videolike', 'Video\LikeController@update');
