@@ -10,6 +10,7 @@ use App\Models\Task\TaskStatusTypes;
 use App\Models\Auth\Role\Role;
 use App\Models\Auth\User\UserResource;
 use App\Models\StoreInfo;
+use App\Models\Utility\Utility;
 use Carbon\Carbon;
 class Task extends Model
 {
@@ -213,30 +214,35 @@ class Task extends Model
 	public static function getAllIncompleteTasksByStoreId($store_id)
 	{
 		$tasks = Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
-					->join('task_store_status', 'task_store_status.task_id', '=', 'tasks.id' )
-					->join('task_store_status_types', 'task_store_status.status_type_id', '=', 'task_store_status_types.id')
 					->where('tasks_target.store_id', $store_id)
-					->where('task_store_status_types.status_title', 'done')
-					->select('tasks.*', 'tasks_target.store_id', 'task_store_status_types.id as task_status_id', 'task_store_status_types.status_title')
-					->get();
+					->select('tasks.*', 'tasks_target.store_id')
+					->get()
+					->each(function($task){
+						$task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
+						if(TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', "!=", '2' )->first()){
+							$task->task_status_id = TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', "!=", '2' )->first()->status_type_id;
+							$task->status_title = TaskStoreStatus::join('task_store_status_types', 'task_store_status_types.id', '=', 'task_store_status.task_id')
+																->where('task_id', $task->id)
+																->select('task_store_status_types.status_title')
+																->first();
+
+						}
+					});
 		return $tasks;
 
 	}
 
 	public static function getTaskDueTodaybyStoreId($store_id)
 	{
-		$today = Carbon::today();
-		$today->hour = 23;
-		$today->minute = 59;
-		$today->second = 59;
-		$today_formatted = $today->format('Y-m-d H:i:s');
+		$endOfDayToday = Carbon::today()->endOfDay()->format('Y-m-d H:i:s');
 
 		$tasks = Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
 					->where('tasks_target.store_id', $store_id)
-					->where('due_date' , "<", $today_formatted)
+					->where('due_date' , "<", $endOfDayToday)
 					->select('tasks.*', 'tasks_target.store_id')
 					->get()
 					->each(function($task){
+						$task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
 						if(TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', "!=", '2' )->first()){
 							$task->task_status_id = TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', "!=", '2' )->first()->status_type_id;
 							$task->status_title = TaskStoreStatus::join('task_store_status_types', 'task_store_status_types.id', '=', 'task_store_status.task_id')
@@ -250,5 +256,48 @@ class Task extends Model
 		return $tasks;
 	}
 
+	public static function getAllCompletedTasksByStoreId($store_id)
+	{
+		$tasks = Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
+					->join('task_store_status' , 'task_store_status.task_id' , '=', 'tasks.id' )
+					->where('tasks_target.store_id', $store_id)
+					->where('task_store_status.store_id', $store_id)
+					->where('task_store_status.status_type_id', '2')
+					->select('tasks.*', 'tasks_target.store_id', 'task_store_status.created_at as completed_on')
+					->get()
+					->each(function($task){
+						$task->pretty_due_date = Utility::prettifyDate($task->due_date);
+						$task->pretty_completed_date = "Completed on " . Utility::prettifyDate($task->completed_on);
+					});
+		return $tasks;
+	}
+
+
+	public static function getTaskCount($store_id)
+	{
+		return count( Task::getTaskDueTodaybyStoreId($store_id) );
+	}
+
+	public static function getTaskPrettyDueDate($due_date)
+	{
+
+		$due_date = Carbon::createFromFormat('Y-m-d H:i:s', $due_date)->endOfDay();
+		$today = Carbon::today()->endOfDay();
+		$diff = $today->diffInDays($due_date, false);
+
+		if($diff == 0){
+			return "Due Today";
+		}
+		else if($diff < 0){
+			return abs($diff) . " days overdue";
+		}
+		else if($diff <= 7){
+			return "due in ". $diff . " days";
+		}
+		else if($diff > 7){
+			return "due on " . Utility::prettifyDate($due_date);
+		}
+		
+	}
 
 }

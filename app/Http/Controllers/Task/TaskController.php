@@ -23,10 +23,15 @@ class TaskController extends Controller
         // get tasks due today for store
         //get tasks due for store arranged reverese chronologically
         $storeNumber = RequestFacade::segment(1);
-        $storeInfo = StoreInfo::getStoreInfoByStoreId($storeNumber);
-        $storeBanner = $storeInfo->banner_id;
-
-        return view('site.tasks.index');
+        $allIncompleteTasks = Task::getAllIncompleteTasksByStoreId($storeNumber);
+        $tasksDueToday = Task::getTaskDueTodaybyStoreId($storeNumber);
+        $tasksNotDueToday = $allIncompleteTasks->diff($tasksDueToday);
+        $tasksCompleted = Task::getAllCompletedTasksByStoreId($storeNumber);
+        // dd($completedTasks);
+        return view('site.tasks.index')
+                    ->with('tasksDueToday', $tasksDueToday)
+                    ->with('tasksDue', $tasksNotDueToday)
+                    ->with('tasksCompleted', $tasksCompleted);
     }
 
     /**
