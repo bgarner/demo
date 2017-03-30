@@ -16,7 +16,7 @@ class FlyerController extends Controller
      */
     public function index()
     {
-        //
+        return view('site.flyer.index');
     }
 
     /**

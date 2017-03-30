@@ -41,6 +41,9 @@ Route::resource('/communication', 'Communication\CommunicationTargetController')
 Route::get('/{storeno}/community', array('uses' => 'Community\CommunityController@index'));
 Route::resource('/savedonation', 'Community\CommunityFundController');
 
+//FLYER
+Route::get('/{storeno}/flyer', array('uses' => 'Flyer\FlyerController@index'));
+
 //TOOLS
 Route::get('/{storeno}/tools/boxingday', array('uses' => 'Tools\BlackFridayController@index'));
 Route::post('/getFlyerBoxes', 'Tools\FlyerPageSelectionController@show');
@@ -195,6 +198,8 @@ Route::get('/admin/productlaunch/create', 'Calendar\ProductLaunchAdminController
 Route::post('/admin/productlaunch', 'Calendar\ProductLaunchAdminController@store');
 Route::get('admin/productlaunch/add-meta-data', 'Calendar\ProductLaunchAdminController@edit');
 
+//FLYER
+Route::get('/admin/flyer', 'Flyer\FlyerAdminController@index');
 
 /* API Routes */
 //get navigation
