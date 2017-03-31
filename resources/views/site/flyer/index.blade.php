@@ -7,7 +7,7 @@
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 	<link rel="stylesheet" href="/css/plugins/dataTables/datatables.min.css">
-	<!-- <link rel="stylesheet" href="/css/plugins/dataTables/dataTables.tableTools.min.css"> -->
+	{{-- <link rel="stylesheet" href="/css/plugins/dataTables/dataTables.tableTools.min.css"> --}}
 </head>
 
 <body class="fixed-navigation adminview">
@@ -44,38 +44,39 @@
 	                    	<table class="table dataTable" id="productLaunchDataTable">
 	                    		<thead>
 	                    			<tr role="row">
-	                    				<th>Launch Date</th>
-	                    				<th>Event Type</th>
-	                    				<th>Style Number</th>
-	                    				<th>Vendor Code</th>
-	                    				<th>Style</th>
-	                    				<th>Retail Price</th>
-	                    				<th>Tracking</th>
-	                    				
+	                    				<th>Category</th>
+	                    				<th>Brand Name</th>
+	                    				<th>Product Name</th>
+	                    				<th>PMM</th>
+	                    				<th>Disclaimer</th>
+	                    				<th>Original Price</th>
+	                    				<th>Sale Price</th>
+	                    				<th>Notes</th>
+	                    				<th>Images</th>
 	                    			</tr>
 	                    		</thead>
 	                    		<tbody>
-	                    			{{-- @foreach($productLaunches as $productLaunch) --}}
+	                    			@foreach($flyerItems as $item)
 										<tr class="" role="row">
-{{-- 											<td>{{$productLaunch->launch_date}}</td>
-											<td>{{$productLaunch->event_type}}</td>
-											<td>{{$productLaunch->style_number}}</td>
-											<td>{{$productLaunch->vendor_code}}</td>
-											<td>{{$productLaunch->style_name}}</td>
-											<td>{{$productLaunch->retail_price}}</td>
-											<td>{{$productLaunch->tracking}}</td> --}}
-
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											
-
+											<td>{{ $item->category }}</td>
+											<td>{{ $item->brand_name }}</td>
+											<td>{{ $item->product_name }}</td>
+											<td>
+											@foreach($item->pmm_numbers as $pmm_numbers)
+												{{ $pmm_numbers }}<br />
+											@endforeach
+											</td>
+											<td>{{ $item->disclaimer }}</td>
+											<td>{{ $item->original_price }}</td>
+											<td>{{ $item->sale_price }}</td>
+											<td>{{ $item->notes }}</td>
+											<td>
+												@foreach($item->image_urls as $image)
+												<img src="{{ $image }}" /><br /> 
+												@endforeach
+											</td>
 										</tr>
-	                    			{{-- @endforeach --}}
+	                    			@endforeach
 				                    
 				                </tbody>
 			                </table>
@@ -96,6 +97,7 @@
 		<script>
 			
 	        $(document).ready(function(){
+	        	console.log("ready");
 	            $('.dataTable').DataTable({
 	                pageLength: 50,
 	                responsive: true,

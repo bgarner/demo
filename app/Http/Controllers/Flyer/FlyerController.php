@@ -14,6 +14,7 @@ use App\Models\Alert\Alert;
 use App\Models\StoreInfo;
 use App\Models\Banner;
 use App\Skin;
+use App\Models\Flyer\Flyer;
 
 
 class FlyerController extends Controller
@@ -39,13 +40,17 @@ class FlyerController extends Controller
      */
     public function index()
     {
+        $flyerItems = Flyer::getFlyerData();
+        //dd($flyerItems);
         return view('site.flyer.index')
             ->with('skin', $this->skin)
             ->with('communicationCount', $this->communicationCount)
             ->with('alertCount', $this->alertCount)
             ->with('urgentNoticeCount', $this->urgentNoticeCount)
             ->with('banner', $this->banner)
+            ->with('flyerItems', $flyerItems)
             ->with('isComboStore', $this->isComboStore); 
+
     }
 
     /**
