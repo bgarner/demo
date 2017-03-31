@@ -213,9 +213,13 @@ $(document).on('click','.task-create',function(){
 		  		due_date : due_date,
 		  		banner_id : 1,
 		  		target_stores : target_stores,
-		  		send_reminder : send_reminder
+		  		send_reminder : send_reminder,
+		  		publish_date : Date()
+
 		    },
 		    success: function(result) {
+
+		    	console.log(result);
 		    
 		        if(result.validation_result == 'false') {
 		        	var errors = result.errors;
@@ -247,7 +251,6 @@ $(document).on('click','.task-create',function(){
 		    }
 		}).done(function(response){
 			$(".search-field").find('input').val('');
-			processStorePaste();
 		});    	
     }
 

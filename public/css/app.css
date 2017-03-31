@@ -8452,3 +8452,44 @@ body.md-skin {
         width: 50%;
         padding: 0px 0px 0px 20px;
     }
+
+.bootstrap-datetimepicker-widget.dropdown-menu.bottom {
+    top: 26px !important;
+    right:10px;
+  width:23em !important;
+  left: auto !important;
+    right: -45px !important;
+}
+
+.bootstrap-datetimepicker-widget.dropdown-menu.bottom:before {
+  left: 210px;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu.bottom:after {
+  left: 211px;
+}
+.bootstrap-datetimepicker-widget table td.day{
+  line-height: 0px;
+}
+.task-element-selected{
+  color: green;
+}
+.task-element-in-process{
+  color:#3276b1;
+}
+#due_date_popover, #store_select_popover, .task-create, .project-completion{
+  cursor: pointer;
+}
+.project-row-detail{
+  background-color: #e7eaec;
+}
+.project-list table tr td{
+  vertical-align: top !important; 
+}
+.task-done{
+  float:right;
+  padding-right: 20px; 
+}
+.task-not-done{
+  float: left;
+  padding-left: 20px;
+}

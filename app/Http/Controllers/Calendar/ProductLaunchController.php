@@ -27,7 +27,8 @@ class ProductLaunchController extends Controller
      */
     public function index()
     {
-        $productLaunches = ProductLaunch::getActiveProductLaunchByStore($this->storeNumber);
+        $storeNumber = RequestFacade::segment(1);
+        $productLaunches = ProductLaunch::getActiveProductLaunchByStore($storeNumber);
         $lastUpdated ="";
         if ( count($productLaunches) > 0){
             $lastUpdated = ProductLaunch::getLastUpdatedTimestamp();

@@ -25,10 +25,13 @@ class Task extends Model
 			'title'   		=> $request['title'],
 			'publish_date'  => $request['publish_date'],
 			'due_date'      => $request['due_date'],
-			'target_stores' => $request['target_stores'],
-			'documents' 	=> $request['task_documents']
+			'target_stores' => $request['target_stores']
 
 		];
+
+		if(isset($request['task_documents'])){
+			$validateThis['documents'] = $request['task_documents'];
+		}
 
 		\Log::info($validateThis);
 		$v = new TaskValidator();
@@ -44,12 +47,17 @@ class Task extends Model
 			'publish_date'  => $request['publish_date'],
 			'due_date'      => $request['due_date'],
 			'target_stores' => $request['target_stores'],
-			'documents' 	=> $request['task_documents'],
 			'status_type_id' => $request['status_type_id'],
-			'allStores' => $request['allStores'],
-			'remove_document' =>$request['remove_document']
+			'allStores' => $request['allStores']
 
 		];
+
+		if(isset($request['task_documents'])){
+			$validateThis['documents'] = $request['task_documents'];
+		}
+		if(isset($request['remove_document'])){
+			$validateThis['remove_document'] = $request['remove_document'];
+		}
 
 		\Log::info($validateThis);
 		$v = new TaskValidator();

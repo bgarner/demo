@@ -206,7 +206,7 @@
 		</script>
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 		<script type="text/javascript" src="/js/custom/manager/tasks/addTask.js"></script>
-		<script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
+		<!-- <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script> -->
 
 
 		@include('site.includes.bugreport')
