@@ -61,7 +61,7 @@ class TaskController extends Controller
      * @param  \App\Models\Task\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function show(Task $task)
+    public function show($id)
     {
         //get Details of the current task
     }
@@ -72,7 +72,7 @@ class TaskController extends Controller
      * @param  \App\Models\Task\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function edit(Task $task)
+    public function edit($id)
     {
         // remove this method
     }
@@ -84,9 +84,9 @@ class TaskController extends Controller
      * @param  \App\Models\Task\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Task $task)
+    public function update(Request $request, $storeNumber, $id)
     {
-        //store updated task status
+        return Task::updateTaskStoreStatus($request, $storeNumber, $id);
     }
 
     /**
@@ -95,7 +95,7 @@ class TaskController extends Controller
      * @param  \App\Models\Task\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Task $task)
+    public function destroy($id)
     {
         // remove this method
     }

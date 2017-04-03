@@ -58,6 +58,7 @@ Route::get('/{storeno}/search', array('uses' => 'Search\SearchController@index')
 
 //TASKS
 Route::get('/{storeno}/tasks', 'Task\TaskController@index');
+Route::patch('/{storeno}/task/{id}', 'Task\TaskController@update');
 
 //TOOLS
 Route::get('/{storeno}/tools/boxingday', array('uses' => 'Tools\BlackFridayController@index'));

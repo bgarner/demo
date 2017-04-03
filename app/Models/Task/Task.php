@@ -7,6 +7,7 @@ use App\Models\Validation\TaskValidator;
 use App\Models\Task\TaskTarget;
 use App\Models\Task\TaskDocument;
 use App\Models\Task\TaskStatusTypes;
+use App\Models\Task\StoreStatusTypes;
 use App\Models\Auth\Role\Role;
 use App\Models\Auth\User\UserResource;
 use App\Models\StoreInfo;
@@ -132,6 +133,26 @@ class Task extends Model
 
 	}
 
+	public static function updateTaskStoreStatus($request, $storeNumber, $id)
+	{
+		$store_status = TaskStoreStatus::where('task_id', $id)->where('store_id', $storeNumber)->first();
+		$updatedStatus = StoreStatusTypes::getTaskStatusTypeId($request->current_task_status);
+		if($store_status){
+			$store_status['status_type_id'] = $updatedStatus->id;
+			$store_status->save();
+			return $store_status;
+		}
+		else{
+			
+			return TaskStoreStatus::create([
+				'store_id' => $storeNumber,
+				'task_id'  => $id,
+				'status_type_id' => $updatedStatus->id
+				]);
+		}
+		
+	}
+
 	public static function deleteTask($id)
 	{
 		Task::find($id)->delete();
@@ -227,15 +248,23 @@ class Task extends Model
 					->get()
 					->each(function($task){
 						$task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
-						if(TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', "!=", '2' )->first()){
-							$task->task_status_id = TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', "!=", '2' )->first()->status_type_id;
-							$task->status_title = TaskStoreStatus::join('task_store_status_types', 'task_store_status_types.id', '=', 'task_store_status.task_id')
-																->where('task_id', $task->id)
-																->select('task_store_status_types.status_title')
-																->first();
-
-						}
 					});
+
+
+		foreach ($tasks as $key => $task) {
+			if(TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', '2')->first()){
+				$tasks->forget($key);
+
+			}
+
+			if(TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', '1' )->first()){
+				$task->task_status_id = TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', "!=", '2' )->first()->status_type_id;
+				$task->status_title = TaskStoreStatus::join('task_store_status_types', 'task_store_status_types.id', '=', 'task_store_status.task_id')
+													->where('task_id', $task->id)
+													->select('task_store_status_types.status_title')
+													->first();
+			}
+		}
 		return $tasks;
 
 	}
@@ -251,15 +280,23 @@ class Task extends Model
 					->get()
 					->each(function($task){
 						$task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
-						if(TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', "!=", '2' )->first()){
-							$task->task_status_id = TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', "!=", '2' )->first()->status_type_id;
-							$task->status_title = TaskStoreStatus::join('task_store_status_types', 'task_store_status_types.id', '=', 'task_store_status.task_id')
-																->where('task_id', $task->id)
-																->select('task_store_status_types.status_title')
-																->first();
-
-						}
+						
 					});
+		foreach ($tasks as $key=>$task) {
+			if(TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', '2')->first()){
+				$tasks->forget($key);
+
+			}
+
+			if(TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', '1' )->first()){
+				$task->task_status_id = TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', "!=", '2' )->first()->status_type_id;
+				$task->status_title = TaskStoreStatus::join('task_store_status_types', 'task_store_status_types.id', '=', 'task_store_status.task_id')
+													->where('task_id', $task->id)
+													->select('task_store_status_types.status_title')
+													->first();
+
+			}
+		}
 
 		return $tasks;
 	}
@@ -307,5 +344,6 @@ class Task extends Model
 		}
 		
 	}
+
 
 }

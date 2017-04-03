@@ -5,9 +5,8 @@ use Illuminate\Database\Seeder;
 class TaskStoreStatusTypesSeeder extends Seeder
 {
     private $task_status_types = [
-    	['status_title' => 'seen'],
-    	['status_title' => 'done'],
-    	['status_title' => 're-assign to store']
+    	['id'=>1, 'status_title' => 'not done'],
+    	['id'=>2, 'status_title' => 'done']
 
     ];
     /**
