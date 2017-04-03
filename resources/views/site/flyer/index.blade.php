@@ -26,21 +26,21 @@
 		<div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-12">
                 <h2>Flyer</h2>
-                
+
                 <small class="pull-right"> Last Updated :  </small>
             </div>
-        </div>        
+        </div>
 
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="ibox">
-                    
+
                          <p class="pull-right"><a href="#" data-toggle="modal" data-target="#productLaunchModal"><i class="fa fa-question-circle" aria-hidden="true"></i> Footwear Release vs. Footwear Launch</a></p>
 
-                        <div class="ibox-content">       	
-			                    
+                        <div class="ibox-content">
+
 	                    	<table class="table dataTable" id="productLaunchDataTable">
 	                    		<thead>
 	                    			<tr role="row">
@@ -71,16 +71,16 @@
 											<td>{{ $item->sale_price }}</td>
 											<td>{{ $item->notes }}</td>
 											<td>
-												@foreach($item->image_urls as $image)
-												<img src="{{ $image }}" /><br /> 
+												@foreach($item->images as $image)
+                                                    <a href="{{ $image['full'] }}"><img src="{{ $image['thumb'] }}" style="border: 1px solid #eee; float: left;" /></a>
 												@endforeach
 											</td>
 										</tr>
 	                    			@endforeach
-				                    
+
 				                </tbody>
 			                </table>
-					               
+
                         </div>
 
                     </div>
@@ -92,10 +92,10 @@
 
 	    @include('site.includes.scripts')
 
-	
+
 		<script type="text/javascript" src="/js/plugins/dataTables/datatables.min.js"></script>
 		<script>
-			
+
 	        $(document).ready(function(){
 	        	console.log("ready");
 	            $('.dataTable').DataTable({
@@ -109,7 +109,7 @@
 
 
 		</script>
-		
+
 
 		@include('site.includes.modal')
 
@@ -121,7 +121,7 @@
 	                    <h4 id="modalTitle" class="modal-title">What's New?</h4>
 	                </div> -->
 	                <div id="modalBody" class="modal-body event-modal-body" style="padding: 20px;">
-	                    
+
 <h4>What is the difference between Footwear Release and Footwear Launch?</h4>
 
 <p><em>Footwear Launch</em> – A true launch product has a hard date for availability to the public and cannot be sold, displayed or even socialized (pictures) prior to that date. The vendor typically creates some hype around launch products with marketing and social media leading up to the date. It is the expectation that launch product is to be in all applicable stores for the launch date, even if the vendor has to expedite the product to stores at their own cost to hit the launch. <strong>We will send a communication to stores if this product is late or is not expected to arrive.</strong></p>

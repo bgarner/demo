@@ -20,15 +20,23 @@ class Flyer extends Model
     	foreach($flyerItems as $fi){
 
     		$pmm_array = unserialize($fi->pmm);
-    		$image_url_array = array();
+			$images = array();
 
     		foreach($pmm_array as $item){
-    			array_push($image_url_array, "https://fgl.scene7.com/is/image/FGLSportsLtd/".$item."_99_a?bgColor=0,0,0,0&fmt=png-alpha&hei=200&resMode=sharp2&op_sharpen=1");
-    		}
-    		$fi->pmm_numbers = $pmm_array;
-    		$fi->image_urls = $image_url_array;
 
+				$image = array(
+					"thumb" => "https://fgl.scene7.com/is/image/FGLSportsLtd/".$item."_99_a?bgColor=0,0,0,0&fmt=jpg&hei=50&resMode=sharp2&op_sharpen=1",
+					"full" => "https://fgl.scene7.com/is/image/FGLSportsLtd/".$item."_99_a?bgColor=0,0,0,0&fmt=jpg&hei=800&resMode=sharp2&op_sharpen=1"
+				);
+
+				$images[$item] = $image;
+    		}
+
+    		$fi->pmm_numbers = $pmm_array;
+			$fi->images = $images;
+			//dd($images);
     	}
+		// echo "<pre>" . $flyerItems ."</pre>";
 
     	return $flyerItems;
     }
