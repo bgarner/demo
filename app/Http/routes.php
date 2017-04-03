@@ -199,7 +199,7 @@ Route::post('/admin/productlaunch', 'Calendar\ProductLaunchAdminController@store
 Route::get('admin/productlaunch/add-meta-data', 'Calendar\ProductLaunchAdminController@edit');
 
 //FLYER
-Route::get('/admin/flyer', 'Flyer\FlyerAdminController@index');
+Route::resource('/admin/flyer', 'Flyer\FlyerAdminController');
 
 /* API Routes */
 //get navigation

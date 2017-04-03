@@ -84,14 +84,7 @@
     </li>
 
 
-    @if (Request::is('admin/document/*') || Request::is('admin/document'))
 
-    <li class="active">
-    @else
-    <li>
-    @endif
-        <a href="/admin/document/manager"><i class="fa fa-book"></i> <span class="nav-label">Library</span></a>
-    </li>
     
 
     @if (Request::is('admin/alert/*') || Request::is('admin/alert') || Request::is('admin/urgentnotice') || Request::is('admin/urgentnotice/*')) 
@@ -105,6 +98,27 @@
             <li><a href="/admin/urgentnotice">Manage Urgent Notices</a></li>
         </ul>
     </li>
+    
+    @if (Request::is('admin/flyer/*') || Request::is('admin/flyer'))
+
+    <li class="active">
+    @else
+    <li>
+    @endif
+        <a href="/admin/flyer"><i class="fa fa-newspaper-o"></i> <span class="nav-label">Flyer</span></a>
+    </li>
+
+    
+    @if (Request::is('admin/document/*') || Request::is('admin/document'))
+
+    <li class="active">
+    @else
+    <li>
+    @endif
+        <a href="/admin/document/manager"><i class="fa fa-book"></i> <span class="nav-label">Library</span></a>
+    </li>
+
+
     @if (Request::is('admin/video/*') || Request::is('admin/video') || Request::is('admin/tag') || Request::is('admin/tag/*') || Request::is('admin/playlist') || Request::is('admin/playlist/*') ) 
     <li class="active">
     @else

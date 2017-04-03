@@ -63,6 +63,7 @@ return array(
     'CreateHoodsTable' => $baseDir . '/database/migrations/future/2015_09_03_165000_create_hoods_table.php',
     'CreateJobsTable' => $baseDir . '/database/migrations/2016_08_08_155117_create_jobs_table.php',
     'CreateMediaTypes' => $baseDir . '/database/migrations/future/2015_09_09_201308_create_media_types.php',
+    'CreateMigrationDataTable' => $baseDir . '/database/migrations/2017_04_03_142941_create_migration_data_table.php',
     'CreateMovesTable' => $baseDir . '/database/migrations/future/2015_08_05_210432_create_moves_table.php',
     'CreateNewAnalyticsTable' => $baseDir . '/database/migrations/2016_03_28_104212_create_new_analytics_table.php',
     'CreatePackageTable' => $baseDir . '/database/migrations/2015_11_27_172830_create_package_table.php',

@@ -432,6 +432,7 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         'CreateHoodsTable' => __DIR__ . '/../..' . '/database/migrations/future/2015_09_03_165000_create_hoods_table.php',
         'CreateJobsTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_08_155117_create_jobs_table.php',
         'CreateMediaTypes' => __DIR__ . '/../..' . '/database/migrations/future/2015_09_09_201308_create_media_types.php',
+        'CreateMigrationDataTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_03_142941_create_migration_data_table.php',
         'CreateMovesTable' => __DIR__ . '/../..' . '/database/migrations/future/2015_08_05_210432_create_moves_table.php',
         'CreateNewAnalyticsTable' => __DIR__ . '/../..' . '/database/migrations/2016_03_28_104212_create_new_analytics_table.php',
         'CreatePackageTable' => __DIR__ . '/../..' . '/database/migrations/2015_11_27_172830_create_package_table.php',
