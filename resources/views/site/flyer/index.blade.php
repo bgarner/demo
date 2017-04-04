@@ -7,6 +7,7 @@
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 	<link rel="stylesheet" href="/css/plugins/dataTables/datatables.min.css">
+    <link rel="stylesheet" href="css/plugins/blueimp/css/blueimp-gallery.min.css">
 	{{-- <link rel="stylesheet" href="/css/plugins/dataTables/dataTables.tableTools.min.css"> --}}
 </head>
 
@@ -70,9 +71,9 @@
 											<td>{{ $item->original_price }}</td>
 											<td>{{ $item->sale_price }}</td>
 											<td>{{ $item->notes }}</td>
-											<td>
+											<td id="links">
 												@foreach($item->images as $image)
-                                                    <a href="{{ $image['full'] }}"><img src="{{ $image['thumb'] }}" style="border: 1px solid #eee; float: left;" /></a>
+                                                    <a title="{{ $item->product_name }}" href="{{ $image['full'] }}"><img src="{{ $image['thumb'] }}" style="border: 1px solid #eee; float: left;" /></a>
 												@endforeach
 											</td>
 										</tr>
@@ -108,10 +109,38 @@
 			});
 
 
+            document.getElementById('links').onclick = function (event) {
+                event = event || window.event;
+                var target = event.target || event.srcElement,
+                    link = target.src ? target.parentNode : target,
+                    options = {index: link, event: event},
+                    links = this.getElementsByTagName('a');
+                    blueimp.Gallery(
+                        document.getElementById('links').getElementsByTagName('a'),
+                        {
+                            container: '#blueimp-gallery-carousel',
+                            carousel: true
+                        }
+                    );
+            };
+
+
+
+
 		</script>
 
 
 		@include('site.includes.modal')
+
+        <div id="blueimp-gallery" class="blueimp-gallery">
+            <div class="slides"></div>
+            <h3 class="title"></h3>
+            <a class="prev">‹</a>
+            <a class="next">›</a>
+            <a class="close">×</a>
+            <a class="play-pause"></a>
+            <ol class="indicator"></ol>
+        </div>
 
 	 <div class="modal inmodal" id="productLaunchModal" tabindex="-1" role="event" aria-hidden="true" style="display: none;" >
 
