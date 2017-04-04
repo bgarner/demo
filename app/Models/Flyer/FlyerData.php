@@ -56,14 +56,14 @@ class FlyerData extends Model
 
         if($upload_success){
             $csvFile = Reader::createFromPath($directory. "/" . $filename);
-            Flyer::insertRecords($request, $csvFile);
+            FlyerData::insertRecords($request, $csvFile);
 
         }
     }
 
     public static function updateFlyerData($id, $request)
     {
-        $flyerData = Flyer::find($id);
+        $flyerData = FlyerData::find($id);
         $flyerData['category'] = $request->category;
         $flyerData['brand_name'] = $request->brand_name;
         $flyerData['product_name'] = $request->product_name;
@@ -72,13 +72,20 @@ class FlyerData extends Model
         $flyerData['original_price'] = $request->original_price;
         $flyerData['sale_price'] = $request->sale_price;
         $flyerData['notes'] = $request->notes;
-        $flyerData['start_date'] = $request->start_date;
-        $flyerData['end_date'] = $request->end_date;
+        // $flyerData['start_date'] = $request->start_date;
+        // $flyerData['end_date'] = $request->end_date;
 
         $flyerData->save();
+
+        return;
     }
 
 
+    public static function deleteFlyerData($id)
+    {
+        $flyerData = Self::find($id)->delete();
+
+    }
 
     public static function insertRecords($request, $csvFile)
     {

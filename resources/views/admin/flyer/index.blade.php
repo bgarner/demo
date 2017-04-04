@@ -69,11 +69,12 @@
 	                    				<th>Sale Price</th>
 	                    				<th>Notes</th>
 	                    				<th>Images</th>
+	                    				<th></th>
 	                    			</tr>
 	                    		</thead>
 	                    		<tbody>
 	                    			@foreach($flyerItems as $item)
-										<tr class="flyerItem" role="row" data-flyer-record-id="{{$item->id}}">
+										<tr class="flyerItem" role="row" data-flyer-item-id="{{$item->id}}">
 											<td>{{ $item->category }}</td>
 											<td>{{ $item->brand_name }}</td>
 											<td>{{ $item->product_name }}</td>
@@ -90,6 +91,9 @@
 												@foreach($item->image_urls as $image)
 												<img src="{{ $image }}" /><br /> 
 												@endforeach
+											</td>
+											<td>
+												<span class="delete_flyer_item"><i class="fa fa-trash"></i>Delete</span>
 											</td>
 										</tr>
 	                    			@endforeach
@@ -111,6 +115,8 @@
 	
 		<script type="text/javascript" src="/js/plugins/dataTables/datatables.min.js"></script>
 		<script type="text/javascript" src="/js/custom/admin/flyers/editFlyer.js"></script>
+		<script type="text/javascript" src="/js/custom/admin/flyers/deleteFlyer.js"></script>
+
 		<script>
 			
 	        $(document).ready(function(){

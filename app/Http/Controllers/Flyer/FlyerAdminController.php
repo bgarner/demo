@@ -91,7 +91,9 @@ class FlyerAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        FlyerData::updateFlyerData($id, $request);
+        return redirect('/admin/flyer');
+
     }
 
     /**
@@ -102,6 +104,6 @@ class FlyerAdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return FlyerData::deleteFlyerData($id);
     }
 }
