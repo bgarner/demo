@@ -1,0 +1,60 @@
+$(".flyerItem").on('click', function(e){
+
+	var modal = $('#mmmm-modal');
+    var modalBody = $('#mmmm-modal .modal-content');
+    localStorage.setItem('lastClickedtoTriggerModal', $(this).attr('data-folderId') );
+
+    modalBody.empty();
+    var flyerItemId = $(this).attr('data-flyer-item-id');
+    var flyerEditLink = "/admin/flyer/" + flyerItemId + "/edit";
+    
+    modal
+        .on('show.bs.modal', function() {
+            modalBody.load(flyerEditLink);
+        })
+        .modal({show:true})
+        .on('shown.bs.modal', function () {
+            // $('#foldername').focus();
+        });
+    
+    e.preventDefault();
+});
+
+$('.cancel-modal').click(function(e) {
+
+	var modalBody = $('#mmmm-modal .modal-content');
+	modalBody.empty();
+});
+
+
+
+$("body").on("change paste keyup",  ".pmm_number", function() {
+   var updated_pmm = $(this).val(); 
+   $(this).parent().find('img').attr('src', 'https://fgl.scene7.com/is/image/FGLSportsLtd/'+updated_pmm+
+                                            '_99_a?bgColor=0,0,0,0&fmt=png-alpha&hei=150&resMode=sharp2&op_sharpen=1');
+
+});
+
+
+$("body").on("click", ".remove_pmm", function() {
+   
+   
+   // var removed_pmm =  $(this).parent().find('.pmm_number').val();
+   // $(".removed_pmm").append("<input type='text' name='removed_pmm[]' class='removed_pmm[]' value=" + removed_pmm + ">"); 
+   $(this).parent().hide(200).remove();
+
+});
+
+$("body").on("click",  ".add_more_pmm", function() {
+    $(this).parent().find('.row').append(
+            
+                '<div class="col-sm-4 col-md-4">'+
+                    '<i class="fa fa-times remove_pmm" title="Remove PMM" ></i>'+
+                    '<input type="text" name="pmm[]" class="form-control pmm_number" placeholder="Add PMM">'+
+                    '<img src="">'+
+                '</div>'
+            
+
+        );
+
+});

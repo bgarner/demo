@@ -4,40 +4,36 @@ namespace App\Models\Flyer;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Flyer\FlyerData;
 
 class Flyer extends Model
 {
-	use SoftDeletes;
-    protected $table = 'flyer';
-    protected $dates = ['deleted_at'];
-    protected $fillable = ['category', 'brand_name', 'product_name', 'pmm', 'disclaimer', 'original_price', 'sale_price', 'notes'];
+    use SoftDeletes;
+	
+	protected $dates = ['deleted_at'];
+    protected $table = 'flyers';
+    protected $fillable = ['flyer_name', 'start_date', 'end_date'];
 
 
-    public static function getFlyerData()
+    public static function createFlyer($request)
     {
-    	$flyerItems = Self::all();
+    	$flyer = Self::create([
+    		'flyer_name' => $request['flyer_name'],
+    		'start_date' => $request['start_date'],
+    		'end_date' => $request['end_date']
 
-    	foreach($flyerItems as $fi){
+    	]);
 
-    		$pmm_array = unserialize($fi->pmm);
-			$images = array();
+    	FlyerData::addFlyerData($request, $flyer->id); 
+    	return $flyer;
+    }
 
-    		foreach($pmm_array as $item){
 
-				$image = array(
-					"thumb" => "https://fgl.scene7.com/is/image/FGLSportsLtd/".$item."_99_a?bgColor=0,0,0,0&fmt=jpg&hei=50&resMode=sharp2&op_sharpen=1",
-					"full" => "https://fgl.scene7.com/is/image/FGLSportsLtd/".$item."_99_a?bgColor=0,0,0,0&fmt=jpg&hei=800&resMode=sharp2&op_sharpen=1"
-				);
-
-				$images[$item] = $image;
-    		}
-
-    		$fi->pmm_numbers = $pmm_array;
-			$fi->images = $images;
-			//dd($images);
-    	}
-		// echo "<pre>" . $flyerItems ."</pre>";
-
-    	return $flyerItems;
+    public static function getFlyersByBannerId($banner_id)
+    {
+    	// put in banner_id and update query;
+    	// $flyers = Self::where('banner_id', $banner_id)->get();
+    	//return $flyersl
+    	return Self::all();
     }
 }

@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\UserSelectedBanner;
+// use App\Models\Flyer\Flyers;
+use App\Models\Flyer\Flyer;
+use App\Models\Flyer\FlyerData;
+use App\Models\Banner;
 
 class FlyerAdminController extends Controller
 {
@@ -16,7 +21,13 @@ class FlyerAdminController extends Controller
      */
     public function index()
     {
-        //
+        $banner = UserSelectedBanner::getBanner();
+        $banners = Banner::all();
+        // $flyerItems = FlyerData::getFlyerData($banner->id);
+        $flyers = Flyer::getFlyersByBannerId($banner->id);
+        return view('admin.flyer.index')->with('flyers', $flyers)
+                                                ->with('banner', $banner)
+                                                ->with('banners', $banners);
     }
 
     /**
@@ -26,7 +37,10 @@ class FlyerAdminController extends Controller
      */
     public function create()
     {
-        //
+        $banner = UserSelectedBanner::getBanner();
+        $banners = Banner::all();
+        return view('admin.flyer.upload')->with('banner', $banner)
+                                                ->with('banners', $banners);
     }
 
     /**
@@ -37,7 +51,8 @@ class FlyerAdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        \Log::info($request->all());
+        return Flyer::createFlyer($request);
     }
 
     /**
@@ -48,7 +63,12 @@ class FlyerAdminController extends Controller
      */
     public function show($id)
     {
-        //
+        $banner = UserSelectedBanner::getBanner();
+        $banners = Banner::all();
+        $flyerItems = FlyerData::getFlyerDataByFlyerId($id);
+        return view('admin.flyer.view')->with('flyerItems', $flyerItems)
+                                                ->with('banner', $banner)
+                                                ->with('banners', $banners);
     }
 
     /**
@@ -59,7 +79,15 @@ class FlyerAdminController extends Controller
      */
     public function edit($id)
     {
-        //
+        
+
+        $banner = UserSelectedBanner::getBanner();
+        $banners = Banner::all();
+        $flyer_data = FlyerData::getFlyerDataById($id);
+
+        return view('admin.flyer.flyer-edit-modal')->with('flyer_data', $flyer_data)
+                                        ->with('banner', $banner)
+                                        ->with('banners', $banners);   
     }
 
     /**
@@ -71,7 +99,9 @@ class FlyerAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        FlyerData::updateFlyerData($id, $request);
+        return redirect('/admin/flyer');
+
     }
 
     /**
@@ -82,6 +112,6 @@ class FlyerAdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return FlyerData::deleteFlyerData($id);
     }
 }
