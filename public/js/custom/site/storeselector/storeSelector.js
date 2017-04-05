@@ -28,7 +28,7 @@ $( document ).ready(function() {
 	var bannerDropdown = document.getElementById('bannerSelect');
 	var storeDropdown = document.getElementById('storeSelect');
 
-	if(bannerDropdown) > 0) {
+	if(bannerDropdown) {
 
 		getBanners();
 
