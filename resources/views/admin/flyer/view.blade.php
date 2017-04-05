@@ -60,21 +60,40 @@
 	                    	<table class="table dataTable" id="flyerDataTable">
 	                    		<thead>
 	                    			<tr role="row">
-	                    				<th>Flyer Name</th>
-	                    				<th>Start Date</th>
-	                    				<th>End Date</th>
+	                    				<th>Category</th>
+	                    				<th>Brand Name</th>
+	                    				<th>Product Name</th>
+	                    				<th>PMM</th>
+	                    				<th>Disclaimer</th>
+	                    				<th>Original Price</th>
+	                    				<th>Sale Price</th>
+	                    				<th>Notes</th>
+	                    				<th>Images</th>
 	                    				<th></th>
 	                    			</tr>
 	                    		</thead>
 	                    		<tbody>
-	                    			@foreach($flyers as $flyer)
-										<tr class="flyer" role="row" data-flyer-id="{{$flyer->id}}">
-											<td>{{ $flyer->flyer_name }}</td>
-											<td>{{ $flyer->start_date }}</td>
-											<td>{{ $flyer->end_date }}</td>
+	                    			@foreach($flyerItems as $item)
+										<tr class="flyerItem" role="row" data-flyer-item-id="{{$item->id}}">
+											<td>{{ $item->category }}</td>
+											<td>{{ $item->brand_name }}</td>
+											<td>{{ $item->product_name }}</td>
 											<td>
-												<a href="/admin/flyer/{{ $flyer->id }}/" class="btn btn-primary btn-sm" title="View Flyer"><i class="fa fa-eye"></i></a>
-												<a data-flyer="{{ $flyer->id }}" id="flyer{{ $flyer->id }}" title="Delete Flyer" class="delete-flyer btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+											@foreach($item->pmm_numbers as $pmm_numbers)
+												{{ $pmm_numbers }}<br />
+											@endforeach
+											</td>
+											<td>{{ $item->disclaimer }}</td>
+											<td>{{ $item->original_price }}</td>
+											<td>{{ $item->sale_price }}</td>
+											<td>{{ $item->notes }}</td>
+											<td>
+												@foreach($item->image_urls as $image)
+												<img src="{{ $image }}" /><br /> 
+												@endforeach
+											</td>
+											<td>
+												<span class="delete_flyer_item"><i class="fa fa-trash"></i>Delete</span>
 											</td>
 										</tr>
 	                    			@endforeach

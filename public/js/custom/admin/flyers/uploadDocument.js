@@ -27,6 +27,9 @@ var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
       // Pass token. You can use the same method to pass any other values as well such as a id to associate the image with for example.
         formData.append("_token", $('[name=_token').val()); // Laravel expect the token post value to be named _token by default
         formData.append("banner_id", $('[name=banner_id]').val());
+        formData.append("flyer_name", $('[name=flyer_name]').val());
+        formData.append("start_date", $('[name=start_date]').val());
+        formData.append("end_date", $('[name=end_date]').val());
         // formData.append("uploadOption", $('#uploadOptionProductLaunch option:selected').val());
 
     },
@@ -71,7 +74,7 @@ myDropzone.on("queuecomplete", function (progress) {
     document.querySelector("#total-progress").style.opacity = "0";
     $(".file-row .delete").hide();
     //window.location = '/admin/document/add-meta-data?package=' + upload_package_id + "&banner_id=" + banner_id + "&parent=" + folder_id;
-    var metadatalink = $("<a class='btn btn-primary next-action' href='/admin/productlaunch'><i class='fa fa-check'></i> Done </a>");
+    var metadatalink = $("<a class='btn btn-primary next-action' href='/admin/flyer'><i class='fa fa-check'></i> Done </a>");
     
     $( ".file-actions .btn" ).fadeOut( "slow", function() {
       $( ".file-actions" ).empty();

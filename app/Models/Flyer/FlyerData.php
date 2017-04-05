@@ -4,18 +4,20 @@ namespace App\Models\Flyer;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Document\Document;
+use League\Csv\Reader;
 
 class FlyerData extends Model
 {
 	use SoftDeletes;
     protected $table = 'flyer_data';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['category', 'brand_name', 'product_name', 'pmm', 'disclaimer', 'original_price', 'sale_price', 'notes'];
+    protected $fillable = ['flyer_id', 'category', 'brand_name', 'product_name', 'pmm', 'disclaimer', 'original_price', 'sale_price', 'notes'];
 
 
-    public static function getFlyerData()
+    public static function getFlyerDataByFlyerId($id)
     {
-    	$flyerItems = Self::all();
+    	$flyerItems = Self::where('flyer_id', $id)->get();
 
     	foreach($flyerItems as $fi){
 
@@ -42,7 +44,7 @@ class FlyerData extends Model
         return $flyerData;
     }
 
-    public static function addFlyerData($request)
+    public static function addFlyerData($request, $flyer_id)
     {
         $flyerDocument = $request->file('document');
 
@@ -56,14 +58,14 @@ class FlyerData extends Model
 
         if($upload_success){
             $csvFile = Reader::createFromPath($directory. "/" . $filename);
-            FlyerData::insertRecords($request, $csvFile);
+            Self::insertRecords($csvFile, $flyer_id);
 
         }
     }
 
     public static function updateFlyerData($id, $request)
     {
-        $flyerData = FlyerData::find($id);
+        $flyerData = Self::find($id);
         $flyerData['category'] = $request->category;
         $flyerData['brand_name'] = $request->brand_name;
         $flyerData['product_name'] = $request->product_name;
@@ -87,26 +89,26 @@ class FlyerData extends Model
 
     }
 
-    public static function insertRecords($request, $csvFile)
+    public static function insertRecords($csvFile, $flyer_id)
     {
         foreach ($csvFile as $index => $row) {
+            \Log::info($row);
             if($index != 0){
                 if(!empty($row[0])){
-                $productLaunch = Flyer::create(
-                    [
-                        'category' => (isset($row[0]) ? $row[0] : ''),
-                        'brand_name' => (isset($row[1]) ? $row[1] : ''),
-                        'product_name' => (isset($row[2]) ? $row[2] : ''),
-                        'pmm' => (isset($row[3]) ? serialize($row[3]) : ''),
-                        'disclaimer' => (isset($row[4]) ? $row[4] : ''),
-                        'original_price' => (isset($row[5]) ? $row[5] : ''),
-                        'sale_price' => (isset($row[6]) ? $row[6] : ''),
-                        'notes' => (isset($row[7]) ? $row[7] : ''),
-                        'start_date' => (isset($row[7]) ? $row[7] : ''),
-                        'end_date' => (isset($row[7]) ? $row[7] : ''),
-                        
-                    ]
-                );
+                    Self::create(
+                        [
+                            'flyer_id' => $flyer_id,
+                            'category' => (isset($row[2]) ? $row[2] : ''),
+                            'brand_name' => (isset($row[3]) ? $row[3] : ''),
+                            'product_name' => (isset($row[4]) ? $row[4] : ''),
+                            'pmm' => (isset($row[5]) ? serialize(explode( ';',$row[5])) : ''),
+                            'disclaimer' => (isset($row[6]) ? $row[6] : ''),
+                            'original_price' => (isset($row[7]) ? $row[7] : ''),
+                            'sale_price' => (isset($row[8]) ? $row[8] : ''),
+                            'notes' => (isset($row[9]) ? $row[9] : '')
+                            
+                        ]
+                    );
 
                 }
             }

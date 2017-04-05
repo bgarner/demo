@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\UserSelectedBanner;
 // use App\Models\Flyer\Flyers;
+use App\Models\Flyer\Flyer;
 use App\Models\Flyer\FlyerData;
 use App\Models\Banner;
 
@@ -22,8 +23,9 @@ class FlyerAdminController extends Controller
     {
         $banner = UserSelectedBanner::getBanner();
         $banners = Banner::all();
-        $flyerItems = FlyerData::getFlyerData($banner->id);
-        return view('admin.flyer.index')->with('flyerItems', $flyerItems)
+        // $flyerItems = FlyerData::getFlyerData($banner->id);
+        $flyers = Flyer::getFlyersByBannerId($banner->id);
+        return view('admin.flyer.index')->with('flyers', $flyers)
                                                 ->with('banner', $banner)
                                                 ->with('banners', $banners);
     }
@@ -49,7 +51,8 @@ class FlyerAdminController extends Controller
      */
     public function store(Request $request)
     {
-        return FlyerData::addFlyerData($request);
+        \Log::info($request->all());
+        return Flyer::createFlyer($request);
     }
 
     /**
@@ -60,7 +63,12 @@ class FlyerAdminController extends Controller
      */
     public function show($id)
     {
-        //
+        $banner = UserSelectedBanner::getBanner();
+        $banners = Banner::all();
+        $flyerItems = FlyerData::getFlyerDataByFlyerId($id);
+        return view('admin.flyer.view')->with('flyerItems', $flyerItems)
+                                                ->with('banner', $banner)
+                                                ->with('banners', $banners);
     }
 
     /**
