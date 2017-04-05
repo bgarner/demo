@@ -17,8 +17,6 @@ class Flyer extends Model
 
     public static function createFlyer($request)
     {
-    	\Log::info('banner id from flyer.php');
-    	\Log::info($request->banner_id);
     	$flyer = Self::create([
     		'flyer_name' => $request['flyer_name'],
     		'start_date' => $request['start_date'],
@@ -29,6 +27,7 @@ class Flyer extends Model
     	FlyerData::addFlyerData($request, $flyer->id); 
     	return $flyer;
     }
+
 
     public static function getFlyersByBannerId($banner_id)
     {
