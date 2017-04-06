@@ -15,6 +15,7 @@ use App\Models\StoreInfo;
 use App\Models\Banner;
 use App\Skin;
 use App\Models\Flyer\Flyer;
+use App\Models\Flyer\FlyerItem;
 
 
 class FlyerController extends Controller
@@ -40,15 +41,14 @@ class FlyerController extends Controller
      */
     public function index()
     {
-        $flyerItems = Flyer::getFlyerData();
-        //dd($flyerItems);
+        $flyers = Flyer::getFlyersByBannerId($this->banner->id);
         return view('site.flyer.index')
             ->with('skin', $this->skin)
             ->with('communicationCount', $this->communicationCount)
             ->with('alertCount', $this->alertCount)
             ->with('urgentNoticeCount', $this->urgentNoticeCount)
             ->with('banner', $this->banner)
-            ->with('flyerItems', $flyerItems)
+            ->with('flyers', $flyers)
             ->with('isComboStore', $this->isComboStore); 
 
     }
@@ -80,9 +80,19 @@ class FlyerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show($storenumber, $id)
+    {   
+        $flyer = Flyer::getFlyerDetailsById($id);
+        $flyerItems = FlyerItem::getFlyerItemsByFlyerId($id);
+        return view('site.flyer.flyer')
+            ->with('skin', $this->skin)
+            ->with('communicationCount', $this->communicationCount)
+            ->with('alertCount', $this->alertCount)
+            ->with('urgentNoticeCount', $this->urgentNoticeCount)
+            ->with('banner', $this->banner)
+            ->with('flyer', $flyer)
+            ->with('flyerItems', $flyerItems)
+            ->with('isComboStore', $this->isComboStore); 
     }
 
     /**

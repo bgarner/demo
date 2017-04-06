@@ -6,7 +6,7 @@ $(".flyerItem").on('click', function(e){
 
     modalBody.empty();
     var flyerItemId = $(this).attr('data-flyer-item-id');
-    var flyerEditLink = "/admin/flyer/" + flyerItemId + "/edit";
+    var flyerEditLink = "/admin/flyeritem/" + flyerItemId + "/edit";
     
     modal
         .on('show.bs.modal', function() {
@@ -26,6 +26,30 @@ $('.cancel-modal').click(function(e) {
 	modalBody.empty();
 });
 
+
+$(".addFlyerItem").on('click', function(e){
+
+    e.preventDefault();
+    var modal = $('#mmmm-modal');
+    var modalBody = $('#mmmm-modal .modal-content');
+    localStorage.setItem('lastClickedtoTriggerModal', $(this).attr('data-folderId') );
+
+    modalBody.empty();
+    var flyerId = $(this).attr('data-flyer-id');
+    console.log(flyerId);
+    var flyerEditLink = "/admin/flyeritem/create";
+    
+    modal
+        .on('show.bs.modal', function() {
+            modalBody.load(flyerEditLink);
+        })
+        .modal({show:true})
+        .on('shown.bs.modal', function () {
+            $('#flyer_id').val(flyerId);
+        });
+    
+    e.preventDefault();
+});
 
 
 $("body").on("change paste keyup",  ".pmm_number", function() {

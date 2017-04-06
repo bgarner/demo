@@ -1,11 +1,9 @@
 $(".delete_flyer_item").click(function(){
 
 	var flyerItemId = $(this).closest('.flyerItem').attr('data-flyer-item-id');
-	// var selector = "#communication"+commId;
 
 	swal({
 		title: "Are you sure?",
-		//text: "You will not be able to recover this imaginary file!",
 		type: "warning",
 		showCancelButton: true,
 		confirmButtonColor: "#DD6B55",
@@ -14,7 +12,7 @@ $(".delete_flyer_item").click(function(){
     	}, function () {
 	    
 		$.ajax({
-		    url: '/admin/flyer/'+ flyerItemId,
+		    url: '/admin/flyeritem/'+ flyerItemId,
 		    type: 'DELETE',
 		    data : { "_token": $('meta[name="csrf-token"]').attr('content') },
 		    success: function(result) {
@@ -28,3 +26,33 @@ $(".delete_flyer_item").click(function(){
 
     return false;
 });
+
+
+$(".delete-flyer").click(function(){
+
+	var flyerId = $(this).attr('data-flyer-id');
+
+	swal({
+		title: "Are you sure?",
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonColor: "#DD6B55",
+		confirmButtonText: "Yes, delete it!",
+		closeOnConfirm: false
+    	}, function () {
+	    
+		$.ajax({
+		    url: '/admin/flyer/'+ flyerId,
+		    type: 'DELETE',
+		    data : { "_token": $('meta[name="csrf-token"]').attr('content') },
+		    success: function(result) {
+		        $(".flyer[data-flyer-id="+flyerId+"]").fadeOut(1000);
+		        swal("Deleted!", "This flyer item has been deleted.", "success");
+		    }
+
+		});
+        
+    });
+
+    return false;
+})
