@@ -17,8 +17,10 @@ class CreateFlyersTable extends Migration
             $table->string('flyer_name');
             $table->timestamp('start_date');
             $table->timestamp('end_date');
+            $table->integer('banner_id')->unsigned();
             $table->softDeletes();
             $table->timestamps();
+            $table->foreign('banner_id')->references('id')->on('banners');
         });
     }
 

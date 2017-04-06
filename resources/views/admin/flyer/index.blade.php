@@ -74,7 +74,7 @@
 											<td>{{ $flyer->end_date }}</td>
 											<td>
 												<a href="/admin/flyer/{{ $flyer->id }}/" class="btn btn-primary btn-sm" title="View Flyer"><i class="fa fa-eye"></i></a>
-												<a data-flyer="{{ $flyer->id }}" id="flyer{{ $flyer->id }}" title="Delete Flyer" class="delete-flyer btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+												<a data-flyer-id="{{ $flyer->id }}" id="flyer{{ $flyer->id }}" title="Delete Flyer" class="delete-flyer btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 											</td>
 										</tr>
 	                    			@endforeach
@@ -95,13 +95,15 @@
 
 	
 		<script type="text/javascript" src="/js/plugins/dataTables/datatables.min.js"></script>
-		<script type="text/javascript" src="/js/custom/admin/flyers/editFlyer.js"></script>
 		<script type="text/javascript" src="/js/custom/admin/flyers/deleteFlyer.js"></script>
 
 		<script>
-			
+			$.ajaxSetup({
+		        headers: {
+		            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		        }
+			});
 	        $(document).ready(function(){
-	        	console.log("ready");
 	            $('.dataTable').DataTable({
 	                pageLength: 50,
 	                responsive: true,

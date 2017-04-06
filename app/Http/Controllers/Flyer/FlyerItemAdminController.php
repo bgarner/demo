@@ -7,12 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\UserSelectedBanner;
-// use App\Models\Flyer\Flyers;
-use App\Models\Flyer\Flyer;
-use App\Models\Flyer\FlyerItem;
 use App\Models\Banner;
+use App\Models\Flyer\FlyerItem;
 
-class FlyerAdminController extends Controller
+class FlyerItemAdminController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,12 +19,7 @@ class FlyerAdminController extends Controller
      */
     public function index()
     {
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
-        $flyers = Flyer::getFlyersByBannerId($banner->id);
-        return view('admin.flyer.index')->with('flyers', $flyers)
-                                                ->with('banner', $banner)
-                                                ->with('banners', $banners);
+        //
     }
 
     /**
@@ -38,7 +31,7 @@ class FlyerAdminController extends Controller
     {
         $banner = UserSelectedBanner::getBanner();
         $banners = Banner::all();
-        return view('admin.flyer.upload')->with('banner', $banner)
+        return view('admin.flyer.flyer-item-add-modal')->with('banner', $banner)
                                                 ->with('banners', $banners);
     }
 
@@ -50,7 +43,9 @@ class FlyerAdminController extends Controller
      */
     public function store(Request $request)
     {
-        return Flyer::createFlyer($request);
+        FlyerItem::createFlyerItem($request);
+        $flyer_id = $request->flyer_id;
+        return redirect('/admin/flyer/'. $flyer_id);
     }
 
     /**
@@ -61,14 +56,7 @@ class FlyerAdminController extends Controller
      */
     public function show($id)
     {
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
-        $flyer = Flyer::getFlyerDetailsById($id);
-        $flyerItems = FlyerItem::getFlyerItemsByFlyerId($id);
-        return view('admin.flyer.view')->with('flyerItems', $flyerItems)
-                                                ->with('flyer', $flyer)
-                                                ->with('banner', $banner)
-                                                ->with('banners', $banners);
+        //
     }
 
     /**
@@ -79,7 +67,14 @@ class FlyerAdminController extends Controller
      */
     public function edit($id)
     {
-         
+
+        $banner = UserSelectedBanner::getBanner();
+        $banners = Banner::all();
+        $flyer_data = FlyerItem::getFlyerItemById($id);
+
+        return view('admin.flyer.flyer-item-edit-modal')->with('flyer_data', $flyer_data)
+                                        ->with('banner', $banner)
+                                        ->with('banners', $banners);   
     }
 
     /**
@@ -91,7 +86,9 @@ class FlyerAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        FlyerItem::updateFlyerItem($id, $request);
+        $flyer_id = $request->flyer_id;
+        return redirect('/admin/flyer/'. $flyer_id);
     }
 
     /**
@@ -102,6 +99,6 @@ class FlyerAdminController extends Controller
      */
     public function destroy($id)
     {
-        Flyer::deleteFlyer($id);
+        return FlyerItem::deleteFlyerItem($id);
     }
 }

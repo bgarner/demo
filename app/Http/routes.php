@@ -43,6 +43,7 @@ Route::resource('/savedonation', 'Community\CommunityFundController');
 
 //FLYER
 Route::get('/{storeno}/flyer', array('uses' => 'Flyer\FlyerController@index'));
+Route::get('/{storeno}/flyer/{flyer_id}', array('uses' => 'Flyer\FlyerController@show'));
 
 //TOOLS
 Route::get('/{storeno}/tools/boxingday', array('uses' => 'Tools\BlackFridayController@index'));
@@ -200,6 +201,7 @@ Route::get('admin/productlaunch/add-meta-data', 'Calendar\ProductLaunchAdminCont
 
 //FLYER
 Route::resource('/admin/flyer', 'Flyer\FlyerAdminController');
+Route::resource('/admin/flyeritem', 'Flyer\FlyerItemAdminController');
 
 /* API Routes */
 //get navigation
