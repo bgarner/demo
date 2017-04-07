@@ -6,6 +6,11 @@ $("#add-more-packages").click(function(){
 	$("#package-listing").modal('show');
 });
 
+$("#add-more-flyers").click(function(){
+	console.log('jwhegjwrg');
+	$("#flyer-listing").modal('show');
+});
+
 
 
 $('body').on('click', '#attach-selected-files', function(){
@@ -30,7 +35,6 @@ $('body').on('click', '#attach-selected-files', function(){
 $('body').on('click', '#attach-selected-packages', function(){
 
 	$(".selected-packages").remove();
-	// $("#packages-selected").append('<label class="control-label col-sm-2">Packages Attached</label>');
 	$('input[name^="feature_packages"]').each(function(){
 		if($(this).is(":checked")){
 			$(".feature-packages-table tbody").append( '<tr class="selected-packages"> '+
@@ -42,6 +46,24 @@ $('body').on('click', '#attach-selected-packages', function(){
 		if($(".feature-packages-table").hasClass('hidden') )	{
 			console.log($(".feature-packages-table tbody .feature-packages").length);
 			$(".feature-packages-table").removeClass('hidden');
+		}
+	});
+});
+
+$('body').on('click', '#attach-selected-flyers', function(){
+
+	$(".selected-flyers").remove();
+	$('input[name^="feature_flyers"]').each(function(){
+		if($(this).is(":checked")){
+			$(".feature-flyers-table tbody").append( '<tr class="selected-flyers"> '+
+													'<td data-flyer-id='+ $(this).val() +'><i class="fa fa-folder-o"></i> '+ $(this).attr("data-flyername") +'</td>'+
+													'<td></td>'+
+													'<td> <a data-flyer-id="'+ $(this).val()+'" id="flyer'+ $(this).val()+'" class="remove-staged-flyer btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>'+
+												 '</tr>');		
+		}
+		if($(".feature-flyers-table").hasClass('hidden') )	{
+			console.log($(".feature-flyers-table tbody .feature-flyers").length);
+			$(".feature-flyers-table").removeClass('hidden');
 		}
 	});
 });
@@ -60,11 +82,22 @@ $('body').on('click', ".remove-file", function(){
 $('body').on('click', ".remove-package", function(){
 	console.log('remove package');
 	var package_id = $(this).attr('data-package-id');
-	console.log(package_id);
 	$(this).closest('.feature-packages').fadeOut(200);
 	
 	$("#packages-staged-to-remove").append('<div class="remove_package" data-package-id='+ package_id +'>')
 });
+
+
+$('body').on('click', ".remove-flyer", function(){
+	console.log('remove flyer');
+	var flyer_id = $(this).attr('data-flyer-id');
+	console.log(flyer_id);
+	$(this).closest('.feature-flyers').fadeOut(200);
+	
+	$("#flyers-staged-to-remove").append('<div class="remove_flyer" data-flyer-id='+ flyer_id +'>')
+});
+
+
 
 $("body").on('click', ".remove-staged-file", function(){
 	
@@ -86,6 +119,18 @@ $("body").on('click', ".remove-staged-package", function(){
 	$(this).closest('.selected-packages').fadeOut(200);
 
 });
+
+$("body").on('click', ".remove-staged-flyer", function(){
+	
+	
+	var flyer_id = $(this).attr('data-flyer-id');
+	console.log('remove stages flyer' + flyer_id);
+	$(this).closest('.selected-flyers').remove();
+	$(this).closest('.selected-flyers').fadeOut(200);
+
+});
+
+
 
 $('input[id="thumbnail"]').on('change', function(){
 
@@ -187,8 +232,10 @@ $(document).on('click','.feature-update',function(){
 	var background = $('input[id="background"]')[0].files[0];
 	var remove_document = [];
 	var remove_package   = [];
+	var remove_flyer   = [];
 	var feature_files = [];
 	var feature_packages = [];
+	var feature_flyers = [];
 	var update_type = $('input:radio[name =  "latest_updates_option"]:checked').val();
 	var update_frequency =  $('input:radio[name ="latest_updates_option"]:checked').next('input[name="update_frequency"]').val();
 	console.log('latest updates : ' + update_type);
@@ -201,12 +248,20 @@ $(document).on('click','.feature-update',function(){
 	$(".remove_package").each(function(){
 		remove_package.push($(this).attr('data-package-id'));
 	});
-	console.log(remove_package);
+
+	$(".remove_flyer").each(function(){
+		remove_flyer.push($(this).attr('data-flyer-id'));
+	});
+
+
 	$(".selected-files").each(function(){
 		feature_files.push($(this).find('td:first').attr('data-document-id'));
 	});
 	$(".selected-packages").each(function(){
 		feature_packages.push($(this).find('td:first').attr('data-package-id'));
+	});
+	$(".selected-flyers").each(function(){
+		feature_flyers.push($(this).find('td:first').attr('data-flyer-id'));
 	});
  
 
@@ -238,8 +293,10 @@ $(document).on('click','.feature-update',function(){
      	$.extend(dataObj, {end: featureEnd});
      	$.extend(dataObj, {feature_files:  feature_files});
      	$.extend(dataObj, {feature_packages:  feature_packages});
+     	$.extend(dataObj, {feature_flyers:  feature_flyers});
      	$.extend(dataObj, {remove_document: remove_document});
      	$.extend(dataObj, {remove_package: remove_package});
+     	$.extend(dataObj, {remove_flyer: remove_flyer});
      	$.extend(dataObj, {update_type : update_type});
      	$.extend(dataObj, {update_frequency : update_frequency});
      	
@@ -273,6 +330,12 @@ $(document).on('click','.feature-update',function(){
 			        		$("#packages-selected").append('<div class="req">' + errors.packages[index]  + '</div>');	
 			        	});
 			        }
+			        if(errors.hasOwnProperty("flyers")) {
+			        	$.each(errors.flyers, function(index){
+			        		$("#flyers-selected").append('<div class="req">' + errors.flyers[index]  + '</div>');	
+			        	});
+			        }
+
 			        if(errors.hasOwnProperty("update_type_id")) {
 			        	$.each(errors.update_type_id, function(index){
 			        		$(".latest-updates-container").append('<div class="req">' + errors.update_type_id[index]  + '</div>');	
@@ -322,6 +385,11 @@ $(document).on('click','.feature-update',function(){
 			$("#packages-staged-to-remove").empty();
 			$("#packages-selected").empty();
 			$("#package-listing").find(".package-checkbox").prop('checked', false);
+
+			$(".existing-flyers-container").load("/admin/featureflyers/"+featureID);
+			$("#flyers-staged-to-remove").empty();
+			$("#flyers-selected").empty();
+			$("#flyer-listing").find(".flyer-checkbox").prop('checked', false);
 		});    	
     }
 

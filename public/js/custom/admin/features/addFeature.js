@@ -7,6 +7,11 @@ $("#add-packages").click(function(){
 	$("#package-listing").modal('show');
 });
 
+
+$("#add-flyers").click(function(){
+	$("#flyer-listing").modal('show');
+});
+
 $('input[name="latest_updates_option"]').change( function(){
 	if($('input[name=latest_updates_option]').is(':checked')){
 		console.log($(this).next('input[name="update_frequency"]'));
@@ -54,6 +59,26 @@ $('body').on('click', '#attach-selected-packages', function(){
 	});
 });
 
+$('body').on('click', '#attach-selected-flyers', function(){
+
+	if($('.feature-flyers-table').hasClass('hidden')){
+		$(".feature-flyers-table").removeClass('hidden').addClass('visible');
+	}
+	
+	$(".feature-flyers-table").find("tbody").empty();
+	$('input[name^="feature_flyers"]').each(function(){
+		if($(this).is(":checked")){
+			
+			$(".feature-flyers-table").find("tbody").append('<tr class="feature-flyers"> '+
+													'<td data-flyerid='+ $(this).attr('data-flyerid') +'>'+ $(this).attr("data-flyername")+'</td>'+
+													'<td></td>'+
+													'<td> <a data-flyer-id="'+ $(this).val()+'" id="flyer'+ $(this).val()+'" class="remove-staged-flyer btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>'+
+												'</tr>');
+		}
+		
+	});
+});
+
 $("body").on('click', ".remove-staged-file", function(){
 	
 	var document_id = $(this).attr('data-file-id');
@@ -66,11 +91,23 @@ $("body").on('click', ".remove-staged-package", function(){
 	
 
 	var package_id = $(this).attr('data-package-id');
-	console.log('remove this package' + package_id);
 	$(".feature-packages[data-packageid = '" + package_id + "']").remove();
 	$(this).closest('.feature-packages').fadeOut(200);
 
 });
+
+
+$("body").on('click', ".remove-staged-flyer", function(){
+	
+
+	var flyer_id = $(this).attr('data-flyer-id');
+	console.log('remove this flyer' + flyer_id);
+	$(".feature-flyers[data-flyerid = '" + flyer_id + "']").remove();
+	$(this).closest('.feature-flyers').fadeOut(200);
+
+});
+
+
 
 $(document).on('click','.feature-create',function(){
   	
@@ -92,15 +129,21 @@ $(document).on('click','.feature-create',function(){
 	console.log(update_frequency);
 	var feature_files = [];
 	var feature_packages = [];
+	var feature_flyers = [];
 	$(".feature-documents").each(function(){
 		feature_files.push($(this).find('td:first').attr('data-fileid'));
 	});
 	$(".feature-packages").each(function(){
 		feature_packages.push($(this).find('td:first').attr('data-packageid'));
 	});
+
+	$(".feature-flyers").each(function(){
+		feature_flyers.push($(this).find('td:first').attr('data-flyerid'));
+	});
  	
  	console.log(feature_files);
  	console.log(feature_packages);
+ 	console.log(feature_flyers);
 
     if(featureTitle == '') {
 		swal("Oops!", "This feature needs a name.", "error"); 
@@ -131,6 +174,7 @@ $(document).on('click','.feature-create',function(){
      	data.append('background', background );
      	data.append('feature_files',  JSON.stringify(feature_files));
      	data.append('feature_packages',  JSON.stringify(feature_packages));
+     	data.append('feature_flyers',  JSON.stringify(feature_flyers));
     	data.append('update_type', update_type);
     	data.append('update_frequency', update_frequency);
 
@@ -159,6 +203,11 @@ $(document).on('click','.feature-create',function(){
 			        if(errors.hasOwnProperty("packages")) {
 			        	$.each(errors.packages, function(index){
 			        		$("#packages-selected").append('<div class="req">' + errors.packages[index]  + '</div>');	
+			        	});
+			        }
+			        if(errors.hasOwnProperty("flyers")) {
+			        	$.each(errors.flyers, function(index){
+			        		$("#flyers-selected").append('<div class="req">' + errors.flyers[index]  + '</div>');	
 			        	});
 			        }
 			        if(errors.hasOwnProperty("update_type_id")) {

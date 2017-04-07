@@ -77,7 +77,7 @@ class FlyerItemAdminController extends Controller
         $banner = UserSelectedBanner::getBanner();
         $banners = Banner::all();
         $flyer_data = FlyerItem::getFlyerItemById($id);
-
+        
         return view('admin.flyer.flyer-item-edit-modal')->with('flyer_data', $flyer_data)
                                         ->with('banner', $banner)
                                         ->with('banners', $banners);   

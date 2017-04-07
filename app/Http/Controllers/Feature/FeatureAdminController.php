@@ -15,6 +15,8 @@ use App\Models\Document\Package;
 use App\Models\Document\Document;
 use App\Models\Feature\FeatureDocument;
 use App\Models\Feature\FeaturePackage;
+use App\Models\Feature\FeatureFlyer;
+use App\Models\Flyer\Flyer;
 
 class FeatureAdminController extends Controller
 {
@@ -34,7 +36,7 @@ class FeatureAdminController extends Controller
         $banner = UserSelectedBanner::getBanner();
         $banners = Banner::all();
         $features = Feature::where('banner_id', $banner->id)->get();
-                
+        
         return view('admin.feature.index')
                 ->with('features', $features)
                 ->with('banner', $banner)
@@ -53,11 +55,14 @@ class FeatureAdminController extends Controller
 
         $packages = Package::where('banner_id', $banner->id)->get();
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
+        $flyers = Flyer::getFlyersByBannerId($banner->id);
+
         return view('admin.feature.create')
                 ->with('banner', $banner)
                 ->with('banners', $banners)
                 ->with('navigation', $fileFolderStructure)
-                ->with('packages', $packages);
+                ->with('packages', $packages)
+                ->with('flyers', $flyers);
     }
 
     /**
@@ -113,6 +118,9 @@ class FeatureAdminController extends Controller
             array_push($selected_packages, $package);
         }
 
+        $flyers = Flyer::getFlyersByBannerId($banner->id);
+        $selected_flyers = FeatureFlyer::getFlyersByFeatureId($id);
+
         return view('admin.feature.edit')->with('feature', $feature)
                                     
                                         ->with('banner', $banner)
@@ -120,11 +128,10 @@ class FeatureAdminController extends Controller
                                         ->with('navigation', $fileFolderStructure)
                                         ->with('feature_documents', $selected_documents )
                                         ->with('packages', $packages)
-                                        ->with('feature_packages', $selected_packages);
-                                        // ->with('tags', $tags)
-                                        // ->with('selected_tags', $selected_tags)
-                                        // ->with('folders', $selected_folders)
-                                        // ->with('folderStructure', $folderStructure);
+                                        ->with('feature_packages', $selected_packages)
+                                        ->with('flyers', $flyers)
+                                        ->with('feature_flyers', $selected_flyers);
+                                        
     }
 
     /**
@@ -162,5 +169,12 @@ class FeatureAdminController extends Controller
         $packages = Feature::getPackageDetailsByFeatureId($feature_id);
 
         return view('admin.feature.feature-packages-partial')->with('packages', $packages);
+    }
+
+    public function getFeatureFlyerPartial($feature_id)
+    {
+        $flyers = Feature::getFlyerDetailsByFeatureId($feature_id);
+
+        return view('admin.feature.feature-flyers-partial')->with('flyers', $flyers);
     }
 }

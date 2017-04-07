@@ -139,6 +139,7 @@ Route::resource('/admin/feature/background', 'Feature\FeatureBackgroundAdminCont
 Route::resource('/admin/featureOrder', 'Feature\FeatureOrderAdminController');
 Route::get('/admin/featuredocuments/{feature_id}', 'Feature\FeatureAdminController@getFeatureDocumentPartial');
 Route::get('/admin/featurepackages/{feature_id}', 'Feature\FeatureAdminController@getFeaturePackagePartial');
+Route::get('/admin/featureflyers/{feature_id}', 'Feature\FeatureAdminController@getFeatureFlyerPartial');
 
 //Dasboard ADMIN
 Route::resource('/admin/dashboard', 'Dashboard\DashboardAdminController');
