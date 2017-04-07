@@ -7,7 +7,6 @@ $("#add-more-packages").click(function(){
 });
 
 $("#add-more-flyers").click(function(){
-	console.log('jwhegjwrg');
 	$("#flyer-listing").modal('show');
 });
 
@@ -26,7 +25,7 @@ $('body').on('click', '#attach-selected-files', function(){
 		}
 
 		if($(".feature-documents-table").hasClass('hidden') )	{
-			console.log($(".feature-documents-table tbody .feature-documents").length);
+			// console.log($(".feature-documents-table tbody .feature-documents").length);
 			$(".feature-documents-table").removeClass('hidden');
 		}
 	});
@@ -44,7 +43,7 @@ $('body').on('click', '#attach-selected-packages', function(){
 												 '</tr>');		
 		}
 		if($(".feature-packages-table").hasClass('hidden') )	{
-			console.log($(".feature-packages-table tbody .feature-packages").length);
+			// console.log($(".feature-packages-table tbody .feature-packages").length);
 			$(".feature-packages-table").removeClass('hidden');
 		}
 	});
@@ -62,7 +61,7 @@ $('body').on('click', '#attach-selected-flyers', function(){
 												 '</tr>');		
 		}
 		if($(".feature-flyers-table").hasClass('hidden') )	{
-			console.log($(".feature-flyers-table tbody .feature-flyers").length);
+			// console.log($(".feature-flyers-table tbody .feature-flyers").length);
 			$(".feature-flyers-table").removeClass('hidden');
 		}
 	});
@@ -72,15 +71,15 @@ $('body').on('click', '#attach-selected-flyers', function(){
 
 
 $('body').on('click', ".remove-file", function(){
-	console.log('remove file');
+	// console.log('remove file');
 	var document_id = $(this).attr('data-document-id');
-	console.log(document_id);
+	// console.log(document_id);
 	$(this).closest('.feature-documents').fadeOut(200);
 	$("#files-staged-to-remove").append('<div class="remove_document"  data-document-id='+ document_id +'>')
 });
 
 $('body').on('click', ".remove-package", function(){
-	console.log('remove package');
+	
 	var package_id = $(this).attr('data-package-id');
 	$(this).closest('.feature-packages').fadeOut(200);
 	
@@ -89,9 +88,8 @@ $('body').on('click', ".remove-package", function(){
 
 
 $('body').on('click', ".remove-flyer", function(){
-	console.log('remove flyer');
+
 	var flyer_id = $(this).attr('data-flyer-id');
-	console.log(flyer_id);
 	$(this).closest('.feature-flyers').fadeOut(200);
 	
 	$("#flyers-staged-to-remove").append('<div class="remove_flyer" data-flyer-id='+ flyer_id +'>')
@@ -103,9 +101,9 @@ $("body").on('click', ".remove-staged-file", function(){
 	
 	
 	var document_id = $(this).attr('data-document-id');
-	console.log('remove staged file' + document_id);
+	// console.log('remove staged file' + document_id);
 	$(this).closest('.selected-files').remove();
-	console.log($(this).closest('.selected-files'));
+	// console.log($(this).closest('.selected-files'));
 	$(this).closest('.selected-files').fadeOut(200);
 
 });
@@ -114,7 +112,7 @@ $("body").on('click', ".remove-staged-package", function(){
 	
 	
 	var package_id = $(this).attr('data-package-id');
-	console.log('remove stages package' + package_id);
+	// console.log('remove stages package' + package_id);
 	$(this).closest('.selected-packages').remove();
 	$(this).closest('.selected-packages').fadeOut(200);
 
@@ -124,7 +122,7 @@ $("body").on('click', ".remove-staged-flyer", function(){
 	
 	
 	var flyer_id = $(this).attr('data-flyer-id');
-	console.log('remove stages flyer' + flyer_id);
+	// console.log('remove stages flyer' + flyer_id);
 	$(this).closest('.selected-flyers').remove();
 	$(this).closest('.selected-flyers').fadeOut(200);
 
@@ -136,11 +134,11 @@ $('input[id="thumbnail"]').on('change', function(){
 
 	var featureID = $("#featureID").val();
 	var thumbnail = $('input[id="thumbnail"]')[0].files[0];
-	console.log(featureID);
+	// console.log(featureID);
 	var data = new FormData();
 	data.append('thumbnail', thumbnail);
 	data.append('featureID', featureID);
-	console.log(data);
+	// console.log(data);
 	$.ajax({
 		    url: '/admin/feature/thumbnail',
 		    type: 'POST',
@@ -150,7 +148,7 @@ $('input[id="thumbnail"]').on('change', function(){
             contentType: false,   // tell jQuery not to set contentType
 		    success: function(result) {
 		    	
-		    	console.log(result);
+		    	// console.log(result);
 		    	if(result.validation_result == 'false') {
 			    	var errors = result.errors;
 			        if( errors ) {
@@ -168,7 +166,7 @@ $('input[id="thumbnail"]').on('change', function(){
 		        
 		    }
 		}).done(function(response){
-			console.log(response);
+			// console.log(response);
 		});    
 
 });
@@ -189,7 +187,7 @@ $('input[id="background"]').on('change', function(){
             processData: false,  // tell jQuery not to process the data
             contentType: false,   // tell jQuery not to set contentType
 		    success: function(result) {
-		        console.log(result);
+		        // console.log(result);
 		        if(result.validation_result == 'false') {
 			        var errors = result.errors;
 			        if(  errors ) {
@@ -206,7 +204,7 @@ $('input[id="background"]').on('change', function(){
 		        
 		    }
 		}).done(function(response){
-			console.log(response);
+			// console.log(response);
 		});    
 
 });
@@ -238,8 +236,8 @@ $(document).on('click','.feature-update',function(){
 	var feature_flyers = [];
 	var update_type = $('input:radio[name =  "latest_updates_option"]:checked').val();
 	var update_frequency =  $('input:radio[name ="latest_updates_option"]:checked').next('input[name="update_frequency"]').val();
-	console.log('latest updates : ' + update_type);
-	console.log('latest update freq : ' + update_frequency);
+	// console.log('latest updates : ' + update_type);
+	// console.log('latest update freq : ' + update_frequency);
 
 
 	$(".remove_document").each(function(){
@@ -286,7 +284,7 @@ $(document).on('click','.feature-update',function(){
 
      if(hasError == false) {
      	var dataObj = {};
-     	console.log(typeof(dataObj));
+     	// console.log(typeof(dataObj));
      	$.extend(dataObj, {title: featureTitle});
      	$.extend(dataObj, {tileLabel: featureTileLabel});
      	$.extend(dataObj, {start: featureStart});
@@ -302,8 +300,8 @@ $(document).on('click','.feature-update',function(){
      	
 
      	var data = JSON.stringify(dataObj);
-     	console.log(dataObj);
-     	console.log(data);
+     	// console.log(dataObj);
+     	// console.log(data);
 
 		$.ajax({
 		    url: '/admin/feature/' + featureID ,
@@ -374,8 +372,8 @@ $(document).on('click','.feature-update',function(){
 			    }
 		    }
 		}).done(function(response){
-			console.log(response);
-			console.log("********");
+			// console.log(response);
+			// console.log("********");
 			$(".existing-files-container").load("/admin/featuredocuments/"+featureID);
 			$("#files-staged-to-remove").empty();
 			$("#files-selected").empty();
