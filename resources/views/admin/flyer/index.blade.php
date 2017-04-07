@@ -69,11 +69,12 @@
 	                    		<tbody>
 	                    			@foreach($flyers as $flyer)
 										<tr class="flyer" role="row" data-flyer-id="{{$flyer->id}}">
-											<td>{{ $flyer->flyer_name }}</td>
+											<td><a href="/admin/flyer/{{ $flyer->id }}" title="View Flyer">{{ $flyer->flyer_name }}</a></td>
 											<td>{{ $flyer->start_date }}</td>
 											<td>{{ $flyer->end_date }}</td>
 											<td>
-												<a href="/admin/flyer/{{ $flyer->id }}/" class="btn btn-primary btn-sm" title="View Flyer"><i class="fa fa-eye"></i></a>
+												<a href="#" class="editFlyer btn btn-primary btn-sm" id="flyer{{ $flyer->id }}" data-flyer-id="{{ $flyer->id }}" title="Edit Flyer"><i class="fa fa-pencil"></i></a>
+												
 												<a data-flyer-id="{{ $flyer->id }}" id="flyer{{ $flyer->id }}" title="Delete Flyer" class="delete-flyer btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 											</td>
 										</tr>
@@ -95,7 +96,9 @@
 
 	
 		<script type="text/javascript" src="/js/plugins/dataTables/datatables.min.js"></script>
+		<script type="text/javascript" src="/js/custom/admin/flyers/editFlyer.js"></script>
 		<script type="text/javascript" src="/js/custom/admin/flyers/deleteFlyer.js"></script>
+		
 
 		<script>
 			$.ajaxSetup({

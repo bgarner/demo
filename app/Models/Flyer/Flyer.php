@@ -46,6 +46,16 @@ class Flyer extends Model
     	return $flyer;
     }
 
+    public static function updateFlyer($id, $request)
+    {
+    	$flyer = Flyer::find($id);
+    	$flyer['flyer_name'] = $request->flyer_name;
+    	$flyer['start_date'] = $request->start_date;
+    	$flyer['end_date'] = $request->end_date;
+    	$flyer->save();
+    	return;
+    }
+
     public static function deleteFlyer($flyer_id)
     {
     	Flyer::find($flyer_id)->delete();

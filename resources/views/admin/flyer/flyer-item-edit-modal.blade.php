@@ -8,6 +8,8 @@
     <div class="modal-body">
 
         <input type="hidden" name="banner_id" value="{{$banner->id}}">
+        <input type="hidden" name="flyer_id" value="{{$flyer_data->flyer_id}}">
+
         
 
         <div class="form-group">

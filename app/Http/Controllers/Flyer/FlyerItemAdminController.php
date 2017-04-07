@@ -12,6 +12,12 @@ use App\Models\Flyer\FlyerItem;
 
 class FlyerItemAdminController extends Controller
 {
+    
+    public function __construct()
+    {
+        $this->middleware('admin.auth');
+        $this->middleware('banner');
+    }
     /**
      * Display a listing of the resource.
      *

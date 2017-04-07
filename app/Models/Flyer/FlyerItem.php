@@ -17,18 +17,31 @@ class FlyerItem extends Model
 
     public static function getFlyerItemsByFlyerId($id)
     {
-    	$flyerItems = Self::where('flyer_id', $id)->get();
+    	$banner_id = Flyer::find($id)->banner_id;
+        $flyerItems = Self::where('flyer_id', $id)->get();
 
     	foreach($flyerItems as $fi){
 
     		$pmm_array = unserialize($fi->pmm);
     		$images = array();
             foreach($pmm_array as $item){
-                $image = array(
+
+                if($banner_id == 1){
+                    $image = array(
                     "thumb" => "https://fgl.scene7.com/is/image/FGLSportsLtd/".$item."_99_a?bgColor=0,0,0,0&fmt=jpg&hei=50&resMode=sharp2&op_sharpen=1",
                     "full" => "https://fgl.scene7.com/is/image/FGLSportsLtd/".$item."_99_a?bgColor=0,0,0,0&fmt=jpg&hei=800&resMode=sharp2&op_sharpen=1"
-                );
-                $images[$item] = $image;
+                    );
+                    $images[$item] = $image;
+                }
+                else if($banner_id == 2){
+                    $image = array(
+
+                    "thumb" => "https://s7d2.scene7.com/is/image/atmosphere/".$item."?bgColor=0,0,0,0&fmt=jpg&hei=50&op_sharpen=1&resMode=sharp2",
+                    "full" => "https://s7d2.scene7.com/is/image/atmosphere/".$item."?bgColor=0,0,0,0&fmt=jpg&hei=800&op_sharpen=1&resMode=sharp2"
+                    );
+                    $images[$item] = $image;
+                }
+                
             }
     		$fi->pmm_numbers = $pmm_array;
     		$fi->images = $images;
@@ -117,14 +130,14 @@ class FlyerItem extends Model
                     Self::create(
                         [
                             'flyer_id' => $flyer_id,
-                            'category' => (isset($row[2]) ? $row[2] : ''),
-                            'brand_name' => (isset($row[3]) ? $row[3] : ''),
-                            'product_name' => (isset($row[4]) ? $row[4] : ''),
-                            'pmm' => (isset($row[5]) ? serialize(explode( ';',$row[5])) : ''),
-                            'disclaimer' => (isset($row[6]) ? $row[6] : ''),
-                            'original_price' => (isset($row[7]) ? $row[7] : ''),
-                            'sale_price' => (isset($row[8]) ? $row[8] : ''),
-                            'notes' => (isset($row[9]) ? $row[9] : '')
+                            'category' => (isset($row[0]) ? $row[0] : ''),
+                            'brand_name' => (isset($row[1]) ? $row[1] : ''),
+                            'product_name' => (isset($row[2]) ? $row[2] : ''),
+                            'pmm' => (isset($row[3]) ? serialize(explode( ';',$row[3])) : ''),
+                            'disclaimer' => (isset($row[4]) ? $row[4] : ''),
+                            'original_price' => (isset($row[5]) ? $row[5] : ''),
+                            'sale_price' => (isset($row[6]) ? $row[6] : ''),
+                            'notes' => (isset($row[7]) ? $row[7] : '')
                             
                         ]
                     );
@@ -133,4 +146,22 @@ class FlyerItem extends Model
             }
          } 
     }
+
+    public static function getFlyerImages($pmm, $banner_id)
+    {
+        switch ($banner_id) {
+            case 1:
+                
+                break;
+            
+            case 2:
+
+                break;
+            default:
+                # code...
+                break;
+        }
+    }
+
+
 }
