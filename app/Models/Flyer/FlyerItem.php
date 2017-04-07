@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Document\Document;
 use League\Csv\Reader;
+use App\Models\Validation\FlyerItemValidator;
 
 class FlyerItem extends Model
 {
@@ -13,6 +14,20 @@ class FlyerItem extends Model
     protected $table = 'flyer_data';
     protected $dates = ['deleted_at'];
     protected $fillable = ['flyer_id', 'category', 'brand_name', 'product_name', 'pmm', 'disclaimer', 'original_price', 'sale_price', 'notes'];
+
+
+    public static function validateFlyerItem($flyer_id)
+    {
+        $validateThis =  [
+
+            'flyer_id' => $flyer_id
+        ];
+
+        \Log::info($validateThis);
+        $v = new FlyerItemValidator();
+        return $v->validate($validateThis);
+
+    }
 
 
     public static function getFlyerItemsByFlyerId($id)
@@ -36,8 +51,8 @@ class FlyerItem extends Model
                 else if($banner_id == 2){
                     $image = array(
 
-                    "thumb" => "https://s7d2.scene7.com/is/image/atmosphere/".$item."?bgColor=0,0,0,0&fmt=jpg&hei=50&op_sharpen=1&resMode=sharp2",
-                    "full" => "https://s7d2.scene7.com/is/image/atmosphere/".$item."?bgColor=0,0,0,0&fmt=jpg&hei=800&op_sharpen=1&resMode=sharp2"
+                    "thumb" => "https://s7d2.scene7.com/is/image/atmosphere/".$item."_99_a?bgColor=0,0,0,0&fmt=jpg&hei=50&op_sharpen=1&resMode=sharp2",
+                    "full" => "https://s7d2.scene7.com/is/image/atmosphere/".$item."_99_a?bgColor=0,0,0,0&fmt=jpg&hei=800&op_sharpen=1&resMode=sharp2"
                     );
                     $images[$item] = $image;
                 }
@@ -62,6 +77,12 @@ class FlyerItem extends Model
 
     public static function addFlyerItems($request, $flyer_id)
     {
+        $validate = Self::validateFlyerItem($flyer_id);
+        if($validate['validation_result'] == 'false') {
+            \Log::info($validate);
+            return json_encode($validate);
+        }
+
         $flyerDocument = $request->file('document');
 
         $metadata = Document::getDocumentMetaData($flyerDocument);
@@ -73,6 +94,7 @@ class FlyerItem extends Model
         $upload_success = $request->file('document')->move($directory, $filename); 
 
         if($upload_success){
+                       
             $csvFile = Reader::createFromPath($directory. "/" . $filename);
             Self::insertRecords($csvFile, $flyer_id);
 
@@ -81,6 +103,12 @@ class FlyerItem extends Model
 
     public static function createFlyerItem($request)
     {
+        $validate = Self::validateFlyerItem($request->flyer_id);
+        if($validate['validation_result'] == 'false') {
+            \Log::info($validate);
+            return json_encode($validate);
+        } 
+
         Self::create(
                         [
                             'flyer_id' => $request->flyer_id,
@@ -99,6 +127,7 @@ class FlyerItem extends Model
 
     public static function updateFlyerItem($id, $request)
     {
+
         $flyerItem = Self::find($id);
         $flyerItem['category'] = $request->category;
         $flyerItem['brand_name'] = $request->brand_name;
@@ -127,6 +156,7 @@ class FlyerItem extends Model
             \Log::info($row);
             if($index != 0){
                 if(!empty($row[0])){
+
                     Self::create(
                         [
                             'flyer_id' => $flyer_id,
@@ -145,22 +175,6 @@ class FlyerItem extends Model
                 }
             }
          } 
-    }
-
-    public static function getFlyerImages($pmm, $banner_id)
-    {
-        switch ($banner_id) {
-            case 1:
-                
-                break;
-            
-            case 2:
-
-                break;
-            default:
-                # code...
-                break;
-        }
     }
 
 
