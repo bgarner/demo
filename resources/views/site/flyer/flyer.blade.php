@@ -7,7 +7,7 @@
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 	<link rel="stylesheet" href="/css/plugins/dataTables/datatables.min.css">
-    <link rel="stylesheet" href="css/plugins/blueimp/css/blueimp-gallery.min.css">
+    <link rel="stylesheet" href="/js/plugins/lightbox2/css/lightbox.css" >
 	{{-- <link rel="stylesheet" href="/css/plugins/dataTables/dataTables.tableTools.min.css"> --}}
 </head>
 
@@ -69,7 +69,7 @@
 											<td>{{ $item->notes }}</td>
 											<td id="links">
 												@foreach($item->images as $image)
-                                                    <a title="{{ $item->product_name }}" href="{{ $image['full'] }}"><img src="{{ $image['thumb'] }}" style="border: 1px solid #eee; float: left;" /></a>
+                                                    <a title="{{ $item->product_name }} - Sale Price: ${{ $item->sale_price }}" data-lightbox="product" href="{{ $image['full'] }}"><img src="{{ $image['thumb'] }}" style="border: 1px solid #eee; float: left;" /></a>
 												@endforeach
 											</td>
 										</tr>
@@ -91,6 +91,8 @@
 
 
 		<script type="text/javascript" src="/js/plugins/dataTables/datatables.min.js"></script>
+        <script type="text/javascript" src="/js/plugins/lightbox2/js/lightbox.min.js"></script>
+
 		<script>
 
 	        $(document).ready(function(){
