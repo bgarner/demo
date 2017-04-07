@@ -54,12 +54,11 @@ class FlyerData extends Model
         $uniqueHash = sha1(time() . time());
         $filename  = $metadata["modifiedName"] . "_" . $uniqueHash . "." . $metadata["originalExtension"];
 
-        $upload_success = $request->file('document')->move($directory, $filename); 
+        $upload_success = $request->file('document')->move($directory, $filename);
 
         if($upload_success){
             $csvFile = Reader::createFromPath($directory. "/" . $filename);
             Self::insertRecords($csvFile, $flyer_id);
-
         }
     }
 
@@ -106,12 +105,11 @@ class FlyerData extends Model
                             'original_price' => (isset($row[7]) ? $row[7] : ''),
                             'sale_price' => (isset($row[8]) ? $row[8] : ''),
                             'notes' => (isset($row[9]) ? $row[9] : '')
-                            
                         ]
                     );
 
                 }
             }
-         } 
+         }
     }
 }
