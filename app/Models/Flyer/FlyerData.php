@@ -31,7 +31,6 @@ class FlyerData extends Model
     		$fi->image_urls = $image_url_array;
 
     	}
-
     	return $flyerItems;
     }
 

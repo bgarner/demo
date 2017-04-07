@@ -211,3 +211,19 @@ body.lb-disable-scrolling {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
 }
+
+.lb-caption{
+    display: block;
+    position: relative;
+    bottom: 140px;
+    color: #000;
+    font-size: 20px !important;
+    line-height: 30px !important;
+    font-weight: normal !important;
+    padding-left: 20px;
+    width: 100% !important;
+}
+
+.lb-number{
+    display: none;
+}

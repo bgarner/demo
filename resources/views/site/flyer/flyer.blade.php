@@ -68,9 +68,10 @@
 											<td>{{ $item->sale_price }}</td>
 											<td>{{ $item->notes }}</td>
 											<td id="links">
-												@foreach($item->images as $image)
-                                                    <a title="{{ $item->product_name }} - Sale Price: ${{ $item->sale_price }}" data-lightbox="product" href="{{ $image['full'] }}"><img src="{{ $image['thumb'] }}" style="border: 1px solid #eee; float: left;" /></a>
+												@foreach($item->images as $key=>$image)
+                                                    <a title="{{ $item->brand_name }} {{ $item->product_name }} <br /> Orig Price: ${{ $item->original_price }} Sale Price: ${{ $item->sale_price }} <br /> Style #: {{ $key }}" data-lightbox="product" href="{{ $image['full'] }}"><img src="{{ $image['thumb'] }}" style="border: 1px solid #eee; float: left;" /></a>
 												@endforeach
+
 											</td>
 										</tr>
 	                    			@endforeach
