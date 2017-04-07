@@ -4,11 +4,10 @@
 <head>
     @section('title', 'Flyer')
     @include('site.includes.head')
-
+    <link rel="stylesheet" media="screen" href="/js/plugins/lightbox2/css/lightbox.css" >
+    <link rel="stylesheet" media="screen" href="/css/plugins/dataTables/datatables.min.css">
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
-	<link rel="stylesheet" href="/css/plugins/dataTables/datatables.min.css">
-    <link rel="stylesheet" href="/js/plugins/lightbox2/css/lightbox.css" >
-	{{-- <link rel="stylesheet" href="/css/plugins/dataTables/dataTables.tableTools.min.css"> --}}
+
 </head>
 
 <body class="fixed-navigation adminview">
@@ -24,7 +23,7 @@
 			@include('site.includes.topbar')
         </div>
 
-		<div class="row wrapper border-bottom white-bg page-heading">
+		<div class="row wrapper border-bottom white-bg page-heading printable">
             <div class="col-lg-12">
                 <h2>{{$flyer->flyer_name}} <i><small> {{$flyer->pretty_start_date}} to {{$flyer->pretty_end_date}} </small></i> </h2>
             </div>
@@ -38,7 +37,7 @@
 
                         <div class="ibox-content">
 
-	                    	<table class="table dataTable" id="productLaunchDataTable">
+	                    	<table class="table dataTable printable" id="productLaunchDataTable">
 	                    		<thead>
 	                    			<tr role="row">
 	                    				<th>Category</th>
@@ -102,45 +101,11 @@
 	                pageLength: 50,
 	                responsive: true,
 	                fixedHeader: true
-
 	            });
-
 			});
-
-
-            document.getElementById('links').onclick = function (event) {
-                event = event || window.event;
-                var target = event.target || event.srcElement,
-                    link = target.src ? target.parentNode : target,
-                    options = {index: link, event: event},
-                    links = this.getElementsByTagName('a');
-                    blueimp.Gallery(
-                        document.getElementById('links').getElementsByTagName('a'),
-                        {
-                            container: '#blueimp-gallery-carousel',
-                            carousel: true
-                        }
-                    );
-            };
-
-
-
-
 		</script>
 
-
 		@include('site.includes.modal')
-
-        <div id="blueimp-gallery" class="blueimp-gallery">
-            <div class="slides"></div>
-            <h3 class="title"></h3>
-            <a class="prev">‹</a>
-            <a class="next">›</a>
-            <a class="close">×</a>
-            <a class="play-pause"></a>
-            <ol class="indicator"></ol>
-        </div>
-
 
 	</body>
 	</html>
