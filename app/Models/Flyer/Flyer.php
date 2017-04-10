@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Flyer\FlyerItem;
 use App\Models\Utility\Utility;
+use App\Models\Validation\FlyerValidator;
 
 class Flyer extends Model
 {
@@ -16,8 +17,47 @@ class Flyer extends Model
     protected $fillable = ['flyer_name', 'start_date', 'end_date', 'banner_id'];
 
 
+    public static function validateCreateFlyer($request)
+	{
+		$validateThis =  [
+
+		'flyer_name' => $request['flyer_name'],
+		'start'      => $request['start_date'],
+		'end'        => $request['end_date'],
+		'document'   => $request->file('document')
+
+		];
+
+		\Log::info($validateThis);
+	 	$v = new FlyerValidator();
+	 	return $v->validate($validateThis);
+
+	}
+
+	public static function validateEditFlyer($request)
+	{
+		$validateThis =  [
+
+			'flyer_name' => $request['flyer_name'],
+			'start'      => $request['start_date'],
+			'end'        => $request['end_date'],
+
+		];
+
+	 	\Log::info($validateThis);
+	 	$v = new FlyerValidator();
+	 	return $v->validate($validateThis);  
+	}
+
     public static function createFlyer($request)
     {
+    	
+    	$validate = Self::validateCreateFlyer($request);
+    	if($validate['validation_result'] == 'false') {
+           \Log::info($validate);
+           return json_encode($validate);
+         } 
+
     	$flyer = Self::create([
     		'flyer_name' => $request['flyer_name'],
     		'start_date' => $request['start_date'],
@@ -44,6 +84,22 @@ class Flyer extends Model
     	$flyer->pretty_end_date = Utility::prettifyDate($flyer->end_date);
 
     	return $flyer;
+    }
+
+    public static function updateFlyer($id, $request)
+    {
+    	$validate = Self::validateEditFlyer($request);
+    	if($validate['validation_result'] == 'false') {
+           \Log::info($validate);
+           return json_encode($validate);
+         } 
+
+    	$flyer = Flyer::find($id);
+    	$flyer['flyer_name'] = $request->flyer_name;
+    	$flyer['start_date'] = $request->start_date;
+    	$flyer['end_date'] = $request->end_date;
+    	$flyer->save();
+    	return;
     }
 
     public static function deleteFlyer($flyer_id)

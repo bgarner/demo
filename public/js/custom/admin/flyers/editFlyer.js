@@ -48,7 +48,30 @@ $(".addFlyerItem").on('click', function(e){
             $('#flyer_id').val(flyerId);
         });
     
+});
+
+
+$(".editFlyer").on('click', function(e){
+
     e.preventDefault();
+    var modal = $('#mmmm-modal');
+    var modalBody = $('#mmmm-modal .modal-content');
+    localStorage.setItem('lastClickedtoTriggerModal', $(this).attr('data-folderId') );
+
+    modalBody.empty();
+    var flyerId = $(this).attr('data-flyer-id');
+    console.log(flyerId);
+    var flyerEditLink = "/admin/flyer/" + flyerId +"/edit";
+    
+    modal
+        .on('show.bs.modal', function() {
+            modalBody.load(flyerEditLink);
+        })
+        .modal({show:true})
+        .on('shown.bs.modal', function () {
+            $('#flyer_id').val(flyerId);
+        });
+    
 });
 
 
@@ -61,10 +84,7 @@ $("body").on("change paste keyup",  ".pmm_number", function() {
 
 
 $("body").on("click", ".remove_pmm", function() {
-   
-   
-   // var removed_pmm =  $(this).parent().find('.pmm_number').val();
-   // $(".removed_pmm").append("<input type='text' name='removed_pmm[]' class='removed_pmm[]' value=" + removed_pmm + ">"); 
+
    $(this).parent().hide(200).remove();
 
 });

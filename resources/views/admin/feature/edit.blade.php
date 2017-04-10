@@ -165,6 +165,39 @@
 								</div> <!-- ibox content closes -->
 							</div>
 
+
+							<div class="ibox">
+                            	<div class="ibox-title">
+                            		<h5> Flyers </h5>
+                            		<div class="ibox-tools">
+                            			
+                            			<div id="add-more-flyers" class="btn btn-primary btn-outline col-md-offset-8" role="button" ><i class="fa fa-plus"></i> Add More Flyers</div>
+                            		</div>
+                            	</div>
+                            	<div class="ibox-content">
+
+                                     <div class="existing-flyers row" >
+										
+										<div class="existing-flyers-container " >
+											
+											@include('admin.feature.feature-flyers-partial', ['flyers'=>$feature_flyers])
+
+										</div> <!-- existing-flyers-container closes -->
+													
+										
+									</div><!-- existing-folders closes -->
+									<div id="flyers-selected" class="row">
+
+									</div>
+									<div id="flyers-staged-to-remove">
+
+									</div>
+									
+								</div> <!-- ibox content closes -->
+							</div>
+
+
+
 							<div class="ibox">
                             	<div class="ibox-title">
                             		<h5> Notifications </h5>
@@ -285,6 +318,26 @@
 	            <div class="modal-footer">
 	                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 	                <button type="button" data-dismiss="modal" class="btn btn-primary" id="attach-selected-packages">Select Packages</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+
+	<div id="flyer-listing" class="modal fade">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title">Select Flyers</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<ul class="tree">
+	            	@include('admin.flyer.flyer-listing-partial', ['flyers' =>$flyers])
+	            	</ul>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	                <button type="button" data-dismiss="modal" class="btn btn-primary" id="attach-selected-flyers">Select Flyers</button>
 	            </div>
 	        </div>
 	    </div>

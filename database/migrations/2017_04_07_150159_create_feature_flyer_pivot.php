@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFlyerDataTable extends Migration
+class CreateFeatureFlyerPivot extends Migration
 {
     /**
      * Run the migrations.
@@ -12,19 +12,13 @@ class CreateFlyerDataTable extends Migration
      */
     public function up()
     {
-        Schema::create('flyer_data', function (Blueprint $table) {
+        Schema::create('feature_flyer', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('feature_id')->unsigned();
             $table->integer('flyer_id')->unsigned();
-            $table->text('category');
-            $table->text('brand_name');
-            $table->text('product_name');
-            $table->text('pmm');
-            $table->text('disclaimer');
-            $table->text('original_price');
-            $table->text('sale_price');
-            $table->text('notes');
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
+            $table->foreign('feature_id')->references('id')->on('features')->onDelete('cascade');
             $table->foreign('flyer_id')->references('id')->on('flyers')->onDelete('cascade');
         });
     }
@@ -36,6 +30,6 @@ class CreateFlyerDataTable extends Migration
      */
     public function down()
     {
-        Schema::drop('flyer_data');
+        Schema::drop('feature_flyer');
     }
 }

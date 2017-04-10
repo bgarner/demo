@@ -18,7 +18,7 @@ use App\Models\Validation\FeatureBackgroundValidator;
 
 class Feature extends Model
 {
-	  use SoftDeletes;
+	use SoftDeletes;
     protected $table = 'features';
     protected $dates = ['deleted_at'];
     protected $fillable = ['banner_id', 'title', 'tile_label', 'description', 'start', 'end', 'background_image', 'thumbnail', 'update_type_id', 'update_frequency'];
@@ -31,6 +31,7 @@ class Feature extends Model
                         'title'     => $request['tileLabel'],
                         'documents' => json_decode($request['feature_files']),
                         'packages'  => json_decode($request['feature_packages']),
+                        'flyers'    => json_decode($request['feature_flyers']),
                         'thumbnail' => $request['thumbnail'],
                         'background'=> $request['background'],
                         'start'     => $request['start'],
@@ -51,6 +52,7 @@ class Feature extends Model
                         'title'     => $request['tileLabel'],
                         'documents' => $request['feature_files'],
                         'packages'  => $request['feature_packages'],
+                        'flyers'    => $request['feature_flyers'],
                         'thumbnail' => $request['thumbnail'],
                         'background'=> $request['background'],
                         'start'     => $request['start'],
@@ -103,38 +105,39 @@ class Feature extends Model
         \Log::info($validate);
         return json_encode($validate);
       }	
-      $title = $request["name"];
-  		$tile_label = $request["tileLabel"];
-  		$start = $request["start"];
-  		$end = $request["end"];
-      $update_type_id = $request["update_type"];
-      $update_frequency = $request["update_frequency"];
+        $title = $request["name"];
+        $tile_label = $request["tileLabel"];
+        $start = $request["start"];
+        $end = $request["end"];
+        $update_type_id = $request["update_type"];
+        $update_frequency = $request["update_frequency"];
   		$thumbnail = $request->file("thumbnail");
   		$background_image = $request->file("background");
   		$banner = UserSelectedBanner::getBanner();
 
   		$feature = Feature::create([
-  				'banner_id'     => $banner->id,
-  				'title' 		    => $title,
-  				'tile_label'	  => $tile_label,
-  				'start'         => $start,
-  				'end' 			    => $end,
-  				'update_type_id'=> $update_type_id,
+  				'banner_id'        => $banner->id,
+  				'title' 		   => $title,
+  				'tile_label'	   => $tile_label,
+  				'start'            => $start,
+  				'end' 			   => $end,
+  				'update_type_id'   => $update_type_id,
   				'update_frequency' => $update_frequency,
-          'thumbnail'     => 'temp',
-          'background_image' =>'temp'
+                'thumbnail'        => 'temp',
+                'background_image' => 'temp'
 
  			]);
 
   		if(isset($background_image)) {
-        Feature::updateFeatureBackground($background_image, $feature->id);  
-      }
-      if(isset($thumbnail)) {
-        Feature::updateFeatureThumbnail($thumbnail, $feature->id);  
-      }
+            Feature::updateFeatureBackground($background_image, $feature->id);  
+        }
+        if(isset($thumbnail)) {
+            Feature::updateFeatureThumbnail($thumbnail, $feature->id);  
+        }
       
   		Feature::addFiles(json_decode($request["feature_files"]), $feature->id);
   		Feature::addPackages(json_decode($request['feature_packages']), $feature->id);
+        Feature::addFlyers(json_decode($request['feature_flyers']), $feature->id);
 
   		return $feature;
 
@@ -166,6 +169,8 @@ class Feature extends Model
         Feature::removeFiles($request->remove_document, $id);
         Feature::addPackages($request->feature_packages, $id);
         Feature::removePackages($request->remove_package, $id);
+        Feature::addFlyers($request->feature_flyers, $id);
+        Feature::removeFlyers($request->remove_flyer, $id);
         return $feature;
 
     }
@@ -217,6 +222,31 @@ class Feature extends Model
         }
         return; 
     }
+
+    public static function addFlyers($feature_flyers, $feature_id)
+    {
+        
+        if (isset($feature_flyers)) {
+            foreach ($feature_flyers as $flyer) {
+                FeatureFlyer::create([
+                    'feature_id' => $feature_id,
+                    'flyer_id'   => intval($flyer)
+                    ]);
+            }
+        }
+        return;
+    }
+
+    public static function removeFlyers($feature_flyers, $feature_id)
+    {
+        if (isset($feature_flyers)) {
+          foreach ($feature_flyers as $flyer) {
+            FeatureFlyer::where('feature_id', $feature_id)->where('flyer_id', intval($flyer))->delete();  
+          }
+        }
+        return; 
+    }
+
 
 
     public static function updateFeatureBackground($file, $feature_id)
@@ -327,6 +357,7 @@ class Feature extends Model
         Feature::find($id)->delete();
         FeaturePackage::where('feature_id', $id)->delete();
         FeatureDocument::where('feature_id', $id)->delete();
+        FeatureFlyer::where('feature_id', $id)->delete();
         return;
     }
 
@@ -343,4 +374,15 @@ class Feature extends Model
                                 ->where('feature_package.feature_id', '=', $feature_id)->get();
         return $packages;
     }
+
+    public static function getFlyerDetailsByFeatureId($feature_id)
+    {
+        $flyers = FeatureFlyer::join('flyers', 'feature_flyer.flyer_id', '=', 'flyers.id')
+                                ->where('feature_flyer.feature_id', '=', $feature_id)->get();
+        return $flyers;
+    }
+
+
+
+    
 }

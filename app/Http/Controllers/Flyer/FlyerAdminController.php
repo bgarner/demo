@@ -14,6 +14,12 @@ use App\Models\Banner;
 
 class FlyerAdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin.auth');
+        $this->middleware('banner');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -79,7 +85,10 @@ class FlyerAdminController extends Controller
      */
     public function edit($id)
     {
-         
+        $banner = UserSelectedBanner::getBanner();
+        $flyer = Flyer::find($id); 
+        return view('admin.flyer.flyer-edit-modal')->with('flyer', $flyer)
+                                                 ->with('banner', $banner);
     }
 
     /**
@@ -91,7 +100,8 @@ class FlyerAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        Flyer::updateFlyer($id, $request);
+        return redirect('/admin/flyer');   
     }
 
     /**

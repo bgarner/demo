@@ -6,6 +6,10 @@ $("#add-more-packages").click(function(){
 	$("#package-listing").modal('show');
 });
 
+$("#add-more-flyers").click(function(){
+	$("#flyer-listing").modal('show');
+});
+
 
 
 $('body').on('click', '#attach-selected-files', function(){
@@ -21,7 +25,7 @@ $('body').on('click', '#attach-selected-files', function(){
 		}
 
 		if($(".feature-documents-table").hasClass('hidden') )	{
-			console.log($(".feature-documents-table tbody .feature-documents").length);
+			// console.log($(".feature-documents-table tbody .feature-documents").length);
 			$(".feature-documents-table").removeClass('hidden');
 		}
 	});
@@ -30,7 +34,6 @@ $('body').on('click', '#attach-selected-files', function(){
 $('body').on('click', '#attach-selected-packages', function(){
 
 	$(".selected-packages").remove();
-	// $("#packages-selected").append('<label class="control-label col-sm-2">Packages Attached</label>');
 	$('input[name^="feature_packages"]').each(function(){
 		if($(this).is(":checked")){
 			$(".feature-packages-table tbody").append( '<tr class="selected-packages"> '+
@@ -40,8 +43,26 @@ $('body').on('click', '#attach-selected-packages', function(){
 												 '</tr>');		
 		}
 		if($(".feature-packages-table").hasClass('hidden') )	{
-			console.log($(".feature-packages-table tbody .feature-packages").length);
+			// console.log($(".feature-packages-table tbody .feature-packages").length);
 			$(".feature-packages-table").removeClass('hidden');
+		}
+	});
+});
+
+$('body').on('click', '#attach-selected-flyers', function(){
+
+	$(".selected-flyers").remove();
+	$('input[name^="feature_flyers"]').each(function(){
+		if($(this).is(":checked")){
+			$(".feature-flyers-table tbody").append( '<tr class="selected-flyers"> '+
+													'<td data-flyer-id='+ $(this).val() +'><i class="fa fa-folder-o"></i> '+ $(this).attr("data-flyername") +'</td>'+
+													'<td></td>'+
+													'<td> <a data-flyer-id="'+ $(this).val()+'" id="flyer'+ $(this).val()+'" class="remove-staged-flyer btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>'+
+												 '</tr>');		
+		}
+		if($(".feature-flyers-table").hasClass('hidden') )	{
+			// console.log($(".feature-flyers-table tbody .feature-flyers").length);
+			$(".feature-flyers-table").removeClass('hidden');
 		}
 	});
 });
@@ -50,29 +71,39 @@ $('body').on('click', '#attach-selected-packages', function(){
 
 
 $('body').on('click', ".remove-file", function(){
-	console.log('remove file');
+	// console.log('remove file');
 	var document_id = $(this).attr('data-document-id');
-	console.log(document_id);
+	// console.log(document_id);
 	$(this).closest('.feature-documents').fadeOut(200);
 	$("#files-staged-to-remove").append('<div class="remove_document"  data-document-id='+ document_id +'>')
 });
 
 $('body').on('click', ".remove-package", function(){
-	console.log('remove package');
+	
 	var package_id = $(this).attr('data-package-id');
-	console.log(package_id);
 	$(this).closest('.feature-packages').fadeOut(200);
 	
 	$("#packages-staged-to-remove").append('<div class="remove_package" data-package-id='+ package_id +'>')
 });
 
+
+$('body').on('click', ".remove-flyer", function(){
+
+	var flyer_id = $(this).attr('data-flyer-id');
+	$(this).closest('.feature-flyers').fadeOut(200);
+	
+	$("#flyers-staged-to-remove").append('<div class="remove_flyer" data-flyer-id='+ flyer_id +'>')
+});
+
+
+
 $("body").on('click', ".remove-staged-file", function(){
 	
 	
 	var document_id = $(this).attr('data-document-id');
-	console.log('remove staged file' + document_id);
+	// console.log('remove staged file' + document_id);
 	$(this).closest('.selected-files').remove();
-	console.log($(this).closest('.selected-files'));
+	// console.log($(this).closest('.selected-files'));
 	$(this).closest('.selected-files').fadeOut(200);
 
 });
@@ -81,21 +112,33 @@ $("body").on('click', ".remove-staged-package", function(){
 	
 	
 	var package_id = $(this).attr('data-package-id');
-	console.log('remove stages package' + package_id);
+	// console.log('remove stages package' + package_id);
 	$(this).closest('.selected-packages').remove();
 	$(this).closest('.selected-packages').fadeOut(200);
 
 });
 
+$("body").on('click', ".remove-staged-flyer", function(){
+	
+	
+	var flyer_id = $(this).attr('data-flyer-id');
+	// console.log('remove stages flyer' + flyer_id);
+	$(this).closest('.selected-flyers').remove();
+	$(this).closest('.selected-flyers').fadeOut(200);
+
+});
+
+
+
 $('input[id="thumbnail"]').on('change', function(){
 
 	var featureID = $("#featureID").val();
 	var thumbnail = $('input[id="thumbnail"]')[0].files[0];
-	console.log(featureID);
+	// console.log(featureID);
 	var data = new FormData();
 	data.append('thumbnail', thumbnail);
 	data.append('featureID', featureID);
-	console.log(data);
+	// console.log(data);
 	$.ajax({
 		    url: '/admin/feature/thumbnail',
 		    type: 'POST',
@@ -105,7 +148,7 @@ $('input[id="thumbnail"]').on('change', function(){
             contentType: false,   // tell jQuery not to set contentType
 		    success: function(result) {
 		    	
-		    	console.log(result);
+		    	// console.log(result);
 		    	if(result.validation_result == 'false') {
 			    	var errors = result.errors;
 			        if( errors ) {
@@ -123,7 +166,7 @@ $('input[id="thumbnail"]').on('change', function(){
 		        
 		    }
 		}).done(function(response){
-			console.log(response);
+			// console.log(response);
 		});    
 
 });
@@ -144,7 +187,7 @@ $('input[id="background"]').on('change', function(){
             processData: false,  // tell jQuery not to process the data
             contentType: false,   // tell jQuery not to set contentType
 		    success: function(result) {
-		        console.log(result);
+		        // console.log(result);
 		        if(result.validation_result == 'false') {
 			        var errors = result.errors;
 			        if(  errors ) {
@@ -161,7 +204,7 @@ $('input[id="background"]').on('change', function(){
 		        
 		    }
 		}).done(function(response){
-			console.log(response);
+			// console.log(response);
 		});    
 
 });
@@ -187,12 +230,14 @@ $(document).on('click','.feature-update',function(){
 	var background = $('input[id="background"]')[0].files[0];
 	var remove_document = [];
 	var remove_package   = [];
+	var remove_flyer   = [];
 	var feature_files = [];
 	var feature_packages = [];
+	var feature_flyers = [];
 	var update_type = $('input:radio[name =  "latest_updates_option"]:checked').val();
 	var update_frequency =  $('input:radio[name ="latest_updates_option"]:checked').next('input[name="update_frequency"]').val();
-	console.log('latest updates : ' + update_type);
-	console.log('latest update freq : ' + update_frequency);
+	// console.log('latest updates : ' + update_type);
+	// console.log('latest update freq : ' + update_frequency);
 
 
 	$(".remove_document").each(function(){
@@ -201,12 +246,20 @@ $(document).on('click','.feature-update',function(){
 	$(".remove_package").each(function(){
 		remove_package.push($(this).attr('data-package-id'));
 	});
-	console.log(remove_package);
+
+	$(".remove_flyer").each(function(){
+		remove_flyer.push($(this).attr('data-flyer-id'));
+	});
+
+
 	$(".selected-files").each(function(){
 		feature_files.push($(this).find('td:first').attr('data-document-id'));
 	});
 	$(".selected-packages").each(function(){
 		feature_packages.push($(this).find('td:first').attr('data-package-id'));
+	});
+	$(".selected-flyers").each(function(){
+		feature_flyers.push($(this).find('td:first').attr('data-flyer-id'));
 	});
  
 
@@ -231,22 +284,24 @@ $(document).on('click','.feature-update',function(){
 
      if(hasError == false) {
      	var dataObj = {};
-     	console.log(typeof(dataObj));
+     	// console.log(typeof(dataObj));
      	$.extend(dataObj, {title: featureTitle});
      	$.extend(dataObj, {tileLabel: featureTileLabel});
      	$.extend(dataObj, {start: featureStart});
      	$.extend(dataObj, {end: featureEnd});
      	$.extend(dataObj, {feature_files:  feature_files});
      	$.extend(dataObj, {feature_packages:  feature_packages});
+     	$.extend(dataObj, {feature_flyers:  feature_flyers});
      	$.extend(dataObj, {remove_document: remove_document});
      	$.extend(dataObj, {remove_package: remove_package});
+     	$.extend(dataObj, {remove_flyer: remove_flyer});
      	$.extend(dataObj, {update_type : update_type});
      	$.extend(dataObj, {update_frequency : update_frequency});
      	
 
      	var data = JSON.stringify(dataObj);
-     	console.log(dataObj);
-     	console.log(data);
+     	// console.log(dataObj);
+     	// console.log(data);
 
 		$.ajax({
 		    url: '/admin/feature/' + featureID ,
@@ -273,6 +328,12 @@ $(document).on('click','.feature-update',function(){
 			        		$("#packages-selected").append('<div class="req">' + errors.packages[index]  + '</div>');	
 			        	});
 			        }
+			        if(errors.hasOwnProperty("flyers")) {
+			        	$.each(errors.flyers, function(index){
+			        		$("#flyers-selected").append('<div class="req">' + errors.flyers[index]  + '</div>');	
+			        	});
+			        }
+
 			        if(errors.hasOwnProperty("update_type_id")) {
 			        	$.each(errors.update_type_id, function(index){
 			        		$(".latest-updates-container").append('<div class="req">' + errors.update_type_id[index]  + '</div>');	
@@ -311,8 +372,8 @@ $(document).on('click','.feature-update',function(){
 			    }
 		    }
 		}).done(function(response){
-			console.log(response);
-			console.log("********");
+			// console.log(response);
+			// console.log("********");
 			$(".existing-files-container").load("/admin/featuredocuments/"+featureID);
 			$("#files-staged-to-remove").empty();
 			$("#files-selected").empty();
@@ -322,6 +383,11 @@ $(document).on('click','.feature-update',function(){
 			$("#packages-staged-to-remove").empty();
 			$("#packages-selected").empty();
 			$("#package-listing").find(".package-checkbox").prop('checked', false);
+
+			$(".existing-flyers-container").load("/admin/featureflyers/"+featureID);
+			$("#flyers-staged-to-remove").empty();
+			$("#flyers-selected").empty();
+			$("#flyer-listing").find(".flyer-checkbox").prop('checked', false);
 		});    	
     }
 

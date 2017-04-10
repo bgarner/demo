@@ -414,6 +414,7 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         'CreateFailedJobsTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_08_155802_create_failed_jobs_table.php',
         'CreateFeatureCommunicationTable' => __DIR__ . '/../..' . '/database/migrations/2016_06_21_151449_create_feature_communication_table.php',
         'CreateFeatureDocumentPivotTable' => __DIR__ . '/../..' . '/database/migrations/2016_02_01_173157_create_feature_document_pivot_table.php',
+        'CreateFeatureFlyerPivot' => __DIR__ . '/../..' . '/database/migrations/2017_04_07_150159_create_feature_flyer_pivot.php',
         'CreateFeaturePackagePivot' => __DIR__ . '/../..' . '/database/migrations/2016_01_29_233852_create_feature_package_pivot.php',
         'CreateFeaturesTable' => __DIR__ . '/../..' . '/database/migrations/2016_01_26_223339_create_features_table.php',
         'CreateFeaturesUpdateTypeTable' => __DIR__ . '/../..' . '/database/migrations/2016_01_20_201217_create_features_update_type_table.php',

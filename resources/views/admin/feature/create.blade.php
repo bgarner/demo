@@ -146,6 +146,34 @@
 		                        </div>
 		                    </div>
 
+		                    <div class="ibox">
+		                        <div class="ibox-title">
+		                            <h5>Flyers</h5>
+
+		                            <div class="ibox-tools">
+		                            	<div class="btn btn-primary btn-outline" type="button" id="add-flyers" role="button"><i class="fa fa-plus"></i> Add Flyers </div>
+		                            </div>
+		                        </div>
+		                        <div class="ibox-content">
+		                        	
+                                    <div id="flyers-selected">
+                                    	<table class="table table-hover feature-flyers-table hidden">
+                                    		<thead>
+                                    			<tr>
+                                    				<td>Flyer Name</td>
+                                    				<td></td>
+                                    				<td>Action</td>
+                                    			</tr>
+                                    		</thead>
+                                    		<tbody>
+                                    		</tbody>
+
+                                    	</table>
+
+                                    </div>
+		                        </div>
+		                    </div>
+
 
 		                     <div class="ibox">
 		                        <div class="ibox-title">
@@ -250,6 +278,28 @@
 				        </div>
 				    </div>
 				</div>
+
+				<div id="flyer-listing" class="modal fade">
+				    <div class="modal-dialog">
+				        <div class="modal-content">
+				            <div class="modal-header">
+				                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				                <h4 class="modal-title">Select Flyers</h4>
+				            </div>
+				            <div class="modal-body">
+				            	<ul class="tree">
+								@include('admin.flyer.flyer-listing-partial', ['flyers' =>$flyers])
+								</ul>
+				            </div>
+				            <div class="modal-footer">
+				                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				                <button type="button" data-dismiss="modal" class="btn btn-primary attach-selected-flyers" id="attach-selected-flyers">Select Flyers</button>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+
 
 				<script type="text/javascript" src="/js/custom/admin/features/addFeature.js"></script>
 				<script type="text/javascript" src="/js/custom/tree.js"></script>
