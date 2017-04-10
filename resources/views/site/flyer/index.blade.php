@@ -6,9 +6,6 @@
     @include('site.includes.head')
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
-	<link rel="stylesheet" href="/css/plugins/dataTables/datatables.min.css">
-    <link rel="stylesheet" href="css/plugins/blueimp/css/blueimp-gallery.min.css">
-	{{-- <link rel="stylesheet" href="/css/plugins/dataTables/dataTables.tableTools.min.css"> --}}
 </head>
 
 <body class="fixed-navigation adminview">
@@ -69,43 +66,6 @@
 		@include('site.includes.footer')
 
 	    @include('site.includes.scripts')
-
-
-		<script type="text/javascript" src="/js/plugins/dataTables/datatables.min.js"></script>
-		<script>
-
-	        $(document).ready(function(){
-	        	console.log("ready");
-	            // $('.dataTable').DataTable({
-	            //     pageLength: 50,
-	            //     responsive: true,
-	            //     fixedHeader: true
-                //
-	            // });
-
-			});
-
-
-            document.getElementById('links').onclick = function (event) {
-                event = event || window.event;
-                var target = event.target || event.srcElement,
-                    link = target.src ? target.parentNode : target,
-                    options = {index: link, event: event},
-                    links = this.getElementsByTagName('a');
-                    blueimp.Gallery(
-                        document.getElementById('links').getElementsByTagName('a'),
-                        {
-                            container: '#blueimp-gallery-carousel',
-                            carousel: true
-                        }
-                    );
-            };
-
-
-
-
-		</script>
-
 
 		@include('site.includes.modal')
 
