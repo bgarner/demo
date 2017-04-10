@@ -41,29 +41,8 @@ class FlyerItem extends Model
             $colour_array = unserialize($fi->colour);
     		$images = array();
             foreach($pmm_array as $key=>$item){
-                if($banner_id == 1){
-                    
-                    $image = array(
-                    // "thumb" => "https://fgl.scene7.com/is/image/FGLSportsLtd/".$item."_99_a?bgColor=0,0,0,0&fmt=jpg&hei=50&resMode=sharp2&op_sharpen=1",
-                    // "full" => "https://fgl.scene7.com/is/image/FGLSportsLtd/".$item."_99_a?bgColor=0,0,0,0&fmt=jpg&hei=800&resMode=sharp2&op_sharpen=1"
-
-
-                    "thumb" => "https://fgl.scene7.com/is/image/FGLSportsLtd/".$item."_" . $colour_array[$key] . "_a?bgColor=0,0,0,0&fmt=jpg&hei=50&resMode=sharp2&op_sharpen=1",
-                    "full" => "https://fgl.scene7.com/is/image/FGLSportsLtd/".$item."_" . $colour_array[$key] . "_a?bgColor=0,0,0,0&fmt=jpg&hei=800&resMode=sharp2&op_sharpen=1"
-                    );
-                    $images[$item] = $image;
-                }
-                else if($banner_id == 2){
-                    $image = array(
-
-                    // "thumb" => "https://s7d2.scene7.com/is/image/atmosphere/".$item."_99_a?bgColor=0,0,0,0&fmt=jpg&hei=50&op_sharpen=1&resMode=sharp2",
-                    // "full" => "https://s7d2.scene7.com/is/image/atmosphere/".$item."_99_a?bgColor=0,0,0,0&fmt=jpg&hei=800&op_sharpen=1&resMode=sharp2"
-
-                    "thumb" => "https://s7d2.scene7.com/is/image/atmosphere/".$item."_" . $colour_array[$key] . "_a?bgColor=0,0,0,0&fmt=jpg&hei=50&op_sharpen=1&resMode=sharp2",
-                    "full" => "https://s7d2.scene7.com/is/image/atmosphere/".$item."_" . $colour_array[$key] . "_a?bgColor=0,0,0,0&fmt=jpg&hei=800&op_sharpen=1&resMode=sharp2"
-                    );
-                    $images[$item] = $image;
-                }
+                $colour = $colour_array[$key];
+                $images[$item] = Self::getFlyerItemImage($item, $colour, $banner_id);
                 
             }
     		$fi->pmm_numbers = $pmm_array;
@@ -76,9 +55,22 @@ class FlyerItem extends Model
 
     public static function getFlyerItemById($id)
     {
-        $flyerItem = Self::find($id);
+        
 
-        $flyerItem->pmm_numbers = unserialize($flyerItem->pmm);
+        $flyerItem = Self::find($id);
+        $banner_id = Flyer::find($flyerItem->flyer_id)->banner_id;
+
+        $pmm_array = unserialize($flyerItem->pmm);
+        $colour_array = unserialize($flyerItem->colour);
+        $images = array();
+        foreach($pmm_array as $key=>$item){
+            $colour = $colour_array[$key];
+            $images[$item] = Self::getFlyerItemImage($item, $colour, $banner_id);
+            
+        }
+        $flyerItem->pmm_numbers = $pmm_array;
+        $flyerItem->images = $images;
+
 
         return $flyerItem;
     }
@@ -145,6 +137,7 @@ class FlyerItem extends Model
         $flyerItem['original_price'] = $request->original_price;
         $flyerItem['sale_price'] = $request->sale_price;
         $flyerItem['notes'] = $request->notes;
+        $flyerItem['colour'] = serialize( $request->colour );
 
         $flyerItem->save();
 
@@ -175,7 +168,8 @@ class FlyerItem extends Model
                             'disclaimer' => (isset($row[4]) ? $row[4] : ''),
                             'original_price' => (isset($row[5]) ? $row[5] : ''),
                             'sale_price' => (isset($row[6]) ? $row[6] : ''),
-                            'notes' => (isset($row[7]) ? $row[7] : '')
+                            'notes' => (isset($row[7]) ? $row[7] : ''),
+                            'colour' => (isset($row[8]) ? serialize(explode( ';',$row[8])) : ''),
                             
                         ]
                     );
@@ -183,6 +177,37 @@ class FlyerItem extends Model
                 }
             }
          } 
+    }
+
+    public static function getFlyerItemImage($flyerItemId, $colour, $banner_id)
+    {
+        $image = [];
+
+        if($banner_id == 1){
+                    
+            $image = array(
+            // "thumb" => "https://fgl.scene7.com/is/image/FGLSportsLtd/".$item."_99_a?bgColor=0,0,0,0&fmt=jpg&hei=50&resMode=sharp2&op_sharpen=1",
+            // "full" => "https://fgl.scene7.com/is/image/FGLSportsLtd/".$item."_99_a?bgColor=0,0,0,0&fmt=jpg&hei=800&resMode=sharp2&op_sharpen=1"
+
+
+            "thumb" => "https://fgl.scene7.com/is/image/FGLSportsLtd/".$flyerItemId."_" . $colour . "_a?bgColor=0,0,0,0&fmt=jpg&hei=50&resMode=sharp2&op_sharpen=1",
+            "medium" => "https://fgl.scene7.com/is/image/FGLSportsLtd/".$flyerItemId."_" . $colour . "_a?bgColor=0,0,0,0&fmt=jpg&hei=150&resMode=sharp2&op_sharpen=1",
+            "full" => "https://fgl.scene7.com/is/image/FGLSportsLtd/".$flyerItemId."_" . $colour . "_a?bgColor=0,0,0,0&fmt=jpg&hei=800&resMode=sharp2&op_sharpen=1"
+            );
+        }
+        else if($banner_id == 2){
+            $image = array(
+
+            // "thumb" => "https://s7d2.scene7.com/is/image/atmosphere/".$item."_99_a?bgColor=0,0,0,0&fmt=jpg&hei=50&op_sharpen=1&resMode=sharp2",
+            // "full" => "https://s7d2.scene7.com/is/image/atmosphere/".$item."_99_a?bgColor=0,0,0,0&fmt=jpg&hei=800&op_sharpen=1&resMode=sharp2"
+
+            "thumb" => "https://s7d2.scene7.com/is/image/atmosphere/".$flyerItemId."_" . $colour . "_a?bgColor=0,0,0,0&fmt=jpg&hei=50&op_sharpen=1&resMode=sharp2",
+            "medium" => "https://s7d2.scene7.com/is/image/atmosphere/".$flyerItemId."_" . $colour . "_a?bgColor=0,0,0,0&fmt=jpg&hei=150&op_sharpen=1&resMode=sharp2",
+            "full" => "https://s7d2.scene7.com/is/image/atmosphere/".$flyerItemId."_" . $colour . "_a?bgColor=0,0,0,0&fmt=jpg&hei=800&op_sharpen=1&resMode=sharp2"
+            );
+        }   
+
+        return $image;
     }
 
 

@@ -31,11 +31,11 @@
             <h5 class="clearfix">PMM<span class="req">*</span></h5>
             <span class="add_more_pmm"><i class="fa fa-plus"></i> Add More</span>
             <div class="row">
-                @foreach($flyer_data->pmm_numbers as $pmm_number)
+                @foreach($flyer_data->pmm_numbers as $key=>$pmm_number)
                 <div class="col-sm-4 col-md-4">
                     <i class="fa fa-times remove_pmm" title="Remove PMM" ></i>
                     {!! Form::text('pmm[]', $pmm_number, ['class'=>'form-control pmm_number']) !!}
-                    <img src="https://fgl.scene7.com/is/image/FGLSportsLtd/{{$pmm_number}}_99_a?bgColor=0,0,0,0&amp;fmt=png-alpha&amp;hei=150&amp;resMode=sharp2&amp;op_sharpen=1">
+                    <img src="{{$flyer_data->images[$pmm_number]['medium']}}" alt="">
                 </div>
                 @endforeach
             </div>
