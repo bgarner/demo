@@ -11,7 +11,7 @@ use App\Models\Validation\FlyerValidator;
 class Flyer extends Model
 {
     use SoftDeletes;
-	
+
 	protected $dates = ['deleted_at'];
     protected $table = 'flyers';
     protected $fillable = ['flyer_name', 'start_date', 'end_date', 'banner_id'];
@@ -46,17 +46,17 @@ class Flyer extends Model
 
 	 	\Log::info($validateThis);
 	 	$v = new FlyerValidator();
-	 	return $v->validate($validateThis);  
+	 	return $v->validate($validateThis);
 	}
 
     public static function createFlyer($request)
     {
-    	
+
     	$validate = Self::validateCreateFlyer($request);
     	if($validate['validation_result'] == 'false') {
            \Log::info($validate);
            return json_encode($validate);
-         } 
+         }
 
     	$flyer = Self::create([
     		'flyer_name' => $request['flyer_name'],
@@ -66,14 +66,17 @@ class Flyer extends Model
 
     	]);
 
-    	FlyerItem::addFlyerItems($request, $flyer->id); 
+    	FlyerItem::addFlyerItems($request, $flyer->id);
     	return $flyer;
     }
 
 
     public static function getFlyersByBannerId($banner_id)
     {
-    	$flyers = Self::where('banner_id', $banner_id)->get();
+    	$flyers = Self::where('banner_id', $banner_id)->get()->each(function($flyer){
+            $flyer->pretty_start_date = Utility::prettifyDate($flyer->start_date);
+        	$flyer->pretty_end_date = Utility::prettifyDate($flyer->end_date);
+        });
     	return $flyers;
     }
 
@@ -92,7 +95,7 @@ class Flyer extends Model
     	if($validate['validation_result'] == 'false') {
            \Log::info($validate);
            return json_encode($validate);
-         } 
+         }
 
     	$flyer = Flyer::find($id);
     	$flyer['flyer_name'] = $request->flyer_name;

@@ -27,8 +27,6 @@
 		<div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-12">
                 <h2>Flyers</h2>
-
-                <small class="pull-right"> Last Updated :  </small>
             </div>
         </div>
 
@@ -40,7 +38,7 @@
 
                         <div class="ibox-content">
 
-	                    	<table class="table dataTable" id="productLaunchDataTable">
+	                    	<table class="table">
 	                    		<thead>
 	                    			<tr role="row">
 	                    				<th>Flyer Name</th>
@@ -52,11 +50,11 @@
 	                    			@foreach($flyers as $flyer)
 										<tr class="flyer" role="row" data-flyer-id="{{$flyer->id}}">
 											<td><a href="flyer/{{ $flyer->id }}" title="View Flyer">{{ $flyer->flyer_name }}</a></td>
-											<td>{{ $flyer->start_date }}</td>
-											<td>{{ $flyer->end_date }}</td>
+											<td>{{ $flyer->pretty_start_date }}</td>
+											<td>{{ $flyer->pretty_end_date }}</td>
 										</tr>
 	                    			@endforeach
-				                    
+
 				                </tbody>
 
 			                </table>
@@ -78,12 +76,12 @@
 
 	        $(document).ready(function(){
 	        	console.log("ready");
-	            $('.dataTable').DataTable({
-	                pageLength: 50,
-	                responsive: true,
-	                fixedHeader: true
-
-	            });
+	            // $('.dataTable').DataTable({
+	            //     pageLength: 50,
+	            //     responsive: true,
+	            //     fixedHeader: true
+                //
+	            // });
 
 			});
 
