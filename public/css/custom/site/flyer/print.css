@@ -1,0 +1,14 @@
+body, #content, #container {
+	width: 100%;
+	margin: 0;
+	float: none;
+	background: #fff url(none);
+}
+
+*{
+    display: none;
+}
+
+.ibox-content, .ibox-content *{
+    display: block !important;
+}
