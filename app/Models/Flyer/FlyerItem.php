@@ -38,21 +38,29 @@ class FlyerItem extends Model
     	foreach($flyerItems as $fi){
 
     		$pmm_array = unserialize($fi->pmm);
+            $colour_array = unserialize($fi->colour);
     		$images = array();
-            foreach($pmm_array as $item){
-
+            foreach($pmm_array as $key=>$item){
                 if($banner_id == 1){
+                    
                     $image = array(
-                    "thumb" => "https://fgl.scene7.com/is/image/FGLSportsLtd/".$item."_99_a?bgColor=0,0,0,0&fmt=jpg&hei=50&resMode=sharp2&op_sharpen=1",
-                    "full" => "https://fgl.scene7.com/is/image/FGLSportsLtd/".$item."_99_a?bgColor=0,0,0,0&fmt=jpg&hei=800&resMode=sharp2&op_sharpen=1"
+                    // "thumb" => "https://fgl.scene7.com/is/image/FGLSportsLtd/".$item."_99_a?bgColor=0,0,0,0&fmt=jpg&hei=50&resMode=sharp2&op_sharpen=1",
+                    // "full" => "https://fgl.scene7.com/is/image/FGLSportsLtd/".$item."_99_a?bgColor=0,0,0,0&fmt=jpg&hei=800&resMode=sharp2&op_sharpen=1"
+
+
+                    "thumb" => "https://fgl.scene7.com/is/image/FGLSportsLtd/".$item."_" . $colour_array[$key] . "_a?bgColor=0,0,0,0&fmt=jpg&hei=50&resMode=sharp2&op_sharpen=1",
+                    "full" => "https://fgl.scene7.com/is/image/FGLSportsLtd/".$item."_" . $colour_array[$key] . "_a?bgColor=0,0,0,0&fmt=jpg&hei=800&resMode=sharp2&op_sharpen=1"
                     );
                     $images[$item] = $image;
                 }
                 else if($banner_id == 2){
                     $image = array(
 
-                    "thumb" => "https://s7d2.scene7.com/is/image/atmosphere/".$item."_99_a?bgColor=0,0,0,0&fmt=jpg&hei=50&op_sharpen=1&resMode=sharp2",
-                    "full" => "https://s7d2.scene7.com/is/image/atmosphere/".$item."_99_a?bgColor=0,0,0,0&fmt=jpg&hei=800&op_sharpen=1&resMode=sharp2"
+                    // "thumb" => "https://s7d2.scene7.com/is/image/atmosphere/".$item."_99_a?bgColor=0,0,0,0&fmt=jpg&hei=50&op_sharpen=1&resMode=sharp2",
+                    // "full" => "https://s7d2.scene7.com/is/image/atmosphere/".$item."_99_a?bgColor=0,0,0,0&fmt=jpg&hei=800&op_sharpen=1&resMode=sharp2"
+
+                    "thumb" => "https://s7d2.scene7.com/is/image/atmosphere/".$item."_" . $colour_array[$key] . "_a?bgColor=0,0,0,0&fmt=jpg&hei=50&op_sharpen=1&resMode=sharp2",
+                    "full" => "https://s7d2.scene7.com/is/image/atmosphere/".$item."_" . $colour_array[$key] . "_a?bgColor=0,0,0,0&fmt=jpg&hei=800&op_sharpen=1&resMode=sharp2"
                     );
                     $images[$item] = $image;
                 }
