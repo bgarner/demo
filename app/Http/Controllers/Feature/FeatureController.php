@@ -12,6 +12,7 @@ use App\Models\Notification\Notification;
 use App\Skin;
 use App\Models\Feature\FeatureDocument;
 use App\Models\Feature\FeaturePackage;
+use App\Models\Feature\FeatureFlyer;
 use App\Models\Feature\FeatureCommunication;
 use App\Models\Communication\Communication;
 use App\Models\Communication\CommunicationTarget;
@@ -94,6 +95,8 @@ class FeatureController extends Controller
 
         $feature_communcations = CommunicationTarget::getTargetedCommunicationsByCategory($storeNumber, $feature_communcation_type_id);
 
+        $flyers = FeatureFlyer::getFlyersByFeatureId($feature);
+
 		$notifications = Notification::getNotificationsByFeature($feature->id, $storeNumber);
 
         $urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($storeNumber);
@@ -110,6 +113,7 @@ class FeatureController extends Controller
             ->with('feature_communcations', $feature_communcations)
             ->with('urgentNoticeCount', $urgentNoticeCount)
             ->with('banner', $banner)
+            ->with('flyers', $flyers)
             ->with('isComboStore', $isComboStore);
     }
 
