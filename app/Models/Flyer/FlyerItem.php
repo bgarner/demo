@@ -43,19 +43,19 @@ class FlyerItem extends Model
             foreach($pmm_array as $key=>$item){
                 $colour = $colour_array[$key];
                 $images[$item] = Self::getFlyerItemImage($item, $colour, $banner_id);
-                
+
             }
     		$fi->pmm_numbers = $pmm_array;
     		$fi->images = $images;
 
     	}
-        
+
     	return $flyerItems;
     }
 
     public static function getFlyerItemById($id)
     {
-        
+
 
         $flyerItem = Self::find($id);
         $banner_id = Flyer::find($flyerItem->flyer_id)->banner_id;
@@ -66,7 +66,7 @@ class FlyerItem extends Model
         foreach($pmm_array as $key=>$item){
             $colour = $colour_array[$key];
             $images[$item] = Self::getFlyerItemImage($item, $colour, $banner_id);
-            
+
         }
         $flyerItem->pmm_numbers = $pmm_array;
         $flyerItem->images = $images;
@@ -91,10 +91,10 @@ class FlyerItem extends Model
         $uniqueHash = sha1(time() . time());
         $filename  = $metadata["modifiedName"] . "_" . $uniqueHash . "." . $metadata["originalExtension"];
 
-        $upload_success = $request->file('document')->move($directory, $filename); 
+        $upload_success = $request->file('document')->move($directory, $filename);
 
         if($upload_success){
-                       
+
             $csvFile = Reader::createFromPath($directory. "/" . $filename);
             Self::insertRecords($csvFile, $flyer_id);
 
@@ -107,7 +107,7 @@ class FlyerItem extends Model
         if($validate['validation_result'] == 'false') {
             \Log::info($validate);
             return json_encode($validate);
-        } 
+        }
 
         Self::create(
                         [
@@ -120,7 +120,7 @@ class FlyerItem extends Model
                             'original_price' => $request->original_price,
                             'sale_price' => $request->sale_price,
                             'notes' => $request->notes
-                            
+
                         ]
                     );
     }
@@ -170,21 +170,25 @@ class FlyerItem extends Model
                             'sale_price' => (isset($row[6]) ? $row[6] : ''),
                             'notes' => (isset($row[7]) ? $row[7] : ''),
                             'colour' => (isset($row[8]) ? serialize(explode( ';',$row[8])) : ''),
-                            
+
                         ]
                     );
 
                 }
             }
-         } 
+         }
     }
 
     public static function getFlyerItemImage($flyerItemId, $colour, $banner_id)
     {
         $image = [];
 
+		if(!$colour){
+			$colour = "99";
+		}
+
         if($banner_id == 1){
-                    
+
             $image = array(
             // "thumb" => "https://fgl.scene7.com/is/image/FGLSportsLtd/".$item."_99_a?bgColor=0,0,0,0&fmt=jpg&hei=50&resMode=sharp2&op_sharpen=1",
             // "full" => "https://fgl.scene7.com/is/image/FGLSportsLtd/".$item."_99_a?bgColor=0,0,0,0&fmt=jpg&hei=800&resMode=sharp2&op_sharpen=1"
@@ -205,7 +209,7 @@ class FlyerItem extends Model
             "medium" => "https://s7d2.scene7.com/is/image/atmosphere/".$flyerItemId."_" . $colour . "_a?bgColor=0,0,0,0&fmt=jpg&hei=150&op_sharpen=1&resMode=sharp2",
             "full" => "https://s7d2.scene7.com/is/image/atmosphere/".$flyerItemId."_" . $colour . "_a?bgColor=0,0,0,0&fmt=jpg&hei=800&op_sharpen=1&resMode=sharp2"
             );
-        }   
+        }
 
         return $image;
     }

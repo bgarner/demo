@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Feature;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Request as RequestFacade; 
+use Illuminate\Support\Facades\Request as RequestFacade;
 use Carbon\Carbon;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -73,7 +73,7 @@ class FeatureController extends Controller
 
         $alertCount = Alert::getActiveAlertCountByStore($storeNumber);
 
-        $communicationCount = Communication::getActiveCommunicationCount($storeNumber);     
+        $communicationCount = Communication::getActiveCommunicationCount($storeNumber);
 
         $storeBanner = $storeInfo->banner_id;
 
@@ -83,19 +83,19 @@ class FeatureController extends Controller
 
         $skin = Skin::getSkin($storeBanner);
 
-        $id = $request->id;		
+        $id = $request->id;
 
         $feature = Feature::where('id', $id)->first();
 
         $selected_documents = FeatureDocument::getFeaturedDocuments($feature->id, $storeNumber);
 
         $selected_packages = FeaturePackage::getFeaturePackages($feature->id);
-        
+
         $feature_communcation_type_id = FeatureCommunication::getCommunicationTypeId($id);
 
         $feature_communcations = CommunicationTarget::getTargetedCommunicationsByCategory($storeNumber, $feature_communcation_type_id);
 
-        $flyers = FeatureFlyer::getFlyersByFeatureId($feature);
+        $flyers = FeatureFlyer::getFlyersByFeatureId($feature->id);
 
 		$notifications = Notification::getNotificationsByFeature($feature->id, $storeNumber);
 
@@ -106,7 +106,7 @@ class FeatureController extends Controller
             ->with('urgentNoticeCount', $urgentNoticeCount)
 			->with('notifications', $notifications)
             ->with('communicationCount', $communicationCount)
-            ->with('alertCount', $alertCount)            
+            ->with('alertCount', $alertCount)
             ->with('feature', $feature)
             ->with('feature_documents', $selected_documents)
             ->with('feature_packages', $selected_packages)

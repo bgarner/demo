@@ -101,9 +101,9 @@
                                         @foreach ($flyers as $flyer)
 
                                             <tr>
-                                                <td>{{ $flyer->title }}  </td>
-                                                <td>{{ $flyer->start_date }}  </td>
-                                                <td>{{ $flyer->end_date }}  </td>
+                                                <td><a href="../../flyer/{{ $flyer->id }}">{{ $flyer->flyer_name }}</a>  </td>
+                                                <td>{{ $flyer->pretty_start_date }}  </td>
+                                                <td>{{ $flyer->pretty_end_date }}  </td>
                                             </tr>
 
                                         @endforeach
