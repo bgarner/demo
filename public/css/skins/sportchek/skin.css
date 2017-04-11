@@ -1,5 +1,5 @@
 body{
-	background-color: #2B2B2B !important;
+	background-color: #2B2B2B;
 }
 
 .nav-header{
@@ -18,7 +18,7 @@ body{
 }
 
 .metismenu > li.active a{
-	border-left: 4px solid #E20000 !important;	
+	border-left: 4px solid #E20000 !important;
     background: #444444 !important;
 }
 
@@ -28,7 +28,7 @@ body{
 
 
 .metismenu > li a:hover{
-	border-left: 4px solid #E20000 !important;	
+	border-left: 4px solid #E20000 !important;
 	background: #444444 !important;
 }
 
@@ -38,7 +38,7 @@ body{
 
 .metismenu li.urgetnNoticeNav {
 	border: none !important;
-	background-color: red; 
+	background-color: red;
 	color: white;
 }
 

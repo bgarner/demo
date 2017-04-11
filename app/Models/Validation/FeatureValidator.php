@@ -14,6 +14,7 @@ class FeatureValidator extends PortalValidator
     	'packages'			=> 'sometimes|exists:packages,id',
     	'remove_documents'	=> 'sometimes|exists:documents,id',
     	'remove_packages'	=> 'sometimes|exists:packages,id',
+        'remove_flyers'     => 'sometimes|exists:flyers,id',
     	'update_type_id'	=> 'required|exists:feature_latest_update_types,id',
     	'update_frequency'	=> 'required|integer|min:1',
     	'start'				=> 'required|date',
