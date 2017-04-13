@@ -13,7 +13,7 @@ class FlyerItem extends Model
 	use SoftDeletes;
     protected $table = 'flyer_data';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['flyer_id', 'category', 'brand_name', 'product_name', 'pmm', 'disclaimer', 'original_price', 'sale_price', 'notes'];
+    protected $fillable = ['flyer_id', 'category', 'brand_name', 'product_name', 'pmm', 'disclaimer', 'original_price', 'sale_price', 'notes', 'colour'];
 
 
     public static function validateFlyerItem($flyer_id)
@@ -47,6 +47,7 @@ class FlyerItem extends Model
             }
     		$fi->pmm_numbers = $pmm_array;
     		$fi->images = $images;
+			$fi->colour = $colour_array;
 
     	}
 
@@ -119,8 +120,8 @@ class FlyerItem extends Model
                             'disclaimer' => $request->disclaimer,
                             'original_price' => $request->original_price,
                             'sale_price' => $request->sale_price,
-                            'notes' => $request->notes
-
+                            'notes' => $request->notes,
+							'colour' => serialize($request->colour),
                         ]
                     );
     }
