@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Request as RequestFacade; 
+use Illuminate\Support\Facades\Request as RequestFacade;
 use App\Models\ProductLaunch\ProductLaunch;
 use App\Models\Communication\Communication;
 use App\Models\UrgentNotice\UrgentNotice;
@@ -23,7 +23,6 @@ class FlyerController extends Controller
 
     public function __construct()
     {
-
         $this->storeNumber = RequestFacade::segment(1);
         $storeInfo = StoreInfo::getStoreInfoByStoreId($this->storeNumber);
         $this->storeBanner = $storeInfo->banner_id;
@@ -31,9 +30,9 @@ class FlyerController extends Controller
         $this->isComboStore = $storeInfo->is_combo_store;
         $this->skin = Skin::getSkin($this->storeBanner);
         $this->urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($this->storeNumber);
-        $this->alertCount = Alert::getActiveAlertCountByStore($this->storeNumber);        
-        $this->communicationCount = Communication::getActiveCommunicationCount($this->storeNumber);        
-    }    
+        $this->alertCount = Alert::getActiveAlertCountByStore($this->storeNumber);
+        $this->communicationCount = Communication::getActiveCommunicationCount($this->storeNumber);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -49,7 +48,7 @@ class FlyerController extends Controller
             ->with('urgentNoticeCount', $this->urgentNoticeCount)
             ->with('banner', $this->banner)
             ->with('flyers', $flyers)
-            ->with('isComboStore', $this->isComboStore); 
+            ->with('isComboStore', $this->isComboStore);
 
     }
 
@@ -81,8 +80,11 @@ class FlyerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($storenumber, $id)
-    {   
+    {
         $flyer = Flyer::getFlyerDetailsById($id);
+        if( !$flyer ){
+            return redirect( $this->storeNumber . '/flyer');
+        }
         $flyerItems = FlyerItem::getFlyerItemsByFlyerId($id);
         return view('site.flyer.flyer')
             ->with('skin', $this->skin)
@@ -92,7 +94,7 @@ class FlyerController extends Controller
             ->with('banner', $this->banner)
             ->with('flyer', $flyer)
             ->with('flyerItems', $flyerItems)
-            ->with('isComboStore', $this->isComboStore); 
+            ->with('isComboStore', $this->isComboStore);
     }
 
     /**

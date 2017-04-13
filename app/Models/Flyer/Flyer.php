@@ -83,10 +83,13 @@ class Flyer extends Model
     public static function getFlyerDetailsById($flyer_id)
     {
     	$flyer = Flyer::find($flyer_id);
-    	$flyer->pretty_start_date = Utility::prettifyDate($flyer->start_date);
-    	$flyer->pretty_end_date = Utility::prettifyDate($flyer->end_date);
+        if($flyer){
+            $flyer->pretty_start_date = Utility::prettifyDate($flyer->start_date);
+            $flyer->pretty_end_date = Utility::prettifyDate($flyer->end_date);
+            return $flyer;
+        }
+        return null;
 
-    	return $flyer;
     }
 
     public static function updateFlyer($id, $request)
