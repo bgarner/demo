@@ -13,7 +13,7 @@ class FlyerItem extends Model
 	use SoftDeletes;
     protected $table = 'flyer_data';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['flyer_id', 'category', 'brand_name', 'product_name', 'pmm', 'disclaimer', 'original_price', 'sale_price', 'notes'];
+    protected $fillable = ['flyer_id', 'category', 'brand_name', 'product_name', 'pmm', 'disclaimer', 'original_price', 'sale_price', 'notes', 'colour'];
 
 
     public static function validateFlyerItem($flyer_id)
@@ -41,12 +41,18 @@ class FlyerItem extends Model
             $colour_array = unserialize($fi->colour);
     		$images = array();
             foreach($pmm_array as $key=>$item){
-                $colour = $colour_array[$key];
+				if(count($colour_array) < 1){
+					$colour = 99;
+				} else if(count($colour_array) == 1 && count($pmm_array) > 1){
+					$colour = $colour_array[0];
+				} else{
+					$colour = $colour_array[$key];
+				}
                 $images[$item] = Self::getFlyerItemImage($item, $colour, $banner_id);
-
             }
     		$fi->pmm_numbers = $pmm_array;
     		$fi->images = $images;
+			$fi->colour = $colour_array;
 
     	}
 
@@ -119,8 +125,8 @@ class FlyerItem extends Model
                             'disclaimer' => $request->disclaimer,
                             'original_price' => $request->original_price,
                             'sale_price' => $request->sale_price,
-                            'notes' => $request->notes
-
+                            'notes' => $request->notes,
+							'colour' => serialize($request->colour),
                         ]
                     );
     }
@@ -170,7 +176,6 @@ class FlyerItem extends Model
                             'sale_price' => (isset($row[6]) ? $row[6] : ''),
                             'notes' => (isset($row[7]) ? $row[7] : ''),
                             'colour' => (isset($row[8]) ? serialize(explode( ';',$row[8])) : ''),
-
                         ]
                     );
 
