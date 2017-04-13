@@ -41,9 +41,14 @@ class FlyerItem extends Model
             $colour_array = unserialize($fi->colour);
     		$images = array();
             foreach($pmm_array as $key=>$item){
-                $colour = $colour_array[$key];
+				if(count($colour_array) < 1){
+					$colour = 99;
+				} else if(count($colour_array) == 1 && count($pmm_array) > 1){
+					$colour = $colour_array[0];
+				} else{
+					$colour = $colour_array[$key];
+				}
                 $images[$item] = Self::getFlyerItemImage($item, $colour, $banner_id);
-
             }
     		$fi->pmm_numbers = $pmm_array;
     		$fi->images = $images;
@@ -171,7 +176,6 @@ class FlyerItem extends Model
                             'sale_price' => (isset($row[6]) ? $row[6] : ''),
                             'notes' => (isset($row[7]) ? $row[7] : ''),
                             'colour' => (isset($row[8]) ? serialize(explode( ';',$row[8])) : ''),
-
                         ]
                     );
 
