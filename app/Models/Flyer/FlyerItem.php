@@ -69,13 +69,21 @@ class FlyerItem extends Model
         $pmm_array = unserialize($flyerItem->pmm);
         $colour_array = unserialize($flyerItem->colour);
         $images = array();
+        $colours = array();
         foreach($pmm_array as $key=>$item){
-            $colour = $colour_array[$key];
-            $images[$item] = Self::getFlyerItemImage($item, $colour, $banner_id);
-
-        }
+                if(count($colour_array) < 1){
+                    $colour = 99;
+                } else if(count($colour_array) == 1 && count($pmm_array) > 1){
+                    $colour = $colour_array[0];
+                } else{
+                    $colour = $colour_array[$key];
+                }
+                $images[$item] = Self::getFlyerItemImage($item, $colour, $banner_id);
+                $colours[$item] = $colour;
+            }
         $flyerItem->pmm_numbers = $pmm_array;
         $flyerItem->images = $images;
+        $flyerItem->colours = $colours;
 
 
         return $flyerItem;
