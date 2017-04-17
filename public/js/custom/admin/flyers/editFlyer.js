@@ -2,8 +2,7 @@ $(".flyerItem").on('click', function(e){
 
 	var modal = $('#mmmm-modal');
     var modalBody = $('#mmmm-modal .modal-content');
-    localStorage.setItem('lastClickedtoTriggerModal', $(this).attr('data-folderId') );
-
+    
     modalBody.empty();
     var flyerItemId = $(this).attr('data-flyer-item-id');
     var flyerEditLink = "/admin/flyeritem/" + flyerItemId + "/edit";
@@ -13,8 +12,9 @@ $(".flyerItem").on('click', function(e){
             modalBody.load(flyerEditLink);
         })
         .modal({show:true})
-        .on('shown.bs.modal', function () {
-            // $('#foldername').focus();
+        .on("hidden.bs.modal", function() {
+            modalBody.empty();
+            modal.unbind('show.bs.modal');
         });
     
     e.preventDefault();
@@ -56,24 +56,27 @@ $(".editFlyer").on('click', function(e){
     e.preventDefault();
     var modal = $('#mmmm-modal');
     var modalBody = $('#mmmm-modal .modal-content');
-    localStorage.setItem('lastClickedtoTriggerModal', $(this).attr('data-folderId') );
+    // localStorage.setItem('lastClickedtoTriggerModal', $(this).attr('data-folderId') );
 
     modalBody.empty();
     var flyerId = $(this).attr('data-flyer-id');
-    console.log(flyerId);
     var flyerEditLink = "/admin/flyer/" + flyerId +"/edit";
     
     modal
         .on('show.bs.modal', function() {
+            console.log('hi');
             modalBody.load(flyerEditLink);
         })
         .modal({show:true})
         .on('shown.bs.modal', function () {
             $('#flyer_id').val(flyerId);
+        })
+        .on("hidden.bs.modal", function() {
+            modalBody.empty();
+            modal.unbind('show.bs.modal');
         });
     
 });
-
 
 $("body").on("change paste keyup",  ".pmm_number", function() {
    var updated_pmm = $(this).val(); 
