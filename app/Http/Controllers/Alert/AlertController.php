@@ -19,7 +19,6 @@ class AlertController extends Controller
     public function index(request $request)
     {
         $storeNumber = RequestFacade::segment(1);
-
     
         $alertTypes = AlertType::getAlertTypesByStoreNumber($request, $storeNumber);
 

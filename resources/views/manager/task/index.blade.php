@@ -56,19 +56,28 @@
 											<span class="input-group-addon" 
 												   id="due_date_popover"
 												   style="width:5%"
-												   >
+												   title ="Select a Due Date">
 									            <i class="fa fa-calendar"></i>
 									            
 									        </span>
 											<span class="input-group-addon" 
 													style="width:5%;" 
-													id="store_select_popover">
+													id="store_select_popover"
+													title = "Select Stores">
 													<i class="fa fa-users"></i>
 											</span>
+											<span class="input-group-addon" 
+													style="width:5%;" 
+													id="description_popover"
+													title="Add Description">
+													<i class="fa fa-comment"></i>
+											</span>
 											<span class="input-group-addon task-create" 
-													style="width:5%;">
+													style="width:5%;"
+													title="Create Task">
 													<i class="fa fa-check"></i>
 											</span>
+											
 											
 										</div>
 									
@@ -103,6 +112,18 @@
 											</span>
 						                
 						                    <span class="btn btn-white input-group-addon" id="confirm-store-select" > Done </span>
+							                </div>
+							                
+						                </div>
+
+								</div>
+
+								<div class="ibox-content" id="description_ibox">
+									
+										<div class="row">
+										
+							                <div class="input-group">
+							                   <textarea name="description" id="description" cols="30" rows="10"></textarea>
 							                </div>
 							                
 						                </div>
@@ -206,7 +227,8 @@
 		</script>
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 		<script type="text/javascript" src="/js/custom/manager/tasks/addTask.js"></script>
-		<script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
+		<script type="text/javascript" src="/js/plugins/ckeditor-custom/ckeditor.js"></script>
+		<!-- <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script> -->
 
 
 		@include('site.includes.bugreport')

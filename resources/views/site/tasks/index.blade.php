@@ -37,46 +37,17 @@
             side bar
 
             </div> -->
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 animated fadeInRight">
-
-                    <ul class="todo-list m-t">
-                        <li>
-                            <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
-                            <span class="m-l-xs"><strong>Buy a milk</strong></span>
-                            <small class="label label-primary due-date"><i class="fa fa-clock-o due-date-icon"></i>&nbsp;<span class="due-date-text">1 mins</span></small>
-                            <P style="padding-left: 32px; font-size: 12px;line-height: 18px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                <ul>
-                                    <li>sadasdasdasd</li>
-                                    <li>sadasdasdasd</li>
-                                    <li>sadasdasdasd</li>
-                                    <li>sadasdasdasd</li>
-                                </ul>
-                        </li>
-                        <li>
-                            <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
-                            <span class="m-l-xs">Go to shop and find some products.</span>
-                            <small class="label label-primary due-date"><i class="fa fa-clock-o"></i> 1 mins</small>
-                        </li>
-                        <li>
-                            <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
-                            <span class="m-l-xs">Send documents to Mike</span>
-                            <small class="label label-primary due-date"><i class="fa fa-clock-o"></i> 1 mins</small>
-                        </li>
-                        <li>
-
-                            <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
-                            <span class="m-l-xs">Go to the doctor dr Smith</span>
-                            <small class="label label-primary due-date"><i class="fa fa-clock-o"></i> 1 mins</small>
-                        </li>
-                    </ul>
-
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 animated fadeInRight" id="task-container">
+                @include('site.tasks.task-list-partial')
             </div>
+            
         </div>
     </div>
 
     @include('site.includes.footer')
     @include('site.includes.scripts')
     @include('site.includes.modal')
+    <script type="text/javascript" src="/js/custom/site/tasks/completeTask.js"></script>
 
 </body>
 </html>

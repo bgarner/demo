@@ -14,4 +14,5 @@ class TaskStatusTypes extends Model
     {
     	return TaskStatusTypes::all()->pluck('status_title', 'id');
     }
+
 }

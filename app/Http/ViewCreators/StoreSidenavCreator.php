@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Request as RequestFacade;
 use App\Models\Alert\Alert;
 use App\Models\Communication\Communication;
 use App\Models\UrgentNotice\UrgentNotice;
+use App\Models\Task\Task;
 
 class StoreSidenavCreator
 {
@@ -20,6 +21,7 @@ class StoreSidenavCreator
     protected $alertCount;
     protected $communicationCount;
     protected $urgentNoticeCount;
+    protected $taskCount;
 
     /**
      * Create a new profile composer.
@@ -33,6 +35,7 @@ class StoreSidenavCreator
         $this->alertCount = Alert::getActiveAlertCountByStore($this->storeNumber);
         $this->communicationCount = Communication::getActiveCommunicationCount($this->storeNumber);
         $this->urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($this->storeNumber);
+        $this->taskCount = Task::getTaskCount($this->storeNumber);
     }
 
     /**
@@ -46,6 +49,7 @@ class StoreSidenavCreator
         
         $view->with('alertCount', $this->alertCount)
             ->with('communicationCount', $this->communicationCount)
-            ->with('urgentNoticeCount', $this->urgentNoticeCount);
+            ->with('urgentNoticeCount', $this->urgentNoticeCount)
+            ->with('taskCount', $this->taskCount);
     }
 }

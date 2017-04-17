@@ -1,6 +1,7 @@
 $(document).ready(function(){
 	$("#due_date_ibox").slideUp();
 	$("#store_selector_ibox").slideUp();
+	$("#description_ibox").slideUp();
 	$(".task_status_box").slideUp();
 	$(".task-status").hide();
 	$(".chosen").chosen({
@@ -13,6 +14,7 @@ $(document).ready(function(){
 		format: 'YYYY-MM-DD'
 
 	})
+	CKEDITOR.replace('description');
 });
 
 var toggleSendReminder = function(element){
@@ -126,6 +128,13 @@ $("#confirm-store-select").click(function(){
 
 });
 
+
+
+$("#description_popover").click(function(){
+	$("#description_popover i").toggleClass('task-element-in-process');
+	$("#description_ibox").slideToggle();
+})
+
 $(".edit-task").click(function(e){
 
 	var modal = $('#edit-task-modal');
@@ -186,6 +195,7 @@ $(document).on('click','.task-create',function(){
 	var title = $("#title").val();
 	var due_date = $("#due_date").val();
 	var target_stores  = $("#storeSelect").val();
+	var description = CKEDITOR.instances['description'].getData();
 	var send_reminder = $("#send_reminder").attr('data-state');
 	
     if(title == '' ) {
@@ -213,9 +223,14 @@ $(document).on('click','.task-create',function(){
 		  		due_date : due_date,
 		  		banner_id : 1,
 		  		target_stores : target_stores,
-		  		send_reminder : send_reminder
+		  		send_reminder : send_reminder,
+		  		description : description,
+		  		publish_date : Date()
+
 		    },
 		    success: function(result) {
+
+		    	console.log(result);
 		    
 		        if(result.validation_result == 'false') {
 		        	var errors = result.errors;
@@ -247,7 +262,6 @@ $(document).on('click','.task-create',function(){
 		    }
 		}).done(function(response){
 			$(".search-field").find('input').val('');
-			processStorePaste();
 		});    	
     }
 
