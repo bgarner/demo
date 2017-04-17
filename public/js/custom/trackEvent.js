@@ -6,6 +6,7 @@ $("body").on("click", ".trackclick", function(e){
 	fileId = $(this).attr("data-res-id");
 	videoId = $(this).attr("data-video-id");
 	commId = $(this).attr("data-comm-id");
+	flyerId = $(this).attr("data-flyer-id");
 	urgentnoticeId = $(this).attr("data-urgentnotice-id");
 	externalUrlId = $(this).attr("data-ext-url");
 	playListId = $(this).attr("data-playlist-id");
@@ -64,6 +65,11 @@ $("body").on("click", ".trackclick", function(e){
 
 	if(typeof videoId != "undefined"){
 		trackEvent( device, "video", videoId, localStorage.getItem('userStoreNumber'), loc, loc_id );
+		return;
+	}
+
+	if(typeof flyerId != "undefined"){
+		trackEvent( device, "flyer", flyerId, localStorage.getItem('userStoreNumber'), loc, loc_id );
 		return;
 	}
 

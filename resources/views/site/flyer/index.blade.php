@@ -46,7 +46,7 @@
 	                    		<tbody>
 	                    			@foreach($flyers as $flyer)
 										<tr class="flyer" role="row" data-flyer-id="{{$flyer->id}}">
-											<td><a href="flyer/{{ $flyer->id }}" title="View Flyer">{{ $flyer->flyer_name }}</a></td>
+											<td><a class="trackclick" href="flyer/{{ $flyer->id }}" data-flyer-id="{{ $flyer->id }}" title="View Flyer">{{ $flyer->flyer_name }}</a></td>
 											<td>{{ $flyer->pretty_start_date }}</td>
 											<td>{{ $flyer->pretty_end_date }}</td>
 										</tr>
