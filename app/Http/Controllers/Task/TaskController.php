@@ -29,6 +29,7 @@ class TaskController extends Controller
         $tasksCompleted = Task::getAllCompletedTasksByStoreId($storeNumber);
         // dd($completedTasks);
         return view('site.tasks.index')
+        // return view('site.tasks.task-list-partial')
                     ->with('tasksDueToday', $tasksDueToday)
                     ->with('tasksDue', $tasksNotDueToday)
                     ->with('tasksCompleted', $tasksCompleted);
@@ -63,7 +64,7 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        //get Details of the current task
+        
     }
 
     /**
@@ -86,7 +87,22 @@ class TaskController extends Controller
      */
     public function update(Request $request, $storeNumber, $id)
     {
-        return Task::updateTaskStoreStatus($request, $storeNumber, $id);
+        $store_task_status = Task::updateTaskStoreStatus($request, $storeNumber, $id);
+
+        $allIncompleteTasks = Task::getAllIncompleteTasksByStoreId($storeNumber);
+        $tasksDueToday = Task::getTaskDueTodaybyStoreId($storeNumber);
+        $tasksNotDueToday = $allIncompleteTasks->diff($tasksDueToday);
+        $tasksCompleted = Task::getAllCompletedTasksByStoreId($storeNumber);
+
+
+        $returnHTML = view('site.tasks.task-list-partial')
+                    ->with('tasksDueToday', $tasksDueToday)
+                    ->with('tasksDue', $tasksNotDueToday)
+                    ->with('tasksCompleted', $tasksCompleted)
+                    ->render();
+
+        return response()->json(array('html'=>$returnHTML));
+        
     }
 
     /**
