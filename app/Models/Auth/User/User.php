@@ -176,6 +176,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         
         $user->save();
 
+        UserRole::updateUserRole($user->id, intval($request['role']));
         UserBanner::updateAdminBanner($id, $request['banners']);
         return $user;
 

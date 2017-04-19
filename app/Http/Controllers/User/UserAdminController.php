@@ -10,6 +10,8 @@ use App\Models\Auth\User\User;
 use App\Models\Banner;
 use App\Models\StoreInfo;
 use App\Models\Auth\Group\Group;
+use App\Models\Auth\Role\Role;
+use App\Models\Auth\User\UserRole;
 use App\Models\Auth\User\UserBanner;
 use App\Models\Auth\User\UserSelectedBanner;
 
@@ -118,13 +120,19 @@ class UserAdminController extends Controller
         $selected_banners = Banner::findMany($selected_banner_ids)->pluck('id')->toArray();
 
         $groups = Group::pluck('name', 'id');
+
+        $roles = Role::pluck('role_name', 'id');
+        $selected_role = UserRole::where('user_id', $user->id)->first()->role_id;
         
         return view('superadmin.user.edit')->with('user', $user)
                                             ->with('banners', $banners)
                                             ->with('banners_list', $banners_list)
                                             ->with('banner', $banner)
                                             ->with('selected_banners', $selected_banners)
-                                            ->with('groups', $groups);
+                                            ->with('groups', $groups)
+                                            ->with('roles', $roles)
+                                            ->with('selected_role', $selected_role);
+
     }
 
     /**
