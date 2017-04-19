@@ -77,6 +77,24 @@
                                                 {!! Form::select('group', $groups , $user->group_id, ['class'=>'form-control', 'id'=>'select-group']) !!}
                                             </div>
                                         </div>
+                                        <div class="form-group"><label class="col-sm-2 control-label">Role</label>
+                                            <div class="col-sm-10">
+                                                {!! Form::select('role', $roles , $selected_role, ['class'=>'form-control', 'id'=>'select-role']) !!}
+                                            </div>
+                                        </div>
+                                        
+                                       <!--  <div class="form-group">
+                                            <label class="col-sm-2 control-label">Role</label>
+                                            <div class="col-sm-10">
+                                                <select name="role" id="select-role" class="form-control"></select>
+                                            </div>
+                                        </div> -->
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Resource</label>
+                                            <div class="col-sm-10">
+                                                <select name="role" id="select-resource" class="form-control"></select>
+                                            </div>
+                                        </div>
 
                                         <div class="hr-line-dashed"></div>
 
