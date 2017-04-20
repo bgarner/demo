@@ -10,7 +10,7 @@ class RoleResource extends Model
 {
     protected $table = 'role_resource';
 
-    protected $fillable = ['role_id', 'resource_id'];
+    protected $fillable = ['role_id', 'resource_type_id'];
 
     public static function getResourcesByRoleId($id)
     {
@@ -57,15 +57,47 @@ class RoleResource extends Model
 
     }
 
-    public static function getRoleByResourceId($id)
+    public static function getRoleByResourceTypeId($id)
     {
-        $roles = RoleResource::join('roles', 'role_resource.role_id', '=', 'roles.id' )
-                            ->where('role_resource.resource_id', $id)
-                            ->select('roles.id', 'roles.role_name')
-                            ->get();
+        $roles = RoleResource::join('resource_types', 'resource_types.id', '=', 'role_resource.resource_type_id')
+                            ->join('roles', 'role_resource.role_id', '=', 'roles.id' )
+                            ->where('role_resource.resource_type_id', $id)
+                            // ->select('roles.id', 'roles.role_name')
+                            ->first();
     
-        
         return $roles;
     }
+
+
+    public static function getResourceTypeIdByRoleId($role_id)
+    {
+        $roleResource =  RoleResource::where('role_id', $role_id)->first();
+        if($roleResource)
+        {
+            return $roleResource->resource_type_id;
+        }
+        else return null;
+    }
+
+
+    public static function createRoleResourceTypePivotWithRoleId($role, $request)
+    {
+        RoleResource::create([
+            'role_id' => $role->id,
+            'resource_type_id' => $request->resource_type
+
+        ]); 
+    
+    }
+    public static function editRoleResourceTypePivotWithRoleId($role, $request)
+    {
+        RoleResource::where('role_id', $role->id)->delete();
+        RoleResource::create([
+            'role_id' => $role->id,
+            'resource_type_id' => $request->resource_type
+
+        ]);
+    }
+    
 
 }

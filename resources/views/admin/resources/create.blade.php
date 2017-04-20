@@ -56,28 +56,32 @@
 		                        <div class="ibox-content">
 
                                     <form method="get" class="form-horizontal">
-                                        <div class="form-group"><label class="col-sm-2 control-label">Resource Type</label>
-                                            <div class="col-sm-10">
-                                            	{!! Form::select('resource_type', $resourceTypes, null, [ 'class'=>'chosen', 'id'=> 'select_resource_type']) !!}
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group"><label class="col-sm-2 control-label">Resource</label>
-                                            <div class="col-sm-10">
-                                            	<select name="resource_id" id="select_resource_id"></select>
-                                            	
-                                            </div>
-                                        </div>
-										
-
                                         <div class="form-group">
-                                        	<label class="col-sm-2 control-label">Roles managing the resource</label>
-                                        	<div class="col-sm-10">
-                                        		{!! Form::select('roles[]', $roles, null, [ 'class'=>'chosen', 'id'=> 'roles']) !!}
-                                        		
-                                        	</div>
+                                            <label class="col-sm-2 control-label">Manages Resource Type</label>
+                                            <div class="col-sm-10">
+                                                {!! Form::select('resource_type', $resourceTypes, null, [ 'class'=>'chosen', 'id'=> 'resource_type']) !!}
+                                                
+                                            </div>
 
                                         </div>
+
+
+                                       {{-- <div class="form-group"><label class="col-sm-2 control-label">Resource</label>
+                                              <div class="col-sm-10">
+                                                  <select name="resource_id" id="select_resource_id"></select>
+                                                  
+                                              </div>
+                                          </div>
+                                          
+  
+                                          <div class="form-group">
+                                              <label class="col-sm-2 control-label">Roles managing the resource</label>
+                                              <div class="col-sm-10">
+                                                  {!! Form::select('roles[]', $roles, null, [ 'class'=>'chosen', 'id'=> 'roles']) !!}
+                                                  
+                                              </div>
+  
+                                          </div> --}}
 
                                         <div class="hr-line-dashed"></div>
 

@@ -2,8 +2,15 @@ $(document).ready(function(){
 	$(".chosen").chosen({
 		width:'75%'
 	});
+
+	showDropdowns();
+	
 });
 
+
+$("#groups").change(function(){
+	showDropdowns();
+});
 
 $(document).on('click','.role-edit',function(){
   	
@@ -11,8 +18,9 @@ $(document).on('click','.role-edit',function(){
 
   	var role_name = $("#role_name").val();
   	var role_id = $("#roleID").val();
-    var groups  = $("#groups").val();
+    var group  = $("#groups").val();
     var components = $("#components").val();
+    var resource_type = $("#resource_type").val();
 	
     if(role_name == '') {
 		swal("Oops!", "This event needs a title.", "error"); 
@@ -30,8 +38,9 @@ $(document).on('click','.role-edit',function(){
 		    data: {
 		    	id: role_id,
 		  		role_name: role_name,
-		    	groups : groups,
-		    	components : components
+		    	group : group,
+		    	components : components,
+		    	resource_type : resource_type
 		    },
 
 		    success: function(data) {
@@ -56,3 +65,17 @@ $(document).on('click','.role-edit',function(){
 
     return false;
 });
+
+var showDropdowns = function(){
+	var groupId = $("#groups").val();
+	if(groupId == 1)
+	{
+		$("#components").closest('.form-group').show();
+		$("#resource_type").closest('.form-group').hide();
+	}
+	if(groupId == 2)
+	{
+		$("#resource_type").closest('.form-group').show();
+		$("#components").closest('.form-group').hide();
+	}
+}

@@ -12,9 +12,14 @@ class Resource extends Model
 
     public static function getResourceDetails()
     {
-    	return Resource::all()->each(function($resource){
-    		$resource->roles = RoleResource::getRoleByResourceId($resource->id);
+    	$resources =  Resource::all()->each(function($resource){
+    		$resourceDetails = RoleResource::getRoleByResourceTypeId($resource->resource_type_id);
+            // dd($resourceDetails);
+            $resource->role = $resourceDetails['role_name'];
+            $resource->resource_name = $resourceDetails['resource_name'];
     	});
+
+        return $resources;
     }
 
     public static function createResource($request)

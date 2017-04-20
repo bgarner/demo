@@ -5,6 +5,7 @@ namespace App\Models\Auth\Role;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Auth\Group\GroupRole;
 use App\Models\Auth\Role\RoleComponent;
+use App\Models\Auth\Role\RoleResource;
 
 class Role extends Model
 {
@@ -42,7 +43,13 @@ class Role extends Model
 
             ]);
     	GroupRole::createRoleGroupPivotWithRoleId($role, $request);
-    	RoleComponent::createRoleComponentPivotWithRoleId($role, $request);
+        if(isset($request->components)){
+            RoleComponent::createRoleComponentPivotWithRoleId($role, $request);
+        }
+        if(isset($request->resource_type)){
+            RoleResource::createRoleResourceTypePivotWithRoleId($role, $request);    
+        }
+        
     	return;
 
     }
@@ -53,7 +60,12 @@ class Role extends Model
     	$role['role_name'] = $request['role_name'];
     	$role->save();
     	GroupRole::editRoleGroupPivotByRoleId($request, $id);
-        RoleComponent::editRoleComponentPivotByRoleId($request, $id);
+        if(isset($request->components)){
+            RoleComponent::editRoleComponentPivotByRoleId($request, $id);
+        }
+        if(isset($request->resource_type)){
+            RoleResource::editRoleResourceTypePivotWithRoleId($role, $request);    
+        }
     	return $role;
     }
 

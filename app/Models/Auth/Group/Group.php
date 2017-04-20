@@ -72,7 +72,7 @@ class Group extends Model
 
     public static function getGroupList()
     {
-    	return Group::all()->pluck('name', 'id');
+    	return Group::all()->pluck('name', 'id')->prepend('Select one', '');
     }
 
     public static function getGroupDetails()

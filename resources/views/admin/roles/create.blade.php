@@ -63,7 +63,7 @@
                                         <div class="form-group">
                                         	<label class="col-sm-2 control-label">Associated with Groups</label>
                                         	<div class="col-sm-10">
-                                        		{!! Form::select('groups[]', $groups, null, [ 'class'=>'chosen', 'id'=> 'groups', 'multiple'=>'true']) !!}
+                                        		{!! Form::select('groups[]', $groups, null, [ 'class'=>'chosen', 'id'=> 'groups']) !!}
                                         		
                                         	</div>
 
@@ -75,6 +75,15 @@
                                         		{!! Form::select('components[]', $components, null, [ 'class'=>'chosen', 'id'=> 'components', 'multiple'=>'true']) !!}
                                         		
                                         	</div>
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Manages Resource Type</label>
+                                            <div class="col-sm-10">
+                                                {!! Form::select('resource_type', $resourceTypes, null, [ 'class'=>'chosen', 'id'=> 'resource_type']) !!}
+                                                
+                                            </div>
 
                                         </div>
 

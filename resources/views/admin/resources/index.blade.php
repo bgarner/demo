@@ -74,9 +74,9 @@
 
 											<td class="col-xs-2">{{ $resource->resource_name }} {{$resource->resource_id}}</td>
 											<td class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-												@foreach($resource->roles as $role)
-													<span class="label"> {!! $role->role_name !!} </span>
-												@endforeach		 
+												{{-- @foreach($resource->roles as $role) --}}
+													<span class="label"> {!! $resource->role !!} </span>
+												{{-- @endforeach		  --}}
 										
 
 											</td>
