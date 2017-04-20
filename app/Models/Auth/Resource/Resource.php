@@ -4,6 +4,7 @@ namespace App\Models\Auth\Resource;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Auth\Role\RoleResource;
+use App\Models\StoreInfo;
 
 class Resource extends Model
 {
@@ -49,4 +50,23 @@ class Resource extends Model
     	//check if they already exist in Resource table
     	//return the list of non existing ones.
     }
+
+    public static function getResourceListByResourceTypeId($id)
+    {
+        $resourceNamesList = [];
+
+        if ( $id == 1) {
+            $resourceNamesList = StoreInfo::getStoreNamesList();
+    
+        }
+        if ( $id == 2) {
+            $resourceNamesList = StoreInfo::getDistrictNamesList();
+        }
+        if ( $id == 3) {
+            $resourceNamesList = StoreInfo::getRegionNamesList();
+        }
+        
+        return $resourceNamesList;
+    }
+
 }

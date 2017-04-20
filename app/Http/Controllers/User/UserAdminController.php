@@ -11,8 +11,10 @@ use App\Models\Banner;
 use App\Models\StoreInfo;
 use App\Models\Auth\Group\Group;
 use App\Models\Auth\Role\Role;
+use App\Models\Auth\Role\RoleResource;
 use App\Models\Auth\User\UserRole;
 use App\Models\Auth\User\UserBanner;
+use App\Models\Auth\User\UserResource;
 use App\Models\Auth\User\UserSelectedBanner;
 
 
@@ -123,6 +125,9 @@ class UserAdminController extends Controller
 
         $roles = Role::pluck('role_name', 'id');
         $selected_role = UserRole::where('user_id', $user->id)->first()->role_id;
+
+        $resources = RoleResource::getResourcesByRoleId($selected_role);
+        $selected_resource = UserResource::getResourceIdByUserId($user->id);
         
         return view('superadmin.user.edit')->with('user', $user)
                                             ->with('banners', $banners)
@@ -131,7 +136,9 @@ class UserAdminController extends Controller
                                             ->with('selected_banners', $selected_banners)
                                             ->with('groups', $groups)
                                             ->with('roles', $roles)
-                                            ->with('selected_role', $selected_role);
+                                            ->with('selected_role', $selected_role)
+                                            ->with('resources', $resources)
+                                            ->with('selected_resource', $selected_resource);
 
     }
 

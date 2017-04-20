@@ -12,4 +12,6 @@ class ResourceTypes extends Model
     {
     	return Self::pluck( 'resource_name', 'id');
     }
+
+    
 }

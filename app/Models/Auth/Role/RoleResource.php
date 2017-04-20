@@ -55,10 +55,12 @@ class RoleResource extends Model
         
         $districtNamesList = [];
 
+        $finalResourceList = [];
+
         if ( $resource_type_id == 1) {
             $districtNamesList = StoreInfo::getStoreNamesList();
             foreach ($resources as $resource) {
-               $resource->resource_name = $resource['resource_id'] . " - " . $districtNamesList[$resource['resource_id']];
+                $finalResourceList[$resource['id']] = $resource['resource_id'] . " - " . $districtNamesList[$resource['resource_id']];
             }
         }
         if ( $resource_type_id == 2) {
@@ -69,13 +71,13 @@ class RoleResource extends Model
         }
         if($resource_type_id == 2 || $resource_type_id == 3 ){
             foreach ($resources as $resource) {
-               $resource->resource_name = $districtNamesList[$resource['resource_id']];
+               $finalResourceList[$resource['id']] = $districtNamesList[$resource['resource_id']];
             }
         }
 
 
         
-        return $resources;
+        return $finalResourceList;
 
 
     }

@@ -82,17 +82,23 @@
                                                 {!! Form::select('role', $roles , $selected_role, ['class'=>'form-control', 'id'=>'select-role']) !!}
                                             </div>
                                         </div>
-                                        
-                                       <!--  <div class="form-group">
-                                            <label class="col-sm-2 control-label">Role</label>
+                                       <!--  @if(isset($selected_resource))
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Manages</label>
                                             <div class="col-sm-10">
-                                                <select name="role" id="select-role" class="form-control"></select>
+                                                <span id="selected-resource">
+                                                    {{-- $selected_resource->resource_id}} - {{$selected_resource->resource_name --}}
+                                                </span>
                                             </div>
-                                        </div> -->
+                                        </div>
+                                        @endif -->
+
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Resource</label>
                                             <div class="col-sm-10">
-                                                <select name="role" id="select-resource" class="form-control"></select>
+                                                {!! Form::select('resource', $resources , $selected_resource, ['class'=>'form-control', 'id'=>'select-resource']) !!}
+
+                                                
                                             </div>
                                         </div>
 

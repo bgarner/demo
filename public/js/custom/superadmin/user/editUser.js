@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
 	// $("#select-role").closest('.form-group').hide();
-	$("#select-resource").closest('.form-group').hide();
+	// $("#select-resource").closest('.form-group').hide();
 
 	$("#select-group").change(function(){
 		
@@ -45,22 +45,25 @@ $(document).ready(function(){
 			    dataType: 'json',
 			    success: function(result) {
 			        
-			    	if( result.length >0 ) {
+			    	if( result) {
 			    		
 			    		$("#select-resource option").remove();
 			    		$('<option>').val("")
-			    					.text("Select one")
-			    					.appendTo('#select-resource');
-
-						for (var i = 0; i < result.length ; i++) {
-							$('<option>').val(result[i].id)
-										 .text(result[i].resource_name)
+										 .text("Select one")
 										 .appendTo('#select-resource');
-						}
+			    		$.each( result, function( key, value ) {
+			    			
+						    $('<option>').val(key)
+										 .text(value)
+										 .appendTo('#select-resource');
+						});
+
 						$("#select-resource").closest('.form-group').show();
+						$("#selected-resource").closest('.form-group').hide();
 			        }
 			        else{
 			        	$("#select-resource").closest('.form-group').hide();
+
 			        }
 			        
 			    }
