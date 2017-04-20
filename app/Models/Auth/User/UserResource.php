@@ -12,16 +12,31 @@ class UserResource extends Model
     protected $fillable = ['user_id', 'resource_id'];
 
     
+    public static function updateUserResource($user_id, $resource_id)
+    {
+    	$userRole = Self::where('user_id', $user_id)
+    			->first();
+
+    	$userRole['resource_id'] = $resource_id;
+    	$userRole->save();
+
+    	return;
+    }
+
     public static function getResourceIdByUserId($user_id)
     {
-    	return Self::where('user_id', $user_id)->first()->resource_id;
+    	$userResource = Self::where('user_id', $user_id)->first();
+    	if($userResource)
+    	{
+    		return $userResource->resource_id;
+    	}
+    	else return null;
 
     }
 
     public static function getResourceDetailsByUserId($user_id)
     {
     	$resource = Self::join('resources', 'resources.id', '=', 'user_resource.resource_id')
-    		// ->join('resource_types', 'resource_types.id', '=', 'resources.resource_type_id')
     		->where('user_id', $user_id)
     		->select('resources.resource_type_id', 'resources.resource_id')
     		->first();

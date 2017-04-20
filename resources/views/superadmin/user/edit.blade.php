@@ -82,17 +82,8 @@
                                                 {!! Form::select('role', $roles , $selected_role, ['class'=>'form-control', 'id'=>'select-role']) !!}
                                             </div>
                                         </div>
-                                       <!--  @if(isset($selected_resource))
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">Manages</label>
-                                            <div class="col-sm-10">
-                                                <span id="selected-resource">
-                                                    {{-- $selected_resource->resource_id}} - {{$selected_resource->resource_name --}}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        @endif -->
-
+                                       
+                                        @if(isset($selected_resource))
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Resource</label>
                                             <div class="col-sm-10">
@@ -101,6 +92,7 @@
                                                 
                                             </div>
                                         </div>
+                                        @endif
 
                                         <div class="hr-line-dashed"></div>
 
