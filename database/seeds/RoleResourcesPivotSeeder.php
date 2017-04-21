@@ -9,7 +9,8 @@ class RoleResourcesPivotSeeder extends Seeder
 
             ['role_id' => 7 , 'resource_type_id' => 1],
             ['role_id' => 6 , 'resource_type_id' => 2],
-            ['role_id' => 5 , 'resource_type_id' => 3]
+            ['role_id' => 5 , 'resource_type_id' => 3],
+            ['role_id' => 4 , 'resource_type_id' => 4]
     ];
 
     /**

@@ -37,7 +37,7 @@ $(document).on('click','.role-create',function(){
     console.log(groups);
     console.log(components);
     if(role_name == '') {
-		swal("Oops!", "This we need a name for this role.", "error"); 
+		swal("Oops!", "We need a name for this role.", "error"); 
 		hasError = true;
 		$(window).scrollTop(0);
 		return false;

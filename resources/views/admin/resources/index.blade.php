@@ -82,7 +82,7 @@
 											</td>
 											
 											<td class="col-xs-2">
-												<a href="/admin/resource/{{ $resource->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+												{{--<a href="/admin/resource/{{ $resource->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>--}}
 
 												<a data-resourceId="{{ $resource->id }}" id="resource{{ $resource->id }}" class="resource-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 

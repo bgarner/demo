@@ -16,6 +16,7 @@ class ResourceTypeAdminController extends Controller
      */
     public function show($id)
     {
+        
         return Resource::getNewResourcesByResourceTypeId($id);
     }
 
