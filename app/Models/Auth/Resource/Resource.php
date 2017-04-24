@@ -5,12 +5,27 @@ namespace App\Models\Auth\Resource;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Auth\Role\RoleResource;
 use App\Models\StoreInfo;
+use App\Models\Validation\ResourceValidator;
 
 class Resource extends Model
 {
     protected $table = 'resources';
 
     protected $fillable = ['resource_type_id', 'resource_id' ];
+
+    public static function validateResource($request)
+    {
+        $validateThis = [
+            'resource_type' => $request['resource_type'],
+            'resource_id' => $request['resource_id'],
+            
+        ];
+
+        \Log::info($validateThis);
+        $v = new ResourceValidator();
+          
+        return $v->validate($validateThis);
+    }
 
     public static function getResourceDetails()
     {
@@ -26,11 +41,16 @@ class Resource extends Model
     public static function createResource($request)
     {
     	
-    	//validate resource
-    	Self::create([
-    		'resource_type_id' => $request['resource_type'],
-    		'resource_id' => $request['resource_id']
-    	]);
+    	$validate = Self::validateResource($request);
+        if($validate['validation_result'] == 'false') {
+            \Log::info(json_encode($validate));
+            return $validate;
+        }
+    	$resource = Self::create([
+                		'resource_type_id' => $request['resource_type'],
+                		'resource_id' => $request['resource_id']
+                	]);
+        return $resource;
 
 
     }

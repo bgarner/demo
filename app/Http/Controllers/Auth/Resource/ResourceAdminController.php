@@ -44,11 +44,8 @@ class ResourceAdminController extends Controller
         $banner = UserSelectedBanner::getBanner();
         $banners = Banner::all();
         $resourceTypes = ResourceTypes::getResourceTypeList();
-        $roles = Role::getRoleList();
-        // dd($resources);
         return view('admin.resources.create')->with('banner', $banner)
                                             ->with('banners', $banners)
-                                            ->with('roles', $roles)
                                             ->with('resourceTypes', $resourceTypes);
     }
 
@@ -89,7 +86,6 @@ class ResourceAdminController extends Controller
         $resource = Resource::find($id);
         return view('admin.resources.edit')->with('banners', $banners)
                                         ->with('banner', $banner)
-                                        ->with('roles', $roles)
                                         ->with('resource', $resource)
                                         ->with('selected_roles', $selected_roles);
     }

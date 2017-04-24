@@ -75,15 +75,32 @@ $(document).ready(function(){
 			$.ajax({
 			    url: '/admin/resource',
 			    type: 'POST',
+			    dataType: 'json',
 			    data: { 
 			    	resource_type: resource_type, 
 			    	resource_id : resource_id
 			    },
 			    success: function(result) {
-			        console.log(result);
-			        // $("#role").val(""); // empty the form
-					swal("Nice!", "Resource has been created", "success");        
-			    }
+			    	console.log(result)
+			    	if(result.validation_result == 'false') {
+			    		var errors = result.errors;
+				        	if(errors.hasOwnProperty("resource_type")) {
+				        		$.each(errors.resource_type, function(index){
+				        			$('#select_resource_type').parent().append('<div class="req">' + errors.resource_type[index]  + '</div>');	
+				        		}); 	
+				        	}
+				        	if(errors.hasOwnProperty("resource_id")) {
+				        		$.each(errors.resource_id, function(index){
+				        			$('#select_resource_id').parent().append('<div class="req">' + errors.resource_id[index]  + '</div>');	
+				        		}); 	
+				        	}
+			    	}
+			    	else{
+				        console.log(result);
+				        // $("#role").val(""); // empty the form
+						swal("Nice!", "Resource has been created", "success");        
+				    }
+				}
 			});
 		}
 		
