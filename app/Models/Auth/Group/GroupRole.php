@@ -61,35 +61,30 @@ class GroupRole extends Model
 
     public static function createRoleGroupPivotWithRoleId($role, $request)
     {
-        // foreach ($request['groups'] as $group_id) {
-            GroupRole::create([
-                'role_id' => $role->id,
-                'group_id' => $request->group
-
-            ]); 
-        // }
+        
+        GroupRole::create([
+            'role_id' => $role->id,
+            'group_id' => $request->group
+        ]); 
         
     }
 
     public static function editRoleGroupPivotByGroupId($request, $id)
     {
         GroupRole::where('group_id', $id)->delete();
-        // foreach ($request['roles'] as $role_id) {
-            GroupRole::create([
-                    'group_id' => $id,
-                    'role_id'  => $role_id
-                ]);
-        // }
+        GroupRole::create([
+            'group_id' => $id,
+            'role_id'  => $role_id
+        ]);
+    
     }
     public static function editRoleGroupPivotByRoleId($request, $id)
     {
         GroupRole::where('role_id', $id)->delete();
-        // foreach ($request['groups'] as $group_id) {
-            GroupRole::create([
-                    'role_id' => $id,
-                    'group_id'  => $request->group
-                ]);
-        // }
+        GroupRole::create([
+            'role_id' => $id,
+            'group_id'  => $request->group
+        ]);
     }
 
 }

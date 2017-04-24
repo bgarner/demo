@@ -33,6 +33,11 @@ $(document).on('click','.role-create',function(){
     var resource_type =  $("#resource_type").val();
     var bannerId = localStorage.getItem('admin-banner-id');
 
+    console.log(role_name, 
+		    	group, 
+		    	components, 
+		    	resource_type,
+		    	bannerId );
     if(role_name == '') {
 		swal("Oops!", "We need a name for this role.", "error"); 
 		hasError = true;

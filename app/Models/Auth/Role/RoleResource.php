@@ -92,11 +92,13 @@ class RoleResource extends Model
     public static function editRoleResourceTypePivotWithRoleId($role, $request)
     {
         RoleResource::where('role_id', $role->id)->delete();
-        RoleResource::create([
-            'role_id' => $role->id,
-            'resource_type_id' => $request->resource_type
+        if(isset($request->resource_type)){
+            RoleResource::create([
+                'role_id' => $role->id,
+                'resource_type_id' => $request->resource_type
 
-        ]);
+            ]);
+        }
     }
     
 

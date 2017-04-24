@@ -68,11 +68,13 @@ class RoleComponent extends Model
     public static function editRoleComponentPivotByRoleId($request, $id)
     {
         RoleComponent::where('role_id', $id)->delete();
-        foreach ($request['components'] as $component_id) {
-            RoleComponent::create([
-                    'role_id' => $id,
-                    'component_id'  => $component_id
-                ]);
+        if(isset($request->components)){
+            foreach ($request['components'] as $component_id) {
+                RoleComponent::create([
+                        'role_id' => $id,
+                        'component_id'  => $component_id
+                    ]);
+            }
         }
     }
 

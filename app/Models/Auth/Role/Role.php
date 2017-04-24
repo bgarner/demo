@@ -76,7 +76,7 @@ class Role extends Model
                 'role_name' => $request['role_name']
 
             ]);
-    	if(isset($request->groups)){
+    	if(isset($request->group)){
             GroupRole::createRoleGroupPivotWithRoleId($role, $request);
         }
         if(isset($request->components)){
@@ -101,15 +101,14 @@ class Role extends Model
         $role['role_name'] = $request['role_name'];
         $role->save();
 
-        if(isset($request->groups)){
+        if(isset($request->group)){
         	GroupRole::editRoleGroupPivotByRoleId($request, $id);
         }
-        if(isset($request->components)){
-            RoleComponent::editRoleComponentPivotByRoleId($request, $id);
-        }
-        if(isset($request->resource_type)){
-            RoleResource::editRoleResourceTypePivotWithRoleId($role, $request);    
-        }
+        
+        RoleComponent::editRoleComponentPivotByRoleId($request, $id);
+        
+        RoleResource::editRoleResourceTypePivotWithRoleId($role, $request);    
+        
     	return $role;
     }
 

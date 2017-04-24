@@ -21,6 +21,13 @@ $(document).on('click','.role-edit',function(){
     var group  = $("#group").val();
     var components = $("#components").val();
     var resource_type = $("#resource_type").val();
+
+
+    console.log(role_name, 
+		    	group, 
+		    	components, 
+		    	resource_type);
+		    	
 	
     if(role_name == '') {
 		swal("Oops!", "This event needs a title.", "error"); 
