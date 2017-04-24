@@ -63,7 +63,7 @@
                                         <div class="form-group">
                                         	<label class="col-sm-2 control-label">Associated with Groups</label>
                                         	<div class="col-sm-10">
-                                        		{!! Form::select('groups[]', $groups, null, [ 'class'=>'chosen', 'id'=> 'groups']) !!}
+                                        		{!! Form::select('group', $groups, null, [ 'class'=>'chosen', 'id'=> 'group']) !!}
                                         		
                                         	</div>
 

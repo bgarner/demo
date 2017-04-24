@@ -10,7 +10,7 @@ class ResourceTypes extends Model
 
     public static function getResourceTypeList()
     {
-    	return Self::pluck( 'resource_name', 'id');
+    	return Self::pluck( 'resource_name', 'id')->prepend('Select one' , '');
     }
 
     

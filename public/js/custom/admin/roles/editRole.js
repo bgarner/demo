@@ -18,7 +18,7 @@ $(document).on('click','.role-edit',function(){
 
   	var role_name = $("#role_name").val();
   	var role_id = $("#roleID").val();
-    var group  = $("#groups").val();
+    var group  = $("#group").val();
     var components = $("#components").val();
     var resource_type = $("#resource_type").val();
 	
@@ -43,19 +43,39 @@ $(document).on('click','.role-edit',function(){
 		    	resource_type : resource_type
 		    },
 
-		    success: function(data) {
-		      console.log(data);
-		        // if(data != null && data.validation_result == 'false') {
-		        // 	var errors = data.errors;
-		        // 	if(errors.hasOwnProperty("section_name")) {
-		        // 		$.each(errors.title, function(index){
-		        // 			$("#section_name").parent().append('<div class="req">' + errors.title[index]  + '</div>');	
-		        // 		}); 	
-		        // 	}
-		        // }
-		        // else{
+		    success: function(result) {
+		    	console.log(result);
+		      	if(result.validation_result == 'false') {
+		    		var errors = result.errors;
+			        	if(errors.hasOwnProperty("role_name") || errors.hasOwnProperty("role_id")) {
+			        		$.each(errors.role_name, function(index){
+			        			$('#role_name').parent().append('<div class="req">' + errors.role_name[index]  + '</div>');	
+			        		});
+
+			        		 $.each(errors.role_id, function(index){
+			        			$('#role_name').parent().append('<div class="req">' + errors.role_id[index]  + '</div>');	
+			        		});
+			        	}
+
+			        	if(errors.hasOwnProperty("group")) {
+			        		$.each(errors.group, function(index){
+			        			$('#group').parent().append('<div class="req">' + errors.group[index]  + '</div>');	
+			        		}); 	
+			        	}
+			        	if(errors.hasOwnProperty("components")) {
+			        		$.each(errors.components, function(index){
+			        			$('#components').parent().append('<div class="req">' + errors.components[index]  + '</div>');	
+			        		}); 	
+			        	}
+			        	if(errors.hasOwnProperty("resource_type")) {
+			        		$.each(errors.resource_type, function(index){
+			        			$('#resource_type').parent().append('<div class="req">' + errors.resource_type[index]  + '</div>');	
+			        		}); 	
+			        	}
+		    	}
+		    	else{
 		        	swal({title:"Nice!", text: "'" + role_name +"' has been updated", type: 'success'});      	
-		        // }
+		        }
 
 				
 		    }

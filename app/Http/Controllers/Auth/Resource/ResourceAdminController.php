@@ -43,8 +43,8 @@ class ResourceAdminController extends Controller
         
         $banner = UserSelectedBanner::getBanner();
         $banners = Banner::all();
-        $resourceTypes = ResourceTypes::getResourceTypeList()->prepend('Select one' , '');
-        $roles = Role::getRoleList()->prepend('Select one', '');
+        $resourceTypes = ResourceTypes::getResourceTypeList();
+        $roles = Role::getRoleList();
         // dd($resources);
         return view('admin.resources.create')->with('banner', $banner)
                                             ->with('banners', $banners)

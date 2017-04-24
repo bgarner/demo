@@ -97,6 +97,7 @@ class RoleAdminController extends Controller
         $selected_group = GroupRole::getGroupListByRoleId($id);
         $selected_components = RoleComponent::getComponentListByRoleId($id);
         $selected_resource_type = RoleResource::getResourceTypeIdByRoleId($id);
+        
 
         return view('admin.roles.edit')->with('banners', $banners)
                                         ->with('banner', $banner)

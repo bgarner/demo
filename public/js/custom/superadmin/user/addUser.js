@@ -44,8 +44,8 @@ $(document).ready(function(){
 			    type: 'GET',
 			    dataType: 'json',
 			    success: function(result) {
-			        
-			    	if( result) {
+			        console.log(result);
+			    	if( result && Object.keys(result).length > 0) {
 			    		
 			    		$("#select-resource option").remove();
 			    		$('<option>').val("")

@@ -64,7 +64,7 @@ class GroupRole extends Model
         // foreach ($request['groups'] as $group_id) {
             GroupRole::create([
                 'role_id' => $role->id,
-                'group_id' => $request->groups
+                'group_id' => $request->group
 
             ]); 
         // }
