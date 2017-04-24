@@ -15,12 +15,16 @@ class Role extends Model
     protected $fillable = ['role_name'];
 
 
-    public static function validateCreateRole($request)
+    public static function validateRole($request)
     {
         $validateThis = [
             'role_name' => $request['role_name']
             
         ];
+
+        if(isset($request['id']) && $request['id']){
+            $validateThis['role_id'] = $request['id'];
+        }
 
         if(isset($request['groups']) && $request['groups']){
             $validateThis['groups'] = $request['groups'];
@@ -37,32 +41,6 @@ class Role extends Model
           
         return $v->validate($validateThis);
     }
-
-     public static function validateEditRole($request)
-    {
-        $validateThis = [
-            'role_id'   => $request['id'],
-            'role_name' => $request['role_name']
-            
-        ];
-
-        if(isset($request['group']) && $request['group']){
-            $validateThis['group'] = $request['group'];
-        }
-        if(isset($request['components']) && $request['components']){
-            $validateThis['components'] = $request['components'];
-        }
-        if(isset($request['resource_type']) && $request['resource_type']){
-            $validateThis['resource_type'] = $request['resource_type'];
-        }
-
-        \Log::info($validateThis);
-        $v = new RoleValidator();
-          
-        return $v->validate($validateThis);
-    }
-
-
 
     public static function getRoleByUserId($user_id)
     {
@@ -88,7 +66,7 @@ class Role extends Model
 
    	public static function createRole($request)
     {
-        $validate = Self::validateCreateRole($request);
+        $validate = Self::validateRole($request);
         if($validate['validation_result'] == 'false') {
             \Log::info(json_encode($validate));
             return $validate;
@@ -114,8 +92,7 @@ class Role extends Model
 
     public static function editRole($request, $id)
     {
-    	\Log::info($request->all());
-        $validate = Self::validateEditRole($request);
+        $validate = Self::validateRole($request);
         if($validate['validation_result'] == 'false') {
             \Log::info(json_encode($validate));
             return $validate;

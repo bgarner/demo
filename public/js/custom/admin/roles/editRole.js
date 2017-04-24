@@ -52,7 +52,7 @@ $(document).on('click','.role-edit',function(){
 			        			$('#role_name').parent().append('<div class="req">' + errors.role_name[index]  + '</div>');	
 			        		});
 
-			        		 $.each(errors.role_id, function(index){
+			        		$.each(errors.role_id, function(index){
 			        			$('#role_name').parent().append('<div class="req">' + errors.role_id[index]  + '</div>');	
 			        		});
 			        	}
