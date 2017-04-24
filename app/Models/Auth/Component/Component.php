@@ -4,27 +4,60 @@ namespace App\Models\Auth\Component;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Auth\Role\RoleComponent;
+use App\Models\Validation\ComponentValidator;
 
 class Component extends Model
 {
     protected $table = 'components';
     protected $fillable = ['component_name', 'banner_id'];
 
+    public static function validateComponent($request)
+    {
+        $validateThis = [
+            'component_name' => $request['component_name']
+        ];   
+
+        if(isset($request['id']) && $request['id']){
+            $validateThis['component_id'] = $request['id'];
+        }
+        if(isset($request['roles']) && $request['roles']){
+            $validateThis['roles'] = $request['roles'];
+        }
+        \Log::info($validateThis);
+        $v = new ComponentValidator();
+          
+        return $v->validate($validateThis);
+
+    }
+
     public static function createComponent($request)
     {
-    	$component = component::create([
+        $validate = Self::validateComponent($request);
+        if($validate['validation_result'] == 'false') {
+            \Log::info(json_encode($validate));
+            return $validate;
+        }
+
+        $component = component::create([
                 'component_name' => $request['component_name'],
                 'banner_id' => $request['banner_id']
 
             ]);
     	RoleComponent::createRoleComponentPivotWithComponentId($component, $request);
-    	return;
+    	return $component;
 
     }
 
     public static function editComponent($request, $id)
     {
-    	$component = Component::find($id);
+    	$validate = Self::validateComponent($request);
+        if($validate['validation_result'] == 'false') {
+            \Log::info(json_encode($validate));
+            return $validate;
+        }
+
+
+        $component = Component::find($id);
     	$component['component_name'] = $request['component_name'];
     	$component->save();
     	RoleComponent::editRoleComponentPivotByComponentId($request, $id);
