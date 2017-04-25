@@ -36,18 +36,12 @@ class CalendarAdminController extends Controller
      */
     public function index()
     {
-        $user_id = \Auth::user()->id;
-        $banner_ids = UserBanner::where('user_id', $user_id)->get()->pluck('banner_id');
-        $banners = Banner::whereIn('id', $banner_ids)->get();        
+        
         $banner_id = UserSelectedBanner::where('user_id', \Auth::user()->id)->first()->selected_banner_id;
-        $banner  = Banner::find($banner_id);
-
-        // return view('site.calendar.index');
+        
         $events = Event::where('banner_id', $banner_id)->paginate(15);
         return view('admin.calendar.index')
-            ->with('events', $events)
-            ->with('banner', $banner)
-            ->with('banners', $banners);            
+            ->with('events', $events);            
     }
 
     /**
@@ -57,9 +51,7 @@ class CalendarAdminController extends Controller
      */
     public function create()
     {
-        $user_id = \Auth::user()->id;
-        $banner_ids = UserBanner::where('user_id', $user_id)->get()->pluck('banner_id');
-        $banners = Banner::whereIn('id', $banner_ids)->get();        
+        
         $banner_id = UserSelectedBanner::where('user_id', \Auth::user()->id)->first()->selected_banner_id;
         $banner  = Banner::find($banner_id);
 
@@ -70,8 +62,6 @@ class CalendarAdminController extends Controller
 
         return view('admin.calendar.create')
             ->with('event_types_list', $event_types_list)
-            ->with('banner', $banner)
-            ->with('banners', $banners)
             ->with('stores', $storeList)
             ->with('folderStructure', $folderStructure);     
     }
@@ -107,17 +97,12 @@ class CalendarAdminController extends Controller
     public function edit($id)
     {
 
-        $user_id = \Auth::user()->id;
-        $banner_ids = UserBanner::where('user_id', $user_id)->get()->pluck('banner_id');
-        $banners = Banner::whereIn('id', $banner_ids)->get();        
-        $banner_id = UserSelectedBanner::where('user_id', \Auth::user()->id)->first()->selected_banner_id;
-        $banner  = Banner::find($banner_id);
-
         $event = Event::find($id);
         $event_type = EventType::find($id);
         $event_types_list = ["" =>'Select one'];
-        $event_types_list += EventType::where('banner_id', $banner_id)->pluck('event_type', 'id')->toArray();
         $banner = UserSelectedBanner::getBanner();
+        $event_types_list += EventType::where('banner_id', $banner->id)->pluck('event_type', 'id')->toArray();
+        
         
         $event_target_stores = EventTarget::where('event_id', $id)->get()->pluck('store_id')->toArray();
         $storeList = StoreInfo::getStoreListing($banner->id);
@@ -133,8 +118,6 @@ class CalendarAdminController extends Controller
             ->with('event', $event)
             ->with('event_type', $event_type)
             ->with('event_types_list', $event_types_list)
-            ->with('banner', $banner)
-            ->with('banners', $banners)
             ->with('storeList', $storeList)
             ->with('target_stores', $event_target_stores)
             ->with('all_stores', $all_stores)

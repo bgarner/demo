@@ -181,6 +181,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         App\Providers\AdminSidenavServiceProvider::class,
+        App\Providers\AdminTopbarServiceProvider::class,
         App\Providers\StoreSidenavServiceProvider::class,
         App\Providers\StoreTopbarServiceProvider::class,
         App\Providers\StoreSkinProvider::class,

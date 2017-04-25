@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Auth\User\UserSelectedBanner;
+
 use App\Models\Banner;
 use App\Models\Alert\Alert;
 
@@ -28,13 +28,8 @@ class AlertAdminController extends Controller
     public function index(Request $request)
     {
         
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
-        $alerts = Alert::getAllAlerts($banner->id);
-
-        return view('admin.alerts.index')->with('alerts', $alerts)
-                                                ->with('banner', $banner)
-                                                ->with('banners', $banners);
+        $alerts = Alert::getAllAlerts();
+        return view('admin.alerts.index')->with('alerts', $alerts);
     }
 
 
