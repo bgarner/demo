@@ -30,12 +30,8 @@ class RoleAdminController extends Controller
      */
     public function index()
     {
-        $roles =  Role::getRoleDetails();
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
-        return view('admin.roles.index')->with('roles', $roles)
-                        ->with('banners', $banners)
-                        ->with('banner', $banner);
+        $roles =  Role::getRoleDetails();        
+        return view('admin.roles.index')->with('roles', $roles);
     }
 
     /**
@@ -45,16 +41,12 @@ class RoleAdminController extends Controller
      */
     public function create()
     {
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
         $groups = Group::getGroupList();
-        $components = Component::getComponentList($banner->id);
+        $components = Component::getComponentList();
         $resourceTypes = ResourceTypes::getResourceTypeList();
-        return view('admin.roles.create')->with('banner', $banner)
-                                            ->with('banners', $banners)
-                                            ->with('groups', $groups)
-                                            ->with('components', $components)
-                                            ->with('resourceTypes', $resourceTypes);
+        return view('admin.roles.create')->with('groups', $groups)
+                                        ->with('components', $components)
+                                        ->with('resourceTypes', $resourceTypes);
     }
 
     /**
@@ -88,20 +80,16 @@ class RoleAdminController extends Controller
      */
     public function edit($id)
     {
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
         $role = Role::find($id);
-        $groups = Group::getGroupList($banner->id);
-        $components = Component::getComponentList($banner->id);
+        $groups = Group::getGroupList();
+        $components = Component::getComponentList();
         $resourceTypes = ResourceTypes::getResourceTypeList();
         $selected_group = GroupRole::getGroupListByRoleId($id);
         $selected_components = RoleComponent::getComponentListByRoleId($id);
         $selected_resource_type = RoleResource::getResourceTypeIdByRoleId($id);
         
 
-        return view('admin.roles.edit')->with('banners', $banners)
-                                        ->with('banner', $banner)
-                                        ->with('role', $role)
+        return view('admin.roles.edit')->with('role', $role)
                                         ->with('groups', $groups)
                                         ->with('components', $components)
                                         ->with('resourceTypes', $resourceTypes)

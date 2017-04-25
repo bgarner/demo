@@ -7,6 +7,7 @@
         <ul class="nav nav-second-level collapse">
             <li><a href="/admin/calendar">Manage Events</a></li>
             <li><a href="/admin/eventtypes">Manage Event Types</a></li>
+            <li><a href="/admin/productlaunch">Manage Product Launches</a></li>
         </ul>
     </li>
 

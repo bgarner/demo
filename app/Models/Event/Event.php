@@ -218,5 +218,11 @@ class Event extends Model
         return $events;
     }
 
+    public static function getEventsByBannerId()
+    {
+        $banner = UserSelectedBanner::getBanner();
+        return Event::where('banner_id', $banner->id)->paginate(15);
+    }
+
 }
 

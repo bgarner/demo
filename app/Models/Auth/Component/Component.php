@@ -70,9 +70,9 @@ class Component extends Model
 		RoleComponent::where('component_id', $id)->delete();
 	}    
 
-	public static function getComponentList($banner_id)
+	public static function getComponentList()
     {
-    	return Component::where('banner_id', $banner_id)->get()->pluck('component_name', 'id');
+    	return Component::pluck('component_name', 'id');
     }
     
 

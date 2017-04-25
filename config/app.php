@@ -248,6 +248,7 @@ return [
         'App\Http\Controllers\Feature\FeatureAdminController'                   => 'Featured Content',
         'App\Http\Controllers\Calendar\CalendarAdminController'                 => 'Calendar',
         'App\Http\Controllers\Calendar\EventTypesAdminController'               => 'Calendar',
+        'App\Http\Controllers\Calendar\ProductLaunchAdminController'            => 'Calendar',
         'App\Http\Controllers\Communication\CommunicationAdminController'       => 'Communications',
         'App\Http\Controllers\Communication\CommunicationTypesAdminController'  => 'Communications',
         'App\Http\Controllers\Document\DocumentManagerController'               => 'Library',
