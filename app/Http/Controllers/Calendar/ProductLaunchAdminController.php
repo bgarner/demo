@@ -20,8 +20,7 @@ class ProductLaunchAdminController extends Controller
      */
     public function index()
     {
-        $banner = UserSelectedBanner::getBanner();
-        $productLaunches = ProductLaunch::getAllProductLaunches($banner->id);
+        $productLaunches = ProductLaunch::getAllProductLaunches();
         return view('admin.productlaunch.index')->with('productLaunches', $productLaunches);
     }
 
@@ -66,15 +65,7 @@ class ProductLaunchAdminController extends Controller
      */
     public function edit($id)
     {
-
-        $banner = UserSelectedBanner::getBanner();
-        
-        $banners = Banner::all();
-
-        return view('admin.productlaunch.add-meta-data')
-                ->with('banner', $banner)
-                ->with('banners', $banners)
-                ->with('tags', $tags);
+        //
     }
 
     /**
