@@ -1,0 +1,1 @@
+var textForPages =["Cost $TBD SRP $169.99 Margin TBD\n"];

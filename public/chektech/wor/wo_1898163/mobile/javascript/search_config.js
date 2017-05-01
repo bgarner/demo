@@ -1,0 +1,1 @@
+var textForPages =["-$69.99 FEATHERLIGHT & FEATURE-PACKED\n    • Bluetooth® Wireless\n    • Up to 8 Hour Battery Life\n    • Featherlight Flex Collar\n    • Supreme SoundTM\n    • Noise Isolating Fit\n    • Built-In Microphone\n    • Call, Track, Volume Control\nBluetooth 8 Hour Lightweight Built-In Wireless Battery Life Design Microphone\nCall,Track and Volume control\n"];
