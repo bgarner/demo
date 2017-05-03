@@ -1,0 +1,1 @@
+var textForPages =["Spark Cardio + Music it’s the ultimate combo of mental and physical training technology. With a built in heart-rate monitor through pulse technology and the added bonus of 500 song storage you can  nd your best through any activity.\n"];

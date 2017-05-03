@@ -1,0 +1,1 @@
+var textForPages =["Brand\nModel Name\nNavigation\nSync to tracker\n•\n•\n•\nUser Recognition\nUp to 8\nUp to 16\nUp to 8\nWi \n•\n•\n•\nBluetooth\n•\nActivity and Training\nWeight\n•\n•\n•\nFat Mass\n•\n•\n•\nMuscle Mass\n•\n•\n•\nWater\n•\nBone Mass\n•\n•\nAria Scale\nIndex Smart Scale\nSmart Body Scale\n"];
