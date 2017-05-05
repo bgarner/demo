@@ -14,7 +14,6 @@ class DatabaseSeeder extends Seeder
         $this->call(GroupsTableSeeder::class);
         $this->call(RolesTableSeeder::class);
         $this->call(ComponentsTableSeeder::class);
-        
         $this->call(ResourceTypeTableSeeder::class);
         $this->call(ResourcesTableSeeder::class);
         $this->call(GroupRolesPivotSeeder::class);
@@ -26,6 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PlaylistTableSeeder::class);
         $this->call(FeatureCommunicationTypeTableSeeder::class);
         $this->call(FeatureTableSeeder::class);
+        $this->call(StoreComponentTableSeeder::class);
 
     }
 }

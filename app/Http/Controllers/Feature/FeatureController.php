@@ -71,13 +71,15 @@ class FeatureController extends Controller
 
         $notifications                = Notification::getNotificationsByFeature($feature->id, $storeNumber);
 
+        $flyers = FeatureFlyer::getFlyersByFeatureId($feature->id);
 
         return view('site.feature.index')
 			->with('notifications', $notifications)
             ->with('feature', $feature)
             ->with('feature_documents', $selected_documents)
             ->with('feature_packages', $selected_packages)
-            ->with('feature_communications', $feature_communications);
+            ->with('feature_communications', $feature_communications)
+            ->with('flyers', $flyers);
     }
 
     /**

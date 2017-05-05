@@ -17,6 +17,8 @@ class ComponentsTableSeeder extends Seeder
         ['id' =>9, 'component_name' =>'Task Management','banner_id' => 1],
         ['id' =>10, 'component_name' =>'User and Group Management','banner_id' => 1],
         ['id' =>11, 'component_name' =>'Store Feedback Management','banner_id' => 1],
+        ['id' =>12, 'component_name' =>'Flyer','banner_id' => 1],
+        ['id' =>13, 'component_name' =>'Components','banner_id' => 1]
     ];
     /**
      * Run the database seeds.
