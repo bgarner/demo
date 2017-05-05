@@ -46,6 +46,10 @@ body{
 	border: none !important;
 }
 
+.animate-flicker {
+    animation: fadeIn 1.3s infinite alternate;
+}
+
 .navbar-minimalize{
 	background-color: #2B2B2B !important;
 	border: #2B2B2B;
@@ -92,3 +96,12 @@ body.mini-navbar .logo-element {
 	background: #2B2B2B url('/images/skin/sc.png') top center no-repeat !important;
 	margin: 20px 0px;
 }*/
+
+@keyframes fadeIn {
+  from {
+        background-color: #E20000;
+   }
+   to{
+        background-color: #2B2B2B;
+   }
+}

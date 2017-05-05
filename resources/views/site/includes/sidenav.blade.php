@@ -10,7 +10,7 @@
 
 
                 @if($urgentNoticeCount > 0)
-                <li class="urgetnNoticeNav">
+                <li class="urgetnNoticeNav animate-flicker">
                     <a style="color: white" href="/{{ Request::segment(1) }}/urgentnotice"><i class="fa fa-bolt"></i> <span class="nav-label">URGENT NOTICE</span>
                         @if(isset($urgentNoticeCount))
                         <span class="label label-inverse pull-right">{{$urgentNoticeCount}}</span>
@@ -36,7 +36,7 @@
                     <a href="/{{ Request::segment(1) }}/calendar"><i class="fa fa-calendar"></i> <span class="nav-label">Calendar</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse" style="height: 0px;">
                             <li><a href="/{{ Request::segment(1) }}/calendar">Calendar</a></li>
-                        
+
                             <li><a href="/{{ Request::segment(1) }}/calendar/productlaunch">Product Launch</a></li>
                         </ul>
                 </li>
