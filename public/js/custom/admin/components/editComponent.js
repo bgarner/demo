@@ -32,19 +32,30 @@ $(document).on('click','.component-edit',function(){
 		    	roles : roles
 		    },
 
-		    success: function(data) {
-		      console.log(data);
-		        // if(data != null && data.validation_result == 'false') {
-		        // 	var errors = data.errors;
-		        // 	if(errors.hasOwnProperty("component_name")) {
-		        // 		$.each(errors.title, function(index){
-		        // 			$("#component_name").parent().append('<div class="req">' + errors.title[index]  + '</div>');	
-		        // 		}); 	
-		        // 	}
-		        // }
-		        // else{
+		    success: function(result) {
+		      
+		      	console.log(result);
+		        if(result.validation_result == 'false') {
+		        	var errors = result.errors;
+		        	if(errors.hasOwnProperty("component_name")) {
+		        		$.each(errors.component_name, function(index){
+		        			$("#component_name").parent().append('<div class="req">' + errors.component_name[index]  + '</div>');	
+		        		}); 	
+		        	}
+		        	if(errors.hasOwnProperty("component_id")) {
+		        		$.each(errors.component_id, function(index){
+		        			$("#component_name").parent().append('<div class="req">' + errors.component_id[index]  + '</div>');	
+		        		}); 	
+		        	}
+		        	if(errors.hasOwnProperty("roles")) {
+		        		$.each(errors.roles, function(index){
+		        			$("#roles").parent().append('<div class="req">' + errors.roles[index]  + '</div>');	
+		        		}); 	
+		        	}
+		        }
+		        else{
 		        	swal({title:"Nice!", text: "'" + component_name +"' has been updated", type: 'success'});      	
-		        // }
+		        }
 
 				
 		    }

@@ -21,7 +21,6 @@ use App\Models\Communication\CommunicationTarget;
 
 class CommunicationAdminController extends Controller
 {
-    
     /**
      * Instantiate a new CommunicationAdminController instance.
      */
@@ -39,11 +38,9 @@ class CommunicationAdminController extends Controller
     {
         
         $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
         $communications = Communication::getAllCommunication($banner->id);
-        return view('admin.communication.index')->with('communications', $communications)
-                                                ->with('banner', $banner)
-                                                ->with('banners', $banners);
+        return view('admin.communication.index')->with('communications', $communications);
+                                                
     }
 
     /**
@@ -54,18 +51,17 @@ class CommunicationAdminController extends Controller
     public function create(Request $request)
     {
         $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
         $communicationTypes = CommunicationType::where('banner_id', $banner->id)->get();
         
         $packages = Package::where('banner_id',$banner->id)->get();
         $storeList = StoreInfo::getStoreListing($banner->id);
-        return view('admin.communication.create')->with('banner', $banner)
+        return view('admin.communication.create')
                                                 ->with('storeList', $storeList)
                                                 ->with('communicationTypes', $communicationTypes)
-                                                ->with('banners', $banners)
                                                 ->with('navigation', $fileFolderStructure)
-                                                ->with('packages', $packages);
+                                                ->with('packages', $packages)
+                                                ->with('banner', $banner);
                                                 
 
     }
@@ -89,10 +85,6 @@ class CommunicationAdminController extends Controller
      */
     public function show($id, Request $request)
     {
-        
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
-
         $communication = Communication::find($id);
         $communication_documents  = Communication::getDocumentDetails($id);
         $communication_packages  = Communication::getPackageDetails($id);
@@ -100,12 +92,7 @@ class CommunicationAdminController extends Controller
 
         return view('admin.communication.view')->with('communication', $communication)
                                             ->with('communication_packages', $communication_packages)
-                                            ->with('communication_documents', $communication_documents)
-                                            ->with('importance', $importance)
-                                            ->with('banner', $banner)
-                                            ->with('banners', $banners)
-                                            ->with('tags', $tags)
-                                            ->with('selected_tags', $selected_tags);
+                                            ->with('communication_documents', $communication_documents);
     }
 
 
@@ -118,7 +105,6 @@ class CommunicationAdminController extends Controller
     public function edit($id, Request $request)
     {
         $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
 
         $communication = Communication::find($id);
         $communication_documents  = Communication::getDocumentDetails($id);
@@ -139,13 +125,12 @@ class CommunicationAdminController extends Controller
                                             ->with('communication_packages', $communication_packages)
                                             ->with('communication_documents', $communication_documents)
                                             ->with('communicationTypes', $communicationTypes)
-                                            ->with('banner', $banner)
                                             ->with('storeList', $storeList)
-                                            ->with('banners', $banners)
                                             ->with('navigation', $fileFolderStructure)
                                             ->with('packages', $packages)
                                             ->with('target_stores', $communication_target_stores)
-                                            ->with('all_stores', $all_stores);
+                                            ->with('all_stores', $all_stores)
+                                            ->with('banner', $banner);
     }
 
     /**

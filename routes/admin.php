@@ -91,9 +91,9 @@ Route::resource('/admin/feedback/{id}/note' , 'StoreFeedback\NotesAdminControlle
 Route::resource('/admin/task', 'Task\TaskAdminController');
 Route::get('/admin/task/{task_id}/documents', 'Task\TaskDocumentController@show');
 
-//User Groups and Sections
-Route::resource('/admin/group', 'Auth\GroupAdminController');
-Route::resource('/admin/component', 'Auth\ComponentAdminController');
+//User Groups
+// Route::resource('/admin/group', 'Auth\GroupAdminController');
+// Route::resource('/admin/component', 'Auth\ComponentAdminController');
 
 //User Groups
 Route::resource('/admin/group', 'Auth\Group\GroupAdminController');
@@ -106,8 +106,11 @@ Route::get('/admin/role/{id}/resources', 'Auth\Role\RoleResourceAdminController@
 //Components
 Route::resource('/admin/component', 'Auth\Component\ComponentAdminController');
 
+//Resources
+Route::resource('/admin/resource', 'Auth\Resource\ResourceAdminController');
+Route::get('admin/resourcetype/{id}', 'Auth\Resource\ResourceTypeAdminController@show');
+
 //Product Launch
 Route::get('/admin/productlaunch', 'Calendar\ProductLaunchAdminController@index');
 Route::get('/admin/productlaunch/create', 'Calendar\ProductLaunchAdminController@create');
 Route::post('/admin/productlaunch', 'Calendar\ProductLaunchAdminController@store');
-Route::get('admin/productlaunch/add-meta-data', 'Calendar\ProductLaunchAdminController@edit');

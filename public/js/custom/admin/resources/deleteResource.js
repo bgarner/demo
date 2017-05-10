@@ -1,7 +1,7 @@
-$(document).on('click','.component-delete',function(){
+$(document).on('click','.resource-delete',function(){
 
-    var eventtypeidVal = $(this).attr('data-componentId');
-    var selector = "#component"+eventtypeidVal;
+    var resourceId = $(this).attr('data-resourceId');
+    var selector = "#resource"+resourceId;
 
     swal({
         title: "Are you sure?",
@@ -12,11 +12,11 @@ $(document).on('click','.component-delete',function(){
         closeOnConfirm: false
     }, function () {
     	$.ajax({
-		    url: '/admin/component/'+eventtypeidVal,
+		    url: '/admin/resource/'+resourceId,
 		    type: 'DELETE',
 		    success: function(result) {
 		        $(selector).closest('tr').fadeOut(1000);
-		        swal("Deleted!", "This component has been deleted.", "success");
+		        swal("Deleted!", "This Resource has been deleted.", "success");
 		    }
 		});
         

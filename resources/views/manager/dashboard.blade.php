@@ -104,9 +104,14 @@
                                 <strong class="font-bold profile-name">Test Person</strong>
                             </span>
                             <span class="text-muted text-xs block">AVP - West</span>
-                            <a href="/manager" class="no-style">
-                                <i class="fa fa-sign-out"></i> Log out
+
+                            <a href="{{ url('/logout') }}" onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                                    <i class="fa fa-sign-out"></i> Log out
                             </a>
+                            <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
                         </span>
                     </div>
 

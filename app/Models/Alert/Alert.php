@@ -9,6 +9,7 @@ use App\Models\Utility\Utility;
 use App\Models\Document\Document;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Alert\AlertTarget;
+use App\Models\Auth\User\UserSelectedBanner;
 
 class Alert extends Model
 {
@@ -19,11 +20,12 @@ class Alert extends Model
     protected $fillable = ['banner_id', 'document_id', 'alert_type_id', 'alert_start', 'alert_end'];
     protected $dates = ['deleted_at'];
 
-    public static function getAllAlerts($banner_id)
+    public static function getAllAlerts()
     {
-    	$alerts = Alert::join('documents', 'alerts.document_id' , '=', 'documents.id')
+    	$banner = UserSelectedBanner::getBanner();
+        $alerts = Alert::join('documents', 'alerts.document_id' , '=', 'documents.id')
     			->join('alert_types', 'alert_types.id', '=', 'alerts.alert_type_id')
-    			->where('alerts.banner_id', $banner_id)
+    			->where('alerts.banner_id', $banner->id)
     			->select('alerts.*', 'alert_types.name as alert_type',
                          'documents.id as document_id',
                          'documents.original_filename as document_name',

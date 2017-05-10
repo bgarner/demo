@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    @section('title', 'Sections')
+    @section('title', 'Groups')
     @include('admin.includes.head')
 	
 	<link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">

@@ -13,11 +13,6 @@ use App\Models\ProductLaunch\ProductLaunch;
 
 class ProductLaunchAdminController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('admin.auth');
-        $this->middleware('banner');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -25,12 +20,8 @@ class ProductLaunchAdminController extends Controller
      */
     public function index()
     {
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
-        $productLaunches = ProductLaunch::getAllProductLaunches($banner->id);
-        return view('admin.productlaunch.index')->with('productLaunches', $productLaunches)
-                                                ->with('banner', $banner)
-                                                ->with('banners', $banners);
+        $productLaunches = ProductLaunch::getAllProductLaunches();
+        return view('admin.productlaunch.index')->with('productLaunches', $productLaunches);
     }
 
     /**
@@ -41,10 +32,7 @@ class ProductLaunchAdminController extends Controller
     public function create()
     {
 
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
-        return view('admin.productlaunch.upload')->with('banner', $banner)
-                                                ->with('banners', $banners);
+        return view('admin.productlaunch.upload');
     }
 
     /**
@@ -77,15 +65,7 @@ class ProductLaunchAdminController extends Controller
      */
     public function edit($id)
     {
-
-        $banner = UserSelectedBanner::getBanner();
-        
-        $banners = Banner::all();
-
-        return view('admin.productlaunch.add-meta-data')
-                ->with('banner', $banner)
-                ->with('banners', $banners)
-                ->with('tags', $tags);
+        //
     }
 
     /**

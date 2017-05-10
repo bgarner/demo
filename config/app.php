@@ -181,6 +181,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         App\Providers\AdminSidenavServiceProvider::class,
+        App\Providers\AdminTopbarServiceProvider::class,
         App\Providers\StoreSidenavServiceProvider::class,
         App\Providers\StoreTopbarServiceProvider::class,
         App\Providers\StoreSkinProvider::class,
@@ -247,6 +248,7 @@ return [
         'App\Http\Controllers\Feature\FeatureAdminController'                   => 'Featured Content',
         'App\Http\Controllers\Calendar\CalendarAdminController'                 => 'Calendar',
         'App\Http\Controllers\Calendar\EventTypesAdminController'               => 'Calendar',
+        'App\Http\Controllers\Calendar\ProductLaunchAdminController'            => 'Calendar',
         'App\Http\Controllers\Communication\CommunicationAdminController'       => 'Communications',
         'App\Http\Controllers\Communication\CommunicationTypesAdminController'  => 'Communications',
         'App\Http\Controllers\Document\DocumentManagerController'               => 'Library',
@@ -263,6 +265,7 @@ return [
         'App\Http\Controllers\Auth\Role\RoleAdminController'                    => 'User and Group Management',
         'App\Http\Controllers\Auth\Role\RoleResourceAdminController'            => 'User and Group Management',
         'App\Http\Controllers\Auth\Resource\ResourceAdminController'            => 'User and Group Management',
+        'App\Http\Controllers\Auth\Resource\ResourceTypeAdminController'        => 'User and Group Management',
         'App\Http\Controllers\Auth\Component\ComponentAdminController'          => 'User and Group Management',
         'App\Http\Controllers\StoreFeedback\FeedbackAdminController'            => 'Store Feedback Management',
         'App\Http\Controllers\Task\TaskAdminController'                         => 'Task Management'

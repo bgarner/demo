@@ -5,26 +5,58 @@ namespace App\Models\Auth\Group;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Auth\Group\GroupComponent;
 use App\Models\Auth\Group\GroupRole;
+use App\Models\Validation\GroupValidator;
 
 class Group extends Model
 {
     protected $table = 'groups';
     protected $fillable = ['name'];
 
+    
+    public static function validateGroup($request)
+    {
+        $validateThis = [
+            'group_name' => $request['group_name']
+            
+        ];
+
+        if(isset($request['roles']) && $request['roles']){
+            $validateThis['roles'] = $request['roles'];
+        }
+
+        \Log::info($validateThis);
+        $v = new GroupValidator();
+          
+        return $v->validate($validateThis);
+    }
+
     public static function createGroup($request)
     {
-    	$group = Group::create([
+    	
+        $validate = Self::validateGroup($request);
+        if($validate['validation_result'] == 'false') {
+            \Log::info(json_encode($validate));
+            return $validate;
+        }
+
+        $group = Group::create([
                 'name' => $request['group_name']
 
             ]);
     	GroupRole::createRoleGroupPivotWithGroupId($group, $request);
-    	return;
+    	return $group;
 
     }
 
     public static function editGroup($request, $id)
     {
-    	$group = Group::find($id);
+    	$validate = Self::validateGroup($request);
+        
+        if($validate['validation_result'] == 'false') {
+          return $validate;
+        }
+
+        $group = Group::find($id);
     	$group['name'] = $request['group_name'];
     	$group->save();
         GroupRole::editRoleGroupPivotByGroupId($request, $id);
@@ -40,7 +72,7 @@ class Group extends Model
 
     public static function getGroupList()
     {
-    	return Group::all()->pluck('name', 'id');
+    	return Group::all()->pluck('name', 'id')->prepend('Select one', '');
     }
 
     public static function getGroupDetails()
