@@ -55,12 +55,14 @@ class RoleComponent extends Model
 
     public static function createRoleComponentPivotWithComponentId($component, $request)
     {
-        foreach ($request['roles'] as $role_id) {
-            RoleComponent::create([
-                'component_id' => $component->id,
-                'role_id' => $role_id
+        if(isset($request['roles']) && $request['roles']){
+            foreach ($request['roles'] as $role_id) {
+                RoleComponent::create([
+                    'component_id' => $component->id,
+                    'role_id' => $role_id
 
-            ]); 
+                ]); 
+            }
         }
         
     }
@@ -68,11 +70,13 @@ class RoleComponent extends Model
     public static function editRoleComponentPivotByRoleId($request, $id)
     {
         RoleComponent::where('role_id', $id)->delete();
-        foreach ($request['components'] as $component_id) {
-            RoleComponent::create([
-                    'role_id' => $id,
-                    'component_id'  => $component_id
-                ]);
+        if(isset($request->components)){
+            foreach ($request['components'] as $component_id) {
+                RoleComponent::create([
+                        'role_id' => $id,
+                        'component_id'  => $component_id
+                    ]);
+            }
         }
     }
 

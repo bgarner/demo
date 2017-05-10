@@ -115,12 +115,8 @@
 				</div>
                 @endif
 
-               
 
-
-            </div>            
-
-                
+            </div>
         
 </div>
 
@@ -139,9 +135,6 @@
         });  
   
     </script>
-<!--     <script type="text/javascript" src="/js/custom/site/communications/markAsRead.js"></script> -->
-
- 
 
     @include('site.includes.bugreport')
 	@include('site.includes.modal')

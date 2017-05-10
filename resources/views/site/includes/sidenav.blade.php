@@ -36,7 +36,7 @@
                     <a href="/{{ Request::segment(1) }}/calendar"><i class="fa fa-calendar"></i> <span class="nav-label">Calendar</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse" style="height: 0px;">
                             <li><a href="/{{ Request::segment(1) }}/calendar">Calendar</a></li>
-                        
+
                             <li><a href="/{{ Request::segment(1) }}/calendar/productlaunch">Product Launch</a></li>
                         </ul>
                 </li>
@@ -71,6 +71,21 @@
                     </a>
                 </li>
 
+                @if (Request::segment(2) == 'tasks')
+                <li class="active">
+                @else
+                <li>
+                @endif
+                    <a href="/{{ Request::segment(1) }}/tasks"><i class="fa fa-check-square-o" aria-hidden="true"></i> <span class="nav-label">Tasks</span>
+                    @if( isset($alertCount) )
+                        @if( $alertCount > 0)
+                            <span class="label label-primary pull-right">{{ $taskCount }}</span>
+                        @else
+                            <span class="label label-inverse pull-right">{{ $taskCount }}</span>
+                        @endif
+                    @endif
+                    </a>
+                </li>
 
                 @if (Request::segment(2) == 'document')
                 <li class="active">

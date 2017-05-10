@@ -28,4 +28,48 @@ class EventType extends Model
         $event_type = EventType::find($id);
         return $event_type->event_type;
     }
+
+    public static function getEventTypeListByBannerId($banner_id)
+    {
+        return  EventType::where('banner_id', $banner_id)
+                                    ->pluck('event_type', 'id')
+                                    ->prepend('Select one', '')
+                                    ->toArray();
+    }
+
+    public static function createEventType($request)
+    {
+        $validate = EventType::validateEventType($request);
+        
+        if($validate['validation_result'] == 'false') {
+          \Log::info($validate);
+          return json_encode($validate);
+        }
+
+        $eventTypeDetails = array(
+            'event_type' => $request['event_type'],
+            'banner_id' => $request['banner_id']
+        );
+
+        $eventType = EventType::create($eventTypeDetails);
+        return $eventType;
+    }
+
+    public static function updateEventType($id, $request)
+    {
+        $validate = EventType::validateEventType($request);
+        
+        if($validate['validation_result'] == 'false') {
+          \Log::info($validate);
+          return json_encode($validate);
+        }
+
+        $eventType =  EventType::find($id);
+
+        $eventType->event_type = $request['event_type'];
+    
+        $eventType->save();
+
+        return $eventType;
+    }
 }

@@ -27,12 +27,9 @@ class ComponentAdminController extends Controller
      */
     public function index()
     {
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
         $components =  Component::getComponentDetails();
-        return view('admin.components.index')->with('components', $components)
-                        ->with('banners', $banners)
-                        ->with('banner', $banner);
+        return view('admin.components.index')->with('components', $components);
+                        
     }
 
     /**
@@ -42,12 +39,10 @@ class ComponentAdminController extends Controller
      */
     public function create()
     {
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
-        $roles = Role::getRoleList($banner->id);
-        return view('admin.components.create')->with('banner', $banner)
-                                            ->with('banners', $banners)
-                                            ->with('roles', $roles);
+        
+        $roles = Role::getRoleList();
+        return view('admin.components.create') ->with('roles', $roles);
+                                           
     }
 
     /**
@@ -81,13 +76,11 @@ class ComponentAdminController extends Controller
      */
     public function edit($id)
     {
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
+        
         $component = Component::find($id);
-        $roles = Role::getRoleList($banner->id);
+        $roles = Role::getRoleList();
         $selected_roles = RoleComponent::getRoleListByComponentId($id);
-        return view('admin.components.edit')->with('banners', $banners)
-                                        ->with('banner', $banner)
+        return view('admin.components.edit')
                                         ->with('component', $component)
                                         ->with('roles', $roles)
                                         ->with('selected_roles', $selected_roles);

@@ -6,10 +6,15 @@ class GroupRolesPivotSeeder extends Seeder
 {
     private $group_roles = [
     	
-    	['group_id' => 3, 'role_id' => 1],
-    	['group_id' => 3, 'role_id' => 2],
-    	['group_id' => 3, 'role_id' => 3],
-        ['group_id' => 3, 'role_id' => 4],
+ 
+        ['id'=> 1,'group_id' => 1, 'role_id' => 1],
+        ['id'=> 2,'group_id' => 1, 'role_id' => 2],
+        ['id'=> 3,'group_id' => 1, 'role_id' => 3],
+        ['id'=> 4,'group_id' => 2, 'role_id' => 4],
+        ['id'=> 5,'group_id' => 2, 'role_id' => 5],
+        ['id'=> 6,'group_id' => 2, 'role_id' => 6],
+        ['id'=> 7,'group_id' => 2, 'role_id' => 7],
+
 
 
     ];

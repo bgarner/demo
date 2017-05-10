@@ -27,18 +27,14 @@ class CommunicationTypesAdminController extends Controller
      */
     public function index()
     {
-        $user_id = \Auth::user()->id;
-        $banner_ids = UserBanner::where('user_id', $user_id)->get()->pluck('banner_id');
-        $banners = Banner::whereIn('id', $banner_ids)->get();        
-        $banner_id = UserSelectedBanner::where('user_id', \Auth::user()->id)->first()->selected_banner_id;
-        $banner  = Banner::find($banner_id);
+        
+        $banner = UserSelectedBanner::getBanner();
 
-        $communicationtypes = CommunicationType::where('banner_id', $banner_id)->get();
+        $communicationtypes = CommunicationType::where('banner_id', $banner->id)->get();
 
         return view('admin.communicationtypes.index')
             ->with('communicationtypes', $communicationtypes)
-            ->with('banner', $banner)
-            ->with('banners', $banners);   
+            ->with('banner', $banner);
     }
 
     /**
@@ -48,17 +44,7 @@ class CommunicationTypesAdminController extends Controller
      */
     public function create()
     {
-        $user_id = \Auth::user()->id;
-        $banner_ids = UserBanner::where('user_id', $user_id)->get()->pluck('banner_id');
-        $banners = Banner::whereIn('id', $banner_ids)->get();        
-        $banner_id = UserSelectedBanner::where('user_id', \Auth::user()->id)->first()->selected_banner_id;
-        $banner  = Banner::find($banner_id);
-
-        $communication_types_list = CommunicationType::all();
-        return view('admin.communicationtypes.create')
-            ->with('communication_types_list', $communication_types_list)
-            ->with('banner', $banner)
-            ->with('banners', $banners);
+        return view('admin.communicationtypes.create');
     }
 
     /**
@@ -98,17 +84,11 @@ class CommunicationTypesAdminController extends Controller
      */
     public function edit($id)
     {
-        $banner_ids = UserBanner::where('user_id', $user_id)->get()->pluck('banner_id');
-        $banners = Banner::whereIn('id', $banner_ids)->get();        
-        $banner_id = UserSelectedBanner::where('user_id', \Auth::user()->id)->first()->selected_banner_id;
-        $banner  = Banner::find($banner_id);
-
+        
         $communicationType = CommunicationType::find($id);
-
         return view('admin.communicationtypes.edit')
-            ->with('communicationType', $communicationType)
-            ->with('banner', $banner)
-            ->with('banners', $banners);
+            ->with('communicationType', $communicationType);
+            
     }
 
     /**

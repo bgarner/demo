@@ -15,10 +15,10 @@ class CreateRoleResourcePivot extends Migration
         Schema::create('role_resource', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('role_id')->unsigned();
-            $table->integer('resource_id')->unsigned();
+            $table->integer('resource_type_id')->unsigned();
             $table->timestamps();
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
-            $table->foreign('resource_id')->references('id')->on('resources')->onDelete('cascade');
+            $table->foreign('resource_type_id')->references('id')->on('resource_types')->onDelete('cascade');
         });
     }
 

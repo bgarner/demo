@@ -1,15 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Communication;
+namespace App\Http\Controllers\Auth\Resource;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Communication\CommunicationTarget;
+use App\Models\Auth\User\UserSelectedBanner;
+use App\Models\Banner;
+use App\Models\Auth\Resource\Resource;
+use App\Models\Auth\Resource\ResourceTypes;
+use App\Models\Auth\Role\Role;
+use App\Models\Auth\Role\RoleResource;
 
-class CommunicationTargetController extends Controller
+class ResourceAdminController extends Controller
 {
+    public function __construct()
+    {
+        //
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +25,8 @@ class CommunicationTargetController extends Controller
      */
     public function index()
     {
-        //
+        $resources =  Resource::getResourceDetails();
+        return view('admin.resources.index')->with('resources', $resources);
     }
 
     /**
@@ -27,7 +36,10 @@ class CommunicationTargetController extends Controller
      */
     public function create()
     {
-        //
+        
+        $resourceTypes = ResourceTypes::getResourceTypeList();
+        return view('admin.resources.create')->with('resourceTypes', $resourceTypes);
+                                            
     }
 
     /**
@@ -38,7 +50,8 @@ class CommunicationTargetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $resource = Resource::createResource($request);
+        return  $resource;
     }
 
     /**
@@ -60,7 +73,9 @@ class CommunicationTargetController extends Controller
      */
     public function edit($id)
     {
-        //
+        $resource = Resource::find($id);
+        return view('admin.resources.edit')->with('resource', $resource);                                        
+                                        
     }
 
     /**
@@ -72,8 +87,7 @@ class CommunicationTargetController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $store_id = $request->store_id;
-        CommunicationTarget::markAsRead($id, $store_id);
+        return Resource::editResource($request, $id);
     }
 
     /**
@@ -84,6 +98,6 @@ class CommunicationTargetController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Resource::deleteResource($id);
     }
 }

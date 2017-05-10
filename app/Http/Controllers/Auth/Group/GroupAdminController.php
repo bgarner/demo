@@ -28,11 +28,8 @@ class GroupAdminController extends Controller
     public function index()
     {
         $groups =  Group::getGroupDetails();
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
-        return view('admin.groups.index')->with('groups', $groups)
-                        ->with('banners', $banners)
-                        ->with('banner', $banner);
+        return view('admin.groups.index')->with('groups', $groups);
+                        
     }
 
     /**
@@ -42,13 +39,9 @@ class GroupAdminController extends Controller
      */
     public function create()
     {
-        
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
         $roles = Role::getRoleList();
-        return view('admin.groups.create')->with('banner', $banner)
-                                            ->with('banners', $banners)
-                                            ->with('roles', $roles);
+        return view('admin.groups.create')->with('roles', $roles);
+                                            
     }
 
     /**
@@ -82,16 +75,11 @@ class GroupAdminController extends Controller
      */
     public function edit($id)
     {
-        
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
         $group = Group::find($id);
-        $roles = Role::getRoleList($banner->id);
+        $roles = Role::getRoleList();
         $selected_roles = GroupRole::getRoleListByGroupId($id);
-        return view('admin.groups.edit')->with('banners', $banners)
-                                        ->with('banner', $banner)
+        return view('admin.groups.edit')->with('group', $group)
                                         ->with('roles', $roles)
-                                        ->with('group', $group)
                                         ->with('selected_roles', $selected_roles);
     }
 

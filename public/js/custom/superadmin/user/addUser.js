@@ -32,7 +32,7 @@ $(document).ready(function(){
 			        
 			    }
 			}).done(function(data){
-				console.log(data);
+				// console.log(data);
 			});    
 	});
 
@@ -44,20 +44,22 @@ $(document).ready(function(){
 			    type: 'GET',
 			    dataType: 'json',
 			    success: function(result) {
-			        
-			    	if( result.length >0 ) {
+			        console.log(result);
+			    	if( result && Object.keys(result).length > 0) {
 			    		
 			    		$("#select-resource option").remove();
 			    		$('<option>').val("")
-			    					.text("Select one")
-			    					.appendTo('#select-resource');
-
-						for (var i = 0; i < result.length ; i++) {
-							$('<option>').val(result[i].id)
-										 .text(result[i].resource_name)
+										 .text("Select one")
 										 .appendTo('#select-resource');
-						}
+			    		$.each( result, function( key, value ) {
+			    			
+						    $('<option>').val(key)
+										 .text(value)
+										 .appendTo('#select-resource');
+						});
+
 						$("#select-resource").closest('.form-group').show();
+						$("#selected-resource").closest('.form-group').hide();
 			        }
 			        else{
 			        	$("#select-resource").closest('.form-group').hide();
@@ -65,7 +67,7 @@ $(document).ready(function(){
 			        
 			    }
 			}).done(function(data){
-				console.log(data);
+				// console.log(data);
 			});    
 	});
 

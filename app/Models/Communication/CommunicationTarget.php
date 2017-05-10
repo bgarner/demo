@@ -60,14 +60,4 @@ class CommunicationTarget extends Model
         return $communications;
     }
 
-	public static function markAsRead($id, $store_id)
-	{
-	    $communication = CommunicationTarget::where('communication_id', $id)
-	    				->where('store_id', $store_id)
-	    				->first();
-	    				
-	    $communication->is_read = '1';
-	    $communication->save();
-	}
-
 }

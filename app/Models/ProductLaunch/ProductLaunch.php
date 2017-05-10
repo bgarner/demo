@@ -77,7 +77,7 @@ class ProductLaunch extends Model
     
     }
 
-    public static function getAllProductLaunches($banner_id)
+    public static function getAllProductLaunches()
     {
     	
 

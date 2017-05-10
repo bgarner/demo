@@ -16,7 +16,7 @@ $(document).on('click','.component-delete',function(){
 		    type: 'DELETE',
 		    success: function(result) {
 		        $(selector).closest('tr').fadeOut(1000);
-		        swal("Deleted!", "This Section has been deleted.", "success");
+		        swal("Deleted!", "This component has been deleted.", "success");
 		    }
 		});
         

@@ -12,6 +12,7 @@ use App\Models\Event\EventType;
 use Carbon\Carbon;
 use App\Models\Validation\EventValidator;
 use App\Models\Event\EventAttachment;
+use App\Models\ProductLaunch\ProductLaunch;
 use App\Models\Utility\Utility;
 
 class Event extends Model
@@ -128,15 +129,73 @@ class Event extends Model
         return;
     }
 
+
+    public static function getActiveEventsAndProductLaunchForCalendarViewByStore($storeNumber)
+    {   
+        $events = Event::getActiveEventsByStore($storeNumber);
+        $productLaunches = ProductLaunch::getActiveProductLaunchByStoreForCalendar($storeNumber);
+        
+        $events = $events->merge($productLaunches); 
+        foreach ($events as $event) {
+            $event->prettyDateStart = Utility::prettifyDate($event->start);
+            $event->prettyDateEnd = Utility::prettifyDate($event->end);
+            $event->since = Utility::getTimePastSinceDate($event->start);
+            
+            if(!isset($event->event_type_name)){
+                $event->event_type_name = EventType::getName($event->event_type);
+            }
+        }
+
+        return $events;
+    }
+
     public static function getActiveEventsByStore($store_id)
     {
-      $events = Event::join('events_target', 'events.id', '=', 'events_target.event_id')
+        $events = Event::join('events_target', 'events.id', '=', 'events_target.event_id')
                         ->where('store_id', $store_id)
                         ->select('events.*')
                         ->orderBy('start')
                         ->get();
+
+        foreach ($events as $event) {
+            $attachments = EventAttachment::getEventAttachments($event->id);
+            $attachment_link_string = "";
+            foreach ($attachments as $a) {
+
+                $attachment_link_string .= "<a href='/".$store_id."/document#!/".$a->id."'>". $a->name ."</a><br>";
+                
+            }
+            
+            $event->attachment = $attachment_link_string;
+        }
+
       return $events;
     }
+
+     public static function getListofEventsByStoreAndMonth($storeNumber, $yearMonth)
+    {
+        $eventsList = Event::getActiveEventsByStoreAndMonth($storeNumber, $yearMonth);
+        $productLaunchList = ProductLaunch::getActiveProductLaunchByStoreandMonth($storeNumber, $yearMonth);
+        
+        foreach ($productLaunchList as $key => $value) {
+            
+            if(array_key_exists($key, $eventsList)){
+
+                $value = $value->merge($eventsList[$key]);
+            }
+            else{
+                $eventsList->put($key, $value);
+            }
+            
+        }
+        $eventsList = $eventsList->toArray();
+        ksort($eventsList);
+        $eventsList = json_decode(json_encode($eventsList));
+
+        return $eventsList;
+    }
+
+
 
     public static function getActiveEventsByStoreAndMonth($store_id, $yearMonth)
     {
@@ -157,6 +216,12 @@ class Event extends Model
                     });
                     
         return $events;
+    }
+
+    public static function getEventsByBannerId()
+    {
+        $banner = UserSelectedBanner::getBanner();
+        return Event::where('banner_id', $banner->id)->paginate(15);
     }
 
 }

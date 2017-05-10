@@ -31,19 +31,11 @@ class EventTypesAdminController extends Controller
      */
     public function index()
     {
-        $user_id = \Auth::user()->id;
-        $banner_ids = UserBanner::where('user_id', $user_id)->get()->pluck('banner_id');
-        $banners = Banner::whereIn('id', $banner_ids)->get();        
-        $banner_id = UserSelectedBanner::where('user_id', \Auth::user()->id)->first()->selected_banner_id;
-        $banner  = Banner::find($banner_id);
-
-        // $eventtypes = EventType::all();
-        $eventtypes = EventType::where('banner_id', $banner_id)->get();
+        $banner = UserSelectedBanner::getBanner();
+        $eventtypes = EventType::where('banner_id', $banner->id)->get();
 
         return view('admin.eventtypes.index')
-            ->with('eventtypes', $eventtypes)
-            ->with('banner', $banner)
-            ->with('banners', $banners);   
+            ->with('eventtypes', $eventtypes);
     }
 
     /**
@@ -53,17 +45,7 @@ class EventTypesAdminController extends Controller
      */
     public function create()
     {
-        $user_id = \Auth::user()->id;
-        $banner_ids = UserBanner::where('user_id', $user_id)->get()->pluck('banner_id');
-        $banners = Banner::whereIn('id', $banner_ids)->get();        
-        $banner_id = UserSelectedBanner::where('user_id', \Auth::user()->id)->first()->selected_banner_id;
-        $banner  = Banner::find($banner_id);
-
-        $event_types_list = EventType::all();
-        return view('admin.eventtypes.create')
-            ->with('event_types_list', $event_types_list)
-            ->with('banner', $banner)
-            ->with('banners', $banners);
+        return view('admin.eventtypes.create');
     }
 
     /**
@@ -74,21 +56,7 @@ class EventTypesAdminController extends Controller
      */
     public function store(Request $request)
     {
-        $validate = EventType::validateEventType($request);
-        
-        if($validate['validation_result'] == 'false') {
-          \Log::info($validate);
-          return json_encode($validate);
-        }
-
-        $eventTypeDetails = array(
-            'event_type' => $request['event_type'],
-            'banner_id' => $request['banner_id']
-        );
-
-        $eventType = EventType::create($eventTypeDetails);
-        $eventType->save();
-        return $eventType;
+        return EventType::createEventType($request);
     }
 
     /**
@@ -110,18 +78,9 @@ class EventTypesAdminController extends Controller
      */
     public function edit($id)
     {
-        $user_id = \Auth::user()->id;
-        $banner_ids = UserBanner::where('user_id', $user_id)->get()->pluck('banner_id');
-        $banners = Banner::whereIn('id', $banner_ids)->get();        
-        $banner_id = UserSelectedBanner::where('user_id', \Auth::user()->id)->first()->selected_banner_id;
-        $banner  = Banner::find($banner_id);
-
+        
         $eventType = EventType::find($id);
-
-        return view('admin.eventtypes.edit')
-            ->with('eventType', $eventType)
-            ->with('banner', $banner)
-            ->with('banners', $banners);
+        return view('admin.eventtypes.edit')->with('eventType', $eventType);
     }
 
     /**
@@ -133,21 +92,7 @@ class EventTypesAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $validate = EventType::validateEventType($request);
-        
-        if($validate['validation_result'] == 'false') {
-          \Log::info($validate);
-          return json_encode($validate);
-        }
-
-        $eventType =  EventType::find($id);
-
-        $eventType->event_type = $request['event_type'];
-    
-        $eventType->save();
-
-        return $eventType;
+        return EventType::updateEventType($id, $request);
     }
 
     /**
@@ -158,9 +103,6 @@ class EventTypesAdminController extends Controller
      */
     public function destroy($id)
     {
-        // $id = Request::input('event_id');
-        // $id = $request['event_id'];
-        $eventtype = EventType::find($id);
-        $eventtype->delete();
+        EventType::find($id)->delete();
     }
 }

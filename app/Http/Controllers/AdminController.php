@@ -20,20 +20,6 @@ use App\Models\Analytics\Analytics;
 class AdminController extends Controller
 {
 
-    private $group_id;
-    private $user_id;
-     /**
-     * Instantiate a new AdminController instance.
-     */
-    public function __construct()
-    {
-        // $this->middleware('admin.auth');
-        // $this->middleware('componentaccess');
-        // $this->middleware('banner');
-        
-        
-    }
-
 
     /**
      * Display a listing of the resource.
@@ -42,14 +28,7 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-        $this->user_id = Auth::user()->id;
-        $this->group_id = Auth::user()->group_id;
 
-        $banner_id = UserSelectedBanner::where('user_id', Auth::user()->id)->first()->selected_banner_id;
-
-        $banner  = Banner::find($banner_id);
-
-        $banners = Banner::all();
 
         $trafficDaily = Analytics::getTrafficLast24hrs();
 
@@ -59,12 +38,12 @@ class AdminController extends Controller
 
         $urgentNoticeStats = Analytics::getUrgentNoticeStats();
 
-        return view('admin.index')->with('banner', $banner)
+
+        return view('admin.index')
                     ->with('traffic', $traffic)
                     ->with('trafficDaily', $trafficDaily)
                     ->with('commStats', $commStats)
-                    ->with('urgentNoticeStats', $urgentNoticeStats)
-                    ->with('banners', $banners);
+                    ->with('urgentNoticeStats', $urgentNoticeStats);
 
     }
 
