@@ -33,7 +33,7 @@
                 @else
                 <li>
                 @endif
-                    <a href="/{{ Request::segment(1) }}/calendar"><i class="fa fa-calendar"></i> <span class="nav-label">Calendar</span><span class="fa arrow"></span></a>
+                    <a href="/{{ Request::segment(1) }}/calendar"><i class="fa fa-calendar"></i> <span class="nav-label">{{ trans('lang.Calendar') }}</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse" style="height: 0px;">
                             <li><a href="/{{ Request::segment(1) }}/calendar">Calendar</a></li>
 
@@ -47,7 +47,7 @@
                 @else
                 <li>
                 @endif
-                    <a href="/{{ Request::segment(1) }}/communication"><i class="fa fa-bullhorn"></i> <span class="nav-label">Communications</span>
+                    <a href="/{{ Request::segment(1) }}/communication"><i class="fa fa-bullhorn"></i> <span class="nav-label">{{ trans('lang.Communications') }}</span>
                     @if( isset($communicationCount) )
                     <span class="label label-inverse pull-right">{{ $communicationCount }}</span>
                     @endif
