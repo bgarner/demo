@@ -102,13 +102,7 @@ class CalendarAdminController extends Controller
         
         $event_target_stores = EventTarget::where('event_id', $id)->get()->pluck('store_id')->toArray();
         $storeList = StoreInfo::getStoreListing($banner->id);
-        $all_stores = false;
-        if (count($storeList) == count($event_target_stores)) {
-            $all_stores = true;
-        }
-
         $event_attachments = EventAttachment::getEventAttachments($id);
-
         $folderStructure = FolderStructure::getNavigationStructure($banner->id);
         return view('admin.calendar.edit')
             ->with('event', $event)
@@ -116,7 +110,6 @@ class CalendarAdminController extends Controller
             ->with('event_types_list', $event_types_list)
             ->with('storeList', $storeList)
             ->with('target_stores', $event_target_stores)
-            ->with('all_stores', $all_stores)
             ->with('event_attachments', $event_attachments)
             ->with('folderStructure', $folderStructure);     
     }

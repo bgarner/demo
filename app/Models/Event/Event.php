@@ -17,10 +17,10 @@ use App\Models\Utility\Utility;
 
 class Event extends Model
 {
-	  use SoftDeletes;
+    use SoftDeletes;
     protected $table = 'events';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['banner_id', 'title', 'description', 'event_type', 'start', 'end'];
+    protected $fillable = ['banner_id', 'title', 'description', 'event_type', 'start', 'end', 'all_stores'];
 
     public static function validateEvent($request)
     { 
@@ -44,7 +44,7 @@ class Event extends Model
 
     public static function storeEvent($request)
     {
-
+        \Log::info($request);
         $validate = Event::validateEvent($request);
         
         if($validate['validation_result'] == 'false') {
@@ -96,25 +96,32 @@ class Event extends Model
     }
 
     public static function updateTargetStores($id, $request)
-      {
-         $target_stores = $request['target_stores'];
-         $allStores = $request['allStores'];
-         
-         if (!( $target_stores == '' && $allStores == 'on' )) {
-             EventTarget::where('event_id', $id)->delete();
-             if (count($target_stores) > 0) {
-                 foreach ($target_stores as $store) {
-                     EventTarget::create([
-                        'event_id'   => $id,
-                        'store_id'   => $store
-                     ]);
-               
-                  } 
-             }            
-         }
-         
-         return;
-      }
+        {
+            $target_stores = $request['target_stores'];
+            $allStores = $request['allStores'];
+            if($allStores == 'on') {
+                EventTarget::where('event_id', $id)->delete();
+                $event = Event::find($id);
+                $event->all_stores = 1;
+                $event->save();
+            }
+            else{
+                EventTarget::where('event_id', $id)->delete();
+                if (count($target_stores) > 0) {
+                    foreach ($target_stores as $store) {
+                        EventTarget::create([
+                            'event_id'   => $id,
+                            'store_id'   => $store
+                        ]);
+                    }
+                }
+                $event = Event::find($id);
+                $event->all_stores = 0;
+                $event->save(); 
+            }
+             
+            return; 
+        }
 
     public static function updateTags($id, $tags)
     {

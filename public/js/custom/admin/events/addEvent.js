@@ -109,8 +109,9 @@ $(document).on('click','.event-create',function(){
     var eventEnd = $("#end").val();
     var tags = $('#tags').val();
     var target_stores  = $("#storeSelect").val();
-    console.log(target_stores);
-    var allStores  = $("allStores:checked").val();
+    
+    var allStores  = $("#allStores:checked").val();
+    console.log(allStores);
     var attachments = [];
    	$(".selected-folders").each(function(){
 		attachments.push($(this).attr('data-folderid'));
@@ -161,7 +162,8 @@ $(document).on('click','.event-create',function(){
 		    	start: eventStart,
 		    	end: eventEnd,
 		    	target_stores : target_stores,
-		    	attachments : attachments
+		    	attachments : attachments,
+		    	allStores: allStores
 		    },
 
 		    dataType: 'json',
