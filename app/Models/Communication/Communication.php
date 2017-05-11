@@ -18,7 +18,7 @@ use App\Models\Validation\CommunicationValidator;
 class Communication extends Model
 {
 	protected $table = 'communications';
-	protected $fillable = ['subject', 'body', 'sender', 'importance', 'communication_type_id', 'send_at', 'archive_at', 'is_draft', 'banner_id'];
+	protected $fillable = ['subject', 'body', 'sender', 'importance', 'communication_type_id', 'send_at', 'archive_at', 'is_draft', 'banner_id', 'all_stores'];
 
 
 	public static function validateCreateCommunication($request)
@@ -54,7 +54,7 @@ class Communication extends Model
 			'communication_type_id' => $request['communication_type_id'],
 			'target_stores'    => $request['target_stores'],
 			// 'documents' => $request['communication_documents'],
-			'allStores' => $request['allStores']
+			'allStores' => $request['all_stores']
 			// 'remove_document' =>$request['remove_document']
 
 		];
@@ -89,7 +89,6 @@ class Communication extends Model
 		}
 		else {
 		    $targetedCommunications = CommunicationTarget::getTargetedCommunications($storeNumber);
-
 		}
 
 		if (isset($request['archives']) && !empty($request['archives'])) {
@@ -271,22 +270,29 @@ class Communication extends Model
 	public static function updateTargetStores($id, $request)
 	{
 		$target_stores = $request['target_stores'];
-		$allStores = $request['allStores'];
-
-		if (!( $target_stores == '' && $allStores == 'on' )) {
-			CommunicationTarget::where('communication_id', $id)->delete();
-			if (count($target_stores) > 0) {
-				foreach ($target_stores as $store) {
-					CommunicationTarget::create([
-						'communication_id'   => $id,
-						'store_id'           => $store
-					]);
-
-				}
-			}
-		}
-
-		return;
+        $all_stores = $request['all_stores'];
+        if($all_stores == 'on') {
+            CommunicationTarget::where('communication_id', $id)->delete();
+            $communication = Communication::find($id);
+            $communication->all_stores = 1;
+            $communication->save();
+        }
+        else{
+            CommunicationTarget::where('communication_id', $id)->delete();
+            if (count($target_stores) > 0) {
+                foreach ($target_stores as $store) {
+                    CommunicationTarget::create([
+                        'communication_id'   => $id,
+                        'store_id'   => $store
+                    ]);
+                }
+            } 
+            $communication = Communication::find($id);
+            $communication->all_stores = 0;
+            $communication->save();
+        }
+         
+        return;
 	}
 
 	public static function updateCommunicationDocuments($id, $request)

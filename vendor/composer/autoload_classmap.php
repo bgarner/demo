@@ -685,6 +685,8 @@ return array(
     'TaskStatusTypesSeeder' => $baseDir . '/database/seeds/TaskStatusTypesSeeder.php',
     'TaskStoreStatusTypesSeeder' => $baseDir . '/database/seeds/TaskStoreStatusTypesSeeder.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
+    'UpdateCommunicationTargetTable' => $baseDir . '/database/migrations/2017_05_11_202636_update_communication_target_table.php',
+    'UpdateCommunicationsTable' => $baseDir . '/database/migrations/2017_05_11_195751_update_communications_table.php',
     'UpdateEventsTable' => $baseDir . '/database/migrations/2017_05_11_165610_update_events_table.php',
     'UpdateTasksTable' => $baseDir . '/database/migrations/2017_02_28_131811_update_tasks_table.php',
 );

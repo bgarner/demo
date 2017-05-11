@@ -208,7 +208,7 @@ class ProductLaunch extends Model
                 $record->save();
                 ProductLaunch::deleteProductLaunchTarget($record);
 				$target = $row[10];
-				ProductLaunch::deleteProductLaunchTarget($record, $row[10], $storeList );
+				ProductLaunch::createProductLaunchTarget($record, $target, $storeList );
 			}
 
 			

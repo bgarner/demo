@@ -122,6 +122,7 @@ $(document).on('click','.communication-create',function(){
 		  		send_at : start,
 		  		archive_at : end,
 		  		banner_id : banner_id,
+		  		all_stores : allStores,
 		  		target_stores : target_stores,
 		  		communication_documents : communication_documents,
 		  		communication_packages : communication_packages

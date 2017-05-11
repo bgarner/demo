@@ -94,7 +94,7 @@
 																		data-comm-type="{{$ct->communication_type}}"
 																		data-comm-typecolour="{{$ct->colour}}"
 																		class="comm_type_dropdown_item" >
-																		<a href=""> {{$ct->communication_type}} </a>
+																		<a href="#"> {{$ct->communication_type}} </a>
 																	</li>
 																@else
 																	<li data-comm-typeid="{{$ct->id}}" 
