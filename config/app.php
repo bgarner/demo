@@ -185,6 +185,7 @@ return [
         App\Providers\StoreSidenavServiceProvider::class,
         App\Providers\StoreTopbarServiceProvider::class,
         App\Providers\StoreSkinProvider::class,
+        App\Providers\StoreFooterProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
 

@@ -7,10 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as RequestFacade;
 use App\Models\StoreInfo;
 use App\Skin;
+use App\Models\Banner;
 use Session;
+use File;
+use Config;
+use Debugbar;
 
-
-class StoreSkinCreator
+class StoreFooterCreator
 {
     /**
      * The user repository implementation.
@@ -18,7 +21,10 @@ class StoreSkinCreator
      * @var UserRepository
      */
     protected $storeNumber;
-    protected $skin;
+    protected $storeInfo;
+    protected $bannerInfo;
+    protected $languages;
+    protected $currentLang;
 
     /**
      * Create a new profile composer.
@@ -29,8 +35,9 @@ class StoreSkinCreator
     public function __construct(Request $request)
     {
         $this->storeNumber = RequestFacade::segment(1);
-        $storeInfo = StoreInfo::getStoreInfoByStoreId($this->storeNumber);
-        $this->skin = Skin::getSkin($storeInfo->banner_id);
+        $this->storeInfo = StoreInfo::getStoreInfoByStoreId($this->storeNumber);
+        $this->bannerInfo = Banner::find($this->storeInfo->banner_id);
+        $this->languages = Config::get('languages');
         $this->currentLang = Session::get('language');
     }
 
@@ -42,8 +49,10 @@ class StoreSkinCreator
      */
     public function compose(View $view)
     {
-
-        $view->with('skin', $this->skin)
+        $view->with('storeNumber', $this->storeNumber)
+             ->with('storeInfo', $this->storeInfo)
+             ->with('bannerInfo', $this->bannerInfo)
+             ->with('languages', $this->languages)
              ->with('currentLang', $this->currentLang);
     }
 }

@@ -7,13 +7,6 @@ use Closure, Session, Config, App;
 class GetUserLocale
 {
     /**
-     * The availables languages.
-     *
-     * @array $languages
-     */
-    protected $languages = ['en','fr'];
-
-    /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request

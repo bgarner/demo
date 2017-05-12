@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" media="all" href="/fonts/font-awesome/css/font-awesome.css">
 
     <link rel="stylesheet" type="text/css" media="print" href="/css/print.css">
-    
+
     <link rel="stylesheet" type="text/css" media="screen" href="/css/plugins/sweetalert/sweetalert.css">
     <link rel="stylesheet" type="text/css" media="screen" href="/css/plugins/fullcalendar/fullcalendar.css">
     <link rel="stylesheet" type="text/css" media="print" href="/css/plugins/fullcalendar/fullcalendar.print.css">
@@ -16,13 +16,10 @@
     <link rel="stylesheet" type="text/css" media="screen" href="/css/animate.css">
     <link rel="stylesheet" type="text/css" media="screen" href="/css/app.css">
 
+    <script>
+
+    </script>
     
-
-
     @unless ( Request::is('admin') || Request::is('admin/*') || Request::is('login'))
     {!! $skin !!}
     @endunless
-
-
-
-   

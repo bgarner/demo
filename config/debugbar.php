@@ -97,10 +97,10 @@ return [
         'default_request' => false, // Regular or special Symfony request logger
         'symfony_request' => true,  // Only one can be enabled..
         'mail'            => true,  // Catch mail messages
-        'logs'            => false, // Add the latest log messages
+        'logs'            => true, // Add the latest log messages
         'files'           => false, // Show the included files
         'config'          => false, // Display config settings
-        'auth'            => false, // Display Laravel authentication status
+        'auth'            => true, // Display Laravel authentication status
         'gate'            => false, // Display Laravel Gate checks
         'session'         => true,  // Display session data
     ],
@@ -138,7 +138,7 @@ return [
             'label' => true  // show complete route on bar
         ],
         'logs' => [
-            'file' => null
+            'file' => true
         ],
     ],
 
