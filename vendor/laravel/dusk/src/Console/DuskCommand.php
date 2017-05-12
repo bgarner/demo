@@ -5,8 +5,8 @@ namespace Laravel\Dusk\Console;
 use Dotenv\Dotenv;
 use Illuminate\Console\Command;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
+use Symfony\Component\Process\Exception\RuntimeException;
 
 class DuskCommand extends Command
 {
@@ -24,7 +24,7 @@ class DuskCommand extends Command
      */
     protected $description = 'Run the Dusk tests for the application';
 
-    /*
+    /**
      * Indicates if the project has its own PHPUnit configuration.
      *
      * @var boolean
@@ -52,29 +52,37 @@ class DuskCommand extends Command
     {
         $this->purgeScreenshots();
 
+        $this->purgeConsoleLogs();
+
         $options = array_slice($_SERVER['argv'], 2);
 
         return $this->withDuskEnvironment(function () use ($options) {
-            return (new ProcessBuilder())
+            $process = (new ProcessBuilder())
                 ->setTimeout(null)
                 ->setPrefix($this->binary())
                 ->setArguments($this->phpunitArguments($options))
-                ->getProcess()
-                ->setTty(PHP_OS !== 'WINNT')
-                ->run(function ($type, $line) {
-                    $this->output->write($line);
-                });
+                ->getProcess();
+
+            try {
+                $process->setTty(true);
+            } catch (RuntimeException $e) {
+                $this->output->writeln('Warning: '.$e->getMessage());
+            }
+
+            return $process->run(function ($type, $line) {
+                $this->output->write($line);
+            });
         });
     }
 
     /**
      * Get the PHP binary to execute.
      *
-     * @return string
+     * @return array
      */
     protected function binary()
     {
-        return PHP_OS === 'WINNT' ? base_path('vendor\bin\phpunit.bat') : 'vendor/bin/phpunit';
+        return [PHP_BINARY, 'vendor/phpunit/phpunit/phpunit'];
     }
 
     /**
@@ -97,6 +105,22 @@ class DuskCommand extends Command
         $files = Finder::create()->files()
                         ->in(base_path('tests/Browser/screenshots'))
                         ->name('failure-*');
+
+        foreach ($files as $file) {
+            @unlink($file->getRealPath());
+        }
+    }
+
+    /**
+     * Purge the console logs.
+     *
+     * @return void
+     */
+    protected function purgeConsoleLogs()
+    {
+        $files = Finder::create()->files()
+            ->in(base_path('tests/Browser/console'))
+            ->name('*.log');
 
         foreach ($files as $file) {
             @unlink($file->getRealPath());

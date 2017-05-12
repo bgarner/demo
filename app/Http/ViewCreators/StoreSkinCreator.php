@@ -4,9 +4,10 @@ namespace App\Http\ViewCreators;
 
 use Illuminate\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Request as RequestFacade; 
+use Illuminate\Support\Facades\Request as RequestFacade;
 use App\Models\StoreInfo;
 use App\Skin;
+use Session;
 
 
 class StoreSkinCreator
@@ -30,7 +31,7 @@ class StoreSkinCreator
         $this->storeNumber = RequestFacade::segment(1);
         $storeInfo = StoreInfo::getStoreInfoByStoreId($this->storeNumber);
         $this->skin = Skin::getSkin($storeInfo->banner_id);
-
+        $this->currentLang = Session::get('language');
     }
 
     /**
@@ -41,7 +42,8 @@ class StoreSkinCreator
      */
     public function compose(View $view)
     {
-        
-        $view->with('skin', $this->skin);
+
+        $view->with('skin', $this->skin)
+             ->with('currentLang', $this->currentLang);
     }
 }

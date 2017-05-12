@@ -37,11 +37,10 @@ class DashboardController extends Controller
 
         $notifications = Notification::getAllNotifications($storeInfo->banner_id, $storeNumber, $banner->update_type_id, $banner->update_window_size);
 
-
         $communications = Communication::getActiveCommunicationsByStoreNumber($storeNumber, 3);
 
         $featuredVideo = Video::getFeaturedVideo();
-
+        // Debugbar::info($title);
         return view('site.dashboard.index')
             ->with('banner', $banner)
             ->with('quicklinks', $quicklinks)

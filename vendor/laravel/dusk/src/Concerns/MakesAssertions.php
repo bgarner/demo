@@ -3,7 +3,7 @@
 namespace Laravel\Dusk\Concerns;
 
 use Illuminate\Support\Str;
-use PHPUnit_Framework_Assert as PHPUnit;
+use PHPUnit\Framework\Assert as PHPUnit;
 use Facebook\WebDriver\Exception\NoSuchElementException;
 
 trait MakesAssertions
@@ -45,6 +45,21 @@ trait MakesAssertions
     public function assertPathIs($path)
     {
         PHPUnit::assertEquals($path, parse_url(
+            $this->driver->getCurrentURL()
+        )['path']);
+
+        return $this;
+    }
+
+    /**
+     * Assert that the current URL path does not match the given path.
+     *
+     * @param  string  $path
+     * @return $this
+     */
+    public function assertPathIsNot($path)
+    {
+        PHPUnit::assertNotEquals($path, parse_url(
             $this->driver->getCurrentURL()
         )['path']);
 
@@ -382,7 +397,7 @@ JS;
     {
         $element = $this->resolver->resolveForTyping($field);
 
-        return $element->getTagName() == 'input'
+        return in_array($element->getTagName(), ['input', 'textarea'])
                         ? $element->getAttribute('value')
                         : $element->getText();
     }
@@ -498,6 +513,65 @@ JS;
     }
 
     /**
+     * Assert that the given array of values are available to be selected.
+     *
+     * @param string  $field
+     * @param array  $values
+     * @return $this
+     */
+    public function assertSelectHasOptions($field, array $values)
+    {
+        PHPUnit::assertCount(
+            count($values),
+            $this->resolver->resolveSelectOptions($field, $values),
+            "Expected options [".implode(',', $values)."] for selection field [{$field}] to be available."
+        );
+
+        return $this;
+    }
+
+    /**
+     * Assert that the given array of values are not available to be selected.
+     *
+     * @param string  $field
+     * @param array  $values
+     * @return $this
+     */
+    public function assertSelectMissingOptions($field, array $values)
+    {
+        PHPUnit::assertCount(
+            0, $this->resolver->resolveSelectOptions($field, $values),
+            "Unexpected options [".implode(',', $values)."] for selection field [{$field}]."
+        );
+
+        return $this;
+    }
+
+    /**
+     * Assert that the given value is available to be selected on the given field.
+     *
+     * @param string  $field
+     * @param string  $value
+     * @return $this
+     */
+    public function assertSelectHasOption($field, $value)
+    {
+        return $this->assertSelectHasOptions($field, [$value]);
+    }
+
+    /**
+     * Assert that the given value is not available to be selected on the given field.
+     *
+     * @param string  $field
+     * @param string  $value
+     * @return $this
+     */
+    public function assertSelectMissingOption($field, $value)
+    {
+        return $this->assertSelectMissingOptions($field, [$value]);
+    }
+
+    /**
      * Determine if the given value is selected for the given select field.
      *
      * @param  string  $field
@@ -508,7 +582,7 @@ JS;
     {
         $element = $this->resolver->resolveForSelection($field);
 
-        return $element->getAttribute('value') === $value;
+        return (string) $element->getAttribute('value') === (string) $value;
     }
 
     /**
