@@ -5,7 +5,7 @@
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    
+
     <!-- Custom and plugin javascript -->
     <script src="/js/inspinia.js"></script>
     <script src="/js/plugins/pace/pace.min.js"></script>
@@ -21,6 +21,7 @@
     <script src="/js/custom/site/launchModal.js"></script>
     <script src="/js/custom/trackEvent.js"></script>
     <script src="/js/custom/sendBugReport.js"></script>
+    <script src="/js/custom/setLang.js"></script>
 
     <script type="text/javascript">
         $.ajaxSetup({
@@ -29,7 +30,7 @@
             }
         });
     </script>
-    
+
     <script type="text/javascript">
     // Config box
 
@@ -58,36 +59,35 @@
     }
 
     $(".combostore-onoffswitch").on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function(e){
-        
+
         var userStoreNumber =  localStorage.getItem('userStoreNumber');
         var userStoreName =  localStorage.getItem('userStoreName');
         var initialStoreNumber = userStoreNumber;
-        
+
         if($("input[name='comboStore']:checked").val()) {
-            
+
             localStorage.setItem("userBanner", 1 );
             if(userStoreNumber.match(/^A/) ){
                 userStoreNumber = userStoreNumber.replace("A","");
                 userStoreName = userStoreName.replace("A", "");
             }
-            
+
         }
         else{
-            
-            localStorage.setItem("userBanner", 2 );    
+
+            localStorage.setItem("userBanner", 2 );
             if(! userStoreNumber.match(/^A/) ){
                 userStoreNumber = "A"+userStoreNumber;
                 userStoreName = "A"+userStoreName;
             }
-        
+
         }
         localStorage.setItem("userStoreNumber", userStoreNumber );
         localStorage.setItem("userStoreName", userStoreName);
         if(initialStoreNumber != userStoreNumber) {
             window.location = "/"+userStoreNumber;
         }
-        
+
     });
 
     </script>
-

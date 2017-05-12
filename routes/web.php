@@ -85,7 +85,7 @@ Route::post('/videocount', 'Video\VideoViewCountController@update');
 Route::post('/videolike', 'Video\LikeController@update');
 Route::post('/videodislike', 'Video\DislikeController@update');
 
-
+Route::post('/setLanguage', 'Locale\LocaleController@setLanguage');
 //list of admin functions
 // Route::get('/admin', function(){
 // //	return view('admin.index');

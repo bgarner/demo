@@ -16,9 +16,9 @@
 
                         @foreach($languages as $key=>$value)
                             @if($currentLang == $key)
-                                <li><a data-lang="{{$key}}" href="#" class="setUserLang"><i class="fa fa-check" aria-hidden="true"></i>&nbsp; {{$value}}</a></li>
+                                <li><a data-lang="{{$key}}" data-langname="{{$value}}" href="#" class="setUserLang"><i class="fa fa-check" aria-hidden="true"></i>&nbsp; {{$value}}</a></li>
                             @else
-                                <li><a data-lang="{{$key}}" href="#" class="setUserLang">{{$value}}</a></li>
+                                <li><a data-lang="{{$key}}" data-langname="{{$value}}" href="#" class="setUserLang">{{$value}}</a></li>
                             @endif
                         @endforeach
                     </ul>
