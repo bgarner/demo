@@ -113,10 +113,10 @@ class CommunicationAdminController extends Controller
         
         $communication_target_stores = CommunicationTarget::where('communication_id', $id)->get()->pluck('store_id')->toArray();
         $storeList = StoreInfo::getStoreListing($banner->id);
-        $all_stores = false;
-        if (count($storeList) == count($communication_target_stores)) {
-            $all_stores = true;
-        }
+        // $all_stores = false;
+        // if (count($storeList) == count($communication_target_stores)) {
+        //     $all_stores = true;
+        // }
 
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
         $packages = Package::where('banner_id', $banner->id)->get();
@@ -129,7 +129,7 @@ class CommunicationAdminController extends Controller
                                             ->with('navigation', $fileFolderStructure)
                                             ->with('packages', $packages)
                                             ->with('target_stores', $communication_target_stores)
-                                            ->with('all_stores', $all_stores)
+                                            // ->with('all_stores', $all_stores)
                                             ->with('banner', $banner);
     }
 

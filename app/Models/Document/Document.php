@@ -479,20 +479,30 @@ class Document extends Model
 
     public static function updateDocumentTarget(Request $request, $document)
     {
-         if ($request['stores'] != '') {
+        $all_stores = $request['allStores'];
+        if($all_stores == 'on') {
             DocumentTarget::where('document_id', $document->id)->delete();
-            $target_stores = $request['stores'];
-            if(! is_array($target_stores) ) {
-                $target_stores = explode(',',  $request['stores'] );
-            }
-
-            foreach ($target_stores as $key=>$store) {
-                DocumentTarget::insert([
-                    'document_id' => $document->id,
-                    'store_id' => $store
-                    ]);
-            }
+            $document->all_stores = 1;
+            $document->save();
         }
-            return;
+        else{
+            if ($request['stores'] != '') {
+                $document->all_stores = 0;
+                $document->save();
+                DocumentTarget::where('document_id', $document->id)->delete();
+                $target_stores = $request['stores'];
+                if(! is_array($target_stores) ) {
+                    $target_stores = explode(',',  $request['stores'] );    
+                }
+                foreach ($target_stores as $key=>$store) {
+                    DocumentTarget::insert([
+                        'document_id' => $document->id,
+                        'store_id' => $store
+                        ]);    
+                }
+            } 
+        }
+         
+        return;  
     }
 }

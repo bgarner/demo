@@ -191,7 +191,7 @@
 
 						                <label class="col-sm-2 control-label">Target Stores</label>
 						                <div class="col-sm-10">
-						                	@if($all_stores)
+						                	@if($communication->all_stores)
 		                                        {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
 		                                        {!! Form::label('allStores', 'Or select all stores:') !!}
 		                                        {!! Form::checkbox('allStores', null, true ,['id'=> 'allStores'] ) !!}

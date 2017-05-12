@@ -33,6 +33,9 @@ class Communication extends Model
 			// 'documents' => $request['communication_documents']
 
 		];
+		if ($request['allStores'] != NULL) {
+            $validateThis['allStores'] = $request['allStores'];
+        }
 
 		if(isset($request['communication_documents']) && $request['communication_documents']){
 		 	$validateThis['documents'] = $request['communication_documents'];
@@ -54,10 +57,15 @@ class Communication extends Model
 			'communication_type_id' => $request['communication_type_id'],
 			'target_stores'    => $request['target_stores'],
 			// 'documents' => $request['communication_documents'],
-			'allStores' => $request['all_stores']
+			// 'allStores' => $request['all_stores']
 			// 'remove_document' =>$request['remove_document']
 
 		];
+
+		if ($request['allStores'] != NULL) {
+            $validateThis['allStores'] = $request['allStores'];
+        }
+        
 		if(isset($request['communication_documents']) && $request['communication_documents']){
 		 	$validateThis['documents'] = $request['communication_documents'];
 		}

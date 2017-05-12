@@ -24,7 +24,7 @@ class Event extends Model
 
     public static function validateEvent($request)
     { 
-      $validateThis = [ 
+        $validateThis = [ 
                         'title'         => $request['title'],
                         'event_type'    => $request['event_type'],
                         'start'         => $request['start'],
@@ -32,13 +32,13 @@ class Event extends Model
                         'target_stores' => $request['target_stores'],
                         
                       ];
-      if ($request['allStores'] != NULL) {
-        $validateThis['allStores'] = $request['allStores'];
-      }
-      
-      $v = new EventValidator();
-      
-      return $v->validate($validateThis);
+        if ($request['allStores'] != NULL) {
+            $validateThis['allStores'] = $request['allStores'];
+        }
+
+        $v = new EventValidator();
+
+        return $v->validate($validateThis);
        
     }
 

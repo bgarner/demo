@@ -2,11 +2,6 @@ $("#allStores").change(function(){
 
 	if ($("#allStores").is(":checked")) {
 
-		$("#storeSelect option").each(function(){
-			$(this).removeAttr('selected');
-		});
-		$("#storeSelect").chosen('chosen:updated');
-
 		$("#storeSelect option").each(function(index){			
 			$(this).prop('selected', 'selected');
 		});
@@ -75,6 +70,7 @@ $(document).on('click','.communication-update',function(){
 	var banner_id = $("input[name='banner_id']").val();
 	var target_stores  = $("#storeSelect").val();
 	var allStores  = $("#allStores:checked").val();
+	console.log(allStores);
 
 	console.log(communication_type_id);
 	
