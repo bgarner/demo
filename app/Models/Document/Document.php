@@ -479,7 +479,7 @@ class Document extends Model
 
     public static function updateDocumentTarget(Request $request, $document)
     {
-        $all_stores = $request['allStores'];
+        $all_stores = $request['all_stores'];
         if($all_stores == 'on') {
             DocumentTarget::where('document_id', $document->id)->delete();
             $document->all_stores = 1;

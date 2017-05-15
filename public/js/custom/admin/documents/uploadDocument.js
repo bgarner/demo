@@ -33,7 +33,7 @@ var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
         formData.append("start", $("#start").val());
         formData.append("end", $("#end").val());
         formData.append("stores", $("#storeSelect").val());
-        formData.append("allStores", allStores);
+        formData.append("all_stores", allStores);
     },
     init: function () {
       this.on("success", function (file, response) {

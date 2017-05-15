@@ -115,7 +115,7 @@ $(document).on('click','.alert-create',function(){
 		  		stores : target_stores,
 		  		document_start : document_start,
 		  		document_end : document_end,
-		  		allStores : allStores
+		  		all_stores : allStores
 
 		  		
 		    },
