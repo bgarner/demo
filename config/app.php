@@ -251,6 +251,7 @@ return [
         'App\Http\Controllers\Calendar\ProductLaunchAdminController'            => 'Calendar',
         'App\Http\Controllers\Communication\CommunicationAdminController'       => 'Communications',
         'App\Http\Controllers\Communication\CommunicationTypesAdminController'  => 'Communications',
+        'App\Http\Controllers\Communication\CommunicationPartialController'     => 'Communications',
         'App\Http\Controllers\Document\DocumentManagerController'               => 'Library',
         'App\Http\Controllers\Document\FolderAdminController'                   => 'Library',
         'App\Http\Controllers\Document\DocumentAdminController'                 => 'Library',

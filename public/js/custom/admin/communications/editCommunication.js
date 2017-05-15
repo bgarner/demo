@@ -116,7 +116,7 @@ $(document).on('click','.communication-update',function(){
 		$(window).scrollTop(0);
 		return false;
 	}
-	console.log(communication_type_id);
+	
      if(hasError == false) {
 
 		$.ajax({
@@ -134,7 +134,7 @@ $(document).on('click','.communication-update',function(){
 		  		archive_at : end,
 		  		banner_id : banner_id,
 		  		target_stores : target_stores,
-		  		allStores : allStores,
+		  		all_stores : allStores,
 		  		communication_documents : communication_documents,
 		  		communication_packages : communication_packages,
 		  		remove_document : remove_document,

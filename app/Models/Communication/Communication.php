@@ -30,11 +30,10 @@ class Communication extends Model
 			'end'       => $request['archive_at'],
 			'communication_type_id' => $request['communication_type_id'],
 			'target_stores'    => $request['target_stores']
-			// 'documents' => $request['communication_documents']
 
 		];
-		if ($request['allStores'] != NULL) {
-            $validateThis['allStores'] = $request['allStores'];
+		if ($request['all_stores'] != NULL) {
+            $validateThis['allStores'] = $request['all_stores'];
         }
 
 		if(isset($request['communication_documents']) && $request['communication_documents']){
@@ -55,15 +54,12 @@ class Communication extends Model
 			'start'     => $request['send_at'],
 			'end'       => $request['archive_at'],
 			'communication_type_id' => $request['communication_type_id'],
-			'target_stores'    => $request['target_stores'],
-			// 'documents' => $request['communication_documents'],
-			// 'allStores' => $request['all_stores']
-			// 'remove_document' =>$request['remove_document']
+			'target_stores'    => $request['target_stores']
 
 		];
 
-		if ($request['allStores'] != NULL) {
-            $validateThis['allStores'] = $request['allStores'];
+		if ($request['all_stores'] != NULL) {
+            $validateThis['allStores'] = $request['all_stores'];
         }
         
 		if(isset($request['communication_documents']) && $request['communication_documents']){
@@ -278,8 +274,8 @@ class Communication extends Model
 	public static function updateTargetStores($id, $request)
 	{
 		$target_stores = $request['target_stores'];
-        $all_stores = $request['all_stores'];
-        if($all_stores == 'on') {
+        $allStores = $request['all_stores'];
+        if($allStores == 'on') {
             CommunicationTarget::where('communication_id', $id)->delete();
             $communication = Communication::find($id);
             $communication->all_stores = 1;
