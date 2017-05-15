@@ -136,15 +136,9 @@ class DocumentAdminController extends Controller
         $document = Document::find($id);
         $banner = UserSelectedBanner::getBanner();
         $banners = Banner::all();
-        // $tags = Tag::where('banner_id', $banner->id)->lists('name', 'id');
-        // $tag_ids = ContentTag::where('content_id', $id)->where('content_type', 'document')->get()->pluck('tag_id');
-        // $selected_tags = Tag::findMany($tag_ids)->pluck('id')->toArray();
+
         $storeList = StoreInfo::getStoreListing($banner->id);
         $target_stores = DocumentTarget::getTargetStoresForDocument($id);
-        $all_stores = false;
-        if (count($storeList) == count($target_stores)) {
-            $all_stores = true;
-        }
         
         $alert_types = ["" =>'Select one'];
         $alert_types += \DB::table('alert_types')->pluck('name', 'id')->toArray();
@@ -153,29 +147,13 @@ class DocumentAdminController extends Controller
         if( Alert::where('document_id', $id)->first()) {
             $alert_details = Alert::where('document_id', $id)->first();
         }
-        \Log::info('redirecting to document edit view');
-        \Log::info('documents: ');
-        \Log::info($document);
-        \Log::info('banner');
-        \Log::info($banner);
-        \Log::info($banners);
-        \Log::info('storelist');
-        \Log::info($storeList);
-        \Log::info('all_stores');
-        \Log::info($all_stores);
-        \Log::info('target_stores');
-        \Log::info($target_stores);
-        \Log::info('alert_types');
-        \Log::info($alert_types);
-        \Log::info('alert_details');
-        \Log::info($alert_details);
+
         return view('admin.document-meta.document-edit-meta-data')->with('document', $document)
                                                     ->with('banner', $banner)
                                                     ->with('banners', $banners)
                                                     ->with('storeList', $storeList)
                                                     ->with('target_stores', $target_stores)
-                                                    ->with('all_stores', $all_stores)
-                                                    ->with('alert_types', $alert_types )
+                                                    ->with('alert_types', $alert_types ) 
                                                     ->with('alert_details', $alert_details);
     }
 
