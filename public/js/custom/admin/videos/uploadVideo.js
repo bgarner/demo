@@ -27,6 +27,9 @@ var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
         formData.append("_token", $('[name=_token').val()); // Laravel expect the token post value to be named _token by default
         formData.append("upload_package_id", $('[name=upload_package_id').val());
         formData.append("banner_id", $('[name=banner_id]').val());
+        formData.append("start", $("#start").val());
+        formData.append("target_stores", $("#storeSelect").val());
+        formData.append("all_stores", allStores);
     },
     init: function () {
       this.on("success", function (file, response) {
@@ -104,3 +107,50 @@ myDropzone.on('removedfile', function(file) {
     $('#actions .cancel').addClass('disabled');
   }
 });
+
+$(document).ready(function() {
+
+    $(".chosen").chosen({ width:'100%' });
+
+    $( ".select-stores" ).click(function() {
+        
+
+        $(this).removeClass('btn-outline');
+        $(".all-stores").addClass('btn-outline');
+        $("#storeSelect option").each(function(){
+            $(this).removeAttr("selected");
+        });
+        $('.chosen').trigger('chosen:updated');
+
+        // console.log($("#storeSelect").val());
+        $('.select-stores-form').show();
+        $('.datepicker-div').show();
+        $('#file-uploader').show();
+        $('#actions').show();
+        $(".all-stores-form").hide();
+        allStores = 'off';
+    
+    });
+
+    $( ".all-stores" ).click(function() {
+
+        $(this).removeClass('btn-outline');
+        $(".select-stores").addClass('btn-outline');
+        $('.datepicker-div').show();
+        $('#file-uploader').show();
+        $('#actions').show();
+        $('.select-stores-form').hide();
+        $("#storeSelect option").each(function(index){
+            $(this).prop('selected', true);
+        });
+        allStores = 'on';
+        // console.log($("#storeSelect").val());
+    });
+
+    
+    $( ".all-stores" ).trigger( "click" );
+    $('.datetimepicker-start').datetimepicker({
+        format: 'YYYY-MM-DD HH:mm:ss'
+    });
+
+}); 

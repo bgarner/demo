@@ -15,6 +15,7 @@ class UpdateVideosTable extends Migration
     {
         Schema::table('videos', function (Blueprint $table) {
             $table->boolean('all_stores')->after('featured');
+            $table->date('start');
         });
     }
 
@@ -26,7 +27,8 @@ class UpdateVideosTable extends Migration
     public function down()
     {
         Schema::table('videos', function (Blueprint $table) {
-            $table-dropColoumn('all_stores');
+            $table->dropColumn('all_stores');
+            $table->dropColumn('start');
         });
     }
 }

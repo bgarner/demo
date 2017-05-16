@@ -130,6 +130,7 @@ class Document extends Model
     public static function storeDocument($request)
     {
 
+        \Log::info($request->all());
         $validate = Document::validateCreateDocument($request);
 
         if($validate['validation_result'] == 'false') {

@@ -115,7 +115,7 @@ myDropzone.on('removedfile', function(file) {
 
 $(document).ready(function() {
 
-    $(".chosen").chosen({ width:'75%' });
+    $(".chosen").chosen({ width:'100%' });
 
     $( ".select-stores" ).click(function() {
         

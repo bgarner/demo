@@ -14,6 +14,7 @@ use App\User;
 use FFMpeg\FFMpeg;
 use FFMpeg\FFProbe;
 use FFMpeg\Coordinate\TimeCode;
+use App\Models\Video\VideoTarget;
 
 
 class Video extends Model
@@ -21,7 +22,7 @@ class Video extends Model
     use SoftDeletes;
 
     protected $table = 'videos';
-    protected $fillable = ['upload_package_id', 'original_filename', 'original_extension', 'filename', 'title', 'description', 'uploader', 'likes', 'dislikes', 'featured', 'thumbnail', 'views'];
+    protected $fillable = ['upload_package_id', 'original_filename', 'original_extension', 'filename', 'title', 'description', 'uploader', 'likes', 'dislikes', 'featured', 'thumbnail', 'views', 'all_stores', 'start'];
     protected $dates = ['deleted_at'];
 
     public static function incrementViewCount($id)
@@ -58,10 +59,14 @@ class Video extends Model
         \Log::info($request->all());
         $validateThis = [
 
-            'filename'  => $request->file('document')
+            'filename'      => $request->file('document'),
+            'start'         => $request->start,
+            'target_stores' => $request['target_stores']
 
         ];
-
+        if ($request['all_stores'] != NULL) {
+            $validateThis['allStores'] = $request['all_stores'];
+        }
 
         \Log::info($validateThis);
 
@@ -75,10 +80,10 @@ class Video extends Model
     	$videos = Video::all()
                         ->each(function($file){
                             $file->uploaderFirstName = User::find($file->uploader)->firstname;
-                            $file->uploaderLastName = User::find($file->uploader)->lastname;
-                            $file->link = Utility::getModalLink($file->filename, $file->title, $file->original_extension, $file->id, 0);
-                            $file->link_with_icon = Utility::getModalLink($file->filename, $file->title, $file->original_extension, $file->id, 1);
-                            $file->icon = Utility::getIcon($file->original_extension);
+                            $file->uploaderLastName  = User::find($file->uploader)->lastname;
+                            $file->link              = Utility::getModalLink($file->filename, $file->title, $file->original_extension, $file->id, 0);
+                            $file->link_with_icon    = Utility::getModalLink($file->filename, $file->title, $file->original_extension, $file->id, 1);
+                            $file->icon              = Utility::getIcon($file->original_extension);
                             $file->prettyDateCreated = Utility::prettifyDate($file->created_at);
                             $file->prettyDateUpdated = Utility::prettifyDate($file->updated_at);
                         })
@@ -118,12 +123,14 @@ class Video extends Model
                 'likes'				=> 0,
                 'dislikes'			=> 0,
                 'featured'			=> 0,
-                'thumbnail'         => "video-placeholder_360.jpg"
+                'thumbnail'         => "video-placeholder_360.jpg",
+                'start'             => $request['start']
             );
 
             $video = Video::create($documentdetails);
             $video->save();
             $lastInsertedId= $video->id;
+            Self::updateTargetStores($request, $lastInsertedId);
         }
 
         return $video ;
@@ -353,5 +360,31 @@ class Video extends Model
         Video::find($video_id)->update(['thumbnail'=>$filename]);
 
         return;
+    }
+
+    public static function updateTargetStores($request, $id)
+    {
+        $target_stores = $request['target_stores'];
+        $all_stores = $request['allStores'];
+        $video = Video::find($id);
+        if( $all_stores == 'on' ){
+            VideoTarget::where('video_id', $id)->delete();
+            $video->all_stores = 1;
+            $video->save();
+        }
+        else{
+            if (isset($request['target_stores']) && $request['target_stores'] != '' ) {
+                VideoTarget::where('video_id', $id)->delete();
+                $video->all_stores = 0;
+                $video->save();
+                foreach ($target_stores as $store) {
+                    VideoTarget::create([
+                        'video_id'  => $urgentNotice->id,
+                        'store_id'  => $store
+                    ]);
+                }
+            }  
+        }
+        return;         
     }
 }

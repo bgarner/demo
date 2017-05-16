@@ -9,7 +9,6 @@
         "doctrine/dbal": "^2.5",
         "fzaninotto/faker": "^1.5",
         "guzzlehttp/guzzle": "~6.0",
-        "laracademy/interactive-make": "^0.9.0",
         "laravel/browser-kit-testing": "^1.0",
         "laravel/dusk": "^1.0",
         "laravel/framework": "5.4.*",

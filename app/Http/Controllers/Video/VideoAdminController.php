@@ -50,11 +50,13 @@ class VideoAdminController extends Controller
         $banner = UserSelectedBanner::getBanner();
         $banners = Banner::all();     
         $packageHash = sha1(time() . time());
+        $storeList = StoreInfo::getStoreListing($banner->id);
         
         return view('admin.video.video-manager.video-upload')
             ->with('packageHash', $packageHash)
             ->with('banner', $banner)
-            ->with('banners', $banners); 
+            ->with('banners', $banners)
+            ->with('storeList', $storeList); 
     }
 
     /**
@@ -81,15 +83,15 @@ class VideoAdminController extends Controller
         
         $banners = Banner::all();
         
-        $tags = Tag::where('banner_id', $banner->id)->pluck('name', 'id');
+        // $tags = Tag::where('banner_id', $banner->id)->pluck('name', 'id');
         
         $videos = Video::where('upload_package_id', $package)->get();
 
         return view('admin.video.video-manager.video-add-meta-data')
                 ->with('videos', $videos)
                 ->with('banner', $banner)
-                ->with('banners', $banners)
-                ->with('tags', $tags);
+                ->with('banners', $banners);
+                // ->with('tags', $tags);
             
     }    
 

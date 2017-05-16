@@ -25,11 +25,11 @@ class Communication extends Model
 	{
 		$validateThis =  [
 
-			'subject'   => $request['subject'],
-			'start'     => $request['send_at'],
-			'end'       => $request['archive_at'],
+			'subject'               => $request['subject'],
+			'start'                 => $request['send_at'],
+			'end'                   => $request['archive_at'],
 			'communication_type_id' => $request['communication_type_id'],
-			'target_stores'    => $request['target_stores']
+			'target_stores'         => $request['target_stores']
 
 		];
 		if ($request['all_stores'] != NULL) {
@@ -50,11 +50,11 @@ class Communication extends Model
 	{
 		$validateThis =  [
 
-			'subject'   => $request['subject'],
-			'start'     => $request['send_at'],
-			'end'       => $request['archive_at'],
+			'subject'               => $request['subject'],
+			'start'                 => $request['send_at'],
+			'end'                   => $request['archive_at'],
 			'communication_type_id' => $request['communication_type_id'],
-			'target_stores'    => $request['target_stores']
+			'target_stores'         => $request['target_stores']
 
 		];
 
@@ -176,13 +176,13 @@ class Communication extends Model
 						  ->get();
 
 		foreach($comm as $c){
-			$c->archived = true;
-			$c->since = Utility::getTimePastSinceDate($c->send_at);
-			$c->prettyDate = Utility::prettifyDate($c->send_at);
-			$preview_string = strip_tags($c->body);
-			$c->trunc = Communication::truncateHtml($preview_string);
-			$c->label_name = Communication::getCommunicationCategoryName($c->communication_type_id);
-			$c->label_colour = Communication::getCommunicationCategoryColour($c->communication_type_id);
+			$c->archived        = true;
+			$c->since           = Utility::getTimePastSinceDate($c->send_at);
+			$c->prettyDate      = Utility::prettifyDate($c->send_at);
+			$preview_string     = strip_tags($c->body);
+			$c->trunc           = Communication::truncateHtml($preview_string);
+			$c->label_name      = Communication::getCommunicationCategoryName($c->communication_type_id);
+			$c->label_colour    = Communication::getCommunicationCategoryColour($c->communication_type_id);
 			$c->has_attachments = Communication::hasAttachments($c->id);
 		}
 		return $comm;
@@ -191,8 +191,8 @@ class Communication extends Model
 
 	public static function getCommunicationById($id)
 	{
-		$communication = Communication::find($id);
-		$communication->since = Utility::getTimePastSinceDate($communication->send_at);
+		$communication             = Communication::find($id);
+		$communication->since      = Utility::getTimePastSinceDate($communication->send_at);
 		$communication->prettyDate = Utility::prettifyDate($communication->send_at);
 		return $communication;
 
@@ -212,15 +212,15 @@ class Communication extends Model
 			$is_draft = 1;
 		}
 		$communication = Communication::create([
-			'subject'   => $request["subject"],
+			'subject'               => $request["subject"],
 			'communication_type_id' => $request["communication_type_id"],
-			'body'      => $request["body"],
-			'sender' => "",
-			'importance'=> 1,
-			'is_draft'  => $is_draft,
-			'send_at'   => $request["send_at"],
-			'archive_at'=> $request["archive_at"],
-			'banner_id' => $request["banner_id"]
+			'body'                  => $request["body"],
+			'sender'                => "",
+			'importance'            => 1,
+			'is_draft'              => $is_draft,
+			'send_at'               => $request["send_at"],
+			'archive_at'            => $request["archive_at"],
+			'banner_id'             => $request["banner_id"]
 		]);
 
 		Communication::updateTargetStores($communication->id, $request);
@@ -245,20 +245,20 @@ class Communication extends Model
 		$communication = Communication::find($id);
 
 		$communication["subject"] = $request["subject"];
-		$communication["body"] = $request["body"];
+		$communication["body"]    = $request["body"];
 		if (isset($request['communication_type_id'])) {
 			$communication["communication_type_id"] = $request["communication_type_id"];
 		}
 		
-		$communication["sender"] = $request["sender"];
+		$communication["sender"]     = $request["sender"];
 		$communication["importance"] = $request["importance"];
-		$communication["send_at"] = $request["send_at"];
+		$communication["send_at"]    = $request["send_at"];
 		$communication["archive_at"] = $request["archive_at"];
 		if ($request["send_at"] > Carbon::now()) {
-			$communication["is_draft"] = 1;
+		$communication["is_draft"]   = 1;
 		}
 		else {
-			$communication["is_draft"] = 0;
+		$communication["is_draft"]   = 0;
 		}
 
 		$communication->save();
@@ -312,7 +312,7 @@ class Communication extends Model
 		if (isset($add_docs)) {
 			foreach ($add_docs as $doc) {
 			   CommunicationDocument::create([
-				  'communication_id'   => $id,
+				  'communication_id' => $id,
 				  'document_id'      => $doc
 			   ]);
 			}
@@ -332,7 +332,7 @@ class Communication extends Model
 		if (isset($add_packages)) {
 			foreach ($add_packages as $package) {
 				CommunicationPackage::create([
-					'communication_id'   => $id,
+					'communication_id'=> $id,
 					'package_id'      => $package
 				]);
 			}
@@ -344,15 +344,15 @@ class Communication extends Model
 		$communication_document_list = CommunicationDocument::where('communication_id', $id)->get();
 		$documents = [];
 		foreach ($communication_document_list as $list_item) {
-			$doc = Document::find($list_item->document_id);
-			$doc["folder_path"] = Document::getFolderPathForDocument($list_item->document_id);
-			$doc["link"] = Utility::getModalLink($doc->filename, $doc->title, $doc->original_extension, $doc->id, 0);
+			$doc                   = Document::find($list_item->document_id);
+			$doc["folder_path"]    = Document::getFolderPathForDocument($list_item->document_id);
+			$doc["link"]           = Utility::getModalLink($doc->filename, $doc->title, $doc->original_extension, $doc->id, 0);
 			$doc["link_with_icon"] = Utility::getModalLink($doc->filename, $doc->title, $doc->original_extension, $doc->id, 1);
-			$doc["icon"] = Utility::getIcon($doc->original_extension);
-			$doc["anchor_only"] =  Utility::getModalLink($doc->filename, $doc->title, $doc->original_extension, $doc->id, 1, 1);
+			$doc["icon"]           = Utility::getIcon($doc->original_extension);
+			$doc["anchor_only"]    = Utility::getModalLink($doc->filename, $doc->title, $doc->original_extension, $doc->id, 1, 1);
 
-			$doc["prettyDate"] = Utility::prettifyDate($doc->updated_at);
-			$doc["since"] = Utility::getTimePastSinceDate($doc->updated_at);
+			$doc["prettyDate"]     = Utility::prettifyDate($doc->updated_at);
+			$doc["since"]          = Utility::getTimePastSinceDate($doc->updated_at);
 			array_push($documents, $doc);
 		}
 		return $documents;

@@ -5,7 +5,7 @@
     @section('title', 'Upload New Videos')
     @include('admin.includes.head')
     <link rel="stylesheet" type="text/css" href="/css/custom/tree.css">
-    <!-- <link rel="stylesheet" type="text/css" href="/css/custom/admin/file-upload.css"> -->
+    <link rel="stylesheet" type="text/css" href="/css/custom/admin/file-upload.css">
     <meta name="csrf-token" content="{!! csrf_token() !!}"/>
     <style type="text/css">
          #watermark{
@@ -62,6 +62,37 @@
                 </div> -->
 
                 <div class="ibox-content form-group form-horizontal">
+
+                    <center>
+                        <span class="btn btn-success btn-lg all-stores">All Stores</span>
+                        <span class="btn btn-success btn-lg btn-outline select-stores">Selected Stores</span>
+                    </center>
+
+                    <div class="form-container">
+
+                        <div class="upload-form select-stores-form" style="padding-bottom: 10px;">
+                            <label class="col-sm-2 control-label">Target Stores</label>
+                            <div class="col-sm-10">
+                                {!! Form::select('stores[]', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
+                                {!! Form::label('allStores', 'Or select all stores:', ['class'=>'hidden']) !!}
+                                {!! Form::checkbox('allStores', null, false ,['id'=> 'allStores', 'class'=>'hidden'] ) !!}
+                            </div>
+                        </div>
+
+                        <div class="datepicker-div">
+
+                                <label class="col-sm-2 control-label">Start Date</label>
+
+                                <div class="col-sm-10">
+                                    <div class="input-daterange input-group" id="datepicker">
+                                        <input type="text" class="input-sm form-control datetimepicker-start" name="start" id="start" value="" />
+                                    </div>
+                                </div>
+                        </div>
+
+
+                    </div>
+
 
                 	<div id="file-uploader" class="visible">
 
@@ -177,9 +208,11 @@
             <script type="text/javascript" src="/js/vendor/underscore-1.8.3.js"></script>
             <script type="text/javascript" src="/js/vendor/dropzone.js"></script>
             <script type="text/javascript" src="/js/vendor/tablesorter.min.js"></script>
+            <script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
             <script type="text/javascript" src="/js/vendor/lightbox.min.js"></script>
             <script type="text/javascript" src="/js/custom/admin/documents/breadcrumb.js"></script>
             <script type="text/javascript" src="/js/custom/admin/videos/uploadVideo.js"></script>
+            <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
             
             
             <script type="text/javascript">
@@ -188,6 +221,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
             </script>
 
                 @include('site.includes.bugreport')
