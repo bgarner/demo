@@ -122,7 +122,7 @@ $(document).on('click','.urgentnotice-create',function(){
 	var end = $("#end").val();
 	var banner_id = $("input[name='banner_id']").val();
 	var target_stores  = $("#storeSelect").val();
-	var allStores  = $("allStores:checked").val();
+	var all_stores  = $("#allStores:checked").val();
 	var urgentnotice_documents = [];
 	var urgentnotice_folders = [];
 	$(".urgentnotice-documents").each(function(){
@@ -131,8 +131,6 @@ $(document).on('click','.urgentnotice-create',function(){
 	$(".urgentnotice-folders").each(function(){
 		urgentnotice_folders.push($(this).find('td:first').attr('data-folderid'));
 	});
-
-	console.log(target_stores);
 
 	$(".attachment").each(function(){
 		attachments.push($(this).attr('data-attachmentid'));
@@ -152,7 +150,7 @@ $(document).on('click','.urgentnotice-create',function(){
 		$(window).scrollTop(0);
 		return false;
 	}
-	if( target_stores == null && typeof allStores === 'undefined' ) {
+	if( target_stores == null && typeof all_stores === 'undefined' ) {
 		swal("Oops!", "Target stores not selected.", "error"); 
 		hasError = true;
 		$(window).scrollTop(0);
@@ -171,6 +169,7 @@ $(document).on('click','.urgentnotice-create',function(){
 		  		end : end,
 		  		banner_id : banner_id,
 		  		target_stores : target_stores,
+		  		all_stores : all_stores,
 		  		urgentnotice_folders : urgentnotice_folders,
 		  		urgentnotice_documents : urgentnotice_documents,
 		  		attachment_type_id : 1 //adding dummy value to keep the database as was before; attachment_type would not hold any meaning though

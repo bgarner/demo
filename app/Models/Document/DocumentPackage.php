@@ -17,7 +17,7 @@ class DocumentPackage extends Model
     	return self::join('document_target', 'document_target.document_id', '=' ,'document_package.document_id')
     						->where('package_id', $package_id )
     						->where('document_target.store_id',$store_number)
-    						->where('document_target.deleted_at', null)
+    						// ->where('document_target.deleted_at', null)
     						->get()->pluck('document_id')->toArray();	
     }
     

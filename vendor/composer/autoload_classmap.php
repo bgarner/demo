@@ -691,4 +691,6 @@ return array(
     'UpdateDocumentsTable' => $baseDir . '/database/migrations/2017_05_12_152143_update_documents_table.php',
     'UpdateEventsTable' => $baseDir . '/database/migrations/2017_05_11_165610_update_events_table.php',
     'UpdateTasksTable' => $baseDir . '/database/migrations/2017_02_28_131811_update_tasks_table.php',
+    'UpdateUrgentNoticeTable' => $baseDir . '/database/migrations/2017_05_16_164022_update_urgent_notice_table.php',
+    'UpdateVideosTable' => $baseDir . '/database/migrations/2017_05_16_171543_update_videos_table.php',
 );

@@ -146,6 +146,7 @@ $(document).on('click','.urgentnotice-update',function(){
 	var end = $("#end").val();
 	var banner_id = $("input[name='banner_id']").val();
 	var target_stores  = $("#storeSelect").val();
+	var all_stores  = $("#allStores:checked").val();
 	var remove_document = [];
 	var remove_folder = [];
 	var urgentnotice_files = [];
@@ -196,6 +197,7 @@ $(document).on('click','.urgentnotice-update',function(){
 		  		end : end,
 		  		banner_id : banner_id,
 		  		target_stores : target_stores,
+		  		all_stores : all_stores,
 		  		remove_document : remove_document,
 				remove_folder : remove_folder,
 				urgentnotice_files : urgentnotice_files,

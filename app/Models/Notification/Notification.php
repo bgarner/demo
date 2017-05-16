@@ -29,7 +29,7 @@ class Notification extends Model
                                         ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
                                 })
                                 ->where('document_target.store_id', '=', $storeNumber)
-                                ->where('document_target.deleted_at', '=', null)
+                                // ->where('document_target.deleted_at', '=', null)
     							->orderBy('documents.start', 'desc')
                                 ->select('documents.*', DB::raw('count(*) as count'))
                                 ->groupBy('documents.upload_package_id')
@@ -46,7 +46,7 @@ class Notification extends Model
                                         ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
                                 })
                                 ->where('document_target.store_id', '=', $storeNumber)
-                                ->where('document_target.deleted_at', '=', null)
+                                // ->where('document_target.deleted_at', '=', null)
                                 ->orderBy('documents.start', 'desc')
                                 ->select('documents.*', DB::raw('count(*) as count'))
                                 ->groupBy('documents.upload_package_id')

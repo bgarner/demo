@@ -93,6 +93,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
             'Laravel\\Passport\\' => 17,
             'Laravel\\Dusk\\' => 13,
             'Laravel\\BrowserKitTesting\\' => 26,
+            'Laracademy\\Commands\\' => 20,
         ),
         'I' => 
         array (
@@ -297,6 +298,10 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'Laravel\\BrowserKitTesting\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/browser-kit-testing/src',
+        ),
+        'Laracademy\\Commands\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laracademy/interactive-make/src',
         ),
         'Illuminate\\' => 
         array (
@@ -1133,6 +1138,8 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'UpdateDocumentsTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_12_152143_update_documents_table.php',
         'UpdateEventsTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_11_165610_update_events_table.php',
         'UpdateTasksTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_28_131811_update_tasks_table.php',
+        'UpdateUrgentNoticeTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_16_164022_update_urgent_notice_table.php',
+        'UpdateVideosTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_16_171543_update_videos_table.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

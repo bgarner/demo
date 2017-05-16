@@ -80,7 +80,7 @@ class Document extends Model
                                     ->orWhere('documents.end', '=', '0000-00-00 00:00:00' );
                             })
                             ->where('documents.deleted_at', '=', null)
-                            ->where('document_target.deleted_at', '=', null)
+                            // ->where('document_target.deleted_at', '=', null)
                             ->where('document_target.store_id', strval($storeNumber))
                             ->select('documents.*')
                             ->get();
@@ -90,7 +90,7 @@ class Document extends Model
                 $files = \DB::table('file_folder')
                             ->join('documents', 'file_folder.document_id', '=', 'documents.id')
                             ->where('file_folder.folder_id', '=', $global_folder_id)
-                            ->where('documents.deleted_at', '=', null)
+                            // ->where('documents.deleted_at', '=', null)
                             ->select('documents.*')
                             ->get();
             }

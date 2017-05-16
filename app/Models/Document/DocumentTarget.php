@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class DocumentTarget extends Model
 {
-    use SoftDeletes;
+    // use SoftDeletes;
     protected $table = 'document_target';
     protected $fillable = ['document_id', 'store_id'];
     // protected $dates = ['deleted_at'];

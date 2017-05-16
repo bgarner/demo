@@ -136,11 +136,6 @@ class UrgentNoticeAdminController extends Controller
 
         $storeList = StoreInfo::getStoreListing($banner->id);
         $target_stores = UrgentNoticeTarget::where('urgent_notice_id', $id)->get()->pluck('store_id')->toArray();
-        $all_stores = false;
-        if (count($storeList) == count($target_stores)) {
-            $all_stores = true;
-        }
-
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
         $folderStructure = FolderStructure::getNavigationStructure($banner->id);
         
@@ -153,7 +148,6 @@ class UrgentNoticeAdminController extends Controller
                                             ->with('attached_documents', $attached_documents)
                                             ->with('target_stores', $target_stores)
                                             ->with('storeList', $storeList)
-                                            ->with('all_stores', $all_stores)
                                             ->with('navigation', $fileFolderStructure)
                                             ->with('folderStructure', $folderStructure);
     }

@@ -3913,12 +3913,12 @@
         "version_normalized": "0.9.9.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/padraic/mockery.git",
+            "url": "https://github.com/mockery/mockery.git",
             "reference": "6fdb61243844dc924071d3404bb23994ea0b6856"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/padraic/mockery/zipball/6fdb61243844dc924071d3404bb23994ea0b6856",
+            "url": "https://api.github.com/repos/mockery/mockery/zipball/6fdb61243844dc924071d3404bb23994ea0b6856",
             "reference": "6fdb61243844dc924071d3404bb23994ea0b6856",
             "shasum": ""
         },
@@ -5392,5 +5392,40 @@
         ],
         "description": "HTML and Form Builders for the Laravel Framework",
         "homepage": "http://laravelcollective.com"
+    },
+    {
+        "name": "laracademy/interactive-make",
+        "version": "0.9",
+        "version_normalized": "0.9.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/laracademy/interactive-make.git",
+            "reference": "8c2ffd526100cd494d7f384ec583eeee9ee42d1a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/laracademy/interactive-make/zipball/8c2ffd526100cd494d7f384ec583eeee9ee42d1a",
+            "reference": "8c2ffd526100cd494d7f384ec583eeee9ee42d1a",
+            "shasum": ""
+        },
+        "time": "2017-05-04T17:51:28+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Laracademy\\Commands\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Michael McMullen",
+                "email": "packages@laracademy.co"
+            }
+        ],
+        "description": "Interactive make CLI replacement for Laravel"
     }
 ]
