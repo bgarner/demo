@@ -591,6 +591,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'CreateUserResourcePivot' => __DIR__ . '/../..' . '/database/migrations/2017_02_15_132617_create_user_resource_pivot.php',
         'CreateUserRolePivot' => __DIR__ . '/../..' . '/database/migrations/2017_02_15_132614_create_user_role_pivot.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
+        'CreateVideosTargetTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_16_195236_create_videos_target_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
@@ -1139,7 +1140,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'UpdateEventsTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_11_165610_update_events_table.php',
         'UpdateTasksTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_28_131811_update_tasks_table.php',
         'UpdateUrgentNoticeTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_16_164022_update_urgent_notice_table.php',
-        'UpdateVideosTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_16_171543_update_videos_table.php',
+        'UpdateVideosTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_16_195257_update_videos_table.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
