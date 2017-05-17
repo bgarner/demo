@@ -4,7 +4,7 @@ var previewNode = document.querySelector("#template");
 previewNode.id = "";
 var previewTemplate = previewNode.parentNode.innerHTML;
 previewNode.parentNode.removeChild(previewNode);
-
+var allStores;
 
 var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
     url: "/admin/video", // Set the url
@@ -22,7 +22,6 @@ var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
       done();
     },
     sending: function(file, xhr, formData) {
-       console.log($('#folder-title').attr('data-folderid'));
       // Pass token. You can use the same method to pass any other values as well such as a id to associate the image with for example.
         formData.append("_token", $('[name=_token').val()); // Laravel expect the token post value to be named _token by default
         formData.append("upload_package_id", $('[name=upload_package_id').val());
@@ -114,15 +113,12 @@ $(document).ready(function() {
 
     $( ".select-stores" ).click(function() {
         
-
         $(this).removeClass('btn-outline');
         $(".all-stores").addClass('btn-outline');
         $("#storeSelect option").each(function(){
             $(this).removeAttr("selected");
         });
         $('.chosen').trigger('chosen:updated');
-
-        // console.log($("#storeSelect").val());
         $('.select-stores-form').show();
         $('.datepicker-div').show();
         $('#file-uploader').show();
@@ -144,7 +140,6 @@ $(document).ready(function() {
             $(this).prop('selected', true);
         });
         allStores = 'on';
-        // console.log($("#storeSelect").val());
     });
 
     

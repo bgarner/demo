@@ -73,7 +73,7 @@
                         <div class="upload-form select-stores-form" style="padding-bottom: 10px;">
                             <label class="col-sm-2 control-label">Target Stores</label>
                             <div class="col-sm-10">
-                                {!! Form::select('stores[]', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
+                                {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
                                 {!! Form::label('allStores', 'Or select all stores:', ['class'=>'hidden']) !!}
                                 {!! Form::checkbox('allStores', null, false ,['id'=> 'allStores', 'class'=>'hidden'] ) !!}
                             </div>

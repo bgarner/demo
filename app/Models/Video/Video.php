@@ -61,7 +61,7 @@ class Video extends Model
 
             'filename'      => $request->file('document'),
             'start'         => $request->start,
-            'target_stores' => $request['target_stores']
+            'target_stores' => explode(',', $request['target_stores'])
 
         ];
         if ($request['all_stores'] != NULL) {
@@ -364,8 +364,7 @@ class Video extends Model
 
     public static function updateTargetStores($request, $id)
     {
-        $target_stores = $request['target_stores'];
-        $all_stores = $request['allStores'];
+        $all_stores = $request['all_stores'];
         $video = Video::find($id);
         if( $all_stores == 'on' ){
             VideoTarget::where('video_id', $id)->delete();
@@ -377,11 +376,15 @@ class Video extends Model
                 VideoTarget::where('video_id', $id)->delete();
                 $video->all_stores = 0;
                 $video->save();
+                $target_stores = $request['target_stores'];
+                if(! is_array($target_stores) ) {
+                    $target_stores = explode(',',  $request['target_stores'] );    
+                }
                 foreach ($target_stores as $store) {
-                    VideoTarget::create([
-                        'video_id'  => $urgentNotice->id,
-                        'store_id'  => $store
-                    ]);
+                    VideoTarget::insert([
+                        'video_id' => $id,
+                        'store_id' => $store
+                        ]);    
                 }
             }  
         }
