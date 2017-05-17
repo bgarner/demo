@@ -5,12 +5,12 @@
 
             </div>
             <div class="pull-right">
-            	<small>Application Last Updated: @include('site.includes.release-date')</small>&nbsp;&nbsp;&nbsp;
-            	<a href="#" data-toggle="modal" data-target="#changelogmodal"><i class="fa fa-rocket"></i> What's New?</a>&nbsp;&nbsp;&nbsp;
-            	<a href="#" data-toggle="modal" data-target="#bugreportmodal"><i class="fa fa-comment"></i> Feedback</a>&nbsp;&nbsp;&nbsp;
+            	<small>{{__("Application Last Updated")}}: @include('site.includes.release-date')</small>&nbsp;&nbsp;&nbsp;
+            	<a href="#" data-toggle="modal" data-target="#changelogmodal"><i class="fa fa-rocket"></i> {{__("What's New?")}}</a>&nbsp;&nbsp;&nbsp;
+            	<a href="#" data-toggle="modal" data-target="#bugreportmodal"><i class="fa fa-comment"></i> {{__("Feedback")}}</a>&nbsp;&nbsp;&nbsp;
                 {{-- <a href="#" data-toggle="modal" data-target="#langmodal"><i class="fa fa-language"></i> Language</a> --}}
                 <div class="btn-group dropup">
-                    <a href="#" data-toggle="dropdown"><i class="fa fa-language"></i> Language</a>
+                    <a href="#" data-toggle="dropdown"><i class="fa fa-language"></i> {{__("Language")}}</a>
                     {{-- <button data-toggle="dropdown" class="btn btn-default btn-xs dropdown-toggle" aria-expanded="false">Action <span class="caret"></span></button> --}}
                     <ul class="dropdown-menu lang-select">
 

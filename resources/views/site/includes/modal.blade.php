@@ -41,7 +41,7 @@
                 </div>
                 <div id="modalBody" class="modal-body event-modal-body"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary btn-sm btn-outline" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                    <button type="button" class="btn btn-primary btn-sm btn-outline" data-dismiss="modal"><i class="fa fa-times"></i> {{__("Close")}}</button>
                 </div>
         </div>
     </div>
@@ -63,7 +63,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary btn-sm btn-outline" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                    <button type="button" class="btn btn-primary btn-sm btn-outline" data-dismiss="modal"><i class="fa fa-times"></i> {{__("Close")}}</button>
                 </div>
         </div>
     </div>
@@ -76,9 +76,9 @@
         <div class="modal-content animated flipInY">
 
             <div class="modal-header clearfix">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">{{__("Close")}}</span></button>
                 <i class="fa fa-comment-o modal-icon"></i>
-                <h4 class="modal-title">Feedback</h4>
+                <h4 class="modal-title">{{__("Feedback")}}</h4>
   <!--               <small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small> -->
             </div>
 
@@ -89,15 +89,15 @@
                     <input type="hidden" name="bugreport_user" id="bugreport_user" value="" />
                     <input type="hidden" name="bugreport_url" id="bugreport_url" value="{{ Request::path() }}" />
 
-                    <textarea rows="5" class="form-control" name="bugreport_desc" id="bugreport_desc" placeholder="Please describe the issue"></textarea>
+                    <textarea rows="5" class="form-control" name="bugreport_desc" id="bugreport_desc" placeholder="{{__("Please describe the issue")}}"></textarea>
                     <br />
                     <div class="row">
                         <div class="col-md-8">
-                            <input type="email" placeholder="Enter your email (optional)" class="form-control" name="bugreport_email"  id="bugreport_email" value="" />
+                            <input type="email" placeholder="{{__("Enter your email")}} ({{__("optional")}})" class="form-control" name="bugreport_email"  id="bugreport_email" value="" />
                         </div>
                         <div class="col-md-4">
                             <label>
-                                <input class="" type="checkbox" value="1" name="bugreport_followup" id="bugreport_followup"</input> Need a Follow Up?
+                                <input class="" type="checkbox" value="1" name="bugreport_followup" id="bugreport_followup"</input> {{__("Need a Follow Up?")}}
                             </label>
                         </div>
                     </div>
@@ -108,58 +108,13 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary sendBugReport" data-dismiss="modal">Send</button>
+                <button type="button" class="btn btn-white" data-dismiss="modal">{{__("Close")}}</button>
+                <button type="button" class="btn btn-primary sendBugReport" data-dismiss="modal">{{__("Send")}}</button>
             </div>
         </div>
     </div>
 </div>
 
-
-<div class="modal inmodal" id="langmodal" tabindex="-1" role="event" aria-hidden="true" style="display: none;">
-
-    <div class="modal-dialog">
-        <div class="modal-content animated flipInY">
-
-            <div class="modal-header clearfix">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                <i class="fa fa-language modal-icon"></i>
-                <h4 class="modal-title">Select Your Language</h4>
-  <!--               <small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small> -->
-            </div>
-
-            <div class="modal-body" style="padding: 10px 10px;">
-                <div class="form-group">
-
-                    <input type="hidden" name="bugreport_store_number" id="bugreport_store_number" value="{{ Request::segment(1) }}" />
-                    <input type="hidden" name="bugreport_user" id="bugreport_user" value="" />
-                    <input type="hidden" name="bugreport_url" id="bugreport_url" value="{{ Request::path() }}" />
-
-                    <textarea rows="5" class="form-control" name="bugreport_desc" id="bugreport_desc" placeholder="Please describe the issue"></textarea>
-                    <br />
-                    <div class="row">
-                        <div class="col-md-8">
-                            <input type="email" placeholder="Enter your email (optional)" class="form-control" name="bugreport_email"  id="bugreport_email" value="" />
-                        </div>
-                        <div class="col-md-4">
-                            <label>
-                                <input class="" type="checkbox" value="1" name="bugreport_followup" id="bugreport_followup"</input> Need a Follow Up?
-                            </label>
-                        </div>
-                    </div>
-
-
-                </div>
-
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary sendBugReport" data-dismiss="modal">Send</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script>
     document.getElementById("videoplayer").allowTransparency = "true";

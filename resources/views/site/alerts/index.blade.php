@@ -40,7 +40,7 @@
                                 <div class="col-md-6">
                                     <h2>
                                     	@if($title == "")
-                                    		{{ trans('lang.AllAlerts') }} 
+                                    		{{ ucwords(trans('lang.label.all_alerts')) }}
                                     	@else
                                     		{{ $title }}
                                     	@endif
@@ -53,7 +53,7 @@
                                     <form class="form-inline" >
                                         <div class="pull-right">
 
-                                            <small style="font-weight: bold; padding-right: 5px;">Show Archive</small>
+                                            <small style="font-weight: bold; padding-right: 5px;">{{ ucwords(trans('lang.show_archive')) }}</small>
 
                                                 <div class="switch pull-right">
                                                     <div class="archive-onoffswitch onoffswitch">
@@ -89,10 +89,10 @@
                                 <thead>
                                     <tr>
 
-                                        <th> Type</th>
-                                        <th> Title </th>
+                                        <th> {{ ucwords(trans('lang.type')) }}</th>
+                                        <th> {{ ucwords(trans('lang.title')) }} </th>
                                         <!-- <th> Description </th> -->
-                                        <th> Date </th>
+                                        <th> {{ ucwords(trans('lang.date')) }} </th>
                                     </tr>
                                 </thead>
                                 <tbody>

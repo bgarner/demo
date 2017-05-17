@@ -25,31 +25,31 @@
 
 		<div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-12">
-                <h2>Product Launches</h2>
-                <small class="pull-right"> Last Updated : {{$lastUpdated}} </small>
+                <h2>{{ __("Product Launches") }}</h2>
+                <small class="pull-right"> {{ __("Last Updated")}} : {{$lastUpdated}} </small>
             </div>
-        </div>        
+        </div>
 
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="ibox">
-                        
+
                         <div class="ibox-content">
-							
-			                    	
+
+
 	                    	<table class="table dataTable" id="productLaunchDataTable" >
 	                    		<thead>
 	                    			<tr role="row">
-	                    				<th>Launch Date</th>
-	                    				<th>Event Type</th>
-	                    				<th>Style Number</th>
-	                    				<th>Vendor Code</th>
-	                    				<th>Style</th>
-	                    				<th>Retail Price</th>
-	                    				<th>Tracking</th>
-	                    				
+	                    				<th>{{__("Launch Date")}}</th>
+	                    				<th>{{__("Event Type")}}</th>
+	                    				<th>{{__("Style Number")}}</th>
+	                    				<th>{{__("Vendor Code")}}</th>
+	                    				<th>{{__("Style")}}</th>
+	                    				<th>{{__("Retail Price")}}</th>
+	                    				<th>{{__("Tracking")}}</th>
+
 	                    			</tr>
 	                    		</thead>
 	                    		<tbody>
@@ -62,14 +62,14 @@
 											<td>{{$productLaunch->style_name}}</td>
 											<td>{{$productLaunch->retail_price}}</td>
 											<td>{{$productLaunch->tracking}}</td>
-											
+
 
 										</tr>
 	                    			@endforeach
-				                    
+
 				                </tbody>
 			                </table>
-					               
+
                         </div>
 
                     </div>
@@ -81,10 +81,10 @@
 
 	    @include('site.includes.scripts')
 
-	
+
 		<script type="text/javascript" src="/js/plugins/dataTables/datatables.min.js"></script>
 		<script>
-			
+
 	        $(document).ready(function(){
 	            $('.dataTable').DataTable({
 	                pageLength: 50,
@@ -97,7 +97,7 @@
 
 
 		</script>
-		
+
 
 		@include('site.includes.modal')
 

@@ -43,7 +43,7 @@
                     <div class="ibox float-e-margins">
 
                         <div class="ibox-title">
-                            <h2>Featured Content</h2>
+                            <h2>{{__("Featured Content")}}</h2>
                         </div>
 
                         <div class="ibox-content clearfix">
@@ -76,7 +76,7 @@
                 <div class="col-lg-4">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h2>Featured Video</h2>
+                            <h2>{{__("Featured Video")}}</h2>
                         </div>
 
                         <a href="/{{ Request::segment(1) }}/video/watch/{{$featuredVideo->id}}"><img src="/video/thumbs/{{$featuredVideo->thumbnail}}" data-video-id="{{$featuredVideo->id}}" class="trackclick img-responsive" style="width: 100%" /></a>
@@ -85,7 +85,7 @@
                             <div class="ibox-title clearfix">
                                 <div class="pull-left">
                                     <h3><a href="/{{ Request::segment(1) }}/video/watch/{{$featuredVideo->id}}" class="trackclick" data-video-id="{{$featuredVideo->id}}">{{$featuredVideo->title}}</a></h3>
-                                    <p>{{$featuredVideo->views}} views &middot; {{$featuredVideo->sinceCreated}} ago</p>
+                                    <p>{{$featuredVideo->views}} views &middot; {{$featuredVideo->sinceCreated}} {{__("ago")}}</p>
                                     {{-- <h6>Tags:</h6>
                                     <span class="label">SOmething</span>
                                     <span class="label">SOm3thing totally different</span> --}}
@@ -115,7 +115,7 @@
                 <div class="col-lg-4">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h2>Quick Links</h2>
+                            <h2>{{__("Quick Links")}}</h2>
                         </div>
 
                         <div class="ibox-content">
@@ -139,7 +139,7 @@
                 <div class="col-lg-4">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h2>Latest Communications</h2>
+                            <h2>{{__("Latest Communications")}}</h2>
                         </div>
 
                         <div class="ibox-content">
@@ -150,7 +150,7 @@
                                 @foreach($communications as $c)
                                     <div class="feed-element">
                                         <div>
-                                            <small class="pull-right">{{ $c->since }} ago</small>
+                                            <small class="pull-right">{{ $c->since }} {{__("ago")}}</small>
                                             <strong><a class="trackclick" data-comm-id="{{ $c->id }}" href="/{{ Request::segment(1) }}/communication/show/{{ $c->id }}">{{ $c->subject }}</strong></a><br />
                                             <small>{{ $c->prettyDate }}</small>
                                             <div>{!! $c->trunc !!}</div>
@@ -161,7 +161,7 @@
                             @else
                                  <div class="feed-element">
                                         <div>
-                                            <h4>No Current Communications</h4>
+                                            <h4>{{("No Current Communications")}}</h4>
                                         </div>
                                 </div>
                             @endif
@@ -175,7 +175,7 @@
             <div class="col-lg-4">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h2>Recent Uploads</h2>
+                        <h2>{{__("Recent Uploads")}}</h2>
                     </div>
 
                     <div class="ibox-content" style="max-height: 328px; overflow: auto;">
@@ -189,10 +189,10 @@
                                         <span class="pull-left" style="padding: 0px 10px 0px 0px;">
                                             <h2 style="padding: 0; margin: 0;">{!! $n->linkedIcon !!}</h2>
                                         </span>
-                                        <small class="pull-right" style="padding-left: 10px;">{{ $n->since }} ago</small>
-                                            <strong>{!! $n->link !!}</strong> was {{ $n->verb }} <strong><a href="/{{ Request::segment(1) }}/document#!/{{ $n->global_folder_id }}">{{ $n->folder_name}}</a></strong>
+                                        <small class="pull-right" style="padding-left: 10px;">{{ $n->since }} {{__("ago")}}</small>
+                                            <strong>{!! $n->link !!}</strong> {{__("was")}} {{ $n->verb }} <strong><a href="/{{ Request::segment(1) }}/document#!/{{ $n->global_folder_id }}">{{ $n->folder_name}}</a></strong>
                                             @if($n->count > 1)
-                                            with <strong>{!! $n->count -1 !!}</strong> other documents
+                                            {{__("with")}} <strong>{!! $n->count -1 !!}</strong> {{__("other documents")}}
                                             @endif
                                     </div>
                                 </div>
