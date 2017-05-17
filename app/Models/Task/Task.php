@@ -29,6 +29,9 @@ class Task extends Model
 			'target_stores' => $request['target_stores']
 
 		];
+		if ($request['all_stores'] != NULL) {
+            $validateThis['allStores'] = $request['all_stores'];
+        }
 
 		if(isset($request['task_documents'])){
 			$validateThis['documents'] = $request['task_documents'];
@@ -44,14 +47,16 @@ class Task extends Model
 	{
 		$validateThis =  [
 
-			'title'   		=> $request['title'],
-			'publish_date'  => $request['publish_date'],
-			'due_date'      => $request['due_date'],
-			'target_stores' => $request['target_stores'],
-			'status_type_id' => $request['status_type_id'],
-			'allStores' => $request['allStores']
+			'title'   		 => $request['title'],
+			'publish_date'   => $request['publish_date'],
+			'due_date'       => $request['due_date'],
+			'target_stores'  => $request['target_stores'],
+			'status_type_id' => $request['status_type_id']
 
 		];
+		if ($request['all_stores'] != NULL) {
+            $validateThis['allStores'] = $request['all_stores'];
+        }
 
 		if(isset($request['task_documents'])){
 			$validateThis['documents'] = $request['task_documents'];
