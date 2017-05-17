@@ -22,7 +22,7 @@
 
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2>Tasks</h2>
+                <h2>{{__("Tasks")}}</h2>
 
             </div>
             <div class="col-lg-2">
@@ -40,7 +40,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 animated fadeInRight" id="task-container">
                 @include('site.tasks.task-list-partial')
             </div>
-            
+
         </div>
     </div>
 

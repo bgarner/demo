@@ -4,8 +4,8 @@
 <head>
     @section('title', 'Urgent Notice')
     @include('site.includes.head')
-    <meta name="csrf-token" content="{!! csrf_token() !!}"/> 
-</head>	
+    <meta name="csrf-token" content="{!! csrf_token() !!}"/>
+</head>
 
 <body class="fixed-navigation">
 
@@ -32,12 +32,12 @@
 
 		<div class="col-lg-12 animated fadeInRight">
             <div class="mail-box-header">
-            	 <a href="../"><i class="fa fa-chevron-left"></i> Back</a>
+            	 <a href="../"><i class="fa fa-chevron-left"></i> {{__("Back")}}</a>
                 <h1>
                     {{ $notice->title }}
-                     <span class="pull-right font-normal" style="font-size: 16px;">{{ $notice->prettyDate }} <small style="font-weight: normal;padding-left: 10px;">({{ $notice->since }} ago)</small></span>
+                     <span class="pull-right font-normal" style="font-size: 16px;">{{ $notice->prettyDate }} <small style="font-weight: normal;padding-left: 10px;">({{ $notice->since }} {{__("ago")}})</small></span>
                 </h1>
-               
+
             </div>
                 <div class="mail-box">
 
@@ -50,7 +50,7 @@
                 @if(count($attached_folders) > 0)
                 <div class="mail-attachment">
                     <h3>
-                        <span><i class="fa fa-paperclip"></i> {{ count($attached_folders) }} folders</span>
+                        <span><i class="fa fa-paperclip"></i> {{ count($attached_folders) }} {{__("folders")}}</span>
                     </h3>
                     @foreach($attached_folders as $folder)
 
@@ -64,14 +64,14 @@
 
                                         <div class="file-name">
                                             <div style="font-size: 16px; padding-bottom: 10px;"> {{ $folder->name }}</div>
-                                            
-                                            <small class="clearfix"><span class="text-muted pull-left">{{ $folder->prettyDate }}</span> <span class="text-muted pull-right">{{ $folder->since }} ago</span></small>
+
+                                            <small class="clearfix"><span class="text-muted pull-left">{{ $folder->prettyDate }}</span> <span class="text-muted pull-right">{{ $folder->since }} {{__("ago")}}</span></small>
                                         </div>
                                     </a>
                                 </div>
 
-                            </div>                    
-                    
+                            </div>
+
                     @endforeach
                     <div class="clearfix"></div>
                 </div>
@@ -79,13 +79,13 @@
                 @if(count($attached_documents) > 0)
                <div class="mail-attachment">
                     <h3>
-                        <span><i class="fa fa-paperclip"></i> {{ count($attached_documents) }} documents</span>
+                        <span><i class="fa fa-paperclip"></i> {{ count($attached_documents) }} {{__("documents")}}</span>
                     </h3>
 
                     <div class="attachment">
 
                     	@foreach($attached_documents as $doc)
-                   	    
+
                             <div class="file-box">
                                 <div class="file">
                                     {!! $doc->anchor_only !!}
@@ -97,19 +97,19 @@
 
                                         <div class="file-name">
                                             <div style="font-size: 16px; padding-bottom: 10px;"> {{ $doc->title }}</div>
-                                            
-                                            <small class="clearfix"><span class="text-muted pull-left">{{ $doc->prettyDate }}</span> <span class="text-muted pull-right">{{ $doc->since }} ago</span></small>
+
+                                            <small class="clearfix"><span class="text-muted pull-left">{{ $doc->prettyDate }}</span> <span class="text-muted pull-right">{{ $doc->since }} {{__("ago")}}</span></small>
 
                                         </div>
                                     </a>
-                                    
+
                                 </div>
 
                             </div>
 
                         @endforeach
 
-    
+
                         <div class="clearfix"></div>
                     </div>
 				</div>
@@ -117,26 +117,26 @@
 
 
             </div>
-        
+
 </div>
 
 
 
-    @include('site.includes.footer')       
+    @include('site.includes.footer')
 
     <script type="text/javascript" src="/js/plugins/fullcalendar/moment.min.js"></script>
-    
+
     @include('site.includes.scripts')
     <script type="text/javascript">
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
-        });  
-  
+        });
+
     </script>
 
     @include('site.includes.bugreport')
 	@include('site.includes.modal')
 </body>
-</html> 
+</html>

@@ -1,5 +1,5 @@
 
-        <h4>Tasks Due Today</h4>
+        <h4>{{__("Tasks Due Today")}}</h4>
         <ul class="todo-list m-t">
             @foreach($tasksDueToday as $task)
                 <li>
@@ -11,8 +11,8 @@
             @endforeach
         </ul>
         <br>
-     
-        <h4>Upcoming Tasks</h4>
+
+        <h4>{{__("Upcoming Tasks")}}</h4>
         <ul class="todo-list m-t">
             @foreach($tasksDue as $task)
                 <li>
@@ -24,7 +24,7 @@
             @endforeach
         </ul>
 
-        <h4>Completed Tasks</h4>
+        <h4>{{__("Completed Tasks")}}</h4>
         <ul class="todo-list m-t">
             @foreach($tasksCompleted as $task)
                 <li>
@@ -35,5 +35,3 @@
                 </li>
             @endforeach
         </ul>
-
-
