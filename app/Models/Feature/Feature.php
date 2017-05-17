@@ -97,41 +97,41 @@ class Feature extends Model
   	public static function storeFeature(Request $request)
   	{
   	  
-      $validate = Feature::validateCreateFeature($request);
+        $validate = Feature::validateCreateFeature($request);
         
-      if($validate['validation_result'] == 'false') {
-        \Log::info($validate);
-        return json_encode($validate);
-      }	
-      $title = $request["name"];
-  		$tile_label = $request["tileLabel"];
-  		$start = $request["start"];
-  		$end = $request["end"];
-      $update_type_id = $request["update_type"];
-      $update_frequency = $request["update_frequency"];
-  		$thumbnail = $request->file("thumbnail");
-  		$background_image = $request->file("background");
-  		$banner = UserSelectedBanner::getBanner();
+        if($validate['validation_result'] == 'false') {
+            \Log::info($validate);
+            return json_encode($validate);
+        }	
+        $title            = $request["name"];
+        $tile_label       = $request["tileLabel"];
+        $start            = $request["start"];
+        $end              = $request["end"];
+        $update_type_id   = $request["update_type"];
+        $update_frequency = $request["update_frequency"];
+        $thumbnail        = $request->file("thumbnail");
+        $background_image = $request->file("background");
+        $banner           = UserSelectedBanner::getBanner();
 
-  		$feature = Feature::create([
-  				'banner_id'     => $banner->id,
-  				'title' 		    => $title,
-  				'tile_label'	  => $tile_label,
-  				'start'         => $start,
-  				'end' 			    => $end,
-  				'update_type_id'=> $update_type_id,
-  				'update_frequency' => $update_frequency,
-          'thumbnail'     => 'temp',
-          'background_image' =>'temp'
+        $feature          = Feature::create([
+                'banner_id'        => $banner->id,
+                'title'            => $title,
+                'tile_label'       => $tile_label,
+                'start'            => $start,
+                'end'              => $end,
+                'update_type_id'   => $update_type_id,
+                'update_frequency' => $update_frequency,
+                'thumbnail'        => 'temp',
+                'background_image' => 'temp'
 
  			]);
 
   		if(isset($background_image)) {
-        Feature::updateFeatureBackground($background_image, $feature->id);  
-      }
-      if(isset($thumbnail)) {
-        Feature::updateFeatureThumbnail($thumbnail, $feature->id);  
-      }
+            Feature::updateFeatureBackground($background_image, $feature->id);  
+        }
+        if(isset($thumbnail)) {
+            Feature::updateFeatureThumbnail($thumbnail, $feature->id);  
+        }
       
   		Feature::addFiles(json_decode($request["feature_files"]), $feature->id);
   		Feature::addPackages(json_decode($request['feature_packages']), $feature->id);
@@ -221,15 +221,15 @@ class Feature extends Model
 
     public static function updateFeatureBackground($file, $feature_id)
     {
-        $metadata = Feature::getFileMetaData($file);
+        $metadata       = Feature::getFileMetaData($file);
 
-        $directory = public_path() . '/images/featured-backgrounds/';
-        $uniqueHash = sha1(time() . time());
-        $filename  = $metadata["modifiedName"] . "_" . $uniqueHash . "." . $metadata["originalExtension"];
+        $directory      = public_path() . '/images/featured-backgrounds/';
+        $uniqueHash     = sha1(time() . time());
+        $filename       = $metadata["modifiedName"] . "_" . $uniqueHash . "." . $metadata["originalExtension"];
 
-        $upload_success = $file->move($directory, $filename); //move and rename file  
+        $upload_success = $file->move($directory, $filename); //move and rename file
 
-        $feature = Feature::where('id', $feature_id)->update(['background_image' => $filename]);
+        $feature        = Feature::where('id', $feature_id)->update(['background_image' => $filename]);
   
         return $filename;
     }
@@ -313,8 +313,8 @@ class Feature extends Model
     {
         $now = Carbon::now()->toDatetimeString();
         return Feature::where('banner_id', $banner_id)
-              ->where('start', '<=', $now)
-               ->where(function($query) use ($now) {
+                ->where('start', '<=', $now)
+                ->where(function($query) use ($now) {
                     $query->where('features.end', '>=', $now)
                         ->orWhere('features.end', '=', '0000-00-00 00:00:00' ); 
                 })
