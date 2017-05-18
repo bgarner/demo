@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Calendar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as RequestFacade;
 use DB;
-use Log;
 use Carbon\Carbon;
 
 use App\Http\Requests;
