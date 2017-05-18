@@ -22,34 +22,34 @@ class Event extends Model
     protected $fillable = ['banner_id', 'title', 'description', 'event_type', 'start', 'end'];
 
     public static function validateEvent($request)
-    { 
-      $validateThis = [ 
+    {
+      $validateThis = [
                         'title'         => $request['title'],
                         'event_type'    => $request['event_type'],
                         'start'         => $request['start'],
                         'end'           => $request['end'],
                         'target_stores' => $request['target_stores'],
-                        
+
                       ];
       if ($request['allStores'] != NULL) {
         $validateThis['allStores'] = $request['allStores'];
       }
-      
+
       $v = new EventValidator();
-      
+
       return $v->validate($validateThis);
-       
+
     }
 
     public static function storeEvent($request)
     {
 
         $validate = Event::validateEvent($request);
-        
+
         if($validate['validation_result'] == 'false') {
           return json_encode($validate);
         }
-        
+
         $banner = UserSelectedBanner::getBanner();
         $desc = preg_replace('/\n+/', '', $request['description']);
         $event = Event::create([
@@ -62,10 +62,10 @@ class Event extends Model
             'start' => $request['start'],
             'end' => $request['end']
     	   ]);
-        
+
         $event = Event::updateTargetStores($event->id, $request);
         return json_encode($event);
-       
+
     }
 
     public static function updateEvent($id, $request)
@@ -82,7 +82,7 @@ class Event extends Model
         $event->description = preg_replace('/\n+/', '', $request['description']);
         $event->start = $request['start'];
         $event->end = $request['end'];
-        
+
         $event->save();
 
         Event::updateTargetStores($id, $request);
@@ -94,7 +94,7 @@ class Event extends Model
       {
          $target_stores = $request['target_stores'];
          $allStores = $request['allStores'];
-         
+
          if (!( $target_stores == '' && $allStores == 'on' )) {
              EventTarget::where('event_id', $id)->delete();
              if (count($target_stores) > 0) {
@@ -103,11 +103,11 @@ class Event extends Model
                         'event_id'   => $id,
                         'store_id'   => $store
                      ]);
-               
-                  } 
-             }            
+
+                  }
+             }
          }
-         
+
          return;
       }
 
@@ -138,21 +138,22 @@ class Event extends Model
         $events = Event::join('events_target', 'events.id', '=', 'events_target.event_id')
                     ->where('store_id', $store_id)
                     ->where('start', 'LIKE', $yearMonth.'%')
-                    
+
                     ->orderBy('start')
                     ->get()
                     ->each(function ($item) {
                         $item->prettyDateStart = Utility::prettifyDate($item->start);
                         $item->prettyDateEnd = Utility::prettifyDate($item->end);
                         $item->since = Utility::getTimePastSinceDate($item->start);
-                        $item->event_type_name = EventType::getName($item->event_type);                        
+                        $item->event_type_name = EventType::getName($item->event_type);
                     })
                     ->groupBy(function($event) {
                             return Carbon::parse($event->start)->format('Y-m-d');
                     });
-                    
+
         return $events;
     }
 
-}
 
+
+}

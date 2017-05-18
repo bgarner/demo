@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Calendar;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Request as RequestFacade; 
+use Illuminate\Support\Facades\Request as RequestFacade;
 use DB;
+use Log;
 use Carbon\Carbon;
 
 use App\Http\Requests;
@@ -36,7 +37,7 @@ class CalendarController extends Controller
     {
 
         $today = date("Y") . "-" . date("m");
-        $today = (string) $today; 
+        $today = (string) $today;
 
         $storeNumber = RequestFacade::segment(1);
 
@@ -59,11 +60,11 @@ class CalendarController extends Controller
         //for the calendar view
         $events = Event::getActiveEventsByStore($storeNumber);
         $productLaunches = ProductLaunch::getActiveProductLaunchByStoreForCalendar($storeNumber);
-        $events = $events->merge($productLaunches); 
-        
+        $events = $events->merge($productLaunches);
+
         //for the list of events
         $eventsList = $this->getListofEventsByStoreAndMonth($storeNumber, $today);
-        
+
         foreach ($events as $event) {
             $event->prettyDateStart = Utility::prettifyDate($event->start);
             $event->prettyDateEnd = Utility::prettifyDate($event->end);
@@ -72,7 +73,7 @@ class CalendarController extends Controller
                 $event->event_type_name = EventType::getName($event->event_type);
             }
         }
-        
+
         return view('site.calendar.index')
                 ->with('skin', $skin)
                 ->with('alertCount', $alertCount)
@@ -163,19 +164,23 @@ class CalendarController extends Controller
     {
         $eventsList = Event::getActiveEventsByStoreAndMonth($storeNumber, $yearMonth);
         $productLaunchList = ProductLaunch::getActiveProductLaunchByStoreandMonth($storeNumber, $yearMonth);
-        
-        foreach ($productLaunchList as $key => $value) {
-            
-            if(array_key_exists($key, $eventsList)){
 
-                $value = $value->merge($eventsList[$key]);
+        $eventsList = $eventsList->toArray();
+        $productLaunchList = $productLaunchList->toArray();
+
+        foreach ($productLaunchList as $date => $launch) {
+
+            if(array_key_exists($date, $eventsList)){
+
+                foreach($launch as $key => $launchObj){
+                    array_push($eventsList[$date], $launchObj);
+                }
             }
             else{
-                $eventsList->put($key, $value);
+                $eventsList[$date] = $launch;
             }
-            
         }
-        $eventsList = $eventsList->toArray();
+
         ksort($eventsList);
         $eventsList = json_decode(json_encode($eventsList));
 
