@@ -95,8 +95,8 @@ return [
     |
     */
 
-    'log' => env('LOG_HANDLER', 'single'),
-
+    'log' => env('LOG_HANDLER', 'daily'),
+    'log_max_files' => 30,
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
