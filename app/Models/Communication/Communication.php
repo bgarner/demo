@@ -14,6 +14,7 @@ use App\Models\Communication\CommunicationType;
 use DB;
 use App\Models\Utility\Utility;
 use App\Models\Validation\CommunicationValidator;
+use App\Models\StoreInfo;
 
 class Communication extends Model
 {
@@ -120,21 +121,30 @@ class Communication extends Model
 	public static function getActiveCommunicationsByStoreNumber($storeNumber, $maxToFetch=100)
 	{
 
+		$banner_id = StoreInfo::getStoreInfoByStoreId($storeNumber)->banner_id;
 		$now = Carbon::now();
-		$comm = DB::table('communications_target')->where('store_id', $storeNumber)
+		
+		$allStoreComm = Communication::where('all_stores', 1)
+                                    ->where('banner_id', $banner_id)
+                                    ->where('communications.send_at', '<=', $now )
+                                    ->where('communications.archive_at', '>=', $now )
+                                    ->get();
+
+		$targetedComm = CommunicationTarget::where('store_id', $storeNumber)
 						->join('communications', 'communications.id', '=', 'communications_target.communication_id')
 						->where('communications.send_at', '<=', $now )
 						->where('communications.archive_at', '>=', $now )
-						->take($maxToFetch)
-						->orderBy('communications.send_at', 'desc')
 						->get();
-		foreach($comm as $c){
 
-			$c->since = Utility::getTimePastSinceDate($c->send_at);
-			$c->prettyDate = Utility::prettifyDate($c->send_at);
-			$preview_string = strip_tags($c->body);
-			$c->trunc = Communication::truncateHtml($preview_string);
-		}
+		$comm = $allStoreComm->merge($targetedComm)->each(function($c){
+
+				$c->since = Utility::getTimePastSinceDate($c->send_at);
+				$c->prettyDate = Utility::prettifyDate($c->send_at);
+				$preview_string = strip_tags($c->body);
+				$c->trunc = Communication::truncateHtml($preview_string);
+			})->sortByDesc('send_at')
+				->take($maxToFetch);
+		
 		return $comm;
 
 	}

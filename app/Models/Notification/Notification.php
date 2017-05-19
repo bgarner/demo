@@ -17,7 +17,7 @@ class Notification extends Model
 
         
     	switch($windowType){
-    		case 1:  
+    		case 1:  //number of days
 
                 $notifications = Self::getNotificationsByStoreAndNumberOfDays($bannerId, $storeNumber, $windowSize);
                 $allStoreNotifications  = Self::getNotificationsForAllStoresByNumberOfDays($bannerId, $windowSize);
@@ -25,10 +25,10 @@ class Notification extends Model
                 $notifications = $notifications->merge($allStoreNotifications)->sortByDesc('updated_at');
                 break;
 
-    		case 2:  
+    		case 2:  // number of Documents
 
                 $notifications = Self::getNotificationsByStoreAndNumberOfDocuments($bannerId, $storeNumber);
-                $allStoreNotifications Self::getNotificationsForAllStoresByNumberOfDocuments($bannerId);
+                $allStoreNotifications = Self::getNotificationsForAllStoresByNumberOfDocuments($bannerId);
                 $notifications = $notifications->merge($allStoreNotifications)->sortByDesc('updated_at')->take($windowSize);
     			break;
 
@@ -179,7 +179,7 @@ class Notification extends Model
 
     }
 
-    public static function getNotificationsByStoreAndNumberOfDocuments($bannerId, $storeNumber, $windowSize)
+    public static function getNotificationsByStoreAndNumberOfDocuments($bannerId, $storeNumber)
     {
         $now = Carbon::now()->toDatetimeString();
         return Document::where('banner_id', $bannerId)
