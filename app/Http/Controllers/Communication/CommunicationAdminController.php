@@ -50,12 +50,12 @@ class CommunicationAdminController extends Controller
      */
     public function create(Request $request)
     {
-        $banner = UserSelectedBanner::getBanner();
+        $banner              = UserSelectedBanner::getBanner();
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
-        $communicationTypes = CommunicationType::where('banner_id', $banner->id)->get();
+        $communicationTypes  = CommunicationType::where('banner_id', $banner->id)->get();
         
-        $packages = Package::where('banner_id',$banner->id)->get();
-        $storeList = StoreInfo::getStoreListing($banner->id);
+        $packages            = Package::where('banner_id',$banner->id)->get();
+        $storeList           = StoreInfo::getStoreListing($banner->id);
         return view('admin.communication.create')
                                                 ->with('storeList', $storeList)
                                                 ->with('communicationTypes', $communicationTypes)
@@ -85,10 +85,10 @@ class CommunicationAdminController extends Controller
      */
     public function show($id, Request $request)
     {
-        $communication = Communication::find($id);
-        $communication_documents  = Communication::getDocumentDetails($id);
-        $communication_packages  = Communication::getPackageDetails($id);
-        $importance = \DB::table('communication_importance_levels')->pluck('name', 'id');
+        $communication           = Communication::find($id);
+        $communication_documents = CommunicationDocument::getDocumentsByCommunicationId($id);
+        $communication_packages  = CommunicationPackage::getPackagesByCommunicationId($id);
+        $importance              = \DB::table('communication_importance_levels')->pluck('name', 'id');
 
         return view('admin.communication.view')->with('communication', $communication)
                                             ->with('communication_packages', $communication_packages)
@@ -106,20 +106,16 @@ class CommunicationAdminController extends Controller
     {
         $banner = UserSelectedBanner::getBanner();
 
-        $communication = Communication::find($id);
-        $communication_documents  = Communication::getDocumentDetails($id);
-        $communication_packages  = Communication::getPackageDetails($id);
-        $communicationTypes = CommunicationType::where('banner_id', $banner->id)->get();
+        $communication               = Communication::find($id);
+        $communication_documents     = CommunicationDocument::getDocumentsByCommunicationId($id);
+        $communication_packages      = CommunicationPackage::getPackagesByCommunicationId($id);
+        $communicationTypes          = CommunicationType::where('banner_id', $banner->id)->get();
         
         $communication_target_stores = CommunicationTarget::where('communication_id', $id)->get()->pluck('store_id')->toArray();
-        $storeList = StoreInfo::getStoreListing($banner->id);
-        // $all_stores = false;
-        // if (count($storeList) == count($communication_target_stores)) {
-        //     $all_stores = true;
-        // }
+        $storeList                   = StoreInfo::getStoreListing($banner->id);
 
-        $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
-        $packages = Package::where('banner_id', $banner->id)->get();
+        $fileFolderStructure         = FileFolder::getFileFolderStructure($banner->id);
+        $packages                    = Package::where('banner_id', $banner->id)->get();
 
         return view('admin.communication.edit')->with('communication', $communication)
                                             ->with('communication_packages', $communication_packages)
@@ -129,7 +125,6 @@ class CommunicationAdminController extends Controller
                                             ->with('navigation', $fileFolderStructure)
                                             ->with('packages', $packages)
                                             ->with('target_stores', $communication_target_stores)
-                                            // ->with('all_stores', $all_stores)
                                             ->with('banner', $banner);
     }
 

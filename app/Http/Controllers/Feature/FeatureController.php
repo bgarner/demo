@@ -68,7 +68,7 @@ class FeatureController extends Controller
         
         $feature_communcation_type_id = FeatureCommunication::getCommunicationTypeId($id);
 
-        $feature_communcations = CommunicationTarget::getTargetedCommunicationsByCategory($storeNumber, $feature_communcation_type_id);
+        $feature_communcations = CommunicationTarget::getActiveCommunicationsByCategoryAndStoreNumber($storeNumber, $feature_communcation_type_id);
 
 		$notifications = Notification::getNotificationsByFeature($feature->id, $storeNumber);
 
