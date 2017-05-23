@@ -171,7 +171,7 @@ class UrgentNotice extends Model
             $n->since =  Utility::getTimePastSinceDate($n->start);
             $n->prettyDate =  Utility::prettifyDate($n->start);
             $preview_string = strip_tags($n->description);
-            $n->trunc = Communication::truncateHtml($preview_string);
+            $n->trunc = Utility::truncateHtml($preview_string);
         }
 
         return $notices;        
@@ -192,7 +192,7 @@ class UrgentNotice extends Model
             $n->since =  Utility::getTimePastSinceDate($n->start);
             $n->prettyDate =  Utility::prettifyDate($n->start);
             $preview_string = strip_tags($n->description);
-            $n->trunc = Communication::truncateHtml($preview_string);
+            $n->trunc = Utility::truncateHtml($preview_string);
         }
         return $notices;        
 

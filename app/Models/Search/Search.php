@@ -186,7 +186,7 @@ class Search extends Model
         foreach($communications as $comm){
             $comm->since = Utility::getTimePastSinceDate($comm->updated_at);
             $preview_string = strip_tags($comm->body);         
-            $comm->trunc = Communication::truncateHtml($preview_string, 150);
+            $comm->trunc = Utility::truncateHtml($preview_string, 150);
             $comm->rank = 1;
         }
 
@@ -220,7 +220,7 @@ class Search extends Model
             $comm->archived = true;
             $comm->since = Utility::getTimePastSinceDate($comm->updated_at);
             $preview_string = strip_tags($comm->body);         
-            $comm->trunc = Communication::truncateHtml($preview_string, 150);
+            $comm->trunc = Utility::truncateHtml($preview_string, 150);
             $comm->rank = 1;
         }
 

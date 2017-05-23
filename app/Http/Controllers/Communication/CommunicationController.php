@@ -10,6 +10,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Communication\Communication;
 use App\Models\Communication\CommunicationDocument;
+use App\Models\Communication\CommunicationPackage;
 use App\Models\Communication\CommunicationType;
 
 

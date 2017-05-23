@@ -3,6 +3,8 @@
 namespace App\Models\Communication;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Document\Document;
+use App\Models\Utility\Utility;
 
 class CommunicationDocument extends Model
 {

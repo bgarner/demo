@@ -3,6 +3,8 @@
 namespace App\Models\Communication;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Utility\Utility;
+use App\Models\Document\Package;
 
 class CommunicationPackage extends Model
 {
@@ -27,6 +29,21 @@ class CommunicationPackage extends Model
 				]);
 			}
 		}
+	}
+
+	public static function getPackagesByCommunicationId($id)
+	{
+		$communication_package_list = CommunicationPackage::where('communication_id', $id)->get();
+
+		$packages = [];
+		foreach ($communication_package_list as $list_item) {
+			$package = Package::find($list_item->package_id);
+			$package["documents"] = [];
+			$package_docs = Package::getPackageDocumentDetails($list_item->package_id);
+			$package["documents"] = $package_docs;
+			array_push($packages, $package);
+		}
+		return $packages;
 	}
 
 }
