@@ -13,6 +13,8 @@ class UpdateDocumentTargetTable extends Migration
      */
     public function up()
     {
+        \DB::table('document_target')->whereNotNull('deleted_at')->delete();
+        
         Schema::table('document_target', function (Blueprint $table) {
             $table->dropColumn('deleted_at');
         });
