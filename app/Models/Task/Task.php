@@ -254,21 +254,16 @@ class Task extends Model
 					->each(function($task){
 						$task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
 					});
-
+		// add tasks marked all_stores as well
 
 		foreach ($tasks as $key => $task) {
-			if(TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', '2')->first()){
+			
+			$isTaskDoneByStore = Self::isTaskDoneByStore($task->id, $store_id);
+			
+			if($isTaskDoneByStore){
 				$tasks->forget($key);
-
 			}
 
-			if(TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', '1' )->first()){
-				$task->task_status_id = TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', "!=", '2' )->first()->status_type_id;
-				$task->status_title = TaskStoreStatus::join('task_store_status_types', 'task_store_status_types.id', '=', 'task_store_status.task_id')
-													->where('task_id', $task->id)
-													->select('task_store_status_types.status_title')
-													->first();
-			}
 		}
 		return $tasks;
 
@@ -287,19 +282,15 @@ class Task extends Model
 						$task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
 						
 					});
+
+		// add tasks marked all_stores as well
+					
 		foreach ($tasks as $key=>$task) {
-			if(TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', '2')->first()){
+
+			$isTaskDoneByStore = Self::isTaskDoneByStore($task->id, $store_id);
+			
+			if($isTaskDoneByStore){
 				$tasks->forget($key);
-
-			}
-
-			if(TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', '1' )->first()){
-				$task->task_status_id = TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', "!=", '2' )->first()->status_type_id;
-				$task->status_title = TaskStoreStatus::join('task_store_status_types', 'task_store_status_types.id', '=', 'task_store_status.task_id')
-													->where('task_id', $task->id)
-													->select('task_store_status_types.status_title')
-													->first();
-
 			}
 		}
 
@@ -348,6 +339,19 @@ class Task extends Model
 			return "due on " . Utility::prettifyDate($due_date);
 		}
 		
+	}
+
+	public static function isTaskDoneByStore($task_id, $store_id)
+	{
+		$storeTaskStatus = TaskStoreStatus::where('task_id', $task_id)
+											->where('status_type_id', '2')
+											->where('store_id', $store_id)
+											->first();
+		if($storeTaskStatus)
+		{
+			return true;
+		}
+		return false;
 	}
 
 

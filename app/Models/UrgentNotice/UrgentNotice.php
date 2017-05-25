@@ -136,14 +136,25 @@ class UrgentNotice extends Model
 
     public static function getUrgentNoticeCount($storeNumber)
     {
-         $now = Carbon::now()->toDatetimeString();
- 
-        return UrgentNoticeTarget::join('urgent_notices', 'urgent_notices.id' , '=', 'urgent_notice_target.urgent_notice_id')
+        $now = Carbon::now()->toDatetimeString();
+
+        $banner_id = StoreInfo::getStoreInfoByStoreId($storeNumber)->banner_id;
+
+        $allStoreUrgentNoticeCount = UrgentNotice::where('all_stores', 1)
+                                                ->where('banner_id', $banner_id)
+                                                ->where('urgent_notices.start' , '<=', $now)
+                                                ->where('urgent_notices.end', '>=', $now)
+                                                ->count();
+
+        $targetedUrgentNoticeCount = UrgentNoticeTarget::join('urgent_notices','urgent_notices.id','=','urgent_notice_target.urgent_notice_id')
                                 ->where('urgent_notice_target.store_id', $storeNumber)
                                 ->where('urgent_notice_target.is_read', 0)
                                 ->where('urgent_notices.start' , '<=', $now)
                                 ->where('urgent_notices.end', '>=', $now)
                                 ->count();
+        $urgentNoticeCount = $allStoreUrgentNoticeCount + $targetedUrgentNoticeCount;
+
+        return $urgentNoticeCount;
     }
 
     public static function getUrgentNotice($id)

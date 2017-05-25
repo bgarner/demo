@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Request as RequestFacade;
 use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Auth\User\UserResource;
 use App\Models\Auth\Resource\Resource;
+use App\Models\Auth\Resource\ResourceTypes;
 
 class StoreInfo extends Model
 {
@@ -153,10 +154,11 @@ class StoreInfo extends Model
         $resource_id = UserResource::where('user_id', $user_id)->first()->resource_id;
 
         $resource = Resource::find($resource_id);
+        $resource_type_name = ResourceTypes::find($resource->resource_type_id)->resource_name;
 
         $storeApiEndpoint = $storeAPI ."/stores";
         if( $resource->resource_id != NULL ) {
-            $storeApiEndpoint = $storeAPI ."/". $resource->resource_name . "/" . $resource->resource_id . "/stores" ;    
+            $storeApiEndpoint = $storeAPI ."/". $resource_type_name . "/" . $resource->resource_id . "/stores" ;    
         }
         
         $storeInfoJson = file_get_contents( $storeApiEndpoint);
