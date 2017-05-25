@@ -11,6 +11,7 @@ use App\Models\Utility\Utility;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Validation\UrgentNoticeValidator;
 use App\Models\Auth\User\UserSelectedBanner;
+use App\Models\StoreInfo;
 
 
 class UrgentNotice extends Model
@@ -159,12 +160,22 @@ class UrgentNotice extends Model
         
         $now = Carbon::now()->toDatetimeString();
 
-        $notices = UrgentNoticeTarget::join('urgent_notices', 'urgent_notices.id' , '=', 'urgent_notice_target.urgent_notice_id')
+        $banner_id = StoreInfo::getStoreInfoByStoreId($storeNumber)->banner_id;
+
+        $allStoreUrgentNotice  = UrgentNotice::where('all_stores', 1)
+                                            ->where('banner_id', $banner_id )
+                                            ->where('urgent_notices.start' , '<=', $now)
+                                            ->where('urgent_notices.end', '>=', $now)
+                                            ->get();
+
+        $targetedUrgentNotices = UrgentNoticeTarget::join('urgent_notices', 'urgent_notices.id' , '=', 'urgent_notice_target.urgent_notice_id')
                                 ->where('urgent_notice_target.store_id', $storeNumber)
                                 ->where('urgent_notices.start' , '<=', $now)
                                 ->where('urgent_notices.end', '>=', $now)
                                 ->select('urgent_notices.*')
                                 ->get();
+
+        $notices = $allStoreUrgentNotice->merge($targetedUrgentNotices);              
                         
         foreach($notices as $n){
             
@@ -178,25 +189,25 @@ class UrgentNotice extends Model
 
     }   
 
-    public static function getArchivedUrgentNoticesByStore($storeNumber)
-    {
-        $now = Carbon::now()->toDatetimeString();
+    // public static function getArchivedUrgentNoticesByStore($storeNumber)
+    // {
+    //     $now = Carbon::now()->toDatetimeString();
 
-        $notices = DB::table('urgent_notice_target')->where('store_id', $storeNumber)
-                            ->join('urgent_notices', 'urgent_notices.id', '=', 'urgent_notice_target.urgent_notice_id')
-                            ->where('urgent_notices.end' , '<=', $now)
-                            ->get();
+    //     $notices = DB::table('urgent_notice_target')->where('store_id', $storeNumber)
+    //                         ->join('urgent_notices', 'urgent_notices.id', '=', 'urgent_notice_target.urgent_notice_id')
+    //                         ->where('urgent_notices.end' , '<=', $now)
+    //                         ->get();
 
-        foreach($notices as $n){
-            $n->archived= true;
-            $n->since =  Utility::getTimePastSinceDate($n->start);
-            $n->prettyDate =  Utility::prettifyDate($n->start);
-            $preview_string = strip_tags($n->description);
-            $n->trunc = Utility::truncateHtml($preview_string);
-        }
-        return $notices;        
+    //     foreach($notices as $n){
+    //         $n->archived= true;
+    //         $n->since =  Utility::getTimePastSinceDate($n->start);
+    //         $n->prettyDate =  Utility::prettifyDate($n->start);
+    //         $preview_string = strip_tags($n->description);
+    //         $n->trunc = Utility::truncateHtml($preview_string);
+    //     }
+    //     return $notices;        
 
-    }
+    // }
 
     public static function getActiveUrgentNoticesForStoreList($storeNumbersArray)
     {
