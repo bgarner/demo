@@ -66,6 +66,12 @@ $(document).on('click','.task-create',function(){
 		$(window).scrollTop(0);
 		return false;
 	}
+	if(due_date == '' ) {
+		swal("Oops!", "We need a due date for the task.", "error"); 
+		hasError = true;
+		$(window).scrollTop(0);
+		return false;
+	}
 	
 	if( target_stores == null && typeof all_stores === 'undefined' ) {
 		swal("Oops!", "Target stores not selected.", "error"); 
@@ -98,6 +104,11 @@ $(document).on('click','.task-create',function(){
 		        	if(errors.hasOwnProperty("title")) {
 		        		$.each(errors.title, function(index){
 		        			$("#title").parent().append('<div class="req">' + errors.title[index]  + '</div>');	
+		        		}); 	
+		        	}
+		        	if(errors.hasOwnProperty("due_date")) {
+		        		$.each(errors.due_date, function(index){
+		        			$("#due_date").parent().append('<div class="req">' + errors.due_date[index]  + '</div>');	
 		        		}); 	
 		        	}
 		        	

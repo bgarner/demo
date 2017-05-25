@@ -23,6 +23,7 @@
                 </li>
             @endforeach
         </ul>
+        <br>
 
         <h4>Completed Tasks</h4>
         <ul class="todo-list m-t">

@@ -25,10 +25,13 @@ class Task extends Model
 
 			'title'   		=> $request['title'],
 			'publish_date'  => $request['publish_date'],
-			'due_date'      => $request['due_date'],
 			'target_stores' => $request['target_stores']
 
 		];
+		if ($request['due_date'] != NULL) {
+            $validateThis['due_date'] = $request['due_date'];
+        }
+
 		if ($request['all_stores'] != NULL) {
             $validateThis['allStores'] = $request['all_stores'];
         }
@@ -49,11 +52,14 @@ class Task extends Model
 
 			'title'   		 => $request['title'],
 			'publish_date'   => $request['publish_date'],
-			'due_date'       => $request['due_date'],
 			'target_stores'  => $request['target_stores'],
 			'status_type_id' => $request['status_type_id']
 
 		];
+		if ($request['due_date'] != NULL) {
+            $validateThis['due_date'] = $request['due_date'];
+        }
+
 		if ($request['all_stores'] != NULL) {
             $validateThis['allStores'] = $request['all_stores'];
         }
@@ -138,9 +144,9 @@ class Task extends Model
 
 	}
 
-	public static function updateTaskStoreStatus($request, $storeNumber, $id)
+	public static function updateTaskStoreStatus($request, $storeNumber, $task_id)
 	{
-		$store_status = TaskStoreStatus::where('task_id', $id)->where('store_id', $storeNumber)->first();
+		$store_status = TaskStoreStatus::where('task_id', $task_id)->where('store_id', $storeNumber)->first();
 		$updatedStatus = StoreStatusTypes::getTaskStatusTypeId($request->current_task_status);
 		if($store_status){
 			$store_status['status_type_id'] = $updatedStatus->id;
@@ -151,16 +157,16 @@ class Task extends Model
 			
 			return TaskStoreStatus::create([
 				'store_id' => $storeNumber,
-				'task_id'  => $id,
+				'task_id'  => $task_id,
 				'status_type_id' => $updatedStatus->id
 				]);
 		}
 		
 	}
 
-	public static function deleteTask($id)
+	public static function deleteTask($task_id)
 	{
-		Task::find($id)->delete();
+		Task::find($task_id)->delete();
 	}
 	
 	public static function getActiveTasksByUserId($user_id)
@@ -247,14 +253,15 @@ class Task extends Model
 
 	public static function getAllIncompleteTasksByStoreId($store_id)
 	{
-		$tasks = Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
+		$targetedTasks = Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
 					->where('tasks_target.store_id', $store_id)
 					->select('tasks.*', 'tasks_target.store_id')
 					->get()
 					->each(function($task){
 						$task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
 					});
-		// add tasks marked all_stores as well
+	
+		$tasks = $targetedTasks;
 
 		foreach ($tasks as $key => $task) {
 			
@@ -284,7 +291,7 @@ class Task extends Model
 					});
 
 		// add tasks marked all_stores as well
-					
+
 		foreach ($tasks as $key=>$task) {
 
 			$isTaskDoneByStore = Self::isTaskDoneByStore($task->id, $store_id);
@@ -313,11 +320,6 @@ class Task extends Model
 		return $tasks;
 	}
 
-
-	public static function getTaskCount($store_id)
-	{
-		return count( Task::getTaskDueTodaybyStoreId($store_id) );
-	}
 
 	public static function getTaskPrettyDueDate($due_date)
 	{
