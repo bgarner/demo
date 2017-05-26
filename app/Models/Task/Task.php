@@ -24,12 +24,18 @@ class Task extends Model
 		$validateThis =  [
 
 			'title'   		=> $request['title'],
-			'publish_date'  => $request['publish_date'],
 			'target_stores' => $request['target_stores']
 
 		];
 		if ($request['due_date'] != NULL) {
             $validateThis['due_date'] = $request['due_date'];
+        }
+        if ($request['publish_date'] != NULL) {
+            $validateThis['publish_date'] = $request['publish_date'];
+        }
+
+        if ($request['banner_id'] != NULL) {
+            $validateThis['banner_id'] = $request['banner_id'];
         }
 
 		if ($request['all_stores'] != NULL) {
@@ -51,13 +57,18 @@ class Task extends Model
 		$validateThis =  [
 
 			'title'   		 => $request['title'],
-			'publish_date'   => $request['publish_date'],
 			'target_stores'  => $request['target_stores'],
 			'status_type_id' => $request['status_type_id']
 
 		];
 		if ($request['due_date'] != NULL) {
             $validateThis['due_date'] = $request['due_date'];
+        }
+        if ($request['publish_date'] != NULL) {
+            $validateThis['publish_date'] = $request['publish_date'];
+        }
+        if ($request['banner_id'] != NULL) {
+            $validateThis['banner_id'] = $request['banner_id'];
         }
 
 		if ($request['all_stores'] != NULL) {
@@ -96,12 +107,18 @@ class Task extends Model
 			$publish_date = $request['publish_date'];
 		}
 		
+		$banner_id = null;
+		if(isset($request['banner_id'])) {
+			$banner_id = $request['banner_id'];
+		}
+
 		$task = Task::create([
 			'title' 		=> $request["title"],
 			'description' 	=> $description,
 			'publish_date'	=> $publish_date,
 			'due_date'		=> $request["due_date"],
-			'send_reminder'	=> (bool) $request["send_reminder"]
+			'send_reminder'	=> (bool) $request["send_reminder"],
+			'banner_id'		=> $banner_id
 		]);
 
 		TaskTarget::updateTargetStores($task->id, $request);
@@ -171,12 +188,36 @@ class Task extends Model
 	
 	public static function getActiveTasksByUserId($user_id)
 	{
-		$stores = array_keys(StoreInfo::getStoreListingByManagerId($user_id));
+		$storeInfo = StoreInfo::getStoreListingByManagerId($user_id);
+        
+        $allStoreTasks = Self::getAllStoreTasksForStoreList($storeInfo);
+ 
+		$stores = array_column($storeInfo, 'store_number');
 		$tasks = Task::getTasksByStoreList($stores);
+
+		foreach ($allStoreTasks as $task) {
+			array_push( $tasks , (object) $task);
+		}
+		
 		return $tasks;
 		
 	}
 
+	public static function getAllStoreTasksForStoreList($stores)
+	{
+		$allStoreTasks = Task::where('all_stores', 1)->get();
+		$storesGroupedByBannerId = Self::groupStoresByBannerId($stores);
+
+		foreach ($allStoreTasks as $task) {
+			$task['stores'] = $storesGroupedByBannerId[$task->banner_id];
+			Task::getTaskCompletionStatistics($task);
+			Task::getTaskStatus($task);
+		}
+
+		return $allStoreTasks;
+	} 
+
+	
 
 	public static function getTasksByStoreList($stores)
 	{
@@ -185,7 +226,7 @@ class Task extends Model
 								->select('tasks.*', 'tasks_target.store_id')
 								->get()->toArray();
 	
-		$tasks = Task::groupTasksByStores($tasks);
+		$tasks = Task::groupTaskStores($tasks);
 
 		foreach ($tasks as $task) {
 			Task::getTaskCompletionStatistics($task);
@@ -195,7 +236,7 @@ class Task extends Model
 		
 	}
 
-	public static function groupTasksByStores($tasks)
+	public static function groupTaskStores($tasks)
 	{
 		
 		$compiledTasks = [];
@@ -218,9 +259,14 @@ class Task extends Model
 
 	public static function getTaskCompletionStatistics($task)
 	{	
-    	$task->stores_done = TaskStoreStatus::getStoresDone($task->id);
-    	$task->stores_not_done = TaskStoreStatus::getStoresNotDone($task->id);
-    	$task->percentage_done = round( ((count($task->stores) - count($task->stores_not_done))/count($task->stores))*100 );
+    	
+    	$storesDone = TaskStoreStatus::getStoresDone($task->id);
+    	$taskStores = $task->stores;
+    	$storesNotDone = array_diff($taskStores , $storesDone);
+    	
+    	$task->stores_done = $storesDone;
+    	$task->stores_not_done = $storesNotDone;
+    	$task->percentage_done = round( ((count($taskStores) - count($storesNotDone))/count($taskStores))*100 );
     
         return $task;
 	}
@@ -354,6 +400,26 @@ class Task extends Model
 			return true;
 		}
 		return false;
+	}
+
+	public static function groupStoresByBannerId($storeInfo)
+	{
+		$compiledStores = [];
+		foreach ($storeInfo as $store) {
+
+			$currentBannerId = $store->banner_id;
+	        $index = array_search($currentBannerId, array_keys($compiledStores));
+	        if(  $index !== false ){
+	           array_push($compiledStores[$currentBannerId], $store->store_number);
+	        }
+	        else{
+	           $compiledStores[$currentBannerId] = [];
+	           array_push( $compiledStores[$currentBannerId] ,  $store->store_number);
+	        }
+
+        }
+
+        return $compiledStores;
 	}
 
 

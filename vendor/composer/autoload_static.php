@@ -1141,6 +1141,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'UpdateEventsTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_11_165610_update_events_table.php',
         'UpdateTaskTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_17_171352_update_task_table.php',
         'UpdateTasksTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_28_131811_update_tasks_table.php',
+        'UpdateTasksTableAddBannerId' => __DIR__ . '/../..' . '/database/migrations/2017_05_26_161401_update_tasks_table_add_banner_id.php',
         'UpdateUrgentNoticeTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_16_164022_update_urgent_notice_table.php',
         'UpdateVideosTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_16_195257_update_videos_table.php',
     );

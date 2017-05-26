@@ -36,12 +36,12 @@ class TaskStoreStatus extends Model
 
     } 
 
-    public static function getStoresNotDone($task_id)
-    {
-        $storesDone = TaskStoreStatus::getStoresDone($task_id);
-        $taskStores = TaskTarget::where('task_id', $task_id)->get()->pluck('store_id')->toArray();
-        $storesNotDone = array_diff($taskStores, $storesDone );
-        return $storesNotDone;
-    } 
+    // public static function getStoresNotDone($task_id)
+    // {
+    //     $storesDone = TaskStoreStatus::getStoresDone($task_id);
+    //     $taskStores = TaskTarget::where('task_id', $task_id)->get()->pluck('store_id')->toArray();
+    //     $storesNotDone = array_diff($taskStores, $storesDone );
+    //     return $storesNotDone;
+    // } 
 
 }

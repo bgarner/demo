@@ -221,11 +221,10 @@ $(document).on('click','.task-create',function(){
 		    data: {
 		  		title : title,
 		  		due_date : due_date,
-		  		banner_id : 1,
 		  		target_stores : target_stores,
 		  		send_reminder : send_reminder,
 		  		description : description,
-		  		publish_date : Date()
+		  		// publish_date : Date()
 
 		    },
 		    success: function(result) {

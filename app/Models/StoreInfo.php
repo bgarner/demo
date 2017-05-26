@@ -163,11 +163,13 @@ class StoreInfo extends Model
         
         $storeInfoJson = file_get_contents( $storeApiEndpoint);
         $storeInfo = json_decode($storeInfoJson);
-        $storeList = [];
-        foreach ($storeInfo as $store) {
-            $storeList[$store->store_number] = $store->store_number . " - " . $store->name;
-        }
-        return $storeList ;
+        // $storeList = [];
+        // foreach ($storeInfo as $store) {
+        //     $storeList[$store->store_number] = $store->store_number . " - " . $store->name;
+        // }
+        // return $storeList ;
+
+        return $storeInfo;
     }
 
     
