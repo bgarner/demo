@@ -32,12 +32,9 @@ class TaskAdminController extends Controller
      */
     public function index()
     {
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
-        $tasks = Task::all();
-        return view('admin.task.index')->with('tasks', $tasks)
-                                                ->with('banner', $banner)
-                                                ->with('banners', $banners);
+        $tasks = Task::getTasksbyBanner();
+        return view('admin.task.index')->with('tasks', $tasks);
+
     }
 
     /**
@@ -52,7 +49,8 @@ class TaskAdminController extends Controller
         $storeList = StoreInfo::getStoreListing($banner->id);
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
 
-        return view('admin.task.create')->with('banner', $banner)
+        return view('admin.task.create')
+                                        ->with('banner', $banner)
                                         ->with('storeList', $storeList)
                                         ->with('banners', $banners)
                                         ->with('navigation', $fileFolderStructure);

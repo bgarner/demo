@@ -12,7 +12,9 @@ use App\Models\Auth\Role\Role;
 use App\Models\Auth\User\UserResource;
 use App\Models\StoreInfo;
 use App\Models\Utility\Utility;
+use App\Models\Auth\User\UserSelectedBanner;
 use Carbon\Carbon;
+
 class Task extends Model
 {
     protected $table = 'tasks';
@@ -186,6 +188,22 @@ class Task extends Model
 		Task::find($task_id)->delete();
 	}
 	
+	public static function getTasksbyBanner()
+	{
+		$banner = UserSelectedBanner::getBanner();
+        $storeList = StoreInfo::getStoreListing($banner->id);
+		$allStoreTasks = Task::where('all_stores', 1)
+								->where('banner_id', $banner->id)
+								->get();
+
+		
+		$tasks = Task::join('tasks_target', 'tasks_target.task_id', '=', 'tasks.id')
+					->whereIn('store_id', array_keys($storeList))
+					->get();
+		$tasks = $tasks->merge($allStoreTasks);
+		return $tasks;
+	}
+
 	public static function getActiveTasksByUserId($user_id)
 	{
 		$storeInfo = StoreInfo::getStoreListingByManagerId($user_id);
