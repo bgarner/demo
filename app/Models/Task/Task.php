@@ -299,6 +299,18 @@ class Task extends Model
 
 	public static function getAllIncompleteTasksByStoreId($store_id)
 	{
+		
+		$banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
+
+		$allStoreTasks = Task::where('all_stores', 1)
+							->where('banner_id', $banner_id)
+							->get()
+							->each(function($task, $store_id){
+								$task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
+								$task->store_id = $store_id;
+							});
+
+
 		$targetedTasks = Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
 					->where('tasks_target.store_id', $store_id)
 					->select('tasks.*', 'tasks_target.store_id')
@@ -307,7 +319,7 @@ class Task extends Model
 						$task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
 					});
 	
-		$tasks = $targetedTasks;
+		$tasks = $targetedTasks->merge($allStoreTasks);
 
 		foreach ($tasks as $key => $task) {
 			
@@ -325,6 +337,18 @@ class Task extends Model
 	public static function getTaskDueTodaybyStoreId($store_id)
 	{
 		$endOfDayToday = Carbon::today()->endOfDay()->format('Y-m-d H:i:s');
+		$banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
+
+		$allStoreTasks = $tasks = Task::where('all_stores', 1)
+									->where('banner_id', $banner_id)
+									->where('due_date' , "<", $endOfDayToday)
+									->select('tasks.*')
+									->get()
+									->each(function($task, $store_id){
+										$task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
+										$task->store_id = $store_id;
+										
+									});
 
 		$tasks = Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
 					->where('tasks_target.store_id', $store_id)
@@ -336,7 +360,7 @@ class Task extends Model
 						
 					});
 
-		// add tasks marked all_stores as well
+		$tasks = $tasks->merge($allStoreTasks);
 
 		foreach ($tasks as $key=>$task) {
 
@@ -352,6 +376,22 @@ class Task extends Model
 
 	public static function getAllCompletedTasksByStoreId($store_id)
 	{
+		$banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
+
+		$allStoreTasks = $tasks = Task::join('task_store_status' , 'task_store_status.task_id' , '=', 'tasks.id' )
+									->where('all_stores', 1)
+									->where('banner_id', $banner_id)
+									->where('task_store_status.store_id', $store_id)
+									->where('task_store_status.status_type_id', '2')
+									->select('tasks.*', 'task_store_status.created_at as completed_on')
+									->get()
+									->each(function($task, $store_id){
+										$task->store_id = $store_id;
+										$task->pretty_due_date = Utility::prettifyDate($task->due_date);
+										$task->pretty_completed_date = "Completed on " . Utility::prettifyDate($task->completed_on);
+									});
+
+
 		$tasks = Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
 					->join('task_store_status' , 'task_store_status.task_id' , '=', 'tasks.id' )
 					->where('tasks_target.store_id', $store_id)
@@ -363,6 +403,8 @@ class Task extends Model
 						$task->pretty_due_date = Utility::prettifyDate($task->due_date);
 						$task->pretty_completed_date = "Completed on " . Utility::prettifyDate($task->completed_on);
 					});
+
+		$tasks = $tasks->merge($allStoreTasks);
 		return $tasks;
 	}
 
