@@ -244,6 +244,7 @@ return [
     'controllerComponentMap' => [
 
         'App\Http\Controllers\AdminController'                                  => 'Home',
+        'App\Http\Controllers\AdminSelectedBannerController'                    => 'Home',
         'App\Http\Controllers\Dashboard\DashboardAdminController'               => 'Dashboard',
         'App\Http\Controllers\Document\PackageAdminController'                  => 'Featured Content',
         'App\Http\Controllers\Feature\FeatureAdminController'                   => 'Featured Content',
