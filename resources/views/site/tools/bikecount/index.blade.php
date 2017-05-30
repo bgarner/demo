@@ -5,11 +5,11 @@
     @section('title', 'Bike Count Tracker')
     @include('site.includes.head')
 
- {{--    <link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet"> --}}
+    <link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
     <style>
-        .table td{ font-size: 10px; }
-        .table th{ font-size: 11px; }
-        #ad_min{ font-size: 24px; color: #c00; margin-left: 10px; }
+        /*.table td{ font-size: 10px; }
+        .table th{ font-size: 11px; }*/
+        /*#ad_min{ font-size: 24px; color: #c00; margin-left: 10px; }*/
     </style>
 </head>
 
@@ -47,7 +47,7 @@
 
                     <div class="table-responsive clearfix">
 
-                        <p>Last Updated: Friday, December 23, 2016 - 9:25 AM MST</p>
+                        <p>Last Updated: {{ $last_updated }}</p>
 
                     <table class="table table-bordered table-hover biketable" id="">
                         <thead>
@@ -70,50 +70,25 @@
 
                             <th>In Transit</th>
 
-
-
                         </tr>
                         </thead>
 
                         <tbody>
-                        {{-- @foreach($data as $d)
-
-                            @if($d->newbox == 1)
-
-                            @if($d->box_total > 0)
-                            <tr>
-                                <td colspan="11" style="background-color: #eee;">
-                                    <span class="pull-right">Total On Hand/In Transit for this box: &nbsp;&nbsp;<strong>{{ $d->box_total }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                </td>
-                            </tr>
-                            @endif
+                        @foreach($data as $d)
 
                             <tr>
-                                <td colspan="11" style="background: yellow;">
-                                <span class="pull-right">
-                                    <strong>Flyer Page:</strong> {{ $d->flyer_page }} &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <strong>Ad Box:</strong> {{$d->ad_box}} &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <strong>MIN:</strong> {{$d->ad_min}}
-                                </span>
-
-                                </td>
-                            </tr>
-                            @endif
-
-                            <tr>
-                                <td>{{ $d->dpt_name }}</td>
-                                <td>{{ $d->sdpt_name }}</td>
-                                <td>{{ $d->cls_name }}</td>
-                                <td>{{ $d->style_number }}</td>
+                                <td>{{ $d->class }}</td>
+                                <td>{{ $d->brand }}</td>
+                                <td>{{ $d->style }}</td>
                                 <td>{{ $d->style_name }}</td>
-                                <td>{{ $d->clr_name }}</td>
-                                <td>{{ $d->oh_qty }}</td>
-                                <td>{{ $d->it_qty }}</td>
-                                <td>{{ $d->total_onhand_intransit }}</td>
-
+                                <td>{{ $d->colour }}</td>
+                                <td>{{ $d->size }}</td>
+                                <td>{{ $d->on_hand }}</td>
+                                <td>{{ $d->in_transit }}</td>
 
                             </tr>
-                        @endforeach --}}
+
+                        @endforeach
 
                         </tbody>
                     </table>

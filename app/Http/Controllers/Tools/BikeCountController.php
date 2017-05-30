@@ -18,6 +18,7 @@ use App\Models\Communication\CommunicationTarget;
 use App\Models\UrgentNotice\UrgentNotice;
 use App\Models\Alert\Alert;
 use App\Models\StoreInfo;
+use App\Models\Tools\BikeCount\BikeCount;
 
 class BikeCountController extends Controller
 {
@@ -43,6 +44,7 @@ class BikeCountController extends Controller
         $this->urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($this->storeNumber);
         $this->alertCount = Alert::getActiveAlertCountByStore($this->storeNumber);
         $this->communicationCount = Communication::getActiveCommunicationCount($this->storeNumber);
+
     }
 
     /**
@@ -53,11 +55,12 @@ class BikeCountController extends Controller
     public function index()
     {
         //$pages = BlackFriday::getAdPages($this->storeNumber);
-        //$data = BlackFriday::getDataByStoreNumber($this->storeNumber);
+        $data = BikeCount::getDataByStoreNumber($this->storeNumber);
+        $last_updated = BikeCount::getLastUpdatedDate();
         //dd($boxes);
         return view('site.tools.bikecount.index')
-            // ->with('pages', $pages)
-            // ->with('data', $data)
+            ->with('last_updated', $last_updated)
+            ->with('data', $data)
             ->with('skin', $this->skin)
             ->with('communicationCount', $this->communicationCount)
             ->with('alertCount', $this->alertCount)

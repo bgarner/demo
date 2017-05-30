@@ -20,6 +20,7 @@ return array(
     'CreateAlertsTargetTable' => $baseDir . '/database/migrations/2016_02_11_205948_create_alerts_target_table.php',
     'CreateBannerUserPivotTable' => $baseDir . '/database/migrations/2015_12_16_200336_create_banner_user_pivot_table.php',
     'CreateBannersTable' => $baseDir . '/database/migrations/2015_09_30_213442_create-banners-table.php',
+    'CreateBikeCountTable' => $baseDir . '/database/migrations/2017_05_30_163643_create_bike_count_table.php',
     'CreateBlackfridayTrackerTable' => $baseDir . '/database/migrations/2016_11_08_112850_create_blackfriday_tracker_table.php',
     'CreateBugReportTable' => $baseDir . '/database/migrations/2016_03_09_212129_CreateBugReportTable.php',
     'CreateCareerPathsTable' => $baseDir . '/database/migrations/future/2015_08_05_210456_create_career_paths_table.php',
