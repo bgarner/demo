@@ -3,6 +3,7 @@
 namespace App\Models\Tools\BikeCount;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Utility\Utility;
 
 class BikeCount extends Model
 {
@@ -21,7 +22,8 @@ class BikeCount extends Model
     public static function getLastUpdatedDate()
     {
         $record = BikeCount::orderBy('created_at', 'desc')->first();
-        $date = $record->updated_at;
+        $date = Utility::prettifyDateWithTime($record->updated_at);
+        // $date = $record->updated_at;
         return $date;
     }
 }

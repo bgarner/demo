@@ -30,6 +30,7 @@
        <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-12">
                 <h2>Bike Count Tracker</h2>
+                <small class="pull-right"> Last Updated : {{ $last_updated }} </small>
             </div>
         </div>
 
@@ -47,7 +48,6 @@
 
                     <div class="table-responsive clearfix">
 
-                        <p>Last Updated: {{ $last_updated }}</p>
 
                     <table class="table table-bordered table-hover biketable" id="">
                         <thead>
@@ -77,6 +77,7 @@
                         @foreach($data as $d)
 
                             <tr>
+
                                 <td>{{ $d->class }}</td>
                                 <td>{{ $d->brand }}</td>
                                 <td>{{ $d->style }}</td>
