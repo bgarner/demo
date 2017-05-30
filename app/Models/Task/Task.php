@@ -194,28 +194,33 @@ class Task extends Model
         $storeList = StoreInfo::getStoreListing($banner->id);
 		$allStoreTasks = Task::where('all_stores', 1)
 								->where('banner_id', $banner->id)
-								->get();
+								->get()
+								->each(function($task){
+									$task->prettyDueDate = Utility::prettifyDate($task->due_date);
+								});
 
 		
 		$tasks = Task::join('tasks_target', 'tasks_target.task_id', '=', 'tasks.id')
 					->whereIn('store_id', array_keys($storeList))
-					->get();
-		$tasks = $tasks->merge($allStoreTasks);
-		return $tasks;
+					->select('tasks.*', 'tasks_target.store_id')
+					->get()
+					->each(function($task){
+						$task->prettyDueDate = Utility::prettifyDate($task->due_date);
+					});
+		$targetedTasks = Task::groupTaskStores($tasks);			
+		$targetedTasks = $targetedTasks->merge($allStoreTasks);
+		return $targetedTasks;
 	}
 
 	public static function getActiveTasksByUserId($user_id)
 	{
 		$storeInfo = StoreInfo::getStoreListingByManagerId($user_id);
-        
+        $stores = array_column($storeInfo, 'store_number');
+
         $allStoreTasks = Self::getAllStoreTasksForStoreList($storeInfo);
- 
-		$stores = array_column($storeInfo, 'store_number');
 		$tasks = Task::getTasksByStoreList($stores);
 
-		foreach ($allStoreTasks as $task) {
-			array_push( $tasks , (object) $task);
-		}
+		$tasks = $tasks->merge($allStoreTasks);
 		
 		return $tasks;
 		
@@ -242,7 +247,7 @@ class Task extends Model
 		$tasks =  Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
 								->whereIn('store_id', $stores)
 								->select('tasks.*', 'tasks_target.store_id')
-								->get()->toArray();
+								->get();
 	
 		$tasks = Task::groupTaskStores($tasks);
 
@@ -256,7 +261,7 @@ class Task extends Model
 
 	public static function groupTaskStores($tasks)
 	{
-		
+		$tasks = $tasks->toArray();
 		$compiledTasks = [];
 		foreach ($tasks as $task) {
 	        $index = array_search($task['id'], array_column($compiledTasks, 'id'));
@@ -272,7 +277,7 @@ class Task extends Model
 
         }
         
-		return $compiledTasks;
+		return collect($compiledTasks);
 	}
 
 	public static function getTaskCompletionStatistics($task)
