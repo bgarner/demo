@@ -128,7 +128,8 @@
     <script>
         $(document).ready(function(){
             $('.biketable').DataTable({
-                paging: false,
+                paging: true,
+                pageLength: 50,
                 responsive: true,
                 // "order": [[ 8, 'asc' ], [ 9, 'asc' ]]
             });
