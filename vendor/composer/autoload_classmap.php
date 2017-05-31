@@ -119,6 +119,7 @@ return array(
     'App\\Models\\Video\\PlaylistVideo' => $baseDir . '/app/Models/Video/PlaylistVideo.php',
     'App\\Models\\Video\\Tag' => $baseDir . '/app/Models/Video/Tag.php',
     'App\\Models\\Video\\Video' => $baseDir . '/app/Models/Video/Video.php',
+    'App\\Models\\Video\\VideoBanner' => $baseDir . '/app/Models/Video/VideoBanner.php',
     'App\\Models\\Video\\VideoTag' => $baseDir . '/app/Models/Video/VideoTag.php',
     'App\\Models\\Video\\VideoTarget' => $baseDir . '/app/Models/Video/VideoTarget.php',
     'ComponentGroupPivotSeeder' => $baseDir . '/database/seeds/ComponentGroupPivotSeeder.php',
@@ -698,4 +699,5 @@ return array(
     'UpdateTasksTableAddBannerId' => $baseDir . '/database/migrations/2017_05_26_161401_update_tasks_table_add_banner_id.php',
     'UpdateUrgentNoticeTable' => $baseDir . '/database/migrations/2017_05_16_164022_update_urgent_notice_table.php',
     'UpdateVideosTable' => $baseDir . '/database/migrations/2017_05_16_195257_update_videos_table.php',
+    'VideoTableSeeder' => $baseDir . '/database/seeds/VideoTableSeeder.php',
 );

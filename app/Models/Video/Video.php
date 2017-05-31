@@ -78,19 +78,47 @@ class Video extends Model
         return $validationResult;
     }
 
-    public static function getAllVideos()
+    public static function getAllVideosForAdmin()
     {
-    	$videos = Video::all()
-                        ->each(function($file){
-                            $file->uploaderFirstName = User::find($file->uploader)->firstname;
-                            $file->uploaderLastName  = User::find($file->uploader)->lastname;
-                            $file->link              = Utility::getModalLink($file->filename, $file->title, $file->original_extension, $file->id, 0);
-                            $file->link_with_icon    = Utility::getModalLink($file->filename, $file->title, $file->original_extension, $file->id, 1);
-                            $file->icon              = Utility::getIcon($file->original_extension);
-                            $file->prettyDateCreated = Utility::prettifyDate($file->created_at);
-                            $file->prettyDateUpdated = Utility::prettifyDate($file->updated_at);
-                        })
-                        ->sortByDesc('created_at');
+    	$banners = UserBanner::getAllBanners()->pluck('id')->toArray();
+        
+        //stores in accessible banners
+        $storeList = [];
+        foreach ($banners as $banner) {
+            $storeInfo = StoreInfo::getStoresInfo($banner);
+            foreach ($storeInfo as $store) {
+                array_push($storeList, $store->store_number);
+            }
+        }
+
+        $allStoreVideos = Video::join('video_banner', 'video_banner.video_id', '=', 'videos.id')
+                                ->where('all_stores', 1)
+                                ->whereIn('video_banner.banner_id', $banners)
+                                ->select('videos.*', 'video_banner.banner_id')
+                                ->get();
+
+        $allStoreVideos = Video::groupBannersForAllStoreVideos($allStoreVideos);
+        
+        
+        
+        $targetedVideos = Video::join('video_target', 'video_target.video_id', '=', 'videos.id')
+                                ->whereIn('video_target.store_id', $storeList)
+                                ->select('videos.*')
+                                ->get();
+
+        $videos = $allStoreVideos->merge($targetedVideos)->sortByDesc('created_at');
+
+        foreach ($videos as $video) {
+            $video->uploaderFirstName = User::find($video->uploader)->firstname;
+            $video->uploaderLastName  = User::find($video->uploader)->lastname;
+            $video->link              = Utility::getModalLink($video->filename, $video->title, $video->original_extension, $video->id, 0);
+            $video->link_with_icon    = Utility::getModalLink($video->filename, $video->title, $video->original_extension, $video->id, 1);
+            $video->icon              = Utility::getIcon($video->original_extension);
+            $video->prettyDateCreated = Utility::prettifyDate($video->created_at);
+            $video->prettyDateUpdated = Utility::prettifyDate($video->updated_at);
+        }
+                        
+                        
         return $videos;
     }
 
@@ -423,5 +451,26 @@ class Video extends Model
         }
         
         return $storeList;
+    }
+
+    public static function groupBannersForAllStoreVideos($allStoreVideos)
+    {
+        $allStoreVideos = $allStoreVideos->toArray();
+        $compiledVideos = [];
+        foreach ($allStoreVideos as $video) {
+            $index = array_search($video['id'], array_column($compiledVideos, 'id'));
+            if(  $index !== false ){
+               array_push($compiledVideos[$index]->banners, $video["banner_id"]);
+            }
+            else{
+               
+               $video["banners"] = [];
+               array_push( $video["banners"] , $video["banner_id"]);
+               array_push( $compiledVideos , (object) $video);
+            }
+
+        }
+        
+        return collect($compiledVideos);
     }
 }

@@ -31,15 +31,9 @@ class VideoAdminController extends Controller
      */
     public function index()
     {
-        $videos = Video::getAllVideos();
-        // $banner = UserSelectedBanner::getBanner();
-        
-        // $banners = Banner::all();
+        $videos = Video::getAllVideosForAdmin(); 
 
-        return view('admin.video.video-manager.index')
-                                        // ->with('banner', $banner)
-                                        // ->with('banners', $banners)
-                                        ->with('videos', $videos);
+        return view('admin.video.video-manager.index')->with('videos', $videos);
     }
 
     /**
@@ -49,7 +43,7 @@ class VideoAdminController extends Controller
      */
     public function create()
     {
-        // $banner = UserSelectedBanner::getBanner();
+        
         $banners = UserBanner::getAllBanners()->pluck('name', 'id')->toArray();
         $storeList = Video::getStoreListForAdmin();
         $packageHash = sha1(time() . time());
@@ -68,7 +62,6 @@ class VideoAdminController extends Controller
      */
     public function store(Request $request)
     {
-        \Log::info($request->all());
         Video::storeVideo($request);
     }
     /**

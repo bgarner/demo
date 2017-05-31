@@ -53,6 +53,7 @@ class PlaylistAdminController extends Controller
         $banner = UserSelectedBanner::getBanner();
         $banners = Banner::all();
 
+        //get videos for the selected banners
         $videos = Video::getAllVideos();
         return view('admin.video.playlist-manager.create')
                 ->with('videos', $videos)

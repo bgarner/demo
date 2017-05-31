@@ -566,6 +566,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'App\\Models\\Video\\PlaylistVideo' => __DIR__ . '/../..' . '/app/Models/Video/PlaylistVideo.php',
         'App\\Models\\Video\\Tag' => __DIR__ . '/../..' . '/app/Models/Video/Tag.php',
         'App\\Models\\Video\\Video' => __DIR__ . '/../..' . '/app/Models/Video/Video.php',
+        'App\\Models\\Video\\VideoBanner' => __DIR__ . '/../..' . '/app/Models/Video/VideoBanner.php',
         'App\\Models\\Video\\VideoTag' => __DIR__ . '/../..' . '/app/Models/Video/VideoTag.php',
         'App\\Models\\Video\\VideoTarget' => __DIR__ . '/../..' . '/app/Models/Video/VideoTarget.php',
         'ComponentGroupPivotSeeder' => __DIR__ . '/../..' . '/database/seeds/ComponentGroupPivotSeeder.php',
@@ -1145,6 +1146,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'UpdateTasksTableAddBannerId' => __DIR__ . '/../..' . '/database/migrations/2017_05_26_161401_update_tasks_table_add_banner_id.php',
         'UpdateUrgentNoticeTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_16_164022_update_urgent_notice_table.php',
         'UpdateVideosTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_16_195257_update_videos_table.php',
+        'VideoTableSeeder' => __DIR__ . '/../..' . '/database/seeds/VideoTableSeeder.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
