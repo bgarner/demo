@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Auth\User\UserSelectedBanner;
+use App\Models\Auth\User\UserBanner;
 use App\Models\Banner;
 use App\Models\StoreInfo;
 use App\Models\Video\Tag;
@@ -31,12 +32,13 @@ class VideoAdminController extends Controller
     public function index()
     {
         $videos = Video::getAllVideos();
-        $banner = UserSelectedBanner::getBanner();
+        // $banner = UserSelectedBanner::getBanner();
         
-        $banners = Banner::all();
+        // $banners = Banner::all();
 
-        return view('admin.video.video-manager.index')->with('banner', $banner)
-                                        ->with('banners', $banners)
+        return view('admin.video.video-manager.index')
+                                        // ->with('banner', $banner)
+                                        // ->with('banners', $banners)
                                         ->with('videos', $videos);
     }
 
@@ -47,14 +49,13 @@ class VideoAdminController extends Controller
      */
     public function create()
     {
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();     
+        // $banner = UserSelectedBanner::getBanner();
+        $banners = UserBanner::getAllBanners()->pluck('name', 'id')->toArray();
+        $storeList = Video::getStoreListForAdmin();
         $packageHash = sha1(time() . time());
-        $storeList = StoreInfo::getStoreListing($banner->id);
         
         return view('admin.video.video-manager.video-upload')
             ->with('packageHash', $packageHash)
-            ->with('banner', $banner)
             ->with('banners', $banners)
             ->with('storeList', $storeList); 
     }
@@ -67,6 +68,7 @@ class VideoAdminController extends Controller
      */
     public function store(Request $request)
     {
+        \Log::info($request->all());
         Video::storeVideo($request);
     }
     /**

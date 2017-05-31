@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Document\Document;
 use App\Models\Validation\VideoValidator;
 use App\Models\Auth\User\UserSelectedBanner;
+use App\Models\Auth\User\UserBanner;
 use Illuminate\Http\Request;
 use App\Models\Video\VideoTag;
 use App\Models\Utility\Utility;
@@ -15,6 +16,8 @@ use FFMpeg\FFMpeg;
 use FFMpeg\FFProbe;
 use FFMpeg\Coordinate\TimeCode;
 use App\Models\Video\VideoTarget;
+use App\Models\Video\VideoBanner;
+use App\Models\StoreInfo;
 
 
 class Video extends Model
@@ -367,13 +370,27 @@ class Video extends Model
         $all_stores = $request['all_stores'];
         $video = Video::find($id);
         if( $all_stores == 'on' ){
+
             VideoTarget::where('video_id', $id)->delete();
+            $target_banners = $request['target_banners'];
+            if(! is_array($target_banners) ) {
+                $target_banners = explode(',',  $request['target_banners'] );    
+            }
+            foreach ($target_banners as $banner) {
+                VideoBanner::create([
+                'video_id' => $id,
+                'banner_id' => $banner
+                ]);
+            }
+            
             $video->all_stores = 1;
             $video->save();
         }
         else{
             if (isset($request['target_stores']) && $request['target_stores'] != '' ) {
+                
                 VideoTarget::where('video_id', $id)->delete();
+                VideoBanner::where('video_id', $id)->delete();
                 $video->all_stores = 0;
                 $video->save();
                 $target_stores = $request['target_stores'];
@@ -389,5 +406,22 @@ class Video extends Model
             }  
         }
         return;         
+    }
+
+    public static function getStoreListForAdmin()
+    {
+        $banners = UserBanner::getAllBanners();
+        $storeList = [];
+
+        foreach ($banners as $banner) {
+            
+            $storeInfo = StoreInfo::getStoresInfo($banner->id);
+            foreach ($storeInfo as $store) {
+                $storeList[$store->store_number] = $store->store_id . " " . $store->name . " (" . $banner->name .")" ;
+            }
+            
+        }
+        
+        return $storeList;
     }
 }

@@ -70,7 +70,7 @@
 
                     <div class="form-container">
 
-                        <div class="upload-form select-stores-form" style="padding-bottom: 10px;">
+                        <div class="upload-form select-stores-form row">
                             <label class="col-sm-2 control-label">Target Stores</label>
                             <div class="col-sm-10">
                                 {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
@@ -78,8 +78,14 @@
                                 {!! Form::checkbox('allStores', null, false ,['id'=> 'allStores', 'class'=>'hidden'] ) !!}
                             </div>
                         </div>
+                        <div class="select-banners-form row">
+                            <label class="col-sm-2 col-md-2 control-label">Target Banners</label>
+                            <div class="col-sm-10 col-md-10">
+                                {!! Form::select('banners', $banners, null, [ 'class'=>'chosen', 'id'=> 'bannerSelect', 'multiple'=>'true']) !!}
+                            </div>
+                        </div>
 
-                        <div class="datepicker-div">
+                        <div class="datepicker-div row">
 
                                 <label class="col-sm-2 control-label">Start Date</label>
 
@@ -148,7 +154,8 @@
                        <div id="actions" class="row">
                         {!! csrf_field() !!}
                         <input type="hidden" name="upload_package_id"  id="upload_package_id" value="{{ $packageHash }}" />
-                        <input type="hidden" id="banner_id" name="banner_id" value="{{$banner->id}}" />
+                        
+                       <!--  <input type="hidden" id="banner_id" name="banner_id" value="" /> -->
 
 
                           <div class="col-lg-6">

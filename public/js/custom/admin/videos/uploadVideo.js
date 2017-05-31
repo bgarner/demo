@@ -28,6 +28,7 @@ var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
         formData.append("banner_id", $('[name=banner_id]').val());
         formData.append("start", $("#start").val());
         formData.append("target_stores", $("#storeSelect").val());
+        formData.append("target_banners", $("#bannerSelect").val());
         formData.append("all_stores", allStores);
     },
     init: function () {
@@ -120,6 +121,7 @@ $(document).ready(function() {
         });
         $('.chosen').trigger('chosen:updated');
         $('.select-stores-form').show();
+        $('.select-banners-form').hide();
         $('.datepicker-div').show();
         $('#file-uploader').show();
         $('#actions').show();
@@ -135,6 +137,7 @@ $(document).ready(function() {
         $('.datepicker-div').show();
         $('#file-uploader').show();
         $('#actions').show();
+        $('.select-banners-form').show();
         $('.select-stores-form').hide();
         $("#storeSelect option").each(function(index){
             $(this).prop('selected', true);
