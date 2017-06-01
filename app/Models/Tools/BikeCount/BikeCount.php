@@ -22,7 +22,7 @@ class BikeCount extends Model
     public static function getLastUpdatedDate()
     {
         $record = BikeCount::orderBy('created_at', 'desc')->first();
-        if($record){
+        if(count($record) > 0){
             $date = Utility::prettifyDateWithTime($record->updated_at);
             return $date;
         }
