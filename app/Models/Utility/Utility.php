@@ -143,7 +143,7 @@ class Utility extends Model
 		}
 
 		switch($class){
-			
+
 			case "launchImageViewer":
 				$link = '<a href="#">'.$icon.$anchortext.'</a>';
 				$anchorOnly = "<a href=''>";
@@ -200,6 +200,16 @@ class Utility extends Model
 		}
 		//$prettyDate = Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('D, M d, Y h:i a');
 		$prettyDate = Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('D, M d, Y');
+		return $prettyDate;
+	}
+
+	public static function prettifyDateWithTime($date)
+	{
+		if($date == '0000-00-00 00:00:00') {
+			return "";
+		}
+		$prettyDate = Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('D, M d, Y h:i a');
+		//$prettyDate = Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('D, M d, Y');
 		return $prettyDate;
 	}
 

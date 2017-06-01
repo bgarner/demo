@@ -389,6 +389,7 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         'CreateAlertsTargetTable' => __DIR__ . '/../..' . '/database/migrations/2016_02_11_205948_create_alerts_target_table.php',
         'CreateBannerUserPivotTable' => __DIR__ . '/../..' . '/database/migrations/2015_12_16_200336_create_banner_user_pivot_table.php',
         'CreateBannersTable' => __DIR__ . '/../..' . '/database/migrations/2015_09_30_213442_create-banners-table.php',
+        'CreateBikeCountTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_30_163643_create_bike_count_table.php',
         'CreateBlackfridayTrackerTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_08_112850_create_blackfriday_tracker_table.php',
         'CreateBugReportTable' => __DIR__ . '/../..' . '/database/migrations/2016_03_09_212129_CreateBugReportTable.php',
         'CreateCareerPathsTable' => __DIR__ . '/../..' . '/database/migrations/future/2015_08_05_210456_create_career_paths_table.php',
