@@ -18,6 +18,7 @@ use FFMpeg\Coordinate\TimeCode;
 use App\Models\Video\VideoTarget;
 use App\Models\Video\VideoBanner;
 use App\Models\StoreInfo;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 
 class Video extends Model
@@ -263,24 +264,44 @@ class Video extends Model
         return $video;
     }
 
-    public static function getFeaturedVideo()
+    // public static function getFeaturedVideo()
+    // {
+    //     $video = Video::where('featured', 1)->first();
+    //     if(count($video) > 0){
+    //         $video->likes = number_format($video->likes);
+    //         $video->dislikes = number_format($video->dislikes);
+    //         $video->sinceCreated = Utility::getTimePastSinceDate($video->created_at);
+    //         $video->prettyDateUpdated = Utility::prettifyDate($video->updated_at);
+    //     }
+    //     return $video;
+    // }
+
+    public static function getVideosForStore($store_id)
     {
-        $video = Video::where('featured', 1)->first();
-        if(count($video) > 0){
-            $video->likes = number_format($video->likes);
-            $video->dislikes = number_format($video->dislikes);
-            $video->sinceCreated = Utility::getTimePastSinceDate($video->created_at);
-            $video->prettyDateUpdated = Utility::prettifyDate($video->updated_at);
-        }
-        return $video;
+        $banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
+        $allStoreVideosForBanners = Video::join('video_banner', 'videos.id', '=', 'video_banner.video_id' )          
+                                            ->where('videos.all_stores', 1)
+                                            ->where('video_banner.banner_id', $banner_id)
+                                            ->select('videos.*')
+                                            ->get();
+
+        $targetedVideosForStore = Video::join('video_target', 'video_target.video_id', '=', 'videos.id')
+                                        ->where('video_target.store_id', $store_id)
+                                        ->select('videos.*')
+                                        ->get();
+        $videos = $targetedVideosForStore->merge($allStoreVideosForBanners);
+        
+        return $videos;
     }
 
-    public static function getMostLikedVideos($limit=0)
+    public static function getMostLikedVideos($store_id, $limit=0)
     {
         if($limit == 0){
-            $videos = Video::orderBy('likes', 'desc')->paginate(24);
+            $videos = Video::getVideosForStore($store_id)->sortByDesc('likes');
+            $videos = Self::paginate($videos, 24)->setPath('liked');
+
         } else {
-            $videos = Video::orderBy('likes', 'desc')->take($limit)->get();
+            $videos = Video::getVideosForStore($store_id)->sortByDesc('likes')->take($limit);
         }
 
         foreach($videos as $video){
@@ -292,12 +313,15 @@ class Video extends Model
         return $videos;
     }
 
-    public static function getMostRecentVideos($limit=0)
+    public static function getMostRecentVideos($store_id, $limit=0)
     {
         if($limit == 0){
-            $videos = Video::orderBy('created_at', 'desc')->paginate(24);
+            
+            $videos = Video::getVideosForStore($store_id)->sortByDesc('created_at');
+            $videos = Self::paginate($videos, 24)->setPath('latest');
+
         } else {
-            $videos = Video::orderBy('created_at', 'desc')->take($limit)->get();
+            $videos = Video::getVideosForStore($store_id)->sortByDesc('created_at')->take($limit);
         }
 
         foreach($videos as $video){
@@ -309,12 +333,14 @@ class Video extends Model
 
         return $videos;
     }
-    public static function getMostViewedVideos($limit=0)
+    public static function getMostViewedVideos($store_id, $limit=0)
     {
         if($limit == 0){
-            $videos = Video::orderBy('views', 'desc')->paginate(24);
+            $videos = Video::getVideosForStore($store_id)->sortByDesc('views');
+            $videos = Self::paginate($videos, 24)->setPath('popular');
+
         } else {
-            $videos = Video::orderBy('views', 'desc')->take($limit)->get();
+            $videos = Video::getVideosForStore($store_id)->sortByDesc('views')->take($limit);
         }
 
         foreach($videos as $video){
@@ -473,4 +499,24 @@ class Video extends Model
         
         return collect($compiledVideos);
     }
+
+    /**
+     * Create a length aware custom paginator instance.
+     *
+     * @param  Collection  $items
+     * @param  int  $perPage
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
+    public static function paginate($items, $perPage = 12)
+    {
+        //Get current page form url e.g. &page=1
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+
+        //Slice the collection to get the items to display in current page
+        $currentPageItems = $items->slice(($currentPage - 1) * $perPage, $perPage);
+
+        //Create our paginator and pass it to the view
+        return new LengthAwarePaginator($currentPageItems, count($items), $perPage);
+    }
+
 }

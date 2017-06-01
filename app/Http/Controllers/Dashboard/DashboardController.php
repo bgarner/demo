@@ -16,6 +16,7 @@ use App\Models\Dashboard\DashboardBranding;
 use App\Models\Notification\Notification;
 use App\Models\StoreInfo;
 use App\Models\Video\Video;
+use App\Models\Video\FeaturedVideo;
 
 class DashboardController extends Controller
 {
@@ -40,7 +41,7 @@ class DashboardController extends Controller
 
         $communications = Communication::getActiveCommunicationsByStoreNumber($storeNumber, 3);
 
-        $featuredVideo = Video::getFeaturedVideo();
+        $featuredVideo = FeaturedVideo::getFeaturedVideoByBanner($storeBanner);
 
         return view('site.dashboard.index')
             ->with('banner', $banner)

@@ -126,6 +126,7 @@ return array(
     'ComponentsTableSeeder' => $baseDir . '/database/seeds/ComponentsTableSeeder.php',
     'CreateComponentsTable' => $baseDir . '/database/migrations/2017_01_16_114508_create_components_table.php',
     'CreateEventAttachmentsTable' => $baseDir . '/database/migrations/2016_04_27_085018_create_event_attachments_table.php',
+    'CreateFeaturedVideoTable' => $baseDir . '/database/migrations/2017_05_31_231322_create_featured_video_table.php',
     'CreateGroupComponentPivotTable' => $baseDir . '/database/migrations/2017_01_16_115431_create_group_component_pivot_table.php',
     'CreateGroupRolePivot' => $baseDir . '/database/migrations/2017_02_15_132648_create_group_role_pivot.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',

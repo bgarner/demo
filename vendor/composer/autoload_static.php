@@ -573,6 +573,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'ComponentsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/ComponentsTableSeeder.php',
         'CreateComponentsTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_16_114508_create_components_table.php',
         'CreateEventAttachmentsTable' => __DIR__ . '/../..' . '/database/migrations/2016_04_27_085018_create_event_attachments_table.php',
+        'CreateFeaturedVideoTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_31_231322_create_featured_video_table.php',
         'CreateGroupComponentPivotTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_16_115431_create_group_component_pivot_table.php',
         'CreateGroupRolePivot' => __DIR__ . '/../..' . '/database/migrations/2017_02_15_132648_create_group_role_pivot.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
