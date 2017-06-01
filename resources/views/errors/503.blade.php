@@ -17,18 +17,12 @@
 
     <body class="gray-bg">
 
-    <div class=" text-center animated fadeInDown" style="width: 90% !important; margin: 0 auto; padding-top: 100px;">
-        <h1 style="font-size: 60px;">NOPE</h1>
-        <h3 class="font-bold">This is what we call a 503 error, folks.</h3>
+    <div class=" text-center animated fadeInDown" style="width: 90% !important; margin: 0 auto; padding-top: 20px;">
 
+        <img src="/images/testpattern.jpg" height="600" />
+        {{-- <h1 style="font-size: 60px;">NOPE</h1>
+        <h3 class="font-bold">This is what we call a 503 error, folks.</h3> --}}
 
-
-
-
-        <div class="error-desc">
-            <p>Service Unavailable... We could be experiencing high traffic at the momment.</p>
-            <img src="/images/bloopers/<?php echo $images[$i]; ?>" alt="" />
-        </div>
 
 <!--             <form class="form-inline m-t" role="form">
                 <div class="form-group">
@@ -37,16 +31,27 @@
                 <button type="submit" class="btn btn-primary">Search</button>
             </form> -->
 
-
-            <h2>We Suggest...</h2>
+            <h1>Update in Progress</h1>
+            <p>This should only take a few more seconds, either refresh the page or wait and we will do it for you.</p>
+            <h2>Refreshing the page in... </h2>
+                <h1><div id="countdown"></div></h1>
+            {{-- <h2>We Suggest...</h2>
             <p>
             <a href="/">Going to the home page</a><br />
             <a href="#" onclick="history.go(-1);">Going back to the page you just came from</a>
-        </p>
+            </p> --}}
 
     </div>
 
 
+    <script>
+    (function countdown(remaining) {
+        if(remaining === 0)
+            location.reload(true);
+        document.getElementById('countdown').innerHTML = remaining;
+        setTimeout(function(){ countdown(remaining - 1); }, 1000);
+    })(15);
+    </script>
 
 
     </body>
