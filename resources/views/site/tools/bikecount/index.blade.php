@@ -56,6 +56,8 @@
 
                             <th>Class</th>
 
+                            <th>Gender</th>
+
                             <th>Brand</th>
 
                             <th>Style</th>
@@ -79,6 +81,7 @@
                             <tr>
 
                                 <td>{{ $d->class }}</td>
+                                <td>{{ $d->gender }}</td>
                                 <td>{{ $d->brand }}</td>
                                 <td>{{ $d->style }}</td>
                                 <td>{{ $d->style_name }}</td>
