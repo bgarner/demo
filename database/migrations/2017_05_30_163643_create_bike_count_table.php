@@ -17,6 +17,7 @@ class CreateBikeCountTable extends Migration
             $table->string('store_number', 255);
             $table->string('store_name', 255)->nullable();
             $table->string('class', 255)->nullable();
+            $table->string('gender', 255)->nullable();
             $table->string('brand', 255)->nullable();
             $table->string('style', 255)->nullable();
             $table->string('style_name', 255)->nullable();
