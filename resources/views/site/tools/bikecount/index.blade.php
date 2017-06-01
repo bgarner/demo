@@ -80,8 +80,8 @@
 
                             <tr>
 
-                                <td>{{ $d->class }}</td>
-                                <td>{{ $d->gender }}</td>
+                                <td>{{ substr($d->class, 8) }}</td>
+                                <td>{{ substr($d->gender, 7) }}</td>
                                 <td>{{ $d->brand }}</td>
                                 <td>{{ $d->style }}</td>
                                 <td>{{ $d->style_name }}</td>
