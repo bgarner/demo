@@ -23,6 +23,10 @@ class BikeCount extends Model
     {
         $record = BikeCount::orderBy('created_at', 'desc')->first();
         $date = Utility::prettifyDateWithTime($record->updated_at);
+
+        if(!$date){
+            $date = "";
+        }
         // $date = $record->updated_at;
         return $date;
     }
