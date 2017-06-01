@@ -57,6 +57,9 @@ class BikeCountController extends Controller
         //$pages = BlackFriday::getAdPages($this->storeNumber);
         $data = BikeCount::getDataByStoreNumber($this->storeNumber);
         $last_updated = BikeCount::getLastUpdatedDate();
+        if(!$last_updated){
+            $last_update = "";
+        }
         //dd($boxes);
         return view('site.tools.bikecount.index')
             ->with('last_updated', $last_updated)
