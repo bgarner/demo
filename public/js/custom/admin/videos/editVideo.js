@@ -2,7 +2,7 @@ $(document).ready(function(){
 	
 	$(".chosen").on('change', function (event,el) {
 
-		// var selected_value  = $(".chosen").val();
+		var selected_value  = $(".chosen").val();
 		var options = $( ".chosen option:selected" );
 
 		for (var i = 0; i < options.length; i++) {
@@ -10,7 +10,7 @@ $(document).ready(function(){
 
 		    console.log( "data-allStores :" + property);
 		}
-		// console.log(selected_value);
+		console.log(selected_value);
 
 	});
 });

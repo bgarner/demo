@@ -327,7 +327,6 @@ class Utility extends Model
         $optGroupStoreOptions['options'] = $storeList;
         array_push($optGroupOptions, $optGroupStoreOptions);
 
-        dd($optGroupOptions);
         return $optGroupOptions;
 	}
 
