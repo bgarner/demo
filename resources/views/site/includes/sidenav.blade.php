@@ -107,6 +107,7 @@
 
                 </li>
 
+                @if ($banner->name == "Sport Chek")
                 @if (Request::segment(2) == 'tools')
                 <li class="active">
                 @else
@@ -119,5 +120,6 @@
                         </ul>
 
                 </li>
+                @endif
 
             </ul>
