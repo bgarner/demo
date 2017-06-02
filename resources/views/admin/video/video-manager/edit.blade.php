@@ -60,7 +60,7 @@
                      
                      <form class="form-horizontal">
                               <input type="hidden" name="videoId" id="videoId" value="{{ $video->id }}">
-                              <input type="hidden" name="banner_id" value="{{$banner->id}}">
+                              {{-- <input type="hidden" name="banner_id" value="{{$banner->id}}"> --}}
 
                               <div class="form-group"><label class="col-sm-2 control-label"> Title <span class="req">*</span></label>
                                   <div class="col-sm-10"><input type="text" id="title" name="title" class="form-control" value="{{ $video->title }}"></div>
@@ -75,13 +75,35 @@
                                   </div>
                               </div>
 
-                            <div class="form-group">
-                                {!! Form::label('tags[]', 'Tags', ['class'=>'col-sm-2 control-label']) !!}
-                                <div class="col-sm-10">
-                                {!! Form::select('tags[]', $tags, $selected_tags, ['class'=>'chosen', 'multiple'=>'true', 'id'=>'tagsSelected']) !!}
+                            
+                                <div class="form-group">
+                                    {!! Form::label('targets', 'Select Stores', ['class'=>'col-sm-2 control-label']) !!}
+                                    <div class="col-sm-10">
+                                        <select name="targets[]" id="targets" multiple class="chosen">
+                                            <option value="">Select Some Options</option>
+                                            @foreach($optGroupOptions as $optionGroups)
+                                                <optgroup label="{{$optionGroups['optgroup-label']}}">
+                                                @foreach($optionGroups["options"] as $key=>$value)
+                                                    <option value={{$key}} 
+                                                        
+                                                        @forelse($value['data-attributes'] as $attr=>$val )
+                                                            data-{{$attr}} = {{$val}}
+                                                        @empty
+                                                        @endforelse
+                                                        
+                                                    >
+                                                        {{$value['option-label']}}
+                                                    </option>
+                                                @endforeach
+                                                </optgroup>
+                                            @endforeach
+
+                                        </select>
+
+                                    </div>
+
+
                                 </div>
-                            </div>
-                              
 
      
                               

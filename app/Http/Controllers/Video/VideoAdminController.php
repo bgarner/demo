@@ -13,6 +13,7 @@ use App\Models\StoreInfo;
 use App\Models\Video\Tag;
 use App\Models\Video\Video;
 use App\Models\Video\VideoTag;
+use App\Models\Utility\Utility;
 
 class VideoAdminController extends Controller
 {
@@ -45,7 +46,7 @@ class VideoAdminController extends Controller
     {
         
         $banners = UserBanner::getAllBanners()->pluck('name', 'id')->toArray();
-        $storeList = Video::getStoreListForAdmin();
+        $storeList = Utility::getStoreListForAdmin();
         $packageHash = sha1(time() . time());
         
         return view('admin.video.video-manager.video-upload')
@@ -122,22 +123,10 @@ class VideoAdminController extends Controller
     public function edit($id)
     {
         $video = Video::find($id);
-        $banner = UserSelectedBanner::getBanner();
-        
-        $banners = Banner::all();
-        
-        $selected_tags = VideoTag::where('video_id', $id)
-                                ->join('tags', 'tags.id', '=', 'video_tags.tag_id')
-                                ->select('tags.*')
-                                ->get()
-                                ->pluck('id')->toArray();
-                                        
-        $tags = Tag::where('banner_id', $banner->id)->pluck('name', 'id');
+
+        $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
         return view('admin.video.video-manager.edit')->with('video', $video)
-                                                    ->with('banner', $banner)
-                                                    ->with('banners', $banners)
-                                                    ->with('tags', $tags)
-                                                    ->with('selected_tags', $selected_tags);
+                                                    ->with('optGroupOptions', $optGroupOptions);
     }
 
     /**

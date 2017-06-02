@@ -1,3 +1,19 @@
+$(document).ready(function(){
+	
+	$(".chosen").on('change', function (event,el) {
+
+		// var selected_value  = $(".chosen").val();
+		var options = $( ".chosen option:selected" );
+
+		for (var i = 0; i < options.length; i++) {
+		    var property = $(options[i]).attr('data-allStores');
+
+		    console.log( "data-allStores :" + property);
+		}
+		// console.log(selected_value);
+
+	});
+});
 $(document).on('click','.video-update',function(){
   	
  
@@ -12,11 +28,6 @@ $(document).on('click','.video-update',function(){
 	var featured = $("#featured:checked").val();
 
 	var tags = $("#tagsSelected").val();
-
-	console.log(title);
-	console.log(description);
-	console.log(tags);
-	console.log(featured);
 	
      if(hasError == false) {
 

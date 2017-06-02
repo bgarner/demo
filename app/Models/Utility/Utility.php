@@ -4,6 +4,8 @@ namespace App\Models\Utility;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\Models\Auth\User\UserBanner;
+use App\Models\StoreInfo;
 
 class Utility extends Model
 {
@@ -304,5 +306,84 @@ class Utility extends Model
 		}
 		return $truncate;
 	}
+
+
+	public static function getStoreAndBannerSelectDropdownOptions()
+	{
+		$banners = Self::getBannerListByAdminId();
+        
+        $storeList = Self::getStoreListByAdminId();
+
+        $optGroupOptions = [];
+        $optGroupBannerOptions = [];
+        $optGroupBannerOptions['optgroup-label'] = 'Banners';
+        $optGroupBannerOptions['options'] = $banners;
+
+        array_push($optGroupOptions, $optGroupBannerOptions);
+        
+
+        $optGroupStoreOptions = [];
+        $optGroupStoreOptions['optgroup-label'] = 'Stores';
+        $optGroupStoreOptions['options'] = $storeList;
+        array_push($optGroupOptions, $optGroupStoreOptions);
+
+        dd($optGroupOptions);
+        return $optGroupOptions;
+	}
+
+	public static function getStoreListForAdmin()
+    {
+        $banners = UserBanner::getAllBanners();
+        $storeList = [];
+
+        foreach ($banners as $banner) {
+            
+            $storeInfo = StoreInfo::getStoresInfo($banner->id);
+            foreach ($storeInfo as $store) {
+                $storeList[$store->store_number] = $store->store_id . " " . $store->name . " (" . $banner->name .")" ;
+            }
+            
+        }
+        
+        return $storeList;
+    }
+
+    public static function getBannerListByAdminId()
+    {
+    	$banners = UserBanner::getAllBanners()->pluck('name', 'id')->toArray();
+		foreach ($banners as $key => $value) {
+			$bannerName = $value;
+			$value = [];
+			$value['option-label'] = $bannerName;
+			$value['data-attributes'] = ['allStores' => 1 , 'optionType'   => 'banner'];
+			$banners[$key] = $value;
+		}
+
+		return $banners;
+    }
+    public static function getStoreListByAdminId()
+    {
+        $banners = UserBanner::getAllBanners();
+        $storeList = [];
+
+        foreach ($banners as $banner) {
+            
+            $storeInfo = StoreInfo::getStoresInfo($banner->id);
+            foreach ($storeInfo as $store) {
+                $storeList[$store->store_number] = [ 
+                		'option-label' => $store->store_id . " " . $store->name . " (" . $banner->name .")" ,
+                		'data-attributes' => [ 
+                				'parentBanner' => $store->banner_id,
+                				'optionType'   => 'store'
+
+                			]
+                	];
+            }
+            
+        }
+        
+        return $storeList;
+    }
+
 
 }
