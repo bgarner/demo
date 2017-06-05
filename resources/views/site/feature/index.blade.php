@@ -93,8 +93,8 @@
                                         <thead>
                                             <tr>
                                                 <th> Title </th>
-                                                <th> Start </th>
-                                                <th> End </th>
+                                                <th> Uploaded On </th>
+                                                <th> Available Until </th>
                                             </tr>
                                         </thead>
 
