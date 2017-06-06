@@ -4,6 +4,7 @@ namespace App\Models\Tools\BikeCount;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Utility\Utility;
+use App\Models\Tools\BikeCount\BikeBuildPriority;
 
 class BikeCount extends Model
 {
@@ -15,6 +16,12 @@ class BikeCount extends Model
 	    $store_number = ltrim($store_number, 'A');
 		$store_number = ltrim($store_number, '0');
 		$data = BikeCount::where('store_number', $store_number)->get();
+
+        foreach($data as $d){
+            if(BikeBuildPriority::isPriority($d->style)){
+                $d->highlight = 1;
+            }
+        }
 
     	return $data;
     }

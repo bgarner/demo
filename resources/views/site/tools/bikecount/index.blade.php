@@ -71,6 +71,7 @@
                             <th>On Hand</th>
 
                             <th>In Transit</th>
+                            <th>Priority</th>
 
                         </tr>
                         </thead>
@@ -78,8 +79,11 @@
                         <tbody>
                         @foreach($data as $d)
 
+                            @if($d->highlight)
+                            <tr class="highlight">
+                            @else
                             <tr>
-
+                            @endif
                                 <td>{{ substr($d->class, 8) }}</td>
                                 <td>{{ substr($d->gender, 7) }}</td>
                                 <td>{{ $d->brand }}</td>
@@ -89,7 +93,13 @@
                                 <td>{{ $d->size }}</td>
                                 <td>{{ $d->on_hand }}</td>
                                 <td>{{ $d->in_transit }}</td>
-
+                                <td>
+                                    @if($d->highlight)
+                                        <center>
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        </center>
+                                    @endif
+                                </td>
                             </tr>
 
                         @endforeach

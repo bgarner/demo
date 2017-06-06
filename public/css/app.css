@@ -8449,3 +8449,12 @@ body.md-skin {
         width: 50%;
         padding: 0px 0px 0px 20px;
     }
+
+    tr.highlight{
+        background-color: rgb(255, 227, 245);
+    }
+
+    tr.highlight:hover{
+        color: #fff;
+        background-color: rgb(255, 93, 197) !important;
+    }
