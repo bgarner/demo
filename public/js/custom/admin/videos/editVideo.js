@@ -1,6 +1,10 @@
 var allStores;
 var targetBanners = [], targetStores = [];
 $(document).ready(function(){
+
+	$(".chosen-select").chosen({
+		'width':'100%'
+	})
 	
 	$(".chosen").on('change', function (event,el) {
 
@@ -42,6 +46,32 @@ $(document).ready(function(){
 	});
 	
 });
+$("body").on('paste', '.search-field input', function(e) {
+	
+	setTimeout(function(e) {
+	    processStorePaste();
+	  }, 5);
+        
+
+});
+
+var processStorePaste = function(){
+
+    	var storesString = $(".search-field").find('input').val();
+    	var stores = storesString.split(',');
+    	$(stores).each(function(i){
+    		stores[i]= stores[i].replace(/\s/g, '');
+
+    		if(stores[i].length == 3) {
+    			stores[i] = "0"+stores[i];
+    		}
+    		
+			$("#targets option[value='"+  stores[i] +"']").attr('selected', 'true');
+
+    	});
+    	$("#targets").trigger("chosen:updated");
+    	var selectedStoresCount = $('#targets option:selected').length;
+};
 
 var getTargetStores = function(){
 
@@ -75,6 +105,12 @@ $(document).on('click','.video-update',function(){
 	
 	var featured = $("#featured:checked").val();
 
+	var featuredOn = $("#featuredOn").val();
+
+	console.log(featured);
+	console.log(featuredOn);
+
+
 	var tags = $("#tagsSelected").val();
 	
      if(hasError == false) {
@@ -88,10 +124,10 @@ $(document).on('click','.video-update',function(){
 		    	description : description,
 		    	tags : tags,
 		    	featured : featured,
+		    	featuredOn : featuredOn,
 		    	targetStores : getTargetStores(),
 		    	targetBanners : getTargetBanners(),
-		    	allStores : allStores,
-		    	
+		    	allStores : allStores
 
 		    },
 		    

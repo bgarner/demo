@@ -183,21 +183,23 @@ class Video extends Model
         $title          = $request->get('title');
         $description    = $request->get('description');
         $featured       = 0;
-        if ( null !== $request->get('featured') ) {
-            Video::removeFeaturedVideoFlag();
-            $featured = $request->get('featured');
-        }
+        
+        // if ( null !== $request->get('featured') ) {
+        //     FeaturedVideo::removeFeaturedVideoFlag();
+        //     // $featured = $request->get('featured');
+        // }
 
 
         $metadata = array(
             'title'       => $title,
-            'description' => $description,
-            'featured'    => $featured
+            'description' => $description
+            // 'featured'    => $featured
         );
 
         $video = Video::find($id);
         $video->update($metadata);
 
+        FeaturedVideo::updateFeaturedOn($id, $request);
         return $video;
     }
 
@@ -214,17 +216,17 @@ class Video extends Model
         return;
     }
 
-    public static function removeFeaturedVideoFlag()
-    {
-        $featuredVideo = Video::where('featured', 1)->first();
-        if( $featuredVideo !== null )
-        {
-            $featuredVideo->featured = 0;
-            $featuredVideo->save();
-        }
+    // public static function removeFeaturedVideoFlag()
+    // {
+    //     $featuredVideo = Video::where('featured', 1)->first();
+    //     if( $featuredVideo !== null )
+    //     {
+    //         $featuredVideo->featured = 0;
+    //         $featuredVideo->save();
+    //     }
 
-        return;
-    }
+    //     return;
+    // }
 
     public static function getPlaylistsThatContainSpecificVideo($id)
     {
@@ -275,6 +277,25 @@ class Video extends Model
     //     }
     //     return $video;
     // }
+
+    public static function getVideoById($id)
+    {
+        $video = Video::find($id);
+
+        $featuredOnBanner = FeaturedVideo::getFeaturedBannerByVideoId($id);
+
+        if(count($featuredOnBanner) > 0){
+            $video->featured = 1;
+            $featuredOn = [];
+            foreach ($featuredOnBanner as $item) {
+                array_push($featuredOn, $item->banner_id);
+            }
+            
+            $video->featuredOn = $featuredOn;
+        }
+        return $video;
+                    
+    }
 
     public static function getVideosForStore($store_id)
     {
@@ -462,22 +483,7 @@ class Video extends Model
         return;         
     }
 
-    public static function getStoreListForAdmin()
-    {
-        $banners = UserBanner::getAllBanners();
-        $storeList = [];
-
-        foreach ($banners as $banner) {
-            
-            $storeInfo = StoreInfo::getStoresInfo($banner->id);
-            foreach ($storeInfo as $store) {
-                $storeList[$store->store_number] = $store->store_id . " " . $store->name . " (" . $banner->name .")" ;
-            }
-            
-        }
-        
-        return $storeList;
-    }
+   
 
     public static function groupBannersForAllStoreVideos($allStoreVideos)
     {
@@ -518,5 +524,6 @@ class Video extends Model
         //Create our paginator and pass it to the view
         return new LengthAwarePaginator($currentPageItems, count($items), $perPage);
     }
+
 
 }

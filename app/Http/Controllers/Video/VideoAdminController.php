@@ -121,12 +121,13 @@ class VideoAdminController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        $video = Video::find($id);
-
+    { 
+        $video = Video::getVideoById($id);
         $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
+        $banners = UserBanner::getAllBanners()->pluck('name', 'id')->toArray();
         return view('admin.video.video-manager.edit')->with('video', $video)
-                                                    ->with('optGroupOptions', $optGroupOptions);
+                                                    ->with('optGroupOptions', $optGroupOptions)
+                                                    ->with('banners', $banners);
     }
 
     /**

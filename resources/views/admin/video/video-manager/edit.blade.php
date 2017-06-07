@@ -107,26 +107,36 @@
 
      
                               
-                              <div class="form-group">
-                                <label class="col-sm-2 control-label"> This is a featured video</label>
-                                <div class="col-sm-1">
+                            <div class="form-group">
+                                
+                                
+                                <div class="col-sm-1 col-sm-offset-1">
                                   @if( $video->featured )
-                                    <input type="checkbox" id="featured" name="featured" value=1 checked>
+                                    <input type="checkbox" id="featured" name="featured" value=1 checked style="margin: 10px 40px 0px;">
                                   @else
-                                    <input type="checkbox" id="featured" name="featured" value=1>
+                                    <input type="checkbox" id="featured" name="featured" value=1 style="margin: 10px 40px 0px;">
                                   @endif
                                     
                                 </div>
-                              </div>
+                                <label class="col-sm-10 control-label" style="text-align:left"> This is a featured video for:</label>
+                            </div>
+                            <div class="form-group">
+                                
+                                
+                                <div class="col-sm-10 col-sm-offset-2">
+                                    {!! Form::select('featuredOn', $banners, $video->featuredOn, ['class'=>'chosen-select', 'multiple'=>'multiple' , 'id'=>'featuredOn'])  !!}
+                                    
+                                </div>
+                            </div>
                               
 
-                              <div class="form-group">
+                            <div class="form-group">
                                 <div class="col-sm-4 col-sm-offset-2">
                                     <a class="btn btn-white" href="/admin/video"><i class="fa fa-close"></i> Cancel</a>
                                     <button class="video-update btn btn-primary" type="submit"><i class="fa fa-check"></i><span> Save changes</span></button>
 
                                 </div>
-                              </div>
+                            </div>
                       </form>
                   </div><!-- ibox content closes -->
                      
@@ -155,6 +165,7 @@
         </script>
         <script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script> 
         <script type="text/javascript" src="/js/custom/admin/videos/editVideo.js"></script> 
+        <!-- <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script> -->
         <script type="text/javascript">
             $(".chosen").chosen({
               width:'75%'
