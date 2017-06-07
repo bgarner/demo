@@ -12,7 +12,7 @@ class BikeBuildPriority extends Model
     {
         $isPriority = BikeBuildPriority::where('style', $style)->get();
         if(count($isPriority) > 0){
-            return true;
+            return $isPriority;
         }
         return false;
     }

@@ -993,6 +993,7 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         'UpdateAnaltyticsAddDevice' => __DIR__ . '/../..' . '/database/migrations/2016_08_25_174044_update_analtytics_add_device.php',
         'UpdateBannerTableAddTitle' => __DIR__ . '/../..' . '/database/migrations/2016_02_05_164949_update_banner_table_add_title.php',
         'UpdateBannersTable' => __DIR__ . '/../..' . '/database/migrations/2016_01_28_204112_update_banners_table.php',
+        'UpdateBikePriorityTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_07_103246_update_bike_priority_table.php',
         'UpdateCommunicationTypeTable' => __DIR__ . '/../..' . '/database/migrations/2016_02_09_194959_update_communication_type_table.php',
         'UpdateDashboardBrandingTable' => __DIR__ . '/../..' . '/database/migrations/2016_01_27_230216_update_dashboard_branding_table.php',
         'UpdateDocumentsTable' => __DIR__ . '/../..' . '/database/migrations/2015_10_27_145632_update_documents_table.php',

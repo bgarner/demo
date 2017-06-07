@@ -8451,10 +8451,10 @@ body.md-skin {
     }
 
     tr.highlight{
-        background-color: rgb(255, 227, 245);
+        background-color: rgb(255, 224, 224);
     }
 
     tr.highlight:hover{
         color: #fff;
-        background-color: rgb(255, 93, 197) !important;
+        background-color: rgb(252, 10, 10) !important;
     }

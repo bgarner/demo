@@ -18,11 +18,14 @@ class BikeCount extends Model
 		$data = BikeCount::where('store_number', $store_number)->get();
 
         foreach($data as $d){
-            if(BikeBuildPriority::isPriority($d->style)){
-                $d->highlight = 1;
+            $week = BikeBuildPriority::isPriority($d->style);
+            if($week){
+                foreach($week as $w){
+                    $d->week .= $w->week . "<br />";
+                }
+
             }
         }
-
     	return $data;
     }
 

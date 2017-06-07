@@ -71,7 +71,7 @@
                             <th>On Hand</th>
 
                             <th>In Transit</th>
-                            <th>Priority</th>
+                            <th>Ad Week</th>
 
                         </tr>
                         </thead>
@@ -79,7 +79,7 @@
                         <tbody>
                         @foreach($data as $d)
 
-                            @if($d->highlight)
+                            @if($d->week)
                             <tr class="highlight">
                             @else
                             <tr>
@@ -94,9 +94,9 @@
                                 <td>{{ $d->on_hand }}</td>
                                 <td>{{ $d->in_transit }}</td>
                                 <td>
-                                    @if($d->highlight)
+                                    @if($d->week)
                                         <center>
-                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        {!!$d->week!!}
                                         </center>
                                     @endif
                                 </td>
