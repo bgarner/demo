@@ -9,6 +9,8 @@ use App\Models\Validation\PlaylistValidator;
 use App\Models\Validation\PlaylistEditValidator;
 use App\Models\Video\Video;
 use App\Models\Video\PlaylistVideo;
+use App\Models\Video\PlaylistBanner;
+use App\Models\Video\PlaylistTarget;
 
 class Playlist extends Model
 {
@@ -76,7 +78,7 @@ class Playlist extends Model
             'description' => $request["description"]
    		]);
 
-   		Playlist::updatePlaylistVideos($playlist->id, $request);
+   		PlaylistVideo::updatePlaylistVideos($playlist->id, $request);
    		return $playlist;
 
     }
@@ -96,40 +98,40 @@ class Playlist extends Model
     	$playlist['title'] = $request['title'];
         $playlist['description'] = $request['description'];
     	$playlist->save();
-    	Playlist::updatePlaylistVideos($id, $request);
+    	PlaylistVideo::updatePlaylistVideos($id, $request);
     	return $playlist;
     }
 
-    public static function updatePlaylistVideos($id, $request)
-    {
-    	$remove_videos = $request["remove_videos"];
-         if (isset($remove_videos)) {
-            foreach ($remove_videos as $video) {
-               PlaylistVideo::where('playlist_id', $id)->where('video_id', intval($video))->delete();
-            }
-         }
+    // public static function updatePlaylistVideos($id, $request)
+    // {
+    // 	$remove_videos = $request["remove_videos"];
+    //      if (isset($remove_videos)) {
+    //         foreach ($remove_videos as $video) {
+    //            PlaylistVideo::where('playlist_id', $id)->where('video_id', intval($video))->delete();
+    //         }
+    //      }
 
-         $add_videos = $request["playlist_videos"];
-         if (isset($add_videos)) {
-            foreach ($add_videos as $video) {
+    //      $add_videos = $request["playlist_videos"];
+    //      if (isset($add_videos)) {
+    //         foreach ($add_videos as $video) {
 
-                    $video_exists = PlaylistVideo::where('playlist_id', $id)
-                                                    ->where('video_id', $video)
-                                                    ->where('deleted_at', null)
-                                                    ->first();
-                if( ! $video_exists) {
+    //                 $video_exists = PlaylistVideo::where('playlist_id', $id)
+    //                                                 ->where('video_id', $video)
+    //                                                 ->where('deleted_at', null)
+    //                                                 ->first();
+    //             if( ! $video_exists) {
 
-                    PlaylistVideo::create([
-                        'playlist_id'   => $id,
-                        'video_id'      => $video
-                    ]);
-                }
+    //                 PlaylistVideo::create([
+    //                     'playlist_id'   => $id,
+    //                     'video_id'      => $video
+    //                 ]);
+    //             }
 
 
-            }
-         }
-         return;
-    }
+    //         }
+    //      }
+    //      return;
+    // }
 
     public static function getPlaylistByBanner($banner_id)
     {
@@ -163,5 +165,14 @@ class Playlist extends Model
     {
             $playlistMeta = Playlist::find($id);
             return $playlistMeta;
+    }
+
+    public static function getSelectedStoresAndBannersByPlaylistId($playlist_id)
+    {
+        $targetBanners = PlaylistBanner::where('playlist_id', $playlist_id)->get()->pluck('banner_id')->toArray();
+        $targetStores = PlaylistTarget::where('playlist_id', $playlist_id)->get()->pluck('store_id')->toArray();
+
+        $optGroupSelections = array_merge($targetBanners, $targetStores );
+        return( $optGroupSelections );
     }
 }

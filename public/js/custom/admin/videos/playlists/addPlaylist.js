@@ -57,7 +57,9 @@ $(document).on('click','.playlist-create',function(){
 		  		banner_id : banner_id,
 		  		title : title,
 		  		description : description,
-		  		playlist_videos : playlist_videos
+		  		playlist_videos : playlist_videos,
+		  		target_stores : getTargetStores(),
+		  		target_banners : getTargetBanners() 
 		  		
 		    },
 		    success: function(result) {

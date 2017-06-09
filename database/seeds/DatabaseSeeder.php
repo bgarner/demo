@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TaskStatusTypesSeeder::class);
         $this->call(TaskStoreStatusTypesSeeder::class);
         $this->call(VideoTableSeeder::class);
+        $this->call(PlaylistTableSeeder::class);
 
     }
 }

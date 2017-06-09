@@ -11,6 +11,7 @@ use App\Models\Banner;
 use App\Models\Video\Playlist;
 use App\Models\Video\PlaylistVideo;
 use App\Models\Video\Video;
+use App\Models\Utility\Utility;
 
 class PlaylistAdminController extends Controller
 {
@@ -31,16 +32,12 @@ class PlaylistAdminController extends Controller
     public function index()
     {
         $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
-
         $playlists =Playlist::where('banner_id', $banner->id)
                     ->latest('created_at')
                     ->get();
 
         return view('admin.video.playlist-manager.index')
-                ->with('playlists', $playlists)
-                ->with('banners', $banners)
-                ->with('banner', $banner);
+                ->with('playlists', $playlists);
     }
 
     /**
@@ -50,15 +47,14 @@ class PlaylistAdminController extends Controller
      */
     public function create()
     {
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
-
-        //get videos for the selected banners
-        $videos = Video::getAllVideos();
+        
+        $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
+        $optGroupSelections = json_encode([]);
+        $videos = Video::getAllVideosForAdmin();
         return view('admin.video.playlist-manager.create')
                 ->with('videos', $videos)
-                ->with('banners', $banners)
-                ->with('banner', $banner);
+                ->with('optGroupSelections', $optGroupSelections)
+                ->with('optGroupOptions', $optGroupOptions);
 
     }
 
@@ -70,6 +66,7 @@ class PlaylistAdminController extends Controller
      */
     public function store(Request $request)
     {
+        \Log::info($request->all());
         return Playlist::storePlaylist($request);
     }
 
@@ -92,13 +89,12 @@ class PlaylistAdminController extends Controller
      */
     public function edit($id)
     {
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
+        
         $playlist = Playlist::find($id);
-        $videos = Video::getAllVideos();
+        $videos = Video::getAllVideosForAdmin();
+
 
         $selectedVideos = PlaylistVideo::where('playlist_id', $id)->orderBy('order')->get();
-
 
         foreach($selectedVideos as $sv){
             $video_info = Video::find($sv->video_id);
@@ -106,12 +102,15 @@ class PlaylistAdminController extends Controller
             $sv->thumbnail =  $video_info->thumbnail;
         }
 
+        $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
+        $optGroupSelections = json_encode(Playlist::getSelectedStoresAndBannersByPlaylistId($id));
+
         return view('admin.video.playlist-manager.edit')
                 ->with('playlist', $playlist)
                 ->with('videos', $videos)
                 ->with('playlist_videos', $selectedVideos)
-                ->with('banners', $banners)
-                ->with('banner', $banner);
+                ->with('optGroupOptions', $optGroupOptions)
+                ->with('optGroupSelections', $optGroupSelections);
 
     }
 
@@ -124,6 +123,7 @@ class PlaylistAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
+        \Log::info($request->all());
         return Playlist::updatePlaylist($id, $request);
     }
 

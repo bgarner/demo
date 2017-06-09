@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVideoBannerTable extends Migration
+class CreatePlaylistBannerTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateVideoBannerTable extends Migration
      */
     public function up()
     {
-        Schema::create('video_banner', function (Blueprint $table) {
+        Schema::create('playlist_banner', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('video_id')->unsigned();
+            $table->integer('playlist_id')->unsigned();
             $table->integer('banner_id')->unsigned();
             $table->timestamps();
-            $table->foreign('video_id')->references('id')->on('videos')->onDelete('cascade');
+            $table->foreign('playlist_id')->references('id')->on('playlists')->onDelete('cascade');
         });
     }
 
@@ -29,6 +29,6 @@ class CreateVideoBannerTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('video_banner');
+        Schema::dropIfExists('playlist_banner');
     }
 }

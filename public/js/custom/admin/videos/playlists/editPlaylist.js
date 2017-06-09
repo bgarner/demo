@@ -82,7 +82,9 @@ $(document).on('click','.playlist-update',function(){
 		    	title : title,
 		    	description : description,
 		    	playlist_videos:  playlist_videos,
-		    	remove_videos: remove_videos
+		    	remove_videos: remove_videos,
+		    	target_stores : getTargetStores(),
+		    	target_banners : getTargetBanners()
 
 		    },
 		    
