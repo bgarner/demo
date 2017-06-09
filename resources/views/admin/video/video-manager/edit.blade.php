@@ -59,21 +59,26 @@
                   <div class="ibox-content">
                      
                      <form class="form-horizontal">
-                              <input type="hidden" name="videoId" id="videoId" value="{{ $video->id }}">
-                              {{-- <input type="hidden" name="banner_id" value="{{$banner->id}}"> --}}
+                                <input type="hidden" name="videoId" id="videoId" value="{{ $video->id }}">
 
-                              <div class="form-group"><label class="col-sm-2 control-label"> Title <span class="req">*</span></label>
-                                  <div class="col-sm-10"><input type="text" id="title" name="title" class="form-control" value="{{ $video->title }}"></div>
-                              </div>
+                                
+                                <input type="hidden" name="optGroupSelections" id="optGroupSelections" value="{{$optGroupSelections}}">
+
+                                <div class="form-group"><label class="col-sm-2 control-label"> Title 
+                                    <span class="req">*</span></label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="title" name="title" class="form-control" value="{{ $video->title }}">
+                                    </div>
+                                </div>
 
                               
                             
-                              <div class="form-group">
+                                <div class="form-group">
                                   {!! Form::label('description', 'Description' , ['class'=>'col-sm-2 control-label']) !!}
                                   <div class="col-sm-10">
                                       {!! Form::text('description',$video->description, ['class'=>'form-control']) !!}      
                                   </div>
-                              </div>
+                                </div>
 
                             
                                 <div class="form-group">

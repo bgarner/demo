@@ -16,7 +16,7 @@ class CreateVideosTargetTable extends Migration
         Schema::create('video_target', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('video_id')->unsigned();
-            $table->integer('store_id')->unsigned();
+            $table->string('store_id');
             $table->timestamps();
             $table->foreign('video_id')->references('id')->on('videos')->onDelete('cascade');
 

@@ -124,10 +124,13 @@ class VideoAdminController extends Controller
     { 
         $video = Video::getVideoById($id);
         $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
+        $optGroupSelections = json_encode(Video::getSelectedStoresAndBannersByVideoId($id));
+        
         $banners = UserBanner::getAllBanners()->pluck('name', 'id')->toArray();
         return view('admin.video.video-manager.edit')->with('video', $video)
                                                     ->with('optGroupOptions', $optGroupOptions)
-                                                    ->with('banners', $banners);
+                                                    ->with('banners', $banners)
+                                                    ->with('optGroupSelections', $optGroupSelections);
     }
 
     /**

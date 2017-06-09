@@ -19,7 +19,7 @@ class CreateVideoBannerTable extends Migration
             $table->integer('banner_id')->unsigned();
             $table->timestamps();
             $table->foreign('video_id')->references('id')->on('videos')->onDelete('cascade');
-            $table->foreign('banner_id')->references('id')->on('banners')->onDelete('cascade');
+            // $table->foreign('banner_id')->references('id')->on('banners')->onDelete('cascade');
         });
     }
 

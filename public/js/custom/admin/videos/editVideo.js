@@ -1,51 +1,47 @@
 var allStores;
-var targetBanners = [], targetStores = [];
 $(document).ready(function(){
 
 	$(".chosen-select").chosen({
 		'width':'100%'
 	})
+	storeSelect = $('#targets');
+	var selected = JSON.parse($("#optGroupSelections").val());  
+	console.log(selected);
+	selected = Array.from(new Set(selected));
+	storeSelect.val(null);
+	storeSelect.val(selected);
+	storeSelect.trigger('chosen:updated');
+});
+
+
+$(".chosen").on('change', function (event,el) {
+
+	var options = $( ".chosen option:selected" );
+	allStores = 'off';
 	
-	$(".chosen").on('change', function (event,el) {
+	if(el.hasOwnProperty('deselected')){
+		$("option[data-parentBanner='"+ el.deselected +"']").attr("disabled",false);
+		$(".chosen").trigger("chosen:updated");
+	}
+	for (var i = 0; i < options.length; i++) {
+	   
+	    var isAllStoreSelected = $(options[i]).attr('data-allStores');
+	    if(isAllStoreSelected){
+	    	
+	    	var banner = $(options[i]).val()
 
-		var options = $( ".chosen option:selected" );
-		targetBanners = [], targetStores = [];
-		allStores = 'off';
-		
-		if(el.hasOwnProperty('deselected')){
-			$("option[data-parentBanner='"+ el.deselected +"']").attr("disabled",false);
+	    	var storesInBanner = $("option[data-parentBanner='"+ banner +"']:selected");
+			storesInBanner.attr('selected', false);
+	    	var itemToDisable = $("option[data-parentBanner='"+ banner +"']");
+			itemToDisable.attr("disabled",true);
 			$(".chosen").trigger("chosen:updated");
-		}
-		for (var i = 0; i < options.length; i++) {
-		    
-		    var parentBanner = $(options[i]).attr('data-parentBanner');
-		    if(parentBanner){
-		    	var store = $(options[i]).val();
-		    	targetStores.push({"store": store, 'banner': parentBanner});
-		    }
+	    	
+	    }	    
 
-		    var isAllStoreSelected = $(options[i]).attr('data-allStores');
-		    if(isAllStoreSelected){
-		    	allStores = 'on';
-		    	var banner = $(options[i]).val()
-		    	targetBanners.push( banner );
-
-		    	var storesInBanner = $("option[data-parentBanner='"+ banner +"']:selected");
-				storesInBanner.attr('selected', false);
-		    	var itemToDisable = $("option[data-parentBanner='"+ banner +"']");
-				itemToDisable.attr("disabled",true);
-				$(".chosen").trigger("chosen:updated");
-		    	
-		    }
-
-
-		    
-
-		}
-		
-	});
+	}
 	
 });
+	
 $("body").on('paste', '.search-field input', function(e) {
 	
 	setTimeout(function(e) {
@@ -75,18 +71,40 @@ var processStorePaste = function(){
 
 var getTargetStores = function(){
 
-	$.each(targetBanners, function(i, value){
-		for(i in targetStores){
-			if(targetStores[i].banner == value){
-				targetStores.splice(i);
-			}
-		}
-	});
-	//flatten the array ; remove banner key
+	var options = $( ".chosen option:selected" );
+	var targetStores = [];
+	
+	for (var i = 0; i < options.length; i++) {
+	    
+	    var parentBanner = $(options[i]).attr('data-parentBanner');
+	    if(parentBanner){
+	    	var store = $(options[i]).val();
+	    	targetStores.push(store);
+	    }    
+
+	}
 	return targetStores;
+
 }
 
 var getTargetBanners = function(){
+	
+
+	var options = $( ".chosen option:selected" );
+	var targetBanners = [];
+	allStores = 'off';
+	
+	for (var i = 0; i < options.length; i++) {
+	 
+	    var isAllStoreSelected = $(options[i]).attr('data-allStores');
+	    if(isAllStoreSelected){
+	    	allStores = 'on';
+	    	var banner = $(options[i]).val()
+	    	targetBanners.push( banner );
+	    	
+	    }	    
+
+	}
 	return targetBanners;
 }
 
@@ -95,21 +113,16 @@ $(document).on('click','.video-update',function(){
   	
  	
   	var hasError = false;
+
  	var videoId = $("#videoId").val();
  	
  	var title = $("#title").val();
 	
 	var description = $("#description").val();
 	
-	// var banner_id = $("input[name='banner_id']").val();
-	
 	var featured = $("#featured:checked").val();
 
 	var featuredOn = $("#featuredOn").val();
-
-	console.log(featured);
-	console.log(featuredOn);
-
 
 	var tags = $("#tagsSelected").val();
 	
@@ -125,9 +138,9 @@ $(document).on('click','.video-update',function(){
 		    	tags : tags,
 		    	featured : featured,
 		    	featuredOn : featuredOn,
-		    	targetStores : getTargetStores(),
-		    	targetBanners : getTargetBanners(),
-		    	allStores : allStores
+		    	target_stores : getTargetStores(),
+		    	target_banners : getTargetBanners(),
+		    	all_stores : allStores
 
 		    },
 		    

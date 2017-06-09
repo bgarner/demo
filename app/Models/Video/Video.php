@@ -183,23 +183,18 @@ class Video extends Model
         $title          = $request->get('title');
         $description    = $request->get('description');
         $featured       = 0;
-        
-        // if ( null !== $request->get('featured') ) {
-        //     FeaturedVideo::removeFeaturedVideoFlag();
-        //     // $featured = $request->get('featured');
-        // }
-
 
         $metadata = array(
             'title'       => $title,
-            'description' => $description
-            // 'featured'    => $featured
+            'description' => $description,
+            'featured'    => $featured
         );
 
         $video = Video::find($id);
         $video->update($metadata);
 
         FeaturedVideo::updateFeaturedOn($id, $request);
+        Self::updateTargetStores($request, $id);
         return $video;
     }
 
@@ -442,16 +437,22 @@ class Video extends Model
 
     public static function updateTargetStores($request, $id)
     {
+
         $all_stores = $request['all_stores'];
+
         $video = Video::find($id);
+        VideoTarget::where('video_id', $id)->delete();
+        VideoBanner::where('video_id', $id)->delete();
+        
         if( $all_stores == 'on' ){
 
-            VideoTarget::where('video_id', $id)->delete();
+            // VideoTarget::where('video_id', $id)->delete();
             $target_banners = $request['target_banners'];
+            \Log::info($target_banners);
             if(! is_array($target_banners) ) {
                 $target_banners = explode(',',  $request['target_banners'] );    
             }
-            foreach ($target_banners as $banner) {
+            foreach ($target_banners as $key=>$banner) {
                 VideoBanner::create([
                 'video_id' => $id,
                 'banner_id' => $banner
@@ -461,25 +462,21 @@ class Video extends Model
             $video->all_stores = 1;
             $video->save();
         }
-        else{
-            if (isset($request['target_stores']) && $request['target_stores'] != '' ) {
+        
+        if (isset($request['target_stores']) && $request['target_stores'] != '' ) {
                 
-                VideoTarget::where('video_id', $id)->delete();
-                VideoBanner::where('video_id', $id)->delete();
-                $video->all_stores = 0;
-                $video->save();
-                $target_stores = $request['target_stores'];
-                if(! is_array($target_stores) ) {
-                    $target_stores = explode(',',  $request['target_stores'] );    
-                }
-                foreach ($target_stores as $store) {
-                    VideoTarget::insert([
-                        'video_id' => $id,
-                        'store_id' => $store
-                        ]);    
-                }
-            }  
-        }
+            $target_stores = $request['target_stores'];
+            if(! is_array($target_stores) ) {
+                $target_stores = explode(',',  $request['target_stores'] );    
+            }
+            foreach ($target_stores as $store) {
+                VideoTarget::insert([
+                    'video_id' => $id,
+                    'store_id' => $store
+                    ]);    
+            }
+        }  
+        
         return;         
     }
 
@@ -523,6 +520,15 @@ class Video extends Model
 
         //Create our paginator and pass it to the view
         return new LengthAwarePaginator($currentPageItems, count($items), $perPage);
+    }
+
+    public static function getSelectedStoresAndBannersByVideoId($video_id)
+    {
+        $targetBanners = VideoBanner::where('video_id', $video_id)->get()->pluck('banner_id')->toArray();
+        $targetStores = VideoTarget::where('video_id', $video_id)->get()->pluck('store_id')->toArray();
+
+        $optGroupSelections = array_merge($targetBanners, $targetStores );
+        return( $optGroupSelections );
     }
 
 
