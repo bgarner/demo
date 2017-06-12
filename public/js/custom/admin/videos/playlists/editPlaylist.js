@@ -83,6 +83,7 @@ $(document).on('click','.playlist-update',function(){
 		    	description : description,
 		    	playlist_videos:  playlist_videos,
 		    	remove_videos: remove_videos,
+		    	all_stores : getAllStoreStatus(),
 		    	target_stores : getTargetStores(),
 		    	target_banners : getTargetBanners()
 
@@ -96,11 +97,11 @@ $(document).on('click','.playlist-update',function(){
 		        			$("#title").parent().append('<div class="req">' + errors.title[index]  + '</div>');	
 		        		}); 	
 		        	}
-			        if(errors.hasOwnProperty("playlist_videos")) {
-			        	$.each(errors.videos, function(index){
-			        		$(".existing-videos").append('<div class="req">' + errors.playlist_videos[index]  + '</div>');
-			        	});
-			        }
+			        // if(errors.hasOwnProperty("videos")) {
+			        // 	$.each(errors.videos, function(index){
+			        // 		$(".existing-videos").append('<div class="req">' + errors.videos[index]  + '</div>');
+			        // 	});
+			        // }
 			        if(errors.hasOwnProperty("videos")) {
 			        		swal("Error!", "'" + errors.videos +"'", "error");
 			        		// $(".existing-videos").append('<div class="req">' + errors.videos  + '</div>');

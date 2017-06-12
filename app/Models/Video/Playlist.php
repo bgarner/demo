@@ -17,7 +17,7 @@ class Playlist extends Model
     use SoftDeletes;
 
     protected $table = 'playlists';
-    protected $fillable = ['title', 'banner_id', 'description'];
+    protected $fillable = ['title', 'all_stores', 'description'];
     protected $dates = ['deleted_at'];
 
     public static function validateCreatePlaylist($request)
@@ -74,11 +74,12 @@ class Playlist extends Model
 
    		$playlist = Playlist::create([
    			'title' 	=> $request["title"],
-   			'banner_id' => $request["banner_id"],
+   			// 'banner_id' => $request["banner_id"],
             'description' => $request["description"]
    		]);
 
    		PlaylistVideo::updatePlaylistVideos($playlist->id, $request);
+        Playlist::updateTargetStores($request, $playlist->id);
    		return $playlist;
 
     }
@@ -99,6 +100,7 @@ class Playlist extends Model
         $playlist['description'] = $request['description'];
     	$playlist->save();
     	PlaylistVideo::updatePlaylistVideos($id, $request);
+        Playlist::updateTargetStores($request, $id);
     	return $playlist;
     }
 
@@ -132,6 +134,50 @@ class Playlist extends Model
     //      }
     //      return;
     // }
+
+    public static function updateTargetStores($request, $id)
+    {
+
+        $all_stores = $request['all_stores'];
+
+        $video = Playlist::find($id);
+        PlaylistTarget::where('playlist_id', $id)->delete();
+        PlaylistBanner::where('playlist_id', $id)->delete();
+        
+        if( $all_stores == 'on' ){
+
+            $target_banners = $request['target_banners'];
+            \Log::info($target_banners);
+            if(! is_array($target_banners) ) {
+                $target_banners = explode(',',  $request['target_banners'] );    
+            }
+            foreach ($target_banners as $key=>$banner) {
+                PlaylistBanner::create([
+                'playlist_id' => $id,
+                'banner_id' => $banner
+                ]);
+            }
+            
+            $video->all_stores = 1;
+            $video->save();
+        }
+        
+        if (isset($request['target_stores']) && $request['target_stores'] != '' ) {
+                
+            $target_stores = $request['target_stores'];
+            if(! is_array($target_stores) ) {
+                $target_stores = explode(',',  $request['target_stores'] );    
+            }
+            foreach ($target_stores as $store) {
+                PlaylistTarget::insert([
+                    'playlist_id' => $id,
+                    'store_id' => $store
+                    ]);    
+            }
+        }  
+        
+        return;         
+    }
 
     public static function getPlaylistByBanner($banner_id)
     {

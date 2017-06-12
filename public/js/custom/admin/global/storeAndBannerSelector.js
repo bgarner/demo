@@ -109,3 +109,19 @@ var getTargetBanners = function(){
 	}
 	return targetBanners;
 }
+
+var getAllStoreStatus = function()
+{
+	var options = $( ".chosen option:selected" );
+	allStores = 'off';
+	
+	for (var i = 0; i < options.length; i++) {
+	 
+	    var isAllStoreSelected = $(options[i]).attr('data-allStores');
+	    if(isAllStoreSelected){
+	    	allStores = 'on';
+	    }	    
+
+	}
+	return allStores;
+}
