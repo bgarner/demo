@@ -31,10 +31,8 @@ class PlaylistAdminController extends Controller
      */
     public function index()
     {
-        $banner = UserSelectedBanner::getBanner();
-        $playlists =Playlist::where('banner_id', $banner->id)
-                    ->latest('created_at')
-                    ->get();
+
+        $playlists = Playlist::getPlaylistsForAdmin();
 
         return view('admin.video.playlist-manager.index')
                 ->with('playlists', $playlists);

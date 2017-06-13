@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Utility\Utility;
 use App\Models\Validation\PlaylistValidator;
 use App\Models\Validation\PlaylistEditValidator;
+use App\Models\Auth\User\UserBanner;
+use App\Models\StoreInfo;
 use App\Models\Video\Video;
 use App\Models\Video\PlaylistVideo;
 use App\Models\Video\PlaylistBanner;
@@ -104,37 +106,6 @@ class Playlist extends Model
     	return $playlist;
     }
 
-    // public static function updatePlaylistVideos($id, $request)
-    // {
-    // 	$remove_videos = $request["remove_videos"];
-    //      if (isset($remove_videos)) {
-    //         foreach ($remove_videos as $video) {
-    //            PlaylistVideo::where('playlist_id', $id)->where('video_id', intval($video))->delete();
-    //         }
-    //      }
-
-    //      $add_videos = $request["playlist_videos"];
-    //      if (isset($add_videos)) {
-    //         foreach ($add_videos as $video) {
-
-    //                 $video_exists = PlaylistVideo::where('playlist_id', $id)
-    //                                                 ->where('video_id', $video)
-    //                                                 ->where('deleted_at', null)
-    //                                                 ->first();
-    //             if( ! $video_exists) {
-
-    //                 PlaylistVideo::create([
-    //                     'playlist_id'   => $id,
-    //                     'video_id'      => $video
-    //                 ]);
-    //             }
-
-
-    //         }
-    //      }
-    //      return;
-    // }
-
     public static function updateTargetStores($request, $id)
     {
 
@@ -179,6 +150,48 @@ class Playlist extends Model
         return;         
     }
 
+    public static function getPlaylistsForAdmin()
+    {
+        $banners = UserBanner::getAllBanners()->pluck('id')->toArray();
+        
+        //stores in accessible banners
+        $storeList = [];
+        foreach ($banners as $banner) {
+            $storeInfo = StoreInfo::getStoresInfo($banner);
+            foreach ($storeInfo as $store) {
+                array_push($storeList, $store->store_number);
+            }
+        }
+
+        $allStorePlaylists = Playlist::join('playlist_banner', 'playlist_banner.playlist_id', '=', 'playlists.id')
+                                ->where('all_stores', 1)
+                                ->whereIn('playlist_banner.banner_id', $banners)
+                                ->select('playlists.*', 'playlist_banner.banner_id')
+                                ->get();
+
+
+        $allStorePlaylists = Playlist::groupBannersForAllStorePlaylists($allStorePlaylists);
+        
+        $targetedPlaylists = Playlist::join('playlist_target', 'playlist_target.playlist_id', '=', 'playlists.id')
+                                ->whereIn('playlist_target.store_id', $storeList)
+                                ->select('playlists.*', 'playlist_target.store_id')
+                                ->get();
+
+        $targetedPlaylists = Playlist::groupStoresForTargetedPlaylists($targetedPlaylists);
+
+        $playlists = Playlist::mergeTargetedAndAllStoreAssets($targetedPlaylists, $allStorePlaylists);
+
+
+        foreach ($playlists as $playlist) {
+            
+            $playlist->prettyDateCreated = Utility::prettifyDate($playlist->created_at);
+            $playlist->prettyDateUpdated = Utility::prettifyDate($playlist->updated_at);
+        }
+                        
+                        
+        return $playlists;
+    }
+
     public static function getPlaylistByBanner($banner_id)
     {
         $playlists = Playlist::where('banner_id', $banner_id)
@@ -221,4 +234,70 @@ class Playlist extends Model
         $optGroupSelections = array_merge($targetBanners, $targetStores );
         return( $optGroupSelections );
     }
+
+    public static function groupBannersForAllStorePlaylists($allStorePlaylists)
+    {
+        $allStorePlaylists = $allStorePlaylists->toArray();
+        $compiledPlaylists = [];
+        foreach ($allStorePlaylists as $playlist) {
+            $index = array_search($playlist['id'], array_column($compiledPlaylists, 'id'));
+            if(  $index !== false ){
+               array_push($compiledPlaylists[$index]->banners, $playlist["banner_id"]);
+            }
+            else{
+               
+               $playlist["banners"] = [];
+               array_push( $playlist["banners"] , $playlist["banner_id"]);
+               array_push( $compiledPlaylists , (object) $playlist);
+            }
+
+        }
+        
+        return collect($compiledPlaylists);
+    }
+
+    public static function groupStoresForTargetedPlaylists($targetedPlaylists)
+    {
+        $targetedPlaylists = $targetedPlaylists->toArray();
+        $compiledPlaylists = [];
+        foreach ($targetedPlaylists as $playlist) {
+            $index = array_search($playlist['id'], array_column($compiledPlaylists, 'id'));
+            if(  $index !== false ){
+               array_push($compiledPlaylists[$index]->stores, $playlist["store_id"]);
+            }
+            else{
+               
+               $playlist["stores"] = [];
+               array_push( $playlist["stores"] , $playlist["store_id"]);
+               array_push( $compiledPlaylists , (object) $playlist);
+            }
+
+        }
+        
+        return collect($compiledPlaylists);
+    }
+
+    public static function mergeTargetedAndAllStoreAssets($targetedPlaylists, $allStorePlaylists)
+    {
+
+        foreach($targetedPlaylists as $targetedPlaylist)
+        {
+            $id = $targetedPlaylist->id;
+
+            if($allStorePlaylists->contains('id', $id)){
+                
+                $playlistIndex = $allStorePlaylists->where('id', $id)->keys()->toArray()[0];
+                $allStorePlaylists[$playlistIndex]->stores = $targetedPlaylist->stores;
+                
+            }
+            else{
+                $allStorePlaylists->merge($targetedPlaylist);
+            }
+        }
+
+        $playlists = $allStorePlaylists->merge($targetedPlaylists)->unique('id')->sortByDesc('created_at');
+
+        return $playlists;
+    }
+
 }
