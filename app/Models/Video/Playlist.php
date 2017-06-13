@@ -41,24 +41,28 @@ class Playlist extends Model
 
     public static function validateEditPlaylist($id, $request)
     {
-         $validateThis =  [
+        $validateThis =  [
+            'title'  => $request['title']
+        ];
 
-            'title'  => $request['title'],
-            'playlist_videos' => $request['playlist_videos'],
-            'remove_videos' =>$request['remove_videos']
+        if(isset($request['playlist_videos']) && !empty($request['playlist_videos']))
+        {
+            $validateThis['playlist_videos'] = $request['playlist_videos'];
+        }
+        
+        if(isset($request['remove_videos']) && !empty($request['remove_videos']))
+        {
+            $validateThis['remove_videos'] = $request['remove_videos'];
+        }
 
-         ];
+        \Log::info($validateThis);
+        $v = new PlaylistEditValidator();
+        $videoAttachmentValidation  = $v->videoAttachmentValidationRule($id, $request['playlist_videos'], $request['remove_videos']);
 
-         \Log::info($validateThis);
-         $v = new PlaylistEditValidator();
-
-         $videoAttachmentValidation  = $v->videoAttachmentValidationRule($id, $request['playlist_videos'], $request['remove_videos']);
-
-
-         if($videoAttachmentValidation["validation_result"] == 'true') {
+        if($videoAttachmentValidation["validation_result"] == 'true') {
             \Log::info('going ahead with more validation');
             return $v->validate($validateThis);
-         }
+        }
 
          return $videoAttachmentValidation;
     }
@@ -76,7 +80,6 @@ class Playlist extends Model
 
    		$playlist = Playlist::create([
    			'title' 	=> $request["title"],
-   			// 'banner_id' => $request["banner_id"],
             'description' => $request["description"]
    		]);
 
