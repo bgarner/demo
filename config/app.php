@@ -262,6 +262,7 @@ return [
         'App\Http\Controllers\Video\VideoAdminController'                       => 'Videos',
         'App\Http\Controllers\Video\TagAdminController'                         => 'Videos',
         'App\Http\Controllers\Video\PlaylistAdminController'                    => 'Videos',
+        'App\Http\Controllers\Video\PlaylistVideoOrderController'               => 'Videos',
         'App\Http\Controllers\User\UserAdminController'                         => 'User and Group Management',
         'App\Http\Controllers\Auth\Group\GroupAdminController'                  => 'User and Group Management',
         'App\Http\Controllers\Auth\Group\GroupRoleAdminController'              => 'User and Group Management',

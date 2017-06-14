@@ -105,7 +105,7 @@
 									<div id="videos-staged-to-remove"></div>
 
 								</div>
-								<div id="videos-selected" class="row"></div>
+								<div id="videos-selected" class="row hidden"></div>
 								</div>
 
                             </div>
