@@ -43,7 +43,7 @@ class VideoController extends Controller
         $mostViewed = Video::getMostViewedVideos($storeNumber, 12);
         $mostLiked = Video::getMostLikedVideos($storeNumber, 4);
         $mostRecent = Video::getMostRecentVideos($storeNumber, 12);
-        $latestPlaylists = Playlist::getLatestPlaylists(3);
+        $latestPlaylists = Playlist::getLatestPlaylists($storeNumber, 3);
 
         return view('site.video.index')
             ->with('mostLiked', $mostLiked)

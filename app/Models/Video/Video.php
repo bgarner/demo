@@ -272,24 +272,6 @@ class Video extends Model
                     
     }
 
-    public static function getVideosForStore($store_id)
-    {
-        $banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
-        $allStoreVideosForBanners = Video::join('video_banner', 'videos.id', '=', 'video_banner.video_id' )          
-                                            ->where('videos.all_stores', 1)
-                                            ->where('video_banner.banner_id', $banner_id)
-                                            ->select('videos.*')
-                                            ->get();
-
-        $targetedVideosForStore = Video::join('video_target', 'video_target.video_id', '=', 'videos.id')
-                                        ->where('video_target.store_id', $store_id)
-                                        ->select('videos.*')
-                                        ->get();
-        $videos = $targetedVideosForStore->merge($allStoreVideosForBanners);
-        
-        return $videos;
-    }
-
     public static function getMostLikedVideos($store_id, $limit=0)
     {
         if($limit == 0){
@@ -348,6 +330,26 @@ class Video extends Model
 
         return $videos;
     }
+
+    public static function getVideosForStore($store_id)
+    {
+        $banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
+        $allStoreVideosForBanners = Video::join('video_banner', 'videos.id', '=', 'video_banner.video_id' )          
+                                            ->where('videos.all_stores', 1)
+                                            ->where('video_banner.banner_id', $banner_id)
+                                            ->select('videos.*')
+                                            ->get();
+
+        $targetedVideosForStore = Video::join('video_target', 'video_target.video_id', '=', 'videos.id')
+                                        ->where('video_target.store_id', $store_id)
+                                        ->select('videos.*')
+                                        ->get();
+        $videos = $targetedVideosForStore->merge($allStoreVideosForBanners);
+        
+        return $videos;
+    }
+
+
     public static function getVideosByUploader($uploaderId)
     {
         return Video::where('uploader', $uploaderId)->orderBy('created_at', 'desc')->get();

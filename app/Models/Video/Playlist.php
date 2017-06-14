@@ -205,12 +205,15 @@ class Playlist extends Model
         return $playlists;
     }
 
-    public static function getLatestPlaylists($limit=0)
+    public static function getLatestPlaylists($store_id, $limit=0)
     {
         if($limit == 0){
-            $list = Playlist::orderBy('created_at', 'desc')->paginate(24);
+            
+            $list = Playlist::getPlaylistForStore($store_id)->sortByDesc('created_at');
+            $list = Video::paginate($list, 24)->setPath('playlists');
+
         } else {
-            $list = Playlist::orderBy('created_at', 'desc')->take($limit)->get();
+            $list = Playlist::getPlaylistForStore($store_id)->sortByDesc('created_at')->take($limit);
         }
 
         foreach($list as $li){
@@ -221,6 +224,24 @@ class Playlist extends Model
             $li->prettyDateCreated = Utility::prettifyDate($li->created_at);
         }
         return $list;
+    }
+
+    public static function getPlaylistForStore($store_id)
+    {
+        $banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
+        $allStorePlaylistsForBanners = Playlist::join('playlist_banner', 'playlists.id', '=', 'playlist_banner.playlist_id' )          
+                                            ->where('playlists.all_stores', 1)
+                                            ->where('playlist_banner.banner_id', $banner_id)
+                                            ->select('playlists.*')
+                                            ->get();
+
+        $targetedPlaylistsForStore = Playlist::join('playlist_target', 'playlist_target.playlist_id', '=', 'playlists.id')
+                                        ->where('playlist_target.store_id', $store_id)
+                                        ->select('playlists.*')
+                                        ->get();
+        $playlists = $targetedPlaylistsForStore->merge($allStorePlaylistsForBanners);
+        
+        return $playlists;
     }
 
     public static function getPlaylistMetaData($id)
