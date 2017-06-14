@@ -32,7 +32,7 @@ class VideoAdminController extends Controller
      */
     public function index()
     {
-        $videos = Video::getAllVideosForAdmin(); 
+        $videos = Video::getAllVideosForAdmin();
 
         return view('admin.video.video-manager.index')->with('videos', $videos);
     }

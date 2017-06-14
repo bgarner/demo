@@ -10,7 +10,9 @@
 				@foreach($videos as $video)
 
 				<li class="dd-item" data-id="{{ $video->id }}">
-						<span class="pull-left"><div class="dd-handle"><i class="fa fa-bars"></i></div></span>
+						<span class="pull-left">
+							<div class="dd-handle"><i class="fa fa-bars"></i></div>
+						</span>
 						
 						<img src="/video/thumbs/{{ $video->thumbnail }}" height="30" width="30" />
 						<span class="client-link" style="margin:0px 10px;">{{ $video->title }}</span>

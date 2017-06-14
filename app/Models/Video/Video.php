@@ -104,10 +104,14 @@ class Video extends Model
         
         $targetedVideos = Video::join('video_target', 'video_target.video_id', '=', 'videos.id')
                                 ->whereIn('video_target.store_id', $storeList)
-                                ->select('videos.*')
+                                ->select('videos.*', 'video_target.store_id')
                                 ->get();
 
-        $videos = $allStoreVideos->merge($targetedVideos)->sortByDesc('created_at');
+        $targetedVideos = Video::groupStoresForTargetedVideos($targetedVideos);
+
+        $videos = Playlist::mergeTargetedAndAllStoreAssets($targetedVideos, $allStoreVideos);
+
+        // $videos = $allStoreVideos->merge($targetedVideos)->sortByDesc('created_at');
 
         foreach ($videos as $video) {
             $video->uploaderFirstName = User::find($video->uploader)->firstname;
@@ -211,18 +215,6 @@ class Video extends Model
         return;
     }
 
-    // public static function removeFeaturedVideoFlag()
-    // {
-    //     $featuredVideo = Video::where('featured', 1)->first();
-    //     if( $featuredVideo !== null )
-    //     {
-    //         $featuredVideo->featured = 0;
-    //         $featuredVideo->save();
-    //     }
-
-    //     return;
-    // }
-
     public static function getPlaylistsThatContainSpecificVideo($id)
     {
         $playlistMeta = [];
@@ -260,18 +252,6 @@ class Video extends Model
         //dd($video);
         return $video;
     }
-
-    // public static function getFeaturedVideo()
-    // {
-    //     $video = Video::where('featured', 1)->first();
-    //     if(count($video) > 0){
-    //         $video->likes = number_format($video->likes);
-    //         $video->dislikes = number_format($video->dislikes);
-    //         $video->sinceCreated = Utility::getTimePastSinceDate($video->created_at);
-    //         $video->prettyDateUpdated = Utility::prettifyDate($video->updated_at);
-    //     }
-    //     return $video;
-    // }
 
     public static function getVideoById($id)
     {
@@ -502,6 +482,31 @@ class Video extends Model
         
         return collect($compiledVideos);
     }
+
+
+
+    public static function groupStoresForTargetedVideos($targetedVideos)
+    {
+        $targetedVideos = $targetedVideos->toArray();
+        $compiledVideos = [];
+        foreach ($targetedVideos as $video) {
+            $index = array_search($video['id'], array_column($compiledVideos, 'id'));
+            if(  $index !== false ){
+               array_push($compiledVideos[$index]->stores, $video["store_id"]);
+            }
+            else{
+               
+               $video["stores"] = [];
+               array_push( $video["stores"] , $video["store_id"]);
+               array_push( $compiledVideos , (object) $video);
+            }
+
+        }
+        
+        return collect($compiledVideos);
+    }
+
+
 
     /**
      * Create a length aware custom paginator instance.
