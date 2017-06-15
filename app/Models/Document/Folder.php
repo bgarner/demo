@@ -30,9 +30,16 @@ class Folder extends Model
     {
         $validateThis = [
 
-            'parent' => $request['parent'],
+            
             'name'  => $request['name']
         ];
+
+        if(isset($request['parent']) && !empty($request['parent'])){
+
+            $validateThis['parent'] = $request['parent'];
+
+        }
+        
 
         $v = new FolderValidator();
         return $v->validate($validateThis);
