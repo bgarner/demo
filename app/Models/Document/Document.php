@@ -21,6 +21,7 @@ use App\Models\Validation\DocumentValidator;
 use App\Models\Feature\FeatureDocument;
 use App\Models\Communication\CommunicationDocument;
 use App\Models\UrgentNotice\UrgentNoticeDocument;
+use App\Models\StoreInfo;
 
 
 class Document extends Model
@@ -67,55 +68,34 @@ class Document extends Model
             $folder_type = $global_folder_details->folder_type;
             $folder_id = $global_folder_details->folder_id;
 
-            $now = Carbon::now()->toDatetimeString();
-
             if ($forStore) {
-                $files = \DB::table('file_folder')
-                            ->join('documents', 'file_folder.document_id', '=', 'documents.id')
-                            ->join('document_target', 'document_target.document_id' , '=', 'documents.id')
-                            ->where('file_folder.folder_id', '=', $global_folder_id)
-                            ->where('documents.start', '<=', $now )
-                            ->where(function($query) use ($now) {
-                                $query->where('documents.end', '>=', $now)
-                                    ->orWhere('documents.end', '=', '0000-00-00 00:00:00' );
-                            })
-                            ->where('documents.deleted_at', '=', null)
-                            // ->where('document_target.deleted_at', '=', null)
-                            ->where('document_target.store_id', strval($storeNumber))
-                            ->select('documents.*')
-                            ->get();
-
+                $documents = Document::getDocumentsForStore($global_folder_id, $storeNumber);
             }
             else{
-                $files = \DB::table('file_folder')
-                            ->join('documents', 'file_folder.document_id', '=', 'documents.id')
-                            ->where('file_folder.folder_id', '=', $global_folder_id)
-                            // ->where('documents.deleted_at', '=', null)
-                            ->select('documents.*')
-                            ->get();
+                $documents = Document::getDocumentsForAdmin($global_folder_id);
             }
 
+            if (count($documents) > 0) {
 
+                foreach ($documents as $document) {
 
+                    //$document = Document::getDocumentMetaData();
+                    $document->link = Utility::getModalLink($document->filename, $document->title, $document->original_extension, $document->id, 0);
+                    $document->link_with_icon = Utility::getModalLink($document->filename, $document->title, $document->original_extension, $document->id, 1);
+                    $document->icon = Utility::getIcon($document->original_extension);
+                    $document->prettyDateCreated = Utility::prettifyDate($document->created_at);
+                    $document->prettyDateUpdated = Utility::prettifyDate($document->updated_at);
+                    $document->prettyDateStart = Utility::prettifyDate($document->start);
+                    $document->prettyDateEnd = Utility::prettifyDate($document->end);
 
-            if (count($files) > 0) {
-                foreach ($files as $file) {
-                    $file->link = Utility::getModalLink($file->filename, $file->title, $file->original_extension, $file->id, 0);
-                    $file->link_with_icon = Utility::getModalLink($file->filename, $file->title, $file->original_extension, $file->id, 1);
-                    $file->icon = Utility::getIcon($file->original_extension);
-                    $file->prettyDateCreated = Utility::prettifyDate($file->created_at);
-                    $file->prettyDateUpdated = Utility::prettifyDate($file->updated_at);
-                    $file->prettyDateStart = Utility::prettifyDate($file->start);
-                    $file->prettyDateEnd = Utility::prettifyDate($file->end);
-
-                    $file->is_alert = '';
-                    if (Alert::where('document_id', $file->id)->first()) {
-                        $file->is_alert = Utility::getAlertIcon();
+                    $document->is_alert = '';
+                    if (Alert::where('document_id', $document->id)->first()) {
+                        $document->is_alert = Utility::getAlertIcon();
                     }
 
                 }
 
-                return $files;
+                return $documents;
             }
             else{
                 return [];
@@ -360,7 +340,7 @@ class Document extends Model
                     ->where('documents.end', '!=', '0000-00-00 00:00:00')
                     ->where('document_target.store_id', strval($storeNumber))
                     ->where('documents.deleted_at', '=', null)
-                    ->where('document_target.deleted_at', '=', null)
+                    // ->where('document_target.deleted_at', '=', null)
                     ->select('documents.*')
 
                     ->get();
@@ -506,4 +486,53 @@ class Document extends Model
          
         return;  
     }
+
+    public static function getDocumentsForStore($global_folder_id, $storeNumber)
+    {
+        $now = Carbon::now()->toDatetimeString();
+        
+        $banner_id = StoreInfo::getStoreInfoByStoreId($storeNumber)->banner_id;
+
+        $allStoreDocuments = Document::join('file_folder', 'file_folder.document_id', '=', 'documents.id')
+                                    ->where('file_folder.folder_id', $global_folder_id)
+                                    ->where('documents.all_stores', 1)
+                                    ->where('documents.banner_id', $banner_id)
+                                    ->where('documents.start', '<=', $now )
+                                    ->where(function($query) use ($now) {
+                                        $query->where('documents.end', '>=', $now)
+                                            ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+                                    })
+                                    ->where('documents.deleted_at', '=', null)
+                                    ->select('documents.*')
+                                    ->get();
+
+
+        $targetedDocuments = \DB::table('file_folder')
+                            ->join('documents', 'file_folder.document_id', '=', 'documents.id')
+                            ->join('document_target', 'document_target.document_id' , '=', 'documents.id')
+                            ->where('file_folder.folder_id', '=', $global_folder_id)
+                            ->where('documents.start', '<=', $now )
+                            ->where(function($query) use ($now) {
+                                $query->where('documents.end', '>=', $now)
+                                    ->orWhere('documents.end', '=', '0000-00-00 00:00:00' );
+                            })
+                            ->where('documents.deleted_at', '=', null)
+                            ->where('document_target.store_id', strval($storeNumber))
+                            ->select('documents.*')
+                            ->get();
+
+        $documents = $targetedDocuments->merge($allStoreDocuments);
+        return $documents;
+    }
+
+    public static function getDocumentsForAdmin($global_folder_id)
+    {
+        return $documents = \DB::table('file_folder')
+                            ->join('documents', 'file_folder.document_id', '=', 'documents.id')
+                            ->where('file_folder.folder_id', '=', $global_folder_id)
+                            ->where('documents.deleted_at', '=', null)
+                            ->select('documents.*')
+                            ->get();
+    }
+
 }
