@@ -172,7 +172,7 @@ class Communication extends Model
 						  ->orderBy('communications.send_at', 'desc')
 						  ->get();
 
-		$comm = $allStoreComm->merge($targetedComm)->each(function($c){
+		$comm = $allStoreComm->merge($targetedComm)->sortByDesc('send_at')->each(function($c){
 			
 			$c->archived = true;
 			$c->since = Utility::getTimePastSinceDate($c->send_at);
@@ -247,7 +247,7 @@ class Communication extends Model
 						  ->orderBy('communications.send_at', 'desc')
 						  ->get();
 
-		$comm = $allStoreComm->merge($targetedComm)->each(function($c){
+		$comm = $allStoreComm->merge($targetedComm)->sortByDesc('send_at')->each(function($c){
 
 			$c->archived        = true;
 			$c->since           = Utility::getTimePastSinceDate($c->send_at);

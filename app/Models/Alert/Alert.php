@@ -301,7 +301,7 @@ class Alert extends Model
                         ->where('alerts.banner_id', $banner_id)
                         ->where('documents.end', '<=', $now)
                         ->where('documents.end', '!=', '0000-00-00 00:00:00')
-                        ->select('alerts.*')
+                        ->select('alerts.*', 'documents.start as start', 'documents.end as end')
                         ->get();
 
         
@@ -338,7 +338,7 @@ class Alert extends Model
                         ->where('documents.end', '<=', $now)
                         ->where('documents.end', '!=', '0000-00-00 00:00:00')
                         ->where('alert_type_id' , $alert_type)
-                        ->select('alerts.*')
+                        ->select('alerts.*', 'documents.start as start', 'documents.end as end')
                         ->get();
 
         $targetedAlerts = Alert::join('documents', 'alerts.document_id' , '=', 'documents.id')
