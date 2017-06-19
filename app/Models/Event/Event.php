@@ -149,11 +149,12 @@ class Event extends Model
             $event->prettyDateEnd = Utility::prettifyDate($event->end);
             $event->since = Utility::getTimePastSinceDate($event->start);
 
-            if(!isset($event->event_type_name)){
+            // if(!isset($event->event_type_name)){
                 $event->event_type_name = EventType::getName($event->event_type);
                 $event->background_colour = EventType::getBackground($event->event_type);
                 $event->foreground_colour = EventType::getForeground($event->event_type);
-            }
+
+            // }
         }
         return $events;
 

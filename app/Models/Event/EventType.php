@@ -41,6 +41,14 @@ class EventType extends Model
 		return $event_type->foreground_colour;
 	}
 
+	public static function getEventTypeIdByName($name, $banner)
+	{
+		$event_type = EventType::where("event_type", $name)
+								->where("banner_id", $banner)
+								->first();
+		return $event_type->id;
+	}
+
     public static function getEventTypeListByBannerId($banner_id)
     {
         return  EventType::where('banner_id', $banner_id)
