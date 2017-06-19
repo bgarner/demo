@@ -58,7 +58,7 @@
             </div>
 
             <div class="row wrapper border-bottom white-bg page-heading">
-                <h1>Latest Videos</h1>
+                <h1>{{__("Latest Videos")}}</h1>
             </div>
 
 
@@ -73,7 +73,7 @@
                                         <a href="watch/{{$mr->id}}" class="trackclick" data-video-id="{{$mr->id}}"><img src="/video/thumbs/{{$mr->thumbnail}}" class="embed-responsive-item img-responsive" /></a>
                                         </div>
                                         <a href="watch/{{$mr->id}}" class="trackclick" data-video-id="{{$mr->id}}"><h4>{{$mr->title}}</h4></a>
-                                        <p>{{$mr->views}} views &middot; {{$mr->sinceCreated}} ago</p>
+                                        <p>{{$mr->views}} {{__("views")}} &middot; {{$mr->sinceCreated}} {{__("ago")}}</p>
                                     </div>
                                 @endforeach
                             </div>

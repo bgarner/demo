@@ -6,7 +6,7 @@
     @include('site.includes.head')
     <meta name="csrf-token" content="{!! csrf_token() !!}"/>
     <link rel="stylesheet" type="text/css" href="/css/custom/site/feature.css">
-</head>	
+</head>
 
 <body class="fixed-navigation">
 
@@ -36,14 +36,14 @@
 
             </div>
 
-            
+
             <div class="col-lg-10 col-md-9 col-sm-8 col-xs-8 animated fadeInRight printable">
 
             <div class="mail-box-header">
 
                 <h2>
                     {{ $communication->subject }}
-                     <span class="pull-right font-normal" style="font-size: 16px;">{{ $communication->prettyDate }} <small style="font-weight: normal;padding-left: 10px;">({{ $communication->since }} ago)</small></span>
+                     <span class="pull-right font-normal" style="font-size: 16px;">{{ $communication->prettyDate }} <small style="font-weight: normal;padding-left: 10px;">({{ $communication->since }} {{__("ago")}})</small></span>
                 </h2>
 
             </div>
@@ -56,15 +56,15 @@
 
                     <div class="mail-attachment">
                     <h3>
-                        <span><i class="fa fa-paperclip"></i> {{ count($communication_documents) }} Attachments</span>
+                        <span><i class="fa fa-paperclip"></i> {{ count($communication_documents) }} {{__("Attachments")}}</span>
                     </h3>
 
                     @if(count($communication_documents) > 0)
                         <table class="table tablesorter table-hover table-mail tablesorter-default" id="file-table" role="grid">
                             <thead>
-                                <tr> 
-                                    <th> Title </th> 
-                                    <th> Last Updated </th> 
+                                <tr>
+                                    <th> {{__("Title")}} </th>
+                                    <th> {{__("Last Updated")}} </th>
                                 </tr>
                             </thead>
 
@@ -77,32 +77,32 @@
                                 </tr>
 
                             @endforeach
-                            </tbody>                                                                       
+                            </tbody>
                         </table>
                     @endif
 
                             {{--<div class="file-box">
                                     <div class="file">
                                         {!! $doc->anchor_only !!}
-    
+
                                             <div class="icon">
                                                 {!! $doc->icon !!}
                                             </div>
-    
-    
+
+
                                             <div class="file-name">
                                                 <div style="font-size: 16px; padding-bottom: 10px;"> {{ $doc->title }}</div>
-                                                
+
                                                 <small class="clearfix"><span class="text-muted pull-left">{{ $doc->prettyDate }}</span> <span class="text-muted pull-right">{{ $doc->since }} ago</span></small>
-    
+
                                             </div>
                                         </a>
-                                    
+
                                     </div>
-    
-                                </div>    --}}                
-                    
-                    
+
+                                </div>    --}}
+
+
                     <div class="clearfix"></div>
                     </div>
 
@@ -110,10 +110,10 @@
                         <h3>
                             <span><i class="fa fa-paperclip"></i> {{ count($communication_packages) }} Packages</span>
                         </h3>
-            
+
                         <div class="row">
                             <div class="col-lg-4 package-listing">
-                            {{--@foreach($communication_packages as $package)                                                        
+                            {{--@foreach($communication_packages as $package)
                                     @include('site.feature.package-listing', ['package'=>$package])
                                 @endforeach--}}
                             </div>
@@ -123,13 +123,13 @@
 
                                 {{-- @foreach($communication_packages as $package)
                                     <?php $package_document_listing = $package['details']['package_documents']; ?>
-                                    
+
                                     <div  class="package-document-listing hidden" data-packageid= {{$package->id}} >
 
                                         @foreach ($package_document_listing as $document)
                                         {!! $document->link_with_icon !!}
-                                        
-                                           
+
+
                                         @endforeach
                                     </div>
 
@@ -139,27 +139,27 @@
 
                                 @endforeach--}}
                             </div>
-                        </div>               
-                    
+                        </div>
+
                     <div class="clearfix"></div>
                     </div> -->
 
 
 
-            </div>            
+            </div>
 
-                
-        
+
+
 </div>
 
 
 
-    @include('site.includes.footer')       
+    @include('site.includes.footer')
 
     <script type="text/javascript" src="/js/plugins/fullcalendar/moment.min.js"></script>
-    
+
     @include('site.includes.scripts')
-   
+
     <script type="text/javascript" src="/js/custom/tree.js"></script>
     <script type="text/javascript" src="/js/vendor/underscore-1.8.3.js"></script>
     <script type="text/javascript" src="/js/custom/site/features/showFeaturePackageDetails.js"></script>
@@ -188,21 +188,21 @@
                 }
             }
         };
-    
+
         $( document ).ready(function() {
 
             var checked = getUrlParameter('archives');
-            
+
             if( checked == 'true'){
                 $("a.comm_category_link").each(function() {
-                   var href = $(this).attr("href"); 
+                   var href = $(this).attr("href");
                    $(this).attr("href", href + '&archives=true');
-                });                
+                });
             } else {
                 $("a.comm_category_link").each(function() {
-                   var href = $(this).attr("href"); 
+                   var href = $(this).attr("href");
                    $(this).attr('href', href.replace(/&?archives=\d+/, ''));
-                });                                 
+                });
             }
 
             $(".inline-folder-link").click(function(){
@@ -212,10 +212,10 @@
             });
         });
 
- 
+
     </script>
 
     @include('site.includes.modal')
 
 </body>
-</html> 
+</html>

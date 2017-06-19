@@ -118,7 +118,7 @@
         <!-- <div class="hidden-xs hidden-sm"> -->
         <div>
 
-            
+
 
             <div class="" style="padding: 15px 30px 0px 0px; float:right">
                 <span class="truncate" id="store-name">
@@ -144,7 +144,7 @@
                 </span>
                 @endif
 
-                &nbsp;&nbsp;<a id="storeswitch" style="display: inline;"><i class="fa fa-sitemap "></i><span id="storeswitch-text"> Change Store</span></a>
+                &nbsp;&nbsp;<a id="storeswitch" style="display: inline;"><i class="fa fa-sitemap "></i><span id="storeswitch-text"> {{__("Change Store")}}</span></a>
             </div>
         </div>
 

@@ -38,7 +38,6 @@ class DashboardController extends Controller
 
         $notifications = Notification::getAllNotifications($storeInfo->banner_id, $storeNumber, $banner->update_type_id, $banner->update_window_size);
 
-
         $communications = Communication::getActiveCommunicationsByStoreNumber($storeNumber, 3);
 
         $featuredVideo = FeaturedVideo::getFeaturedVideoByBanner($storeBanner);

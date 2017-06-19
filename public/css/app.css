@@ -8483,11 +8483,11 @@ body.md-skin {
   background-color: #e7eaec;
 }
 .project-list table tr td{
-  vertical-align: top !important; 
+  vertical-align: top !important;
 }
 .task-done{
   float:right;
-  padding-right: 20px; 
+  padding-right: 20px;
 }
 .task-not-done{
   float: left;
@@ -8495,4 +8495,18 @@ body.md-skin {
 }
 .task_description{
   padding-left: 25px;
+}
+
+.lang-select{
+    border-radius: 0px;
+
+}
+.dropup{
+    position: relative;
+    bottom: 3px;
+}
+
+.dropup ul{
+    border: 0 !important;
+    margin-bottom: 10px !important;
 }

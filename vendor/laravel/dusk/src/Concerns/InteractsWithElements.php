@@ -70,7 +70,7 @@ trait InteractsWithElements
     {
         $this->ensurejQueryIsAvailable();
 
-        $selector = trim($this->resolver->format("a:contains('{$link}')"));
+        $selector = trim($this->resolver->format("a:contains({$link})"));
 
         $this->driver->executeScript("jQuery.find(\"{$selector}\")[0].click();");
 
@@ -86,7 +86,7 @@ trait InteractsWithElements
      */
     public function value($selector, $value = null)
     {
-        if (! $value) {
+        if (is_null($value)) {
             return $this->resolver->findOrFail($selector)->getAttribute('value');
         }
 
@@ -203,7 +203,7 @@ trait InteractsWithElements
 
         else {
             foreach ($options as $option) {
-                if ($option->getAttribute('value') === $value) {
+                if ((string) $option->getAttribute('value') === (string) $value) {
                     $option->click();
 
                     break;

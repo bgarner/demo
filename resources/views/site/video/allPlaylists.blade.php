@@ -45,7 +45,7 @@
             </div>
 
             <div class="row wrapper border-bottom white-bg page-heading">
-                <h1>Playlists</h1>
+                <h1>{{__("Playlists")}}</h1>
             </div>
 
 
@@ -60,7 +60,7 @@
                                         <a href="playlist/{{$pl->id}}" class="trackclick" data-video-id="{{$pl->id}}"><img src="/video/thumbs/{{$pl->thumbnail}}" class="embed-responsive-item img-responsive" /></a>
                                         </div>
                                         <a href="playlist/{{$pl->id}}" class="trackclick" data-video-id="{{$pl->id}}"><h4>{{$pl->title}}</h4></a>
-                                        <p>{{$pl->count}} videos &middot; {{$pl->sinceCreated}} ago</p>
+                                        <p>{{$pl->count}} videos &middot; {{$pl->sinceCreated}} {{__("ago")}}</p>
                                     </div>
                                 @endforeach
                             </div>
