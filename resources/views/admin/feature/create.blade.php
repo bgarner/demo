@@ -191,7 +191,7 @@
 		        </div>
 		        </div>
 
-				@include('site.includes.footer')
+				@include('admin.includes.footer')
 
 			    @include('admin.includes.scripts')
 
@@ -199,7 +199,7 @@
 
 				
 
-				@include('site.includes.bugreport')
+				@include('admin.includes.bugreport')
 
 				<div id="document-listing" class="modal fade">
 				    <div class="modal-dialog">
