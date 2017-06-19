@@ -3548,13 +3548,6 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/mockery/mockery/zipball/6fdb61243844dc924071d3404bb23994ea0b6856",
-            "reference": "6fdb61243844dc924071d3404bb23994ea0b6856",
-            "url": "https://github.com/symfony/console.git",
-            "reference": "a7a17e0c6c3c4d70a211f80782e4b90ddadeaa38"
-        },
-        "dist": {
-            "type": "zip",
             "url": "https://api.github.com/repos/symfony/console/zipball/a7a17e0c6c3c4d70a211f80782e4b90ddadeaa38",
             "reference": "a7a17e0c6c3c4d70a211f80782e4b90ddadeaa38",
             "shasum": ""
@@ -5554,7 +5547,6 @@
                 "email": "packages@laracademy.co"
             }
         ],
-        "description": "Interactive make CLI replacement for Laravel"
         "description": "PHP Debugbar integration for Laravel",
         "keywords": [
             "debug",
