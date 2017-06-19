@@ -14,17 +14,18 @@ use App\Models\Validation\EventValidator;
 use App\Models\Event\EventAttachment;
 use App\Models\ProductLaunch\ProductLaunch;
 use App\Models\Utility\Utility;
+use App\Models\StoreInfo;
 
 class Event extends Model
 {
-	  use SoftDeletes;
+    use SoftDeletes;
     protected $table = 'events';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['banner_id', 'title', 'description', 'event_type', 'start', 'end'];
+    protected $fillable = ['banner_id', 'title', 'description', 'event_type', 'start', 'end', 'all_stores'];
 
     public static function validateEvent($request)
     { 
-      $validateThis = [ 
+        $validateThis = [ 
                         'title'         => $request['title'],
                         'event_type'    => $request['event_type'],
                         'start'         => $request['start'],
@@ -32,19 +33,19 @@ class Event extends Model
                         'target_stores' => $request['target_stores'],
                         
                       ];
-      if ($request['allStores'] != NULL) {
-        $validateThis['allStores'] = $request['allStores'];
-      }
-      
-      $v = new EventValidator();
-      
-      return $v->validate($validateThis);
+        if ($request['allStores'] != NULL) {
+            $validateThis['allStores'] = $request['allStores'];
+        }
+
+        $v = new EventValidator();
+
+        return $v->validate($validateThis);
        
     }
 
     public static function storeEvent($request)
     {
-
+        \Log::info($request);
         $validate = Event::validateEvent($request);
         
         if($validate['validation_result'] == 'false') {
@@ -96,25 +97,32 @@ class Event extends Model
     }
 
     public static function updateTargetStores($id, $request)
-      {
-         $target_stores = $request['target_stores'];
-         $allStores = $request['allStores'];
-         
-         if (!( $target_stores == '' && $allStores == 'on' )) {
-             EventTarget::where('event_id', $id)->delete();
-             if (count($target_stores) > 0) {
-                 foreach ($target_stores as $store) {
-                     EventTarget::create([
-                        'event_id'   => $id,
-                        'store_id'   => $store
-                     ]);
-               
-                  } 
-             }            
-         }
-         
-         return;
-      }
+        {
+            $target_stores = $request['target_stores'];
+            $allStores = $request['allStores'];
+            if($allStores == 'on') {
+                EventTarget::where('event_id', $id)->delete();
+                $event = Event::find($id);
+                $event->all_stores = 1;
+                $event->save();
+            }
+            else{
+                EventTarget::where('event_id', $id)->delete();
+                if (count($target_stores) > 0) {
+                    foreach ($target_stores as $store) {
+                        EventTarget::create([
+                            'event_id'   => $id,
+                            'store_id'   => $store
+                        ]);
+                    }
+                }
+                $event = Event::find($id);
+                $event->all_stores = 0;
+                $event->save(); 
+            }
+             
+            return; 
+        }
 
     public static function updateTags($id, $tags)
     {
@@ -151,25 +159,34 @@ class Event extends Model
 
     public static function getActiveEventsByStore($store_id)
     {
-        $events = Event::join('events_target', 'events.id', '=', 'events_target.event_id')
+        $banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
+        
+        $allStoreEvents = Event::where('all_stores', '1')
+                            ->where('banner_id', $banner_id)
+                            ->select('events.*')
+                            ->orderBy('start')
+                            ->get();
+
+        $targetedEvents = Event::join('events_target', 'events.id', '=', 'events_target.event_id')
                         ->where('store_id', $store_id)
                         ->select('events.*')
                         ->orderBy('start')
                         ->get();
 
-        foreach ($events as $event) {
-            $attachments = EventAttachment::getEventAttachments($event->id);
-            $attachment_link_string = "";
-            foreach ($attachments as $a) {
+        $allEvents = $allStoreEvents->merge($targetedEvents)
+                    ->each(function($event){
+                        $attachments = EventAttachment::getEventAttachments($event->id);
+                        $attachment_link_string = "";
+                        foreach ($attachments as $a) {
 
-                $attachment_link_string .= "<a href='/".$store_id."/document#!/".$a->id."'>". $a->name ."</a><br>";
-                
-            }
-            
-            $event->attachment = $attachment_link_string;
-        }
+                            $attachment_link_string .= "<a href='/".$store_id."/document#!/".$a->id."'>". $a->name ."</a><br>";
+                            
+                        }
+                        
+                        $event->attachment = $attachment_link_string;
+                    });
 
-      return $events;
+      return $allEvents;
     }
 
      public static function getListofEventsByStoreAndMonth($storeNumber, $yearMonth)

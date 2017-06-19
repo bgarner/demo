@@ -120,7 +120,7 @@ return [
     |
     */
 
-    'log' => env('APP_LOG', 'single'),
+    'log' => env('APP_LOG', 'daily'),
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
@@ -171,6 +171,7 @@ return [
 
         App\Providers\RouteServiceProvider::class,
         Laravel\Dusk\DuskServiceProvider::class,
+        Laracademy\Commands\MakeServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -246,6 +247,7 @@ return [
     'controllerComponentMap' => [
 
         'App\Http\Controllers\AdminController'                                  => 'Home',
+        'App\Http\Controllers\AdminSelectedBannerController'                    => 'Home',
         'App\Http\Controllers\Dashboard\DashboardAdminController'               => 'Dashboard',
         'App\Http\Controllers\Document\PackageAdminController'                  => 'Featured Content',
         'App\Http\Controllers\Feature\FeatureAdminController'                   => 'Featured Content',
@@ -254,6 +256,7 @@ return [
         'App\Http\Controllers\Calendar\ProductLaunchAdminController'            => 'Calendar',
         'App\Http\Controllers\Communication\CommunicationAdminController'       => 'Communications',
         'App\Http\Controllers\Communication\CommunicationTypesAdminController'  => 'Communications',
+        'App\Http\Controllers\Communication\CommunicationPartialController'     => 'Communications',
         'App\Http\Controllers\Document\DocumentManagerController'               => 'Library',
         'App\Http\Controllers\Document\FolderAdminController'                   => 'Library',
         'App\Http\Controllers\Document\DocumentAdminController'                 => 'Library',
@@ -262,6 +265,7 @@ return [
         'App\Http\Controllers\Video\VideoAdminController'                       => 'Videos',
         'App\Http\Controllers\Video\TagAdminController'                         => 'Videos',
         'App\Http\Controllers\Video\PlaylistAdminController'                    => 'Videos',
+        'App\Http\Controllers\Video\PlaylistVideoOrderController'               => 'Videos',
         'App\Http\Controllers\User\UserAdminController'                         => 'User and Group Management',
         'App\Http\Controllers\Auth\Group\GroupAdminController'                  => 'User and Group Management',
         'App\Http\Controllers\Auth\Group\GroupRoleAdminController'              => 'User and Group Management',

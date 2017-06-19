@@ -33,7 +33,7 @@ class Search extends Model
     								->orWhere('end', '=', '0000-00-00 00:00:00');
     							})
                                 ->where('document_target.store_id', $store)
-                                ->where('document_target.deleted_at', '=', null)
+                                // ->where('document_target.deleted_at', '=', null)
                                 ->select('documents.*')
     							->get()
     				);		
@@ -75,7 +75,7 @@ class Search extends Model
                                 ->where('end', '<=', $today )
                                 ->where('end', '!=', '0000-00-00 00:00:00')
                                 ->where('document_target.store_id', $store)
-                                ->where('document_target.deleted_at', '=', null)
+                                // ->where('document_target.deleted_at', '=', null)
                                 ->select('documents.*')
                                 ->get()
                     );      
@@ -186,7 +186,7 @@ class Search extends Model
         foreach($communications as $comm){
             $comm->since = Utility::getTimePastSinceDate($comm->updated_at);
             $preview_string = strip_tags($comm->body);         
-            $comm->trunc = Communication::truncateHtml($preview_string, 150);
+            $comm->trunc = Utility::truncateHtml($preview_string, 150);
             $comm->rank = 1;
         }
 
@@ -220,7 +220,7 @@ class Search extends Model
             $comm->archived = true;
             $comm->since = Utility::getTimePastSinceDate($comm->updated_at);
             $preview_string = strip_tags($comm->body);         
-            $comm->trunc = Communication::truncateHtml($preview_string, 150);
+            $comm->trunc = Utility::truncateHtml($preview_string, 150);
             $comm->rank = 1;
         }
 

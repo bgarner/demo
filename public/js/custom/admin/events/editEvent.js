@@ -96,6 +96,8 @@ $(document).on('click','.event-update',function(){
 	var allStores  = $("#allStores:checked").val();
 	var attachments = [];
 	var remove_attachments = [];
+
+	console.log(allStores);
 	
 	$(".selected-attachments").each(function(){
 		attachments.push($(this).find('td:first').attr('data-attachment-id'));

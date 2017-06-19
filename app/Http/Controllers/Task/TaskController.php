@@ -20,16 +20,14 @@ class TaskController extends Controller
      */
     public function index()
     {
-        // get tasks due today for store
-        //get tasks due for store arranged reverese chronologically
+    
         $storeNumber = RequestFacade::segment(1);
         $allIncompleteTasks = Task::getAllIncompleteTasksByStoreId($storeNumber);
         $tasksDueToday = Task::getTaskDueTodaybyStoreId($storeNumber);
         $tasksNotDueToday = $allIncompleteTasks->diff($tasksDueToday);
         $tasksCompleted = Task::getAllCompletedTasksByStoreId($storeNumber);
-        // dd($completedTasks);
+    
         return view('site.tasks.index')
-        // return view('site.tasks.task-list-partial')
                     ->with('tasksDueToday', $tasksDueToday)
                     ->with('tasksDue', $tasksNotDueToday)
                     ->with('tasksCompleted', $tasksCompleted);

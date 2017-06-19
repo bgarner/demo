@@ -18,10 +18,16 @@ class TaskTarget extends Model
     public static function updateTargetStores($id, $request)
 	{	
 		$target_stores = $request['target_stores'];
-		$allStores = $request['allStores'];
+		$allStores = $request['all_stores'];
 
-		if (!( $target_stores == '' && $allStores == 'on' )) {
-			TaskTarget::where('task_id', $id)->delete();
+		if($allStores == 'on') {
+            TaskTarget::where('task_id', $id)->delete();
+            $task = Task::find($id);
+            $task->all_stores = 1;
+            $task->save();
+        }
+        else{
+        	TaskTarget::where('task_id', $id)->delete();
 			if (count($target_stores) > 0) {
 				foreach ($target_stores as $store) {
 					TaskTarget::create([
@@ -30,9 +36,14 @@ class TaskTarget extends Model
 					]);
 
 				} 
-			}            
+			}
+			$task = Task::find($id);
+        	$task->all_stores = 0;
+        	$task->save();            
+			
 		}
 
-		return;	
+		return;
+
 	}
 }

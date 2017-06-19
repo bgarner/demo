@@ -13,6 +13,8 @@ use App\Models\Video\Video;
 use App\Models\Video\Tag;
 use App\Models\Video\VideoTag;
 use App\Models\Video\Playlist;
+use App\Models\Video\FeaturedVideo;
+use App\Models\StoreInfo;
 
 
 class VideoController extends Controller
@@ -30,11 +32,18 @@ class VideoController extends Controller
      */
     public function index(Request $request)
     {
-        $featured = Video::getFeaturedVideo();
-        $mostViewed = Video::getMostViewedVideos(12);
-        $mostLiked = Video::getMostLikedVideos(4);
-        $mostRecent = Video::getMostRecentVideos(12);
-        $latestPlaylists = Playlist::getLatestPlaylists(3);
+        
+        $storeNumber = RequestFacade::segment(1);
+
+        $storeInfo = StoreInfo::getStoreInfoByStoreId($storeNumber);
+
+        $storeBanner = $storeInfo->banner_id;
+
+        $featured = FeaturedVideo::getFeaturedVideoByBanner($storeBanner);
+        $mostViewed = Video::getMostViewedVideos($storeNumber, 12);
+        $mostLiked = Video::getMostLikedVideos($storeNumber, 4);
+        $mostRecent = Video::getMostRecentVideos($storeNumber, 12);
+        $latestPlaylists = Playlist::getLatestPlaylists($storeNumber, 3);
 
         return view('site.video.index')
             ->with('mostLiked', $mostLiked)

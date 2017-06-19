@@ -89,6 +89,8 @@
 						                                {{$alert->count_target_stores}} Stores
 						                            </button>
 													
+												@elseif(isset($alert->all_stores) && $alert->all_stores)
+													<button type="button" class="btn btn-primary">All Stores</button>
 												@else
 													&mdash;
 												@endif

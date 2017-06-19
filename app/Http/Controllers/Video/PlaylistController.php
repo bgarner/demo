@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Video;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request as RequestFacade;
 use App\Http\Controllers\Controller;
 use App\Models\Video\Playlist;
 use App\Models\Video\PlaylistVideo;
@@ -11,7 +12,8 @@ class PlaylistController extends Controller
 {
     public function index()
     {
-        $playlists = Playlist::getLatestPlaylists();
+        $storeNumber = RequestFacade::segment(1);
+        $playlists = Playlist::getLatestPlaylists($storeNumber);
         return view('site.video.allPlaylists')
             ->with('playlists', $playlists);
     }

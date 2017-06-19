@@ -31,11 +31,12 @@ class StoreSidenavCreator
      */
     public function __construct(Request $request)
     {
-        $this->storeNumber = RequestFacade::segment(1);
-        $this->alertCount = Alert::getActiveAlertCountByStore($this->storeNumber);
+        $this->storeNumber        = RequestFacade::segment(1);
+        $this->alertCount         = Alert::getActiveAlertCountByStore($this->storeNumber);
         $this->communicationCount = Communication::getActiveCommunicationCount($this->storeNumber);
-        $this->urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($this->storeNumber);
-        $this->taskCount = Task::getTaskCount($this->storeNumber);
+        $this->urgentNoticeCount  = UrgentNotice::getUrgentNoticeCount($this->storeNumber);
+        $this->taskDueTodayCount  = Task::getTaskDueTodaybyStoreId($this->storeNumber)->count();
+        $this->allTasksDueCount   = Task::getAllIncompleteTasksByStoreId($this->storeNumber)->count();
     }
 
     /**
@@ -50,6 +51,7 @@ class StoreSidenavCreator
         $view->with('alertCount', $this->alertCount)
             ->with('communicationCount', $this->communicationCount)
             ->with('urgentNoticeCount', $this->urgentNoticeCount)
-            ->with('taskCount', $this->taskCount);
+            ->with('taskDueTodayCount', $this->taskDueTodayCount)
+            ->with('allTasksDueCount', $this->allTasksDueCount);
     }
 }

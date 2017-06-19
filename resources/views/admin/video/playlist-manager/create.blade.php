@@ -61,7 +61,7 @@
 									<form class="form-horizontal" id="createNewPlaylistForm">
 										
 
-										<input type="hidden" name="banner_id" value={{$banner->id}} >
+										{{-- <input type="hidden" name="banner_id" value={{$banner->id}} > --}}
 
 										<div class="form-group">
 											<label class="col-sm-2 control-label">Title</label>
@@ -74,6 +74,8 @@
 											</div>
 
 										</div>
+
+										@include('admin.includes.store-banner-selector', ['optGroupOptions'=> $optGroupOptions, 'optGroupSelections' => $optGroupSelections])
 										
 
 										<div class="form-group">
@@ -148,7 +150,7 @@
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 		<script type="text/javascript" src="/js/custom/admin/videos/playlists/addPlaylist.js"></script>
 		<script type="text/javascript" src="/js/custom/tree.js"></script>
-		<script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
+		<script type="text/javascript" src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
 
 
 		<script type="text/javascript">
@@ -165,9 +167,9 @@
 
     		});
 
-		    $(".chosen").chosen({
-				  width:'75%'
-			});		    
+		 //    $(".chosen").chosen({
+			// 	  width:'75%'
+			// });		    
 		    
 
 

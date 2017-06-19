@@ -12,7 +12,9 @@ use App\Models\Auth\Role\Role;
 use App\Models\Auth\User\UserResource;
 use App\Models\StoreInfo;
 use App\Models\Utility\Utility;
+use App\Models\Auth\User\UserSelectedBanner;
 use Carbon\Carbon;
+
 class Task extends Model
 {
     protected $table = 'tasks';
@@ -24,11 +26,23 @@ class Task extends Model
 		$validateThis =  [
 
 			'title'   		=> $request['title'],
-			'publish_date'  => $request['publish_date'],
-			'due_date'      => $request['due_date'],
 			'target_stores' => $request['target_stores']
 
 		];
+		if ($request['due_date'] != NULL) {
+            $validateThis['due_date'] = $request['due_date'];
+        }
+        if ($request['publish_date'] != NULL) {
+            $validateThis['publish_date'] = $request['publish_date'];
+        }
+
+        if ($request['banner_id'] != NULL) {
+            $validateThis['banner_id'] = $request['banner_id'];
+        }
+
+		if ($request['all_stores'] != NULL) {
+            $validateThis['allStores'] = $request['all_stores'];
+        }
 
 		if(isset($request['task_documents'])){
 			$validateThis['documents'] = $request['task_documents'];
@@ -44,14 +58,24 @@ class Task extends Model
 	{
 		$validateThis =  [
 
-			'title'   		=> $request['title'],
-			'publish_date'  => $request['publish_date'],
-			'due_date'      => $request['due_date'],
-			'target_stores' => $request['target_stores'],
-			'status_type_id' => $request['status_type_id'],
-			'allStores' => $request['allStores']
+			'title'   		 => $request['title'],
+			'target_stores'  => $request['target_stores'],
+			'status_type_id' => $request['status_type_id']
 
 		];
+		if ($request['due_date'] != NULL) {
+            $validateThis['due_date'] = $request['due_date'];
+        }
+        if ($request['publish_date'] != NULL) {
+            $validateThis['publish_date'] = $request['publish_date'];
+        }
+        if ($request['banner_id'] != NULL) {
+            $validateThis['banner_id'] = $request['banner_id'];
+        }
+
+		if ($request['all_stores'] != NULL) {
+            $validateThis['allStores'] = $request['all_stores'];
+        }
 
 		if(isset($request['task_documents'])){
 			$validateThis['documents'] = $request['task_documents'];
@@ -85,12 +109,18 @@ class Task extends Model
 			$publish_date = $request['publish_date'];
 		}
 		
+		$banner_id = null;
+		if(isset($request['banner_id'])) {
+			$banner_id = $request['banner_id'];
+		}
+
 		$task = Task::create([
 			'title' 		=> $request["title"],
 			'description' 	=> $description,
 			'publish_date'	=> $publish_date,
 			'due_date'		=> $request["due_date"],
-			'send_reminder'	=> (bool) $request["send_reminder"]
+			'send_reminder'	=> (bool) $request["send_reminder"],
+			'banner_id'		=> $banner_id
 		]);
 
 		TaskTarget::updateTargetStores($task->id, $request);
@@ -133,9 +163,9 @@ class Task extends Model
 
 	}
 
-	public static function updateTaskStoreStatus($request, $storeNumber, $id)
+	public static function updateTaskStoreStatus($request, $storeNumber, $task_id)
 	{
-		$store_status = TaskStoreStatus::where('task_id', $id)->where('store_id', $storeNumber)->first();
+		$store_status = TaskStoreStatus::where('task_id', $task_id)->where('store_id', $storeNumber)->first();
 		$updatedStatus = StoreStatusTypes::getTaskStatusTypeId($request->current_task_status);
 		if($store_status){
 			$store_status['status_type_id'] = $updatedStatus->id;
@@ -146,35 +176,80 @@ class Task extends Model
 			
 			return TaskStoreStatus::create([
 				'store_id' => $storeNumber,
-				'task_id'  => $id,
+				'task_id'  => $task_id,
 				'status_type_id' => $updatedStatus->id
 				]);
 		}
 		
 	}
 
-	public static function deleteTask($id)
+	public static function deleteTask($task_id)
 	{
-		Task::find($id)->delete();
+		Task::find($task_id)->delete();
 	}
 	
+	public static function getTasksbyBanner()
+	{
+		$banner = UserSelectedBanner::getBanner();
+        $storeList = StoreInfo::getStoreListing($banner->id);
+		$allStoreTasks = Task::where('all_stores', 1)
+								->where('banner_id', $banner->id)
+								->get()
+								->each(function($task){
+									$task->prettyDueDate = Utility::prettifyDate($task->due_date);
+								});
+
+		
+		$tasks = Task::join('tasks_target', 'tasks_target.task_id', '=', 'tasks.id')
+					->whereIn('store_id', array_keys($storeList))
+					->select('tasks.*', 'tasks_target.store_id')
+					->get()
+					->each(function($task){
+						$task->prettyDueDate = Utility::prettifyDate($task->due_date);
+					});
+		$targetedTasks = Task::groupTaskStores($tasks);			
+		$targetedTasks = $targetedTasks->merge($allStoreTasks);
+		return $targetedTasks;
+	}
+
 	public static function getActiveTasksByUserId($user_id)
 	{
-		$stores = array_keys(StoreInfo::getStoreListingByManagerId($user_id));
+		$storeInfo = StoreInfo::getStoreListingByManagerId($user_id);
+        $stores = array_column($storeInfo, 'store_number');
+
+        $allStoreTasks = Self::getAllStoreTasksForStoreList($storeInfo);
 		$tasks = Task::getTasksByStoreList($stores);
+
+		$tasks = $tasks->merge($allStoreTasks);
+		
 		return $tasks;
 		
 	}
 
+	public static function getAllStoreTasksForStoreList($stores)
+	{
+		$allStoreTasks = Task::where('all_stores', 1)->get();
+		$storesGroupedByBannerId = Self::groupStoresByBannerId($stores);
+
+		foreach ($allStoreTasks as $task) {
+			$task['stores'] = $storesGroupedByBannerId[$task->banner_id];
+			Task::getTaskCompletionStatistics($task);
+			Task::getTaskStatus($task);
+		}
+
+		return $allStoreTasks;
+	} 
+
+	
 
 	public static function getTasksByStoreList($stores)
 	{
 		$tasks =  Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
 								->whereIn('store_id', $stores)
 								->select('tasks.*', 'tasks_target.store_id')
-								->get()->toArray();
+								->get();
 	
-		$tasks = Task::groupTasksByStores($tasks);
+		$tasks = Task::groupTaskStores($tasks);
 
 		foreach ($tasks as $task) {
 			Task::getTaskCompletionStatistics($task);
@@ -184,9 +259,9 @@ class Task extends Model
 		
 	}
 
-	public static function groupTasksByStores($tasks)
+	public static function groupTaskStores($tasks)
 	{
-		
+		$tasks = $tasks->toArray();
 		$compiledTasks = [];
 		foreach ($tasks as $task) {
 	        $index = array_search($task['id'], array_column($compiledTasks, 'id'));
@@ -202,14 +277,19 @@ class Task extends Model
 
         }
         
-		return $compiledTasks;
+		return collect($compiledTasks);
 	}
 
 	public static function getTaskCompletionStatistics($task)
 	{	
-    	$task->stores_done = TaskStoreStatus::getStoresDone($task->id);
-    	$task->stores_not_done = TaskStoreStatus::getStoresNotDone($task->id);
-    	$task->percentage_done = round( ((count($task->stores) - count($task->stores_not_done))/count($task->stores))*100 );
+    	
+    	$storesDone = TaskStoreStatus::getStoresDone($task->id);
+    	$taskStores = $task->stores;
+    	$storesNotDone = array_diff($taskStores , $storesDone);
+    	
+    	$task->stores_done = $storesDone;
+    	$task->stores_not_done = $storesNotDone;
+    	$task->percentage_done = round( ((count($taskStores) - count($storesNotDone))/count($taskStores))*100 );
     
         return $task;
 	}
@@ -242,28 +322,36 @@ class Task extends Model
 
 	public static function getAllIncompleteTasksByStoreId($store_id)
 	{
-		$tasks = Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
+		
+		$banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
+
+		$allStoreTasks = Task::where('all_stores', 1)
+							->where('banner_id', $banner_id)
+							->get()
+							->each(function($task, $store_id){
+								$task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
+								$task->store_id = $store_id;
+							});
+
+
+		$targetedTasks = Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
 					->where('tasks_target.store_id', $store_id)
 					->select('tasks.*', 'tasks_target.store_id')
 					->get()
 					->each(function($task){
 						$task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
 					});
-
+	
+		$tasks = $targetedTasks->merge($allStoreTasks);
 
 		foreach ($tasks as $key => $task) {
-			if(TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', '2')->first()){
+			
+			$isTaskDoneByStore = Self::isTaskDoneByStore($task->id, $store_id);
+			
+			if($isTaskDoneByStore){
 				$tasks->forget($key);
-
 			}
 
-			if(TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', '1' )->first()){
-				$task->task_status_id = TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', "!=", '2' )->first()->status_type_id;
-				$task->status_title = TaskStoreStatus::join('task_store_status_types', 'task_store_status_types.id', '=', 'task_store_status.task_id')
-													->where('task_id', $task->id)
-													->select('task_store_status_types.status_title')
-													->first();
-			}
 		}
 		return $tasks;
 
@@ -272,6 +360,18 @@ class Task extends Model
 	public static function getTaskDueTodaybyStoreId($store_id)
 	{
 		$endOfDayToday = Carbon::today()->endOfDay()->format('Y-m-d H:i:s');
+		$banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
+
+		$allStoreTasks = $tasks = Task::where('all_stores', 1)
+									->where('banner_id', $banner_id)
+									->where('due_date' , "<", $endOfDayToday)
+									->select('tasks.*')
+									->get()
+									->each(function($task, $store_id){
+										$task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
+										$task->store_id = $store_id;
+										
+									});
 
 		$tasks = Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
 					->where('tasks_target.store_id', $store_id)
@@ -282,19 +382,15 @@ class Task extends Model
 						$task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
 						
 					});
+
+		$tasks = $tasks->merge($allStoreTasks);
+
 		foreach ($tasks as $key=>$task) {
-			if(TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', '2')->first()){
+
+			$isTaskDoneByStore = Self::isTaskDoneByStore($task->id, $store_id);
+			
+			if($isTaskDoneByStore){
 				$tasks->forget($key);
-
-			}
-
-			if(TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', '1' )->first()){
-				$task->task_status_id = TaskStoreStatus::where('task_id', $task->id)->where('status_type_id', "!=", '2' )->first()->status_type_id;
-				$task->status_title = TaskStoreStatus::join('task_store_status_types', 'task_store_status_types.id', '=', 'task_store_status.task_id')
-													->where('task_id', $task->id)
-													->select('task_store_status_types.status_title')
-													->first();
-
 			}
 		}
 
@@ -303,6 +399,22 @@ class Task extends Model
 
 	public static function getAllCompletedTasksByStoreId($store_id)
 	{
+		$banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
+
+		$allStoreTasks = $tasks = Task::join('task_store_status' , 'task_store_status.task_id' , '=', 'tasks.id' )
+									->where('all_stores', 1)
+									->where('banner_id', $banner_id)
+									->where('task_store_status.store_id', $store_id)
+									->where('task_store_status.status_type_id', '2')
+									->select('tasks.*', 'task_store_status.created_at as completed_on')
+									->get()
+									->each(function($task, $store_id){
+										$task->store_id = $store_id;
+										$task->pretty_due_date = Utility::prettifyDate($task->due_date);
+										$task->pretty_completed_date = "Completed on " . Utility::prettifyDate($task->completed_on);
+									});
+
+
 		$tasks = Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
 					->join('task_store_status' , 'task_store_status.task_id' , '=', 'tasks.id' )
 					->where('tasks_target.store_id', $store_id)
@@ -314,14 +426,11 @@ class Task extends Model
 						$task->pretty_due_date = Utility::prettifyDate($task->due_date);
 						$task->pretty_completed_date = "Completed on " . Utility::prettifyDate($task->completed_on);
 					});
+
+		$tasks = $tasks->merge($allStoreTasks);
 		return $tasks;
 	}
 
-
-	public static function getTaskCount($store_id)
-	{
-		return count( Task::getTaskDueTodaybyStoreId($store_id) );
-	}
 
 	public static function getTaskPrettyDueDate($due_date)
 	{
@@ -343,6 +452,39 @@ class Task extends Model
 			return "due on " . Utility::prettifyDate($due_date);
 		}
 		
+	}
+
+	public static function isTaskDoneByStore($task_id, $store_id)
+	{
+		$storeTaskStatus = TaskStoreStatus::where('task_id', $task_id)
+											->where('status_type_id', '2')
+											->where('store_id', $store_id)
+											->first();
+		if($storeTaskStatus)
+		{
+			return true;
+		}
+		return false;
+	}
+
+	public static function groupStoresByBannerId($storeInfo)
+	{
+		$compiledStores = [];
+		foreach ($storeInfo as $store) {
+
+			$currentBannerId = $store->banner_id;
+	        $index = array_search($currentBannerId, array_keys($compiledStores));
+	        if(  $index !== false ){
+	           array_push($compiledStores[$currentBannerId], $store->store_number);
+	        }
+	        else{
+	           $compiledStores[$currentBannerId] = [];
+	           array_push( $compiledStores[$currentBannerId] ,  $store->store_number);
+	        }
+
+        }
+
+        return $compiledStores;
 	}
 
 

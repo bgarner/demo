@@ -22,7 +22,12 @@ class TaskManagerController extends Controller
     {
         
         $user_id = \Auth::user()->id;
-        $storeList = StoreInfo::getStoreListingByManagerId($user_id);
+        $storeInfo = StoreInfo::getStoreListingByManagerId($user_id);
+        $storeList = [];
+        foreach ($storeInfo as $store) {
+            $storeList[$store->store_number] = $store->store_number . " - " . $store->name;
+        }
+        
         $tasks = Task::getActiveTasksByUserId($user_id);
         return view('manager.task.index')->with('tasks', $tasks)
                                         ->with('stores', $storeList);
@@ -71,7 +76,11 @@ class TaskManagerController extends Controller
         $user_id = \Auth::user()->id;
         $task = Task::find($id);
         $task["stores"] = TaskTarget::where('task_id', $id)->get()->pluck('store_id')->toArray();
-        $storeList = StoreInfo::getStoreListingByManagerId($user_id);
+        $storeInfo = StoreInfo::getStoreListingByManagerId($user_id);
+        $storeList = [];
+        foreach ($storeInfo as $store) {
+            $storeList[$store->store_number] = $store->store_number . " - " . $store->name;
+        }
         return view('manager.task.edit')->with('task', $task)
                                         ->with('stores', $storeList);
     }

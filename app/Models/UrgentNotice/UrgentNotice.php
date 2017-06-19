@@ -11,39 +11,44 @@ use App\Models\Utility\Utility;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Validation\UrgentNoticeValidator;
 use App\Models\Auth\User\UserSelectedBanner;
+use App\Models\StoreInfo;
 
 
 class UrgentNotice extends Model
 {
     use SoftDeletes;
     protected $table = 'urgent_notices';
-    protected $fillable = ['banner_id', 'title', 'description', 'attachment_type_id', 'start', 'end'];
+    protected $fillable = ['banner_id', 'title', 'description', 'attachment_type_id', 'start', 'end', 'all_stores'];
     protected $dates = ['deleted_at'];
 
     public static function validateUrgentNotice($request)
     { 
-      $validateThis = [ 
-                        'title'         => $request['title'],
-                        'start'         => $request['start'],
-                        'end'           => $request['end'],
-                        'target_stores' => $request['target_stores'],
+        $validateThis = [ 
+                        'title'              => $request['title'],
+                        'start'              => $request['start'],
+                        'end'                => $request['end'],
+                        'target_stores'      => $request['target_stores'],
                         'attachment_type_id' => $request['attachment_type'][0],
-                        'folder'        => $request['urgentnotice_folders'],
-                        'document'      => $request['urgentnotice_documents'],
 
-                      ];
-      if ($request['allStores'] != NULL) {
-        $validateThis['allStores'] = $request['allStores'];
-      }
+        ];
+        if ($request['all_stores'] != NULL) {
+            $validateThis['allStores'] = $request['all_stores'];
+        }
+        if(isset($request['urgentnotice_documents']) && $request['urgentnotice_documents']){
+            $validateThis['documents'] = $request['urgentnotice_documents'];
+        }
+        if(isset($request['urgentnotice_folders']) && $request['urgentnotice_folders']){
+            $validateThis['folders'] = $request['urgentnotice_folders'];
+        }
       
-      \Log::info('*********');
-      \Log::info($validateThis);
-      \Log::info('*********');
-      
-      $v = new UrgentNoticeValidator();
-      $validationResult =  $v->validate($validateThis);
-      \Log::info($validationResult);
-      return $validationResult;
+        \Log::info('*********');
+        \Log::info($validateThis);
+        \Log::info('*********');
+
+        $v = new UrgentNoticeValidator();
+        $validationResult =  $v->validate($validateThis);
+        \Log::info($validationResult);
+        return $validationResult;
        
     }
 
@@ -76,13 +81,8 @@ class UrgentNotice extends Model
 
         UrgentNoticeFolder::addFolders($request['urgentnotice_folders'], $urgentNotice->id);
         UrgentNoticeDocument::addDocuments($request['urgentnotice_documents'], $urgentNotice->id);
-
-    	foreach ($target_stores as $store) {
-    		UrgentNoticeTarget::create([
-    			'urgent_notice_id' 	=> $urgentNotice->id,
-    			'store_id'			=> $store
-    		]);
-    	}
+        UrgentNotice::updateTargetStores($request, $urgentNotice->id);
+    	
     	return $urgentNotice;
     	
     }
@@ -90,6 +90,7 @@ class UrgentNotice extends Model
     public static function updateUrgentNotice($request, $id)
     {
     
+        \Log::info($request->all());
         $validate = UrgentNotice::validateUrgentNotice($request);
         if($validate['validation_result'] == 'false') {
           \Log::info($validate);
@@ -117,16 +118,7 @@ class UrgentNotice extends Model
     	
     	UrgentNoticeDocument::updateDocuments($request, $id);
         UrgentNoticeFolder::updateFolders($request, $id);
-        
-        if (isset($request['target_stores']) && $request['target_stores'] != '' ) {
-            UrgentNoticeTarget::where('urgent_notice_id', $id)->delete();
-            foreach ($target_stores as $store) {
-                UrgentNoticeTarget::create([
-                    'urgent_notice_id'  => $urgentNotice->id,
-                    'store_id'          => $store
-                ]);
-            }
-        }
+        Self::updateTargetStores($request, $id);
     	
         return $urgentNotice;
 
@@ -144,14 +136,25 @@ class UrgentNotice extends Model
 
     public static function getUrgentNoticeCount($storeNumber)
     {
-         $now = Carbon::now()->toDatetimeString();
- 
-        return UrgentNoticeTarget::join('urgent_notices', 'urgent_notices.id' , '=', 'urgent_notice_target.urgent_notice_id')
+        $now = Carbon::now()->toDatetimeString();
+
+        $banner_id = StoreInfo::getStoreInfoByStoreId($storeNumber)->banner_id;
+
+        $allStoreUrgentNoticeCount = UrgentNotice::where('all_stores', 1)
+                                                ->where('banner_id', $banner_id)
+                                                ->where('urgent_notices.start' , '<=', $now)
+                                                ->where('urgent_notices.end', '>=', $now)
+                                                ->count();
+
+        $targetedUrgentNoticeCount = UrgentNoticeTarget::join('urgent_notices','urgent_notices.id','=','urgent_notice_target.urgent_notice_id')
                                 ->where('urgent_notice_target.store_id', $storeNumber)
                                 ->where('urgent_notice_target.is_read', 0)
                                 ->where('urgent_notices.start' , '<=', $now)
                                 ->where('urgent_notices.end', '>=', $now)
                                 ->count();
+        $urgentNoticeCount = $allStoreUrgentNoticeCount + $targetedUrgentNoticeCount;
+
+        return $urgentNoticeCount;
     }
 
     public static function getUrgentNotice($id)
@@ -168,41 +171,31 @@ class UrgentNotice extends Model
         
         $now = Carbon::now()->toDatetimeString();
 
-        $notices = UrgentNoticeTarget::join('urgent_notices', 'urgent_notices.id' , '=', 'urgent_notice_target.urgent_notice_id')
+        $banner_id = StoreInfo::getStoreInfoByStoreId($storeNumber)->banner_id;
+
+        $allStoreUrgentNotice  = UrgentNotice::where('all_stores', 1)
+                                            ->where('banner_id', $banner_id )
+                                            ->where('urgent_notices.start' , '<=', $now)
+                                            ->where('urgent_notices.end', '>=', $now)
+                                            ->get();
+
+        $targetedUrgentNotices = UrgentNoticeTarget::join('urgent_notices', 'urgent_notices.id' , '=', 'urgent_notice_target.urgent_notice_id')
                                 ->where('urgent_notice_target.store_id', $storeNumber)
                                 ->where('urgent_notices.start' , '<=', $now)
                                 ->where('urgent_notices.end', '>=', $now)
                                 ->select('urgent_notices.*')
                                 ->get();
+
+        $notices = $allStoreUrgentNotice->merge($targetedUrgentNotices);              
                         
         foreach($notices as $n){
             
             $n->since =  Utility::getTimePastSinceDate($n->start);
             $n->prettyDate =  Utility::prettifyDate($n->start);
             $preview_string = strip_tags($n->description);
-            $n->trunc = Communication::truncateHtml($preview_string);
+            $n->trunc = Utility::truncateHtml($preview_string);
         }
 
-        return $notices;        
-
-    }   
-
-    public static function getArchivedUrgentNoticesByStore($storeNumber)
-    {
-        $now = Carbon::now()->toDatetimeString();
-
-        $notices = DB::table('urgent_notice_target')->where('store_id', $storeNumber)
-                            ->join('urgent_notices', 'urgent_notices.id', '=', 'urgent_notice_target.urgent_notice_id')
-                            ->where('urgent_notices.end' , '<=', $now)
-                            ->get();
-
-        foreach($notices as $n){
-            $n->archived= true;
-            $n->since =  Utility::getTimePastSinceDate($n->start);
-            $n->prettyDate =  Utility::prettifyDate($n->start);
-            $preview_string = strip_tags($n->description);
-            $n->trunc = Communication::truncateHtml($preview_string);
-        }
         return $notices;        
 
     }
@@ -218,7 +211,7 @@ class UrgentNotice extends Model
                             ->orWhere('urgent_notices.end', '=', '0000-00-00 00:00:00' ); 
                     })
                     ->whereNull('urgent_notices.deleted_at')
-                    ->whereNull('urgent_notice_target.deleted_at')
+                    // ->whereNull('urgent_notice_target.deleted_at')
                     ->select('urgent_notices.*', 'urgent_notice_target.store_id')
                     ->get()
                     ->toArray();
@@ -238,7 +231,34 @@ class UrgentNotice extends Model
         }
         }
         return (object)($compiledUrgentNotices);
-    }    
+    }   
+
+    public static function updateTargetStores($request, $id)
+    {
+        $target_stores = $request['target_stores'];
+        $all_stores = $request['all_stores'];
+        $urgentNotice = UrgentNotice::find($id);
+
+        if( $all_stores == 'on' ){
+            UrgentNoticeTarget::where('urgent_notice_id', $id)->delete();
+            $urgentNotice->all_stores = 1;
+            $urgentNotice->save();
+        }
+        else{
+            if (isset($request['target_stores']) && $request['target_stores'] != '' ) {
+                UrgentNoticeTarget::where('urgent_notice_id', $id)->delete();
+                $urgentNotice->all_stores = 0;
+                $urgentNotice->save();
+                foreach ($target_stores as $store) {
+                    UrgentNoticeTarget::create([
+                        'urgent_notice_id'  => $urgentNotice->id,
+                        'store_id'          => $store
+                    ]);
+                }
+            }  
+        }
+        return;         
+    } 
 
 
 }

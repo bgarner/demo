@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleComponentPivotSeeder::class);
         $this->call(TaskStatusTypesSeeder::class);
         $this->call(TaskStoreStatusTypesSeeder::class);
-        
+        $this->call(VideoTableSeeder::class);
+        $this->call(PlaylistTableSeeder::class);
 
     }
 }

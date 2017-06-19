@@ -34,14 +34,6 @@ class TaskStoreStatus extends Model
                        ->get()->pluck('store_id')->toArray();
         return $storesDone;
 
-    } 
-
-    public static function getStoresNotDone($task_id)
-    {
-        $storesDone = TaskStoreStatus::getStoresDone($task_id);
-        $taskStores = TaskTarget::where('task_id', $task_id)->get()->pluck('store_id')->toArray();
-        $storesNotDone = array_diff($taskStores, $storesDone );
-        return $storesNotDone;
-    } 
+    }
 
 }

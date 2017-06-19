@@ -70,7 +70,7 @@ $(document).on('click','.task-update',function(){
 	var due_date = $("#due_date").val();
 	var banner_id = $("input[name='banner_id']").val();
 	var target_stores  = $("#storeSelect").val();
-	var allStores  = $("#allStores:checked").val();
+	var all_stores  = $("#allStores:checked").val();
 	var send_reminder = ($("#send_reminder").prop('checked') === true)?1:0;
 	var status_type_id = $("#status_type_id").val();
 
@@ -94,7 +94,7 @@ $(document).on('click','.task-update',function(){
 		return false;
 	}
 	
-	if( target_stores == null && typeof allStores === 'undefined' ) {
+	if( target_stores == null && typeof all_stores === 'undefined' ) {
 		swal("Oops!", "Target stores not selected.", "error"); 
 		hasError = true;
 		$(window).scrollTop(0);
@@ -114,7 +114,7 @@ $(document).on('click','.task-update',function(){
 		  		publish_date : publish_date,
 		  		due_date : due_date,
 		  		target_stores : target_stores,
-		  		allStores : allStores,
+		  		all_stores : all_stores,
 		  		task_documents : task_documents,
 		  		remove_document : remove_document,
 		  		status_type_id : status_type_id
@@ -153,7 +153,7 @@ $(document).on('click','.task-update',function(){
 			        		$("#storeSelect").parent().append('<div class="req">' + errors.target_stores[index]  + '</div>');	
 			        	});
 			        }
-			        if(errors.hasOwnProperty("allStores")) {
+			        if(errors.hasOwnProperty("all_stores")) {
 			        	$.each(errors.allStores, function(index){
 			        		$("#storeSelect").parent().append('<div class="req">' + errors.allStores[index]  + '</div>');	
 			        	});

@@ -50,7 +50,7 @@ $(document).on('click','.task-create',function(){
 	var banner_id = $("input[name='banner_id']").val();
 	var target_stores  = $("#storeSelect").val();
 	var task_documents = [];
-	var allStores  = $("#allStores:checked").val();
+	var all_stores  = $("#allStores:checked").val();
 	var send_reminder = ($("#send_reminder").prop('checked') === true)?1:0;
 
 	console.log(send_reminder);
@@ -66,8 +66,14 @@ $(document).on('click','.task-create',function(){
 		$(window).scrollTop(0);
 		return false;
 	}
+	if(due_date == '' ) {
+		swal("Oops!", "We need a due date for the task.", "error"); 
+		hasError = true;
+		$(window).scrollTop(0);
+		return false;
+	}
 	
-	if( target_stores == null && typeof allStores === 'undefined' ) {
+	if( target_stores == null && typeof all_stores === 'undefined' ) {
 		swal("Oops!", "Target stores not selected.", "error"); 
 		hasError = true;
 		$(window).scrollTop(0);
@@ -87,6 +93,7 @@ $(document).on('click','.task-create',function(){
 		  		due_date : due_date,
 		  		banner_id : banner_id,
 		  		target_stores : target_stores,
+		  		all_stores : all_stores,
 		  		task_documents : task_documents,
 		  		send_reminder : send_reminder
 		    },
@@ -97,6 +104,11 @@ $(document).on('click','.task-create',function(){
 		        	if(errors.hasOwnProperty("title")) {
 		        		$.each(errors.title, function(index){
 		        			$("#title").parent().append('<div class="req">' + errors.title[index]  + '</div>');	
+		        		}); 	
+		        	}
+		        	if(errors.hasOwnProperty("due_date")) {
+		        		$.each(errors.due_date, function(index){
+		        			$("#due_date").parent().append('<div class="req">' + errors.due_date[index]  + '</div>');	
 		        		}); 	
 		        	}
 		        	

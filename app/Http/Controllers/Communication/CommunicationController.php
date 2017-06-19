@@ -10,6 +10,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Communication\Communication;
 use App\Models\Communication\CommunicationDocument;
+use App\Models\Communication\CommunicationPackage;
 use App\Models\Communication\CommunicationType;
 
 
@@ -22,15 +23,15 @@ class CommunicationController extends Controller
      */
     public function index(Request $request)
     {
-        $storeNumber = RequestFacade::segment(1);
+        $storeNumber        = RequestFacade::segment(1);
 
         $communicationTypes = CommunicationType::getCommunicationTypesByStoreNumber($request, $storeNumber);
 
         $communicationCount = Communication::getCommunicationCountByStoreNumber($request, $storeNumber);
 
-        $title = Communication::getCommunicationCategoryName($request['type']);
+        $title              = Communication::getCommunicationCategoryName($request['type']);
 
-        $communications = Communication::getCommunicationByStoreNumber($request, $storeNumber);
+        $communications     = Communication::getCommunicationByStoreNumber($request, $storeNumber);
         
         return view('site.communications.index')
             ->with('communicationTypes', $communicationTypes)
@@ -70,16 +71,16 @@ class CommunicationController extends Controller
      */
     public function show($sn, $id, Request $request)
     {
-        $storeNumber = RequestFacade::segment(1);
+        $storeNumber            = RequestFacade::segment(1);
 
-        $communicationTypes = CommunicationType::getCommunicationTypesByStoreNumber($request, $storeNumber);
+        $communicationTypes     = CommunicationType::getCommunicationTypesByStoreNumber($request, $storeNumber);
 
-        $communicationCount = Communication::getCommunicationCountByStoreNumber($request, $storeNumber);
+        $communicationCount     = Communication::getCommunicationCountByStoreNumber($request, $storeNumber);
 
-        $communication = Communication::getCommunicationById($id);
+        $communication          = Communication::getCommunicationById($id);
 
-        $communicationPackages = Communication::getPackageDetails($id);
-        $communicationDocuments = Communication::getDocumentDetails($id);
+        $communicationPackages  = CommunicationPackage::getPackagesByCommunicationId($id);
+        $communicationDocuments = CommunicationDocument::getDocumentsByCommunicationId($id);
 
 
         return view('site.communications.message')

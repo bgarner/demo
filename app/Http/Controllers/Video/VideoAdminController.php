@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Auth\User\UserSelectedBanner;
+use App\Models\Auth\User\UserBanner;
 use App\Models\Banner;
 use App\Models\StoreInfo;
 use App\Models\Video\Tag;
 use App\Models\Video\Video;
 use App\Models\Video\VideoTag;
+use App\Models\Utility\Utility;
 
 class VideoAdminController extends Controller
 {
@@ -30,14 +32,9 @@ class VideoAdminController extends Controller
      */
     public function index()
     {
-        $videos = Video::getAllVideos();
-        $banner = UserSelectedBanner::getBanner();
-        
-        $banners = Banner::all();
+        $videos = Video::getAllVideosForAdmin();
 
-        return view('admin.video.video-manager.index')->with('banner', $banner)
-                                        ->with('banners', $banners)
-                                        ->with('videos', $videos);
+        return view('admin.video.video-manager.index')->with('videos', $videos);
     }
 
     /**
@@ -47,14 +44,15 @@ class VideoAdminController extends Controller
      */
     public function create()
     {
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();     
+        
+        $banners = UserBanner::getAllBanners()->pluck('name', 'id')->toArray();
+        $storeList = Utility::getStoreListForAdmin();
         $packageHash = sha1(time() . time());
         
         return view('admin.video.video-manager.video-upload')
             ->with('packageHash', $packageHash)
-            ->with('banner', $banner)
-            ->with('banners', $banners); 
+            ->with('banners', $banners)
+            ->with('storeList', $storeList); 
     }
 
     /**
@@ -81,15 +79,12 @@ class VideoAdminController extends Controller
         
         $banners = Banner::all();
         
-        $tags = Tag::where('banner_id', $banner->id)->pluck('name', 'id');
-        
         $videos = Video::where('upload_package_id', $package)->get();
 
         return view('admin.video.video-manager.video-add-meta-data')
                 ->with('videos', $videos)
                 ->with('banner', $banner)
-                ->with('banners', $banners)
-                ->with('tags', $tags);
+                ->with('banners', $banners);
             
     }    
 
@@ -123,24 +118,16 @@ class VideoAdminController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        $video = Video::find($id);
-        $banner = UserSelectedBanner::getBanner();
+    { 
+        $video = Video::getVideoById($id);
+        $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
+        $optGroupSelections = json_encode(Video::getSelectedStoresAndBannersByVideoId($id));
         
-        $banners = Banner::all();
-        
-        $selected_tags = VideoTag::where('video_id', $id)
-                                ->join('tags', 'tags.id', '=', 'video_tags.tag_id')
-                                ->select('tags.*')
-                                ->get()
-                                ->pluck('id')->toArray();
-                                        
-        $tags = Tag::where('banner_id', $banner->id)->pluck('name', 'id');
+        $banners = UserBanner::getAllBanners()->pluck('name', 'id')->toArray();
         return view('admin.video.video-manager.edit')->with('video', $video)
-                                                    ->with('banner', $banner)
+                                                    ->with('optGroupOptions', $optGroupOptions)
                                                     ->with('banners', $banners)
-                                                    ->with('tags', $tags)
-                                                    ->with('selected_tags', $selected_tags);
+                                                    ->with('optGroupSelections', $optGroupSelections);
     }
 
     /**

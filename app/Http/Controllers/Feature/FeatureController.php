@@ -12,7 +12,7 @@ use App\Models\Notification\Notification;
 use App\Models\Feature\FeatureDocument;
 use App\Models\Feature\FeaturePackage;
 use App\Models\Feature\FeatureCommunication;
-use App\Models\Communication\CommunicationTarget;
+use App\Models\Communication\Communication;
 use App\Models\Document\Package;
 
 class FeatureController extends Controller
@@ -68,7 +68,7 @@ class FeatureController extends Controller
         
         $feature_communcation_type_id = FeatureCommunication::getCommunicationTypeId($id);
 
-        $feature_communcations = CommunicationTarget::getTargetedCommunicationsByCategory($storeNumber, $feature_communcation_type_id);
+        $feature_communcations = Communication::getActiveCommunicationsByCategory($storeNumber, $feature_communcation_type_id);
 
 		$notifications = Notification::getNotificationsByFeature($feature->id, $storeNumber);
 

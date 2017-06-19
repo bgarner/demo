@@ -94,6 +94,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
             'Laravel\\Passport\\' => 17,
             'Laravel\\Dusk\\' => 13,
             'Laravel\\BrowserKitTesting\\' => 26,
+            'Laracademy\\Commands\\' => 20,
         ),
         'I' => 
         array (
@@ -303,6 +304,10 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'Laravel\\BrowserKitTesting\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/browser-kit-testing/src',
+        ),
+        'Laracademy\\Commands\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laracademy/interactive-make/src',
         ),
         'Illuminate\\' => 
         array (
@@ -691,11 +696,16 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'App\\Models\\Validation\\UrgentNoticeValidator' => __DIR__ . '/../..' . '/app/Models/Validation/UrgentNoticeValidator.php',
         'App\\Models\\Validation\\UserValidator' => __DIR__ . '/../..' . '/app/Models/Validation/UserValidator.php',
         'App\\Models\\Validation\\VideoValidator' => __DIR__ . '/../..' . '/app/Models/Validation/VideoValidator.php',
+        'App\\Models\\Video\\FeaturedVideo' => __DIR__ . '/../..' . '/app/Models/Video/FeaturedVideo.php',
         'App\\Models\\Video\\Playlist' => __DIR__ . '/../..' . '/app/Models/Video/Playlist.php',
+        'App\\Models\\Video\\PlaylistBanner' => __DIR__ . '/../..' . '/app/Models/Video/PlaylistBanner.php',
+        'App\\Models\\Video\\PlaylistTarget' => __DIR__ . '/../..' . '/app/Models/Video/PlaylistTarget.php',
         'App\\Models\\Video\\PlaylistVideo' => __DIR__ . '/../..' . '/app/Models/Video/PlaylistVideo.php',
         'App\\Models\\Video\\Tag' => __DIR__ . '/../..' . '/app/Models/Video/Tag.php',
         'App\\Models\\Video\\Video' => __DIR__ . '/../..' . '/app/Models/Video/Video.php',
+        'App\\Models\\Video\\VideoBanner' => __DIR__ . '/../..' . '/app/Models/Video/VideoBanner.php',
         'App\\Models\\Video\\VideoTag' => __DIR__ . '/../..' . '/app/Models/Video/VideoTag.php',
+        'App\\Models\\Video\\VideoTarget' => __DIR__ . '/../..' . '/app/Models/Video/VideoTarget.php',
         'App\\Providers\\AdminSidenavServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AdminSidenavServiceProvider.php',
         'App\\Providers\\AdminTopbarServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AdminTopbarServiceProvider.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
@@ -754,9 +764,12 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'ComponentsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/ComponentsTableSeeder.php',
         'CreateComponentsTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_16_114508_create_components_table.php',
         'CreateEventAttachmentsTable' => __DIR__ . '/../..' . '/database/migrations/2016_04_27_085018_create_event_attachments_table.php',
+        'CreateFeaturedVideoTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_31_231322_create_featured_video_table.php',
         'CreateGroupComponentPivotTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_16_115431_create_group_component_pivot_table.php',
         'CreateGroupRolePivot' => __DIR__ . '/../..' . '/database/migrations/2017_02_15_132648_create_group_role_pivot.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
+        'CreatePlaylistBannerTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_09_193202_create_playlist_banner_table.php',
+        'CreatePlaylistTargetTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_09_193149_create_playlist_target_table.php',
         'CreateResourceTypeTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_15_132000_create_resource_type_table.php',
         'CreateResourcesTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_15_132414_create_resources_table.php',
         'CreateRoleComponentPivot' => __DIR__ . '/../..' . '/database/migrations/2017_03_14_112654_create_role_component_pivot.php',
@@ -774,6 +787,8 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'CreateUserResourcePivot' => __DIR__ . '/../..' . '/database/migrations/2017_02_15_132617_create_user_resource_pivot.php',
         'CreateUserRolePivot' => __DIR__ . '/../..' . '/database/migrations/2017_02_15_132614_create_user_role_pivot.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
+        'CreateVideoBannerTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_30_221400_create_video_banner_table.php',
+        'CreateVideosTargetTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_16_195236_create_videos_target_table.php',
         'Cron\\AbstractField' => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron/AbstractField.php',
         'Cron\\CronExpression' => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron/CronExpression.php',
         'Cron\\DayOfMonthField' => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron/DayOfMonthField.php',
@@ -3494,6 +3509,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'PHP_Token_XOR_EQUAL' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD_FROM' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
+        'PlaylistTableSeeder' => __DIR__ . '/../..' . '/database/seeds/PlaylistTableSeeder.php',
         'Parsedown' => __DIR__ . '/..' . '/erusev/parsedown/Parsedown.php',
         'ParsedownTest' => __DIR__ . '/..' . '/erusev/parsedown/test/ParsedownTest.php',
         'PhpParser\\Autoloader' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Autoloader.php',
@@ -4612,6 +4628,18 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'Tests\\TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Tests\\Unit\\ExampleTest' => __DIR__ . '/../..' . '/tests/Unit/ExampleTest.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
+        'UpdateCommunicationTargetTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_11_202636_update_communication_target_table.php',
+        'UpdateCommunicationsTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_11_195751_update_communications_table.php',
+        'UpdateDocumentTargetTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_15_215303_update_document_target_table.php',
+        'UpdateDocumentsTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_12_152143_update_documents_table.php',
+        'UpdateEventsTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_11_165610_update_events_table.php',
+        'UpdatePlaylistTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_09_202016_update_playlist_table.php',
+        'UpdateTaskTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_17_171352_update_task_table.php',
+        'UpdateTasksTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_28_131811_update_tasks_table.php',
+        'UpdateTasksTableAddBannerId' => __DIR__ . '/../..' . '/database/migrations/2017_05_26_161401_update_tasks_table_add_banner_id.php',
+        'UpdateUrgentNoticeTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_16_164022_update_urgent_notice_table.php',
+        'UpdateVideosTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_16_195257_update_videos_table.php',
+        'VideoTableSeeder' => __DIR__ . '/../..' . '/database/seeds/VideoTableSeeder.php',
         'TijsVerkoyen\\CssToInlineStyles\\CssToInlineStyles' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/CssToInlineStyles.php',
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Processor' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Processor.php',
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Property\\Processor' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Property/Processor.php',
@@ -4737,6 +4765,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'phpseclib\\Net\\SSH2' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/Net/SSH2.php',
         'phpseclib\\System\\SSH\\Agent' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/System/SSH/Agent.php',
         'phpseclib\\System\\SSH\\Agent\\Identity' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/System/SSH/Agent/Identity.php',
+
     );
 
     public static function getInitializer(ClassLoader $loader)

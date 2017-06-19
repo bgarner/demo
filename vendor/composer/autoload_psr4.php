@@ -47,6 +47,7 @@ return array(
     'Laravel\\Passport\\' => array($vendorDir . '/laravel/passport/src'),
     'Laravel\\Dusk\\' => array($vendorDir . '/laravel/dusk/src'),
     'Laravel\\BrowserKitTesting\\' => array($vendorDir . '/laravel/browser-kit-testing/src'),
+    'Laracademy\\Commands\\' => array($vendorDir . '/laracademy/interactive-make/src'),
     'Illuminate\\' => array($vendorDir . '/laravel/framework/src/Illuminate'),
     'GuzzleHttp\\Psr7\\' => array($vendorDir . '/guzzlehttp/psr7/src'),
     'GuzzleHttp\\Promise\\' => array($vendorDir . '/guzzlehttp/promises/src'),

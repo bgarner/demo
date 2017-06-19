@@ -5,46 +5,31 @@ $("#add-more-videos").click(function(){
 
 $('body').on('click', '#attach-selected-videos', function(){
 	
-	$(".selected-videos").remove();
 	$('input[name^="playlist_videos"]').each(function(){
+
 		if($(this).is(":checked")){
-			$(".playlist-videos-table tbody").append('<tr class="selected-videos"> '+
+			$("#videos-selected").append('<tr class="selected-videos"> '+
 													'<td data-video-id='+ $(this).val() +'><i class="fa fa-file-o"></i> '+ $(this).attr("data-videoname") +'</td>'+
 													'<td></td>'+
 													'<td> <a data-video-id="'+ $(this).val()+'" id="file'+ $(this).val()+'" class="remove-staged-file btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>'+
 												 '</tr>');
 		}
 
-		if($(".playlist-videos-table").hasClass('hidden') )	{
-			console.log($(".playlist-videos-table tbody .playlist-videos").length);
-			$(".playlist-videos-table").removeClass('hidden');
-		}
 	});
+
+	setTimeout(function() {
+    	$(".playlist-update").trigger('click');
+	}, 1000);
+	
 });
 
 
 
 $('body').on('click', ".remove-video", function(){
-	console.log('remove video');
 	var video_id = $(this).attr('data-video-id');
-	console.log(video_id);
-	$(this).closest('.playlist-videos').fadeOut(200);
+	$(this).closest('.dd-item').fadeOut(200);
 	$("#videos-staged-to-remove").append('<div class="remove_video"  data-video-id='+ video_id +'>')
 });
-
-
-
-$("body").on('click', ".remove-staged-video", function(){
-	
-	
-	var video_id = $(this).attr('data-video-id');
-	console.log('remove staged file' + video_id);
-	$(this).closest('.selected-video').remove();
-	console.log($(this).closest('.selected-video'));
-	$(this).closest('.selected-video').fadeOut(200);
-
-});
-
 
 
 $(document).on('click','.playlist-update',function(){
@@ -82,7 +67,10 @@ $(document).on('click','.playlist-update',function(){
 		    	title : title,
 		    	description : description,
 		    	playlist_videos:  playlist_videos,
-		    	remove_videos: remove_videos
+		    	remove_videos: remove_videos,
+		    	all_stores : getAllStoreStatus(),
+		    	target_stores : getTargetStores(),
+		    	target_banners : getTargetBanners()
 
 		    },
 		    
@@ -94,11 +82,11 @@ $(document).on('click','.playlist-update',function(){
 		        			$("#title").parent().append('<div class="req">' + errors.title[index]  + '</div>');	
 		        		}); 	
 		        	}
-			        if(errors.hasOwnProperty("playlist_videos")) {
-			        	$.each(errors.videos, function(index){
-			        		$(".existing-videos").append('<div class="req">' + errors.playlist_videos[index]  + '</div>');
-			        	});
-			        }
+			        // if(errors.hasOwnProperty("videos")) {
+			        // 	$.each(errors.videos, function(index){
+			        // 		$(".existing-videos").append('<div class="req">' + errors.videos[index]  + '</div>');
+			        // 	});
+			        // }
 			        if(errors.hasOwnProperty("videos")) {
 			        		swal("Error!", "'" + errors.videos +"'", "error");
 			        		// $(".existing-videos").append('<div class="req">' + errors.videos  + '</div>');

@@ -48,6 +48,7 @@
       <div class="row">
           <div class="col-lg-12">
               <div class="ibox">
+
                   <div class="ibox-title">
                       <h5>Document details</h5>
 
@@ -64,20 +65,6 @@
                               <div class="form-group"><label class="col-sm-2 control-label"> Title <span class="req">*</span></label>
                                   <div class="col-sm-10"><input type="text" id="title" name="title" class="form-control" value="{{ $document->title }}"></div>
                               </div>
-
-                              
-                            {{--
-                              <div class="form-group">
-                                  {!! Form::label('description', 'Description' , ['class'=>'col-sm-2 control-label']) !!}
-                                  <div class="col-sm-10">
-                                      {!! Form::text('description',$document->description, ['class'=>'form-control']) !!}      
-                                  </div>
-                              </div> --}}
-
-                              {{-- <div class="form-group">
-                                {!! Form::label('tags[]', 'Tags') !!}
-                                {!! Form::select('tags[]', $tags, $selected_tags, ['class'=>'chosen', 'multiple'=>'true']) !!}
-                              </div> --}}
                               
                                <div class="form-group">
 
@@ -98,7 +85,7 @@
                                             
                                   <label class="col-sm-2 control-label">Target Stores <span class="req">*</span></label>
                                   <div class="col-sm-10">
-                                    @if($all_stores)
+                                    @if($document->all_stores)
                                         {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
                                         {!! Form::label('allStores', 'Or select all stores:') !!}
                                         {!! Form::checkbox('allStores', null, true ,['id'=> 'allStores'] ) !!}
@@ -135,30 +122,6 @@
                                       @endif
                                   </div>
                               </div>
-                              
-                              
-
-                              {{--
-                              <div class="hr-line-dashed"></div>
-
-                               <div class="form-group">
-                                                            
-                                      <label class="col-sm-2 control-label">Start &amp; End</label>
-
-                                      <div class="col-sm-10">
-                                          <div class="input-daterange input-group" id="datepicker">
-                                              @if(isset($alert_details->alert_start))
-                                              <input type="text" class="input-sm form-control" name="start" id="start" value="{{$alert_details->alert_start}}" />
-                                              <span class="input-group-addon">to</span>
-                                              <input type="text" class="input-sm form-control" name="end" id="end" value="{{$alert_details->alert_end}}" />
-                                              @else
-                                              <input type="text" class="input-sm form-control" name="start" id="start" value="{{$document->start}}" />
-                                              <span class="input-group-addon">to</span>
-                                              <input type="text" class="input-sm form-control" name="end" id="end" value="{{$document->end}}" />
-                                              @endif
-                                          </div>
-                                      </div>
-                              </div> --}}
                               <div class="form-group">
                                 <div class="col-sm-4 col-sm-offset-2">
                                     <a class="btn btn-white" href="/admin/alert"><i class="fa fa-close"></i> Cancel</a>
