@@ -54,21 +54,21 @@
 
 	                        <div class="table-responsive">
 
-								<table class="table table-hover issue-tracker">
-
-									<tr>
-										<td>Subject</td>
-										
-										<td>Start</td>
-										<td>Action</td>
-									</tr>
-
+								<table class="table datatable">
+									<thead>
+										<tr>
+											<td>Subject</td>
+											<td>Start</td>
+											<td>Action</td>
+										</tr>
+									</thead>
+									<tbody>
 									@foreach($communications as $communication)
 									<tr>
 
 										<td>{{ $communication->subject }}</td>
 										
-										<td>{{ $communication->prettySentAtDate }}</td>
+										<td data-order="{{$communication->send_at}}">{{ $communication->prettySentAtDate }}</td>
 										
 										<td>
 											<a href="/admin/communication/{{ $communication->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
@@ -77,7 +77,7 @@
 										</td>
 									</tr>
 									@endforeach
-
+									</tbody>
 								</table>
 
 	                        </div>
@@ -100,6 +100,12 @@
 	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 	        }
 		});
+		$(".datatable").DataTable({
+            pageLength: 50,
+			responsive: true,
+			fixedHeader: true
+
+        });
 
 	</script>
 

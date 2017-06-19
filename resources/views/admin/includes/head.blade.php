@@ -40,3 +40,5 @@
 	</style>  
 
 	{{-- <link href="/css/plugins/summernote/summernote-bs3.css" rel="stylesheet"> --}}
+
+	<link rel="stylesheet" href="/css/plugins/dataTables/datatables.min.css">
