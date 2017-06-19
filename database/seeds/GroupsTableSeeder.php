@@ -17,9 +17,18 @@ class GroupsTableSeeder extends Seeder
      */
     public function run()
     {
-    	DB::table('groups')->where('id', 2)->delete();
-        foreach ($this->groups as $group) {
-        	DB::table('groups')->insert($group);
+    	
+        DB::table('users')->where('group_id', '=', 2)->update(['group_id' => 1]);
+
+        if (DB::table('groups')->where('id', '=', 2)->exists()) {
+           
+            DB::table('groups')->where('id', 2)->delete();
+            foreach ($this->groups as $group) {
+                DB::table('groups')->insert($group);
+            }
+
         }
+
+        
     }
 }
