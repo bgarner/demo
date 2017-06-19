@@ -16,7 +16,6 @@ class UpdateEventTypeTableWithColours extends Migration
         Schema::table('event_types', function (Blueprint $table) {
             $table->string('background_colour')->after('event_type');
             $table->string('foreground_colour')->after('background_colour');
-
         });
     }
 

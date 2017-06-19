@@ -11,7 +11,7 @@ class EventType extends Model
 	use SoftDeletes;
     protected $table = 'event_types';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['event_type', 'banner_id'];
+    protected $fillable = ['event_type', 'background_colour', 'foreground_colour', 'banner_id'];
 
     public static function validateEventType($request)
     {
@@ -24,10 +24,22 @@ class EventType extends Model
     }
 
     public static function getName($id)
-    {   
+    {
         $event_type = EventType::find($id);
         return $event_type->event_type;
     }
+
+	public static function getBackground($id)
+	{
+		$event_type = EventType::find($id);
+		return $event_type->background_colour;
+	}
+
+	public static function getForeground($id)
+	{
+		$event_type = EventType::find($id);
+		return $event_type->foreground_colour;
+	}
 
     public static function getEventTypeListByBannerId($banner_id)
     {
@@ -40,7 +52,7 @@ class EventType extends Model
     public static function createEventType($request)
     {
         $validate = EventType::validateEventType($request);
-        
+
         if($validate['validation_result'] == 'false') {
           \Log::info($validate);
           return json_encode($validate);
@@ -58,7 +70,7 @@ class EventType extends Model
     public static function updateEventType($id, $request)
     {
         $validate = EventType::validateEventType($request);
-        
+
         if($validate['validation_result'] == 'false') {
           \Log::info($validate);
           return json_encode($validate);
@@ -67,7 +79,7 @@ class EventType extends Model
         $eventType =  EventType::find($id);
 
         $eventType->event_type = $request['event_type'];
-    
+
         $eventType->save();
 
         return $eventType;
