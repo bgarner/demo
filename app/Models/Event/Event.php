@@ -137,7 +137,6 @@ class Event extends Model
         return;
     }
 
-
     public static function getActiveEventsAndProductLaunchForCalendarViewByStore($storeNumber)
     {
         $events = Event::getActiveEventsByStore($storeNumber);
@@ -148,13 +147,9 @@ class Event extends Model
             $event->prettyDateStart = Utility::prettifyDate($event->start);
             $event->prettyDateEnd = Utility::prettifyDate($event->end);
             $event->since = Utility::getTimePastSinceDate($event->start);
-
-            // if(!isset($event->event_type_name)){
-                $event->event_type_name = EventType::getName($event->event_type);
-                $event->background_colour = EventType::getBackground($event->event_type);
-                $event->foreground_colour = EventType::getForeground($event->event_type);
-
-            // }
+            $event->event_type_name = EventType::getName($event->event_type);
+            $event->background_colour = EventType::getBackground($event->event_type);
+            $event->foreground_colour = EventType::getForeground($event->event_type);
         }
         return $events;
 
