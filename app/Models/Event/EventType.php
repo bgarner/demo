@@ -68,6 +68,8 @@ class EventType extends Model
 
         $eventTypeDetails = array(
             'event_type' => $request['event_type'],
+			'background_colour' => $request['background_colour'],
+			'foreground_colour' => $request['foreground_colour'],
             'banner_id' => $request['banner_id']
         );
 
