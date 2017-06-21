@@ -115,6 +115,10 @@ class Event extends Model
                             'store_id'   => $store
                         ]);
                     }
+                    EventTarget::create([
+                            'event_id'   => $id,
+                            'store_id'   => '0940'
+                        ]);
                 }
                 $event = Event::find($id);
                 $event->all_stores = 0;

@@ -384,5 +384,20 @@ class Utility extends Model
         return $storeList;
     }
 
+    public static function addHeadOffice($content_id, $request, $table)
+    {
+    	if($request['banner_id'] == 1){
+	        $headOffice = '0940';
+	    }else if($request['banner_id'] == 2){
+	        $headOffice = 'A0940';
+	    }
+
+	    CommunicationTarget::create([
+	        'communication_id' => $id,
+	        'store_id'         => $headOffice
+	    ]);    
+                
+    }
+
 
 }

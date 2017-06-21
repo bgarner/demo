@@ -254,7 +254,12 @@ class UrgentNotice extends Model
                         'urgent_notice_id'  => $urgentNotice->id,
                         'store_id'          => $store
                     ]);
+
                 }
+                UrgentNoticeTarget::create([
+                        'urgent_notice_id'  => $urgentNotice->id,
+                        'store_id'          => '0940'
+                    ]);
             }  
         }
         return;         
