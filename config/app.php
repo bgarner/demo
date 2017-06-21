@@ -251,6 +251,8 @@ return [
         'App\Http\Controllers\Dashboard\DashboardAdminController'               => 'Dashboard',
         'App\Http\Controllers\Document\PackageAdminController'                  => 'Featured Content',
         'App\Http\Controllers\Feature\FeatureAdminController'                   => 'Featured Content',
+        'App\Http\Controllers\Feature\FeatureThumbnailAdminController'          => 'Featured Content',
+        'App\Http\Controllers\Feature\FeatureBackgroundAdminController'         => 'Featured Content',
         'App\Http\Controllers\Calendar\CalendarAdminController'                 => 'Calendar',
         'App\Http\Controllers\Calendar\EventTypesAdminController'               => 'Calendar',
         'App\Http\Controllers\Calendar\ProductLaunchAdminController'            => 'Calendar',
