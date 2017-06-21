@@ -62,11 +62,11 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Background Colour</label>
-                                            <div class="col-sm-2"><input class="jscolor form-control" value="ab2567"></div>
+                                            <div class="col-sm-2"><input class="jscolor form-control" name="background_colour" id="background_colour" value="{{$eventType->background_colour}}"></div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Text Colour</label>
-                                            <div class="col-sm-2"><input class="jscolor form-control" value="ab2567"></div>
+                                            <div class="col-sm-2"><input class="jscolor form-control" name="foreground_colour" id="foreground_colour" value="{{$eventType->foreground_colour}}"></div>
                                         </div>
 
 

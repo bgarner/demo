@@ -89,6 +89,8 @@ class EventType extends Model
         $eventType =  EventType::find($id);
 
         $eventType->event_type = $request['event_type'];
+		$eventType->background_colour = $request['background_colour'];
+		$eventType->foreground_colour = $request['foreground_colour'];
 
         $eventType->save();
 
