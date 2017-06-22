@@ -35,19 +35,7 @@ class CommunicationTarget extends Model
                     ]);
                 }
 
-                Utility::addHeadOffice($id, $request, 'CommunicationTarget')
-                if($request['banner_id'] == 1){
-                    $headOffice = '0940';
-                }else if($request['banner_id'] == 2){
-                    $headOffice = 'A0940';
-                }
-
-                CommunicationTarget::create([
-                    'communication_id' => $id,
-                    'store_id'         => $headOffice
-                ]);    
-                
-
+                Utility::addHeadOffice($id, 'communications_target', 'communication_id');
                 
             } 
             $communication = Communication::find($id);

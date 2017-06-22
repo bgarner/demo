@@ -256,10 +256,7 @@ class UrgentNotice extends Model
                     ]);
 
                 }
-                UrgentNoticeTarget::create([
-                        'urgent_notice_id'  => $urgentNotice->id,
-                        'store_id'          => '0940'
-                    ]);
+                Utility::addHeadOffice($id, 'urgent_notice_target', 'urgent_notice_id');
             }  
         }
         return;         
