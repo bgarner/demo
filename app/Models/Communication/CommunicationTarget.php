@@ -30,10 +30,13 @@ class CommunicationTarget extends Model
             if (count($target_stores) > 0) {
                 foreach ($target_stores as $store) {
                     CommunicationTarget::create([
-                        'communication_id'   => $id,
-                        'store_id'   => $store
+                        'communication_id' => $id,
+                        'store_id'         => $store
                     ]);
                 }
+
+                Utility::addHeadOffice($id, 'communications_target', 'communication_id');
+                
             } 
             $communication = Communication::find($id);
             $communication->all_stores = 0;

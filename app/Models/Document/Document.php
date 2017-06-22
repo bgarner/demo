@@ -481,6 +481,8 @@ class Document extends Model
                         'store_id' => $store
                         ]);    
                 }
+                Utility::addHeadOffice($document->id, 'document_target', 'document_id');
+
             } 
         }
          

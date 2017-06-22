@@ -155,7 +155,7 @@ $(document).on('click','.event-create',function(){
 		    url: '/admin/calendar',
 		    type: 'POST',
 		    data: {
-		    	banner: eventBanner,
+		    	banner_id: eventBanner,
 		  		title: eventTitle,
 		  		description: eventDescription,
 		    	event_type: eventType,
