@@ -457,6 +457,7 @@ class Video extends Model
                     'store_id' => $store
                     ]);    
             }
+            // Utility::addHeadOffice($id, 'video_target', 'video_id');
         }  
         
         return;         
