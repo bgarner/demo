@@ -9,6 +9,7 @@ return array(
     'AddBrandingToBannerTable' => $baseDir . '/database/migrations/2016_02_01_174829_add_branding_to_banner_table.php',
     'AddNotesToDonationTable' => $baseDir . '/database/migrations/2016_11_07_153726_add_notes_to_donation_table.php',
     'AddNotificationsToBannerTable' => $baseDir . '/database/migrations/2016_02_04_230134_add_notifications_to_banner_table.php',
+    'AddOnOrderCountToBikeTracker' => $baseDir . '/database/migrations/2017_06_23_142132_add_on_order_count_to_bike_tracker.php',
     'AddOrderingToFeaturePackageTable' => $baseDir . '/database/migrations/2016_03_17_164606_add_ordering_to_feature_package_table.php',
     'AddTypesToCommunicationTable' => $baseDir . '/database/migrations/2016_02_09_175504_add_types_to_communication_table.php',
     'Addordertoplaylistvideos' => $baseDir . '/database/migrations/2016_09_08_132614_addordertoplaylistvideos.php',
