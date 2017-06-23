@@ -45,6 +45,16 @@
                     {{ $communication->subject }}
                      <span class="pull-right font-normal" style="font-size: 16px;">{{ $communication->prettyDate }} <small style="font-weight: normal;padding-left: 10px;">({{ $communication->since }} {{__("ago")}})</small></span>
                 </h2>
+                @if(isset($previousCommunicationId))
+                <span class="pull-left">
+                    <a href="/{{ Request::segment(1) }}/communication/show/{{$previousCommunicationId}}"><i class="fa fa-angle-double-left"></i> {{__("Previous")}}</a>
+                </span>
+                @endif
+                @if(isset($nextCommunicationId))
+                <span class="pull-right">
+                    <a href="/{{ Request::segment(1) }}/communication/show/{{$nextCommunicationId}}">{{__("Next")}} <i class="fa fa-angle-double-right"></i></a>
+                </span>
+                @endif
 
             </div>
                 <div class="mail-box">
