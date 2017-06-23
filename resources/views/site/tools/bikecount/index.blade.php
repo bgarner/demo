@@ -71,6 +71,7 @@
                             <th>On Hand</th>
 
                             <th>In Transit</th>
+                            <th>On Order</th>
                             <th>Ad Week</th>
 
                         </tr>
@@ -93,6 +94,7 @@
                                 <td>{{ $d->size }}</td>
                                 <td>{{ $d->on_hand }}</td>
                                 <td>{{ $d->in_transit }}</td>
+                                <td>{{ $d->on_order }}</td>
                                 <td>
                                     @if($d->week)
                                         <center>
