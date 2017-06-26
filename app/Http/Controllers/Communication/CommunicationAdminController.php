@@ -18,6 +18,7 @@ use App\Models\Tag\Tag;
 use App\Models\Tag\ContentTag;
 use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Communication\CommunicationTarget;
+use App\Models\Tools\CustomStoreGroup;
 
 class CommunicationAdminController extends Controller
 {
@@ -56,6 +57,11 @@ class CommunicationAdminController extends Controller
         
         $packages            = Package::where('banner_id',$banner->id)->get();
         $storeList           = StoreInfo::getStoreListing($banner->id);
+        $storeGroups         = CustomStoreGroup::getAllGroups()->pluck('group_name', 'id')->toArray();
+        // dd($storeGroups);
+        // $storeList = array_merge($storeList, $storeGroups);
+        $storeList = $storeList + $storeGroups;
+        // dd($storeList);
         return view('admin.communication.create')
                                                 ->with('storeList', $storeList)
                                                 ->with('communicationTypes', $communicationTypes)

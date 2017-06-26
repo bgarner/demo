@@ -277,10 +277,8 @@ return [
         'App\Http\Controllers\Auth\Resource\ResourceTypeAdminController'        => 'User and Group Management',
         'App\Http\Controllers\Auth\Component\ComponentAdminController'          => 'User and Group Management',
         'App\Http\Controllers\StoreFeedback\FeedbackAdminController'            => 'Store Feedback Management',
-        'App\Http\Controllers\Task\TaskAdminController'                         => 'Task Management'
-
-
-
+        'App\Http\Controllers\Task\TaskAdminController'                         => 'Task Management',
+        'App\Http\Controllers\Tools\CustomStoreGroupAdminController'            => 'Tools'
 
     ],
 
