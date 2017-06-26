@@ -134,10 +134,31 @@
 
 								                <label class="col-sm-2 control-label">Target Stores</label>
 								                <div class="col-sm-10">
+								                	<select name="stores" id="storeSelect" multiple class="chosen">
+										            	<option value="">Select Some Options</option>
+										            	@foreach($storeAndStoreGroups as $option)
+											                
+										                    <option value="{{$option['id']}}"
+										                        
+										                        @if(isset($option["isStoreGroup"]))
+																	data-isStoreGroup = "{{$option['isStoreGroup']}}"
+										                        @endif
+										                        
+										                    >
+										                        {{$option['name']}}
+										                    </option>
+											                
+										            	@endforeach
+
+										        	</select>
+										        	{!! Form::label('allStores', 'Or select all stores:') !!}
+										        	{!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
+								                </div>
+								                {{--<div class="col-sm-10">
 								                    {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
 								                    {!! Form::label('allStores', 'Or select all stores:') !!}
 								                    {!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
-								                </div>
+								                </div>--}}
 
 								        </div>
 

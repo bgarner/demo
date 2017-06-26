@@ -57,13 +57,28 @@ class CommunicationAdminController extends Controller
         
         $packages            = Package::where('banner_id',$banner->id)->get();
         $storeList           = StoreInfo::getStoreListing($banner->id);
-        $storeGroups         = CustomStoreGroup::getAllGroups()->pluck('group_name', 'id')->toArray();
-        // dd($storeGroups);
-        // $storeList = array_merge($storeList, $storeGroups);
-        $storeList = $storeList + $storeGroups;
-        // dd($storeList);
+        $storeGroups         = CustomStoreGroup::getAllGroups();
+        $storeAndStoreGroups = [];
+        foreach ($storeList as $storeNumber => $storeName) {
+            $temp = [];
+            $temp['id'] = $storeNumber;
+            $temp['name'] = $storeName;
+            array_push($storeAndStoreGroups, $temp);
+            unset($temp);
+        }
+
+        foreach ($storeGroups as $storeGroup) {
+            $temp = [];
+            $temp['id'] = $storeGroup->id;
+            $temp['name'] = $storeGroup->group_name;
+            $temp['isStoreGroup'] = true;
+            $temp['stores'] = $storeGroup->stores;
+            array_push($storeAndStoreGroups, $temp);
+            unset($temp);
+        }
+        // dd($storeAndStoreGroups);
         return view('admin.communication.create')
-                                                ->with('storeList', $storeList)
+                                                ->with('storeAndStoreGroups', $storeAndStoreGroups)
                                                 ->with('communicationTypes', $communicationTypes)
                                                 ->with('navigation', $fileFolderStructure)
                                                 ->with('packages', $packages)
