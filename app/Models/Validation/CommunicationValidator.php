@@ -21,7 +21,7 @@ class CommunicationValidator extends PortalValidator
 
     protected $messages = [
         'subject'                        => 'Communication title required',
-        'communication_type_id.'         => 'Invalid communication type',
+        'communication_type_id.exists'   => 'Invalid communication type',
         'target_stores.required_without' => 'Target Store missing',
         'allStores.in'                   => 'Invalid value in Target Stores',
         'documents.exists'               => 'Invalid document attached'

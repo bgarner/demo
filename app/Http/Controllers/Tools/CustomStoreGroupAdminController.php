@@ -49,7 +49,6 @@ class CustomStoreGroupAdminController extends Controller
      */
     public function store(Request $request)
     {
-    	\Log::info($request->all());
     	return CustomStoreGroup::saveStoreGroup($request);
     }
 
@@ -73,7 +72,11 @@ class CustomStoreGroupAdminController extends Controller
      */
     public function edit($id, Request $request)
     {
-        
+        $storeList = Utility::getStoreListForAdmin();
+        $storeGroup = CustomStoreGroup::find($id);
+        $storeGroup->stores = unserialize($storeGroup->stores);
+        return view('admin.storegroup.edit')->with('storeGroup', $storeGroup)
+                                            ->with('storeList', $storeList);   
     }
 
     /**
@@ -85,7 +88,7 @@ class CustomStoreGroupAdminController extends Controller
      */
     public function update(Request $request, $id)
     {        
-        
+        return CustomStoreGroup::editStoreGroup($request, $id);
     }
 
     /**
@@ -96,6 +99,6 @@ class CustomStoreGroupAdminController extends Controller
      */
     public function destroy($id, Request $request)
     {
-        
+        CustomStoreGroup::find($id)->delete();
     }
 }

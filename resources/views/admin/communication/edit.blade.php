@@ -191,11 +191,7 @@
 
 						                <label class="col-sm-2 control-label">Target Stores</label>
 						                <div class="col-sm-10">
-						                	@if($communication->all_stores)
-		                                        {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
-		                                        {!! Form::label('allStores', 'Or select all stores:') !!}
-		                                        {!! Form::checkbox('allStores', null, true ,['id'=> 'allStores'] ) !!}
-		                                    @else
+						                	
 		                                        <select name="stores" id="storeSelect" multiple class="chosen">
 									            	<option value="">Select Some Options</option>
 									            	@foreach($storeAndStoreGroups as $option)
@@ -220,9 +216,16 @@
 									            	@endforeach
 
 										        </select>
-		                                        {!! Form::label('allStores', 'Or select all stores:') !!}
-		                                        {!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
-		                                    @endif
+
+										        @if($communication->all_stores)
+		                                        
+		                                        	{!! Form::label('allStores', 'Or select all stores:') !!}
+		                                        	{!! Form::checkbox('allStores', null, true ,['id'=> 'allStores'] ) !!}
+		                                    	@else
+
+		                                        	{!! Form::label('allStores', 'Or select all stores:') !!}
+		                                        	{!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
+		                                    	@endif
 						                </div>
 
 						        </div>

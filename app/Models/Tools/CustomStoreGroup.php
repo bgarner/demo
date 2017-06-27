@@ -25,6 +25,24 @@ class CustomStoreGroup extends Model
 
 	}
 
+	public static function validateEditCustomStoreGroup($request, $id)
+	{
+		$validateThis =  [
+			'target_stores'     => $request['stores']
+		];
+
+		$group_name = strtolower(CustomStoreGroup::find($id)->group_name);
+		$new_group_name = strtolower($request['group_name']);
+
+		if($group_name !== $new_group_name){
+			$validateThis['group_name'] = $request['group_name'];
+		}
+		\Log::info($validateThis);
+		$v = new CustomStoreGroupValidator();
+		return $v->validate($validateThis);
+
+	}
+
 
  	public static function getAllGroups()
  	{
@@ -51,4 +69,23 @@ class CustomStoreGroup extends Model
 
 		return $storeGroup;
  	}
+
+ 	public static function editStoreGroup($request, $id)
+ 	{
+
+		\Log::info($request->all());
+		$validate = Self::validateEditCustomStoreGroup($request, $id);
+		\Log::info($validate);
+		if($validate['validation_result'] == 'false') {
+			\Log::info($validate);
+			return json_encode($validate);
+		}
+		
+		$storeGroup = Self::find($id);
+		$storeGroup['group_name'] = $request["group_name"];
+		$storeGroup['stores'] = serialize($request["stores"]);
+		$storeGroup->save();
+		return $storeGroup;
+ 	}
+
 }
