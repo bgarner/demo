@@ -25,11 +25,11 @@ var processStorePaste = function(){
     			stores[i] = "0"+stores[i];
     		}
     		
-			$("#targets option[value='"+  stores[i] +"']").attr('selected', 'true');
+			$("#storeSelect option[value='"+  stores[i] +"']").attr('selected', 'true');
 
     	});
-    	$("#targets").trigger("chosen:updated");
-    	var selectedStoresCount = $('#targets option:selected').length;
+    	$("#storeSelect").trigger("chosen:updated");
+    	var selectedStoresCount = $('#storeSelect option:selected').length;
 };
 
 var getTargetStores = function(){
