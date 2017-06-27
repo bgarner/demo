@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Calendar;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Request as RequestFacade; 
+use Illuminate\Support\Facades\Request as RequestFacade;
 use DB;
 use Carbon\Carbon;
 use App\Http\Requests;
@@ -25,7 +25,7 @@ class CalendarController extends Controller
     {
 
         $today = date("Y") . "-" . date("m");
-        $today = (string) $today; 
+        $today = (string) $today;
 
         $storeNumber = RequestFacade::segment(1);
 
@@ -34,7 +34,7 @@ class CalendarController extends Controller
 
         //for the list of events
         $eventsList = Event::getListofEventsByStoreAndMonth($storeNumber, $today);
-        
+
         return view('site.calendar.index')
                 ->with('events', $events)
                 ->with('eventsList', $eventsList)
@@ -49,6 +49,6 @@ class CalendarController extends Controller
 
     }
 
-   
+
 
 }

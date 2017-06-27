@@ -49,15 +49,24 @@
 		                            <h5>Edit Event Type</h5>
 		                            <div class="ibox-tools">
 		                               {{--  <a href="/admin/calendar/create" class="btn btn-primary" role="button"><i class="fa fa-plus"></i> Add New Event</a> --}}
-                                        
+
 		                            </div>
 		                        </div>
 		                        <div class="ibox-content">
 
                                     <form method="get" class="form-horizontal">
                                     	<input type="hidden" name="eventTypeID" id="eventTypeID" value="{{ $eventType->id }}">
-                                        <div class="form-group"><label class="col-sm-2 control-label">Event Type Name</label>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Event Type Name</label>
                                             <div class="col-sm-10"><input type="text" class="form-control" name="event_type" id="event_type" value="{{ $eventType->event_type }}"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Background Colour</label>
+                                            <div class="col-sm-2"><input class="jscolor form-control" name="background_colour" id="background_colour" value="{{$eventType->background_colour}}"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Text Colour</label>
+                                            <div class="col-sm-2"><input class="jscolor form-control" name="foreground_colour" id="foreground_colour" value="{{$eventType->foreground_colour}}"></div>
                                         </div>
 
 
@@ -98,7 +107,8 @@
 				</script>
 
 				<script src="/js/custom/admin/events/editEventType.js"></script>
-				
+                <script src="/js/vendor/jscolor-2.0.4/jscolor.min.js"></script>
+
 
 				@include('site.includes.bugreport')
 

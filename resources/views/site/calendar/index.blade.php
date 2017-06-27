@@ -203,11 +203,13 @@
                     title: "{{ $event->title }}",
                     start: "{{ $event->start }}",
                     end: "{{ $event->end }}",
+                    backgroundColor: "#{{ $event->background_colour }}",
+                    borderColor: "#{{ $event->background_colour }}",
+                    textColor: "#{{ $event->foreground_colour }}",
                     description : '{!! $event->description !!}',
                     prettyStart : "{{$event->prettyDateStart}}",
                     prettyEnd : "{{$event->prettyDateEnd}}",
-                    attachment : "{!!$event->attachment!!}"
-
+                    attachment : "{!!$event->attachment!!}",
                 },
                 @endforeach
             ]
