@@ -18,6 +18,8 @@ use App\Models\Tag\Tag;
 use App\Models\Tag\ContentTag;
 use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Communication\CommunicationTarget;
+use App\Models\Tools\CustomStoreGroup;
+use App\Models\Utility\Utility;
 
 class CommunicationAdminController extends Controller
 {
@@ -55,9 +57,9 @@ class CommunicationAdminController extends Controller
         $communicationTypes  = CommunicationType::where('banner_id', $banner->id)->get();
         
         $packages            = Package::where('banner_id',$banner->id)->get();
-        $storeList           = StoreInfo::getStoreListing($banner->id);
+        $storeAndStoreGroups = Utility::getStoreAndStoreGroupList($banner->id);
         return view('admin.communication.create')
-                                                ->with('storeList', $storeList)
+                                                ->with('storeAndStoreGroups', $storeAndStoreGroups)
                                                 ->with('communicationTypes', $communicationTypes)
                                                 ->with('navigation', $fileFolderStructure)
                                                 ->with('packages', $packages)
@@ -112,16 +114,18 @@ class CommunicationAdminController extends Controller
         $communicationTypes          = CommunicationType::where('banner_id', $banner->id)->get();
         
         $communication_target_stores = CommunicationTarget::where('communication_id', $id)->get()->pluck('store_id')->toArray();
-        $storeList                   = StoreInfo::getStoreListing($banner->id);
+        $storeAndStoreGroups         = Utility::getStoreAndStoreGroupList($banner->id);
 
         $fileFolderStructure         = FileFolder::getFileFolderStructure($banner->id);
         $packages                    = Package::where('banner_id', $banner->id)->get();
+
+        // dd($communication_target_stores);
 
         return view('admin.communication.edit')->with('communication', $communication)
                                             ->with('communication_packages', $communication_packages)
                                             ->with('communication_documents', $communication_documents)
                                             ->with('communicationTypes', $communicationTypes)
-                                            ->with('storeList', $storeList)
+                                            ->with('storeAndStoreGroups', $storeAndStoreGroups)
                                             ->with('navigation', $fileFolderStructure)
                                             ->with('packages', $packages)
                                             ->with('target_stores', $communication_target_stores)

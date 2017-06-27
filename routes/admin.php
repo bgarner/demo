@@ -114,3 +114,6 @@ Route::get('admin/resourcetype/{id}', 'Auth\Resource\ResourceTypeAdminController
 Route::get('/admin/productlaunch', 'Calendar\ProductLaunchAdminController@index');
 Route::get('/admin/productlaunch/create', 'Calendar\ProductLaunchAdminController@create');
 Route::post('/admin/productlaunch', 'Calendar\ProductLaunchAdminController@store');
+
+//Custom Store Groups
+Route::resource('/admin/storegroup', 'Tools\CustomStoreGroupAdminController');

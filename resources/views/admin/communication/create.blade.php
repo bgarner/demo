@@ -134,10 +134,34 @@
 
 								                <label class="col-sm-2 control-label">Target Stores</label>
 								                <div class="col-sm-10">
+								                	<select name="stores" id="storeSelect" multiple class="chosen">
+										            	<option value="">Select Some Options</option>
+										            	@foreach($storeAndStoreGroups as $option)
+											                
+										                    <option value="{{$option['id']}}"
+										                        
+										                        @if(isset($option["isStoreGroup"]))
+																	data-isStoreGroup = "{{$option['isStoreGroup']}}"
+										                        @endif
+										                        @if(isset($option["stores"]))
+																	data-stores = "{{$option['stores']}}"
+										                        @endif
+										                        
+										                    >
+										                        {{$option['name']}}
+										                    </option>
+											                
+										            	@endforeach
+
+										        	</select>
+										        	{!! Form::label('allStores', 'Or select all stores:') !!}
+										        	{!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
+								                </div>
+								                {{--<div class="col-sm-10">
 								                    {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
 								                    {!! Form::label('allStores', 'Or select all stores:') !!}
 								                    {!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
-								                </div>
+								                </div>--}}
 
 								        </div>
 
@@ -232,7 +256,8 @@
 		<script type="text/javascript" src="/js/custom/createpackage.js"></script>
 		<script type="text/javascript" src="/js/custom/tree.js"></script>
 		<script type="text/javascript" src="/js/custom/datetimepicker-with-default-time.js"></script>
-		<script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
+		<!-- <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script> -->
+		<script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>
 
 		<script type="text/javascript">
 

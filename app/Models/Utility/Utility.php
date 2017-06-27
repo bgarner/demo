@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\Auth\User\UserBanner;
 use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\StoreInfo;
+use App\Models\Tools\CustomStoreGroup;
 
 class Utility extends Model
 {
@@ -383,6 +384,32 @@ class Utility extends Model
         }
         
         return $storeList;
+    }
+
+    public static function getStoreAndStoreGroupList($banner_id)
+    {
+    	$storeList           = StoreInfo::getStoreListing($banner_id);
+        $storeGroups         = CustomStoreGroup::getAllGroups();
+        $storeAndStoreGroups = [];
+        foreach ($storeList as $storeNumber => $storeName) {
+            $temp = [];
+            $temp['id'] = $storeNumber;
+            $temp['name'] = $storeName;
+            array_push($storeAndStoreGroups, $temp);
+            unset($temp);
+        }
+
+        foreach ($storeGroups as $storeGroup) {
+            $temp = [];
+            $temp['id'] = $storeGroup->id;
+            $temp['name'] = $storeGroup->group_name;
+            $temp['isStoreGroup'] = true;
+            $temp['stores'] = json_encode($storeGroup->stores);
+            array_push($storeAndStoreGroups, $temp);
+            unset($temp);
+        }
+
+        return $storeAndStoreGroups;
     }
 
     public static function addHeadOffice($contentId, $table, $pivotColumn)
