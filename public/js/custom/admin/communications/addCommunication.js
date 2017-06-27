@@ -67,7 +67,8 @@ $(document).on('click','.communication-create',function(){
 	var start = $("#send_at").val();
 	var end = $("#archive_at").val();
 	var banner_id = $("input[name='banner_id']").val();
-	var target_stores  = $("#storeSelect").val();
+	// var target_stores  = $("#storeSelect").val();
+	var target_stores = getTargetStores();
 	var importance = "1";
 	var sender = "";
 	var communication_packages = [];
@@ -105,6 +106,8 @@ $(document).on('click','.communication-create',function(){
 		$(window).scrollTop(0);
 		return false;
 	}
+
+
 
     if(hasError == false) {
 

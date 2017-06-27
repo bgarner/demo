@@ -196,7 +196,30 @@
 		                                        {!! Form::label('allStores', 'Or select all stores:') !!}
 		                                        {!! Form::checkbox('allStores', null, true ,['id'=> 'allStores'] ) !!}
 		                                    @else
-		                                        {!! Form::select('stores', $storeList, $target_stores, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
+		                                        <select name="stores" id="storeSelect" multiple class="chosen">
+									            	<option value="">Select Some Options</option>
+									            	@foreach($storeAndStoreGroups as $option)
+										                
+									                    <option value="{{$option['id']}}"
+									                        
+									                        @if(isset($option["isStoreGroup"]))
+																data-isStoreGroup = "{{$option['isStoreGroup']}}"
+									                        @endif
+									                        @if(isset($option["stores"]))
+																data-stores = "{{$option['stores']}}"
+									                        @endif
+
+									                        @if(in_array($option['id'], $target_stores))
+																selected
+									                        @endif
+									                        
+									                    >
+									                        {{$option['name']}}
+									                    </option>
+										                
+									            	@endforeach
+
+										        </select>
 		                                        {!! Form::label('allStores', 'Or select all stores:') !!}
 		                                        {!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
 		                                    @endif
@@ -294,7 +317,8 @@
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 		<script type="text/javascript" src="/js/custom/tree.js"></script>
 		<script type="text/javascript" src="/js/custom/datetimepicker.js"></script>
-		<script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
+		<!-- <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script> -->
+		<script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>
 
 
 		<script type="text/javascript">

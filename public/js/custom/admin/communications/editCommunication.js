@@ -68,9 +68,11 @@ $(document).on('click','.communication-update',function(){
 	var start = $("#send_at").val();
 	var end = $("#archive_at").val();
 	var banner_id = $("input[name='banner_id']").val();
-	var target_stores  = $("#storeSelect").val();
+	// var target_stores  = $("#storeSelect").val();
+	var target_stores = getTargetStores();
 	var allStores  = $("#allStores:checked").val();
 	console.log(allStores);
+	console.log(target_stores);
 
 	console.log(communication_type_id);
 	

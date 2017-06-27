@@ -143,6 +143,9 @@
 										                        @if(isset($option["isStoreGroup"]))
 																	data-isStoreGroup = "{{$option['isStoreGroup']}}"
 										                        @endif
+										                        @if(isset($option["stores"]))
+																	data-stores = "{{$option['stores']}}"
+										                        @endif
 										                        
 										                    >
 										                        {{$option['name']}}
@@ -253,7 +256,8 @@
 		<script type="text/javascript" src="/js/custom/createpackage.js"></script>
 		<script type="text/javascript" src="/js/custom/tree.js"></script>
 		<script type="text/javascript" src="/js/custom/datetimepicker-with-default-time.js"></script>
-		<script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
+		<!-- <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script> -->
+		<script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>
 
 		<script type="text/javascript">
 
