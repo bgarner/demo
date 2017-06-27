@@ -115,6 +115,7 @@ class Event extends Model
                             'store_id'   => $store
                         ]);
                     }
+                    Utility::addHeadOffice($id, 'events_target', 'event_id');
                 }
                 $event = Event::find($id);
                 $event->all_stores = 0;

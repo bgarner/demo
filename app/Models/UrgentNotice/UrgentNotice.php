@@ -254,7 +254,9 @@ class UrgentNotice extends Model
                         'urgent_notice_id'  => $urgentNotice->id,
                         'store_id'          => $store
                     ]);
+
                 }
+                Utility::addHeadOffice($id, 'urgent_notice_target', 'urgent_notice_id');
             }  
         }
         return;         

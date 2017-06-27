@@ -41,6 +41,7 @@
     "Featured Video": "ਫੀਚਰ ਵੀਡੀਓ",
     "Latest Communications": "ਨਵੀਨਤਮ ਸੰਚਾਰ",
     "No Current Communications": "ਕੋਈ ਮੌਜੂਦਾ ਸੰਚਾਰ ਨਹੀਂ",
+    "More Communications": "ਹੋਰ ਸੰਚਾਰ",
     "Quick Links": "ਤੇਜ਼ ਲਿੰਕ",
     "Recent Uploads": "ਹਾਲੀਆ ਅਪਲੋਡਸ",
     "with": "ਦੇ ਨਾਲ",
@@ -108,5 +109,7 @@
     "Most Liked Videos": "ਜ਼ਿਆਦਾਤਰ ਪਸੰਦ ਕੀਤੇ ਵੀਡੀਓਜ਼",
     "likes": "ਪਸੰਦ",
     "Most Viewed Videos": "ਸਭ ਤੋਂ ਵੱਧ ਵਿਡੀਓਜ਼ ਦੇਖੋ",
-    "Related Playlists": "ਸਬੰਧਤ ਪਲੇਲਿਸਟਸ"
+    "Related Playlists": "ਸਬੰਧਤ ਪਲੇਲਿਸਟਸ",
+    "Next": "ਅਗਲਾ",
+    "Previous" : "ਪਿਛਲੇ"
 }

@@ -3,6 +3,7 @@
 namespace App\Models\Task;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Utility\Utility;
 
 class TaskTarget extends Model
 {
@@ -37,6 +38,7 @@ class TaskTarget extends Model
 
 				} 
 			}
+			Utility::addHeadOffice($id, 'tasks_target', 'task_id');
 			$task = Task::find($id);
         	$task->all_stores = 0;
         	$task->save();            

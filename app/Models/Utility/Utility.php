@@ -5,6 +5,7 @@ namespace App\Models\Utility;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use App\Models\Auth\User\UserBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\StoreInfo;
 
 class Utility extends Model
@@ -382,6 +383,24 @@ class Utility extends Model
         }
         
         return $storeList;
+    }
+
+    public static function addHeadOffice($contentId, $table, $pivotColumn)
+    {
+    	$headOffice = '0940';
+    	$banner_id = UserSelectedBanner::getBanner()->id;
+    	
+		if($banner_id == 1){
+        	$headOffice = '0940';
+	    }else if($banner_id == 2){
+	        $headOffice = 'A0940';
+	    }	
+
+	    \DB::table($table)->insert([
+	        $pivotColumn => $contentId,
+	        'store_id'   => $headOffice
+	    ]);    
+                
     }
 
 

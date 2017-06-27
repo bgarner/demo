@@ -142,7 +142,7 @@
                         </div>
 
                         <div class="ibox-content">
-                            <div class="feed-activity-list">
+                            <div class="feed-activity-list" style="padding-bottom: 10px">
 
                             @if (count($communications) > 0)
 
@@ -155,19 +155,27 @@
                                             <div>{!! $c->trunc !!}</div>
                                             <small class="text-muted"></small>
                                         </div>
+
+                                        
                                     </div>
                                 @endforeach
                             @else
                                  <div class="feed-element">
                                         <div>
-                                            <h4>{{("No Current Communications")}}</h4>
+                                            <h4>{{__("No Current Communications")}}</h4>
                                         </div>
                                 </div>
                             @endif
+                                <div class="pull-right" >
+                                    <small>
+                                        <a href="/{{ Request::segment(1) }}/communication">{{__("More Communications")}}</a>
+                                    </small>
+                                </div>
                             </div>
                         </div>
+                        
                     </div>
-
+                    
                 </div>
 
 

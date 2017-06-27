@@ -147,7 +147,8 @@ class Communication extends Model
             	$c->has_attachments = Communication::hasAttachments($c->id);
 
 			})->sortByDesc('send_at')
-				->take($maxToFetch);
+				->take($maxToFetch)
+				->values();
 		
 		return $comm;
 
@@ -220,7 +221,7 @@ class Communication extends Model
             $c->label_colour = Communication::getCommunicationCategoryColour($c->communication_type_id);
             $c->has_attachments = Communication::hasAttachments($c->id);
 
-        });
+        })->sortByDesc('send_at')->values();
 
         return $communications;
     }
