@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddAllDayToEventsTable' => $baseDir . '/database/migrations/2017_06_28_152315_add_all_day_to_events_table.php',
     'App\\Models\\Alert\\Alert' => $baseDir . '/app/Models/Alert/Alert.php',
     'App\\Models\\Alert\\AlertType' => $baseDir . '/app/Models/Alert/AlertType.php',
     'App\\Models\\Analytics\\Analytics' => $baseDir . '/app/Models/Analytics/Analytics.php',
@@ -95,6 +96,7 @@ return array(
     'App\\Models\\Validation\\AlertValidator' => $baseDir . '/app/Models/Validation/AlertValidator.php',
     'App\\Models\\Validation\\CommunicationValidator' => $baseDir . '/app/Models/Validation/CommunicationValidator.php',
     'App\\Models\\Validation\\ComponentValidator' => $baseDir . '/app/Models/Validation/ComponentValidator.php',
+    'App\\Models\\Validation\\CustomStoreGroupValidator' => $baseDir . '/app/Models/Validation/CustomStoreGroupValidator.php',
     'App\\Models\\Validation\\DashboardBrandingValidator' => $baseDir . '/app/Models/Validation/DashboardBrandingValidator.php',
     'App\\Models\\Validation\\DocumentValidator' => $baseDir . '/app/Models/Validation/DocumentValidator.php',
     'App\\Models\\Validation\\EventTypeValidator' => $baseDir . '/app/Models/Validation/EventTypeValidator.php',

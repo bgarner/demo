@@ -94,13 +94,18 @@
 
                                                 <label class="col-sm-2 control-label">Start &amp; End <span class="req">*</span></label>
 
-                                                <div class="col-sm-10">
+                                                <div class="col-sm-5">
                                                     <div class="input-daterange input-group" id="datepicker">
                                                         <input type="text" class="input-sm form-control datetimepicker-start" name="start" id="start" value="{{ $event->start }}" />
                                                         <span class="input-group-addon">to</span>
                                                         <input type="text" class="input-sm form-control datetimepicker-end" name="end" id="end" value="{{ $event->end }}" />
                                                     </div>
                                                 </div>
+                                                @if($event->all_day == 1)
+                                                    <label class="col-sm-2 control-label">All Day Event &nbsp;<input type="checkbox" class="" value="" id="all-day" name="all-day" checked /></label>
+                                                @else
+                                                    <label class="col-sm-2 control-label">All Day Event &nbsp;<input type="checkbox" class="" value="" id="all-day" name="all-day" /></label>
+                                                @endif
                                         </div>
 
                                         <div class="form-group"><label class="col-sm-2 control-label">Description</label>
@@ -127,7 +132,7 @@
                                             </div>
 
                                         </div>
-                                        
+
                                     </form>
 
 
@@ -138,14 +143,14 @@
                                 <div class="ibox-title">
                                     <h5> Attachments </h5>
                                     <div class="ibox-tools">
-                                        
+
                                         <div id="add-more-attachments" class="btn btn-primary btn-outline col-md-offset-8" role="button" ><i class="fa fa-plus"></i> Add More Attachments</div>
                                     </div>
                                 </div>
                                 <div class="ibox-content">
                                     <div class="form-group">
-                                                                        
-                                            
+
+
                                                 <table class="table table-hover event-attachments-table">
                                                     <thead>
                                                         <tr>
@@ -156,22 +161,22 @@
                                                     </thead>
                                                     <tbody>
                                                         @foreach($event_attachments as $attachment)
-                                                        
+
                                                         <tr class="event-attachments">
                                                             <td class="event-attachmentname" data-folderid = {{$attachment->global_folder_id}}><i class="fa fa-folder-o"></i> {{$attachment->name}} </td>
                                                             <td class="attachment-updated"> {{$attachment->updated_at}} </td>
                                                             <td><a data-folder-id="{{ $attachment->global_folder_id }}" id="folder{{$attachment->global_folder_id}}" class="remove-attachment btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>
                                                         </tr>
-                                                        
+
                                                         @endforeach
 
                                                     </tbody>
                                                 </table>
-                                            
-                                            
+
+
 
                                     </div>
-                                  
+
                                     <div id="attachments-staged-to-remove">
 
                                     </div>
@@ -179,7 +184,7 @@
                                 </div>
 		                    </div>
 
-                           
+
                             <div class="form-group">
                                 <div class="col-sm-4 col-sm-offset-2">
                                     <a class="btn btn-white" href="/admin/calendar"><i class="fa fa-close"></i> Cancel</a>
@@ -206,11 +211,11 @@
                             <div class="modal-body">
                                 <ul class="tree">
                                 @foreach ($folderStructure as $folder)
-                                
+
                                     @if (isset($folder["is_child"]) && ($folder["is_child"] == 0) )
-                                        
+
                                         @include('admin.package.folder-structure-partial', ['folderStructure' =>$folderStructure, 'currentnode' => $folder])
-                                        
+
                                     @endif
 
 
@@ -246,7 +251,7 @@
                         width:'75%'
                     });
 
-                    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});   
+                    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
 
 
                     CKEDITOR.replace('description', {

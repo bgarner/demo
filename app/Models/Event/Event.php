@@ -21,7 +21,7 @@ class Event extends Model
     use SoftDeletes;
     protected $table = 'events';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['banner_id', 'title', 'description', 'event_type', 'start', 'end', 'all_stores'];
+    protected $fillable = ['banner_id', 'title', 'description', 'event_type', 'start', 'end', 'all_day', 'all_stores'];
 
     public static function validateEvent($request)
     {
@@ -62,7 +62,8 @@ class Event extends Model
             'event_type' => $request['event_type'],
             'description' => $desc,
             'start' => $request['start'],
-            'end' => $request['end']
+            'end' => $request['end'],
+            'all_day' => $request['allDay']
 
 
     	   ]);
@@ -87,6 +88,7 @@ class Event extends Model
         $event->description = preg_replace('/\n+/', '', $request['description']);
         $event->start = $request['start'];
         $event->end = $request['end'];
+        $event->all_day = $request['allDay'];
 
         $event->save();
 
@@ -177,15 +179,12 @@ class Event extends Model
                         $attachments = EventAttachment::getEventAttachments($event->id);
                         $attachment_link_string = "";
                         foreach ($attachments as $a) {
-
                             $attachment_link_string .= "<a href='/".$store_id."/document#!/".$a->id."'>". $a->name ."</a><br>";
-
                         }
-
                         $event->attachment = $attachment_link_string;
                     });
 
-      return $allEvents;
+        return $allEvents;
     }
 
      public static function getListofEventsByStoreAndMonth($storeNumber, $yearMonth)
