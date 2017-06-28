@@ -55,38 +55,40 @@
 
 		                            <div class="table-responsive">
 
-										<table class="table table-hover issue-tracker">
+										<table class="table datatable">
+                                            <thead>
+        										<tr>
+        											<td>id</td>
+        											<td>Title</td>
+        											<td>Description</td>
+        											<td>Start</td>
+        											<td>End</td>
+        											<td></td>
 
-										<tr>
-											<td>id</td>
-											<td>Title</td>
-											<td>Description</td>
-											<td>Start</td>
-											<td>End</td>
-											<td></td>
+        										</tr>
+                                            </thead>
 
-										</tr>
-										@foreach($events as $event)
-										<tr>
+                                            <tbody>
+    										@foreach($events as $event)
+    										<tr>
 
 
-											<td>{{ $event->id }}</td>
-											<td><a href="/admin/calendar/{{ $event->id }}/edit">{{ $event->title }}</a></td>
-											<td>{{ mb_strimwidth($event->description, 0, 50, "...") }}</td>
-											<td>{{ $event->start }}</td>
-											<td>{{ $event->end }}</td>
+    											<td>{{ $event->id }}</td>
+    											<td><a href="/admin/calendar/{{ $event->id }}/edit">{{ $event->title }}</a></td>
+    											<td>{{ mb_strimwidth($event->description, 0, 50, "...") }}</td>
+    											<td>{{ $event->start }}</td>
+    											<td>{{ $event->end }}</td>
 
-											<td>
+    											<td>
 
-												<a data-event="{{ $event->id }}" id="event{{$event->id}}" class="event-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+    												<a data-event="{{ $event->id }}" id="event{{$event->id}}" class="event-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 
-											</td>
-										</tr>
-										@endforeach
-
+    											</td>
+    										</tr>
+    										@endforeach
+                                            <tbody>
 										</table>
 
-										{!! $events->render() !!}
 
 		                            </div>
 		                        </div>
@@ -108,6 +110,20 @@
 				            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				        }
 					});
+
+                    $(".datatable").DataTable({
+                        pageLength: 50,
+            			responsive: true,
+            			fixedHeader: true,
+                        "columns": [
+                            null,
+                            { "width": "25%" },
+                            null,
+                            null,
+                            null,
+                            { "orderable": false, "searchable": false }
+                        ]
+                    });
 
 				</script>
 
