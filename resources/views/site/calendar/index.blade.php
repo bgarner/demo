@@ -203,7 +203,7 @@
                 {
                     // {{ $event->event_id }}
                     title: "{{ $event->title }}",
-                    @if( $event->all_day == 1)
+                    @if( $event->all_day == 0)
                     allDay: false,
                     @else
                     allDay: true,

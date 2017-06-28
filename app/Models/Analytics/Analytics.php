@@ -98,12 +98,7 @@ class Analytics extends Model
             $c->unreadCount = $targetCount - count($openCount);
             $c->readPerc = round(( count($openCount) / $targetCount ) * 100);
         }
-    	//figure out what stores opened it
 
-    	//calculate a percentage
-
-    	//format a list of stores +/-
-       //dd($comms);
        return $comms;
     }
 
@@ -146,7 +141,7 @@ class Analytics extends Model
                     $urgentnotice = Urgentnotice::find($a->resource_id);
                     $icon = "fa-bolt";
                     $title = $urgentnotice['title'];
-                    break;                    
+                    break;
 
                 case "video":
                     $video = Video::find($a->resource_id);
@@ -158,14 +153,14 @@ class Analytics extends Model
                     $playlist = Playlist::find($a->resource_id);
                     $icon = "fa-list";
                     $title = $playlist['title'];
-                    break;                    
-                
+                    break;
+
                 case "external_url":
                     $quicklinks = Quicklinks::find($a->resource_id);
                     $icon = "fa-link";
                     $title = $quicklinks['link_name'];
                     break;
-                
+
                 default:
                     $title = "";
                     $icon ="";
@@ -174,7 +169,7 @@ class Analytics extends Model
 
             $a->title = $title;
             $a->icon = $icon;
-            $a->since = Utility::getTimePastSinceDate($a->created_at); 
+            $a->since = Utility::getTimePastSinceDate($a->created_at);
             if($a->device == "Android"){
                 $a->device = "Tablet";
             }

@@ -89,13 +89,18 @@
 
                                                 <label class="col-sm-2 control-label">Start &amp; End <span class="req">*</span></label>
 
-                                                <div class="col-sm-10">
+                                                <div class="col-sm-5">
                                                     <div class="input-daterange input-group" id="datepicker">
                                                         <input type="text" class="input-sm form-control datetimepicker-start" name="start" id="start" value="" />
                                                         <span class="input-group-addon">to</span>
                                                         <input type="text" class="input-sm form-control datetimepicker-end" name="end" id="end" value="" />
                                                     </div>
                                                 </div>
+
+                                                <label class="col-sm-2 control-label">All Day Event &nbsp;<input type="checkbox" class="" value="1" id="all-day" name="all-day" /></label>
+
+
+
                                         </div>
 
                                         <div class="form-group"><label class="col-sm-2 control-label">Description</label>
@@ -156,11 +161,11 @@
                         <div class="modal-body">
                             <ul class="tree">
                             @foreach ($folderStructure as $folder)
-                            
+
                                 @if (isset($folder["is_child"]) && ($folder["is_child"] == 0) )
-                                    
+
                                     @include('admin.package.folder-structure-partial', ['folderStructure' =>$folderStructure, 'currentnode' => $folder])
-                                    
+
                                 @endif
 
 
@@ -206,7 +211,7 @@
                     });
 
 
-                    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});   
+                    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
 
                     CKEDITOR.replace('description', {
                         filebrowserUploadUrl: "{{route('utilities.ckeditorimages.store',['_token' => csrf_token() ])}}"
