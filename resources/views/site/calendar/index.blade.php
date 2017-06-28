@@ -186,6 +186,7 @@
                 right: 'month,agendaWeek,agendaDay,list'
             },
             defaultDate: today,
+            firstDay: 1,
             editable: true,
             eventDurationEditable: false,
             eventLimit: true, // allow "more" link when too many events
