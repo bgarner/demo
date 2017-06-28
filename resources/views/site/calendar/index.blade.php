@@ -187,6 +187,13 @@
             },
             defaultDate: today,
             firstDay: 1,
+            weekNumbers: true,
+
+            weekNumberCalculation: function(moment){
+                moment.subtract(4, 'weeks');
+                return moment.week();
+            },
+            //weekNumbersWithinDays:true,
             editable: true,
             eventDurationEditable: false,
             eventLimit: true, // allow "more" link when too many events
