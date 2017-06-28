@@ -177,15 +177,12 @@ class Event extends Model
                         $attachments = EventAttachment::getEventAttachments($event->id);
                         $attachment_link_string = "";
                         foreach ($attachments as $a) {
-
                             $attachment_link_string .= "<a href='/".$store_id."/document#!/".$a->id."'>". $a->name ."</a><br>";
-
                         }
-
                         $event->attachment = $attachment_link_string;
                     });
 
-      return $allEvents;
+        return $allEvents;
     }
 
      public static function getListofEventsByStoreAndMonth($storeNumber, $yearMonth)

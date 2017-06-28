@@ -197,10 +197,17 @@
                 $("#modalBody").append(event.attachment);
                 $('#fullCalModal').modal();
             },
+
             events: [
                 @foreach($events as $event)
                 {
+                    // {{ $event->event_id }}
                     title: "{{ $event->title }}",
+                    @if( $event->all_day == 1)
+                    allDay: false,
+                    @else
+                    allDay: true,
+                    @endif
                     start: "{{ $event->start }}",
                     end: "{{ $event->end }}",
                     backgroundColor: "#{{ $event->background_colour }}",

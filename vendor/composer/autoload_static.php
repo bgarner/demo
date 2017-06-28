@@ -467,6 +467,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
     );
 
     public static $classMap = array (
+        'AddAllDayToEventsTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_28_152315_add_all_day_to_events_table.php',
         'App\\Models\\Alert\\Alert' => __DIR__ . '/../..' . '/app/Models/Alert/Alert.php',
         'App\\Models\\Alert\\AlertType' => __DIR__ . '/../..' . '/app/Models/Alert/AlertType.php',
         'App\\Models\\Analytics\\Analytics' => __DIR__ . '/../..' . '/app/Models/Analytics/Analytics.php',
@@ -556,6 +557,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'App\\Models\\Validation\\AlertValidator' => __DIR__ . '/../..' . '/app/Models/Validation/AlertValidator.php',
         'App\\Models\\Validation\\CommunicationValidator' => __DIR__ . '/../..' . '/app/Models/Validation/CommunicationValidator.php',
         'App\\Models\\Validation\\ComponentValidator' => __DIR__ . '/../..' . '/app/Models/Validation/ComponentValidator.php',
+        'App\\Models\\Validation\\CustomStoreGroupValidator' => __DIR__ . '/../..' . '/app/Models/Validation/CustomStoreGroupValidator.php',
         'App\\Models\\Validation\\DashboardBrandingValidator' => __DIR__ . '/../..' . '/app/Models/Validation/DashboardBrandingValidator.php',
         'App\\Models\\Validation\\DocumentValidator' => __DIR__ . '/../..' . '/app/Models/Validation/DocumentValidator.php',
         'App\\Models\\Validation\\EventTypeValidator' => __DIR__ . '/../..' . '/app/Models/Validation/EventTypeValidator.php',
