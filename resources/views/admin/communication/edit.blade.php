@@ -134,59 +134,6 @@
 										</div>
 								</div>
 
-								<!-- <div class="existing-files row"> -->
-									<div class="form-group">
-
-										<label class="col-sm-2 control-label">Attachments</label>
-										<div class="existing-files-container col-md-10">
-											@include('admin.communication.document-partial', ['communication_documents'=>$communication_documents])
-
-
-										</div>
-
-
-									</div>
-								<!-- </div> -->
-								<div id="files-staged-to-remove"></div>
-								<div id="files-selected" class="row"></div>
-
-								<!-- <div class="existing-folders row"> -->
-									{{-- <div class="form-group">
-											<label class="col-sm-2 control-label">Packages Attached</label>
-											<div class="existing-folders-container col-md-10" >
-
-												@foreach($communication_packages as $package)
-												<div class="row">
-													<div class="communication_packages col-md-8">
-														<div class="feature-packagename" data-folderid = {{$package->id}}> <i class="fa fa-folder-o"></i> {{$package->package_name}} </div>
-
-														<div class="package-timestamp"> Updated At : {{$package->updated_at}}</div>
-													</div>
-
-
-													<a data-package-id="{{ $package->id }}" id="package{{$package->id}}" class="remove-package btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
-												</div>
-												@endforeach
-
-
-											</div>
-
-										</div> --}}
-								<!-- </div>	 -->
-								<div id="packages-selected" class="row"></div>
-								<div id="packages-staged-to-remove"></div>
-
-
-
-
-
-								<div class="form-group">
-									<div class="col-sm-10 col-sm-offset-2">
-										<div id="add-documents" class="btn btn-primary btn-outline"><i class="fa fa-plus"></i> Add Documents</div>
-									{{-- <div id="add-packages" class="btn btn-primary btn-outline"><i class="fa fa-plus"></i> Add Packages</div>	--}}
-									</div>
-								</div>
-
 								<div class="form-group">
 
 						                <label class="col-sm-2 control-label">Target Stores</label>
@@ -227,25 +174,54 @@
 		                                        	{!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
 		                                    	@endif
 						                </div>
-
 						        </div>
-
-								<div class="hr-line-dashed"></div>
-								<div class="form-group">
-									<div class="col-sm-10 col-sm-offset-2">
-										<a class="btn btn-white" href="/admin/communication"><i class="fa fa-close"></i> Cancel</a>
-										<button class="btn btn-primary communication-update"><i class="fa fa-check"></i> Update Communication</button>
-						            </div>
-						        </div>
-
+								
 							</form>
 
 
 
 
                         </div> <!--  ibox content closes-->
+                        
 
                     </div><!-- ibox closes -->
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <h5>Documents</h5>
+
+                            <div class="ibox-tools">
+                            	
+                        	</div>
+                        
+                            
+                        </div>
+
+                        <div class="ibox-content">
+                      
+			                <div class="input-group">
+								<input type="text" class="form-control" name="seach_document" id="search_document" value="" placeholder="Search for document..."/>
+								<span class="input-group-btn" >
+									<div class="btn btn-primary" onclick="showDocumentListing()" >
+									<i class="fa fa-plus"></i> Add documents</div>
+								</span>
+						    </div>
+						    <div id="document-list"></div>
+							
+							<div id="files-selected">
+                        		@include('admin.communication.document-partial', ['communication_documents'=>$communication_documents])
+							</div>
+							<div id="files-staged-to-remove"></div>
+                                
+                        </div>
+                        
+                    </div><!-- ibox closes-->
+                    <div class="form-group">
+						<div class="col-sm-10 col-sm-offset-2">
+							<a class="btn btn-white" href="/admin/communication"><i class="fa fa-close"></i> Cancel</a>
+							<button class="btn btn-primary communication-update"><i class="fa fa-check"></i> Update Communication</button>
+			            </div>
+			        </div>
+
                 </div> <!-- col-lg-12 closes -->
             </div><!-- row closes -->
 
@@ -312,15 +288,14 @@
 
 	    @include('site.includes.bugreport')
 
-		<!-- // <script type="text/javascript" src="/js/custom/admin/features/editFeature.js"></script> -->
 		<script type="text/javascript" src="/js/custom/admin/communications/editCommunication.js"></script>
+		<script type="text/javascript" src="/js/custom/admin/communications/documentSelector.js"></script>
 		<script type="text/javascript" src="/js/vendor/moment.js"></script>
 		<script type="text/javascript" src="/js/vendor/bootstrap-datetimepicker.min.js"></script>
 		<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 		<script type="text/javascript" src="/js/custom/tree.js"></script>
 		<script type="text/javascript" src="/js/custom/datetimepicker.js"></script>
-		<!-- <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script> -->
 		<script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>
 
 

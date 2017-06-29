@@ -24,37 +24,6 @@ $("#allStores").change(function(){
 
 
 
-$("#add-documents").click(function(){
-	$("#document-listing").modal('show');
-});
-$("#add-packages").click(function(){
-	$("#package-listing").modal('show');	
-});
-
-
-$('body').on('click', '#attach-selected-files', function(){
-	$("#files-selected").empty();
-	$("#files-selected").append('<label class= "control-label col-sm-2 "> Documents attached</label>');
-	$('input[name^="package_files"]').each(function(){
-		if($(this).is(":checked")){
-			$("#files-selected").append('<div class="selected-files col-sm-10 col-sm-offset-2" data-fileid='+ $(this).val() +'>'+$(this).attr("data-filename")+'</div>')
-		}
-	});
-});
-
-$('body').on('click', '#attach-selected-packages', function(){
-
-	console.log('attach selected-packages');
-	$("#packages-selected").empty();
-	$("#packages-selected").append('<label class= "control-label col-sm-2 ">Packages Attached</label>');
-	$('input[name^="packages"]:checked').each(function(){
-		
-			$("#packages-selected").append('<div class="selected-packages col-sm-10 col-sm-offset-2" data-packageid='+ $(this).val() +'>'+ $(this).attr("data-package-name")+'</div>')		
-		
-		
-	});
-});
-
 
 
 $(document).on('click','.communication-create',function(){
@@ -80,7 +49,7 @@ $(document).on('click','.communication-create',function(){
 
 	}
 
-	$(".selected-files").each(function(){
+	$(".communication-documents").each(function(){
 		communication_documents.push($(this).attr('data-fileid'));
 	});
 	
