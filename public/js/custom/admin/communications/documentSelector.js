@@ -26,6 +26,9 @@ $('#search_document').on('keyup', function(){
 
 });
 
+var showDocumentListing = function(){                
+    $("#document-listing").modal('show');
+}
 
 $('#search_document').on('blur', function(){
 	setTimeout(function(){
@@ -103,4 +106,10 @@ $("body").on('click', ".remove-staged-file", function(){
     $(this).closest('.communication-documents').fadeOut(200);
     $(this).closest('.communication-documents').remove();
 
+});
+
+$('body').on('click', ".remove-file", function(){
+    var document_id = $(this).attr('data-document-id');
+    $(this).closest('.communication-documents').fadeOut(200).remove();
+    $("#files-staged-to-remove").append('<div class="remove_document" data-documentid='+ document_id +'>')
 });

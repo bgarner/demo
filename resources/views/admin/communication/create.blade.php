@@ -119,37 +119,6 @@
 										</div>
 
 
-
-										<!-- <div class="form-group">
-											<div class="col-sm-10 col-sm-offset-2"> -->
-												<!-- <div id="add-documents" class="btn btn-primary btn-outline"><i class="fa fa-plus"></i> Add documents</div> -->
-
-												
-								                <!-- <span id="add-documents" class="input-group-btn">
-								                	<i class="fa fa-plus"></i> Add documents
-								                </span>
-
-
-								                <div class="input-group">
-													<input type="text" class="form-control" name="seach_document" id="search_document" value="" placeholder="Search for document..."/>
-													<span class="input-group-btn" >
-														<div class="btn btn-primary" onclick="showDocumentListing()" >
-														<i class="fa fa-plus"></i> Add documents</div>
-													</span>
-											    </div>
-												<div id="document-list"></div> -->
-
-
-											
-											<!-- </div>
-										</div> -->
-										<!-- <div class="form-group">
-											<div id="selected-files-container" class="hidden">
-												<label class= "control-label col-sm-2 "> Documents attached</label>
-												<div id="files-selected" ></div>
-											</div>
-											<div id="packages-selected"></div>
-										</div> -->
 										<div class="form-group">
 
 								                <label class="col-sm-2 control-label">Target Stores</label>
@@ -178,16 +147,9 @@
 										        	{!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
 								                </div>
 
-								        </div>
-
-
-										<!-- <div class="hr-line-dashed"></div> -->
-										
+								        </div>										
 
 									</form>
-
-
-
 
 		                        </div> <!-- ibox-content closes -->
 
@@ -205,9 +167,7 @@
 		                        </div>
 
 		                        <div class="ibox-content">
-		                        	<!-- <span id="add-documents" class="input-group-btn">
-					                	<i class="fa fa-plus"></i> Add documents
-					                </span> -->
+		                        	
 
 
 					                <div class="input-group">
@@ -219,13 +179,7 @@
 								    </div>
 								    <div id="document-list"></div>
 
-		                        	<!-- <div class="form-group"> -->
-										<!-- <div id="selected-files-container" class="hidden">
-											<label class= "control-label col-sm-2 "> Documents attached</label>
-											<div id="files-selected" ></div>
-										</div> -->
-										<!-- <div id="packages-selected"></div> -->
-									<!-- </div> -->
+		                        	
 
 									<div id="files-selected">
                                     	<table class="table table-hover communication-documents-table hidden ">
@@ -243,19 +197,6 @@
 		                                
 		                        </div>
 		                        
-								<!-- <div id="files-selected">
-                                	<table class="table table-hover feature-documents-table hidden ">
-                                		<thead>
-                                			<tr>
-                                				<td>Title</td>
-                                				<td></td>
-                                				<td>Action</td>
-                                			</tr>
-                                		</thead>
-                                		<tbody>
-                                		</tbody>
-                                	</table>
-                                </div> -->
 		                    </div><!-- ibox closes-->
 
 		                    <div class="form-group">
