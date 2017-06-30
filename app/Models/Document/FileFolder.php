@@ -40,4 +40,9 @@ class FileFolder extends Model
                         // ->where('document_target.deleted_at', null)
                         ->get()->pluck('document_id')->toArray();
     }
+
+    public static function updateDocumentFolder($id, $request)
+    {
+        return FileFolder::where('document_id', $id)->first()->update(['folder_id'=> $request->folder_id]);
+    }
 }

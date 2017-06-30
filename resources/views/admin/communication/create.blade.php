@@ -311,9 +311,7 @@
 		    // $("#add-documents").click(function(){
 		    // 	$("#document-listing").modal('show');
 		    // });
-		    var showDocumentListing = function(){
-		    	$("#document-listing").modal('show');
-		    }
+		    
 
 		    $("#add-packages").click(function(){
 		    	$("#package-listing").modal('show');
