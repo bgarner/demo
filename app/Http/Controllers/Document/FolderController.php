@@ -58,16 +58,17 @@ class FolderController extends Controller
 
         $folder = Folder::getFolderDescription($folder_id);
         $response = [];
-        $response["files"] = $documents;
+        // $response["files"] = $documents;
 
         if (isset($request['archives']) && $request['archives'] == true) {
             $archivedDocuments = Document::getArchivedDocumentsByStoreNumber($folder_id, $storeNumber);
-            foreach ($archivedDocuments as $archivedDocument) {
-                array_push($response["files"], $archivedDocument);
-            }
+            // foreach ($archivedDocuments as $archivedDocument) {
+                // array_push($response["files"], $archivedDocument);
+            $documents = $documents->merge($archivedDocuments);
+            // }
         }
         
-
+        $response["files"] = $documents;
         $response["folder"] = $folder;
         return $response;
     }

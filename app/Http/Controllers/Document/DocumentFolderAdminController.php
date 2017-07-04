@@ -13,6 +13,6 @@ class DocumentFolderAdminController extends Controller
     {
     	\Log::info($request->all());
     	FileFolder::updateDocumentFolder($id, $request);
-    	return Document::getFolderPathForDocument($id);
+    	return json_encode( ['path'=> Document::getFolderPathForDocument($id)]);
     }
 }

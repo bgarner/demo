@@ -34,8 +34,10 @@ class CommunicationTarget extends Model
                         'store_id'         => $store
                     ]);
                 }
-
-                Utility::addHeadOffice($id, 'communications_target', 'communication_id');
+                if(!in_array('0940', $target_stores)){
+                    Utility::addHeadOffice($id, 'communications_target', 'communication_id');    
+                }
+                
                 
             } 
             $communication = Communication::find($id);

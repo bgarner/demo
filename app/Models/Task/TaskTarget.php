@@ -38,7 +38,9 @@ class TaskTarget extends Model
 
 				} 
 			}
-			Utility::addHeadOffice($id, 'tasks_target', 'task_id');
+			if(!in_array('0940', $target_stores)){
+				Utility::addHeadOffice($id, 'tasks_target', 'task_id');
+			}
 			$task = Task::find($id);
         	$task->all_stores = 0;
         	$task->save();            

@@ -256,7 +256,9 @@ class UrgentNotice extends Model
                     ]);
 
                 }
-                Utility::addHeadOffice($id, 'urgent_notice_target', 'urgent_notice_id');
+                if(!in_array('0940', $target_stores)){
+                    Utility::addHeadOffice($id, 'urgent_notice_target', 'urgent_notice_id');
+                }
             }  
         }
         return;         
