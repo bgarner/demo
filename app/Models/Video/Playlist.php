@@ -148,7 +148,9 @@ class Playlist extends Model
                     'store_id' => $store
                     ]);    
             }
+            // if(!in_array('0940', $target_stores)){
             // Utility::addHeadOffice($id, 'playlist_target', 'playlist_id');
+            // }
         }  
         
         return;         

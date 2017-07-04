@@ -246,8 +246,9 @@ class ProductLaunch extends Model
 			}
 
 		}
-
-		Utility::addHeadOffice($productLaunch->id, 'productlaunch_target', 'productlaunch_id');
+		if(!in_array('0940', $stores)){
+			Utility::addHeadOffice($productLaunch->id, 'productlaunch_target', 'productlaunch_id');
+		}
 	}
 
 	public static function deleteProductLaunchTarget($productLaunch)

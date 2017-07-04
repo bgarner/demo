@@ -208,7 +208,7 @@ class Task extends Model
 						$task->prettyDueDate = Utility::prettifyDate($task->due_date);
 					});
 		$targetedTasks = Task::groupTaskStores($tasks);			
-		$targetedTasks = $targetedTasks->merge($allStoreTasks);
+		$targetedTasks = $targetedTasks->merge($allStoreTasks)->sortByDesc('created_at');
 		return $targetedTasks;
 	}
 

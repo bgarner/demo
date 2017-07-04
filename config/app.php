@@ -262,6 +262,7 @@ return [
         'App\Http\Controllers\Document\DocumentManagerController'               => 'Library',
         'App\Http\Controllers\Document\FolderAdminController'                   => 'Library',
         'App\Http\Controllers\Document\DocumentAdminController'                 => 'Library',
+        'App\Http\Controllers\Document\DocumentFolderAdminController'           => 'Library',
         'App\Http\Controllers\Alert\AlertAdminController'                       => 'Alerts and Notices',
         'App\Http\Controllers\UrgentNotice\UrgentNoticeAdminController'         => 'Alerts and Notices',
         'App\Http\Controllers\Video\VideoAdminController'                       => 'Videos',

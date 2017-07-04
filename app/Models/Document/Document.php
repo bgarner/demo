@@ -331,7 +331,6 @@ class Document extends Model
     {
 
         $now = Carbon::now()->toDatetimeString();
-
         $files = \DB::table('file_folder')
                     ->join('documents', 'file_folder.document_id', '=', 'documents.id')
                     ->join('document_target', 'document_target.document_id' , '=', 'documents.id')
@@ -340,10 +339,21 @@ class Document extends Model
                     ->where('documents.end', '!=', '0000-00-00 00:00:00')
                     ->where('document_target.store_id', strval($storeNumber))
                     ->where('documents.deleted_at', '=', null)
-                    // ->where('document_target.deleted_at', '=', null)
                     ->select('documents.*')
 
                     ->get();
+        // \Log::info(gettype($files));
+
+        $allStoreDocuments = \DB::table('file_folder')
+                    ->join('documents', 'file_folder.document_id', '=', 'documents.id')
+                    ->where('file_folder.folder_id', '=', $global_folder_id)
+                    ->where('documents.end', '<=', $now)
+                    ->where('documents.end', '!=', '0000-00-00 00:00:00')
+                    ->where('documents.all_stores', 1)
+                    ->where('documents.deleted_at', '=', null)
+                    ->select('documents.*')
+                    ->get();
+        $files = $files->merge($allStoreDocuments);
 
         if (count($files) > 0) {
             foreach ($files as $file) {
@@ -481,7 +491,9 @@ class Document extends Model
                         'store_id' => $store
                         ]);    
                 }
-                Utility::addHeadOffice($document->id, 'document_target', 'document_id');
+                if(!in_array('0940', $target_stores)){
+                    Utility::addHeadOffice($document->id, 'document_target', 'document_id');
+                }
 
             } 
         }
@@ -524,6 +536,7 @@ class Document extends Model
                             ->get();
 
         $documents = $targetedDocuments->merge($allStoreDocuments);
+
         return $documents;
     }
 

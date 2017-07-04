@@ -148,13 +148,18 @@ class DocumentAdminController extends Controller
             $alert_details = Alert::where('document_id', $id)->first();
         }
 
+        $folderStructure = FolderStructure::getNavigationStructure($banner->id);
+        $folderPath = Document::getFolderPathForDocument($id);
+
         return view('admin.document-meta.document-edit-meta-data')->with('document', $document)
                                                     ->with('banner', $banner)
                                                     ->with('banners', $banners)
                                                     ->with('storeList', $storeList)
                                                     ->with('target_stores', $target_stores)
                                                     ->with('alert_types', $alert_types ) 
-                                                    ->with('alert_details', $alert_details);
+                                                    ->with('alert_details', $alert_details)
+                                                    ->with('folderStructure', $folderStructure)
+                                                    ->with('folderPath', $folderPath);
     }
 
     /**
