@@ -71,7 +71,7 @@
                                     <label class="control-label col-sm-2"> Current Folder </label>
                                     <div class="col-sm-10">
                                         <div class="input-group">
-                                            <input type="text" id="folder-path" value="{{$folderPath}}" class="input-sm form-control">
+                                            <span id="folder-path" class="input-sm form-control">{{$folderPath}}</span>
                                             <span class="btn input-group-addon" id="folder-select">Change</span>
                                         </div>
                                     </div>

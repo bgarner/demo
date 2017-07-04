@@ -32,7 +32,8 @@ var updateDocumentFolder = function(folder_id){
 		    data: { folder_id : folder_id },
 		    success: function(data) {
 		    	var result = JSON.parse(data);
-				swal("Nice!", "Document has been moved", "success");
+				$("#folder-path").text( result.path);
+				swal("Nice!", "Document has been updated", "success");
 		    }
 		});
 }

@@ -62,10 +62,17 @@ class FolderController extends Controller
 
         if (isset($request['archives']) && $request['archives'] == true) {
             $archivedDocuments = Document::getArchivedDocumentsByStoreNumber($folder_id, $storeNumber);
-            // foreach ($archivedDocuments as $archivedDocument) {
-                // array_push($response["files"], $archivedDocument);
-            $documents = $documents->merge($archivedDocuments);
-            // }
+            if(count($archivedDocuments)>0){
+                
+                if(count($documents)>0){
+                    $documents = $documents->merge($archivedDocuments);
+                }
+                else{
+                    $documents = $archivedDocuments;
+                }
+                
+            }
+            
         }
         
         $response["files"] = $documents;
