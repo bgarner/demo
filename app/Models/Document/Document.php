@@ -299,6 +299,24 @@ class Document extends Model
 
     public static function replaceDocument($request, $id)
     {   
+
+        //validate document type
+        $v = \Validator::make(
+                    ['filename' => $request->file('document')], 
+                    ['filename'    => 'required|mimes:jpeg,bmp,png,pdf,xls,xlsx,xlsm,webm']
+                );
+        
+        $response = ['validation_result' => 'true'] ;
+
+        if ($v->fails())
+        {
+            $response =  ['validation_result' => 'false', 'errors' => $v->errors()];
+            if($response['validation_result'] == 'false'){
+                return $response;    
+            }
+            
+        }
+
         $metadata = Document::getDocumentMetaData($request->file('document'));
 
         $directory = public_path() . '/files';

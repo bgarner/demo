@@ -27,24 +27,18 @@ $("body").on("click", ".fileinput-upload-button", function(e) {
             success: function(result) {
                 console.log(result); 
                 if(result.validation_result == 'false') {
-                    // var errors = result.errors;
-                    // if(errors.hasOwnProperty("background")) {
-                    //     $.each(errors.background, function(index){
-                    //         $(".file-preview").parent().parent().append('<div class="req">' + errors.background[index]  + '</div>'); 
-                    //     });   
-                    // }
+                    var errors = result.errors;
+                    if(errors.hasOwnProperty("filename")) {
+                        $.each(errors.filename, function(index){
+                            $(".file-preview").append('<div class="req">' + errors.filename[index]  + '</div>'); 
+                        });   
+                    }
                 }
 
                 else{
                   console.log(result);
                   swal("Nice!", "'" + $("#title").val() +"' has been replaced", "success");   
                   $('.fileinput-remove').trigger( "click" ); //reset the form 
-                      
-                    //   $.get( "/admin/document/"+document_id, { },
-                    //     function(data) {
-                    //       $("#background-preview").attr("src", "/images/dashboard-banners/"+data);
-                    //     }
-                    // );   
                 }
                 
             }
