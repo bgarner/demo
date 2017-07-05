@@ -268,6 +268,8 @@ class Document extends Model
 
     public static function updateDocument($request, $id) {
 
+        \Log::info($request->all());
+
         $document       = Document::find($id);
         $title          = $request->get('title');
         $description    = $request->get('description');
@@ -293,6 +295,51 @@ class Document extends Model
 
         return $document;
 
+    }
+
+    public static function replaceDocument($request, $id)
+    {   
+
+        //validate document type
+        $v = \Validator::make(
+                    ['filename' => $request->file('document')], 
+                    ['filename'    => 'required|mimes:jpeg,bmp,png,pdf,xls,xlsx,xlsm,webm']
+                );
+        
+        $response = ['validation_result' => 'true'] ;
+
+        if ($v->fails())
+        {
+            $response =  ['validation_result' => 'false', 'errors' => $v->errors()];
+            if($response['validation_result'] == 'false'){
+                return $response;    
+            }
+            
+        }
+
+        $metadata = Document::getDocumentMetaData($request->file('document'));
+
+        $directory = public_path() . '/files';
+        $uniqueHash = sha1(time() . time());
+        $filename  = $metadata["modifiedName"] . "_" . $uniqueHash . "." . $metadata["originalExtension"];
+
+        $upload_success = $request->file('document')->move($directory, $filename); //move and rename file
+
+        // $banner = UserSelectedBanner::getBanner();
+
+        if ($upload_success) {
+
+            $document = Document::find($id);
+            $documentdetails = array(
+                'original_filename' => $metadata["originalName"],
+                'filename'          => $filename,
+                'original_extension'=> $metadata["originalExtension"]
+            );
+
+            $document->update($documentdetails);
+        }
+
+        return $document;
     }
 
     public static function getRecentDocuments($banner_id, $days)

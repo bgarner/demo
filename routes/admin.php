@@ -13,6 +13,7 @@ Route::post('/admin/document/add-meta-data', 'Document\DocumentAdminController@u
 Route::get('/admin/document/manager',  ['middleware' => 'admin.auth', 'uses' =>'Document\DocumentManagerController@index' ] );
 
 Route::resource('/admin/document', 'Document\DocumentAdminController');
+Route::post('/admin/document/{id}', 'Document\DocumentAdminController@replaceDocument');
 Route::resource('/admin/documentfolder', 'Document\DocumentFolderAdminController');
 
 //FOLDERS
