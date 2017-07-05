@@ -73,7 +73,7 @@ class DocumentAdminController extends Controller
      */
     public function store(Request $request)
     {
-        Document::storeDocument($request);    
+        Document::storeDocument($request);
     }
 
     /**
@@ -174,6 +174,22 @@ class DocumentAdminController extends Controller
         return Document::updateDocument($request, $id);
     
     }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  Request  $request
+     * @param  int  $id
+     * @return Response
+     */
+    public function replaceDocument(Request $request, $id)
+    {
+        
+        return Document::replaceDocument($request, $id);
+    
+    }
+
+
 
     /**
      * Remove the specified resource from storage.

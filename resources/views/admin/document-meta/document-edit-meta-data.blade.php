@@ -5,6 +5,7 @@
     @section('title', 'Document')
     @include('admin.includes.head')
     <link rel="stylesheet" type="text/css" href="/css/custom/tree.css">
+    <link href="/js/plugins/fileinput/fileinput.css" rel="stylesheet">
   <meta name="csrf-token" content="{!! csrf_token() !!}"/>
 </head>
 
@@ -45,20 +46,20 @@
     </div>
 
     <div class="wrapper wrapper-content  animated fadeInRight">
-      <div class="row">
-          <div class="col-lg-12">
-              <div class="ibox">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox">
 
-                  <div class="ibox-title">
-                      <h5>Document details</h5>
+                    <div class="ibox-title">
+                        <h5>Document Details</h5>
 
-                      <div class="ibox-tools">
+                        <div class="ibox-tools">
 
                           
-                      </div>
-                  </div>
-                  <div class="ibox-content">
-                     <form method="get" class="form-horizontal" >
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                            <form method="get" class="form-horizontal" >
                                 <input type="hidden" name="documentID" id="documentID" value="{{ $document->id }}">
                                 <input type="hidden" name="banner_id" value="{{$banner->id}}">
 
@@ -72,7 +73,7 @@
                                     <div class="col-sm-10">
                                         <div class="input-group">
                                             <span id="folder-path" class="input-sm form-control">{{$folderPath}}</span>
-                                            <span class="btn input-group-addon" id="folder-select">Change</span>
+                                            <span class="btn input-group-addon" id="folder-select"><i class="fa fa-folder-open"></i> Change</span>
                                         </div>
                                     </div>
                                 </div>
@@ -130,7 +131,7 @@
                                             {!! Form::select('alert_type', $alert_types, null ,['class'=> 'form-control', 'id'=>'alert_type']) !!}
                                         @endif
                                     </div>
-                              </div>
+                                </div>
 
                               
 
@@ -142,10 +143,54 @@
 
                                     </div>
                                 </div>
-                        </form>
+                            </form>
                     </div><!-- ibox content closes -->
                      
-              </div> <!-- ibox closes -->
+            </div> <!-- ibox closes -->
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>Update Document</h5>
+
+                    <div class="ibox-tools">
+                        
+                    </div>
+                
+                    
+                </div>
+
+                <div class="ibox-content">
+              
+                   <!--  <div class="form-group">
+
+
+                        <input type="file" name="document" class="file hidden">
+                        <div class="input-group col-xs-12">
+                           
+                            <input type="text" class="form-control" disabled placeholder="Upload Document">
+                            <span class="input-group-btn">
+                                <button class="browse btn btn-primary" type="button"><i class="fa fa-search"></i> Browse</button>
+                            </span>
+                        </div>
+                    </div> -->
+
+
+
+                    <div class="row">
+                         <label class="control-label col-sm-2"> New Document </label>
+                        <div class="col-sm-10">
+                            
+                            <input id="updatedDocument" name="updatedDocument[]" type="file" multiple class="file-loading">
+                            <input type="hidden" value="{{ $document->id }}" name="document_id" id="document_id">
+
+                        </div>
+                        
+                    </div>
+                    
+                        
+                </div>
+                
+            </div><!-- ibox closes-->
 
 
 
@@ -199,16 +244,20 @@
         </script>
         <script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>  
         <script type="text/javascript" src="/js/custom/tree.js"></script>
+        <script src="/js/plugins/fileinput/fileinput.js"></script>
         <script type="text/javascript">
             $(".chosen").chosen({
               width:'75%'
             });
             $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
+
+            $("#updatedDocument").fileinput();
                       
         </script>
         <script type="text/javascript" src="/js/custom/admin/alerts/createAlert.js"></script>
         <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
         <script type="text/javascript" src="/js/custom/admin/documents/changeFolder.js"></script>
+        <script type="text/javascript" src="/js/custom/admin/documents/replaceDocument.js"></script>
         @include('site.includes.bugreport')
 
 
