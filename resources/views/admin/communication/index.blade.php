@@ -57,7 +57,9 @@
 								<table class="table datatable">
 									<thead>
 										<tr>
+											<td>Id</td>	
 											<td>Subject</td>
+											<td>Type</td>
 											<td>Start</td>
 											<td>Action</td>
 										</tr>
@@ -65,9 +67,9 @@
 									<tbody>
 									@foreach($communications as $communication)
 									<tr>
-
+										<td>{{ $communication->id }}</td>
 										<td>{{ $communication->subject }}</td>
-										
+										<td><span class="label label-sm label-{{$communication->label_colour}}">{{$communication->label_name}}</span></td>
 										<td data-order="{{$communication->send_at}}">{{ $communication->prettySentAtDate }}</td>
 										
 										<td>
@@ -100,12 +102,23 @@
 	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 	        }
 		});
-		$(".datatable").DataTable({
-            pageLength: 50,
-			responsive: true,
-			fixedHeader: true
 
-        });
+        $(".datatable").dataTable( 
+        	{
+    			"order": [[ 0, 'desc' ]],
+			
+				"columns": [	
+				    { "visible": false },
+				    { "width": "45%" },
+				    null,
+				    null,
+				    { "width" : "10%" , "sortable" : false}
+				  ],
+				pageLength: 50,
+				responsive: true,
+				fixedHeader: true
+			}
+		);
 
 	</script>
 

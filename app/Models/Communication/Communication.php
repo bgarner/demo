@@ -80,6 +80,8 @@ class Communication extends Model
 		$communicatons = Communication::where('banner_id', $banner_id)->get();
 		foreach($communicatons as $c){
 			$c->prettySentAtDate = Utility::prettifyDate( $c->send_at );
+			$c->label_name = Communication::getCommunicationCategoryName($c->communication_type_id);
+            $c->label_colour = Communication::getCommunicationCategoryColour($c->communication_type_id);
 		}
 		return $communicatons;
 	}
