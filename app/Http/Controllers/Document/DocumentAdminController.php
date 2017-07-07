@@ -92,6 +92,11 @@ class DocumentAdminController extends Controller
         $parent = $request->get('parent');
         
         $tags = Tag::where('banner_id', $banner->id)->pluck('name', 'id');
+
+        $alert_types = ["" =>'Select one'];
+
+        $alert_types = \DB::table('alert_types')->pluck('name', 'id')->toArray();
+
         $documents = Document::where('upload_package_id', $package)->get();
 
         return view('admin.document-meta.document-add-meta-data')
@@ -99,7 +104,8 @@ class DocumentAdminController extends Controller
                 ->with('banner', $banner)
                 ->with('banners', $banners)
                 ->with('folder_id', $parent)
-                ->with('tags', $tags);
+                ->with('tags', $tags)
+                ->with('alert_types', $alert_types );
             
     }    
 
