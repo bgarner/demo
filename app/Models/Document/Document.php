@@ -263,11 +263,16 @@ class Document extends Model
 
         $global_parent_folder_id = FileFolder::where('document_id', $id)->first()->folder_id;
         Folder::updateTimestamp($global_parent_folder_id, $document->updated_at );
+        $is_alert = $request->get('is_alert');
+        if( $is_alert == 1) {
+            Alert::markDocumentAsAlert($request, $id);
+        }
 
     }
 
     public static function updateDocument($request, $id) {
 
+        
         \Log::info($request->all());
 
         $document       = Document::find($id);
