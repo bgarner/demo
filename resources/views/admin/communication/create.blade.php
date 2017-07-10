@@ -278,10 +278,8 @@
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 		<script type="text/javascript" src="/js/custom/admin/communications/addCommunication.js"></script>
 		<script type="text/javascript" src="/js/custom/admin/communications/documentSelector.js"></script>
-		<!-- <script type="text/javascript" src="/js/custom/createpackage.js"></script> -->
 		<script type="text/javascript" src="/js/custom/tree.js"></script>
 		<script type="text/javascript" src="/js/custom/datetimepicker-with-default-time.js"></script>
-		<!-- <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script> -->
 		<script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>
 
 		<script type="text/javascript">
