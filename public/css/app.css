@@ -8545,3 +8545,7 @@ body.md-skin {
   bottom: 10px;
   width: 100%;
 }
+
+.edit_multiple_documents .dropdown-item{
+  line-height: 30px;
+}

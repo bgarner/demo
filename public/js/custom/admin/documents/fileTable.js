@@ -78,6 +78,7 @@
 			if(data.files.length>0) {
 				$('#file-table').append('<thead>'+
 										'<tr>'+
+										'<th><input type="checkbox" id="select_all" /></th>'+
 										'<th></th>'+
 										'<th> Title </th>'+
 										// ' <th> Description </th>'+
@@ -90,6 +91,7 @@
 				$('#file-table').append('<tbody>');
 				_.each(files, function(i){
 					$('#file-table').append('<tr>'+
+												'<td><input type="checkbox" class="select_document" data-fileid="'+i.id+'"/></td>'+
 												'<td>'+ i.is_alert +'</td>'+
 												'<td>'+ i.link_with_icon +'</td>'+
 												// ' <td>'+ i.description +'</td>'+

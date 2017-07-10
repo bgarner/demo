@@ -89,7 +89,16 @@
                                         <h5 id="folder-title"> <i class="fa fa-folder-open"></i> {{$banner->name}}</h5>
                                     
                                         <div class="ibox-tools">
-
+                                            
+                                            <span class="dropdown" id="edit_multiple_documents" >
+                                                <button class="btn btn-warning dropdown-toggle" type="button" id="edit_selected" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Edit Selected
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="edit_selected">
+                                                    <li><a href="">Start Date</a></li>
+                                                    <li><a href="">End Date</a></li>
+                                                </ul>
+                                            </span>
                                              <a id="add-files" class="hidden" data-folderId="" href="/admin/document/create"><button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Add Files </i></button></a>
                                              <a id="add-folder" href="/admin/folder/create"><button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> <i class="fa fa-folder-o"></i></button></a>
                                              <a id="edit-folder" class="hidden" href=""><button type="button" class="btn btn-primary"><i class="fa fa-pencil"></i></button></a>
@@ -164,6 +173,7 @@
     <script type="text/javascript" src="/js/custom/admin/documents/deleteFolder.js"></script>
     <script type="text/javascript" src="/js/custom/admin/documents/copyFolder.js"></script>
     <script type="text/javascript" src="/js/custom/admin/documents/copyDocument.js"></script>
+    <script type="text/javascript" src="/js/custom/admin/documents/editDocument.js"></script>
     <script type="text/javascript" src="/js/custom/site/launchModal.js" ></script>
 
 
