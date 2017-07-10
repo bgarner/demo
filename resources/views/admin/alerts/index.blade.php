@@ -49,8 +49,7 @@
 		                            <h5>Alerts</h5>
 
 		                            <div class="ibox-tools">
-
-		                                
+		                                <a href="/admin/alert/create" class="btn btn-primary btn"><i class="fa fa-plus"></i> New Alert</a>
 		                            </div>
 		                        </div>
 		                        <div class="ibox-content">

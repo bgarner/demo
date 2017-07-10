@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\Models\Document\FileFolder;
 use App\Models\Banner;
 use App\Models\Alert\Alert;
+use App\Models\Auth\User\UserSelectedBanner;
 
 class AlertAdminController extends Controller
 {
@@ -40,7 +41,13 @@ class AlertAdminController extends Controller
      */
     public function create()
     {
-        //
+        $banner = UserSelectedBanner::getBanner();
+        $alert_types = ["" =>'Select one'];
+        $alert_types += \DB::table('alert_types')->pluck('name', 'id')->toArray();
+        $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
+
+        return view('admin.alerts.create')->with('alert_types', $alert_types )
+                                        ->with('navigation', $fileFolderStructure);
     }
 
     /**
@@ -51,7 +58,8 @@ class AlertAdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        \Log::info($request->all());
+        return Alert::createAlert($request);
     }
 
     /**

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Alert\AlertTarget;
 use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\StoreInfo;
+use App\Models\Validation\AlertValidator;
 
 class Alert extends Model
 {
@@ -20,6 +21,20 @@ class Alert extends Model
 
     protected $fillable = ['banner_id', 'document_id', 'alert_type_id', 'alert_start', 'alert_end'];
     protected $dates = ['deleted_at'];
+
+    public static function validateAlert($request)
+    {
+         $validateThis = [
+            'document_id'   => $request['document_id'],
+            'alert_type_id' => $request['alert_type_id']
+        ];
+
+        \Log::info($validateThis);
+
+        $v = new AlertValidator();
+        $validationResult = $v->validate($validateThis);
+        return $validationResult;
+    }
 
     public static function getAllAlerts()
     {
@@ -419,6 +434,19 @@ class Alert extends Model
     }
 
 
+    public static function createAlert($request)
+    {
+        
+        $validate = Alert::validateAlert($request);
+
+        if($validate['validation_result'] == 'false') {
+            \Log::info($validate);
+            return json_encode($validate);
+        }
+
+        return Self::markDocumentAsAlert($request, $request['document_id']);
+    }
+
     public static function markDocumentAsAlert($request, $id)
     {
         if (Alert::where('document_id', $id)->first()) {
@@ -443,7 +471,7 @@ class Alert extends Model
         }
         
         
-        return;
+        return $alert;
     }
 
     public static function deleteAlert($document_id)
