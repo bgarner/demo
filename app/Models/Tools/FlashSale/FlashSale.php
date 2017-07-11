@@ -3,6 +3,7 @@
 namespace App\Models\Tools\FlashSale;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Utility\Utility;
 
 class FlashSale extends Model
 {

@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\Request as RequestFacade;
+use DB;
 use App\Models\Banner;
 use App\Skin;
 use App\Models\Communication\Communication;
@@ -18,18 +19,17 @@ use App\Models\Alert\Alert;
 use App\Models\StoreInfo;
 use App\Models\Tools\FlashSale\FlashSale;
 
-public $storeNumber;
-public $storeInfo;
-public $storeBanner;
-public $banner;
-public $isComboStore;
-public $skin;
-public $urgentNoticeCount;
-public $alertCount;
-public $communicationCount;
-
 class FlashSaleController extends Controller
 {
+    public $storeNumber;
+    public $storeInfo;
+    public $storeBanner;
+    public $banner;
+    public $isComboStore;
+    public $skin;
+    public $urgentNoticeCount;
+    public $alertCount;
+    public $communicationCount;
 
     public function __construct()
     {
