@@ -58,6 +58,7 @@ return array(
     'CreateFeedbackResponseTable' => $baseDir . '/database/migrations/2016_07_22_154142_create_feedback_response_table.php',
     'CreateFeedbackStatusTypesTable' => $baseDir . '/database/migrations/2016_07_22_091556_create_feedback_status_types_table.php',
     'CreateFiscalYearTable' => $baseDir . '/database/migrations/2015_09_28_215143_create-fiscal-year-table.php',
+    'CreateFlashSaleTable' => $baseDir . '/database/migrations/2017_07_11_095930_create_flash_sale_table.php',
     'CreateFlyerDataTable' => $baseDir . '/database/migrations/2017_04_05_133225_create_flyer_data_table.php',
     'CreateFlyersTable' => $baseDir . '/database/migrations/2017_03_31_105904_create_flyers_table.php',
     'CreateFolderIdsTable' => $baseDir . '/database/migrations/2015_10_28_173427_create_folder_ids_table.php',

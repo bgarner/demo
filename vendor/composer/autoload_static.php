@@ -427,6 +427,7 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         'CreateFeedbackResponseTable' => __DIR__ . '/../..' . '/database/migrations/2016_07_22_154142_create_feedback_response_table.php',
         'CreateFeedbackStatusTypesTable' => __DIR__ . '/../..' . '/database/migrations/2016_07_22_091556_create_feedback_status_types_table.php',
         'CreateFiscalYearTable' => __DIR__ . '/../..' . '/database/migrations/2015_09_28_215143_create-fiscal-year-table.php',
+        'CreateFlashSaleTable' => __DIR__ . '/../..' . '/database/migrations/2017_07_11_095930_create_flash_sale_table.php',
         'CreateFlyerDataTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_05_133225_create_flyer_data_table.php',
         'CreateFlyersTable' => __DIR__ . '/../..' . '/database/migrations/2017_03_31_105904_create_flyers_table.php',
         'CreateFolderIdsTable' => __DIR__ . '/../..' . '/database/migrations/2015_10_28_173427_create_folder_ids_table.php',
