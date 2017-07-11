@@ -190,9 +190,7 @@ class DocumentAdminController extends Controller
      */
     public function replaceDocument(Request $request, $id)
     {
-        
         return Document::replaceDocument($request, $id);
-    
     }
 
 
