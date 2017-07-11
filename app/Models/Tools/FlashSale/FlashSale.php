@@ -16,4 +16,14 @@ class FlashSale extends Model
 		$data = FlashSale::where('store_number', $store_number)->get();
     	return $data;
     }
+
+    public static function getLastUpdatedDate()
+    {
+        $record = FlashSale::orderBy('created_at', 'desc')->first();
+        if(count($record) > 0){
+            $date = Utility::prettifyDateWithTime($record->updated_at);
+            return $date;
+        }
+        return "";
+    }
 }
