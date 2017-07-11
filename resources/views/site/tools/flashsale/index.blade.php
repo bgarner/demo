@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    @section('title', 'Flash Sale')
+    @section('title', 'Flash Sale Tracker')
     @include('site.includes.head')
     <link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
 </head>
@@ -23,7 +23,8 @@
 
        <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-12">
-                <h2>Flash Sale</h2>
+                <h2>DOM Flash Sale Tracker</h2>
+                <p>Sale Date: July 20, 2017</p>
                 <small class="pull-right"> Last Updated : {{ $last_updated }} </small>
             </div>
         </div>
