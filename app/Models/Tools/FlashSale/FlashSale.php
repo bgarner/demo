@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class FlashSale extends Model
 {
+    protected $table = 'flash_sale';
+
     public static function getDataByStoreNumber($store_number)
     {
     	//strip off the leading zero
