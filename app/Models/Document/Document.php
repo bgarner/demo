@@ -312,6 +312,9 @@ class Document extends Model
             Alert::deleteAlert($document->id);
         }
 
+        $document->prettyDateStart = Utility::prettifyDate($document->start);
+        $document->prettyDateEnd = Utility::prettifyDate($document->end);
+
         return $document;
 
     }
