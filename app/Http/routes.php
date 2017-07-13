@@ -49,6 +49,7 @@ Route::get('/{storeno}/flyer/{flyer_id}', array('uses' => 'Flyer\FlyerController
 Route::get('/{storeno}/tools/boxingday', array('uses' => 'Tools\BlackFridayController@index'));
 Route::get('/{storeno}/tools/bikecount', array('uses' => 'Tools\BikeCountController@index'));
 Route::get('/{storeno}/tools/flashsale', array('uses' => 'Tools\FlashSaleController@index'));
+Route::get('/{storeno}/tools/fwinitials', array('uses' => 'Tools\FootwearInitialsController@index'));
 Route::post('/getFlyerBoxes', 'Tools\FlyerPageSelectionController@show');
 Route::post('/getFlyerBoxData', 'Tools\FlyerBoxSelectionController@show');
 
