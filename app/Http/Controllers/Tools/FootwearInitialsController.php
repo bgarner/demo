@@ -49,7 +49,6 @@ class FootwearInitialsController extends Controller
     public function index()
     {
         $fwInitials = FootwearInitials::getTotalForGenderByStore($this->storeNumber);
-        
         return view('site.tools.fwinitials.index')->with('fwinitials', $fwInitials)
                                                 ->with('skin', $this->skin)
                                                 ->with('communicationCount', $this->communicationCount)

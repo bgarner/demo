@@ -35,7 +35,7 @@ class FootwearInitials extends Model
 									->groupBy('subdepartment')
 									->get()
 									->each(function($row){
-										$row->category_totals =  Self::getTotalForCategoryByGenderAndStoreNumber($row->store_number, $row->gender);
+										$row->category_totals =  json_encode(Self::getTotalForCategoryByGenderAndStoreNumber($row->store_number, $row->gender));
 									});	
 		return($fwTotals);
     }
@@ -58,7 +58,7 @@ class FootwearInitials extends Model
 									->groupBy('category')
 									->get()
 									->each(function($row){
-										$row->brand_totals = Self::getTotalForBrandByCategoryAndGenderAndStoreNumber($row->store_number, $row->gender, $row->category);
+										$row->brand_totals = json_encode(Self::getTotalForBrandByCategoryAndGenderAndStoreNumber($row->store_number, $row->gender, $row->category));
 
 									});
 									
