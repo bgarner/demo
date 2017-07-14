@@ -32,7 +32,8 @@ var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
         formData.append("isWeekFolder", $('#folder-title').attr('data-isweekfolder') );
         formData.append("start", $("#start").val());
         formData.append("end", $("#end").val());
-        formData.append("stores", $("#storeSelect").val());
+        // formData.append("stores", $("#storeSelect").val());
+        formData.append("stores", getTargetStores());
         formData.append("all_stores", allStores);
     },
     init: function () {
@@ -127,7 +128,8 @@ $(document).ready(function() {
         });
         $('.chosen').trigger('chosen:updated');
 
-        console.log($("#storeSelect").val());
+        // console.log($("#storeSelect").val());
+        console.log(getTargetStores());
         $('.select-stores-form').show();
         $('.datepicker-div').show();
         $('#file-uploader').show();
@@ -149,7 +151,9 @@ $(document).ready(function() {
             $(this).prop('selected', true);
         });
         allStores = 'on';
-        console.log($("#storeSelect").val());
+        console.log(getTargetStores());
+        // console.log($("#storeSelect").val());
+
     });
 
     

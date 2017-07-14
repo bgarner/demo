@@ -63,7 +63,28 @@
                         <div class="upload-form select-stores-form" style="padding-bottom: 10px;">
                             <label class="col-sm-2 control-label">Target Stores</label>
                             <div class="col-sm-10">
-                                {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
+                                {{--{!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}--}}
+
+                                <select name="stores" id="storeSelect" multiple class="chosen">
+                                    <option value="">Select Some Options</option>
+                                    @foreach($storeAndStoreGroups as $option)
+                                        
+                                        <option value="{{$option['id']}}"
+                                            
+                                            @if(isset($option["isStoreGroup"]))
+                                                data-isStoreGroup = "{{$option['isStoreGroup']}}"
+                                            @endif
+                                            @if(isset($option["stores"]))
+                                                data-stores = "{{$option['stores']}}"
+                                            @endif
+                                            
+                                        >
+                                            {{$option['name']}}
+                                        </option>
+                                        
+                                    @endforeach
+
+                                </select>
                                 {!! Form::label('allStores', 'Or select all stores:', ['class'=>'hidden']) !!}
                                 {!! Form::checkbox('allStores', null, false ,['id'=> 'allStores', 'class'=>'hidden'] ) !!}
                             </div>
@@ -212,7 +233,9 @@
             <script type="text/javascript" src="/js/custom/admin/documents/breadcrumb.js"></script>
             <script type="text/javascript" src="/js/custom/admin/documents/uploadDocument.js"></script>
             <script type="text/javascript" src="/js/custom/datetimepicker-with-default-time.js"></script>
-            <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
+            <!-- <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script> -->
+            <script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>
+
             
 
             <script type="text/javascript">
