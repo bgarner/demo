@@ -99,13 +99,16 @@ class DocumentAdminController extends Controller
 
         $documents = Document::where('upload_package_id', $package)->get();
 
+        $documentContext["folder"] = Folder::getFolderDescription($parent);
+
         return view('admin.document-meta.document-add-meta-data')
                 ->with('documents', $documents)
                 ->with('banner', $banner)
                 ->with('banners', $banners)
                 ->with('folder_id', $parent)
                 ->with('tags', $tags)
-                ->with('alert_types', $alert_types );
+                ->with('alert_types', $alert_types )
+                ->with('documentContext', json_encode($documentContext));
             
     }    
 
