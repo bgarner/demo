@@ -3,11 +3,24 @@
 namespace App\Models\Alert;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Validation\AlertTypeValidator;
 
 class AlertType extends Model
 {
     protected $table = 'alert_types';
     protected $fillable = ['name'];
+
+
+    public static function validateAlertType($request)
+    {
+        $validateThis = [
+                            'alert_type' => $request['alert_type']
+                        ];
+
+        $v = new AlertTypeValidator();
+        return $v->validate($validateThis);
+    }
+
 
     public static function getAlertTypesByStoreNumber($request, $storeNumber)
     {
@@ -44,16 +57,29 @@ class AlertType extends Model
 
     public static function createAlertType($request)
     {
+        $validate = AlertType::validateAlertType($request);
+
+        if($validate['validation_result'] == 'false') {
+          \Log::info($validate);
+          return json_encode($validate);
+        }
+
         $alertType = AlertType::create([
                 'name'=> $request['alert_type']
-            ]);
+        ]);
 
         return $alertType;
     } 
 
     public static function updateAlertType($id, $request)
     {
-        
+        $validate = AlertType::validateAlertType($request);
+
+        if($validate['validation_result'] == 'false') {
+          \Log::info($validate);
+          return json_encode($validate);
+        }
+
         $alertType = AlertType::find($id);
         $alertType['name'] = $request['alert_type'];
         $alertType->save();
