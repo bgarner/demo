@@ -178,7 +178,7 @@
                                     	<label class="col-sm-2 control-label">Communication Types</label>
                                     	<div class="col-md-10">
                                     		
-                                    		{!! Form::select('communicationTypes[]', $communicationTypes, $selected_communication_types, ['class'=>'chosen', 'multiple'=>'multiple', 'id'=>'communicationTypes']) !!}
+                                    		{!! Form::select('communicationTypes[]', $communicationTypes, $selected_communication_types, ['class'=>'chosen', 'multiple'=>'multiple', 'id'=>'communicationType']) !!}
                                     	</div>
                                     </div>
                                     <br>

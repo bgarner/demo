@@ -174,7 +174,7 @@ class Feature extends Model
         Feature::removeFiles($request->remove_document, $id);
         Feature::addPackages($request->feature_packages, $id);
         Feature::removePackages($request->remove_package, $id);
-        Feature::updateCommunicationTypes(json_decode($request['communication_type']), $feature->id);
+        Feature::updateCommunicationTypes($request['communication_type'], $feature->id);
         return $feature;
 
     }
@@ -229,15 +229,13 @@ class Feature extends Model
 
     public static function updateCommunicationTypes($communication_types, $feature_id)
     {
-        \Log::info($feature_id);
-        \Log::info($communication_types);
-        if (isset($communication_types)) {
+        if(FeatureCommunicationTypes::where('feature_id', $feature_id)->first()){
+            $feature = FeatureCommunicationTypes::where('feature_id', $feature_id)->delete();
+        }
+        if (isset($communication_types)) {   
             
-            if(FeatureCommunicationTypes::find('feature_id', $feature_id)){
-                $feature = FeatureCommunicationTypes::where('feature_id', $feature_id)->delete();
-            }
             foreach ($communication_types as $type) {
-                FeatureCommunicationType::create([
+                FeatureCommunicationTypes::create([
                     'feature_id' => $feature_id,
                     'communication_type_id' => intval($type)
                     ]);

@@ -85,13 +85,13 @@ $(document).on('click','.feature-create',function(){
 	var background = $("#background")[0].files[0];
 	var update_type = $('input:radio[name =  "latest_updates_option"]:checked').val();
 	var update_frequency =  $('input:radio[name ="latest_updates_option"]:checked').next(".update_frequency").val();
-	var communication_types = $("#communicationTypes").val();
+	var communication_type = $("#communicationTypes").val();
 
 	console.log(thumbnail);
 	console.log(background);
 	console.log(update_type);
 	console.log(update_frequency);
-	console.log(communication_types);
+	console.log(communication_type);
 	var feature_files = [];
 	var feature_packages = [];
 	$(".feature-documents").each(function(){
@@ -133,7 +133,7 @@ $(document).on('click','.feature-create',function(){
      	data.append('background', background );
      	data.append('feature_files',  JSON.stringify(feature_files));
      	data.append('feature_packages',  JSON.stringify(feature_packages));
-     	data.append('communication_types',  JSON.stringify(communication_types));
+     	data.append('communication_type',  JSON.stringify(communication_type));
     	data.append('update_type', update_type);
     	data.append('update_frequency', update_frequency);
 
