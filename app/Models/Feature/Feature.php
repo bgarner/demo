@@ -1,4 +1,5 @@
-<?php namespace App\Models\Feature;
+<?php
+namespace App\Models\Feature;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +16,7 @@ use App\Models\Document\FileFolder;
 use App\Models\Validation\FeatureValidator;
 use App\Models\Validation\FeatureThumbnailValidator;
 use App\Models\Validation\FeatureBackgroundValidator;
+use App\Models\Feature\FeatureCommunicationTypes;
 
 class Feature extends Model
 {
@@ -140,6 +142,7 @@ class Feature extends Model
       
   		Feature::addFiles(json_decode($request["feature_files"]), $feature->id);
   		Feature::addPackages(json_decode($request['feature_packages']), $feature->id);
+        Feature::updateCommunicationTypes(json_decode($request['communication_type']), $feature->id);
 
   		return $feature;
 
@@ -171,6 +174,7 @@ class Feature extends Model
         Feature::removeFiles($request->remove_document, $id);
         Feature::addPackages($request->feature_packages, $id);
         Feature::removePackages($request->remove_package, $id);
+        Feature::updateCommunicationTypes(json_decode($request['communication_type']), $feature->id);
         return $feature;
 
     }
@@ -206,7 +210,7 @@ class Feature extends Model
     			foreach ($feature_packages as $package) {
     				FeaturePackage::create([
     					'feature_id' => $feature_id,
-    					'package_id'	 => intval($package)
+    					'package_id' => intval($package)
     					]);
     			}
     		}
@@ -223,6 +227,23 @@ class Feature extends Model
         return; 
     }
 
+    public static function updateCommunicationTypes($communication_types, $feature_id)
+    {
+        \Log::info($feature_id);
+        \Log::info($communication_types);
+        if (isset($communication_types)) {
+            
+            if(FeatureCommunicationTypes::find('feature_id', $feature_id)){
+                $feature = FeatureCommunicationTypes::where('feature_id', $feature_id)->delete();
+            }
+            foreach ($communication_types as $type) {
+                FeatureCommunicationType::create([
+                    'feature_id' => $feature_id,
+                    'communication_type_id' => intval($type)
+                    ]);
+            }
+        }
+    }
 
     public static function updateFeatureBackground($file, $feature_id)
     {

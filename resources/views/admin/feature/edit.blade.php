@@ -166,6 +166,28 @@
 							</div>
 
 							<div class="ibox">
+		                        <div class="ibox-title">
+		                            <h5>Communication Types</h5>
+
+		                            <div class="ibox-tools">
+		                            	
+		                            </div>
+		                        </div>
+		                        <div class="ibox-content">
+		                        	<div class="form-group">
+                                    	<label class="col-sm-2 control-label">Communication Types</label>
+                                    	<div class="col-md-10">
+                                    		
+                                    		{!! Form::select('communicationTypes[]', $communicationTypes, $selected_communication_types, ['class'=>'chosen', 'multiple'=>'multiple', 'id'=>'communicationTypes']) !!}
+                                    	</div>
+                                    </div>
+                                    <br>
+		                        </div>
+		                    </div>
+
+
+
+							<div class="ibox">
                             	<div class="ibox-title">
                             		<h5> Notifications </h5>
                             		
@@ -294,6 +316,7 @@
 
 	<script type="text/javascript" src="/js/custom/admin/features/editFeature.js"></script>
 	<script type="text/javascript" src="/js/custom/tree.js"></script>
+	<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 	<script src="/js/custom/datetimepicker.js"></script>
 	
 	<script type="text/javascript">
@@ -304,6 +327,10 @@
 		});
 
     	$(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});    
+
+    	$(".chosen").chosen({
+    		'width':'100%'
+    	});
 
 	</script>
 

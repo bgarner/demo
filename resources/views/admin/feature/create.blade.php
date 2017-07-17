@@ -6,6 +6,7 @@
     @include('admin.includes.head')
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
+	<link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
 </head>
 
 <body class="fixed-navigation adminview">
@@ -148,6 +149,26 @@
 		                        </div>
 		                    </div>
 
+		                    <div class="ibox">
+		                        <div class="ibox-title">
+		                            <h5>Communication Types</h5>
+
+		                            <div class="ibox-tools">
+		                            	
+		                            </div>
+		                        </div>
+		                        <div class="ibox-content">
+		                        	<div class="form-group">
+                                    	<label class="col-sm-2 control-label">Communication Types</label>
+                                    	<div class="col-md-10">
+                                    		
+                                    		{!! Form::select('communicationTypes[]', $communicationTypes, null, ['class'=>'chosen', 'multiple'=>'multiple', 'id'=>'communicationTypes']) !!}
+                                    	</div>
+                                    </div>
+                                    <br>
+		                        </div>
+		                    </div>
+
 
 		                     <div class="ibox">
 		                        <div class="ibox-title">
@@ -251,6 +272,7 @@
 
 				<script type="text/javascript" src="/js/custom/admin/features/addFeature.js"></script>
 				<script type="text/javascript" src="/js/custom/tree.js"></script>
+				<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 				<script src="/js/custom/datetimepicker-with-default-time.js"></script>
 				
 				<script type="text/javascript">
@@ -262,6 +284,10 @@
 
 					
                     $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
+
+                    $(".chosen").chosen({
+                    	'width':'100%'
+                    });
 
 				</script>
 				
