@@ -39,5 +39,34 @@ class AlertType extends Model
         else{
             return false;
         }
-    }   
+    }
+
+
+    public static function createAlertType($request)
+    {
+        $alertType = AlertType::create([
+                'name'=> $request['alert_type']
+            ]);
+
+        return $alertType;
+    } 
+
+    public static function updateAlertType($id, $request)
+    {
+        
+        $alertType = AlertType::find($id);
+        $alertType['name'] = $request['alert_type'];
+        $alertType->save();
+    }  
+    public static function getAllAlertTypes()
+    {
+        $alertTypes = AlertType::all();
+        foreach ($alertTypes as $at) {
+            
+            $at->alertCount = Alert::where('alert_type_id', $at->id)->get()->count();
+        }
+
+        return $alertTypes;
+
+    }
 }

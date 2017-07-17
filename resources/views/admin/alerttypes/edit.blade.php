@@ -1,116 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
+{!! Form::model($alertType, ['action' => ['Alert\AlertTypesAdminController@update', 'id'=>$alertType->id], 'method' => 'PUT']) !!}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">Edit Alert Type </h4>
+</div>
 
-<head>
-    @section('title', 'Calendar')
-    @include('admin.includes.head')
+<div class="modal-body">
+    
+    <div class="form-group">
+        <h5 class="clearfix">Alert Type <span class="req">*</span></h5>
+        {!! Form::text('alert_type', $alertType->name, ['class'=>'form-control', 'id'=>'alert_type']) !!}
+    </div>
+    
+    
+</div>
 
-	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
-</head>
+<div class="modal-footer">
 
-<body class="fixed-navigation adminview">
-    <div id="wrapper">
-	    <nav class="navbar-default navbar-static-side" role="navigation">
-	        <div class="sidebar-collapse">
-	          @include('admin.includes.sidenav')
-	        </div>
-	    </nav>
+    <button type="button" class="btn btn-white cancel-modal" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
+    <button class="btn btn-primary"><i class='fa fa-check'></i> Save changes</button>
+</div>
 
-	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
+{!! Form::close() !!}
 
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Edit an Event Type</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li>
-                            <a href="/admin/calendar">Calendar</a>
-                        </li>
-                        <li class="active">
-                            <strong>Edit Event Type</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
-
-		<div class="wrapper wrapper-content  animated fadeInRight">
-		            <div class="row">
-		                <div class="col-lg-12">
-		                    <div class="ibox">
-		                        <div class="ibox-title">
-		                            <h5>Edit Event Type</h5>
-		                            <div class="ibox-tools">
-		                               {{--  <a href="/admin/calendar/create" class="btn btn-primary" role="button"><i class="fa fa-plus"></i> Add New Event</a> --}}
-
-		                            </div>
-		                        </div>
-		                        <div class="ibox-content">
-
-                                    <form method="get" class="form-horizontal">
-                                    	<input type="hidden" name="eventTypeID" id="eventTypeID" value="{{ $eventType->id }}">
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">Event Type Name</label>
-                                            <div class="col-sm-10"><input type="text" class="form-control" name="event_type" id="event_type" value="{{ $eventType->event_type }}"></div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">Background Colour</label>
-                                            <div class="col-sm-2"><input class="jscolor form-control" name="background_colour" id="background_colour" value="{{$eventType->background_colour}}"></div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">Text Colour</label>
-                                            <div class="col-sm-2"><input class="jscolor form-control" name="foreground_colour" id="foreground_colour" value="{{$eventType->foreground_colour}}"></div>
-                                        </div>
+    
 
 
-                                        <div class="hr-line-dashed"></div>
-
-                                        <div class="form-group">
-                                            <div class="col-sm-4 col-sm-offset-2">
-                                                <a class="btn btn-white" href="/admin/eventtypes"><i class="fa fa-close"></i> Cancel</a>
-                                                <button class="eventtype-edit btn btn-primary" type="submit"><i class="fa fa-check"></i> Save Event Type</button>
-
-                                            </div>
-                                        </div>
-                                    </form>
-
-
-                                </div>
-		                    </div>
-
-		                </div>
-
-                    </div>
-            </div>
-	</div>
-
-
-		        </div>
-
-				@include('admin.includes.footer')
-
-			    @include('admin.includes.scripts')
-
-				<script type="text/javascript">
-					$.ajaxSetup({
-				        headers: {
-				            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				        }
-					});
-				</script>
-
-				<script src="/js/custom/admin/events/editEventType.js"></script>
-                <script src="/js/vendor/jscolor-2.0.4/jscolor.min.js"></script>
-
-
-				@include('site.includes.bugreport')
-
-			</body>
-			</html>

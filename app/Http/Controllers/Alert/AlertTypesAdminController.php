@@ -15,8 +15,7 @@ class AlertTypesAdminController extends Controller
      */
     public function index()
     {
-        $alerttypes = AlertType::all();
-
+        $alerttypes = AlertType::getAllAlertTypes();
         return view('admin.alerttypes.index')
             ->with('alerttypes', $alerttypes);
     }
@@ -39,7 +38,8 @@ class AlertTypesAdminController extends Controller
      */
     public function store(Request $request)
     {
-        return AlertType::createAlertType($request);
+        AlertType::createAlertType($request);
+        return redirect()->action('Alert\AlertTypesAdminController@index');
     }
 
     /**
@@ -60,10 +60,9 @@ class AlertTypesAdminController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        
+    {   
         $alertType = AlertType::find($id);
-        return view('admin.alert.edit')->with('alertType', $alertType);
+        return view('admin.alerttypes.edit')->with('alertType', $alertType);
     }
 
     /**
@@ -75,7 +74,8 @@ class AlertTypesAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return AlertType::updateAlertType($id, $request);
+        AlertType::updateAlertType($id, $request);
+        return redirect()->action('Alert\AlertTypesAdminController@index');
     }
 
     /**
@@ -86,6 +86,6 @@ class AlertTypesAdminController extends Controller
      */
     public function destroy($id)
     {
-        // EventType::find($id)->delete();
+        AlertType::find($id)->delete();
     }
 }
