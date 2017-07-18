@@ -75,7 +75,6 @@ class FeatureAdminController extends Controller
      */
     public function store(Request $request)
     {
-        \Log::info($request->all());
         return Feature::storeFeature($request);
     }
 
@@ -139,10 +138,7 @@ class FeatureAdminController extends Controller
                                         ->with('selected_communication_types', $selected_communication_types)
                                         ->with('communications', $communications)
                                         ->with('selected_communications', $selected_communications);
-                                        // ->with('tags', $tags)
-                                        // ->with('selected_tags', $selected_tags)
-                                        // ->with('folders', $selected_folders)
-                                        // ->with('folderStructure', $folderStructure);
+                                        
     }
 
     /**

@@ -58,7 +58,8 @@
 		                        	<form method="get" class="form-horizontal" id="createNewFeatureForm" enctype="multipart/form-data">
                                         
                                         <input type="hidden" name="banner_id" value="{{$banner->id}}">
-                                        <div class="form-group"><label class="col-sm-2 control-label">Feature Title</label>
+                                        <div class="form-group">
+                                        	<label class="col-sm-2 control-label">Feature Title <span class="req">*</span></label>
                                             <div class="col-sm-10"><input type="text" id="feature_title" name="feature_title" class="form-control" value=""></div>
                                         </div>
                                         <div class="form-group"><label class="col-sm-2 control-label">Tile Label</label>
@@ -66,7 +67,7 @@
                                         </div>
                                         <div class="form-group">
 
-                                                <label class="col-sm-2 control-label">Start &amp; End</label>
+                                                <label class="col-sm-2 control-label">Start &amp; End <span class="req">*</span></label>
 
                                                 <div class="col-sm-10">
                                                     <div class="input-daterange input-group" id="datepicker">
@@ -79,13 +80,13 @@
 
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
-                                        	<label class="col-sm-2 control-label">Thumbnail</label>
+                                        	<label class="col-sm-2 control-label">Thumbnail <span class="req">*</span></label>
                                         	<div class="col-md-10"><input type="file" name="thumbnail" id="thumbnail" class="form-control "></div>
                                             
                                         </div>
 
                                         <div class="form-group">
-                                        	<label class="col-sm-2 control-label">Background Image</label>
+                                        	<label class="col-sm-2 control-label">Background Image <span class="req">*</span></label>
                                         	<div class="col-md-10"><input type="file" name="background" id="background" class="form-control "></div>
                                             <div class="col-sm-10"></div>
                                         </div>
@@ -194,7 +195,7 @@
 		                        	
                                     <div class="form-group">
                                     	<div class="row">
-                                    		<label class="col-sm-2 control-label">Latest Updates</label>
+                                    		<label class="col-sm-2 control-label">Latest Updates <span class="req">*</span></label>
 										
 											<div class="latest-updates-container col-sm-10">
 												<div class="latest-update-option ">

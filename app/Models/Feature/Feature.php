@@ -34,8 +34,6 @@ class Feature extends Model
                         'title'              => $request['tileLabel'],
                         'documents'          => json_decode($request['feature_files']),
                         'packages'           => json_decode($request['feature_packages']),
-                        'communication_type' => json_decode($request['communication_type']),
-                        'communications'     => json_decode($request['communications']),
                         'thumbnail'          => $request['thumbnail'],
                         'background'         => $request['background'],
                         'start'              => $request['start'],
@@ -43,9 +41,18 @@ class Feature extends Model
                         'update_type_id'     => $request['update_type'],
                         'update_frequency'   => $request['update_frequency']
                       ];
-        
+
+        if(null !== json_decode($request['communication_type'])){
+            $validateThis['communication_type'] = json_decode($request['communication_type']);
+                        
+        }
+
+        if(null !== json_decode($request['communications'])){
+            $validateThis['communications'] = json_decode($request['communications']);
+                        
+        }
         $v = new FeatureValidator();
-          
+
         return $v->validate($validateThis);
     }
 
@@ -61,10 +68,18 @@ class Feature extends Model
                         'update_type_id'     => $request['update_type'],
                         'update_frequency'   => $request['update_frequency'],
                         'remove_documents'   => $request['remove_document'],
-                        'remove_packages'    => $request['remove_package'],
-                        'communication_type' => $request['communication_type'],
-                        'communications'     => $request['communications'],
+                        'remove_packages'    => $request['remove_package']
                       ];
+
+        if(null !== $request['communication_type']){
+            $validateThis['communication_type'] = $request['communication_type'];
+                        
+        }
+
+        if(null !== $request['communications']){
+            $validateThis['communications'] = $request['communications'];
+                        
+        }
         if(isset($request['thumbnail']) && $request['thumbnail']){
             $validateThis['thumbnail']     = $request['thumbnail'];
                         
@@ -108,7 +123,6 @@ class Feature extends Model
 
   	public static function storeFeature(Request $request)
   	{
-  	  
         $validate = Feature::validateCreateFeature($request);
         
         if($validate['validation_result'] == 'false') {
@@ -156,7 +170,6 @@ class Feature extends Model
 
     public static function updateFeature(Request $request, $id)
     {
-        \Log::info($request->all());        
         $validate = Feature::validateEditFeature($id, $request);
         
         if($validate['validation_result'] == 'false') {
