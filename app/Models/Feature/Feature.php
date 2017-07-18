@@ -17,6 +17,7 @@ use App\Models\Validation\FeatureValidator;
 use App\Models\Validation\FeatureThumbnailValidator;
 use App\Models\Validation\FeatureBackgroundValidator;
 use App\Models\Feature\FeatureCommunicationTypes;
+use App\Models\Communication\Communication;
 
 class Feature extends Model
 {
@@ -143,6 +144,7 @@ class Feature extends Model
   		Feature::addFiles(json_decode($request["feature_files"]), $feature->id);
   		Feature::addPackages(json_decode($request['feature_packages']), $feature->id);
         Feature::updateCommunicationTypes(json_decode($request['communication_type']), $feature->id);
+        FeatureCommunication::updateFeatureCommunications(json_decode($request['communications']), $feature->id);
 
   		return $feature;
 
@@ -175,6 +177,7 @@ class Feature extends Model
         Feature::addPackages($request->feature_packages, $id);
         Feature::removePackages($request->remove_package, $id);
         Feature::updateCommunicationTypes($request['communication_type'], $feature->id);
+        FeatureCommunication::updateFeatureCommunications($request['communications'], $feature->id);
         return $feature;
 
     }
@@ -366,5 +369,25 @@ class Feature extends Model
         $packages = FeaturePackage::join('packages', 'feature_package.package_id', '=', 'packages.id')
                                 ->where('feature_package.feature_id', '=', $feature_id)->get();
         return $packages;
+    }
+
+    public static function getFeatureCommunications($feature_id, $storeNumber)
+    {
+        $featureCommunicationTypes = FeatureCommunicationTypes::getCommunicationTypeId($feature_id);
+
+        $mergedCommunications = [];
+
+        foreach ($featureCommunicationTypes as $type) {
+            $communications  = Communication::getActiveCommunicationsByCategory($storeNumber, $type);
+            $mergedCommunications = $communications->merge($mergedCommunications);
+        }
+
+        $featureCommunications = FeatureCommunication::getCommunicationId($feature_id);
+        foreach ($featureCommunications as $comm) {
+            $communications = Communication::getCommunicationById($comm);
+            $mergedCommunications->push($communications);
+        }
+
+        return $mergedCommunications;
     }
 }

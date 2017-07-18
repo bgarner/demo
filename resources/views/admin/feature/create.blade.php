@@ -151,20 +151,35 @@
 
 		                    <div class="ibox">
 		                        <div class="ibox-title">
-		                            <h5>Communication Types</h5>
+		                            <h5>Communications</h5>
 
 		                            <div class="ibox-tools">
 		                            	
 		                            </div>
 		                        </div>
 		                        <div class="ibox-content">
-		                        	<div class="form-group">
-                                    	<label class="col-sm-2 control-label">Communication Types</label>
-                                    	<div class="col-md-10">
-                                    		
-                                    		{!! Form::select('communicationTypes[]', $communicationTypes, null, ['class'=>'chosen', 'multiple'=>'multiple', 'id'=>'communicationTypes']) !!}
-                                    	</div>
+
+		                        	<div class="row">
+			                        	<div class="form-group">
+	                                    	<label class="col-sm-2 control-label">Communication Types</label>
+	                                    	<div class="col-md-10">
+	                                    		
+	                                    		{!! Form::select('communicationTypes[]', $communicationTypes, null, ['class'=>'chosen', 'multiple'=>'multiple', 'id'=>'communicationTypes']) !!}
+	                                    	</div>
+	                                    </div>
                                     </div>
+
+									<div class="row">
+	                                    <div class="form-group">
+	                                    	<label class="col-sm-2 control-label">Communications</label>
+	                                    	<div class="col-md-10">
+	                                    		
+	                                    		{!! Form::select('communications[]', $communications, null, ['class'=>'chosen', 'multiple'=>'multiple', 'id'=>'communications']) !!}
+	                                    	</div>
+	                                    </div>
+	                                </div>
+
+
                                     <br>
 		                        </div>
 		                    </div>

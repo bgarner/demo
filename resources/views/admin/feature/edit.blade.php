@@ -174,13 +174,25 @@
 		                            </div>
 		                        </div>
 		                        <div class="ibox-content">
-		                        	<div class="form-group">
-                                    	<label class="col-sm-2 control-label">Communication Types</label>
-                                    	<div class="col-md-10">
-                                    		
-                                    		{!! Form::select('communicationTypes[]', $communicationTypes, $selected_communication_types, ['class'=>'chosen', 'multiple'=>'multiple', 'id'=>'communicationType']) !!}
-                                    	</div>
+		                        	<div class="row">
+			                        	<div class="form-group">
+	                                    	<label class="col-sm-2 control-label">Communication Types</label>
+	                                    	<div class="col-md-10">
+	                                    		
+	                                    		{!! Form::select('communicationTypes[]', $communicationTypes, $selected_communication_types, ['class'=>'chosen', 'multiple'=>'multiple', 'id'=>'communicationType']) !!}
+	                                    	</div>
+	                                    </div>
                                     </div>
+
+                                    <div class="row">
+	                                    <div class="form-group">
+	                                    	<label class="col-sm-2 control-label">Communications</label>
+	                                    	<div class="col-md-10">
+	                                    		
+	                                    		{!! Form::select('communications[]', $communications, $selected_communications, ['class'=>'chosen', 'multiple'=>'multiple', 'id'=>'communications']) !!}
+	                                    	</div>
+	                                    </div>
+	                                </div>
                                     <br>
 		                        </div>
 		                    </div>

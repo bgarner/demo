@@ -192,6 +192,7 @@ $(document).on('click','.feature-update',function(){
 	var update_type = $('input:radio[name =  "latest_updates_option"]:checked').val();
 	var update_frequency =  $('input:radio[name ="latest_updates_option"]:checked').next('input[name="update_frequency"]').val();
 	var communication_type = $("#communicationType").val();
+	var communications = $("#communications").val();
 	console.log('latest updates : ' + update_type);
 	console.log('latest update freq : ' + update_frequency);
 
@@ -242,6 +243,7 @@ $(document).on('click','.feature-update',function(){
      	$.extend(dataObj, {remove_document: remove_document});
      	$.extend(dataObj, {remove_package: remove_package});
      	$.extend(dataObj, {communication_type : communication_type});
+     	$.extend(dataObj, {communications : communications});
      	$.extend(dataObj, {update_type : update_type});
      	$.extend(dataObj, {update_frequency : update_frequency});
      	

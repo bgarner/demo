@@ -14,9 +14,9 @@ class FeatureCommunicationTypes extends Model
 
     public static function getCommunicationTypeId( $featureId )
     {
-    	$feature = FeatureCommunicationTypes::where('feature_id', $featureId)->get()->pluck('communication_type_id')->toArray();
+    	$communicationTypes = FeatureCommunicationTypes::where('feature_id', $featureId)->get()->pluck('communication_type_id')->toArray();
     	
-        return $feature;
+        return $communicationTypes;
     	
     }
 }

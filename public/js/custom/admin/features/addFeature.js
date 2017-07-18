@@ -86,12 +86,15 @@ $(document).on('click','.feature-create',function(){
 	var update_type = $('input:radio[name =  "latest_updates_option"]:checked').val();
 	var update_frequency =  $('input:radio[name ="latest_updates_option"]:checked').next(".update_frequency").val();
 	var communication_type = $("#communicationTypes").val();
+	var communications = $("#communications").val();
 
 	console.log(thumbnail);
 	console.log(background);
 	console.log(update_type);
 	console.log(update_frequency);
 	console.log(communication_type);
+	console.log(communications);
+
 	var feature_files = [];
 	var feature_packages = [];
 	$(".feature-documents").each(function(){
@@ -134,6 +137,7 @@ $(document).on('click','.feature-create',function(){
      	data.append('feature_files',  JSON.stringify(feature_files));
      	data.append('feature_packages',  JSON.stringify(feature_packages));
      	data.append('communication_type',  JSON.stringify(communication_type));
+     	data.append('communications',  JSON.stringify(communications));
     	data.append('update_type', update_type);
     	data.append('update_frequency', update_frequency);
 

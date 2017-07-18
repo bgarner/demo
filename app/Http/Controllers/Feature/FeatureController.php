@@ -56,28 +56,31 @@ class FeatureController extends Controller
      */
     public function show(Request $request)
     {
-        $storeNumber = RequestFacade::segment(1);
+        $storeNumber                  = RequestFacade::segment(1);
 
-        $id = $request->id;		
+        $id                           = $request->id;
 
-        $feature = Feature::where('id', $id)->first();
+        $feature                      = Feature::where('id', $id)->first();
 
-        $selected_documents = FeatureDocument::getFeaturedDocuments($feature->id, $storeNumber);
+        $selected_documents           = FeatureDocument::getFeaturedDocuments($feature->id, $storeNumber);
 
-        $selected_packages = FeaturePackage::getFeaturePackages($feature->id);
+        $selected_packages            = FeaturePackage::getFeaturePackages($feature->id);
         
-        $feature_communcation_type_id = FeatureCommunication::getCommunicationTypeId($id);
+        // $feature_communcation_type_id = FeatureCommunicationTypes::getCommunicationTypeId($id);
 
-        $feature_communcations = Communication::getActiveCommunicationsByCategory($storeNumber, $feature_communcation_type_id);
+        // $feature_communications       = Communication::getActiveCommunicationsByCategory($storeNumber, $feature_communcation_type_id);
 
-		$notifications = Notification::getNotificationsByFeature($feature->id, $storeNumber);
+        $feature_communications       = Feature::getFeatureCommunications($feature->id, $storeNumber);
+
+        $notifications                = Notification::getNotificationsByFeature($feature->id, $storeNumber);
+
 
         return view('site.feature.index')
 			->with('notifications', $notifications)
             ->with('feature', $feature)
             ->with('feature_documents', $selected_documents)
             ->with('feature_packages', $selected_packages)
-            ->with('feature_communcations', $feature_communcations);
+            ->with('feature_communications', $feature_communications);
     }
 
     /**

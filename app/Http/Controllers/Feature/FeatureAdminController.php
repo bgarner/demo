@@ -16,7 +16,9 @@ use App\Models\Document\Document;
 use App\Models\Feature\FeatureDocument;
 use App\Models\Feature\FeaturePackage;
 use App\Models\Communication\CommunicationType;
+use App\Models\Communication\Communication;
 use App\Models\Feature\FeatureCommunicationTypes;
+use App\Models\Feature\FeatureCommunication;
 
 class FeatureAdminController extends Controller
 {
@@ -55,12 +57,14 @@ class FeatureAdminController extends Controller
         $packages = Package::where('banner_id', $banner->id)->get();
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
         $communicationTypes  = CommunicationType::where('banner_id', $banner->id)->get()->pluck('communication_type', 'id');
+        $communications = Communication::getAllCommunication($banner->id)->pluck('subject', 'id');
         return view('admin.feature.create')
                 ->with('banner', $banner)
                 ->with('banners', $banners)
                 ->with('navigation', $fileFolderStructure)
                 ->with('packages', $packages)
-                ->with('communicationTypes', $communicationTypes);
+                ->with('communicationTypes', $communicationTypes)
+                ->with('communications', $communications);
     }
 
     /**
@@ -119,7 +123,9 @@ class FeatureAdminController extends Controller
 
         $communicationTypes  = CommunicationType::where('banner_id', $banner->id)->get()->pluck('communication_type', 'id');
         $selected_communication_types = FeatureCommunicationTypes::getCommunicationTypeId($id);
-        // dd($selected_communication_types);
+        
+        $communications = Communication::getAllCommunication($banner->id)->pluck('subject', 'id');
+        $selected_communications = FeatureCommunication::getCommunicationId($id);
 
         return view('admin.feature.edit')->with('feature', $feature)
                                     
@@ -130,7 +136,9 @@ class FeatureAdminController extends Controller
                                         ->with('packages', $packages)
                                         ->with('feature_packages', $selected_packages)
                                         ->with('communicationTypes', $communicationTypes)
-                                        ->with('selected_communication_types', $selected_communication_types);
+                                        ->with('selected_communication_types', $selected_communication_types)
+                                        ->with('communications', $communications)
+                                        ->with('selected_communications', $selected_communications);
                                         // ->with('tags', $tags)
                                         // ->with('selected_tags', $selected_tags)
                                         // ->with('folders', $selected_folders)

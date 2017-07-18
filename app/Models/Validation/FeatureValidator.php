@@ -29,6 +29,6 @@ class FeatureValidator extends PortalValidator
     	'packages.exists'			=> 'Invalid packages attached',
     	'remove_documents.exists'	=> 'Invalid value in documents',
     	'remove_packages.exists'	=> 'Invalid value in packages',
-        'update_type_id.exists'        => 'Invalid value in Latest Updates'
+        'update_type_id.exists'     => 'Invalid value in Latest Updates'
     ];
 }
