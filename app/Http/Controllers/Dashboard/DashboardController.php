@@ -32,7 +32,7 @@ class DashboardController extends Controller
 
         $banner = Banner::find($storeBanner);
 
-        $features = Feature::getActiveFeatureByBannerId($storeBanner);
+        $features = Feature::getActiveFeatureByStoreNumber($storeNumber);
 
         $quicklinks = Quicklinks::getLinks($storeBanner, $storeNumber);
 

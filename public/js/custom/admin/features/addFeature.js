@@ -96,6 +96,7 @@ $(document).on('click','.feature-create',function(){
 	console.log(update_frequency);
 	console.log(communication_type);
 	console.log(communications);
+	console.log(target_stores);
 
 	var feature_files = [];
 	var feature_packages = [];
@@ -149,8 +150,11 @@ $(document).on('click','.feature-create',function(){
      	data.append('communications', JSON.stringify(communications));
     	data.append('update_type', update_type);
     	data.append('update_frequency', update_frequency);
-    	data.append('target_stores', target_stores);
-    	data.append('all_stores', allStores);
+    	data.append('target_stores', JSON.stringify(target_stores));
+    	if(typeof(allStores) !== 'undefined'){
+    		data.append('all_stores', allStores);	
+    	}
+    	
 
 		$.ajax({
 		    url: '/admin/feature',
