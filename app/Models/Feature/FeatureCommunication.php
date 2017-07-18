@@ -12,18 +12,6 @@ class FeatureCommunication extends Model
     protected $fillable = ['communication_id', 'feature_id'];
     protected $dates = ['deleted_at'];
 
-    // public static function getCommunicationId( $featureId )
-    // {
-    // 	$feature = FeatureCommunication::where('feature_id', $featureId)->get()->pluck('communication_id');
-    	
-    //     if(count($feature) > 0){
-    //         return $feature[0];    
-    //     } else {
-    //         return 0;
-    //     }
-    	
-    // }
-
     public static function updateFeatureCommunications($communications, $feature_id)
     {
         if(FeatureCommunication::where('feature_id', $feature_id)->first()){

@@ -65,10 +65,6 @@ class FeatureController extends Controller
         $selected_documents           = FeatureDocument::getFeaturedDocuments($feature->id, $storeNumber);
 
         $selected_packages            = FeaturePackage::getFeaturePackages($feature->id);
-        
-        // $feature_communcation_type_id = FeatureCommunicationTypes::getCommunicationTypeId($id);
-
-        // $feature_communications       = Communication::getActiveCommunicationsByCategory($storeNumber, $feature_communcation_type_id);
 
         $feature_communications       = Feature::getFeatureCommunications($feature->id, $storeNumber);
 

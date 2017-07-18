@@ -190,15 +190,25 @@ $(document).on('click','.feature-create',function(){
 			        	});
 			        }
 			        if(errors.hasOwnProperty("thumbnail")) {
-			        	console.log(1);
 			        	$.each(errors.thumbnail, function(index){
 			        		$("#thumbnail").parent().append('<div class="req">' + errors.thumbnail[index]  + '</div>');	
 			        	});
 			        }
 			        if(errors.hasOwnProperty("background")) {
-			        	console.log(2);
 			        	$.each(errors.background, function(index){
 			        		$("#background").parent().append('<div class="req">' + errors.background[index]  + '</div>');	
+			        	});
+			        }
+
+			        if(errors.hasOwnProperty("communication_type")) {
+			        	$.each(errors.communication_type, function(index){
+			        		$("#communicationTypes").parent().append('<div class="req">' + errors.communication_type[index]  + '</div>');	
+			        	});
+			        }
+
+			        if(errors.hasOwnProperty("communications")) {
+			        	$.each(errors.communications, function(index){
+			        		$("#communications").parent().append('<div class="req">' + errors.communications[index]  + '</div>');	
 			        	});
 			        }
 		        }

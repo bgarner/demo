@@ -30,16 +30,18 @@ class Feature extends Model
     public static function validateCreateFeature($request)
     {
         $validateThis = [ 
-                        'name'             => $request['name'],
-                        'title'            => $request['tileLabel'],
-                        'documents'        => json_decode($request['feature_files']),
-                        'packages'         => json_decode($request['feature_packages']),
-                        'thumbnail'        => $request['thumbnail'],
-                        'background'       => $request['background'],
-                        'start'            => $request['start'],
-                        'end'              => $request['end'],
-                        'update_type_id'   => $request['update_type'],
-                        'update_frequency' => $request['update_frequency']
+                        'name'               => $request['name'],
+                        'title'              => $request['tileLabel'],
+                        'documents'          => json_decode($request['feature_files']),
+                        'packages'           => json_decode($request['feature_packages']),
+                        'communication_type' => json_decode($request['communication_type']),
+                        'communications'     => json_decode($request['communications']),
+                        'thumbnail'          => $request['thumbnail'],
+                        'background'         => $request['background'],
+                        'start'              => $request['start'],
+                        'end'                => $request['end'],
+                        'update_type_id'     => $request['update_type'],
+                        'update_frequency'   => $request['update_frequency']
                       ];
         
         $v = new FeatureValidator();
@@ -50,16 +52,18 @@ class Feature extends Model
     public static function validateEditFeature($id, $request)
     {
         $validateThis = [ 
-                        'name'             => $request['title'],
-                        'title'            => $request['tileLabel'],
-                        'documents'        => $request['feature_files'],
-                        'packages'         => $request['feature_packages'],
-                        'start'            => $request['start'],
-                        'end'              => $request['end'],
-                        'update_type_id'   => $request['update_type'],
-                        'update_frequency' => $request['update_frequency'],
-                        'remove_documents' => $request['remove_document'],
-                        'remove_packages'  => $request['remove_package']
+                        'name'               => $request['title'],
+                        'title'              => $request['tileLabel'],
+                        'documents'          => $request['feature_files'],
+                        'packages'           => $request['feature_packages'],
+                        'start'              => $request['start'],
+                        'end'                => $request['end'],
+                        'update_type_id'     => $request['update_type'],
+                        'update_frequency'   => $request['update_frequency'],
+                        'remove_documents'   => $request['remove_document'],
+                        'remove_packages'    => $request['remove_package'],
+                        'communication_type' => $request['communication_type'],
+                        'communications'     => $request['communications'],
                       ];
         if(isset($request['thumbnail']) && $request['thumbnail']){
             $validateThis['thumbnail']     = $request['thumbnail'];

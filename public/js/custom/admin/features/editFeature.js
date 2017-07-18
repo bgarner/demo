@@ -308,6 +308,17 @@ $(document).on('click','.feature-update',function(){
 			        		$("#background").append('<div class="req">' + errors.background[index]  + '</div>');	
 			        	});
 			        }
+			        if(errors.hasOwnProperty("communication_type")) {
+			        	$.each(errors.communication_type, function(index){
+			        		$("#communicationType").parent().append('<div class="req">' + errors.communication_type[index]  + '</div>');	
+			        	});
+			        }
+
+			        if(errors.hasOwnProperty("communications")) {
+			        	$.each(errors.communications, function(index){
+			        		$("#communications").parent().append('<div class="req">' + errors.communications[index]  + '</div>');	
+			        	});
+			        }
 			    }
 	        
 		        else{
