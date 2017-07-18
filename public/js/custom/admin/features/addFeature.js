@@ -87,6 +87,8 @@ $(document).on('click','.feature-create',function(){
 	var update_frequency   = $('input:radio[name ="latest_updates_option"]:checked').next(".update_frequency").val();
 	var communication_type = $("#communicationTypes").val();
 	var communications     = $("#communications").val();
+	var target_stores 	   = getTargetStores();
+	var allStores  		   = $("#allStores:checked").val();
 
 	console.log(thumbnail);
 	console.log(background);
@@ -125,6 +127,13 @@ $(document).on('click','.feature-create',function(){
 		return false;
 	};
 
+	if( target_stores == null && typeof allStores === 'undefined' ) {
+		swal("Oops!", "Target stores not selected.", "error"); 
+		hasError = true;
+		$(window).scrollTop(0);
+		return false;
+	}
+
 	
      if(hasError == false) {
      	var data = new FormData();
@@ -140,6 +149,8 @@ $(document).on('click','.feature-create',function(){
      	data.append('communications', JSON.stringify(communications));
     	data.append('update_type', update_type);
     	data.append('update_frequency', update_frequency);
+    	data.append('target_stores', target_stores);
+    	data.append('all_stores', allStores);
 
 		$.ajax({
 		    url: '/admin/feature',
@@ -209,6 +220,12 @@ $(document).on('click','.feature-create',function(){
 			        if(errors.hasOwnProperty("communications")) {
 			        	$.each(errors.communications, function(index){
 			        		$("#communications").parent().append('<div class="req">' + errors.communications[index]  + '</div>');	
+			        	});
+			        }
+			        if(errors.hasOwnProperty("target_stores")) {
+			        	console.log(1);
+			        	$.each(errors.target_stores, function(index){
+			        		$("#storeSelect").parent().append('<div class="req">' + errors.target_stores[index]  + '</div>');	
 			        	});
 			        }
 		        }
