@@ -239,7 +239,10 @@ class Event extends Model
     {
         $banner = UserSelectedBanner::getBanner();
         //return Event::where('banner_id', $banner->id)->paginate(15);
-        return Event::where('banner_id', $banner->id)->get();
+        return Event::join('event_types', 'events.event_type', '=', 'event_types.id')
+                    ->where('events.banner_id', $banner->id)
+                    ->select('events.*', 'event_types.event_type', 'event_types.foreground_colour', 'event_types.background_colour' )      
+                    ->get();
     }
 
 }
