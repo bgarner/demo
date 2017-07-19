@@ -30,9 +30,6 @@ class SearchController extends Controller
         $query = $request['q'];
         $store = RequestFacade::segment(1);
 
-        $alertCount = Alert::getActiveAlertCountByStore($store);
-        $communicationCount = Communication::getActiveCommunicationCount($store);
-
         $docs = [];
         $folders = [];
         $communications = [];
@@ -58,33 +55,13 @@ class SearchController extends Controller
             }
         }
 
-        $storeNumber = RequestFacade::segment(1);
-
-        $storeInfo = StoreInfo::getStoreInfoByStoreId($storeNumber);
-
-        $storeBanner = $storeInfo->banner_id;
-
-        $banner = Banner::find($storeBanner);
-
-        $isComboStore = $storeInfo->is_combo_store;
-
-        $skin = Skin::getSkin($storeBanner);
-
-        $urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($storeNumber);
-
         return view('site.search.index')
-            ->with('skin', $skin)
-            ->with('urgentNoticeCount', $urgentNoticeCount)
             ->with('docs', $docs)
             ->with('folders', $folders)
             ->with('communications', $communications)
             ->with('alerts', $alerts)
             ->with('events', $events)
             ->with('videos', $videos)
-            ->with('communicationCount', $communicationCount)
-            ->with('isComboStore', $isComboStore)
-            ->with('banner', $banner)
-            ->with('alertCount', $alertCount)
             ->with('query', $query)
             ->with('archives', $request['archives']);
     }
