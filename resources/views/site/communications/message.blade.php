@@ -220,6 +220,11 @@
                 var storeNumber = localStorage.getItem('userStoreNumber');
                 window.location = "/"+storeNumber+"/document#!/"+folderId;
             });
+            $(".inline-communication-link").click(function(){
+                var communicationId = $(this).data('communicationid');
+                var storeNumber = localStorage.getItem('userStoreNumber');
+                window.location = "/"+storeNumber+"/communication/show/"+communicationId;
+            });
         });
 
 

@@ -75,6 +75,12 @@
 										<td>
 											<a href="/admin/communication/{{ $communication->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
 											<a data-communication="{{ $communication->id }}" id="communication{{ $communication->id }}" class="delete-communication btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+											<a  data-communicationid="{{ $communication->id }}" 
+												data-communicationname="{{ $communication->subject }}"
+												id="copy-communication" 
+												class="btn btn-primary btn-sm">
+												<i class="fa fa-clipboard"></i>
+											</a>
 
 										</td>
 									</tr>
@@ -120,9 +126,12 @@
 			}
 		);
 
+
+
 	</script>
 
 	<script type="text/javascript" src="/js/custom/admin/communications/deleteCommunication.js"></script>
+	<script type="text/javascript" src="/js/custom/admin/communications/copyCommunication.js"></script>
 	
 
 	@include('site.includes.bugreport')

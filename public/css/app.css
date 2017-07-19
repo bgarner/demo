@@ -8348,7 +8348,7 @@ body.md-skin {
     padding-left: 15px;
   }
 
-.inline-folder-link{
+.inline-folder-link, .inline-communication-link{
   color: #337ab7;
   cursor: pointer;
 }
