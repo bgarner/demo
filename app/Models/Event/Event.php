@@ -194,21 +194,21 @@ class Event extends Model
         $eventsList = Event::getActiveEventsByStoreAndMonth($storeNumber, $yearMonth);
         $productLaunchList = ProductLaunch::getActiveProductLaunchByStoreandMonth($storeNumber, $yearMonth);
 
-        foreach ($productLaunchList as $key => $value) {
-
-            if(array_key_exists($key, $eventsList)){
-
-                $value = $value->merge($eventsList[$key]);
+        $eventsList = $eventsList->toArray();
+        $productLaunchList = $productLaunchList->toArray();
+        foreach ($productLaunchList as $date => $launch) {
+            if(array_key_exists($date, $eventsList)){
+                foreach($launch as $key => $launchObj){
+                    array_push($eventsList[$date], $launchObj);
+                }
             }
             else{
-                $eventsList->put($key, $value);
+                $eventsList[$date] = $launch;
             }
-
         }
-        $eventsList = $eventsList->toArray();
         ksort($eventsList);
         $eventsList = json_decode(json_encode($eventsList));
-
+        
         return $eventsList;
     }
 
@@ -216,29 +216,42 @@ class Event extends Model
 
     public static function getActiveEventsByStoreAndMonth($store_id, $yearMonth)
     {
-        $events = Event::join('events_target', 'events.id', '=', 'events_target.event_id')
+        $targetedEvents = Event::join('events_target', 'events.id', '=', 'events_target.event_id')
+                    ->join('event_types', 'events.event_type', '=', 'event_types.id')
                     ->where('store_id', $store_id)
                     ->where('start', 'LIKE', $yearMonth.'%')
-
+                    ->select('events.*', 'event_types.event_type as event_type_name', 'event_types.foreground_colour', 'event_types.background_colour' )
                     ->orderBy('start')
                     ->get()
                     ->each(function ($item) {
                         $item->prettyDateStart = Utility::prettifyDate($item->start);
                         $item->prettyDateEnd = Utility::prettifyDate($item->end);
                         $item->since = Utility::getTimePastSinceDate($item->start);
-                        $item->event_type_name = EventType::getName($item->event_type);
-                    })
-                    ->groupBy(function($event) {
+                    });
+                    
+
+        $allStoreEvents = Event::join('event_types', 'events.event_type', '=', 'event_types.id')
+                        ->where('all_stores', 1)
+                        ->where('start', 'LIKE', $yearMonth.'%')
+                        ->select('events.*', 'event_types.event_type as event_type_name', 'event_types.foreground_colour', 'event_types.background_colour' )
+                        ->orderBy('start')
+                        ->get()
+                        ->each(function ($item) {
+                            $item->prettyDateStart = Utility::prettifyDate($item->start);
+                            $item->prettyDateEnd = Utility::prettifyDate($item->end);
+                            $item->since = Utility::getTimePastSinceDate($item->start);
+                        });
+                        
+        $events = $targetedEvents->merge($allStoreEvents)->groupBy(function($event) {
                             return Carbon::parse($event->start)->format('Y-m-d');
                     });
-
+        
         return $events;
     }
 
     public static function getEventsByBannerId()
     {
         $banner = UserSelectedBanner::getBanner();
-        //return Event::where('banner_id', $banner->id)->paginate(15);
         return Event::join('event_types', 'events.event_type', '=', 'event_types.id')
                     ->where('events.banner_id', $banner->id)
                     ->select('events.*', 'event_types.event_type', 'event_types.foreground_colour', 'event_types.background_colour' )      
