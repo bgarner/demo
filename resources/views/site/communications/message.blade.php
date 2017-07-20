@@ -47,12 +47,12 @@
                 </h2>
                 @if(isset($previousCommunicationId))
                 <span class="pull-left">
-                    <a href="/{{ Request::segment(1) }}/communication/show/{{$previousCommunicationId}}"><i class="fa fa-angle-double-left"></i> {{__("Previous")}}</a>
+                    <a href="/{{ Request::segment(1) }}/communication/show/{{$communication->previousCommunicationId}}"><i class="fa fa-angle-double-left"></i> {{__("Previous")}}</a>
                 </span>
                 @endif
                 @if(isset($nextCommunicationId))
                 <span class="pull-right">
-                    <a href="/{{ Request::segment(1) }}/communication/show/{{$nextCommunicationId}}">{{__("Next")}} <i class="fa fa-angle-double-right"></i></a>
+                    <a href="/{{ Request::segment(1) }}/communication/show/{{$communication->nextCommunicationId}}">{{__("Next")}} <i class="fa fa-angle-double-right"></i></a>
                 </span>
                 @endif
 
