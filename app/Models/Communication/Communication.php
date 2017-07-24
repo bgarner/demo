@@ -271,8 +271,51 @@ class Communication extends Model
 		$communication             = Communication::find($id);
 		$communication->since      = Utility::getTimePastSinceDate($communication->send_at);
 		$communication->prettyDate = Utility::prettifyDate($communication->send_at);
+
 		return $communication;
 
+	}
+
+	public static function getNextCommunication($communications, $communication)
+	{
+		$nextCommunicationId = null;
+        $now = Carbon::now();
+
+        if($now <= $communication->archive_at){
+
+            $currentCommunicationIndex = $communications->where('id', $communication->id)->keys()->toArray()[0];
+            $next = $currentCommunicationIndex + 1;
+
+        
+            if($next > count($communications)-1){
+                $nextCommunicationId = null;
+            }
+            else{
+                $nextCommunicationId = $communications->get($next)->id;    
+            }
+            
+        }
+
+        return $nextCommunicationId;
+	}
+
+	public static function getPreviousCommunication($communications, $communication)
+	{
+        $previousCommunicationId = null;
+        $now = Carbon::now();
+        if($now <= $communication->archive_at){
+
+            $currentCommunicationIndex = $communications->where('id', $communication->id)->keys()->toArray()[0];
+            $previous = $currentCommunicationIndex - 1;
+
+            if($previous < 0){
+                $previousCommunicationId = null;
+            }
+            else{
+                $previousCommunicationId = $communications->get($previous)->id;    
+            }
+        }
+        return $previousCommunicationId;
 	}
 
 	public static function storeCommunication($request)
