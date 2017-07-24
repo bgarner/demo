@@ -42,12 +42,17 @@ var getTargetStores = function(){
 	    var isStoreGroup = $(options[i]).attr('data-isStoreGroup');
 	    if(!isStoreGroup){
 	    	var store = $(options[i]).val();
-	    	targetStores.push(store);
+	    	if(targetStores.indexOf(store) < 0){
+	    		targetStores.push(store);	
+	    	}
+	    	
 	    }else{
 	    	var stores = $.parseJSON($(options[i]).attr('data-stores'));
 	    	
 	    	$(stores).each(function(index, value){
-	    		targetStores.push(value);
+	    		if(targetStores.indexOf(value) < 0){
+		    		targetStores.push(value);	    		
+		    	}
 	    	});
 
 	    }   

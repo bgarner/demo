@@ -17,6 +17,8 @@ use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\StoreInfo;
 use App\Models\Alert\Alert;
 use App\Models\Document\DocumentTarget;
+use App\Models\Utility\Utility;
+
 class DocumentAdminController extends Controller
 {
     /**
@@ -34,11 +36,11 @@ class DocumentAdminController extends Controller
      */
     public function index(Request $request)
     {
-        $folder_id = $request->get('folder');
-        $documents = Document::getDocuments($folder_id);
-        $folder = Folder::getFolderDescription($folder_id);
-        $response = [];
-        $response["files"] = $documents;
+        $folder_id          = $request->get('folder');
+        $documents          = Document::getDocuments($folder_id);
+        $folder             = Folder::getFolderDescription($folder_id);
+        $response           = [];
+        $response["files"]  = $documents;
         $response["folder"] = $folder;
         return $response;
 
@@ -52,16 +54,18 @@ class DocumentAdminController extends Controller
     public function create()
     {
 
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();     
-        $storeList = StoreInfo::getStoreListing($banner->id);
+        $banner      = UserSelectedBanner::getBanner();
+        $banners     = Banner::all();
+        // $storeList   = StoreInfo::getStoreListing($banner->id);
+        $storeAndStoreGroups = Utility::getStoreAndStoreGroupList($banner->id);
         $packageHash = sha1(time() . time());
-        $folders = Folder::all();
+        $folders     = Folder::all();
         return view('admin.documentmanager.document-upload')
             ->with('folders', $folders)
             ->with('packageHash', $packageHash)
             ->with('banner', $banner)
-            ->with('storeList', $storeList)
+            // ->with('storeList', $storeList)
+            ->with('storeAndStoreGroups', $storeAndStoreGroups)
             ->with('banners', $banners);  
     }
 
@@ -84,20 +88,20 @@ class DocumentAdminController extends Controller
      */
     public function showMetaDataForm(Request $request)
     {
-        $package = $request->get('package');
+        $package     = $request->get('package');
 
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
+        $banner      = UserSelectedBanner::getBanner();
+        $banners     = Banner::all();
 
-        $parent = $request->get('parent');
+        $parent      = $request->get('parent');
         
-        $tags = Tag::where('banner_id', $banner->id)->pluck('name', 'id');
+        $tags        = Tag::where('banner_id', $banner->id)->pluck('name', 'id');
 
         $alert_types = ["" =>'Select one'];
 
         $alert_types = \DB::table('alert_types')->pluck('name', 'id')->toArray();
 
-        $documents = Document::where('upload_package_id', $package)->get();
+        $documents   = Document::where('upload_package_id', $package)->get();
 
         $documentContext["folder"] = Folder::getFolderDescription($parent);
 
@@ -142,33 +146,35 @@ class DocumentAdminController extends Controller
      */
     public function edit($id, Request $request)
     {
-        $document = Document::find($id);
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
+        $document            = Document::find($id);
+        $banner              = UserSelectedBanner::getBanner();
+        $banners             = Banner::all();
 
-        $storeList = StoreInfo::getStoreListing($banner->id);
-        $target_stores = DocumentTarget::getTargetStoresForDocument($id);
+        // $storeList           = StoreInfo::getStoreListing($banner->id);
+        $target_stores       = DocumentTarget::getTargetStoresForDocument($id);
         
-        $alert_types = ["" =>'Select one'];
-        $alert_types += \DB::table('alert_types')->pluck('name', 'id')->toArray();
+        $alert_types         = ["" => 'Select one'];
+        $alert_types        += \DB::table('alert_types')->pluck('name', 'id')->toArray();
         
-        $alert_details = [];
+        $alert_details       = [];
         if( Alert::where('document_id', $id)->first()) {
-            $alert_details = Alert::where('document_id', $id)->first();
+        $alert_details       = Alert::where('document_id', $id)->first();
         }
 
-        $folderStructure = FolderStructure::getNavigationStructure($banner->id);
-        $folderPath = Document::getFolderPathForDocument($id);
+        $folderStructure     = FolderStructure::getNavigationStructure($banner->id);
+        $folderPath          = Document::getFolderPathForDocument($id);
+        $storeAndStoreGroups = Utility::getStoreAndStoreGroupList($banner->id);
 
         return view('admin.document-meta.document-edit-meta-data')->with('document', $document)
                                                     ->with('banner', $banner)
                                                     ->with('banners', $banners)
-                                                    ->with('storeList', $storeList)
+                                                    // ->with('storeList', $storeList)
                                                     ->with('target_stores', $target_stores)
                                                     ->with('alert_types', $alert_types ) 
                                                     ->with('alert_details', $alert_details)
                                                     ->with('folderStructure', $folderStructure)
-                                                    ->with('folderPath', $folderPath);
+                                                    ->with('folderPath', $folderPath)
+                                                    ->with('storeAndStoreGroups', $storeAndStoreGroups);
     }
 
     /**
