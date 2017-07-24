@@ -78,6 +78,39 @@
                                                 </div>
                                         </div>
 
+
+                                        <div class="form-group">
+
+								                <label class="col-sm-2 control-label">Target Stores <span class="req">*</span></label>
+								                <div class="col-sm-10">
+								                	<select name="stores" id="storeSelect" multiple class="chosen">
+										            	<option value="">Select Some Options</option>
+										            	@foreach($storeAndStoreGroups as $option)
+											                
+										                    <option value="{{$option['id']}}"
+										                        
+										                        @if(isset($option["isStoreGroup"]))
+																	data-isStoreGroup = "{{$option['isStoreGroup']}}"
+										                        @endif
+										                        @if(isset($option["stores"]))
+																	data-stores = "{{$option['stores']}}"
+										                        @endif
+										                        
+										                    >
+										                        {{$option['name']}}
+										                    </option>
+											                
+										            	@endforeach
+
+										        	</select>
+										        	{!! Form::label('allStores', 'Or select all stores:') !!}
+										        	{!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
+								                </div>
+
+								        </div>
+
+
+
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                         	<label class="col-sm-2 control-label">Thumbnail <span class="req">*</span></label>
@@ -289,6 +322,7 @@
 				<script type="text/javascript" src="/js/custom/admin/features/addFeature.js"></script>
 				<script type="text/javascript" src="/js/custom/tree.js"></script>
 				<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
+				<script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>
 				<script src="/js/custom/datetimepicker-with-default-time.js"></script>
 				
 				<script type="text/javascript">
