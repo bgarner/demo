@@ -57,10 +57,12 @@ class ProductLaunch extends Model
     {
 
         $products = ProductLaunch::join('productlaunch_target', 'productlaunch.id', '=', 'productlaunch_target.productlaunch_id')
+        			->join('event_types', 'productlaunch.event_type', '=', 'event_types.event_type')
                     ->where('productlaunch_target.store_id', $storeNumber)
                     ->where('productlaunch.launch_date', 'LIKE', $yearMonth.'%')
                     ->orderBy('productlaunch.launch_date')
-                    ->select('productlaunch.id', 'productlaunch.launch_date as start', 'productlaunch_target.store_id', 'productlaunch.event_type as event_type_name','productlaunch.style_number', 'productlaunch.style_name', 'productlaunch.retail_price')
+                    ->select('productlaunch.id', 'productlaunch.launch_date as start', 'productlaunch_target.store_id', 'productlaunch.event_type as event_type_name','productlaunch.style_number', 'productlaunch.style_name', 'productlaunch.retail_price', 'event_types.background_colour', 
+                    	'event_types.foreground_colour')
                     ->get()
                     ->each(function ($item) {
                     	$item->end = Carbon::createFromFormat('Y-m-d H:i:s', $item->start)->addDay()->toDateTimeString();
@@ -74,6 +76,7 @@ class ProductLaunch extends Model
                     ->groupBy(function($event) {
                             return Carbon::parse($event->start)->format('Y-m-d');
                     });
+        
         return $products;
 
     }
