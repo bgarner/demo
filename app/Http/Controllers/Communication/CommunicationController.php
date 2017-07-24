@@ -85,8 +85,8 @@ class CommunicationController extends Controller
         $request->request->add(['archives' => false]);
         $communications         = Communication::getCommunicationByStoreNumber($request, $storeNumber);
         
-        $communiation['nextCommunicationId'] = Communication::getNextCommunication($communications, $communication);
-        $communiation['previousCommunicationId'] = Communication::getPreviousCommunication($communications, $communication);
+        $communication->nextCommunicationId = Communication::getNextCommunication($communications, $communication);
+        $communication->previousCommunicationId = Communication::getPreviousCommunication($communications, $communication);
         
         return view('site.communications.message')
             ->with('communicationTypes', $communicationTypes)
@@ -94,9 +94,6 @@ class CommunicationController extends Controller
             ->with('communication', $communication)
             ->with('communication_documents', $communicationDocuments)
             ->with('communication_packages', $communicationPackages);
-            // ->with('previousCommunicationId', $previousCommunicationId)
-            // ->with('nextCommunicationId', $nextCommunicationId);
-
     }
 
     /**
