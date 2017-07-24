@@ -91,3 +91,5 @@
     });
 
     </script>
+
+    <script type="text/javascript" src="/js/plugins/dataTables/datatables.min.js"></script>

@@ -11,7 +11,9 @@ use Carbon\Carbon;
 use Log;
 use Illuminate\Database\Eloquent\Collection as Collection;
 use App\Models\Event\Event;
+use App\Models\Event\EventType;
 use App\Models\Video\Video;
+use App\Models\ProductLaunch\ProductLaunch;
 
 class Search extends Model
 {
@@ -335,6 +337,29 @@ class Search extends Model
                                     $item->prettyDateEnd = Utility::prettifyDate($item->end);
                                 })
                     );
+
+            $productLaunches =  ProductLaunch::join('productlaunch_target', 'productlaunch.id', '=', 'productlaunch_target.productlaunch_id')
+                                ->where('productlaunch_target.store_id', $store)
+                                ->where('productlaunch.launch_date', '>=', $today)
+                                ->where(function($q) use($term){
+                                    $q->where('event_type', 'LIKE', '%'.$term.'%' )
+                                    ->orWhere('style_number', 'LIKE', '%'.$term.'%')
+                                    ->orWhere('style_name', 'LIKE', '%'.$term.'%' );    
+                                })
+                                
+                                ->select('productlaunch.id', 'productlaunch.launch_date as start', 'productlaunch_target.store_id', 'productlaunch.event_type as event_type_name', 'productlaunch.style_number', 'productlaunch.style_name', 'productlaunch.retail_price')
+                                ->get()
+                                ->each(function ($item) {
+                                    $item->end = Carbon::createFromFormat('Y-m-d H:i:s', $item->start)->addDay()->toDateTimeString();
+                                    $title = $item->event_type_name . " - " . $item->style_number . " - " . $item->style_name . " - Reg. " . $item->retail_price;
+                                    $item->title = addslashes($title);
+                                    $item->event_type = EventType::getEventTypeIdByName($item->event_type_name, 1);
+                                    $item->prettyDateStart = Utility::prettifyDate($item->start);
+                                    $item->prettyDateEnd = Utility::prettifyDate($item->end);
+                                    $item->rank = 1;
+                                });
+            
+            $events = $events->merge($productLaunches);
         }    
 
         $ranked_results = Search::rankSearchResults($events);
@@ -371,6 +396,31 @@ class Search extends Model
 
                                 })
                     );
+
+
+            $productLaunches =  ProductLaunch::join('productlaunch_target', 'productlaunch.id', '=', 'productlaunch_target.productlaunch_id')
+                                ->where('productlaunch_target.store_id', $store)
+                                ->where('productlaunch.launch_date', '<', $today)
+                                ->where(function($q) use($term){
+                                    $q->where('event_type', 'LIKE', '%'.$term.'%' )
+                                    ->orWhere('style_number', 'LIKE', '%'.$term.'%')
+                                    ->orWhere('style_name', 'LIKE', '%'.$term.'%' );    
+                                })
+                                
+                                ->select('productlaunch.id', 'productlaunch.launch_date as start', 'productlaunch_target.store_id', 'productlaunch.event_type as event_type_name', 'productlaunch.style_number', 'productlaunch.style_name', 'productlaunch.retail_price')
+                                ->get()
+                                ->each(function ($item) {
+                                    $item->end = Carbon::createFromFormat('Y-m-d H:i:s', $item->start)->addDay()->toDateTimeString();
+                                    $title = $item->event_type_name . " - " . $item->style_number . " - " . $item->style_name . " - Reg. " . $item->retail_price;
+                                    $item->title = addslashes($title);
+                                    $item->event_type = EventType::getEventTypeIdByName($item->event_type_name, 1);
+                                    $item->prettyDateStart = Utility::prettifyDate($item->start);
+                                    $item->prettyDateEnd = Utility::prettifyDate($item->end);
+                                    $item->rank = 1;
+                                    $item->archived = true;
+                                });
+            
+            $events = $events->merge($productLaunches);
         }
 
         $ranked_results = Search::rankSearchResults($events);
