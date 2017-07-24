@@ -105,7 +105,6 @@
 
 											<td>
 												<a href="/admin/document/{{ $alert->document_id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
-
 												<a data-alert="{{ $alert->id }}" id="alert{{ $alert->id }}" class="delete-alert btn btn-danger btn-sm"><i class="fa fa-ban"></i></a>
 
 											</td>

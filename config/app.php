@@ -264,6 +264,7 @@ return [
         'App\Http\Controllers\Document\DocumentAdminController'                 => 'Library',
         'App\Http\Controllers\Document\DocumentFolderAdminController'           => 'Library',
         'App\Http\Controllers\Alert\AlertAdminController'                       => 'Alerts and Notices',
+        'App\Http\Controllers\Alert\AlertTypesAdminController'                  => 'Alerts and Notices',
         'App\Http\Controllers\UrgentNotice\UrgentNoticeAdminController'         => 'Alerts and Notices',
         'App\Http\Controllers\Video\VideoAdminController'                       => 'Videos',
         'App\Http\Controllers\Video\TagAdminController'                         => 'Videos',
