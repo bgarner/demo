@@ -154,7 +154,7 @@
                             </div>
                         </div>
 
-                        @if( count($feature_communcations) > 0 )
+                        @if( count($feature_communications) > 0 )
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="ibox float-e-margins">
@@ -165,7 +165,7 @@
                                     <div class="mail-box">
                                         <table class="table table-hover table-mail">
                                         <tbody>
-                                            @foreach($feature_communcations as $communication)
+                                            @foreach($feature_communications as $communication)
 
                                             <?php $tr_class="" ?>
                                             @if( $communication->is_read == 1)

@@ -77,19 +77,24 @@ $(document).on('click','.feature-create',function(){
  
   	var hasError = false;
  
-	var featureTitle = $("#feature_title").val();
-	var featureTileLabel = $("#tile_label").val();
-	var featureStart = $("#start").val();
-	var featureEnd = $("#end").val();
-	var thumbnail = $("#thumbnail")[0].files[0];
-	var background = $("#background")[0].files[0];
-	var update_type = $('input:radio[name =  "latest_updates_option"]:checked').val();
-	var update_frequency =  $('input:radio[name ="latest_updates_option"]:checked').next(".update_frequency").val();
+	var featureTitle       = $("#feature_title").val();
+	var featureTileLabel   = $("#tile_label").val();
+	var featureStart       = $("#start").val();
+	var featureEnd         = $("#end").val();
+	var thumbnail          = $("#thumbnail")[0].files[0];
+	var background         = $("#background")[0].files[0];
+	var update_type        = $('input:radio[name =  "latest_updates_option"]:checked').val();
+	var update_frequency   = $('input:radio[name ="latest_updates_option"]:checked').next(".update_frequency").val();
+	var communication_type = $("#communicationTypes").val();
+	var communications     = $("#communications").val();
 
 	console.log(thumbnail);
 	console.log(background);
 	console.log(update_type);
 	console.log(update_frequency);
+	console.log(communication_type);
+	console.log(communications);
+
 	var feature_files = [];
 	var feature_packages = [];
 	$(".feature-documents").each(function(){
@@ -131,6 +136,8 @@ $(document).on('click','.feature-create',function(){
      	data.append('background', background );
      	data.append('feature_files',  JSON.stringify(feature_files));
      	data.append('feature_packages',  JSON.stringify(feature_packages));
+     	data.append('communication_type',  JSON.stringify(communication_type));
+     	data.append('communications', JSON.stringify(communications));
     	data.append('update_type', update_type);
     	data.append('update_frequency', update_frequency);
 
@@ -183,15 +190,25 @@ $(document).on('click','.feature-create',function(){
 			        	});
 			        }
 			        if(errors.hasOwnProperty("thumbnail")) {
-			        	console.log(1);
 			        	$.each(errors.thumbnail, function(index){
 			        		$("#thumbnail").parent().append('<div class="req">' + errors.thumbnail[index]  + '</div>');	
 			        	});
 			        }
 			        if(errors.hasOwnProperty("background")) {
-			        	console.log(2);
 			        	$.each(errors.background, function(index){
 			        		$("#background").parent().append('<div class="req">' + errors.background[index]  + '</div>');	
+			        	});
+			        }
+
+			        if(errors.hasOwnProperty("communication_type")) {
+			        	$.each(errors.communication_type, function(index){
+			        		$("#communicationTypes").parent().append('<div class="req">' + errors.communication_type[index]  + '</div>');	
+			        	});
+			        }
+
+			        if(errors.hasOwnProperty("communications")) {
+			        	$.each(errors.communications, function(index){
+			        		$("#communications").parent().append('<div class="req">' + errors.communications[index]  + '</div>');	
 			        	});
 			        }
 		        }

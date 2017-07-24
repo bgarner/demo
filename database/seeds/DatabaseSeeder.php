@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TaskStoreStatusTypesSeeder::class);
         $this->call(VideoTableSeeder::class);
         $this->call(PlaylistTableSeeder::class);
+        $this->call(FeatureCommunicationTypeTableSeeder::class);
 
     }
 }
