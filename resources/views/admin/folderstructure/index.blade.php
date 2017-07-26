@@ -155,7 +155,7 @@
 		</script>
 
 
-		@include('site.includes.footer')	    
+		@include('admin.includes.footer')	    
 		@include('site.includes.bugreport')
 		@include('admin.folder.foldermodal')
 

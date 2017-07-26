@@ -68,12 +68,65 @@ $(document).ready(function () {
         railOpacity: 0.4
     });
 
+
+    Date.prototype.today = function () {
+        return ((this.getDate() < 10)?"0":"") + this.getDate() +"/"+(((this.getMonth()+1) < 10)?"0":"") + (this.getMonth()+1) +"/"+ this.getFullYear();
+    }
+
+    // For the time now
+    Date.prototype.timeNow = function () {
+         return ((this.getHours() < 10)?"0":"") + this.getHours() +":"+ ((this.getMinutes() < 10)?"0":"") + this.getMinutes();
+    }
+
+    function updateclock() {
+
+        function pad(n) {
+             return (n < 10) ? '0' + n : n;
+        }
+
+        var time = new Date();
+        var hours = time.getHours();
+        var minutes = time.getMinutes();
+        var ampm = "am";
+
+        if (hours > 12) {
+            hours -= 12;
+            ampm = "pm";
+        } else if (hours === 0) {
+            hours = 12;
+        }
+
+        var todisplay = hours + ':' + pad(minutes) + " " + ampm;
+        return todisplay;
+    }
+
     // Small todo handler
     $('.check-link').click(function () {
+
+        var newDate = new Date();
+        var datetime = "Completed at: " + newDate.today() + " @ " + updateclock();
+
         var button = $(this).find('i');
         var label = $(this).next('span');
+        var duedate = $(this).siblings('.due-date');
+        var duedateicon = $(duedate).children('.due-date-icon');
+        var duedatetext = $(duedate).children('.due-date-text');
+
         button.toggleClass('fa-check-square').toggleClass('fa-square-o');
         label.toggleClass('todo-completed');
+        duedate.toggleClass('label-default').toggleClass('label-primary');
+        duedatetext.text(datetime);
+        duedateicon.toggleClass('fa-clock-o').toggleClass('fa-check');
+
+        //TODO: ajax to mark the task as complete
+
+        if(duedateicon.is('.fa-clock-o')){
+            //TODO: get original due date from server via ajax, instead of "not done"...
+            duedatetext.text("not done");
+            //TODO: ajax - mark the task as incomplete
+
+
+        }
         return false;
     });
 
@@ -274,5 +327,3 @@ function WinMove() {
         })
         .disableSelection();
 }
-
-

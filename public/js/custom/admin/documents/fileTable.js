@@ -78,6 +78,7 @@
 			if(data.files.length>0) {
 				$('#file-table').append('<thead>'+
 										'<tr>'+
+										'<th><input type="checkbox" id="select_all" /></th>'+
 										'<th></th>'+
 										'<th> Title </th>'+
 										// ' <th> Description </th>'+
@@ -89,13 +90,14 @@
 				console.log(files)
 				$('#file-table').append('<tbody>');
 				_.each(files, function(i){
-					$('#file-table').append('<tr>'+
+					$('#file-table').append('<tr data-fileid="'+i.id+'">'+
+												'<td><input type="checkbox" class="select_document" data-fileid="'+i.id+'"/></td>'+
 												'<td>'+ i.is_alert +'</td>'+
 												'<td>'+ i.link_with_icon +'</td>'+
 												// ' <td>'+ i.description +'</td>'+
 												' <td>'+ i.prettyDateCreated +'</td>'+
-												' <td>'+ i.prettyDateStart +'</td>' +
-												' <td>'+ i.prettyDateEnd +'</td>' +
+												' <td class="start">'+ i.prettyDateStart +'</td>' +
+												' <td class="end">'+ i.prettyDateEnd +'</td>' +
 												' <td class="action"> '+
 													'<a class="btn btn-xs btn-primary" href="/admin/document/'+ i.id +'/edit"><i class="fa fa-pencil"></i></a> '+
 													'<button type="button" class="btn btn-xs btn-primary" id="copy-document" data-documentTitle="'+ i.title +'" data-documentName= "'+ i.filename +'" data-fileid="'+ i.id + '"><i class="fa fa-clipboard"></i></button> '+

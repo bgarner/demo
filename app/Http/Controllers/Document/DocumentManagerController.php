@@ -11,9 +11,9 @@ use App\Models\Document\FolderStructure;
 use App\Models\Document\Folder;
 use App\Models\Document\Package;
 use App\Models\Communication\Communication;
-use App\User;
-use App\Models\UserBanner;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\User;
+use App\Models\Auth\User\UserBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 
 class DocumentManagerController extends Controller
 {
@@ -25,11 +25,7 @@ class DocumentManagerController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin.auth');
-        $this->middleware('banner');
-        $this->user_id = \Auth::user()->id;
-        $this->group_id = \Auth::user()->group_id;
-        
+        //
     }
 
     /**
@@ -39,6 +35,10 @@ class DocumentManagerController extends Controller
      */
     public function index(Request $request)
     {
+        $this->user_id = \Auth::user()->id;
+        
+        $this->group_id = \Auth::user()->group_id;
+
         $banner_id = UserSelectedBanner::where('user_id', \Auth::user()->id)->first()->selected_banner_id;
 
         $banner  = Banner::find($banner_id);

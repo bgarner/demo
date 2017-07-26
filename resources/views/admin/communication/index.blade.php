@@ -39,81 +39,95 @@
 		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
-		            <div class="row">
-		                <div class="col-lg-12">
-		                    <div class="ibox">
-		                        <div class="ibox-title">
-		                            <h5>All Communications</h5>
+        	<div class="row">
+	            <div class="col-lg-12">
+	                <div class="ibox">
+	                    <div class="ibox-title">
+	                        <h5>All Communications</h5>
 
-		                            <div class="ibox-tools">
+	                        <div class="ibox-tools">
 
-		                                <a href="/admin/communication/create" class="btn btn-primary btn"><i class="fa fa-plus"></i> New Communication</a>
-		                            </div>
-		                        </div>
-		                        <div class="ibox-content">
+	                            <a href="/admin/communication/create" class="btn btn-primary btn"><i class="fa fa-plus"></i> New Communication</a>
+	                        </div>
+	                    </div>
+	                    <div class="ibox-content">
 
+	                        <div class="table-responsive">
 
-
-		                            <div class="table-responsive">
-
-										<table class="table table-hover issue-tracker">
-
+								<table class="table datatable">
+									<thead>
 										<tr>
+											<td>Id</td>	
 											<td>Subject</td>
-											
+											<td>Type</td>
 											<td>Start</td>
 											<td>Action</td>
 										</tr>
+									</thead>
+									<tbody>
+									@foreach($communications as $communication)
+									<tr>
+										<td>{{ $communication->id }}</td>
+										<td>{{ $communication->subject }}</td>
+										<td><span class="label label-sm label-{{$communication->label_colour}}">{{$communication->label_name}}</span></td>
+										<td data-order="{{$communication->send_at}}">{{ $communication->prettySentAtDate }}</td>
+										
+										<td>
+											<a href="/admin/communication/{{ $communication->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+											<a data-communication="{{ $communication->id }}" id="communication{{ $communication->id }}" class="delete-communication btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 
-										@foreach($communications as $communication)
-										<tr>
+										</td>
+									</tr>
+									@endforeach
+									</tbody>
+								</table>
 
-											<!-- <td><a href="/admin/communication/{{ $communication->id }}/edit">{{ $communication->subject }}</a></td> -->
-											<td>{{ $communication->subject }}</td>
-											
-											<td>{{ $communication->prettySentAtDate }}</td>
-											
-											<td>
-												<a href="/admin/communication/{{ $communication->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
-												<a data-communication="{{ $communication->id }}" id="communication{{ $communication->id }}" class="delete-communication btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+	                        </div>
+                    </div>
 
-											</td>
-										</tr>
-										@endforeach
-
-										</table>
-
-{{-- 										{!! $events->render() !!} --}}
-
-		                            </div>
-		                        </div>
-
-		                    </div>
-		                </div>
-		            </div>
+                </div>
+            </div>
+        </div>
 
 
-		        </div>
+    </div>
 
-				@include('site.includes.footer')
+	@include('admin.includes.footer')
 
-			    @include('admin.includes.scripts')
+    @include('admin.includes.scripts')
 
-				<script type="text/javascript">
-					$.ajaxSetup({
-				        headers: {
-				            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				        }
-					});
+	<script type="text/javascript">
+		$.ajaxSetup({
+	        headers: {
+	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	        }
+		});
 
-				</script>
+        $(".datatable").dataTable( 
+        	{
+    			"order": [[ 0, 'desc' ]],
+			
+				"columns": [	
+				    { "visible": false },
+				    { "width": "45%" },
+				    null,
+				    null,
+				    { "width" : "10%" , "sortable" : false}
+				  ],
+				pageLength: 50,
+				responsive: true,
+				fixedHeader: true
+			}
+		);
 
-				<script type="text/javascript" src="/js/custom/admin/communications/deleteCommunication.js"></script>
-				
+	</script>
 
-				@include('site.includes.bugreport')
+	<script type="text/javascript" src="/js/custom/admin/communications/deleteCommunication.js"></script>
+	
+
+	@include('site.includes.bugreport')
 
 
 
-			</body>
-			</html>
+</body>
+</html>

@@ -6,11 +6,16 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Auth\User\User;
 use App\Models\Banner;
-use App\Models\UserGroup;
-use App\Models\UserBanner;
-use App\Models\UserSelectedBanner;
+use App\Models\StoreInfo;
+use App\Models\Auth\Group\Group;
+use App\Models\Auth\Role\Role;
+use App\Models\Auth\Role\RoleResource;
+use App\Models\Auth\User\UserRole;
+use App\Models\Auth\User\UserBanner;
+use App\Models\Auth\User\UserResource;
+use App\Models\Auth\User\UserSelectedBanner;
 
 
 class UserAdminController extends Controller
@@ -20,11 +25,9 @@ class UserAdminController extends Controller
      */
     public function __construct()
     {        
-        $this->middleware('admin.auth');
-        $this->middleware('superadmin.auth');
-        $this->middleware('banner');
+        //
     }
-
+    
     /**
      * Display a listing of the resource.
      *
@@ -54,17 +57,23 @@ class UserAdminController extends Controller
         $banner_ids = UserBanner::where('user_id',  \Auth::user()->id)->get()->pluck('banner_id');
         $banners = Banner::whereIn('id', $banner_ids)->get();
 
-        $groups = UserGroup::lists('name', 'id');
+        
         
         $banner_id = UserSelectedBanner::where('user_id', \Auth::user()->id)->first()->selected_banner_id;
         $banner  = Banner::find($banner_id);
 
-        $banners_list = Banner::all()->lists('name', 'id');
+        $banners_list = Banner::all()->pluck('name', 'id');
+
+        $groups = Group::getGroupNamesList();
+        $district_name_list = StoreInfo::getDistrictNamesList();
+        $region_name_list = StoreInfo::getRegionNamesList();
 
         return view('superadmin.user.create')->with('banners', $banners)
                                             ->with('banner', $banner)
-                                            ->with('groups', $groups)
-                                            ->with('banners_list', $banners_list);
+                                            ->with('group_names', $groups)
+                                            ->with('banners_list', $banners_list)
+                                            ->with('district_names', $district_name_list)
+                                            ->with('region_names', $region_name_list);
     }
 
     /**
@@ -75,6 +84,8 @@ class UserAdminController extends Controller
      */
     public function store(Request $request)
     {
+        \Log::info("****** User ******");
+        \Log::info($request->all());
         $user = User::createAdminUser($request);
         return ($user);
     }
@@ -102,7 +113,7 @@ class UserAdminController extends Controller
         
         $banner_ids = UserBanner::where('user_id', \Auth::user()->id)->get()->pluck('banner_id');
         $banners = Banner::whereIn('id', $banner_ids)->get();    
-        $banners_list = Banner::all()->lists('name', 'id');
+        $banners_list = Banner::all()->pluck('name', 'id');
 
         $banner_id = UserSelectedBanner::where('user_id', \Auth::user()->id)->first()->selected_banner_id;
         $banner  = Banner::find($banner_id);
@@ -110,14 +121,25 @@ class UserAdminController extends Controller
         $selected_banner_ids = UserBanner::where('user_id', $id)->get()->pluck('banner_id');
         $selected_banners = Banner::findMany($selected_banner_ids)->pluck('id')->toArray();
 
-        $groups = UserGroup::lists('name', 'id');
+        $groups = Group::pluck('name', 'id');
+
+        $roles = Role::pluck('role_name', 'id');
+        $selected_role = UserRole::where('user_id', $user->id)->first()->role_id;
+
+        $resources = RoleResource::getResourcesByRoleId($selected_role);
+        $selected_resource = UserResource::getResourceIdByUserId($user->id);
         
         return view('superadmin.user.edit')->with('user', $user)
                                             ->with('banners', $banners)
                                             ->with('banners_list', $banners_list)
                                             ->with('banner', $banner)
                                             ->with('selected_banners', $selected_banners)
-                                            ->with('groups', $groups);
+                                            ->with('groups', $groups)
+                                            ->with('roles', $roles)
+                                            ->with('selected_role', $selected_role)
+                                            ->with('resources', $resources)
+                                            ->with('selected_resource', $selected_resource);
+
     }
 
     /**

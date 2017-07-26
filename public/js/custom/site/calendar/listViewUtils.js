@@ -107,18 +107,18 @@ function getNextMonth( yearMonth )
 	return yearMonthReturn;
 }
 
-function getListData(yearMonth)
-{
-	var storeno = localStorage.getItem('userStoreNumber');
+// function getListData(yearMonth)
+// {
+// 	var storeno = localStorage.getItem('userStoreNumber');
 
-	$.ajax({
-		url : "/" + storeno + "/calendar/listevents/" + yearMonth,
-	    type: 'GET'
-	}).done(function( data ){
-		console.log(data);
-		renderList(yearMonth);
-	});
-}
+// 	$.ajax({
+// 		url : "/" + storeno + "/calendar/listevents/" + yearMonth,
+// 	    type: 'GET'
+// 	}).done(function( data ){
+// 		console.log(data);
+// 		renderList(yearMonth);
+// 	});
+// }
 
 function renderList(yearMonth)
 {

@@ -4,28 +4,34 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
+class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
-        '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '1d1b89d124cc9cb8219922c9d5569199' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest.php',
-        '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
-        'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
-        '65fec9ebcfbb3cbb4fd0d519687aea01' => __DIR__ . '/..' . '/danielstjules/stringy/src/Create.php',
-        'fad373d645dd668e85d44ccf3c38fbd6' => __DIR__ . '/..' . '/guzzlehttp/streams/src/functions.php',
-        'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
+        '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
+        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
+        '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
+        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
+        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
+        'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
+        'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
-        '154e0d165f5fe76e8e9695179d0a7345' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
+        '4a1f389d6ce373bda9e57857d3b61c84' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
         'p' => 
         array (
+            'phpseclib\\' => 10,
             'phpDocumentor\\Reflection\\' => 25,
+        ),
+        'Z' => 
+        array (
+            'Zend\\Diactoros\\' => 15,
         ),
         'X' => 
         array (
@@ -35,10 +41,13 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         array (
             'Webmozart\\Assert\\' => 17,
         ),
+        'T' => 
+        array (
+            'TijsVerkoyen\\CssToInlineStyles\\' => 31,
+            'Tests\\' => 6,
+        ),
         'S' => 
         array (
-            'Symfony\\Polyfill\\Util\\' => 22,
-            'Symfony\\Polyfill\\Php56\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Component\\Yaml\\' => 23,
             'Symfony\\Component\\VarDumper\\' => 28,
@@ -54,13 +63,17 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
             'Symfony\\Component\\Debug\\' => 24,
             'Symfony\\Component\\CssSelector\\' => 30,
             'Symfony\\Component\\Console\\' => 26,
-            'SuperClosure\\' => 13,
-            'Stringy\\' => 8,
+            'Symfony\\Bridge\\PsrHttpMessage\\' => 30,
+        ),
+        'R' => 
+        array (
+            'Ramsey\\Uuid\\' => 12,
         ),
         'P' => 
         array (
             'Psy\\' => 4,
             'Psr\\Log\\' => 8,
+            'Psr\\Http\\Message\\' => 17,
             'PhpParser\\' => 10,
         ),
         'M' => 
@@ -69,9 +82,19 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         ),
         'L' => 
         array (
+            'League\\OAuth2\\Server\\' => 21,
+            'League\\OAuth1\\' => 14,
             'League\\Flysystem\\' => 17,
+            'League\\Event\\' => 13,
             'League\\Csv\\' => 11,
-            'Laracasts\\Generators\\' => 21,
+            'Lcobucci\\JWT\\' => 13,
+            'Laravel\\Tinker\\' => 15,
+            'Laravel\\Socialite\\' => 18,
+            'Laravel\\Scout\\' => 14,
+            'Laravel\\Passport\\' => 17,
+            'Laravel\\Dusk\\' => 13,
+            'Laravel\\BrowserKitTesting\\' => 26,
+            'Laracademy\\Commands\\' => 20,
         ),
         'I' => 
         array (
@@ -79,30 +102,35 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         ),
         'G' => 
         array (
-            'GuzzleHttp\\Stream\\' => 18,
+            'GuzzleHttp\\Psr7\\' => 16,
+            'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
         ),
         'F' => 
         array (
+            'Firebase\\JWT\\' => 13,
             'Faker\\' => 6,
+            'Facebook\\WebDriver\\' => 19,
         ),
         'D' => 
         array (
+            'Dotenv\\' => 7,
             'Doctrine\\Instantiator\\' => 22,
             'Doctrine\\Common\\Cache\\' => 22,
             'Doctrine\\Common\\Annotations\\' => 28,
             'Doctrine\\Common\\' => 16,
+            'DeepCopy\\' => 9,
+            'DebugBar\\' => 9,
         ),
         'C' => 
         array (
             'Cron\\' => 5,
             'Collective\\Html\\' => 16,
-            'ClassPreloader\\' => 15,
             'Carbon\\' => 7,
         ),
         'B' => 
         array (
-            'Bootstrap\\' => 10,
+            'Barryvdh\\Debugbar\\' => 18,
         ),
         'A' => 
         array (
@@ -111,11 +139,19 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
     );
 
     public static $prefixDirsPsr4 = array (
+        'phpseclib\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
+        ),
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+        ),
+        'Zend\\Diactoros\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zend-diactoros/src',
         ),
         'XdgBaseDir\\' => 
         array (
@@ -125,13 +161,13 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
         ),
-        'Symfony\\Polyfill\\Util\\' => 
+        'TijsVerkoyen\\CssToInlineStyles\\' => 
         array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-util',
+            0 => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src',
         ),
-        'Symfony\\Polyfill\\Php56\\' => 
+        'Tests\\' => 
         array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-php56',
+            0 => __DIR__ . '/../..' . '/tests',
         ),
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
@@ -193,13 +229,13 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         array (
             0 => __DIR__ . '/..' . '/symfony/console',
         ),
-        'SuperClosure\\' => 
+        'Symfony\\Bridge\\PsrHttpMessage\\' => 
         array (
-            0 => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src',
+            0 => __DIR__ . '/..' . '/symfony/psr-http-message-bridge',
         ),
-        'Stringy\\' => 
+        'Ramsey\\Uuid\\' => 
         array (
-            0 => __DIR__ . '/..' . '/danielstjules/stringy/src',
+            0 => __DIR__ . '/..' . '/ramsey/uuid/src',
         ),
         'Psy\\' => 
         array (
@@ -209,6 +245,10 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
         ),
+        'Psr\\Http\\Message\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
         'PhpParser\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
@@ -217,33 +257,89 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
+        'League\\OAuth2\\Server\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/league/oauth2-server/src',
+        ),
+        'League\\OAuth1\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/league/oauth1-client/src',
+        ),
         'League\\Flysystem\\' => 
         array (
             0 => __DIR__ . '/..' . '/league/flysystem/src',
+        ),
+        'League\\Event\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/league/event/src',
         ),
         'League\\Csv\\' => 
         array (
             0 => __DIR__ . '/..' . '/league/csv/src',
         ),
-        'Laracasts\\Generators\\' => 
+        'Lcobucci\\JWT\\' => 
         array (
-            0 => __DIR__ . '/..' . '/laracasts/generators/src',
+            0 => __DIR__ . '/..' . '/lcobucci/jwt/src',
+        ),
+        'Laravel\\Tinker\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laravel/tinker/src',
+        ),
+        'Laravel\\Socialite\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laravel/socialite/src',
+        ),
+        'Laravel\\Scout\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laravel/scout/src',
+        ),
+        'Laravel\\Passport\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laravel/passport/src',
+        ),
+        'Laravel\\Dusk\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laravel/dusk/src',
+        ),
+        'Laravel\\BrowserKitTesting\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laravel/browser-kit-testing/src',
+        ),
+        'Laracademy\\Commands\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laracademy/interactive-make/src',
         ),
         'Illuminate\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/framework/src/Illuminate',
         ),
-        'GuzzleHttp\\Stream\\' => 
+        'GuzzleHttp\\Psr7\\' => 
         array (
-            0 => __DIR__ . '/..' . '/guzzlehttp/streams/src',
+            0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
+        ),
+        'GuzzleHttp\\Promise\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/promises/src',
         ),
         'GuzzleHttp\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
+        'Firebase\\JWT\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
+        ),
         'Faker\\' => 
         array (
             0 => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker',
+        ),
+        'Facebook\\WebDriver\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/facebook/webdriver/lib',
+        ),
+        'Dotenv\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
         ),
         'Doctrine\\Instantiator\\' => 
         array (
@@ -261,6 +357,14 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         array (
             0 => __DIR__ . '/..' . '/doctrine/common/lib/Doctrine/Common',
         ),
+        'DeepCopy\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
+        ),
+        'DebugBar\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/maximebf/debugbar/src/DebugBar',
+        ),
         'Cron\\' => 
         array (
             0 => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron',
@@ -269,17 +373,13 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         array (
             0 => __DIR__ . '/..' . '/laravelcollective/html/src',
         ),
-        'ClassPreloader\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/classpreloader/classpreloader/src',
-        ),
         'Carbon\\' => 
         array (
             0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
         ),
-        'Bootstrap\\' => 
+        'Barryvdh\\Debugbar\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/bootstrap',
+            0 => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src',
         ),
         'App\\' => 
         array (
@@ -294,9 +394,9 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
             array (
                 0 => __DIR__ . '/..' . '/phpspec/prophecy/src',
             ),
-            'PhpSpec' => 
+            'Parsedown' => 
             array (
-                0 => __DIR__ . '/..' . '/phpspec/phpspec/src',
+                0 => __DIR__ . '/..' . '/erusev/parsedown',
             ),
         ),
         'N' => 
@@ -340,10 +440,6 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         ),
         'D' => 
         array (
-            'Dotenv' => 
-            array (
-                0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
-            ),
             'Doctrine\\DBAL\\' => 
             array (
                 0 => __DIR__ . '/..' . '/doctrine/dbal/lib',
@@ -360,10 +456,6 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
             array (
                 0 => __DIR__ . '/..' . '/doctrine/collections/lib',
             ),
-            'Diff' => 
-            array (
-                0 => __DIR__ . '/..' . '/phpspec/php-diff/lib',
-            ),
         ),
         'A' => 
         array (
@@ -375,110 +467,170 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
     );
 
     public static $classMap = array (
-        'AddBrandingToBannerTable' => __DIR__ . '/../..' . '/database/migrations/2016_02_01_174829_add_branding_to_banner_table.php',
-        'AddNotesToDonationTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_07_153726_add_notes_to_donation_table.php',
-        'AddNotificationsToBannerTable' => __DIR__ . '/../..' . '/database/migrations/2016_02_04_230134_add_notifications_to_banner_table.php',
-        'AddOnOrderCountToBikeTracker' => __DIR__ . '/../..' . '/database/migrations/2017_06_23_142132_add_on_order_count_to_bike_tracker.php',
-        'AddOrderingToFeaturePackageTable' => __DIR__ . '/../..' . '/database/migrations/2016_03_17_164606_add_ordering_to_feature_package_table.php',
-        'AddTypesToCommunicationTable' => __DIR__ . '/../..' . '/database/migrations/2016_02_09_175504_add_types_to_communication_table.php',
-        'Addordertoplaylistvideos' => __DIR__ . '/../..' . '/database/migrations/2016_09_08_132614_addordertoplaylistvideos.php',
-        'BannerTableSeeder' => __DIR__ . '/../..' . '/database/seeds/BannerTableSeeder.php',
-        'CreateActivitiesTable' => __DIR__ . '/../..' . '/database/migrations/future/2015_08_05_203634_create_activities_table.php',
-        'CreateActivityLevelsTable' => __DIR__ . '/../..' . '/database/migrations/future/2015_08_05_210403_create_activity_levels_table.php',
-        'CreateAlertTypesTable' => __DIR__ . '/../..' . '/database/migrations/2016_02_11_205551_create_alert_types_table.php',
-        'CreateAlertsTable' => __DIR__ . '/../..' . '/database/migrations/2016_02_11_205607_create_alerts_table.php',
-        'CreateAlertsTargetTable' => __DIR__ . '/../..' . '/database/migrations/2016_02_11_205948_create_alerts_target_table.php',
-        'CreateBannerUserPivotTable' => __DIR__ . '/../..' . '/database/migrations/2015_12_16_200336_create_banner_user_pivot_table.php',
-        'CreateBannersTable' => __DIR__ . '/../..' . '/database/migrations/2015_09_30_213442_create-banners-table.php',
-        'CreateBikeBuildPriorityTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_06_113002_create_bike_build_priority_table.php',
-        'CreateBikeCountTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_30_163643_create_bike_count_table.php',
-        'CreateBlackfridayTrackerTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_08_112850_create_blackfriday_tracker_table.php',
-        'CreateBugReportTable' => __DIR__ . '/../..' . '/database/migrations/2016_03_09_212129_CreateBugReportTable.php',
-        'CreateCareerPathsTable' => __DIR__ . '/../..' . '/database/migrations/future/2015_08_05_210456_create_career_paths_table.php',
-        'CreateCommunicationDocumentPivotTable' => __DIR__ . '/../..' . '/database/migrations/2015_12_04_222116_create_communication_document_pivot_table.php',
-        'CreateCommunicationImportanceTable' => __DIR__ . '/../..' . '/database/migrations/2015_12_03_214110_create_communication_importance_table.php',
-        'CreateCommunicationPackagePivotTable' => __DIR__ . '/../..' . '/database/migrations/2015_12_04_222108_create_communication_package_pivot_table.php',
-        'CreateCommunicationTargetTable' => __DIR__ . '/../..' . '/database/migrations/2015_12_18_212934_CreateCommunicationTargetTable.php',
-        'CreateCommunicationTypesTable' => __DIR__ . '/../..' . '/database/migrations/2016_02_09_164438_create_communication_types_table.php',
-        'CreateCommunicationsTable' => __DIR__ . '/../..' . '/database/migrations/2015_12_03_214558_create_communications_table.php',
-        'CreateCommunityDonationItems' => __DIR__ . '/../..' . '/database/migrations/2016_10_20_102304_create_community_donation_items.php',
-        'CreateCommunityDonationTypesTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_20_102246_create_community_donation_types_table.php',
-        'CreateCommunityDonationsTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_20_102212_create_community_donations_table.php',
-        'CreateCommunityItems' => __DIR__ . '/../..' . '/database/migrations/2016_10_20_102257_create_community_items.php',
-        'CreateCommunitySportsTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_20_102235_create_community_sports_table.php',
-        'CreateContentTagPivotTable' => __DIR__ . '/../..' . '/database/migrations/2015_12_09_200212_create_content_tag_pivot_table.php',
-        'CreateDashboardBrandingTable' => __DIR__ . '/../..' . '/database/migrations/2016_01_27_220050_create_dashboard_branding_table.php',
-        'CreateDocumentPackagePivotTable' => __DIR__ . '/../..' . '/database/migrations/2015_11_27_175201_create_document_package_pivot_table.php',
-        'CreateDocumentTargetTable' => __DIR__ . '/../..' . '/database/migrations/2016_03_29_092001_create_document_target_table.php',
-        'CreateEducationLevelTable' => __DIR__ . '/../..' . '/database/migrations/future/2015_08_21_151222_create_education_level_table.php',
-        'CreateEventTargetTable' => __DIR__ . '/../..' . '/database/migrations/2016_03_23_134549_create_event_target_table.php',
-        'CreateEventTypesTable' => __DIR__ . '/../..' . '/database/migrations/2015_11_30_210139_create_event_types_table.php',
-        'CreateEventsTable' => __DIR__ . '/../..' . '/database/migrations/2015_11_30_222337_create_events_table.php',
-        'CreateFailedJobsTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_08_155802_create_failed_jobs_table.php',
-        'CreateFeatureCommunicationTable' => __DIR__ . '/../..' . '/database/migrations/2016_06_21_151449_create_feature_communication_table.php',
-        'CreateFeatureDocumentPivotTable' => __DIR__ . '/../..' . '/database/migrations/2016_02_01_173157_create_feature_document_pivot_table.php',
-        'CreateFeatureFlyerPivot' => __DIR__ . '/../..' . '/database/migrations/2017_04_07_150159_create_feature_flyer_pivot.php',
-        'CreateFeaturePackagePivot' => __DIR__ . '/../..' . '/database/migrations/2016_01_29_233852_create_feature_package_pivot.php',
-        'CreateFeaturesTable' => __DIR__ . '/../..' . '/database/migrations/2016_01_26_223339_create_features_table.php',
-        'CreateFeaturesUpdateTypeTable' => __DIR__ . '/../..' . '/database/migrations/2016_01_20_201217_create_features_update_type_table.php',
-        'CreateFeedbackCategoryTable' => __DIR__ . '/../..' . '/database/migrations/2016_07_22_145930_create_feedback_category_table.php',
-        'CreateFeedbackCategoryTypesTable' => __DIR__ . '/../..' . '/database/migrations/2016_07_22_145823_create-feedback-category-types-table.php',
-        'CreateFeedbackNotes' => __DIR__ . '/../..' . '/database/migrations/2016_07_22_150351_create_feedback_notes.php',
-        'CreateFeedbackResponseTable' => __DIR__ . '/../..' . '/database/migrations/2016_07_22_154142_create_feedback_response_table.php',
-        'CreateFeedbackStatusTypesTable' => __DIR__ . '/../..' . '/database/migrations/2016_07_22_091556_create_feedback_status_types_table.php',
-        'CreateFiscalYearTable' => __DIR__ . '/../..' . '/database/migrations/2015_09_28_215143_create-fiscal-year-table.php',
-        'CreateFlashSaleTable' => __DIR__ . '/../..' . '/database/migrations/2017_07_11_095930_create_flash_sale_table.php',
-        'CreateFlyerDataTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_05_133225_create_flyer_data_table.php',
-        'CreateFlyersTable' => __DIR__ . '/../..' . '/database/migrations/2017_03_31_105904_create_flyers_table.php',
-        'CreateFolderIdsTable' => __DIR__ . '/../..' . '/database/migrations/2015_10_28_173427_create_folder_ids_table.php',
-        'CreateFolderPackagePivot' => __DIR__ . '/../..' . '/database/migrations/2016_01_27_174427_create_folder_package_pivot.php',
-        'CreateHoodMembersTable' => __DIR__ . '/../..' . '/database/migrations/future/2015_09_03_165002_create_hood_members_table.php',
-        'CreateHoodPostRepsonsesTable' => __DIR__ . '/../..' . '/database/migrations/future/2015_09_03_165003_create_hood_post_repsonses_table.php',
-        'CreateHoodPostsTable' => __DIR__ . '/../..' . '/database/migrations/future/2015_09_03_165001_create_hood_posts_table.php',
-        'CreateHoodsTable' => __DIR__ . '/../..' . '/database/migrations/future/2015_09_03_165000_create_hoods_table.php',
-        'CreateJobsTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_08_155117_create_jobs_table.php',
-        'CreateMediaTypes' => __DIR__ . '/../..' . '/database/migrations/future/2015_09_09_201308_create_media_types.php',
-        'CreateMovesTable' => __DIR__ . '/../..' . '/database/migrations/future/2015_08_05_210432_create_moves_table.php',
-        'CreateNewAnalyticsTable' => __DIR__ . '/../..' . '/database/migrations/2016_03_28_104212_create_new_analytics_table.php',
-        'CreatePackageTable' => __DIR__ . '/../..' . '/database/migrations/2015_11_27_172830_create_package_table.php',
+        'AddAllDayToEventsTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_28_152315_add_all_day_to_events_table.php',
+        'App\\Models\\Alert\\Alert' => __DIR__ . '/../..' . '/app/Models/Alert/Alert.php',
+        'App\\Models\\Alert\\AlertType' => __DIR__ . '/../..' . '/app/Models/Alert/AlertType.php',
+        'App\\Models\\Analytics\\Analytics' => __DIR__ . '/../..' . '/app/Models/Analytics/Analytics.php',
+        'App\\Models\\Auth\\Component\\Component' => __DIR__ . '/../..' . '/app/Models/Auth/Component/Component.php',
+        'App\\Models\\Auth\\Group\\Group' => __DIR__ . '/../..' . '/app/Models/Auth/Group/Group.php',
+        'App\\Models\\Auth\\Group\\GroupRole' => __DIR__ . '/../..' . '/app/Models/Auth/Group/GroupRole.php',
+        'App\\Models\\Auth\\Resource\\Resource' => __DIR__ . '/../..' . '/app/Models/Auth/Resource/Resource.php',
+        'App\\Models\\Auth\\Resource\\ResourceTypes' => __DIR__ . '/../..' . '/app/Models/Auth/Resource/ResourceTypes.php',
+        'App\\Models\\Auth\\Role\\Role' => __DIR__ . '/../..' . '/app/Models/Auth/Role/Role.php',
+        'App\\Models\\Auth\\Role\\RoleComponent' => __DIR__ . '/../..' . '/app/Models/Auth/Role/RoleComponent.php',
+        'App\\Models\\Auth\\Role\\RoleResource' => __DIR__ . '/../..' . '/app/Models/Auth/Role/RoleResource.php',
+        'App\\Models\\Auth\\User\\User' => __DIR__ . '/../..' . '/app/Models/Auth/User/User.php',
+        'App\\Models\\Auth\\User\\UserBanner' => __DIR__ . '/../..' . '/app/Models/Auth/User/UserBanner.php',
+        'App\\Models\\Auth\\User\\UserGroup' => __DIR__ . '/../..' . '/app/Models/Auth/User/UserGroup.php',
+        'App\\Models\\Auth\\User\\UserResource' => __DIR__ . '/../..' . '/app/Models/Auth/User/UserResource.php',
+        'App\\Models\\Auth\\User\\UserRole' => __DIR__ . '/../..' . '/app/Models/Auth/User/UserRole.php',
+        'App\\Models\\Auth\\User\\UserSelectedBanner' => __DIR__ . '/../..' . '/app/Models/Auth/User/UserSelectedBanner.php',
+        'App\\Models\\Banner' => __DIR__ . '/../..' . '/app/Models/Banner.php',
+        'App\\Models\\BugReport\\BugReport' => __DIR__ . '/../..' . '/app/Models/BugReport/BugReport.php',
+        'App\\Models\\Communication\\Communication' => __DIR__ . '/../..' . '/app/Models/Communication/Communication.php',
+        'App\\Models\\Communication\\CommunicationDocument' => __DIR__ . '/../..' . '/app/Models/Communication/CommunicationDocument.php',
+        'App\\Models\\Communication\\CommunicationPackage' => __DIR__ . '/../..' . '/app/Models/Communication/CommunicationPackage.php',
+        'App\\Models\\Communication\\CommunicationTarget' => __DIR__ . '/../..' . '/app/Models/Communication/CommunicationTarget.php',
+        'App\\Models\\Communication\\CommunicationType' => __DIR__ . '/../..' . '/app/Models/Communication/CommunicationType.php',
+        'App\\Models\\Community\\Donation' => __DIR__ . '/../..' . '/app/Models/Community/Donation.php',
+        'App\\Models\\Community\\DonationItem' => __DIR__ . '/../..' . '/app/Models/Community/DonationItem.php',
+        'App\\Models\\Community\\DonationSport' => __DIR__ . '/../..' . '/app/Models/Community/DonationSport.php',
+        'App\\Models\\Community\\DonationType' => __DIR__ . '/../..' . '/app/Models/Community/DonationType.php',
+        'App\\Models\\Community\\Item' => __DIR__ . '/../..' . '/app/Models/Community/Item.php',
+        'App\\Models\\Dashboard\\DashboardBranding' => __DIR__ . '/../..' . '/app/Models/Dashboard/DashboardBranding.php',
+        'App\\Models\\Dashboard\\QuicklinkTypes' => __DIR__ . '/../..' . '/app/Models/Dashboard/QuicklinkTypes.php',
+        'App\\Models\\Dashboard\\Quicklinks' => __DIR__ . '/../..' . '/app/Models/Dashboard/Quicklinks.php',
+        'App\\Models\\Document\\Document' => __DIR__ . '/../..' . '/app/Models/Document/Document.php',
+        'App\\Models\\Document\\DocumentPackage' => __DIR__ . '/../..' . '/app/Models/Document/DocumentPackage.php',
+        'App\\Models\\Document\\DocumentTarget' => __DIR__ . '/../..' . '/app/Models/Document/DocumentTarget.php',
+        'App\\Models\\Document\\FileFolder' => __DIR__ . '/../..' . '/app/Models/Document/FileFolder.php',
+        'App\\Models\\Document\\Folder' => __DIR__ . '/../..' . '/app/Models/Document/Folder.php',
+        'App\\Models\\Document\\FolderPackage' => __DIR__ . '/../..' . '/app/Models/Document/FolderPackage.php',
+        'App\\Models\\Document\\FolderStructure' => __DIR__ . '/../..' . '/app/Models/Document/FolderStructure.php',
+        'App\\Models\\Document\\GlobalFolder' => __DIR__ . '/../..' . '/app/Models/Document/GlobalFolder.php',
+        'App\\Models\\Document\\Package' => __DIR__ . '/../..' . '/app/Models/Document/Package.php',
+        'App\\Models\\Document\\Week' => __DIR__ . '/../..' . '/app/Models/Document/Week.php',
+        'App\\Models\\Document\\Year' => __DIR__ . '/../..' . '/app/Models/Document/Year.php',
+        'App\\Models\\Event\\Event' => __DIR__ . '/../..' . '/app/Models/Event/Event.php',
+        'App\\Models\\Event\\EventAttachment' => __DIR__ . '/../..' . '/app/Models/Event/EventAttachment.php',
+        'App\\Models\\Event\\EventTarget' => __DIR__ . '/../..' . '/app/Models/Event/EventTarget.php',
+        'App\\Models\\Event\\EventType' => __DIR__ . '/../..' . '/app/Models/Event/EventType.php',
+        'App\\Models\\Feature\\Feature' => __DIR__ . '/../..' . '/app/Models/Feature/Feature.php',
+        'App\\Models\\Feature\\FeatureCommunication' => __DIR__ . '/../..' . '/app/Models/Feature/FeatureCommunication.php',
+        'App\\Models\\Feature\\FeatureCommunicationTypes' => __DIR__ . '/../..' . '/app/Models/Feature/FeatureCommunicationTypes.php',
+        'App\\Models\\Feature\\FeatureDocument' => __DIR__ . '/../..' . '/app/Models/Feature/FeatureDocument.php',
+        'App\\Models\\Feature\\FeaturePackage' => __DIR__ . '/../..' . '/app/Models/Feature/FeaturePackage.php',
+        'App\\Models\\ManagerDashboard\\ManagerDashboard' => __DIR__ . '/../..' . '/app/Models/ManagerDashboard/ManagerDashboard.php',
+        'App\\Models\\Notification\\Notification' => __DIR__ . '/../..' . '/app/Models/Notification/Notification.php',
+        'App\\Models\\ProductLaunch\\ProductLaunch' => __DIR__ . '/../..' . '/app/Models/ProductLaunch/ProductLaunch.php',
+        'App\\Models\\ProductLaunch\\ProductLaunchTarget' => __DIR__ . '/../..' . '/app/Models/ProductLaunch/ProductLaunchTarget.php',
+        'App\\Models\\Profile\\Career' => __DIR__ . '/../..' . '/app/Models/Profile/Career.php',
+        'App\\Models\\Profile\\Move' => __DIR__ . '/../..' . '/app/Models/Profile/Move.php',
+        'App\\Models\\Profile\\Position' => __DIR__ . '/../..' . '/app/Models/Profile/Position.php',
+        'App\\Models\\Profile\\Profile' => __DIR__ . '/../..' . '/app/Models/Profile/Profile.php',
+        'App\\Models\\Profile\\SubscriptionGroups' => __DIR__ . '/../..' . '/app/Models/Profile/SubscriptionGroups.php',
+        'App\\Models\\Search\\Search' => __DIR__ . '/../..' . '/app/Models/Search/Search.php',
+        'App\\Models\\StoreFeedback\\FeedbackCategory' => __DIR__ . '/../..' . '/app/Models/StoreFeedback/FeedbackCategory.php',
+        'App\\Models\\StoreFeedback\\FeedbackCategoryTypes' => __DIR__ . '/../..' . '/app/Models/StoreFeedback/FeedbackCategoryTypes.php',
+        'App\\Models\\StoreFeedback\\FeedbackNotes' => __DIR__ . '/../..' . '/app/Models/StoreFeedback/FeedbackNotes.php',
+        'App\\Models\\StoreFeedback\\FeedbackResponse' => __DIR__ . '/../..' . '/app/Models/StoreFeedback/FeedbackResponse.php',
+        'App\\Models\\StoreFeedback\\FeedbackStatus' => __DIR__ . '/../..' . '/app/Models/StoreFeedback/FeedbackStatus.php',
+        'App\\Models\\StoreFeedback\\FeedbackStatusTypes' => __DIR__ . '/../..' . '/app/Models/StoreFeedback/FeedbackStatusTypes.php',
+        'App\\Models\\StoreInfo' => __DIR__ . '/../..' . '/app/Models/StoreInfo.php',
+        'App\\Models\\Tag\\ContentTag' => __DIR__ . '/../..' . '/app/Models/Tag/ContentTag.php',
+        'App\\Models\\Tag\\Tag' => __DIR__ . '/../..' . '/app/Models/Tag/Tag.php',
+        'App\\Models\\Task\\StoreStatusTypes' => __DIR__ . '/../..' . '/app/Models/Task/StoreStatusTypes.php',
+        'App\\Models\\Task\\Task' => __DIR__ . '/../..' . '/app/Models/Task/Task.php',
+        'App\\Models\\Task\\TaskCreator' => __DIR__ . '/../..' . '/app/Models/Task/TaskCreator.php',
+        'App\\Models\\Task\\TaskDocument' => __DIR__ . '/../..' . '/app/Models/Task/TaskDocument.php',
+        'App\\Models\\Task\\TaskStatusTypes' => __DIR__ . '/../..' . '/app/Models/Task/TaskStatusTypes.php',
+        'App\\Models\\Task\\TaskStoreStatus' => __DIR__ . '/../..' . '/app/Models/Task/TaskStoreStatus.php',
+        'App\\Models\\Task\\TaskTarget' => __DIR__ . '/../..' . '/app/Models/Task/TaskTarget.php',
+        'App\\Models\\Tools\\BlackFriday\\BlackFriday' => __DIR__ . '/../..' . '/app/Models/Tools/BlackFriday/BlackFriday.php',
+        'App\\Models\\Tools\\CustomStoreGroup' => __DIR__ . '/../..' . '/app/Models/Tools/CustomStoreGroup.php',
+        'App\\Models\\UrgentNotice\\UrgentNotice' => __DIR__ . '/../..' . '/app/Models/UrgentNotice/UrgentNotice.php',
+        'App\\Models\\UrgentNotice\\UrgentNoticeAttachment' => __DIR__ . '/../..' . '/app/Models/UrgentNotice/UrgentNoticeAttachment.php',
+        'App\\Models\\UrgentNotice\\UrgentNoticeAttachmentType' => __DIR__ . '/../..' . '/app/Models/UrgentNotice/UrgentNoticeAttachmentType.php',
+        'App\\Models\\UrgentNotice\\UrgentNoticeDocument' => __DIR__ . '/../..' . '/app/Models/UrgentNotice/UrgentNoticeDocument.php',
+        'App\\Models\\UrgentNotice\\UrgentNoticeFolder' => __DIR__ . '/../..' . '/app/Models/UrgentNotice/UrgentNoticeFolder.php',
+        'App\\Models\\UrgentNotice\\UrgentNoticeTarget' => __DIR__ . '/../..' . '/app/Models/UrgentNotice/UrgentNoticeTarget.php',
+        'App\\Models\\Utility\\Utility' => __DIR__ . '/../..' . '/app/Models/Utility/Utility.php',
+        'App\\Models\\Validation\\AlertValidator' => __DIR__ . '/../..' . '/app/Models/Validation/AlertValidator.php',
+        'App\\Models\\Validation\\CommunicationValidator' => __DIR__ . '/../..' . '/app/Models/Validation/CommunicationValidator.php',
+        'App\\Models\\Validation\\ComponentValidator' => __DIR__ . '/../..' . '/app/Models/Validation/ComponentValidator.php',
+        'App\\Models\\Validation\\CustomStoreGroupValidator' => __DIR__ . '/../..' . '/app/Models/Validation/CustomStoreGroupValidator.php',
+        'App\\Models\\Validation\\DashboardBrandingValidator' => __DIR__ . '/../..' . '/app/Models/Validation/DashboardBrandingValidator.php',
+        'App\\Models\\Validation\\DocumentValidator' => __DIR__ . '/../..' . '/app/Models/Validation/DocumentValidator.php',
+        'App\\Models\\Validation\\EventTypeValidator' => __DIR__ . '/../..' . '/app/Models/Validation/EventTypeValidator.php',
+        'App\\Models\\Validation\\EventValidator' => __DIR__ . '/../..' . '/app/Models/Validation/EventValidator.php',
+        'App\\Models\\Validation\\FeatureBackgroundValidator' => __DIR__ . '/../..' . '/app/Models/Validation/FeatureBackgroundValidator.php',
+        'App\\Models\\Validation\\FeatureThumbnailValidator' => __DIR__ . '/../..' . '/app/Models/Validation/FeatureThumbnailValidator.php',
+        'App\\Models\\Validation\\FeatureValidator' => __DIR__ . '/../..' . '/app/Models/Validation/FeatureValidator.php',
+        'App\\Models\\Validation\\FolderValidator' => __DIR__ . '/../..' . '/app/Models/Validation/FolderValidator.php',
+        'App\\Models\\Validation\\GroupValidator' => __DIR__ . '/../..' . '/app/Models/Validation/GroupValidator.php',
+        'App\\Models\\Validation\\PackageValidator' => __DIR__ . '/../..' . '/app/Models/Validation/PackageValidator.php',
+        'App\\Models\\Validation\\PlaylistEditValidator' => __DIR__ . '/../..' . '/app/Models/Validation/PlaylistEditValidator.php',
+        'App\\Models\\Validation\\PlaylistValidator' => __DIR__ . '/../..' . '/app/Models/Validation/PlaylistValidator.php',
+        'App\\Models\\Validation\\PortalValidator' => __DIR__ . '/../..' . '/app/Models/Validation/PortalValidator.php',
+        'App\\Models\\Validation\\QuicklinkValidator' => __DIR__ . '/../..' . '/app/Models/Validation/QuicklinkValidator.php',
+        'App\\Models\\Validation\\ResourceValidator' => __DIR__ . '/../..' . '/app/Models/Validation/ResourceValidator.php',
+        'App\\Models\\Validation\\RoleValidator' => __DIR__ . '/../..' . '/app/Models/Validation/RoleValidator.php',
+        'App\\Models\\Validation\\TagValidator' => __DIR__ . '/../..' . '/app/Models/Validation/TagValidator.php',
+        'App\\Models\\Validation\\TaskValidator' => __DIR__ . '/../..' . '/app/Models/Validation/TaskValidator.php',
+        'App\\Models\\Validation\\UrgentNoticeValidator' => __DIR__ . '/../..' . '/app/Models/Validation/UrgentNoticeValidator.php',
+        'App\\Models\\Validation\\UserValidator' => __DIR__ . '/../..' . '/app/Models/Validation/UserValidator.php',
+        'App\\Models\\Validation\\VideoValidator' => __DIR__ . '/../..' . '/app/Models/Validation/VideoValidator.php',
+        'App\\Models\\Video\\FeaturedVideo' => __DIR__ . '/../..' . '/app/Models/Video/FeaturedVideo.php',
+        'App\\Models\\Video\\Playlist' => __DIR__ . '/../..' . '/app/Models/Video/Playlist.php',
+        'App\\Models\\Video\\PlaylistBanner' => __DIR__ . '/../..' . '/app/Models/Video/PlaylistBanner.php',
+        'App\\Models\\Video\\PlaylistTarget' => __DIR__ . '/../..' . '/app/Models/Video/PlaylistTarget.php',
+        'App\\Models\\Video\\PlaylistVideo' => __DIR__ . '/../..' . '/app/Models/Video/PlaylistVideo.php',
+        'App\\Models\\Video\\Tag' => __DIR__ . '/../..' . '/app/Models/Video/Tag.php',
+        'App\\Models\\Video\\Video' => __DIR__ . '/../..' . '/app/Models/Video/Video.php',
+        'App\\Models\\Video\\VideoBanner' => __DIR__ . '/../..' . '/app/Models/Video/VideoBanner.php',
+        'App\\Models\\Video\\VideoTag' => __DIR__ . '/../..' . '/app/Models/Video/VideoTag.php',
+        'App\\Models\\Video\\VideoTarget' => __DIR__ . '/../..' . '/app/Models/Video/VideoTarget.php',
+        'ComponentGroupPivotSeeder' => __DIR__ . '/../..' . '/database/seeds/ComponentGroupPivotSeeder.php',
+        'ComponentsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/ComponentsTableSeeder.php',
+        'CreateComponentsTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_16_114508_create_components_table.php',
+        'CreateCustomStoreGroupTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_26_160803_create_custom_store_group_table.php',
+        'CreateEventAttachmentsTable' => __DIR__ . '/../..' . '/database/migrations/2016_04_27_085018_create_event_attachments_table.php',
+        'CreateFeatureCommunicationTable' => __DIR__ . '/../..' . '/database/migrations/2017_07_18_151350_create_feature_communication_table.php',
+        'CreateFeatureCommunicationTypesTable' => __DIR__ . '/../..' . '/database/migrations/2017_07_17_213354_create_feature_communication_types_table.php',
+        'CreateFeatureTargetTable' => __DIR__ . '/../..' . '/database/migrations/2017_07_18_203518_create_feature_target_table.php',
+        'CreateFeaturedVideoTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_31_231322_create_featured_video_table.php',
+        'CreateGroupComponentPivotTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_16_115431_create_group_component_pivot_table.php',
+        'CreateGroupRolePivot' => __DIR__ . '/../..' . '/database/migrations/2017_02_15_132648_create_group_role_pivot.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
-        'CreatePlaylistTable' => __DIR__ . '/../..' . '/database/migrations/2016_07_11_113755_create_playlist_table.php',
-        'CreatePlaylistVideoTable' => __DIR__ . '/../..' . '/database/migrations/2016_07_11_113806_create_playlist_video_table.php',
-        'CreatePositionRolesTable' => __DIR__ . '/../..' . '/database/migrations/future/2015_09_09_205512_create_position_roles_table.php',
-        'CreatePositionsTable' => __DIR__ . '/../..' . '/database/migrations/future/2015_08_05_203218_create_positions_table.php',
-        'CreateProductlaunchTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_31_114859_create_productlaunch_table.php',
-        'CreateProductlaunchTargetTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_31_115029_create_productlaunch_target_table.php',
-        'CreateProfileActivitiesTable' => __DIR__ . '/../..' . '/database/migrations/future/2015_08_05_211633_create_profile_activities_table.php',
-        'CreateProfileEducationTable' => __DIR__ . '/../..' . '/database/migrations/future/2015_08_21_151326_create_profile_education_table.php',
-        'CreateProfileHistoryTable' => __DIR__ . '/../..' . '/database/migrations/future/2015_08_05_211709_create_profile_history_table.php',
-        'CreateProfileSubscriptionsTable' => __DIR__ . '/../..' . '/database/migrations/future/2015_08_19_172505_create_profile_subscriptions_table.php',
-        'CreateProfilesTable' => __DIR__ . '/../..' . '/database/migrations/future/2015_08_05_210613_create_profiles_table.php',
-        'CreateQuicklinksTable' => __DIR__ . '/../..' . '/database/migrations/2016_01_27_214111_create_quicklinks_table.php',
-        'CreateQuicklinksTypeTable' => __DIR__ . '/../..' . '/database/migrations/2016_01_26_220505_create_quicklinks_type_table.php',
-        'CreateRolesTable' => __DIR__ . '/../..' . '/database/migrations/future/2015_09_09_205316_create_roles_table.php',
-        'CreateSubscriptionGroupsTable' => __DIR__ . '/../..' . '/database/migrations/future/2015_08_18_222608_create_subscription_groups_table.php',
-        'CreateTagsTable' => __DIR__ . '/../..' . '/database/migrations/2015_12_07_234421_create_tags_table.php',
-        'CreateUrgentNoticeAttachmentTable' => __DIR__ . '/../..' . '/database/migrations/2016_02_09_171819_create_urgent_notice_attachment_table.php',
-        'CreateUrgentNoticeAttachmentTypesTable' => __DIR__ . '/../..' . '/database/migrations/2016_02_09_155416_create_urgent_notice_attachment_types_table.php',
-        'CreateUrgentNoticeTargetTable' => __DIR__ . '/../..' . '/database/migrations/2016_02_09_200318_create_urgent_notice_target_table.php',
-        'CreateUrgentNoticesTable' => __DIR__ . '/../..' . '/database/migrations/2016_02_09_155520_create_urgent_notices_table.php',
-        'CreateUserGroupTable' => __DIR__ . '/../..' . '/database/migrations/2015_12_15_181406_create_user_group_table.php',
-        'CreateUserSelectedBannerTable' => __DIR__ . '/../..' . '/database/migrations/2015_12_17_231103_create_user_selected_banner_table.php',
+        'CreatePlaylistBannerTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_09_193202_create_playlist_banner_table.php',
+        'CreatePlaylistTargetTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_09_193149_create_playlist_target_table.php',
+        'CreateResourceTypeTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_15_132000_create_resource_type_table.php',
+        'CreateResourcesTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_15_132414_create_resources_table.php',
+        'CreateRoleComponentPivot' => __DIR__ . '/../..' . '/database/migrations/2017_03_14_112654_create_role_component_pivot.php',
+        'CreateRoleResourcePivot' => __DIR__ . '/../..' . '/database/migrations/2017_02_15_132713_create_role_resource_pivot.php',
+        'CreateRolesTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_15_125134_create_roles_table.php',
+        'CreateTaskCreatorPivotTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_17_135440_createTaskCreatorPivotTable.php',
+        'CreateTaskDocumentPivotTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_10_084453_create_task_document_pivot_table.php',
+        'CreateTaskStatusTypesTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_28_085741_create_task_status_types_table.php',
+        'CreateTaskStoreStatusPivotTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_28_085807_create_task_store_status_pivot_table.php',
+        'CreateTaskStoreStatusTypes' => __DIR__ . '/../..' . '/database/migrations/2017_02_28_085799_create_task_store_status_types.php',
+        'CreateTasksTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_10_084356_create_tasks_table.php',
+        'CreateTasksTargetTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_10_084434_create_tasks_target_table.php',
+        'CreateUrgentNoticeDocumentsTable' => __DIR__ . '/../..' . '/database/migrations/2016_07_04_102925_create__urgent_notice_documents_table.php',
+        'CreateUrgentNoticeFoldersTable' => __DIR__ . '/../..' . '/database/migrations/2016_07_04_102940_create__urgent_notice_folders_table.php',
+        'CreateUserResourcePivot' => __DIR__ . '/../..' . '/database/migrations/2017_02_15_132617_create_user_resource_pivot.php',
+        'CreateUserRolePivot' => __DIR__ . '/../..' . '/database/migrations/2017_02_15_132614_create_user_role_pivot.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
-        'CreateVideoTable' => __DIR__ . '/../..' . '/database/migrations/2016_07_11_112252_create_video_table.php',
-        'CreateVideoTagsTable' => __DIR__ . '/../..' . '/database/migrations/2016_07_11_113001_create_video_tags_table.php',
-        'CreateWeeksTable' => __DIR__ . '/../..' . '/database/migrations/2015_09_28_215144_create-weeks-table.php',
+        'CreateVideoBannerTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_30_221400_create_video_banner_table.php',
+        'CreateVideosTargetTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_16_195236_create_videos_target_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
-        'DeleteAnalyticsTable' => __DIR__ . '/../..' . '/database/migrations/2016_03_28_103732_DeleteAnalyticsTable.php',
-        'Documents' => __DIR__ . '/../..' . '/database/migrations/2015_09_02_150403_documents.php',
-        'EventTypesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/EventTypesTableSeeder.php',
-        'EventsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/EventsTableSeeder.php',
-        'FileFolder' => __DIR__ . '/../..' . '/database/migrations/2015_09_16_150438_file_folder.php',
+        'FeatureCommunicationTypeTableSeeder' => __DIR__ . '/../..' . '/database/seeds/FeatureCommunicationTypeTableSeeder.php',
+        'FeatureTableSeeder' => __DIR__ . '/../..' . '/database/seeds/FeatureTableSeeder.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
         'File_Iterator_Factory' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Factory.php',
-        'FolderStruct' => __DIR__ . '/../..' . '/database/migrations/2015_09_16_150425_folder_struct.php',
-        'Folders' => __DIR__ . '/../..' . '/database/migrations/2015_09_16_150414_folders.php',
+        'GroupRolesPivotSeeder' => __DIR__ . '/../..' . '/database/seeds/GroupRolesPivotSeeder.php',
+        'GroupsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/GroupsTableSeeder.php',
         'Hamcrest\\Arrays\\IsArray' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Arrays/IsArray.php',
         'Hamcrest\\Arrays\\IsArrayContaining' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Arrays/IsArrayContaining.php',
         'Hamcrest\\Arrays\\IsArrayContainingInAnyOrder' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Arrays/IsArrayContainingInAnyOrder.php',
@@ -547,7 +699,6 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         'Hamcrest\\Type\\IsString' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Type/IsString.php',
         'Hamcrest\\Util' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Util.php',
         'Hamcrest\\Xml\\HasXPath' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Xml/HasXPath.php',
-        'IlluminateQueueClosure' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
         'PHPUnit\\Framework\\Assert' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/Assert.php',
         'PHPUnit\\Framework\\BaseTestListener' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/BaseTestListener.php',
         'PHPUnit\\Framework\\TestCase' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/TestCase.php',
@@ -573,6 +724,7 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         'PHPUnit_Framework_Constraint_ClassHasStaticAttribute' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/ClassHasStaticAttribute.php',
         'PHPUnit_Framework_Constraint_Composite' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/Composite.php',
         'PHPUnit_Framework_Constraint_Count' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/Count.php',
+        'PHPUnit_Framework_Constraint_DirectoryExists' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/DirectoryExists.php',
         'PHPUnit_Framework_Constraint_Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/Exception.php',
         'PHPUnit_Framework_Constraint_ExceptionCode' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/ExceptionCode.php',
         'PHPUnit_Framework_Constraint_ExceptionMessage' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/ExceptionMessage.php',
@@ -583,12 +735,17 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         'PHPUnit_Framework_Constraint_IsEmpty' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/IsEmpty.php',
         'PHPUnit_Framework_Constraint_IsEqual' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/IsEqual.php',
         'PHPUnit_Framework_Constraint_IsFalse' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/IsFalse.php',
+        'PHPUnit_Framework_Constraint_IsFinite' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/IsFinite.php',
         'PHPUnit_Framework_Constraint_IsIdentical' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/IsIdentical.php',
+        'PHPUnit_Framework_Constraint_IsInfinite' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/IsInfinite.php',
         'PHPUnit_Framework_Constraint_IsInstanceOf' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/IsInstanceOf.php',
         'PHPUnit_Framework_Constraint_IsJson' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/IsJson.php',
+        'PHPUnit_Framework_Constraint_IsNan' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/IsNan.php',
         'PHPUnit_Framework_Constraint_IsNull' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/IsNull.php',
+        'PHPUnit_Framework_Constraint_IsReadable' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/IsReadable.php',
         'PHPUnit_Framework_Constraint_IsTrue' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/IsTrue.php',
         'PHPUnit_Framework_Constraint_IsType' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/IsType.php',
+        'PHPUnit_Framework_Constraint_IsWritable' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/IsWritable.php',
         'PHPUnit_Framework_Constraint_JsonMatches' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/JsonMatches.php',
         'PHPUnit_Framework_Constraint_JsonMatches_ErrorMessageProvider' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/JsonMatches/ErrorMessageProvider.php',
         'PHPUnit_Framework_Constraint_LessThan' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/LessThan.php',
@@ -604,6 +761,7 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         'PHPUnit_Framework_Constraint_TraversableContains' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/TraversableContains.php',
         'PHPUnit_Framework_Constraint_TraversableContainsOnly' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/TraversableContainsOnly.php',
         'PHPUnit_Framework_Constraint_Xor' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/Xor.php',
+        'PHPUnit_Framework_CoveredCodeNotExecutedException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/CoveredCodeNotExecutedException.php',
         'PHPUnit_Framework_Error' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Error.php',
         'PHPUnit_Framework_Error_Deprecated' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Error/Deprecated.php',
         'PHPUnit_Framework_Error_Notice' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Error/Notice.php',
@@ -614,8 +772,8 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         'PHPUnit_Framework_IncompleteTest' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/IncompleteTest.php',
         'PHPUnit_Framework_IncompleteTestCase' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/IncompleteTestCase.php',
         'PHPUnit_Framework_IncompleteTestError' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/IncompleteTestError.php',
-        'PHPUnit_Framework_InvalidCoversTargetError' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/InvalidCoversTargetError.php',
         'PHPUnit_Framework_InvalidCoversTargetException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/InvalidCoversTargetException.php',
+        'PHPUnit_Framework_MissingCoversAnnotationException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MissingCoversAnnotationException.php',
         'PHPUnit_Framework_MockObject_BadMethodCallException' => __DIR__ . '/..' . '/phpunit/phpunit-mock-objects/src/Framework/MockObject/Exception/BadMethodCallException.php',
         'PHPUnit_Framework_MockObject_Builder_Identity' => __DIR__ . '/..' . '/phpunit/phpunit-mock-objects/src/Framework/MockObject/Builder/Identity.php',
         'PHPUnit_Framework_MockObject_Builder_InvocationMocker' => __DIR__ . '/..' . '/phpunit/phpunit-mock-objects/src/Framework/MockObject/Builder/InvocationMocker.php',
@@ -655,6 +813,7 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         'PHPUnit_Framework_MockObject_Stub_Return' => __DIR__ . '/..' . '/phpunit/phpunit-mock-objects/src/Framework/MockObject/Stub/Return.php',
         'PHPUnit_Framework_MockObject_Stub_ReturnArgument' => __DIR__ . '/..' . '/phpunit/phpunit-mock-objects/src/Framework/MockObject/Stub/ReturnArgument.php',
         'PHPUnit_Framework_MockObject_Stub_ReturnCallback' => __DIR__ . '/..' . '/phpunit/phpunit-mock-objects/src/Framework/MockObject/Stub/ReturnCallback.php',
+        'PHPUnit_Framework_MockObject_Stub_ReturnReference' => __DIR__ . '/..' . '/phpunit/phpunit-mock-objects/src/Framework/MockObject/Stub/ReturnReference.php',
         'PHPUnit_Framework_MockObject_Stub_ReturnSelf' => __DIR__ . '/..' . '/phpunit/phpunit-mock-objects/src/Framework/MockObject/Stub/ReturnSelf.php',
         'PHPUnit_Framework_MockObject_Stub_ReturnValueMap' => __DIR__ . '/..' . '/phpunit/phpunit-mock-objects/src/Framework/MockObject/Stub/ReturnValueMap.php',
         'PHPUnit_Framework_MockObject_Verifiable' => __DIR__ . '/..' . '/phpunit/phpunit-mock-objects/src/Framework/MockObject/Verifiable.php',
@@ -676,6 +835,7 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         'PHPUnit_Framework_TestSuite_DataProvider' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/TestSuite/DataProvider.php',
         'PHPUnit_Framework_UnintentionallyCoveredCodeError' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/UnintentionallyCoveredCodeError.php',
         'PHPUnit_Framework_Warning' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Warning.php',
+        'PHPUnit_Framework_WarningTestCase' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/WarningTestCase.php',
         'PHPUnit_Runner_BaseTestRunner' => __DIR__ . '/..' . '/phpunit/phpunit/src/Runner/BaseTestRunner.php',
         'PHPUnit_Runner_Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Runner/Exception.php',
         'PHPUnit_Runner_Filter_Factory' => __DIR__ . '/..' . '/phpunit/phpunit/src/Runner/Filter/Factory.php',
@@ -691,6 +851,7 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         'PHPUnit_TextUI_TestRunner' => __DIR__ . '/..' . '/phpunit/phpunit/src/TextUI/TestRunner.php',
         'PHPUnit_Util_Blacklist' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Blacklist.php',
         'PHPUnit_Util_Configuration' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Configuration.php',
+        'PHPUnit_Util_ConfigurationGenerator' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/ConfigurationGenerator.php',
         'PHPUnit_Util_ErrorHandler' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/ErrorHandler.php',
         'PHPUnit_Util_Fileloader' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Fileloader.php',
         'PHPUnit_Util_Filesystem' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Filesystem.php',
@@ -701,6 +862,7 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         'PHPUnit_Util_Log_JSON' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Log/JSON.php',
         'PHPUnit_Util_Log_JUnit' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Log/JUnit.php',
         'PHPUnit_Util_Log_TAP' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Log/TAP.php',
+        'PHPUnit_Util_Log_TeamCity' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Log/TeamCity.php',
         'PHPUnit_Util_PHP' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/PHP.php',
         'PHPUnit_Util_PHP_Default' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/PHP/Default.php',
         'PHPUnit_Util_PHP_Windows' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/PHP/Windows.php',
@@ -712,44 +874,10 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         'PHPUnit_Util_TestDox_ResultPrinter' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/TestDox/ResultPrinter.php',
         'PHPUnit_Util_TestDox_ResultPrinter_HTML' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/TestDox/ResultPrinter/HTML.php',
         'PHPUnit_Util_TestDox_ResultPrinter_Text' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/TestDox/ResultPrinter/Text.php',
+        'PHPUnit_Util_TestDox_ResultPrinter_XML' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/TestDox/ResultPrinter/XML.php',
         'PHPUnit_Util_TestSuiteIterator' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/TestSuiteIterator.php',
         'PHPUnit_Util_Type' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Type.php',
         'PHPUnit_Util_XML' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/XML.php',
-        'PHP_CodeCoverage' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage.php',
-        'PHP_CodeCoverage_Driver' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Driver.php',
-        'PHP_CodeCoverage_Driver_HHVM' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Driver/HHVM.php',
-        'PHP_CodeCoverage_Driver_PHPDBG' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Driver/PHPDBG.php',
-        'PHP_CodeCoverage_Driver_Xdebug' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Driver/Xdebug.php',
-        'PHP_CodeCoverage_Exception' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Exception.php',
-        'PHP_CodeCoverage_Exception_UnintentionallyCoveredCode' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Exception/UnintentionallyCoveredCode.php',
-        'PHP_CodeCoverage_Filter' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Filter.php',
-        'PHP_CodeCoverage_Report_Clover' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Report/Clover.php',
-        'PHP_CodeCoverage_Report_Crap4j' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Report/Crap4j.php',
-        'PHP_CodeCoverage_Report_Factory' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Report/Factory.php',
-        'PHP_CodeCoverage_Report_HTML' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Report/HTML.php',
-        'PHP_CodeCoverage_Report_HTML_Renderer' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Report/HTML/Renderer.php',
-        'PHP_CodeCoverage_Report_HTML_Renderer_Dashboard' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Report/HTML/Renderer/Dashboard.php',
-        'PHP_CodeCoverage_Report_HTML_Renderer_Directory' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Report/HTML/Renderer/Directory.php',
-        'PHP_CodeCoverage_Report_HTML_Renderer_File' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Report/HTML/Renderer/File.php',
-        'PHP_CodeCoverage_Report_Node' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Report/Node.php',
-        'PHP_CodeCoverage_Report_Node_Directory' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Report/Node/Directory.php',
-        'PHP_CodeCoverage_Report_Node_File' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Report/Node/File.php',
-        'PHP_CodeCoverage_Report_Node_Iterator' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Report/Node/Iterator.php',
-        'PHP_CodeCoverage_Report_PHP' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Report/PHP.php',
-        'PHP_CodeCoverage_Report_Text' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Report/Text.php',
-        'PHP_CodeCoverage_Report_XML' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Report/XML.php',
-        'PHP_CodeCoverage_Report_XML_Directory' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Report/XML/Directory.php',
-        'PHP_CodeCoverage_Report_XML_File' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Report/XML/File.php',
-        'PHP_CodeCoverage_Report_XML_File_Coverage' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Report/XML/File/Coverage.php',
-        'PHP_CodeCoverage_Report_XML_File_Method' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Report/XML/File/Method.php',
-        'PHP_CodeCoverage_Report_XML_File_Report' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Report/XML/File/Report.php',
-        'PHP_CodeCoverage_Report_XML_File_Unit' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Report/XML/File/Unit.php',
-        'PHP_CodeCoverage_Report_XML_Node' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Report/XML/Node.php',
-        'PHP_CodeCoverage_Report_XML_Project' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Report/XML/Project.php',
-        'PHP_CodeCoverage_Report_XML_Tests' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Report/XML/Tests.php',
-        'PHP_CodeCoverage_Report_XML_Totals' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Report/XML/Totals.php',
-        'PHP_CodeCoverage_Util' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Util.php',
-        'PHP_CodeCoverage_Util_InvalidArgumentHelper' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Util/InvalidArgumentHelper.php',
         'PHP_Timer' => __DIR__ . '/..' . '/phpunit/php-timer/src/Timer.php',
         'PHP_Token' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_TokenWithScope' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
@@ -879,6 +1007,7 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         'PHP_Token_NEW' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_NS_C' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_NS_SEPARATOR' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
+        'PHP_Token_NULLSAFE_OBJECT_OPERATOR' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_NUM_STRING' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_OBJECT_CAST' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_OBJECT_OPERATOR' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
@@ -949,6 +1078,52 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         'PHP_Token_XOR_EQUAL' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD_FROM' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
+        'PlaylistTableSeeder' => __DIR__ . '/../..' . '/database/seeds/PlaylistTableSeeder.php',
+        'RenameUserGroupsTable' => __DIR__ . '/../..' . '/database/migrations/2017_03_14_095128_rename_user_groups_table.php',
+        'ResourceTypeTableSeeder' => __DIR__ . '/../..' . '/database/seeds/ResourceTypeTableSeeder.php',
+        'ResourcesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/ResourcesTableSeeder.php',
+        'RoleComponentPivotSeeder' => __DIR__ . '/../..' . '/database/seeds/RoleComponentPivotSeeder.php',
+        'RoleResourcesPivotSeeder' => __DIR__ . '/../..' . '/database/seeds/RoleResourcesPivotSeeder.php',
+        'RolesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/RolesTableSeeder.php',
+        'SebastianBergmann\\CodeCoverage\\CodeCoverage' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage.php',
+        'SebastianBergmann\\CodeCoverage\\CoveredCodeNotExecutedException' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Exception/CoveredCodeNotExecutedException.php',
+        'SebastianBergmann\\CodeCoverage\\Driver\\Driver' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Driver/Driver.php',
+        'SebastianBergmann\\CodeCoverage\\Driver\\HHVM' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Driver/HHVM.php',
+        'SebastianBergmann\\CodeCoverage\\Driver\\PHPDBG' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Driver/PHPDBG.php',
+        'SebastianBergmann\\CodeCoverage\\Driver\\Xdebug' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Driver/Xdebug.php',
+        'SebastianBergmann\\CodeCoverage\\Exception' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Exception/Exception.php',
+        'SebastianBergmann\\CodeCoverage\\Filter' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Filter.php',
+        'SebastianBergmann\\CodeCoverage\\InvalidArgumentException' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Exception/InvalidArgumentException.php',
+        'SebastianBergmann\\CodeCoverage\\MissingCoversAnnotationException' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Exception/MissingCoversAnnotationException.php',
+        'SebastianBergmann\\CodeCoverage\\Node\\AbstractNode' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Node/AbstractNode.php',
+        'SebastianBergmann\\CodeCoverage\\Node\\Builder' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Node/Builder.php',
+        'SebastianBergmann\\CodeCoverage\\Node\\Directory' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Node/Directory.php',
+        'SebastianBergmann\\CodeCoverage\\Node\\File' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Node/File.php',
+        'SebastianBergmann\\CodeCoverage\\Node\\Iterator' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Node/Iterator.php',
+        'SebastianBergmann\\CodeCoverage\\Report\\Clover' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Report/Clover.php',
+        'SebastianBergmann\\CodeCoverage\\Report\\Crap4j' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Report/Crap4j.php',
+        'SebastianBergmann\\CodeCoverage\\Report\\Html\\Dashboard' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Report/Html/Renderer/Dashboard.php',
+        'SebastianBergmann\\CodeCoverage\\Report\\Html\\Directory' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Report/Html/Renderer/Directory.php',
+        'SebastianBergmann\\CodeCoverage\\Report\\Html\\Facade' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Report/Html/Facade.php',
+        'SebastianBergmann\\CodeCoverage\\Report\\Html\\File' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Report/Html/Renderer/File.php',
+        'SebastianBergmann\\CodeCoverage\\Report\\Html\\Renderer' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Report/Html/Renderer.php',
+        'SebastianBergmann\\CodeCoverage\\Report\\PHP' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Report/PHP.php',
+        'SebastianBergmann\\CodeCoverage\\Report\\Text' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Report/Text.php',
+        'SebastianBergmann\\CodeCoverage\\Report\\Xml\\Coverage' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Report/Xml/Coverage.php',
+        'SebastianBergmann\\CodeCoverage\\Report\\Xml\\Directory' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Report/Xml/Directory.php',
+        'SebastianBergmann\\CodeCoverage\\Report\\Xml\\Facade' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Report/Xml/Facade.php',
+        'SebastianBergmann\\CodeCoverage\\Report\\Xml\\File' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Report/Xml/File.php',
+        'SebastianBergmann\\CodeCoverage\\Report\\Xml\\Method' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Report/Xml/Method.php',
+        'SebastianBergmann\\CodeCoverage\\Report\\Xml\\Node' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Report/Xml/Node.php',
+        'SebastianBergmann\\CodeCoverage\\Report\\Xml\\Project' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Report/Xml/Project.php',
+        'SebastianBergmann\\CodeCoverage\\Report\\Xml\\Report' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Report/Xml/Report.php',
+        'SebastianBergmann\\CodeCoverage\\Report\\Xml\\Tests' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Report/Xml/Tests.php',
+        'SebastianBergmann\\CodeCoverage\\Report\\Xml\\Totals' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Report/Xml/Totals.php',
+        'SebastianBergmann\\CodeCoverage\\Report\\Xml\\Unit' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Report/Xml/Unit.php',
+        'SebastianBergmann\\CodeCoverage\\RuntimeException' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Exception/RuntimeException.php',
+        'SebastianBergmann\\CodeCoverage\\UnintentionallyCoveredCodeException' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Exception/UnintentionallyCoveredCodeException.php',
+        'SebastianBergmann\\CodeCoverage\\Util' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Util.php',
+        'SebastianBergmann\\CodeUnitReverseLookup\\Wizard' => __DIR__ . '/..' . '/sebastian/code-unit-reverse-lookup/src/Wizard.php',
         'SebastianBergmann\\Comparator\\ArrayComparator' => __DIR__ . '/..' . '/sebastian/comparator/src/ArrayComparator.php',
         'SebastianBergmann\\Comparator\\Comparator' => __DIR__ . '/..' . '/sebastian/comparator/src/Comparator.php',
         'SebastianBergmann\\Comparator\\ComparisonFailure' => __DIR__ . '/..' . '/sebastian/comparator/src/ComparisonFailure.php',
@@ -981,63 +1156,40 @@ class ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e
         'SebastianBergmann\\GlobalState\\Restorer' => __DIR__ . '/..' . '/sebastian/global-state/src/Restorer.php',
         'SebastianBergmann\\GlobalState\\RuntimeException' => __DIR__ . '/..' . '/sebastian/global-state/src/RuntimeException.php',
         'SebastianBergmann\\GlobalState\\Snapshot' => __DIR__ . '/..' . '/sebastian/global-state/src/Snapshot.php',
+        'SebastianBergmann\\ObjectEnumerator\\Enumerator' => __DIR__ . '/..' . '/sebastian/object-enumerator/src/Enumerator.php',
+        'SebastianBergmann\\ObjectEnumerator\\Exception' => __DIR__ . '/..' . '/sebastian/object-enumerator/src/Exception.php',
+        'SebastianBergmann\\ObjectEnumerator\\InvalidArgumentException' => __DIR__ . '/..' . '/sebastian/object-enumerator/src/InvalidArgumentException.php',
         'SebastianBergmann\\RecursionContext\\Context' => __DIR__ . '/..' . '/sebastian/recursion-context/src/Context.php',
         'SebastianBergmann\\RecursionContext\\Exception' => __DIR__ . '/..' . '/sebastian/recursion-context/src/Exception.php',
         'SebastianBergmann\\RecursionContext\\InvalidArgumentException' => __DIR__ . '/..' . '/sebastian/recursion-context/src/InvalidArgumentException.php',
+        'SebastianBergmann\\ResourceOperations\\ResourceOperations' => __DIR__ . '/..' . '/sebastian/resource-operations/src/ResourceOperations.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
-        'SessionHandlerInterface' => __DIR__ . '/..' . '/symfony/http-foundation/Resources/stubs/SessionHandlerInterface.php',
-        'TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
+        'TaskStatusTypesSeeder' => __DIR__ . '/../..' . '/database/seeds/TaskStatusTypesSeeder.php',
+        'TaskStoreStatusTypesSeeder' => __DIR__ . '/../..' . '/database/seeds/TaskStoreStatusTypesSeeder.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
-        'UpdateAlertsTableAddSoftDeletes' => __DIR__ . '/../..' . '/database/migrations/2016_03_28_104855_update_alerts_table_addSoftDeletes.php',
-        'UpdateAlertsTableAddStartend' => __DIR__ . '/../..' . '/database/migrations/2016_03_10_160342_update_alerts_table_add_startend.php',
-        'UpdateAlertsTableDropStartend' => __DIR__ . '/../..' . '/database/migrations/2016_03_10_160335_update_alerts_table_drop_startend.php',
-        'UpdateAlertstargetTableChangeStoreidDatatype' => __DIR__ . '/../..' . '/database/migrations/2016_03_14_085852_update_alertstarget_table_change_storeid_datatype.php',
-        'UpdateAnaltyticsAddDevice' => __DIR__ . '/../..' . '/database/migrations/2016_08_25_174044_update_analtytics_add_device.php',
-        'UpdateBannerTableAddTitle' => __DIR__ . '/../..' . '/database/migrations/2016_02_05_164949_update_banner_table_add_title.php',
-        'UpdateBannersTable' => __DIR__ . '/../..' . '/database/migrations/2016_01_28_204112_update_banners_table.php',
-        'UpdateBikePriorityTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_07_103246_update_bike_priority_table.php',
-        'UpdateCommunicationTypeTable' => __DIR__ . '/../..' . '/database/migrations/2016_02_09_194959_update_communication_type_table.php',
-        'UpdateDashboardBrandingTable' => __DIR__ . '/../..' . '/database/migrations/2016_01_27_230216_update_dashboard_branding_table.php',
-        'UpdateDocumentsTable' => __DIR__ . '/../..' . '/database/migrations/2015_10_27_145632_update_documents_table.php',
-        'UpdateDocumentsTableAddStartend' => __DIR__ . '/../..' . '/database/migrations/2016_02_19_224333_update_documents_table_add_startend.php',
-        'UpdateDocumentsTableDropStartend' => __DIR__ . '/../..' . '/database/migrations/2016_02_19_224325_update_documents_table_drop_startend.php',
-        'UpdateEventsTableAddStartend' => __DIR__ . '/../..' . '/database/migrations/2016_02_24_181942_update_events_table_add_startend.php',
-        'UpdateEventsTableDropStartend' => __DIR__ . '/../..' . '/database/migrations/2016_02_24_181909_update_events_table_drop_startend.php',
-        'UpdateFeatureDocumentTableAddSoftDeletes' => __DIR__ . '/../..' . '/database/migrations/2016_03_28_111034_update_feature_document_table_addSoftDeletes.php',
-        'UpdateFeaturePackageTableAddSoftDeletes' => __DIR__ . '/../..' . '/database/migrations/2016_03_28_111310_update_feature_package_table_addSoftDeletes.php',
-        'UpdateFeaturesTable' => __DIR__ . '/../..' . '/database/migrations/2016_01_29_201330_update_features_table.php',
-        'UpdateFeaturesTableAddStartend' => __DIR__ . '/../..' . '/database/migrations/2016_03_10_165126_update_features_table_add_startend.php',
-        'UpdateFeaturesTableDropStartend' => __DIR__ . '/../..' . '/database/migrations/2016_03_10_165116_update_features_table_drop_startend.php',
-        'UpdateFileFolderTableAddSoftDeletes' => __DIR__ . '/../..' . '/database/migrations/2016_03_28_114908_update_file_folder_table_addSoftDeletes.php',
-        'UpdateFolderIdsTableAddSoftDeletes' => __DIR__ . '/../..' . '/database/migrations/2016_03_28_114842_update_folder_ids_table_addSoftDeletes.php',
-        'UpdateFolderStructureTableAddSoftDeletes' => __DIR__ . '/../..' . '/database/migrations/2016_03_28_114718_update_folder_structure_table_addSoftDeletes.php',
-        'UpdateFoldersTable' => __DIR__ . '/../..' . '/database/migrations/2015_09_30_215422_update-folders-table.php',
-        'UpdateFoldersTableAddSoftDeletes' => __DIR__ . '/../..' . '/database/migrations/2016_03_28_114336_update_folders_table_addSoftDeletes.php',
-        'UpdatePackageFoldersTableAddSoftdeletes' => __DIR__ . '/../..' . '/database/migrations/2016_03_29_164058_update_package_folders_table_add_softdeletes.php',
-        'UpdatePackagesTable' => __DIR__ . '/../..' . '/database/migrations/2015_12_02_230415_update_packages_table.php',
-        'UpdatePlaylistTableAddDescription' => __DIR__ . '/../..' . '/database/migrations/2016_08_05_160241_update_playlist_table_add_description.php',
-        'UpdateQuicklinksTable' => __DIR__ . '/../..' . '/database/migrations/2016_01_28_180958_update_quicklinks_table.php',
-        'UpdateQuicklinksTypesTable' => __DIR__ . '/../..' . '/database/migrations/2016_01_27_231623_update_quicklinks_types_table.php',
-        'UpdateUrgentNoticeTargetAddStoreIdString' => __DIR__ . '/../..' . '/database/migrations/2016_06_21_114555_update_urgent_notice_target_add_Store_id_string.php',
-        'UpdateUrgentNoticeTargetRemoveStoreId' => __DIR__ . '/../..' . '/database/migrations/2016_06_21_114542_update_urgent_notice_target_remove_Store_id.php',
-        'UpdateUrgentNoticesTableAddSoftDeletes' => __DIR__ . '/../..' . '/database/migrations/2016_03_29_154257_update_urgent_notices_table_add_soft_deletes.php',
-        'UpdateUrgentnoticeTargetTableAddSoftDeletes' => __DIR__ . '/../..' . '/database/migrations/2016_03_29_161342_update_urgentnotice_target_table_add_SoftDeletes.php',
-        'UpdateUrgentnoticesTableAddStartend' => __DIR__ . '/../..' . '/database/migrations/2016_03_10_165722_update_urgentnotices_table_add_startend.php',
-        'UpdateUrgentnoticesTableDropStartend' => __DIR__ . '/../..' . '/database/migrations/2016_03_10_165708_update_urgentnotices_table_drop_startend.php',
-        'UpdateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2015_12_15_182533_update_users_table.php',
-        'UpdateVideoTableAddViewCount' => __DIR__ . '/../..' . '/database/migrations/2016_08_05_135605_update_video_table_add_view_count.php',
-        'UpdateVideosTableAddThumbnail' => __DIR__ . '/../..' . '/database/migrations/2016_08_03_150521_update_videos_table_add_thumbnail.php',
-        'UpdateWeeksTable' => __DIR__ . '/../..' . '/database/migrations/2015_12_14_180605_update_weeks_table.php',
-        'UpdatedDocumentsTableAddSoftDeletes' => __DIR__ . '/../..' . '/database/migrations/2016_03_28_110214_updated_documents_table_addSoftDeletes.php',
+        'UpdateCommunicationTargetTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_11_202636_update_communication_target_table.php',
+        'UpdateCommunicationsTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_11_195751_update_communications_table.php',
+        'UpdateDocumentTargetTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_15_215303_update_document_target_table.php',
+        'UpdateDocumentsTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_12_152143_update_documents_table.php',
+        'UpdateEventTypeTableWithColours' => __DIR__ . '/../..' . '/database/migrations/2017_06_19_202749_update_event_type_table_with_colours.php',
+        'UpdateEventsTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_11_165610_update_events_table.php',
+        'UpdateFeaturesTable' => __DIR__ . '/../..' . '/database/migrations/2017_07_18_203705_update_features_table.php',
+        'UpdatePlaylistTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_09_202016_update_playlist_table.php',
+        'UpdateTaskTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_17_171352_update_task_table.php',
+        'UpdateTasksTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_28_131811_update_tasks_table.php',
+        'UpdateTasksTableAddBannerId' => __DIR__ . '/../..' . '/database/migrations/2017_05_26_161401_update_tasks_table_add_banner_id.php',
+        'UpdateUrgentNoticeTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_16_164022_update_urgent_notice_table.php',
+        'UpdateVideosTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_16_195257_update_videos_table.php',
+        'VideoTableSeeder' => __DIR__ . '/../..' . '/database/seeds/VideoTableSeeder.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitc2b7e885dfdb76b34282a8465b80aa8e::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit235cce204c435aec5a5c3c7acba25b13::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit235cce204c435aec5a5c3c7acba25b13::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit235cce204c435aec5a5c3c7acba25b13::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit235cce204c435aec5a5c3c7acba25b13::$classMap;
 
         }, null, ClassLoader::class);
     }

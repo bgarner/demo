@@ -1,10 +1,11 @@
-<?php namespace App\Models\Feature;
+<?php
+namespace App\Models\Feature;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Feature\FeatureDocument;
 use App\Models\Feature\FeaturePackage;
 use App\Http\Requests;
@@ -15,6 +16,10 @@ use App\Models\Document\FileFolder;
 use App\Models\Validation\FeatureValidator;
 use App\Models\Validation\FeatureThumbnailValidator;
 use App\Models\Validation\FeatureBackgroundValidator;
+use App\Models\Feature\FeatureCommunicationTypes;
+use App\Models\Feature\FeatureTarget;
+use App\Models\Communication\Communication;
+use App\Models\StoreInfo;
 
 class Feature extends Model
 {
@@ -27,41 +32,75 @@ class Feature extends Model
     public static function validateCreateFeature($request)
     {
         $validateThis = [ 
-                        'name'      => $request['name'],
-                        'title'     => $request['tileLabel'],
-                        'documents' => json_decode($request['feature_files']),
-                        'packages'  => json_decode($request['feature_packages']),
-                        'flyers'    => json_decode($request['feature_flyers']),
-                        'thumbnail' => $request['thumbnail'],
-                        'background'=> $request['background'],
-                        'start'     => $request['start'],
-                        'end'       => $request['end'],
-                        'update_type_id'    => $request['update_type'],
-                        'update_frequency'  => $request['update_frequency']
+                        'name'             => $request['name'],
+                        'title'            => $request['tileLabel'],
+                        'documents'        => json_decode($request['feature_files']),
+                        'packages'         => json_decode($request['feature_packages']),
+                        'thumbnail'        => $request['thumbnail'],
+                        'background'       => $request['background'],
+                        'start'            => $request['start'],
+                        'end'              => $request['end'],
+                        'update_type_id'   => $request['update_type'],
+                        'update_frequency' => $request['update_frequency'],
+                        'target_stores'    => json_decode($request['target_stores'])
                       ];
-        
+
+        if(null !== json_decode($request['communication_type'])){
+            $validateThis['communication_type'] = json_decode($request['communication_type']);
+                        
+        }
+
+        if(null !== json_decode($request['communications'])){
+            $validateThis['communications'] = json_decode($request['communications']);
+                        
+        }
+
+        if ($request['all_stores'] != NULL) {
+            $validateThis['allStores'] = $request['all_stores'];
+        }
+
         $v = new FeatureValidator();
-          
+
         return $v->validate($validateThis);
     }
 
     public static function validateEditFeature($id, $request)
     {
         $validateThis = [ 
-                        'name'      => $request['title'],
-                        'title'     => $request['tileLabel'],
-                        'documents' => $request['feature_files'],
-                        'packages'  => $request['feature_packages'],
-                        'flyers'    => $request['feature_flyers'],
-                        'thumbnail' => $request['thumbnail'],
-                        'background'=> $request['background'],
-                        'start'     => $request['start'],
-                        'end'       => $request['end'],
-                        'update_type_id'    => $request['update_type'],
-                        'update_frequency'  => $request['update_frequency'],
-                        'remove_documents'  => $request['remove_document'],
-                        'remove_packages'   => $request['remove_package']
+                        'name'             => $request['title'],
+                        'title'            => $request['tileLabel'],
+                        'documents'        => $request['feature_files'],
+                        'packages'         => $request['feature_packages'],
+                        'start'            => $request['start'],
+                        'end'              => $request['end'],
+                        'update_type_id'   => $request['update_type'],
+                        'update_frequency' => $request['update_frequency'],
+                        'remove_documents' => $request['remove_document'],
+                        'remove_packages'  => $request['remove_package'],
+                        'target_stores'    => $request['target_stores']
                       ];
+
+        if(null !== $request['communication_type']){
+            $validateThis['communication_type'] = $request['communication_type'];
+                        
+        }
+
+        if(null !== $request['communications']){
+            $validateThis['communications'] = $request['communications'];
+                        
+        }
+
+        if ($request['all_stores'] != NULL) {
+            $validateThis['allStores'] = $request['all_stores'];
+        }
+
+        if(isset($request['thumbnail']) && $request['thumbnail']){
+            $validateThis['thumbnail']     = $request['thumbnail'];
+                        
+        }
+        if(isset($request['background']) && $request['background']){
+            $validateThis['background']    = $request['background'];
+        }
 
         $v = new FeatureValidator();
           
@@ -98,31 +137,31 @@ class Feature extends Model
 
   	public static function storeFeature(Request $request)
   	{
-  	  
-      $validate = Feature::validateCreateFeature($request);
+        \Log::info($request->all());
+        $validate = Feature::validateCreateFeature($request);
         
-      if($validate['validation_result'] == 'false') {
-        \Log::info($validate);
-        return json_encode($validate);
-      }	
-        $title = $request["name"];
-        $tile_label = $request["tileLabel"];
-        $start = $request["start"];
-        $end = $request["end"];
-        $update_type_id = $request["update_type"];
+        if($validate['validation_result'] == 'false') {
+            \Log::info($validate);
+            return json_encode($validate);
+        }	
+        $title            = $request["name"];
+        $tile_label       = $request["tileLabel"];
+        $start            = $request["start"];
+        $end              = $request["end"];
+        $update_type_id   = $request["update_type"];
         $update_frequency = $request["update_frequency"];
-  		$thumbnail = $request->file("thumbnail");
-  		$background_image = $request->file("background");
-  		$banner = UserSelectedBanner::getBanner();
+        $thumbnail        = $request->file("thumbnail");
+        $background_image = $request->file("background");
+        $banner           = UserSelectedBanner::getBanner();
 
-  		$feature = Feature::create([
-  				'banner_id'        => $banner->id,
-  				'title' 		   => $title,
-  				'tile_label'	   => $tile_label,
-  				'start'            => $start,
-  				'end' 			   => $end,
-  				'update_type_id'   => $update_type_id,
-  				'update_frequency' => $update_frequency,
+        $feature          = Feature::create([
+                'banner_id'        => $banner->id,
+                'title'            => $title,
+                'tile_label'       => $tile_label,
+                'start'            => $start,
+                'end'              => $end,
+                'update_type_id'   => $update_type_id,
+                'update_frequency' => $update_frequency,
                 'thumbnail'        => 'temp',
                 'background_image' => 'temp'
 
@@ -137,7 +176,9 @@ class Feature extends Model
       
   		Feature::addFiles(json_decode($request["feature_files"]), $feature->id);
   		Feature::addPackages(json_decode($request['feature_packages']), $feature->id);
-        Feature::addFlyers(json_decode($request['feature_flyers']), $feature->id);
+        Feature::updateCommunicationTypes(json_decode($request['communication_type']), $feature->id);
+        FeatureCommunication::updateFeatureCommunications(json_decode($request['communications']), $feature->id);
+        FeatureTarget::updateFeatureTarget($feature->id, $request);
 
   		return $feature;
 
@@ -145,7 +186,7 @@ class Feature extends Model
 
     public static function updateFeature(Request $request, $id)
     {
-        \Log::info($request->all());        
+        \Log::info($request->all());
         $validate = Feature::validateEditFeature($id, $request);
         
         if($validate['validation_result'] == 'false') {
@@ -169,8 +210,9 @@ class Feature extends Model
         Feature::removeFiles($request->remove_document, $id);
         Feature::addPackages($request->feature_packages, $id);
         Feature::removePackages($request->remove_package, $id);
-        Feature::addFlyers($request->feature_flyers, $id);
-        Feature::removeFlyers($request->remove_flyer, $id);
+        Feature::updateCommunicationTypes($request['communication_type'], $feature->id);
+        FeatureCommunication::updateFeatureCommunications($request['communications'], $feature->id);
+        FeatureTarget::updateFeatureTarget($feature_id, $request);
         return $feature;
 
     }
@@ -206,7 +248,7 @@ class Feature extends Model
     			foreach ($feature_packages as $package) {
     				FeaturePackage::create([
     					'feature_id' => $feature_id,
-    					'package_id'	 => intval($package)
+    					'package_id' => intval($package)
     					]);
     			}
     		}
@@ -223,43 +265,33 @@ class Feature extends Model
         return; 
     }
 
-    public static function addFlyers($feature_flyers, $feature_id)
+    public static function updateCommunicationTypes($communication_types, $feature_id)
     {
-        
-        if (isset($feature_flyers)) {
-            foreach ($feature_flyers as $flyer) {
-                FeatureFlyer::create([
+        if(FeatureCommunicationTypes::where('feature_id', $feature_id)->first()){
+            $feature = FeatureCommunicationTypes::where('feature_id', $feature_id)->delete();
+        }
+        if (isset($communication_types)) {   
+            
+            foreach ($communication_types as $type) {
+                FeatureCommunicationTypes::create([
                     'feature_id' => $feature_id,
-                    'flyer_id'   => intval($flyer)
+                    'communication_type_id' => intval($type)
                     ]);
             }
         }
-        return;
     }
-
-    public static function removeFlyers($feature_flyers, $feature_id)
-    {
-        if (isset($feature_flyers)) {
-          foreach ($feature_flyers as $flyer) {
-            FeatureFlyer::where('feature_id', $feature_id)->where('flyer_id', intval($flyer))->delete();  
-          }
-        }
-        return; 
-    }
-
-
 
     public static function updateFeatureBackground($file, $feature_id)
     {
-        $metadata = Feature::getFileMetaData($file);
+        $metadata       = Feature::getFileMetaData($file);
 
-        $directory = public_path() . '/images/featured-backgrounds/';
-        $uniqueHash = sha1(time() . time());
-        $filename  = $metadata["modifiedName"] . "_" . $uniqueHash . "." . $metadata["originalExtension"];
+        $directory      = public_path() . '/images/featured-backgrounds/';
+        $uniqueHash     = sha1(time() . time());
+        $filename       = $metadata["modifiedName"] . "_" . $uniqueHash . "." . $metadata["originalExtension"];
 
-        $upload_success = $file->move($directory, $filename); //move and rename file  
+        $upload_success = $file->move($directory, $filename); //move and rename file
 
-        $feature = Feature::where('id', $feature_id)->update(['background_image' => $filename]);
+        $feature        = Feature::where('id', $feature_id)->update(['background_image' => $filename]);
   
         return $filename;
     }
@@ -339,16 +371,31 @@ class Feature extends Model
 
     }
 
-    public static function getActiveFeatureByBannerId($banner_id)
+    public static function getActiveFeatureByStoreNumber($storeNumber)
     {
         $now = Carbon::now()->toDatetimeString();
-        return Feature::where('banner_id', $banner_id)
-              ->where('start', '<=', $now)
-               ->where(function($query) use ($now) {
-                    $query->where('features.end', '>=', $now)
-                        ->orWhere('features.end', '=', '0000-00-00 00:00:00' ); 
-                })
-              ->orderBy('order')->get();
+        $banner_id = StoreInfo::getStoreInfoByStoreId($storeNumber)->banner_id;
+
+        $allStoreFeatures = Feature::where('all_stores', 1)
+                                    ->where('banner_id', $banner_id)
+                                    ->where('start', '<=', $now)
+                                    ->where(function($query) use ($now) {
+                                        $query->where('features.end', '>=', $now)
+                                            ->orWhere('features.end', '=', '0000-00-00 00:00:00' ); 
+                                    })
+                                    ->select('features.*')
+                                    ->get();
+
+        $targetedFeatures = Feature::join('feature_target', 'features.id', '=', 'feature_target.feature_id')
+                                    ->where('store_id', $storeNumber)
+                                    ->where(function($query) use ($now) {
+                                        $query->where('features.end', '>=', $now)
+                                            ->orWhere('features.end', '=', '0000-00-00 00:00:00' ); 
+                                    })
+                                    ->select('features.*')
+                                    ->get();
+        $features = $allStoreFeatures->merge($targetedFeatures)->sortBy('order');  
+        return $features;                               
 
     }
 
@@ -375,14 +422,23 @@ class Feature extends Model
         return $packages;
     }
 
-    public static function getFlyerDetailsByFeatureId($feature_id)
+    public static function getFeatureCommunications($feature_id, $storeNumber)
     {
-        $flyers = FeatureFlyer::join('flyers', 'feature_flyer.flyer_id', '=', 'flyers.id')
-                                ->where('feature_flyer.feature_id', '=', $feature_id)->get();
-        return $flyers;
+        $featureCommunicationTypes = FeatureCommunicationTypes::getCommunicationTypeId($feature_id);
+
+        $mergedCommunications = [];
+
+        foreach ($featureCommunicationTypes as $type) {
+            $communications  = Communication::getActiveCommunicationsByCategory($storeNumber, $type);
+            $mergedCommunications = $communications->merge($mergedCommunications);
+        }
+
+        $featureCommunications = FeatureCommunication::getCommunicationId($feature_id);
+        foreach ($featureCommunications as $comm) {
+            $communications = Communication::getCommunicationById($comm);
+            $mergedCommunications->push($communications);
+        }
+
+        return $mergedCommunications;
     }
-
-
-
-    
 }

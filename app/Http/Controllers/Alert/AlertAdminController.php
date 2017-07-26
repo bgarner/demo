@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\UserSelectedBanner;
+use App\Models\Document\FileFolder;
 use App\Models\Banner;
 use App\Models\Alert\Alert;
+use App\Models\Auth\User\UserSelectedBanner;
 
 class AlertAdminController extends Controller
 {
@@ -17,8 +18,7 @@ class AlertAdminController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin.auth');
-        $this->middleware('banner');
+        //
     }
 
     /**
@@ -29,13 +29,8 @@ class AlertAdminController extends Controller
     public function index(Request $request)
     {
         
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
-        $alerts = Alert::getAllAlerts($banner->id);
-
-        return view('admin.alerts.index')->with('alerts', $alerts)
-                                                ->with('banner', $banner)
-                                                ->with('banners', $banners);
+        $alerts = Alert::getAllAlerts();
+        return view('admin.alerts.index')->with('alerts', $alerts);
     }
 
 
@@ -46,7 +41,13 @@ class AlertAdminController extends Controller
      */
     public function create()
     {
-        //
+        $banner = UserSelectedBanner::getBanner();
+        $alert_types = ["" =>'Select one'];
+        $alert_types += \DB::table('alert_types')->pluck('name', 'id')->toArray();
+        $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
+
+        return view('admin.alerts.create')->with('alert_types', $alert_types )
+                                        ->with('navigation', $fileFolderStructure);
     }
 
     /**
@@ -57,7 +58,8 @@ class AlertAdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        \Log::info($request->all());
+        return Alert::createAlert($request);
     }
 
     /**

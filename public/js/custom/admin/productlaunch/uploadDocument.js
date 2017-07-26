@@ -26,7 +26,7 @@ var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
        console.log($('#folder-title').attr('data-folderid'));
       // Pass token. You can use the same method to pass any other values as well such as a id to associate the image with for example.
         formData.append("_token", $('[name=_token').val()); // Laravel expect the token post value to be named _token by default
-        formData.append("banner_id", $('[name=banner_id]').val());
+        // formData.append("banner_id", $('[name=banner_id]').val());
         formData.append("uploadOption", $('#uploadOptionProductLaunch option:selected').val());
 
     },

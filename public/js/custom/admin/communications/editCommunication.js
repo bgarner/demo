@@ -2,11 +2,6 @@ $("#allStores").change(function(){
 
 	if ($("#allStores").is(":checked")) {
 
-		$("#storeSelect option").each(function(){
-			$(this).removeAttr('selected');
-		});
-		$("#storeSelect").chosen('chosen:updated');
-
 		$("#storeSelect option").each(function(index){			
 			$(this).prop('selected', 'selected');
 		});
@@ -23,44 +18,6 @@ $("#allStores").change(function(){
 });
 
 
-$("#add-documents").click(function(){
-	$("#document-listing").modal('show');
-});
-
-$("#add-packages").click(function(){
-	$("#package-listing").modal('show');	
-});
-
-
-$('body').on('click', '#attach-selected-files', function(){
-	$(".selected-files").remove();
-	$('input[name^="package_files"]').each(function(){
-		if($(this).is(":checked")){
-			$("#files-selected").append('<div class="col-sm-10 col-sm-offset-2"><div class="row">'+
-											'<div class="feature-files col-md-8 " data-fileid='+ $(this).val() +'> '+
-												'<div class="feature-filename selected-files" data-fileid='+ $(this).val() +'><i class="fa fa-file-o"></i> '+  $(this).attr("data-filename")+
-											'</div></div>'+
-											'<a data-document-id="'+ $(this).val()+'" id="file'+ $(this).val()+'" class="remove-staged-file btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></div></div>')
-		}
-	});
-});
-
-
-$('body').on('click', ".remove-file", function(){
-	var document_id = $(this).attr('data-document-id');
-	$(this).parent().fadeOut(200);
-	$("#files-staged-to-remove").append('<div class="remove_document"  data-documentid='+ document_id +'>')
-});
-
-$("body").on('click', ".remove-staged-file", function(){
-	
-	var document_id = $(this).attr('data-document-id');
-	$(".feature-files[data-fileid = '" + document_id + "']").remove();
-	$(this).parent().fadeOut(200);
-
-});
-
-
 $(document).on('click','.communication-update',function(){
   	
  
@@ -73,8 +30,11 @@ $(document).on('click','.communication-update',function(){
 	var start = $("#send_at").val();
 	var end = $("#archive_at").val();
 	var banner_id = $("input[name='banner_id']").val();
-	var target_stores  = $("#storeSelect").val();
+	// var target_stores  = $("#storeSelect").val();
+	var target_stores = getTargetStores();
 	var allStores  = $("#allStores:checked").val();
+	console.log(allStores);
+	console.log(target_stores);
 
 	console.log(communication_type_id);
 	
@@ -101,7 +61,7 @@ $(document).on('click','.communication-update',function(){
 		communication_packages.push($(this).attr('data-packageid'));
 	});
  
-
+	console.log(remove_document);
     if(subject == '' || body == '') {
 		swal("Oops!", "Communication title/body incomplete.", "error"); 
 		hasError = true;
@@ -120,7 +80,7 @@ $(document).on('click','.communication-update',function(){
 		$(window).scrollTop(0);
 		return false;
 	}
-	console.log(communication_type_id);
+	
      if(hasError == false) {
 
 		$.ajax({
@@ -138,7 +98,7 @@ $(document).on('click','.communication-update',function(){
 		  		archive_at : end,
 		  		banner_id : banner_id,
 		  		target_stores : target_stores,
-		  		allStores : allStores,
+		  		all_stores : allStores,
 		  		communication_documents : communication_documents,
 		  		communication_packages : communication_packages,
 		  		remove_document : remove_document,
@@ -199,9 +159,10 @@ $(document).on('click','.communication-update',function(){
 		    }
 		}).done(function(response){
 			console.log(response);
-			$(".existing-files-container").load("/admin/communicationdocuments/"+communicationId);
+			// $(".existing-files-container").load("/admin/communicationdocuments/"+communicationId);
 			$("#files-staged-to-remove").empty();
 			$("#files-selected").empty();
+			$("#files-selected").load("/admin/communicationdocuments/"+communicationId);
 			$("#document-listing").find(".document-checkbox").prop('checked', false);
 		});    	
     }

@@ -4,7 +4,7 @@ $( document ).ready(function() {
 	
 	var folderId = window.location.hash.substr(3);
 
-	console.log(folderId);
+	// console.log(folderId);
 
 	getFolderDocuments(folderId);
 
@@ -18,7 +18,7 @@ $( document ).ready(function() {
 });
 
 var getFolderDocuments = function(id){
-	console.log("this is the id for the ajax call: " + id);
+	// console.log("this is the id for the ajax call: " + id);
 	var folder_id = id;
 	$.ajax(
 		{
@@ -30,9 +30,9 @@ var getFolderDocuments = function(id){
 		}
 	)
 	.done(function(data){
-		console.log(data);
+		// console.log(data);
 		fillTable(data);
-		console.log("this is what we are sending to setDeepLink " + data.folder.global_folder_id);
+		// console.log("this is what we are sending to setDeepLink " + data.folder.global_folder_id);
 		setDeepLink(data.folder.global_folder_id);
 		fillBreadCrumbs(data);
 		$("#folder-name-for-upload").html("to  <i>"+data.folder.name+"</i>");
@@ -49,10 +49,10 @@ var checkDeepLink = function(){
 	}
 }
 var setDeepLink = function(folderId){
-	// var id = window.location.hash;
+	var id = window.location.hash;
 	// console.log(id);
-	console.log("folderId: " +folderId);
-	console.log(window.location.pathname);
+	// console.log("folderId: " +folderId);
+	// console.log(window.location.pathname);
 	location.href = window.location.pathname + "#!/" + folderId;
 }
 	

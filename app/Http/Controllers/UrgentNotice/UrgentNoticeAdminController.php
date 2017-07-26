@@ -6,18 +6,19 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\UserSelectedBanner;
-use App\Models\UserBanner;
+use App\Models\Auth\User\UserSelectedBanner;
+use App\Models\Auth\User\UserBanner;
 use App\Models\Banner;
 use App\Models\StoreInfo;
 use App\Models\UrgentNotice\UrgentNotice;
 use App\Models\Document\FileFolder;
 use App\Models\Document\FolderStructure;
 use App\Models\UrgentNotice\UrgentNoticeAttachmentType;
-use App\Models\UrgentNotice\UrgentNoticeAttachment;
 use App\Models\UrgentNotice\UrgentNoticeTarget;
 use App\Models\Document\Document;
 use App\Models\Document\Folder;
+use App\Models\UrgentNotice\UrgentNoticeDocument;
+use App\Models\UrgentNotice\UrgentNoticeFolder;
 
 class UrgentNoticeAdminController extends Controller
 {
@@ -27,8 +28,7 @@ class UrgentNoticeAdminController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin.auth');
-        $this->middleware('banner');
+        //
     }
     
     /**
@@ -38,19 +38,11 @@ class UrgentNoticeAdminController extends Controller
      */
     public function index()
     {
-        // return view('admin.urgent-notice.index');
-
-        $user_id = \Auth::user()->id;
-        $banner_ids = UserBanner::where('user_id', $user_id)->get()->pluck('banner_id');
-        $banners = Banner::whereIn('id', $banner_ids)->get();        
-        $banner_id = UserSelectedBanner::where('user_id', \Auth::user()->id)->first()->selected_banner_id;
-        $banner  = Banner::find($banner_id);
+       
+        $banner = UserSelectedBanner::getBanner();
 
         $urgent_notices = UrgentNotice::where('banner_id', $banner->id)->get();
-        return view('admin/urgent-notice/index')
-                ->with('banner', $banner)
-                ->with('banners',$banners)
-                ->with('urgent_notices',$urgent_notices);
+        return view('admin.urgent-notice.index')->with('urgent_notices',$urgent_notices);
     }
 
     /**
@@ -70,8 +62,6 @@ class UrgentNoticeAdminController extends Controller
         $attachment_types = UrgentNoticeAttachmentType::all();
 
         $storeList = StoreInfo::getStoreListing($banner->id);
-        
-        // dd($fileFolderStructure);
         
         return view('admin.urgent-notice.create')
                     ->with('banner', $banner)
@@ -118,38 +108,16 @@ class UrgentNoticeAdminController extends Controller
         $banners = Banner::all();
 
         $urgent_notice = UrgentNotice::find($id);
-
-        $urgent_notice_attachment_ids = UrgentNoticeAttachment::where('urgent_notice_id', $id)->get()->pluck('attachment_id');
         
         $attached_folders = [];
         $attached_documents = [];
 
-        if ($urgent_notice->attachment_type_id == 1) { //folder
-            
-            foreach ($urgent_notice_attachment_ids as $key=>$global_folder_id) {
-                $folder_id = \DB::table('folder_ids')->where('id', $global_folder_id)->first()->folder_id;
-                $folder = Folder::find($folder_id);
-                array_push($attached_folders, $folder);
-                unset($folder);
-            }
-        }
-        else if ( $urgent_notice->attachment_type_id == 2 ) { //document
-            
-            foreach ($urgent_notice_attachment_ids as $document_id) {
-                
-                $document = Document::find($document_id);
-                array_push($attached_documents, $document);
-                unset($document);
-            }
-        }
-        
+
+        $attached_documents = UrgentNoticeDocument::getDocuments($id);
+        $attached_folders = UrgentNoticeFolder::getFolders($id);
+
         $storeList = StoreInfo::getStoreListing($banner->id);
         $target_stores = UrgentNoticeTarget::where('urgent_notice_id', $id)->get()->pluck('store_id')->toArray();
-        $all_stores = false;
-        if (count($storeList) == count($target_stores)) {
-            $all_stores = true;
-        }
-
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
         $folderStructure = FolderStructure::getNavigationStructure($banner->id);
         
@@ -160,10 +128,8 @@ class UrgentNoticeAdminController extends Controller
                                             ->with('urgent_notice', $urgent_notice)
                                             ->with('attached_folders', $attached_folders)
                                             ->with('attached_documents', $attached_documents)
-                                            ->with('attachment_types', $attachment_types)
                                             ->with('target_stores', $target_stores)
                                             ->with('storeList', $storeList)
-                                            ->with('all_stores', $all_stores)
                                             ->with('navigation', $fileFolderStructure)
                                             ->with('folderStructure', $folderStructure);
     }
@@ -177,7 +143,6 @@ class UrgentNoticeAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
         return UrgentNotice::updateUrgentNotice($request, $id);
     }
 
@@ -190,5 +155,17 @@ class UrgentNoticeAdminController extends Controller
     public function destroy($id)
     {
         return UrgentNotice::deleteUrgentNotice($id);
+    }
+
+    public function getDocumentPartial($id)
+    {
+        $documents = UrgentNoticeDocument::getDocuments($id);
+        return view('admin.urgent-notice.document-partial')->with('documents', $documents);
+    }
+
+    public function getFolderPartial($id)
+    {
+        $folders = UrgentNoticeFolder::getFolders($id);
+        return view('admin.urgent-notice.folder-partial')->with('folders', $folders);
     }
 }

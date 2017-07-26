@@ -49,8 +49,7 @@
 		                            <h5>Alerts</h5>
 
 		                            <div class="ibox-tools">
-
-		                                
+		                                <a href="/admin/alert/create" class="btn btn-primary btn"><i class="fa fa-plus"></i> New Alert</a>
 		                            </div>
 		                        </div>
 		                        <div class="ibox-content">
@@ -89,6 +88,8 @@
 						                                {{$alert->count_target_stores}} Stores
 						                            </button>
 													
+												@elseif(isset($alert->all_stores) && $alert->all_stores)
+													<button type="button" class="btn btn-primary">All Stores</button>
 												@else
 													&mdash;
 												@endif
@@ -104,7 +105,6 @@
 
 											<td>
 												<a href="/admin/document/{{ $alert->document_id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
-
 												<a data-alert="{{ $alert->id }}" id="alert{{ $alert->id }}" class="delete-alert btn btn-danger btn-sm"><i class="fa fa-ban"></i></a>
 
 											</td>
@@ -123,7 +123,7 @@
 
 		        </div>
 
-				@include('site.includes.footer')
+				@include('admin.includes.footer')
 
 			    @include('admin.includes.scripts')
 

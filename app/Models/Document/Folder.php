@@ -10,14 +10,14 @@ use App\Models\Document\FolderStructure;
 use App\Models\Tag\Tag;
 use App\Models\Tag\ContentTag;
 use Carbon\Carbon;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use DB;
 use App\Models\Dashboard\Quicklinks;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Document\GlobalFolder;
 use App\Models\Validation\FolderValidator;
 use App\Models\Document\FolderPackage;
-use App\Models\UrgentNotice\UrgentNoticeAttachment;
+use App\Models\UrgentNotice\UrgentNoticeFolder;
 
 class Folder extends Model
 {
@@ -30,9 +30,16 @@ class Folder extends Model
     {
         $validateThis = [
 
-            'parent' => $request['parent'],
+            
             'name'  => $request['name']
         ];
+
+        if(isset($request['parent']) && !empty($request['parent'])){
+
+            $validateThis['parent'] = $request['parent'];
+
+        }
+        
 
         $v = new FolderValidator();
         return $v->validate($validateThis);
@@ -153,7 +160,7 @@ class Folder extends Model
         FolderPackage::where('folder_id', $id)->delete();
 
         //delete from urgent notices
-        UrgentNoticeAttachment::deleteAttachment($id, 'Folder');
+        UrgentNoticeFolder::deleteFolder($id);
 
         //delete from Quicklink
         $quicklink = Quicklinks::where('url', $id)->where('type', 1)->first();

@@ -1809,6 +1809,7 @@ a.DTTT_button:hover:not(.DTTT_disabled) {
   margin: 0;
   padding: 0;
   font-size: 14px;
+  background-color: #fff;
 }
 .todo-list.small-list {
   font-size: 12px;
@@ -1830,10 +1831,11 @@ a.DTTT_button:hover:not(.DTTT_disabled) {
   padding: 1px 2px 1px 5px;
 }
 .todo-list > li {
-  background: #f3f3f4;
+  /*background: #f3f3f4;*/
   border-left: 6px solid #e7eaec;
   border-right: 6px solid #e7eaec;
-  border-radius: 4px;
+  border-bottom: 1px dotted #e7eaec;
+  /*border-radius: 1px;*/
   color: inherit;
   margin-bottom: 2px;
   padding: 10px;
@@ -1849,7 +1851,9 @@ a.DTTT_button:hover:not(.DTTT_disabled) {
   margin-left: 10px;
 }
 .check-link {
-  font-size: 16px;
+  font-size: 24px;
+  position: relative;
+  top: 5px;
 }
 .todo-completed {
   text-decoration: line-through;
@@ -8450,11 +8454,99 @@ body.md-skin {
         padding: 0px 0px 0px 20px;
     }
 
-    tr.highlight{
-        background-color: rgb(255, 224, 224);
-    }
+.bootstrap-datetimepicker-widget.dropdown-menu.bottom {
+    top: 26px !important;
+    right:10px;
+  width:23em !important;
+  left: auto !important;
+    right: -45px !important;
+}
 
-    tr.highlight:hover{
-        color: #fff;
-        background-color: rgb(252, 10, 10) !important;
-    }
+.bootstrap-datetimepicker-widget.dropdown-menu.bottom:before {
+  left: 210px;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu.bottom:after {
+  left: 211px;
+}
+.bootstrap-datetimepicker-widget table td.day{
+  line-height: 0px;
+}
+.task-element-selected{
+  color: green;
+}
+.task-element-in-process{
+  color:#3276b1;
+}
+#due_date_popover, #store_select_popover, .task-create, .project-completion{
+  cursor: pointer;
+}
+.project-row-detail{
+  background-color: #e7eaec;
+}
+.project-list table tr td{
+  vertical-align: top !important;
+}
+.task-done{
+  float:right;
+  padding-right: 20px;
+}
+.task-not-done{
+  float: left;
+  padding-left: 20px;
+}
+.task_description{
+  padding-left: 25px;
+}
+
+.lang-select{
+    border-radius: 0px;
+
+}
+.dropup{
+    position: relative;
+    bottom: 3px;
+}
+
+.dropup ul{
+    border: 0 !important;
+    margin-bottom: 10px !important;
+}
+#document-list{
+  max-height: 200px;
+  display: none;
+  overflow-y: scroll;
+  border:thin solid #e9e9e9;
+}
+
+
+#folder-listing .modal-dialog{
+  height:95%;
+}
+
+#folder-listing .modal-header{
+  position: absolute;
+  top: 10px;
+  width: 100%;
+}
+
+#folder-listing .modal-body{
+  position: absolute;
+  top: 70px;
+  width: 100%;
+  height: 90% !important;
+}
+
+#folder-listing .modal-body .tree{
+  height: 90% !important;
+  overflow-y: auto;
+}
+
+#folder-listing .modal-footer{
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+}
+
+.edit_multiple_documents .dropdown-item{
+  line-height: 30px;
+}

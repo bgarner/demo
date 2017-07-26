@@ -49,7 +49,7 @@
 		                            <h5>New Event Type</h5>
 		                            <div class="ibox-tools">
 		                               {{--  <a href="/admin/calendar/create" class="btn btn-primary" role="button"><i class="fa fa-plus"></i> Add New Event</a> --}}
-                                        
+
 		                            </div>
 		                        </div>
 		                        <div class="ibox-content">
@@ -59,12 +59,21 @@
                                             <div class="col-sm-10"><input type="text" class="form-control" name="event_type" id="event_type" value=""></div>
                                         </div>
 
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Background Colour</label>
+                                            <div class="col-sm-2"><input class="jscolor form-control" value="ab2567" name="background_colour" id="background_colour"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Text Colour</label>
+                                            <div class="col-sm-2"><input class="jscolor form-control" value="ab2567" name="foreground_colour" id="foreground_colour"></div>
+                                        </div>
+
 
                                         <div class="hr-line-dashed"></div>
 
                                         <div class="form-group">
                                             <div class="col-sm-4 col-sm-offset-2">
-                                                <a class="btn btn-white" href="/admin/calendar"><i class="fa fa-close"></i> Cancel</a>
+                                                <a class="btn btn-white" href="/admin/eventtypes"><i class="fa fa-close"></i> Cancel</a>
                                                 <button class="eventtype-create btn btn-primary" type="submit"><i class="fa fa-check"></i> Create New Event</button>
 
                                             </div>
@@ -84,7 +93,7 @@
 
 		        </div>
 
-				@include('site.includes.footer')
+				@include('admin.includes.footer')
 
 			    @include('admin.includes.scripts')
 
@@ -97,7 +106,7 @@
 				</script>
 
 				<script src="/js/custom/admin/events/addEventType.js"></script>
-				
+                <script src="/js/vendor/jscolor-2.0.4/jscolor.min.js"></script>
 
 				@include('site.includes.bugreport')
 

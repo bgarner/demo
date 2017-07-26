@@ -64,7 +64,7 @@
                             </div>
 
                             <div class="pull-right">
-                                    <h2>{{$video[0]->views}} views</h2>
+                                    <h2>{{$video[0]->views}} {{__("views")}}</h2>
                                     <!-- <div class="progress progress-mini" style="margin-bottom: 10px;">
                                         <div style="width: {{$video[0]->ratio}}%;" class="progress-bar"></div>
                                     </div> -->
@@ -80,7 +80,7 @@
 
                             @if( count($playlists) > 0)
                                 <hr />
-                                <h2>Related Playlists</h2>
+                                <h2>{{__("Related Playlists")}}</h2>
                                 @foreach($playlists as $playlist)
                                     <h4><i class="fa fa-list" aria-hidden="true"></i> <a href="../playlist/{{$playlist->id}}">{{ $playlist->title }}</a></h4>
                                 @endforeach

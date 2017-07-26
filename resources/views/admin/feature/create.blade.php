@@ -6,6 +6,7 @@
     @include('admin.includes.head')
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
+	<link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
 </head>
 
 <body class="fixed-navigation adminview">
@@ -57,7 +58,8 @@
 		                        	<form method="get" class="form-horizontal" id="createNewFeatureForm" enctype="multipart/form-data">
                                         
                                         <input type="hidden" name="banner_id" value="{{$banner->id}}">
-                                        <div class="form-group"><label class="col-sm-2 control-label">Feature Title</label>
+                                        <div class="form-group">
+                                        	<label class="col-sm-2 control-label">Feature Title <span class="req">*</span></label>
                                             <div class="col-sm-10"><input type="text" id="feature_title" name="feature_title" class="form-control" value=""></div>
                                         </div>
                                         <div class="form-group"><label class="col-sm-2 control-label">Tile Label</label>
@@ -65,7 +67,7 @@
                                         </div>
                                         <div class="form-group">
 
-                                                <label class="col-sm-2 control-label">Start &amp; End</label>
+                                                <label class="col-sm-2 control-label">Start &amp; End <span class="req">*</span></label>
 
                                                 <div class="col-sm-10">
                                                     <div class="input-daterange input-group" id="datepicker">
@@ -76,15 +78,48 @@
                                                 </div>
                                         </div>
 
+
+                                        <div class="form-group">
+
+								                <label class="col-sm-2 control-label">Target Stores <span class="req">*</span></label>
+								                <div class="col-sm-10">
+								                	<select name="stores" id="storeSelect" multiple class="chosen">
+										            	<option value="">Select Some Options</option>
+										            	@foreach($storeAndStoreGroups as $option)
+											                
+										                    <option value="{{$option['id']}}"
+										                        
+										                        @if(isset($option["isStoreGroup"]))
+																	data-isStoreGroup = "{{$option['isStoreGroup']}}"
+										                        @endif
+										                        @if(isset($option["stores"]))
+																	data-stores = "{{$option['stores']}}"
+										                        @endif
+										                        
+										                    >
+										                        {{$option['name']}}
+										                    </option>
+											                
+										            	@endforeach
+
+										        	</select>
+										        	{!! Form::label('allStores', 'Or select all stores:') !!}
+										        	{!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
+								                </div>
+
+								        </div>
+
+
+
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
-                                        	<label class="col-sm-2 control-label">Thumbnail</label>
+                                        	<label class="col-sm-2 control-label">Thumbnail <span class="req">*</span></label>
                                         	<div class="col-md-10"><input type="file" name="thumbnail" id="thumbnail" class="form-control "></div>
                                             
                                         </div>
 
                                         <div class="form-group">
-                                        	<label class="col-sm-2 control-label">Background Image</label>
+                                        	<label class="col-sm-2 control-label">Background Image <span class="req">*</span></label>
                                         	<div class="col-md-10"><input type="file" name="background" id="background" class="form-control "></div>
                                             <div class="col-sm-10"></div>
                                         </div>
@@ -96,7 +131,9 @@
 		                            <h5>Documents</h5>
 
 		                            <div class="ibox-tools">
-		                            	<div class="btn btn-primary btn-outline" type="button" role="button" id="add-documents" > <i class="fa fa-plus"></i> Add Documents </div>
+		                            	<div class="btn btn-primary btn-outline" type="button" role="button" id="add-documents" > 
+		                            		<i class="fa fa-plus"></i> Add Documents 
+		                            	</div>
 		                                
 		                            </div>
 		                        </div>
@@ -148,29 +185,36 @@
 
 		                    <div class="ibox">
 		                        <div class="ibox-title">
-		                            <h5>Flyers</h5>
+		                            <h5>Communications</h5>
 
 		                            <div class="ibox-tools">
-		                            	<div class="btn btn-primary btn-outline" type="button" id="add-flyers" role="button"><i class="fa fa-plus"></i> Add Flyers </div>
+		                            	
 		                            </div>
 		                        </div>
 		                        <div class="ibox-content">
-		                        	
-                                    <div id="flyers-selected">
-                                    	<table class="table table-hover feature-flyers-table hidden">
-                                    		<thead>
-                                    			<tr>
-                                    				<td>Flyer Name</td>
-                                    				<td></td>
-                                    				<td>Action</td>
-                                    			</tr>
-                                    		</thead>
-                                    		<tbody>
-                                    		</tbody>
 
-                                    	</table>
-
+		                        	<div class="row">
+			                        	<div class="form-group">
+	                                    	<label class="col-sm-2 control-label">Communication Types</label>
+	                                    	<div class="col-md-10">
+	                                    		
+	                                    		{!! Form::select('communicationTypes[]', $communicationTypes, null, ['class'=>'chosen', 'multiple'=>'multiple', 'id'=>'communicationTypes']) !!}
+	                                    	</div>
+	                                    </div>
                                     </div>
+
+									<div class="row">
+	                                    <div class="form-group">
+	                                    	<label class="col-sm-2 control-label">Communications</label>
+	                                    	<div class="col-md-10">
+	                                    		
+	                                    		{!! Form::select('communications[]', $communications, null, ['class'=>'chosen', 'multiple'=>'multiple', 'id'=>'communications']) !!}
+	                                    	</div>
+	                                    </div>
+	                                </div>
+
+
+                                    <br>
 		                        </div>
 		                    </div>
 
@@ -184,28 +228,23 @@
 		                        	
                                     <div class="form-group">
                                     	<div class="row">
-                                    	<label class="col-sm-2 control-label">Latest Updates</label>
+                                    		<label class="col-sm-2 control-label">Latest Updates <span class="req">*</span></label>
 										
-										<div class="latest-updates-container col-sm-10">
-											<div class="latest-update-option ">
-												{!! Form::radio('latest_updates_option', '1') !!} By Days
-												{!! Form::input('text', 'update_frequency', null, [ 'class' => 'update_frequency', 'disabled'=> 'disabled', 'placeholder'=>'Number of Days']) !!}
+											<div class="latest-updates-container col-sm-10">
+												<div class="latest-update-option ">
+													{!! Form::radio('latest_updates_option', '1') !!} By Days
+													{!! Form::input('text', 'update_frequency', null, [ 'class' => 'update_frequency', 'disabled'=> 'disabled', 'placeholder'=>'Number of Days']) !!}
+												</div>
+												<div class="latest-update-option ">
+													{!! Form::radio('latest_updates_option', '2') !!} By Documents
+													{!! Form::input('text', 'update_frequency', null, [ 'class' => 'update_frequency','disabled'=> 'disabled', 'placeholder'=>'Number of Documents']) !!}
+												</div>
+												
 											</div>
-											<div class="latest-update-option ">
-												{!! Form::radio('latest_updates_option', '2') !!} By Documents
-												{!! Form::input('text', 'update_frequency', null, [ 'class' => 'update_frequency','disabled'=> 'disabled', 'placeholder'=>'Number of Documents']) !!}
-											</div>
-											
-										</div>
 										
 									</div>
 		                        </div>
 		                    </div>
-
-										
-							
-								
-
 
                             <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-2">
@@ -220,8 +259,9 @@
 
 
 		        </div>
+		        </div>
 
-				@include('site.includes.footer')
+				@include('admin.includes.footer')
 
 			    @include('admin.includes.scripts')
 
@@ -303,7 +343,9 @@
 
 				<script type="text/javascript" src="/js/custom/admin/features/addFeature.js"></script>
 				<script type="text/javascript" src="/js/custom/tree.js"></script>
-				<script src="/js/custom/datetimepicker.js"></script>
+				<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
+				<script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>
+				<script src="/js/custom/datetimepicker-with-default-time.js"></script>
 				
 				<script type="text/javascript">
 					$.ajaxSetup({
@@ -314,6 +356,10 @@
 
 					
                     $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
+
+                    $(".chosen").chosen({
+                    	'width':'100%'
+                    });
 
 				</script>
 				
