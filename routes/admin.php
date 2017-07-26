@@ -120,3 +120,6 @@ Route::post('/admin/productlaunch', 'Calendar\ProductLaunchAdminController@store
 
 //Custom Store Groups
 Route::resource('/admin/storegroup', 'Tools\CustomStoreGroupAdminController');
+
+//Store Components
+Route::resource('/admin/storecomponent', 'StoreComponent\StoreComponentAdminController');
