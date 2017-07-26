@@ -1,4 +1,5 @@
-<?php namespace App\Models\Feature;
+<?php
+namespace App\Models\Feature;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +16,10 @@ use App\Models\Document\FileFolder;
 use App\Models\Validation\FeatureValidator;
 use App\Models\Validation\FeatureThumbnailValidator;
 use App\Models\Validation\FeatureBackgroundValidator;
+use App\Models\Feature\FeatureCommunicationTypes;
+use App\Models\Feature\FeatureTarget;
+use App\Models\Communication\Communication;
+use App\Models\StoreInfo;
 
 class Feature extends Model
 {
@@ -36,11 +41,26 @@ class Feature extends Model
                         'start'            => $request['start'],
                         'end'              => $request['end'],
                         'update_type_id'   => $request['update_type'],
-                        'update_frequency' => $request['update_frequency']
+                        'update_frequency' => $request['update_frequency'],
+                        'target_stores'    => json_decode($request['target_stores'])
                       ];
-        
+
+        if(null !== json_decode($request['communication_type'])){
+            $validateThis['communication_type'] = json_decode($request['communication_type']);
+                        
+        }
+
+        if(null !== json_decode($request['communications'])){
+            $validateThis['communications'] = json_decode($request['communications']);
+                        
+        }
+
+        if ($request['all_stores'] != NULL) {
+            $validateThis['allStores'] = $request['all_stores'];
+        }
+
         $v = new FeatureValidator();
-          
+
         return $v->validate($validateThis);
     }
 
@@ -56,8 +76,24 @@ class Feature extends Model
                         'update_type_id'   => $request['update_type'],
                         'update_frequency' => $request['update_frequency'],
                         'remove_documents' => $request['remove_document'],
-                        'remove_packages'  => $request['remove_package']
+                        'remove_packages'  => $request['remove_package'],
+                        'target_stores'    => $request['target_stores']
                       ];
+
+        if(null !== $request['communication_type']){
+            $validateThis['communication_type'] = $request['communication_type'];
+                        
+        }
+
+        if(null !== $request['communications']){
+            $validateThis['communications'] = $request['communications'];
+                        
+        }
+
+        if ($request['all_stores'] != NULL) {
+            $validateThis['allStores'] = $request['all_stores'];
+        }
+
         if(isset($request['thumbnail']) && $request['thumbnail']){
             $validateThis['thumbnail']     = $request['thumbnail'];
                         
@@ -101,7 +137,7 @@ class Feature extends Model
 
   	public static function storeFeature(Request $request)
   	{
-  	  
+        \Log::info($request->all());
         $validate = Feature::validateCreateFeature($request);
         
         if($validate['validation_result'] == 'false') {
@@ -140,6 +176,9 @@ class Feature extends Model
       
   		Feature::addFiles(json_decode($request["feature_files"]), $feature->id);
   		Feature::addPackages(json_decode($request['feature_packages']), $feature->id);
+        Feature::updateCommunicationTypes(json_decode($request['communication_type']), $feature->id);
+        FeatureCommunication::updateFeatureCommunications(json_decode($request['communications']), $feature->id);
+        FeatureTarget::updateFeatureTarget($feature->id, $request);
 
   		return $feature;
 
@@ -147,7 +186,7 @@ class Feature extends Model
 
     public static function updateFeature(Request $request, $id)
     {
-        \Log::info($request->all());        
+        \Log::info($request->all());
         $validate = Feature::validateEditFeature($id, $request);
         
         if($validate['validation_result'] == 'false') {
@@ -171,6 +210,9 @@ class Feature extends Model
         Feature::removeFiles($request->remove_document, $id);
         Feature::addPackages($request->feature_packages, $id);
         Feature::removePackages($request->remove_package, $id);
+        Feature::updateCommunicationTypes($request['communication_type'], $feature->id);
+        FeatureCommunication::updateFeatureCommunications($request['communications'], $feature->id);
+        FeatureTarget::updateFeatureTarget($feature_id, $request);
         return $feature;
 
     }
@@ -206,7 +248,7 @@ class Feature extends Model
     			foreach ($feature_packages as $package) {
     				FeaturePackage::create([
     					'feature_id' => $feature_id,
-    					'package_id'	 => intval($package)
+    					'package_id' => intval($package)
     					]);
     			}
     		}
@@ -223,6 +265,21 @@ class Feature extends Model
         return; 
     }
 
+    public static function updateCommunicationTypes($communication_types, $feature_id)
+    {
+        if(FeatureCommunicationTypes::where('feature_id', $feature_id)->first()){
+            $feature = FeatureCommunicationTypes::where('feature_id', $feature_id)->delete();
+        }
+        if (isset($communication_types)) {   
+            
+            foreach ($communication_types as $type) {
+                FeatureCommunicationTypes::create([
+                    'feature_id' => $feature_id,
+                    'communication_type_id' => intval($type)
+                    ]);
+            }
+        }
+    }
 
     public static function updateFeatureBackground($file, $feature_id)
     {
@@ -314,16 +371,31 @@ class Feature extends Model
 
     }
 
-    public static function getActiveFeatureByBannerId($banner_id)
+    public static function getActiveFeatureByStoreNumber($storeNumber)
     {
         $now = Carbon::now()->toDatetimeString();
-        return Feature::where('banner_id', $banner_id)
-                ->where('start', '<=', $now)
-                ->where(function($query) use ($now) {
-                    $query->where('features.end', '>=', $now)
-                        ->orWhere('features.end', '=', '0000-00-00 00:00:00' ); 
-                })
-              ->orderBy('order')->get();
+        $banner_id = StoreInfo::getStoreInfoByStoreId($storeNumber)->banner_id;
+
+        $allStoreFeatures = Feature::where('all_stores', 1)
+                                    ->where('banner_id', $banner_id)
+                                    ->where('start', '<=', $now)
+                                    ->where(function($query) use ($now) {
+                                        $query->where('features.end', '>=', $now)
+                                            ->orWhere('features.end', '=', '0000-00-00 00:00:00' ); 
+                                    })
+                                    ->select('features.*')
+                                    ->get();
+
+        $targetedFeatures = Feature::join('feature_target', 'features.id', '=', 'feature_target.feature_id')
+                                    ->where('store_id', $storeNumber)
+                                    ->where(function($query) use ($now) {
+                                        $query->where('features.end', '>=', $now)
+                                            ->orWhere('features.end', '=', '0000-00-00 00:00:00' ); 
+                                    })
+                                    ->select('features.*')
+                                    ->get();
+        $features = $allStoreFeatures->merge($targetedFeatures)->sortBy('order');  
+        return $features;                               
 
     }
 
@@ -347,5 +419,25 @@ class Feature extends Model
         $packages = FeaturePackage::join('packages', 'feature_package.package_id', '=', 'packages.id')
                                 ->where('feature_package.feature_id', '=', $feature_id)->get();
         return $packages;
+    }
+
+    public static function getFeatureCommunications($feature_id, $storeNumber)
+    {
+        $featureCommunicationTypes = FeatureCommunicationTypes::getCommunicationTypeId($feature_id);
+
+        $mergedCommunications = [];
+
+        foreach ($featureCommunicationTypes as $type) {
+            $communications  = Communication::getActiveCommunicationsByCategory($storeNumber, $type);
+            $mergedCommunications = $communications->merge($mergedCommunications);
+        }
+
+        $featureCommunications = FeatureCommunication::getCommunicationId($feature_id);
+        foreach ($featureCommunications as $comm) {
+            $communications = Communication::getCommunicationById($comm);
+            $mergedCommunications->push($communications);
+        }
+
+        return $mergedCommunications;
     }
 }

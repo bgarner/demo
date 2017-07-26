@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Communication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as RequestFacade;
 use DB;
-
+use Carbon\Carbon;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Communication\Communication;
@@ -84,36 +84,16 @@ class CommunicationController extends Controller
 
         $request->request->add(['archives' => false]);
         $communications         = Communication::getCommunicationByStoreNumber($request, $storeNumber);
-        // dd($communications);
-
-        $currentCommunicationIndex = $communications->where('id', $communication->id)->keys()->toArray()[0];
-        $next = $currentCommunicationIndex + 1;
-        $previous = $currentCommunicationIndex - 1;
-
         
-        if($next > count($communications)-1){
-            $nextCommunicationId = null;
-        }
-        else{
-            $nextCommunicationId = $communications->get($next)->id;    
-        }
-
-        if($previous < 0){
-            $previousCommunicationId = null;
-        }
-        else{
-            $previousCommunicationId = $communications->get($previous)->id;    
-        }
+        $communication->nextCommunicationId = Communication::getNextCommunication($communications, $communication);
+        $communication->previousCommunicationId = Communication::getPreviousCommunication($communications, $communication);
         
         return view('site.communications.message')
             ->with('communicationTypes', $communicationTypes)
             ->with('communicationCount', $communicationCount)
             ->with('communication', $communication)
             ->with('communication_documents', $communicationDocuments)
-            ->with('communication_packages', $communicationPackages)
-            ->with('previousCommunicationId', $previousCommunicationId)
-            ->with('nextCommunicationId', $nextCommunicationId);
-
+            ->with('communication_packages', $communicationPackages);
     }
 
     /**

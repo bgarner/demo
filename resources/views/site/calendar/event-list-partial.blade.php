@@ -20,7 +20,7 @@
             @foreach($events as $e)
             <div class="event row">
                 <div class="event-type col-md-3">
-                    <span class="label label-primary">{!! $e->event_type_name !!}</span>
+                    <span class="label" style="background-color: #{{$e->background_colour}}; color: #{{$e->foreground_colour}};">{!! $e->event_type_name !!}</span>
                 </div>
                 <div class="col-md-9">
                     <div class="event-title">

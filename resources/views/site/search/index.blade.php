@@ -256,7 +256,7 @@
                         <div class="mail-box">
 
 
-                            <table class="table table-hover table-mail">
+                            <table class="table table-hover table-mail datatable">
 
                                 <thead>
                                     <tr>
@@ -353,6 +353,18 @@
     @include('site.includes.modal')
     <script type="text/javascript" src="/js/custom/site/getArchivedContent.js"></script>
     <script type="text/javascript" src="/js/custom/site/highlightSearch.js"></script>
+
+    <script>
+        $(".datatable").dataTable({
+            "bPaginate": false,
+            "order": [],
+            "info":     false,
+            "searching": false,
+            "columns": [    
+               {"orderable": false,},null, null,null
+             ],
+        });    
+    </script>
 
 
 </body>

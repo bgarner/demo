@@ -61,7 +61,8 @@
                                         <input type="hidden" name="featureID" id="featureID" value="{{ $feature->id }}">
                                         <input type="hidden" name="banner_id" value="{{$banner->id}}">
 
-                                        <div class="form-group"><label class="col-sm-2 control-label"> Title</label>
+                                        <div class="form-group">
+                                        	<label class="col-sm-2 control-label"> Title <span class="req">*</span></label>
                                             <div class="col-sm-10"><input type="text" id="feature_title" name="feature_title" class="form-control" value="{{ $feature->title }}"></div>
                                         </div>
 
@@ -71,7 +72,7 @@
 
                                        <div class="form-group">
 
-                                                <label class="col-sm-2 control-label">Start &amp; End</label>
+                                                <label class="col-sm-2 control-label">Start &amp; End <span class="req">*</span></label>
 
                                                 <div class="col-sm-10">
                                                     <div class="input-daterange input-group" id="datepicker">
@@ -81,9 +82,53 @@
                                                     </div>
                                                 </div>
                                         </div>
+
+                                        <div class="form-group">
+
+						                <label class="col-sm-2 control-label">Target Stores <span class="req">*</span></label>
+						                <div class="col-sm-10">
+						                	
+		                                        <select name="stores" id="storeSelect" multiple class="chosen">
+									            	<option value="">Select Some Options</option>
+									            	@foreach($storeAndStoreGroups as $option)
+										                
+									                    <option value="{{$option['id']}}"
+									                        
+									                        @if(isset($option["isStoreGroup"]))
+																data-isStoreGroup = "{{$option['isStoreGroup']}}"
+									                        @endif
+									                        @if(isset($option["stores"]))
+																data-stores = "{{$option['stores']}}"
+									                        @endif
+
+									                        @if(in_array($option['id'], $target_stores))
+																selected
+									                        @endif
+									                        
+									                    >
+									                        {{$option['name']}}
+									                    </option>
+										                
+									            	@endforeach
+
+										        </select>
+
+										        @if($feature->all_stores)
+		                                        
+		                                        	{!! Form::label('allStores', 'Or select all stores:') !!}
+		                                        	{!! Form::checkbox('allStores', null, true ,['id'=> 'allStores'] ) !!}
+		                                    	@else
+
+		                                        	{!! Form::label('allStores', 'Or select all stores:') !!}
+		                                        	{!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
+		                                    	@endif
+						                </div>
+						        </div>
+
+						        
                                         <div class="form-group">
                                         	
-                                        	<label class="col-sm-2 control-label">Thumbnail</label>
+                                        	<label class="col-sm-2 control-label">Thumbnail <span class="req">*</span></label>
                                         	<div class="thumbnail-preview col-sm-5">
                                         		<img src="/images/featured-covers/{{$feature->thumbnail}}">
                                         	</div>
@@ -93,7 +138,7 @@
 
                                         <div class="form-group">
                                         	
-                                        	<label class="col-sm-2 control-label">Background</label>
+                                        	<label class="col-sm-2 control-label">Background <span class="req">*</span></label>
                                         	<div class="background-preview col-sm-5">
                                         		<img src="/images/featured-backgrounds/{{$feature->background_image}}">
                                         	</div>
@@ -166,6 +211,40 @@
 							</div>
 
 							<div class="ibox">
+		                        <div class="ibox-title">
+		                            <h5>Communication Types</h5>
+
+		                            <div class="ibox-tools">
+		                            	
+		                            </div>
+		                        </div>
+		                        <div class="ibox-content">
+		                        	<div class="row">
+			                        	<div class="form-group">
+	                                    	<label class="col-sm-2 control-label">Communication Types</label>
+	                                    	<div class="col-md-10">
+	                                    		
+	                                    		{!! Form::select('communicationTypes[]', $communicationTypes, $selected_communication_types, ['class'=>'chosen', 'multiple'=>'multiple', 'id'=>'communicationType']) !!}
+	                                    	</div>
+	                                    </div>
+                                    </div>
+
+                                    <div class="row">
+	                                    <div class="form-group">
+	                                    	<label class="col-sm-2 control-label">Communications</label>
+	                                    	<div class="col-md-10">
+	                                    		
+	                                    		{!! Form::select('communications[]', $communications, $selected_communications, ['class'=>'chosen', 'multiple'=>'multiple', 'id'=>'communications']) !!}
+	                                    	</div>
+	                                    </div>
+	                                </div>
+                                    <br>
+		                        </div>
+		                    </div>
+
+
+
+							<div class="ibox">
                             	<div class="ibox-title">
                             		<h5> Notifications </h5>
                             		
@@ -173,7 +252,8 @@
 								<div class="ibox-content">
 
 	                                     <div class="latest-updates row" >
-											<div class="form-group"><label class="col-sm-2 control-label">Latest Updates</label>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Latest Updates <span class="req">*</span></label>
 												<div class="latest-updates-container col-md-10" >
 													
 													
@@ -294,7 +374,9 @@
 
 	<script type="text/javascript" src="/js/custom/admin/features/editFeature.js"></script>
 	<script type="text/javascript" src="/js/custom/tree.js"></script>
+	<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 	<script src="/js/custom/datetimepicker.js"></script>
+	<script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>
 	
 	<script type="text/javascript">
 		$.ajaxSetup({
@@ -304,6 +386,10 @@
 		});
 
     	$(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});    
+
+    	$(".chosen").chosen({
+    		'width':'100%'
+    	});
 
 	</script>
 

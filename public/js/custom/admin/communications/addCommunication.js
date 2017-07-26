@@ -76,8 +76,6 @@ $(document).on('click','.communication-create',function(){
 		return false;
 	}
 
-
-
     if(hasError == false) {
 
 		$.ajax({

@@ -56,6 +56,7 @@ return array(
     'App\\Models\\Event\\EventType' => $baseDir . '/app/Models/Event/EventType.php',
     'App\\Models\\Feature\\Feature' => $baseDir . '/app/Models/Feature/Feature.php',
     'App\\Models\\Feature\\FeatureCommunication' => $baseDir . '/app/Models/Feature/FeatureCommunication.php',
+    'App\\Models\\Feature\\FeatureCommunicationTypes' => $baseDir . '/app/Models/Feature/FeatureCommunicationTypes.php',
     'App\\Models\\Feature\\FeatureDocument' => $baseDir . '/app/Models/Feature/FeatureDocument.php',
     'App\\Models\\Feature\\FeaturePackage' => $baseDir . '/app/Models/Feature/FeaturePackage.php',
     'App\\Models\\ManagerDashboard\\ManagerDashboard' => $baseDir . '/app/Models/ManagerDashboard/ManagerDashboard.php',
@@ -133,6 +134,9 @@ return array(
     'CreateComponentsTable' => $baseDir . '/database/migrations/2017_01_16_114508_create_components_table.php',
     'CreateCustomStoreGroupTable' => $baseDir . '/database/migrations/2017_06_26_160803_create_custom_store_group_table.php',
     'CreateEventAttachmentsTable' => $baseDir . '/database/migrations/2016_04_27_085018_create_event_attachments_table.php',
+    'CreateFeatureCommunicationTable' => $baseDir . '/database/migrations/2017_07_18_151350_create_feature_communication_table.php',
+    'CreateFeatureCommunicationTypesTable' => $baseDir . '/database/migrations/2017_07_17_213354_create_feature_communication_types_table.php',
+    'CreateFeatureTargetTable' => $baseDir . '/database/migrations/2017_07_18_203518_create_feature_target_table.php',
     'CreateFeaturedVideoTable' => $baseDir . '/database/migrations/2017_05_31_231322_create_featured_video_table.php',
     'CreateGroupComponentPivotTable' => $baseDir . '/database/migrations/2017_01_16_115431_create_group_component_pivot_table.php',
     'CreateGroupRolePivot' => $baseDir . '/database/migrations/2017_02_15_132648_create_group_role_pivot.php',
@@ -159,6 +163,7 @@ return array(
     'CreateVideoBannerTable' => $baseDir . '/database/migrations/2017_05_30_221400_create_video_banner_table.php',
     'CreateVideosTargetTable' => $baseDir . '/database/migrations/2017_05_16_195236_create_videos_target_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
     'DeleteAnalyticsTable' => $baseDir . '/database/migrations/2016_03_28_103732_DeleteAnalyticsTable.php',
@@ -994,6 +999,10 @@ return array(
     'Faker\\ValidGenerator' => $vendorDir . '/fzaninotto/faker/src/Faker/ValidGenerator.php',
     'FileFolder' => $baseDir . '/database/migrations/2015_09_16_150438_file_folder.php',
 >>>>>>> 56d72c70e... composer updated
+=======
+    'FeatureCommunicationTypeTableSeeder' => $baseDir . '/database/seeds/FeatureCommunicationTypeTableSeeder.php',
+    'FeatureTableSeeder' => $baseDir . '/database/seeds/FeatureTableSeeder.php',
+>>>>>>> b725c732ef13cf644d39e3dc5657e9a4ae4755f3
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
     'File_Iterator_Facade' => $vendorDir . '/phpunit/php-file-iterator/src/Facade.php',
     'File_Iterator_Factory' => $vendorDir . '/phpunit/php-file-iterator/src/Factory.php',
@@ -2288,6 +2297,7 @@ return array(
     'UpdateDocumentsTable' => $baseDir . '/database/migrations/2017_05_12_152143_update_documents_table.php',
     'UpdateEventTypeTableWithColours' => $baseDir . '/database/migrations/2017_06_19_202749_update_event_type_table_with_colours.php',
     'UpdateEventsTable' => $baseDir . '/database/migrations/2017_05_11_165610_update_events_table.php',
+    'UpdateFeaturesTable' => $baseDir . '/database/migrations/2017_07_18_203705_update_features_table.php',
     'UpdatePlaylistTable' => $baseDir . '/database/migrations/2017_06_09_202016_update_playlist_table.php',
     'UpdateTaskTable' => $baseDir . '/database/migrations/2017_05_17_171352_update_task_table.php',
     'UpdateTasksTable' => $baseDir . '/database/migrations/2017_02_28_131811_update_tasks_table.php',

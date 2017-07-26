@@ -49,8 +49,9 @@
 							<div class="ibox-content">
 			
 								<input type="hidden" name="banner_id" value="{{$banner->id}}">
-								<input type="hidden" name="fo_id" value="{{$banner->id}}">
+								<!-- <input type="hidden" name="fo_id" value="{{$banner->id}}"> -->
 								<input type="hidden" name="folder_id" value="{{ $_REQUEST['parent'] }}">
+								<input type="hidden" name="folder" id="folderpath" value="{{$documentContext}}">
 
 								<table class="table table-hover issue-tracker">
 
@@ -211,6 +212,9 @@
 				$(".chosen").chosen();
 				console.log("defautl folder id: " + defaultFolderId);
 				$(".chosen-container").hide();
+				var data = JSON.parse($("#folderpath").val());
+				fillBreadCrumbs(data);
+				$("#folder-name-for-upload").html("to  <i>"+data.folder.name+"</i>");
 
 		}); 
 

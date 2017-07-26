@@ -15,6 +15,12 @@ use App\Models\Document\Package;
 use App\Models\Document\Document;
 use App\Models\Feature\FeatureDocument;
 use App\Models\Feature\FeaturePackage;
+use App\Models\Communication\CommunicationType;
+use App\Models\Communication\Communication;
+use App\Models\Feature\FeatureCommunicationTypes;
+use App\Models\Feature\FeatureCommunication;
+use App\Models\Feature\FeatureTarget;
+use App\Models\Utility\Utility;
 
 class FeatureAdminController extends Controller
 {
@@ -47,16 +53,23 @@ class FeatureAdminController extends Controller
      */
     public function create()
     {
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
+        $banner              = UserSelectedBanner::getBanner();
+        $banners             = Banner::all();
 
-        $packages = Package::where('banner_id', $banner->id)->get();
+        $packages            = Package::where('banner_id', $banner->id)->get();
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
+        $communicationTypes  = CommunicationType::where('banner_id', $banner->id)->get()->pluck('communication_type', 'id');
+        $communications      = Communication::getAllCommunication($banner->id)->pluck('subject', 'id');
+        $storeAndStoreGroups = Utility::getStoreAndStoreGroupList($banner->id);
+
         return view('admin.feature.create')
                 ->with('banner', $banner)
                 ->with('banners', $banners)
                 ->with('navigation', $fileFolderStructure)
-                ->with('packages', $packages);
+                ->with('packages', $packages)
+                ->with('communicationTypes', $communicationTypes)
+                ->with('communications', $communications)
+                ->with('storeAndStoreGroups', $storeAndStoreGroups);
     }
 
     /**
@@ -89,28 +102,37 @@ class FeatureAdminController extends Controller
      */
     public function edit($id)
     {
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
-        $feature = Feature::find($id);
+        $banner              = UserSelectedBanner::getBanner();
+        $banners             = Banner::all();
+        $feature             = Feature::find($id);
 
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
-        $feature_documents = FeatureDocument::where('feature_id', $id)->get()->pluck('document_id');
-        $selected_documents = array();
+        $feature_documents   = FeatureDocument::where('feature_id', $id)->get()->pluck('document_id');
+        $selected_documents  = array();
         foreach ($feature_documents as $doc_id) {
             
-            $doc = Document::find($doc_id);
+            $doc              = Document::find($doc_id);
             $doc->folder_path = Document::getFolderPathForDocument($doc_id);
             array_push($selected_documents, $doc );
             
         }
 
-        $packages = Package::where('banner_id', $banner->id)->get();
-        $feature_packages = FeaturePackage::where('feature_id', $id)->get()->pluck('package_id');
+        $packages          = Package::where('banner_id', $banner->id)->get();
+        $feature_packages  = FeaturePackage::where('feature_id', $id)->get()->pluck('package_id');
         $selected_packages = [];
         foreach ($feature_packages as $package_id) {
             $package = Package::find($package_id);
             array_push($selected_packages, $package);
         }
+
+        $communicationTypes           = CommunicationType::where('banner_id', $banner->id)->get()->pluck('communication_type', 'id');
+        $selected_communication_types = FeatureCommunicationTypes::getCommunicationTypeId($id);
+        
+        $communications               = Communication::getAllCommunication($banner->id)->pluck('subject', 'id');
+        $selected_communications      = FeatureCommunication::getCommunicationId($id);
+
+        $storeAndStoreGroups         = Utility::getStoreAndStoreGroupList($banner->id);
+        $feature_target_stores       = FeatureTarget::where('feature_id', $id)->get()->pluck('store_id')->toArray();
 
         return view('admin.feature.edit')->with('feature', $feature)
                                     
@@ -119,11 +141,14 @@ class FeatureAdminController extends Controller
                                         ->with('navigation', $fileFolderStructure)
                                         ->with('feature_documents', $selected_documents )
                                         ->with('packages', $packages)
-                                        ->with('feature_packages', $selected_packages);
-                                        // ->with('tags', $tags)
-                                        // ->with('selected_tags', $selected_tags)
-                                        // ->with('folders', $selected_folders)
-                                        // ->with('folderStructure', $folderStructure);
+                                        ->with('feature_packages', $selected_packages)
+                                        ->with('communicationTypes', $communicationTypes)
+                                        ->with('selected_communication_types', $selected_communication_types)
+                                        ->with('communications', $communications)
+                                        ->with('selected_communications', $selected_communications)
+                                        ->with('storeAndStoreGroups', $storeAndStoreGroups)
+                                        ->with('target_stores', $feature_target_stores);
+                                        
     }
 
     /**

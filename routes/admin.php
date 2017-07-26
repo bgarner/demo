@@ -60,6 +60,7 @@ Route::get('/admin/urgentnotice-documents/{urgent_notice_id}', 'UrgentNotice\Urg
 Route::get('/admin/urgentnotice-folders/{urgent_notice_id}', 'UrgentNotice\UrgentNoticeAdminController@getFolderPartial');
 
 Route::resource('/admin/alert', 'Alert\AlertAdminController' );
+Route::resource('/admin/alerttypes', 'Alert\AlertTypesAdminController' );
 //Users
 Route::resource('/admin/user', 'User\UserAdminController');
 
