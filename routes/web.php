@@ -49,6 +49,10 @@ Route::get('/{storeno}/document', array('uses' => 'Document\DocumentController@i
 //FEATURES
 Route::get('/{storeno}/feature/show/{id}', 'Feature\FeatureController@show');
 
+//FLYER
+Route::get('/{storeno}/flyer', array('uses' => 'Flyer\FlyerController@index'));
+Route::get('/{storeno}/flyer/{flyer_id}', array('uses' => 'Flyer\FlyerController@show'));
+
 //FOLDER - SHOW CONTENT
 Route::get('/{storeno}/folder/{id}', ['uses' => 'Document\FolderController@show']);
 
@@ -62,6 +66,12 @@ Route::patch('/{storeno}/task/{id}', 'Task\TaskController@update');
 
 //TOOLS
 Route::get('/{storeno}/tools/boxingday', array('uses' => 'Tools\BlackFridayController@index'));
+Route::post('/getFlyerBoxes', 'Tools\FlyerPageSelectionController@show');
+Route::post('/getFlyerBoxData', 'Tools\FlyerBoxSelectionController@show');
+Route::get('/{storeno}/tools/boxingday', array('uses' => 'Tools\BlackFridayController@index'));
+Route::get('/{storeno}/tools/bikecount', array('uses' => 'Tools\BikeCountController@index'));
+Route::get('/{storeno}/tools/flashsale', array('uses' => 'Tools\FlashSaleController@index'));
+Route::get('/{storeno}/tools/fwinitials', array('uses' => 'Tools\FootwearInitialsController@index'));
 Route::post('/getFlyerBoxes', 'Tools\FlyerPageSelectionController@show');
 Route::post('/getFlyerBoxData', 'Tools\FlyerBoxSelectionController@show');
 

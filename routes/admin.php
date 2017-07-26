@@ -32,6 +32,10 @@ Route::resource('/admin/featureOrder', 'Feature\FeatureOrderAdminController');
 Route::get('/admin/featuredocuments/{feature_id}', 'Feature\FeatureAdminController@getFeatureDocumentPartial');
 Route::get('/admin/featurepackages/{feature_id}', 'Feature\FeatureAdminController@getFeaturePackagePartial');
 
+//FLYER
+Route::resource('/admin/flyer', 'Flyer\FlyerAdminController');
+Route::resource('/admin/flyeritem', 'Flyer\FlyerItemAdminController');
+
 //Dasboard ADMIN
 Route::resource('/admin/dashboard', 'Dashboard\DashboardAdminController');
 Route::resource('/admin/dashboardbackground', 'Dashboard\DashboardBackgroundAdminController');

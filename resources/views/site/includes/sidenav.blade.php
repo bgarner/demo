@@ -87,6 +87,14 @@
                     </a>
                 </li>
 
+                @if (Request::segment(2) == 'flyer')
+                <li class="active">
+                @else
+                <li>
+                @endif
+                    <a href="/{{ Request::segment(1) }}/flyer"><i class="fa fa-newspaper-o" aria-hidden="true"></i> <span class="nav-label">Flyer</span></a>
+                </li>                
+
                 @if (Request::segment(2) == 'document')
                 <li class="active">
                 @else
@@ -113,5 +121,23 @@
                     <a href="/{{ Request::segment(1) }}/community"><i class="fa fa-users"></i> <span class="nav-label">{{__("Community")}}</span></a>
 
                 </li>
+
+
+                @if ($banner->name == "Sport Chek")
+                @if (Request::segment(2) == 'tools')
+                <li class="active">
+                @else
+                <li>
+                @endif
+                    <a href="#"><i class="fa fa-wrench" aria-hidden="true"></i> <span class="nav-label">Tools</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse" style="height: 0px;">
+                            {{-- <li><a href="/{{ Request::segment(1) }}/tools/boxingday">Boxing Day Doorcrasher Tracker</a></li> --}}
+                            <li><a href="/{{ Request::segment(1) }}/tools/bikecount">Bike Count Tracker</a></li>
+                            <li><a href="/{{ Request::segment(1) }}/tools/flashsale">DOM Flash Sale Tracker</a></li>
+                            <li><a href="/{{ Request::segment(1) }}/tools/fwinitials">Footwear Initials Tracker</a></li>
+                        </ul>
+
+                </li>
+                @endif                
 
             </ul>
