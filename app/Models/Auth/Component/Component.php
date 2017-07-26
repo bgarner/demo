@@ -5,6 +5,7 @@ namespace App\Models\Auth\Component;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Auth\Role\RoleComponent;
 use App\Models\Validation\ComponentValidator;
+// use App\Models\Auth\User\UserSelectedBanner;
 
 class Component extends Model
 {
@@ -78,9 +79,11 @@ class Component extends Model
 
     public static function getComponentDetails()
     {
-        return Component::all()->each(function($component){
-            $component->roles = RoleComponent::getRoleNameListByComponentId($component->id);
-        });
+        // $banner_id = UserSelectedBanner::getBanner()->id;
+        return Component::all()
+                        ->each(function($component){
+                            $component->roles = RoleComponent::getRoleNameListByComponentId($component->id);
+                });
     }
 
     public static function getComponentIdByComponentName($component_name)
