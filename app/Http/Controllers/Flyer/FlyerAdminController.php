@@ -6,18 +6,16 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\UserSelectedBanner;
-// use App\Models\Flyer\Flyers;
 use App\Models\Flyer\Flyer;
 use App\Models\Flyer\FlyerItem;
 use App\Models\Banner;
+use App\Models\Auth\User\UserSelectedBanner;
 
 class FlyerAdminController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('admin.auth');
-        $this->middleware('banner');
+
     }
 
     /**
@@ -28,11 +26,8 @@ class FlyerAdminController extends Controller
     public function index()
     {
         $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
         $flyers = Flyer::getFlyersByBannerId($banner->id);
-        return view('admin.flyer.index')->with('flyers', $flyers)
-                                                ->with('banner', $banner)
-                                                ->with('banners', $banners);
+        return view('admin.flyer.index')->with('flyers', $flyers);
     }
 
     /**
@@ -67,14 +62,11 @@ class FlyerAdminController extends Controller
      */
     public function show($id)
     {
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
+        
         $flyer = Flyer::getFlyerDetailsById($id);
         $flyerItems = FlyerItem::getFlyerItemsByFlyerId($id);
         return view('admin.flyer.view')->with('flyerItems', $flyerItems)
-                                                ->with('flyer', $flyer)
-                                                ->with('banner', $banner)
-                                                ->with('banners', $banners);
+                                                ->with('flyer', $flyer);
     }
 
     /**
