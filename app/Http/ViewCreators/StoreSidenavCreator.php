@@ -9,6 +9,7 @@ use App\Models\Alert\Alert;
 use App\Models\Communication\Communication;
 use App\Models\UrgentNotice\UrgentNotice;
 use App\Models\Task\Task;
+use App\Models\StoreComponent\StoreComponent;
 
 class StoreSidenavCreator
 {
@@ -22,6 +23,7 @@ class StoreSidenavCreator
     protected $communicationCount;
     protected $urgentNoticeCount;
     protected $taskCount;
+    protected $components;
 
     /**
      * Create a new profile composer.
@@ -37,6 +39,7 @@ class StoreSidenavCreator
         $this->urgentNoticeCount  = UrgentNotice::getUrgentNoticeCount($this->storeNumber);
         $this->taskDueTodayCount  = Task::getTaskDueTodaybyStoreId($this->storeNumber)->count();
         $this->allTasksDueCount   = Task::getAllIncompleteTasksByStoreId($this->storeNumber)->count();
+        $this->components         = StoreComponent::getComponents($this->storeNumber);
     }
 
     /**
@@ -52,6 +55,7 @@ class StoreSidenavCreator
             ->with('communicationCount', $this->communicationCount)
             ->with('urgentNoticeCount', $this->urgentNoticeCount)
             ->with('taskDueTodayCount', $this->taskDueTodayCount)
-            ->with('allTasksDueCount', $this->allTasksDueCount);
+            ->with('allTasksDueCount', $this->allTasksDueCount)
+            ->with('components', $this->components);
     }
 }

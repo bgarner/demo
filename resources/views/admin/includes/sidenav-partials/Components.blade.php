@@ -3,5 +3,5 @@
 @else
 <li>
 @endif
-    <a href="/admin/storecomponent"><i class="fa fa-home"></i> <span class="nav-label">Components</span></a>
+    <a href="/admin/storecomponent"><i class="fa fa-puzzle-piece"></i> <span class="nav-label">Components</span></a>
 </li>
