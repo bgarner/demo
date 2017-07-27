@@ -66,12 +66,30 @@
 									<tbody>
 									@foreach($store_components as $store_component)
 									<tr>
-										<td>{{ $store_component->id }}</td>
+										<td >{{ $store_component->id }}</td>
 										<td>{{ $store_component->component_name }}</td>
 										<td>{{ $store_component->component_label }}</td>
 										
 										<td>
-											<a href="/admin/storecomponent/{{ $store_component->id }}/edit" class="btn btn-danger btn-sm" title="Toggle Visibility"><i class="fa fa-eye-slash"></i></a>
+											<a  href="#" 
+												@if($store_component->state == 'on')
+												class="btn btn-primary btn-xs component-edit" 
+												@else
+												class="btn btn-default btn-xs component-edit" 
+												@endif
+												title="Toggle Visibility" 
+
+												data-state='{{$store_component->state}}' 
+												id="store_component_{{$store_component->id}}" 
+												data-component-id="{{$store_component->id}}">
+
+												@if($store_component->state == 'on')
+												<i class="fa fa-eye"></i>
+												@else
+												<i class="fa fa-eye-slash"></i>
+												@endif
+
+											</a>
 
 										</td>
 									</tr>
@@ -122,7 +140,7 @@
 
 	@include('site.includes.bugreport')
 
-	<script type="text/javascript" src="/js/custom/admin/storecomponent/editComponent.js"></script>
+	<script type="text/javascript" src="/js/custom/admin/storecomponents/editComponent.js"></script>
 
 </body>
 </html>

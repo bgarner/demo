@@ -20,4 +20,9 @@ class StoreComponentAdminController extends Controller
         return view('admin.storecomponent.index')->with('store_components', $components);
                         
     }
+    public function update(Request $request, $id)
+    {
+    	return StoreComponent::updateComponent($request,$id);
+    	
+    }
 }

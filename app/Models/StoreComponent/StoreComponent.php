@@ -19,9 +19,30 @@ class StoreComponent extends Model
         return Self::where('banner_id', $banner_id)
         			->get()
                     ->each(function($component){
-                        // $component->roles = RoleComponent::getRoleNameListByComponentId($component->id);
+
+                    	if(isset($component->config)){
+
+                    		$config = json_decode($component->config);	
+                    		$component->state = $config->state;
+
+                    	}
+                        
                 	});
     
+    }
+
+    public static function updateComponent($request, $id)
+    {
+    	$component = StoreComponent::find($id);
+    	if($request->state == 'on'){
+    		$state = 'off';
+    	}
+    	else{
+    		$state = 'on';
+    	}
+    	$component->update(['config' => json_encode(['state' => $state])]);
+
+    	return $component;
     }
 
 }

@@ -39,7 +39,9 @@ class StoreComponentTableSeeder extends Seeder
     public function run()
     {
         foreach ($this->components as $component) {
-        	DB::table('store_components')->insert($component);
+        	$component['config'] = json_encode(['state' => 'on']);
+        	$row = DB::table('store_components')->insert($component);
+
         }
     }
 }

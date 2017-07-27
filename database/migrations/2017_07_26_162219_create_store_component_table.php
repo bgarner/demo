@@ -18,7 +18,7 @@ class CreateStoreComponentTable extends Migration
             $table->string('component_name');
             $table->string('component_label');
             $table->integer('banner_id')->unsigned();
-            $table->integer('config');
+            $table->string('config');
             $table->foreign('banner_id')->references('id')->on('banners')->onDelete('cascade');
             $table->timestamps();
         });
