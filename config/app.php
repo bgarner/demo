@@ -282,6 +282,9 @@ return [
         'App\Http\Controllers\Task\TaskAdminController'                         => 'Task Management',
         'App\Http\Controllers\Tools\CustomStoreGroupAdminController'            => 'Tools',
         'App\Http\Controllers\StoreComponent\StoreComponentAdminController'     => 'Components',
+        'App\Http\Controllers\Flyer\FlyerAdminController'                       => 'Flyer',
+        'App\Http\Controllers\Flyer\FlyerItemAdminController'                   => 'Flyer'
+
 
 
     ],
