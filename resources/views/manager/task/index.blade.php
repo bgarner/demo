@@ -213,7 +213,7 @@
         </div>
         @include('manager.task.editmodal')
 
-		@include('site.includes.footer')
+		@include('admin.includes.footer')
 
 	    @include('admin.includes.scripts')
 

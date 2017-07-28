@@ -8,3 +8,6 @@ Route::get('/manager/dm-dashboard', ['uses' => 'ManagerDashboard\ManagerDashboar
 
 //MANAGER TASKS
 Route::resource('/manager/task', 'Task\TaskManagerController');
+
+//Store View
+Route::get('/manager/store/{store}', 'ManagerDashboard\StoreProfileController@show');
