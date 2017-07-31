@@ -93,3 +93,4 @@
     </script>
 
     <script type="text/javascript" src="/js/plugins/dataTables/datatables.min.js"></script>
+    <script type="text/javascript" src="/js/plugins/videojs/video.js"></script>

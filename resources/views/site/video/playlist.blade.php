@@ -6,6 +6,11 @@
 
     @include('site.includes.head')
 
+    
+    <link href="/js/plugins/videojs-playlist-ui/dist/videojs-playlist-ui.css" rel="stylesheet">
+    <link href="/js/plugins/videojs-playlist-ui/dist/videojs-playlist-ui.vertical.css" rel="stylesheet">
+    <!-- <link href="/js/plugins/videojs-playlist-ui/dist/advanced.css" rel="stylesheet"> -->
+
     <style>
     #page-wrapper{
     {{-- background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 65%, rgba(0, 0, 0, 1) 100%), url('/images/featured-backgrounds/{{ $feature->background_image }}') no-repeat 0px 50px; --}}
@@ -27,6 +32,52 @@
         width: 1%
     }
 
+    .preview-player-dimensions.vjs-fluid {
+      padding-top: 41.66666666666667%;
+    }
+
+    .main-preview-player {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .video-js{
+      position: relative;
+      min-width: 300px;
+      min-height: 150px;
+      height: 0;
+    }
+
+    .video-js {
+      flex: 3 1 70%;
+    }
+
+    .playlist-container {
+      position: relative;
+      min-width: 300px;
+      min-height: 150px;
+      height: 0;
+    }
+    .playlist-container {
+      flex: 1 1 30%;
+    }
+    .vjs-playlist {
+      margin: 0;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+    .vjs-mouse.vjs-playlist .vjs-playlist-item {
+    height: 106px;
+    margin-bottom: 16px;
+    font-size: 12px;
+}
+.vjs-playlist-title-container {
+    bottom:35px !important;
+}
+
     </style>
 </head>
 
@@ -46,15 +97,6 @@
 
             <div class="row wrapper border-bottom white-bg page-heading">
 
-                {{-- <h1 style="color: #333; font-size: 65px; text-transform: uppercase; font-family: GalaxiePolarisCondensed-Bold;padding-bottom: 0px; line-height: 50px;">Video Library</h1> --}}
-                {{-- <div class="col-lg-10">
-                    <h2>Video</h2>
-                </div> --}}
-
-                {{-- <div class="col-lg-2">
-
-                </div> --}}
-
                 <h1>{{$playlistMeta->title}}</h1>
                 {!! $playlistMeta->description !!}
             </div>
@@ -65,14 +107,14 @@
                     <div class="col-lg-12">
                         <div class="ibox float-e-margins clearfix">
 
-                            @foreach($videoList as $vl)
+                            {{--@foreach($videoList as $vl)
 
                             <div class="ibox-content clearfix col-xs-12 col-sm-12 col-lg-12 video-playlist-box">
 
-                                <div class="video-container">
+                                <div class="video-container">--}}
 
                                     {{-- <a href="../watch/{{$vl->id}}"><img src="/video/thumbs/{{$vl->thumbnail}}" class="img-responsive" /></a> --}}
-                                    <video class="video-overlay" controls="controls" poster="/video/thumbs/{{$vl->thumbnail}}" class="videoInPlaylist" id="video{{$vl->id}}">
+                                    {{--<video class="video-overlay" controls="controls" poster="/video/thumbs/{{$vl->thumbnail}}" class="videoInPlaylist" id="video{{$vl->id}}">
 
                                         <source src="/video/{{$vl->filename}}" type="video/webm" />
                                     </video>
@@ -88,10 +130,19 @@
                                 </div>
 
                             </div>
-                            @endforeach
+                            @endforeach--}}
+                            
 
-                                <br class="clearfix" />
+                            <section class="main-preview-player">
+                                <video id="preview-player" class="video-js vjs-fluid vjs-big-play-centered " controls preload="auto"
+                                data-setup='{"controls": true, "autoplay": false, "preload": "auto", "fluid":true}'
+                                >
 
+                                </video>
+                                <div class="playlist-container  preview-player-dimensions vjs-fluid">
+                                <ol class="vjs-playlist"></ol>
+                                </div>
+                            </section>
 
                             </div>
                         </div>
@@ -115,9 +166,137 @@
     <script type="text/javascript" src="/js/vendor/lightbox.min.js"></script>
     <script type="text/javascript" src="/js/custom/site/video/incViewCountFromPlaylist.js?<?php echo time();?>"></script>
     <script type="text/javascript" src="/js/custom/site/video/likedislike.js?<?php echo time();?>"></script>
-    <script type="text/javascript" src="/js/custom/site/video/playPause.js?<?php echo time();?>"></script>
+    <!-- <script type="text/javascript" src="/js/custom/site/video/playPause.js?<?php echo time();?>"></script> -->
+    <script src="/js/plugins/videojs-playlist/dist/videojs-playlist.js"></script>
+    <script src="/js/plugins/videojs-playlist-ui/dist/videojs-playlist-ui.js"></script>
 
     @include('site.includes.modal')
+
+    <script>
+        var videoId = $(".video-js").attr('id');
+        var player = videojs(videoId, {
+            
+        });
+
+        player.playlist([
+        {
+              name: 'Disney\'s Oceans 1',
+              description: 'Explore the depths of our planet\'s oceans. ' +
+                'Experience the stories that connect their world to ours. ' +
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' +
+                'sed do eiusmod tempor incididunt ut labore et dolore magna ' +
+                'aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco ' +
+                'laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure ' +
+                'dolor in reprehenderit in voluptate velit esse cillum dolore eu ' +
+                'fugiat nulla pariatur. Excepteur sint occaecat cupidatat non ' +
+                'proident, sunt in culpa qui officia deserunt mollit anim id est ' +
+                'laborum.',
+              duration: 45,
+              sources: [
+                { src: 'http://vjs.zencdn.net/v/oceans.mp4', type: 'video/mp4' },
+                { src: 'http://vjs.zencdn.net/v/oceans.webm', type: 'video/webm' },
+              ],
+              // you can use <picture> syntax to display responsive images
+              thumbnail: [
+                {
+                  srcset: '/js/plugins/videojs-playlist-ui/test/example/oceans.jpg',
+                  type: 'image/jpeg',
+                  media: '(min-width: 400px;)'
+                },
+                {
+                  src: '/js/plugins/videojs-playlist-ui/test/example/oceans-low.jpg'
+                }
+              ]
+        },
+        {
+          name: 'Disney\'s Oceans 2',
+          description: 'Explore the depths of our planet\'s oceans. ' +
+            'Experience the stories that connect their world to ours. ' +
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' +
+            'sed do eiusmod tempor incididunt ut labore et dolore magna ' +
+            'aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco ' +
+            'laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure ' +
+            'dolor in reprehenderit in voluptate velit esse cillum dolore eu ' +
+            'fugiat nulla pariatur. Excepteur sint occaecat cupidatat non ' +
+            'proident, sunt in culpa qui officia deserunt mollit anim id est ' +
+            'laborum.',
+          duration: 45,
+          sources: [
+            { src: 'http://media.w3.org/2010/05/sintel/trailer.mp4', type: 'video/mp4' }
+          ],
+          // you can use <picture> syntax to display responsive images
+          thumbnail: [
+            {
+              srcset: 'http://media.w3.org/2010/05/sintel/poster.png',
+              type: 'image/jpeg',
+              media: '(min-width: 400px;)'
+            },
+            {
+              src: 'http://media.w3.org/2010/05/sintel/poster.png'
+            }
+          ]
+        },
+        {
+          name: 'Disney\'s Oceans 3',
+          description: 'Explore the depths of our planet\'s oceans. ' +
+            'Experience the stories that connect their world to ours. ' +
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' +
+            'sed do eiusmod tempor incididunt ut labore et dolore magna ' +
+            'aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco ' +
+            'laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure ' +
+            'dolor in reprehenderit in voluptate velit esse cillum dolore eu ' +
+            'fugiat nulla pariatur. Excepteur sint occaecat cupidatat non ' +
+            'proident, sunt in culpa qui officia deserunt mollit anim id est ' +
+            'laborum.',
+          duration: 45,
+          sources: [
+            { src: 'http://media.w3.org/2010/05/bunny/trailer.mp4', type: 'video/mp4' }
+          ],
+          // you can use <picture> syntax to display responsive images
+          thumbnail: [
+            {
+              srcset: 'http://media.w3.org/2010/05/bunny/poster.png',
+              type: 'image/jpeg',
+              media: '(min-width: 400px;)'
+            },
+            {
+              src: 'http://media.w3.org/2010/05/bunny/poster.png'
+            }
+          ]
+        },
+        {
+          name: 'Disney\'s Oceans 3',
+          description: 'Explore the depths of our planet\'s oceans. ' +
+            'Experience the stories that connect their world to ours. ' +
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' +
+            'sed do eiusmod tempor incididunt ut labore et dolore magna ' +
+            'aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco ' +
+            'laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure ' +
+            'dolor in reprehenderit in voluptate velit esse cillum dolore eu ' +
+            'fugiat nulla pariatur. Excepteur sint occaecat cupidatat non ' +
+            'proident, sunt in culpa qui officia deserunt mollit anim id est ' +
+            'laborum.',
+          duration: 45,
+          sources: [
+            { src: 'http://media.w3.org/2010/05/bunny/trailer.mp4', type: 'video/mp4' }
+          ],
+          // you can use <picture> syntax to display responsive images
+          thumbnail: [
+            {
+              srcset: 'http://media.w3.org/2010/05/bunny/poster.png',
+              type: 'image/jpeg',
+              media: '(min-width: 400px;)'
+            },
+            {
+              src: 'http://media.w3.org/2010/05/bunny/poster.png'
+            }
+          ]
+        }
+       ]);
+
+    // Initialize the playlist-ui plugin with no option (i.e. the defaults).
+    player.playlistUi();
+    </script>
 
 </body>
 </html>

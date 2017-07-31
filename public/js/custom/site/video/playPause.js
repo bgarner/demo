@@ -1,9 +1,13 @@
 jQuery(document).on('click', 'video', function(){
-    if (this.paused) {
+
+	var videoId = $(".video-js").attr('id');
+    var player = videojs(videoId);
+    console.log(player.paused());
+    if (player.paused()) {
         console.log("play!");
-        this.play();
+        player.play();
     } else {
         console.log("pause!");
-        this.pause();
+        player.pause();
     }
 });

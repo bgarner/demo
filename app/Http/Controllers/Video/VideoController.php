@@ -58,9 +58,8 @@ class VideoController extends Controller
         $video = Video::getSingleVideo($request->id);
         $playlists = Video::getPlaylistsThatContainSpecificVideo($request->id);
 
-        return view('site.video.singlevideo')
-            ->with('video', $video)
-            ->with('playlists', $playlists);
+        return response()->view('site.video.singlevideo',['video'=> $video, 'playlists'=> $playlists], 206);
+            
     }
 
 
