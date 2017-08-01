@@ -429,7 +429,7 @@ var PlaylistMenu = function (_Component2) {
       var thumbnail = this.items[selectedIndex].$('.vjs-playlist-thumbnail');
 
       if (thumbnail) {
-        dom.addClass(thumbnail, 'vjs-playlist-now-playing');
+        // dom.addClass(thumbnail, 'vjs-playlist-now-playing');
       }
     }
   };

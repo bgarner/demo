@@ -31,7 +31,10 @@
         white-space: nowrap;
         width: 1%
     }
-
+    
+    body {
+      font-family: Arial, sans-serif;
+    }
     .preview-player-dimensions.vjs-fluid {
       padding-top: 41.66666666666667%;
     }
@@ -70,13 +73,19 @@
       right: 0;
     }
     .vjs-mouse.vjs-playlist .vjs-playlist-item {
-    height: 106px;
-    margin-bottom: 16px;
-    font-size: 12px;
-}
-.vjs-playlist-title-container {
-    bottom:35px !important;
-}
+        height: 106px;
+        margin-bottom: 16px;
+        font-size: 12px;
+    }
+    .vjs-playlist-title-container {
+        bottom:35px !important;
+    }
+    .vjs-playlist .vjs-playlist-description{
+        white-space: normal;
+    }
+    .vjs-playlist-now-playing-text {
+        display: none !important;
+    }
 
     </style>
 </head>
@@ -135,7 +144,7 @@
 
                             <section class="main-preview-player">
                                 <video id="preview-player" class="video-js vjs-fluid vjs-big-play-centered " controls preload="auto"
-                                data-setup='{"controls": true, "autoplay": false, "preload": "auto", "fluid":true}'
+                                data-setup='{"controls": true, "autoplay": true, "preload": "auto", "fluid":true}'
                                 >
 
                                 </video>
@@ -263,39 +272,13 @@
               src: 'http://media.w3.org/2010/05/bunny/poster.png'
             }
           ]
-        },
-        {
-          name: 'Disney\'s Oceans 3',
-          description: 'Explore the depths of our planet\'s oceans. ' +
-            'Experience the stories that connect their world to ours. ' +
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' +
-            'sed do eiusmod tempor incididunt ut labore et dolore magna ' +
-            'aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco ' +
-            'laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure ' +
-            'dolor in reprehenderit in voluptate velit esse cillum dolore eu ' +
-            'fugiat nulla pariatur. Excepteur sint occaecat cupidatat non ' +
-            'proident, sunt in culpa qui officia deserunt mollit anim id est ' +
-            'laborum.',
-          duration: 45,
-          sources: [
-            { src: 'http://media.w3.org/2010/05/bunny/trailer.mp4', type: 'video/mp4' }
-          ],
-          // you can use <picture> syntax to display responsive images
-          thumbnail: [
-            {
-              srcset: 'http://media.w3.org/2010/05/bunny/poster.png',
-              type: 'image/jpeg',
-              media: '(min-width: 400px;)'
-            },
-            {
-              src: 'http://media.w3.org/2010/05/bunny/poster.png'
-            }
-          ]
         }
        ]);
 
     // Initialize the playlist-ui plugin with no option (i.e. the defaults).
+    
     player.playlistUi();
+    player.playlist.autoadvance(0);
     </script>
 
 </body>
