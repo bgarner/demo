@@ -22,7 +22,6 @@ class PlaylistController extends Controller
     {
         $videoList = PlaylistVideo::getPlaylistVideos($request->id);
         $playlistMeta = Playlist::getPlaylistMetaData($request->id);
-
         return view('site.video.playlist')
             ->with('playlistMeta', $playlistMeta)
             ->with('videoList', $videoList);

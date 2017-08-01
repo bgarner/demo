@@ -66,7 +66,6 @@ class StoreComponent extends Model
                         })
                         
                         ->toArray();
-        \Log::info($components);
         return($components);
     }
 
