@@ -46,11 +46,11 @@ class Analytics extends Model
 		        return Carbon::parse($date->created_at)->format('D g a');
 		    });
 
-		    $now = Carbon::now();
-		    foreach($visitorTraffic as $t){
+		    // $now = Carbon::now();
+		    // foreach($visitorTraffic as $t){
 
 
-		   	}
+		   	// }
 		   //	dd($now);
           // dd($now->format("G"));
            // dd($now->hour);
