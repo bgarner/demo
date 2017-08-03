@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Banner;
 use App\Models\Flyer\FlyerItem;
 
@@ -15,8 +15,7 @@ class FlyerItemAdminController extends Controller
     
     public function __construct()
     {
-        $this->middleware('admin.auth');
-        $this->middleware('banner');
+        
     }
     /**
      * Display a listing of the resource.
@@ -36,9 +35,8 @@ class FlyerItemAdminController extends Controller
     public function create()
     {
         $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
-        return view('admin.flyer.flyer-item-add-modal')->with('banner', $banner)
-                                                ->with('banners', $banners);
+        return view('admin.flyer.flyer-item-add-modal')->with('banner', $banner);
+                                                
     }
 
     /**
@@ -75,12 +73,10 @@ class FlyerItemAdminController extends Controller
     {
 
         $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
         $flyer_data = FlyerItem::getFlyerItemById($id);
         
         return view('admin.flyer.flyer-item-edit-modal')->with('flyer_data', $flyer_data)
-                                        ->with('banner', $banner)
-                                        ->with('banners', $banners);   
+                                        ->with('banner', $banner);
     }
 
     /**

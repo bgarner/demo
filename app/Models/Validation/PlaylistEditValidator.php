@@ -8,15 +8,14 @@ use App\Models\Video\PlaylistVideo;
 
 class PlaylistEditValidator extends PortalValidator
 {
-     protected $rules = [
-     				'title' => 'required',
-			    	'playlist_videos'  => 'sometimes|exists:videos,id',
-                    'remove_videos'  => 'sometimes|exists:videos,id',
+    protected $rules = [
+        'title'           => 'required',
+        'playlist_videos' => 'sometimes|exists:videos,id',
+        'remove_videos'   => 'sometimes|exists:videos,id',
 
-    		];
+    ];
 
     protected $messages = [
- 		'playlist_videos.required' 	=> 'Playlist cannot be empty',
  		'playlist_videos.exists' 	=> 'Invalid video files attached',
         'remove_videos.exists'      => 'Invalid video files attached'
     ];

@@ -9,8 +9,8 @@
     .modal-lg{ height: 95%; width: 80% !important; padding: 0; }
     .modal-content{ height: 100% !important;}
     .modal-body{ padding: 0; margin: 0; height: 100% !important; }
-    </style>    
-</head>	
+    </style>
+</head>
 
 <body class="fixed-navigation">
     <div id="wrapper">
@@ -22,7 +22,7 @@
 
     <div id="page-wrapper" class="gray-bg">
         <div class="row border-bottom">
-              @include('site.includes.topbar') 
+              @include('site.includes.topbar')
         </div>
 
 
@@ -37,7 +37,7 @@
             <div class="mail-box-header">
 
                 <h2>
-                	Urgent Notices
+                	{{__("Urgent Notices")}}
                 </h2>
 
             </div>
@@ -47,11 +47,11 @@
                 <table class="table table-hover table-mail">
                 <tbody>
                     <thead>
-                        <tr> 
+                        <tr>
                             <th>&nbsp;</th>
-                            <th> Title</th>
-                            <th> Description </th>
-                            <th> Date </th> 
+                            <th> {{__("Title")}}</th>
+                            <th> {{__("Description")}} </th>
+                            <th> {{__("Date")}} </th>
                         </tr>
                     </thead>
 
@@ -61,7 +61,7 @@
                     		<td class="check-mail"><i class="fa fa-bolt"></i></td>
                     		<td><a class="trackclick" data-urgentnotice-id="{{ $notice->id }}" href="/{{ Request::segment(1) }}/urgentnotice/show/{{ $notice->id }}">{{ $notice->title }}</td>
                     		<td>{{ $notice->trunc }}</td>
-                    		<td class="mail-date">{{ $notice->prettyDate }} <small style="font-weight: normal;padding-left: 10px;">({{ $notice->since }} ago)</small></td>
+                    		<td class="mail-date">{{ $notice->prettyDate }} <small style="font-weight: normal;padding-left: 10px;">({{ $notice->since }} {{__("ago")}})</small></td>
                     	</tr>
                  	@endforeach
                 </tbody>
@@ -75,8 +75,8 @@
 
 
 
-    @include('site.includes.footer')       
-  
+    @include('site.includes.footer')
+
     @include('site.includes.scripts')
 
     <script type="text/javascript">
@@ -91,4 +91,4 @@
     @include('site.includes.modal')
 
 </body>
-</html> 
+</html>

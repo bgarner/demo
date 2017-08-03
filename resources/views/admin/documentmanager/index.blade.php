@@ -89,12 +89,31 @@
                                         <h5 id="folder-title"> <i class="fa fa-folder-open"></i> {{$banner->name}}</h5>
                                     
                                         <div class="ibox-tools">
-
-                                             <a id="add-files" class="hidden" data-folderId="" href="/admin/document/create"><button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Add Files </i></button></a>
-                                             <a id="add-folder" href="/admin/folder/create"><button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> <i class="fa fa-folder-o"></i></button></a>
-                                             <a id="edit-folder" class="hidden" href=""><button type="button" class="btn btn-primary"><i class="fa fa-pencil"></i></button></a>
-                                             <button type="button" class="btn btn-primary hidden" id="copy-folder" ><i class="fa fa-clipboard"></i></button>
-                                             <a id="delete-folder" class="hidden" href=""><button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button></a>
+                                            
+                                            <span class="dropdown" id="edit_multiple_documents" >
+                                                <button class="btn btn-warning dropdown-toggle" type="button" id="edit_selected" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Edit Selected
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="edit_selected">
+                                                    <li id="edit_start_date"><a>Start Date</a></li>
+                                                    <li id="edit_end_date"><a>End Date</a></li>
+                                                </ul>
+                                            </span>
+                                            <a id="add-files" class="hidden" data-folderId="" href="/admin/document/create">
+                                                <button type="button" class="btn btn-primary">
+                                                    <i class="fa fa-plus"></i> Add Files
+                                                </button>
+                                            </a>
+                                            <a id="add-folder" href="/admin/folder/create">
+                                                <button type="button" class="btn btn-primary">
+                                                    <i class="fa fa-plus"></i> <i class="fa fa-folder-o"></i>
+                                                </button>
+                                            </a>
+                                            <a id="edit-folder" class="hidden" href="">
+                                                <button type="button" class="btn btn-primary"><i class="fa fa-pencil"></i></button>
+                                            </a>
+                                            <button type="button" class="btn btn-primary hidden" id="copy-folder" ><i class="fa fa-clipboard"></i></button>
+                                            <a id="delete-folder" class="hidden" href=""><button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button></a>
 
 
                                         </div>
@@ -127,6 +146,42 @@
           
                 </div>
 
+                <div id="start_date_selector" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Start Date</h4>
+                            </div>
+                            <div class="modal-body">
+                                <input type="text" class="input-sm form-control datetimepicker-start" name="start_date" id="start_date" value="" />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id="update_start_date">Update Start Date</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="end_date_selector" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">End Date</h4>
+                            </div>
+                            <div class="modal-body">
+                                <input type="text" class="input-sm form-control datetimepicker-end" name="end_date" id="end_date" value="" />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id="update_end_date">Update End Date</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
             </div>
 
@@ -143,7 +198,7 @@
 
     
 
-    @include('site.includes.footer')
+    @include('admin.includes.footer')
         
 
     @include('admin.includes.scripts')
@@ -164,7 +219,9 @@
     <script type="text/javascript" src="/js/custom/admin/documents/deleteFolder.js"></script>
     <script type="text/javascript" src="/js/custom/admin/documents/copyFolder.js"></script>
     <script type="text/javascript" src="/js/custom/admin/documents/copyDocument.js"></script>
+    <script type="text/javascript" src="/js/custom/admin/documents/editDocument.js"></script>
     <script type="text/javascript" src="/js/custom/site/launchModal.js" ></script>
+    <script type="text/javascript" src="/js/custom/datetimepicker.js"></script>
 
 
         <script type="text/javascript">

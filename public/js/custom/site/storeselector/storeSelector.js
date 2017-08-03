@@ -61,8 +61,8 @@ var getStores = function(banner)
 {
 	$("#storeSelect").empty();
 	$("#storeSelect").append("<option></option>");
-	var jqxhr = $.getJSON( STORE_API_DOMAIN + "/banner/" + banner, function(json) {
-
+	var jqxhr = $.getJSON( STORE_API_DOMAIN + "/banner/" + banner + "/stores", function(json) {
+ 
     var i=0;
         $.each(json, function(index, element) {
             $("#storeSelect").append("<option value='"+ element.store_number +"'>"+ element.store_number + " " + element.name +"</option>");

@@ -45,7 +45,7 @@
             </div>
 
             <div class="row wrapper border-bottom white-bg page-heading">
-                <h1>Most Liked Videos</h1>
+                <h1>{{__("Most Liked Videos")}}</h1>
             </div>
 
             <div class="row">
@@ -59,7 +59,7 @@
                                         <a href="watch/{{$ml->id}}" class="trackclick" data-video-id="{{$ml->id}}"><img src="/video/thumbs/{{$ml->thumbnail}}" class="embed-responsive-item img-responsive" /></a>
                                         </div>
                                         <a href="watch/{{$ml->id}}" class="trackclick" data-video-id="{{$ml->id}}"><h4>{{$ml->title}}</h4></a>
-                                        <p>{{$ml->likes}} likes &middot; {{$ml->sinceCreated}} ago</p>
+                                        <p>{{$ml->likes}} {{__("likes")}} &middot; {{$ml->sinceCreated}} {{__("ago")}}</p>
                                     </div>
                                 @endforeach
                             </div>

@@ -8,12 +8,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Request as RequestFacade;
 use App\Models\ProductLaunch\ProductLaunch;
-use App\Models\Communication\Communication;
-use App\Models\UrgentNotice\UrgentNotice;
-use App\Models\Alert\Alert;
 use App\Models\StoreInfo;
 use App\Models\Banner;
-use App\Skin;
 use App\Models\Flyer\Flyer;
 use App\Models\Flyer\FlyerItem;
 
@@ -27,11 +23,6 @@ class FlyerController extends Controller
         $storeInfo = StoreInfo::getStoreInfoByStoreId($this->storeNumber);
         $this->storeBanner = $storeInfo->banner_id;
         $this->banner = Banner::find($this->storeBanner);
-        $this->isComboStore = $storeInfo->is_combo_store;
-        $this->skin = Skin::getSkin($this->storeBanner);
-        $this->urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($this->storeNumber);
-        $this->alertCount = Alert::getActiveAlertCountByStore($this->storeNumber);
-        $this->communicationCount = Communication::getActiveCommunicationCount($this->storeNumber);
     }
     /**
      * Display a listing of the resource.
@@ -42,13 +33,7 @@ class FlyerController extends Controller
     {
         $flyers = Flyer::getFlyersByBannerId($this->banner->id);
         return view('site.flyer.index')
-            ->with('skin', $this->skin)
-            ->with('communicationCount', $this->communicationCount)
-            ->with('alertCount', $this->alertCount)
-            ->with('urgentNoticeCount', $this->urgentNoticeCount)
-            ->with('banner', $this->banner)
-            ->with('flyers', $flyers)
-            ->with('isComboStore', $this->isComboStore);
+            ->with('flyers', $flyers);
 
     }
 
@@ -87,14 +72,8 @@ class FlyerController extends Controller
         }
         $flyerItems = FlyerItem::getFlyerItemsByFlyerId($id);
         return view('site.flyer.flyer')
-            ->with('skin', $this->skin)
-            ->with('communicationCount', $this->communicationCount)
-            ->with('alertCount', $this->alertCount)
-            ->with('urgentNoticeCount', $this->urgentNoticeCount)
-            ->with('banner', $this->banner)
             ->with('flyer', $flyer)
-            ->with('flyerItems', $flyerItems)
-            ->with('isComboStore', $this->isComboStore);
+            ->with('flyerItems', $flyerItems);
     }
 
     /**

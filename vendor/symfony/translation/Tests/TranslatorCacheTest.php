@@ -11,13 +11,14 @@
 
 namespace Symfony\Component\Translation\Tests;
 
-use Symfony\Component\Config\Resource\ResourceInterface;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\Config\Resource\SelfCheckingResourceInterface;
 use Symfony\Component\Translation\Loader\ArrayLoader;
 use Symfony\Component\Translation\Loader\LoaderInterface;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\MessageCatalogue;
 
-class TranslatorCacheTest extends \PHPUnit_Framework_TestCase
+class TranslatorCacheTest extends TestCase
 {
     protected $tmpDir;
 
@@ -148,6 +149,17 @@ class TranslatorCacheTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('OK', $translator->trans($msgid), '-> the cache was overwritten by another translator instance in '.($debug ? 'debug' : 'production'));
     }
 
+    public function testGeneratedCacheFilesAreOnlyBelongRequestedLocales()
+    {
+        $translator = new Translator('a', null, $this->tmpDir);
+        $translator->setFallbackLocales(array('b'));
+        $translator->trans('bar');
+
+        $cachedFiles = glob($this->tmpDir.'/*.php');
+
+        $this->assertCount(1, $cachedFiles);
+    }
+
     public function testDifferentCacheFilesAreUsedForDifferentSetsOfFallbackLocales()
     {
         /*
@@ -228,7 +240,7 @@ class TranslatorCacheTest extends \PHPUnit_Framework_TestCase
 
     public function testRefreshCacheWhenResourcesAreNoLongerFresh()
     {
-        $resource = $this->getMockBuilder('Symfony\Component\Config\Resource\ResourceInterface')->getMock();
+        $resource = $this->getMockBuilder('Symfony\Component\Config\Resource\SelfCheckingResourceInterface')->getMock();
         $loader = $this->getMockBuilder('Symfony\Component\Translation\Loader\LoaderInterface')->getMock();
         $resource->method('isFresh')->will($this->returnValue(false));
         $loader
@@ -281,7 +293,7 @@ class TranslatorCacheTest extends \PHPUnit_Framework_TestCase
     }
 }
 
-class StaleResource implements ResourceInterface
+class StaleResource implements SelfCheckingResourceInterface
 {
     public function isFresh($timestamp)
     {

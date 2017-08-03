@@ -21,6 +21,9 @@ use Symfony\Component\VarDumper\Cloner\DumperInterface;
  */
 abstract class AbstractDumper implements DataDumperInterface, DumperInterface
 {
+    const DUMP_LIGHT_ARRAY = 1;
+    const DUMP_STRING_LENGTH = 2;
+
     public static $defaultOutput = 'php://output';
 
     protected $line = '';
@@ -28,16 +31,18 @@ abstract class AbstractDumper implements DataDumperInterface, DumperInterface
     protected $outputStream;
     protected $decimalPoint; // This is locale dependent
     protected $indentPad = '  ';
+    protected $flags;
 
     private $charset;
-    private $charsetConverter;
 
     /**
      * @param callable|resource|string|null $output  A line dumper callable, an opened stream or an output path, defaults to static::$defaultOutput
      * @param string                        $charset The default character encoding to use for non-UTF8 strings
+     * @param int                           $flags   A bit field of static::DUMP_* constants to fine tune dumps representation
      */
-    public function __construct($output = null, $charset = null)
+    public function __construct($output = null, $charset = null, $flags = 0)
     {
+        $this->flags = (int) $flags;
         $this->setCharset($charset ?: ini_get('php.output_encoding') ?: ini_get('default_charset') ?: 'UTF-8');
         $this->decimalPoint = (string) 0.5;
         $this->decimalPoint = $this->decimalPoint[1];
@@ -82,9 +87,13 @@ abstract class AbstractDumper implements DataDumperInterface, DumperInterface
     public function setCharset($charset)
     {
         $prev = $this->charset;
+
         $charset = strtoupper($charset);
         $charset = null === $charset || 'UTF-8' === $charset || 'UTF8' === $charset ? 'CP1252' : $charset;
 
+<<<<<<< HEAD
+        $this->charset = $charset;
+=======
         if ($prev === $charset) {
             return $prev;
         }
@@ -107,6 +116,7 @@ abstract class AbstractDumper implements DataDumperInterface, DumperInterface
             $this->charset = 'ISO-8859-1';
         }
         restore_error_handler();
+>>>>>>> 56d72c70e... composer updated
 
         return $prev;
     }
@@ -129,28 +139,33 @@ abstract class AbstractDumper implements DataDumperInterface, DumperInterface
     /**
      * Dumps a Data object.
      *
-     * @param Data                          $data   A Data object
-     * @param callable|resource|string|null $output A line dumper callable, an opened stream or an output path
+     * @param Data                               $data   A Data object
+     * @param callable|resource|string|true|null $output A line dumper callable, an opened stream, an output path or true to return the dump
+     *
+     * @return string|null The dump as string when $output is true
      */
     public function dump(Data $data, $output = null)
     {
-        $exception = null;
+        if ($returnDump = true === $output) {
+            $output = fopen('php://memory', 'r+b');
+        }
         if ($output) {
             $prevOutput = $this->setOutput($output);
         }
         try {
             $data->dump($this);
             $this->dumpLine(-1);
-        } catch (\Exception $exception) {
-            // Re-thrown below
-        } catch (\Throwable $exception) {
-            // Re-thrown below
-        }
-        if ($output) {
-            $this->setOutput($prevOutput);
-        }
-        if (null !== $exception) {
-            throw $exception;
+
+            if ($returnDump) {
+                $result = stream_get_contents($output, -1, 0);
+                fclose($output);
+
+                return $result;
+            }
+        } finally {
+            if ($output) {
+                $this->setOutput($prevOutput);
+            }
         }
     }
 
@@ -188,6 +203,10 @@ abstract class AbstractDumper implements DataDumperInterface, DumperInterface
      */
     protected function utf8Encode($s)
     {
+<<<<<<< HEAD
+        if (preg_match('//u', $s)) {
+            return $s;
+=======
         if ('mbstring' === $this->charsetConverter) {
             return mb_convert_encoding($s, 'UTF-8', mb_check_encoding($s, $this->charset) ? $this->charset : '8bit');
         }
@@ -199,29 +218,20 @@ abstract class AbstractDumper implements DataDumperInterface, DumperInterface
             if ($valid) {
                 return $c;
             }
+>>>>>>> 56d72c70e... composer updated
         }
 
-        $s .= $s;
-        $len = strlen($s);
-
-        for ($i = $len >> 1, $j = 0; $i < $len; ++$i, ++$j) {
-            switch (true) {
-                case $s[$i] < "\x80":
-                    $s[$j] = $s[$i];
-                    break;
-
-                case $s[$i] < "\xC0":
-                    $s[$j] = "\xC2";
-                    $s[++$j] = $s[$i];
-                    break;
-
-                default:
-                    $s[$j] = "\xC3";
-                    $s[++$j] = chr(ord($s[$i]) - 64);
-                    break;
-            }
+        if (!function_exists('iconv')) {
+            throw new \RuntimeException('Unable to convert a non-UTF-8 string to UTF-8: required function iconv() does not exist. You should install ext-iconv or symfony/polyfill-iconv.');
         }
 
-        return substr($s, 0, $j);
+        if (false !== $c = @iconv($this->charset, 'UTF-8', $s)) {
+            return $c;
+        }
+        if ('CP1252' !== $this->charset && false !== $c = @iconv('CP1252', 'UTF-8', $s)) {
+            return $c;
+        }
+
+        return iconv('CP850', 'UTF-8', $s);
     }
 }

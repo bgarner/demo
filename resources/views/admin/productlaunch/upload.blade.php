@@ -122,7 +122,7 @@
                                            <div id="actions" class="row">
                                             {!! csrf_field() !!}
                                             
-                                            <input type="hidden" id="banner_id" name="banner_id" value="{{$banner->id}}" />
+                                            {{--<input type="hidden" id="banner_id" name="banner_id" value="{{$banner->id}}" />--}}
 
 
                                               <div class="col-lg-6">
@@ -167,7 +167,7 @@
 
 
 
-        @include('site.includes.footer')
+        @include('admin.includes.footer')
 
         @include('admin.includes.scripts')
 

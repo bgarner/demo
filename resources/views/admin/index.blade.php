@@ -32,7 +32,6 @@
                 </div>
 		</div>
 
-
         <p>the analytics will be back soon...</p>
 
     </div>

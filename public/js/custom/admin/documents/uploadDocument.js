@@ -4,6 +4,7 @@ var previewNode = document.querySelector("#template");
 previewNode.id = "";
 var previewTemplate = previewNode.parentNode.innerHTML;
 previewNode.parentNode.removeChild(previewNode);
+var allStores;
 
 
 var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
@@ -31,7 +32,9 @@ var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
         formData.append("isWeekFolder", $('#folder-title').attr('data-isweekfolder') );
         formData.append("start", $("#start").val());
         formData.append("end", $("#end").val());
-        formData.append("stores", $("#storeSelect").val());
+        // formData.append("stores", $("#storeSelect").val());
+        formData.append("stores", getTargetStores());
+        formData.append("all_stores", allStores);
     },
     init: function () {
       this.on("success", function (file, response) {
@@ -113,7 +116,7 @@ myDropzone.on('removedfile', function(file) {
 
 $(document).ready(function() {
 
-    $(".chosen").chosen({ width:'75%' });
+    $(".chosen").chosen({ width:'100%' });
 
     $( ".select-stores" ).click(function() {
         
@@ -125,12 +128,14 @@ $(document).ready(function() {
         });
         $('.chosen').trigger('chosen:updated');
 
-        console.log($("#storeSelect").val());
+        // console.log($("#storeSelect").val());
+        console.log(getTargetStores());
         $('.select-stores-form').show();
         $('.datepicker-div').show();
         $('#file-uploader').show();
         $('#actions').show();
         $(".all-stores-form").hide();
+        allStores = 'off';
     
     });
 
@@ -145,8 +150,10 @@ $(document).ready(function() {
         $("#storeSelect option").each(function(index){
             $(this).prop('selected', true);
         });
-        
-        console.log($("#storeSelect").val());
+        allStores = 'on';
+        console.log(getTargetStores());
+        // console.log($("#storeSelect").val());
+
     });
 
     

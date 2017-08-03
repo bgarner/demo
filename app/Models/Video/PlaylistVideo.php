@@ -34,4 +34,35 @@ class PlaylistVideo extends Model
 
 
     }
+
+    public static function updatePlaylistVideos($id, $request)
+    {
+        $remove_videos = $request["remove_videos"];
+         if (isset($remove_videos)) {
+            foreach ($remove_videos as $video) {
+               PlaylistVideo::where('playlist_id', $id)->where('video_id', intval($video))->delete();
+            }
+         }
+
+         $add_videos = $request["playlist_videos"];
+         if (isset($add_videos)) {
+            foreach ($add_videos as $video) {
+
+                    $video_exists = PlaylistVideo::where('playlist_id', $id)
+                                                    ->where('video_id', $video)
+                                                    ->where('deleted_at', null)
+                                                    ->first();
+                if( ! $video_exists) {
+
+                    PlaylistVideo::create([
+                        'playlist_id'   => $id,
+                        'video_id'      => $video
+                    ]);
+                }
+
+
+            }
+         }
+         return;
+    }
 }

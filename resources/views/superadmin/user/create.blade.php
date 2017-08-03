@@ -74,7 +74,20 @@
 
                                         <div class="form-group"><label class="col-sm-2 control-label">Group</label>
                                             <div class="col-sm-10">
-                                                {!! Form::select('group', $groups , null, ['class'=>'form-control', 'id'=>'select-group']) !!}
+                                                {!! Form::select('group', $group_names , "", ['class'=>'form-control', 'id'=>'select-group']) !!}
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Role</label>
+                                            <div class="col-sm-10">
+                                                <select name="role" id="select-role" class="form-control"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Resource</label>
+                                            <div class="col-sm-10">
+                                                <select name="role" id="select-resource" class="form-control"></select>
                                             </div>
                                         </div>
 
@@ -131,7 +144,7 @@
 
 </div>
 
-@include('site.includes.footer')
+@include('admin.includes.footer')
 
 @include('admin.includes.scripts')
 

@@ -14,7 +14,7 @@ var fillBreadCrumbs = function(data)
 
 		_.each(folders, function(i){
 			
-			$('.breadcrumb').append('<li><a class="folder" id="'+ i.global_folder_id+'" href="/document#!/'+ i.global_folder_id+'">'+i.name+'</a></li>');
+			$('.breadcrumb').append('<li><a class="folder" id="'+ i.global_folder_id+'" href="/admin/document/manager#!/'+ i.global_folder_id+'">'+i.name+'</a></li>');
 		});
 	}
 }

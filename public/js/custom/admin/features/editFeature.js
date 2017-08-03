@@ -236,8 +236,13 @@ $(document).on('click','.feature-update',function(){
 	var feature_flyers = [];
 	var update_type = $('input:radio[name =  "latest_updates_option"]:checked').val();
 	var update_frequency =  $('input:radio[name ="latest_updates_option"]:checked').next('input[name="update_frequency"]').val();
-	// console.log('latest updates : ' + update_type);
-	// console.log('latest update freq : ' + update_frequency);
+	var communication_type = $("#communicationType").val();
+	var communications = $("#communications").val();
+	var target_stores = getTargetStores();
+	var allStores  = $("#allStores:checked").val();
+
+	console.log('latest updates : ' + update_type);
+	console.log('latest update freq : ' + update_frequency);
 
 
 	$(".remove_document").each(function(){
@@ -281,6 +286,12 @@ $(document).on('click','.feature-update',function(){
 		$(window).scrollTop(0);
 		return false;	
 	}
+	if( target_stores == null && typeof allStores === 'undefined' ) {
+		swal("Oops!", "Target stores not selected.", "error"); 
+		hasError = true;
+		$(window).scrollTop(0);
+		return false;
+	}
 
      if(hasError == false) {
      	var dataObj = {};
@@ -294,9 +305,12 @@ $(document).on('click','.feature-update',function(){
      	$.extend(dataObj, {feature_flyers:  feature_flyers});
      	$.extend(dataObj, {remove_document: remove_document});
      	$.extend(dataObj, {remove_package: remove_package});
-     	$.extend(dataObj, {remove_flyer: remove_flyer});
+     	$.extend(dataObj, {communication_type : communication_type});
+     	$.extend(dataObj, {communications : communications});
      	$.extend(dataObj, {update_type : update_type});
      	$.extend(dataObj, {update_frequency : update_frequency});
+     	$.extend(dataObj, {target_stores : target_stores});
+     	$.extend(dataObj, {all_stores : allStores});
      	
 
      	var data = JSON.stringify(dataObj);
@@ -363,6 +377,27 @@ $(document).on('click','.feature-update',function(){
 			        if(errors.hasOwnProperty("background")) {
 			        	$.each(errors.background, function(index){
 			        		$("#background").append('<div class="req">' + errors.background[index]  + '</div>');	
+			        	});
+			        }
+			        if(errors.hasOwnProperty("communication_type")) {
+			        	$.each(errors.communication_type, function(index){
+			        		$("#communicationType").parent().append('<div class="req">' + errors.communication_type[index]  + '</div>');	
+			        	});
+			        }
+
+			        if(errors.hasOwnProperty("communications")) {
+			        	$.each(errors.communications, function(index){
+			        		$("#communications").parent().append('<div class="req">' + errors.communications[index]  + '</div>');	
+			        	});
+			        }
+			        if(errors.hasOwnProperty("target_stores")) {
+			        	$.each(errors.target_stores, function(index){
+			        		$("#storeSelect").parent().append('<div class="req">' + errors.target_stores[index]  + '</div>');	
+			        	});
+			        }
+			        if(errors.hasOwnProperty("allStores")) {
+			        	$.each(errors.allStores, function(index){
+			        		$("#storeSelect").parent().append('<div class="req">' + errors.allStores[index]  + '</div>');	
 			        	});
 			        }
 			    }
