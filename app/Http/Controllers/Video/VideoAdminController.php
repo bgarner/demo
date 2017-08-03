@@ -46,13 +46,15 @@ class VideoAdminController extends Controller
     {
         
         $banners = UserBanner::getAllBanners()->pluck('name', 'id')->toArray();
-        $storeList = Utility::getStoreListForAdmin();
+        // $storeList = Utility::getStoreListForAdmin();
         $packageHash = sha1(time() . time());
+        $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
         
         return view('admin.video.video-manager.video-upload')
             ->with('packageHash', $packageHash)
-            ->with('banners', $banners)
-            ->with('storeList', $storeList); 
+            // ->with('storeList', $storeList);
+            ->with('optGroupOptions', $optGroupOptions)
+            ->with('banners', $banners);
     }
 
     /**
@@ -64,6 +66,7 @@ class VideoAdminController extends Controller
     public function store(Request $request)
     {
         Video::storeVideo($request);
+        return;
     }
     /**
      * Show form to updata meta data for specific group of files.
@@ -97,7 +100,7 @@ class VideoAdminController extends Controller
     public function updateMetaData(Request $request)
     {
         Video::updateMetaData($request);
-        return;
+        return redirect()->action('Video\VideoAdminController@index');;
     }       
 
     /**

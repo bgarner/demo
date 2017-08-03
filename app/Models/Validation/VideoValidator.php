@@ -8,8 +8,8 @@ use App\Models\Validation\PortalValidator;
 class VideoValidator extends PortalValidator
 {
     protected $rules = [
-    			    'title' 		=> 'sometimes',
-			    	'filename'  => 'required|mimes:webm'
+    			    'title' 	=> 'sometimes',
+			    	'filename'  => 'required|mimetypes:video/mp4,video/webm'
 
     		];
 

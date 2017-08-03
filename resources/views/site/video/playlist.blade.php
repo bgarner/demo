@@ -185,6 +185,11 @@
             
         });
         var videoList = JSON.parse($("#videoList").val());
+        $(videoList).each(function(index){
+            var video = videoList[index].duration;
+            videoList[index].duration = video;
+        })
+        console.log(videoList);
         player.playlist(videoList);
         var video = videoList[0];
         $(".video-details").find("#video-title").text(video.name);
@@ -284,6 +289,10 @@
     
     player.playlistUi();
     player.playlist.autoadvance(0);
+    player.on('loadedmetadata', function() {
+        var duration = player.duration();
+        console.log(duration);
+    });
 
     player.on('playlistitem', function() {
       var index = player.playlist.currentItem();

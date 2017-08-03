@@ -27,8 +27,8 @@ var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
         formData.append("upload_package_id", $('[name=upload_package_id').val());
         formData.append("banner_id", $('[name=banner_id]').val());
         formData.append("start", $("#start").val());
-        formData.append("target_stores", $("#storeSelect").val());
-        formData.append("target_banners", $("#bannerSelect").val());
+        formData.append("target_stores", getTargetStores());
+        formData.append("target_banners", getTargetBanners());
         formData.append("all_stores", allStores);
     },
     init: function () {
@@ -112,41 +112,10 @@ $(document).ready(function() {
 
     $(".chosen").chosen({ width:'100%' });
 
-    $( ".select-stores" ).click(function() {
-        
-        $(this).removeClass('btn-outline');
-        $(".all-stores").addClass('btn-outline');
-        $("#storeSelect option").each(function(){
-            $(this).removeAttr("selected");
-        });
-        $('.chosen').trigger('chosen:updated');
-        $('.select-stores-form').show();
-        $('.select-banners-form').hide();
-        $('.datepicker-div').show();
-        $('#file-uploader').show();
-        $('#actions').show();
-        $(".all-stores-form").hide();
-        allStores = 'off';
-    
-    });
+    $('.datepicker-div').show();
+    $('#file-uploader').show();
+    $('#actions').show();
 
-    $( ".all-stores" ).click(function() {
-
-        $(this).removeClass('btn-outline');
-        $(".select-stores").addClass('btn-outline');
-        $('.datepicker-div').show();
-        $('#file-uploader').show();
-        $('#actions').show();
-        $('.select-banners-form').show();
-        $('.select-stores-form').hide();
-        $("#storeSelect option").each(function(index){
-            $(this).prop('selected', true);
-        });
-        allStores = 'on';
-    });
-
-    
-    $( ".all-stores" ).trigger( "click" );
     $('.datetimepicker-start').datetimepicker({
         format: 'YYYY-MM-DD HH:mm:ss'
     });

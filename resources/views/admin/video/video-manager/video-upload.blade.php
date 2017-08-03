@@ -63,14 +63,14 @@
 
                 <div class="ibox-content form-group form-horizontal">
 
-                    <center>
+                    <!-- <center>
                         <span class="btn btn-success btn-lg all-stores">All Stores</span>
                         <span class="btn btn-success btn-lg btn-outline select-stores">Selected Stores</span>
-                    </center>
+                    </center> -->
 
                     <div class="form-container">
 
-                        <div class="upload-form select-stores-form row">
+                        {{--<div class="upload-form select-stores-form row">
                             <label class="col-sm-2 control-label">Target Stores</label>
                             <div class="col-sm-10">
                                 {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
@@ -83,7 +83,37 @@
                             <div class="col-sm-10 col-md-10">
                                 {!! Form::select('banners', $banners, null, [ 'class'=>'chosen', 'id'=> 'bannerSelect', 'multiple'=>'true']) !!}
                             </div>
-                        </div>
+                        </div>--}}
+
+
+                        <div class="form-group">
+                            {!! Form::label('targets', 'Select Stores', ['class'=>'col-sm-2 control-label']) !!}
+                            <div class="col-sm-10">
+
+                                <select name="targets[]" id="targets" multiple class="chosen">
+                                    <option value="">Select Some Options</option>
+                                    @foreach($optGroupOptions as $optionGroups)
+                                        <optgroup label="{{$optionGroups['optgroup-label']}}">
+                                        @foreach($optionGroups["options"] as $key=>$value)
+                                            <option value={{$key}} 
+                                                
+                                                @forelse($value['data-attributes'] as $attr=>$val )
+                                                    data-{{$attr}} = {{$val}}
+                                                @empty
+                                                @endforelse
+                                                
+                                            >
+                                                {{$value['option-label']}}
+                                            </option>
+                                        @endforeach
+                                        </optgroup>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                        </div> 
+
+
 
                         <div class="datepicker-div row">
 
@@ -219,7 +249,8 @@
             <script type="text/javascript" src="/js/vendor/lightbox.min.js"></script>
             <script type="text/javascript" src="/js/custom/admin/documents/breadcrumb.js"></script>
             <script type="text/javascript" src="/js/custom/admin/videos/uploadVideo.js"></script>
-            <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
+            <!-- <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script> -->
+            <script type="text/javascript" src="/js/custom/admin/videos/editVideo.js"></script>
             
             
             <script type="text/javascript">
