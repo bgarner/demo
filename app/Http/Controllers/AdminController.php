@@ -47,19 +47,19 @@ class AdminController extends Controller
 
         $banners = Banner::all();
 
-        $trafficDaily = Analytics::getTrafficLast24hrs();
+        // $trafficDaily = Analytics::getTrafficLast24hrs();
 
-        $traffic = Analytics::getTrafficLast30Days();
+        // $traffic = Analytics::getTrafficLast30Days();
 
-        $commStats = Analytics::getCommunicationStats();
+        // $commStats = Analytics::getCommunicationStats();
         
-        $urgentNoticeStats = Analytics::getUrgentNoticeStats();
+        // $urgentNoticeStats = Analytics::getUrgentNoticeStats();
 
         return view('admin.index')->with('banner', $banner)
-                    ->with('traffic', $traffic)
-                    ->with('trafficDaily', $trafficDaily)
-                    ->with('commStats', $commStats)
-                    ->with('urgentNoticeStats', $urgentNoticeStats)
+                    // ->with('traffic', $traffic)
+                    // ->with('trafficDaily', $trafficDaily)
+                    // ->with('commStats', $commStats)
+                    // ->with('urgentNoticeStats', $urgentNoticeStats)
                     ->with('banners', $banners);
         
     }
