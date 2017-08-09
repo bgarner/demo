@@ -49,7 +49,7 @@
 		                            <h5>Groups</h5>
 
 		                            <div class="ibox-tools">
-										 <a href="/admin/group/create" class="btn btn-primary btn"><i class="fa fa-plus"></i> Add New Group</a>
+										 {{--<a href="/admin/group/create" class="btn btn-primary btn"><i class="fa fa-plus"></i> Add New Group</a>--}}
 		                                
 		                            </div>
 		                        </div>
@@ -64,7 +64,7 @@
 												<tr>
 													<td>Groups</td>
 													<td>Roles</td>
-													<td class="actions">Action</td>
+													{{--<td class="actions">Action</td>--}}
 												</tr>
 											</thead>
 											<tbody>
@@ -84,12 +84,12 @@
 
 											</td>
 											
-											<td class="col-xs-2">
-												<a href="/admin/group/{{ $group->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+											{{--<td class="col-xs-2">--}}
+												{{--<a href="/admin/group/{{ $group->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>--}}
 
-												<a data-groupId="{{ $group->id }}" id="group{{ $group->id }}" class="group-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+												{{--<a data-groupId="{{ $group->id }}" id="group{{ $group->id }}" class="group-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>--}}
 
-											</td>
+											{{--</td>--}}
 										</tr>
 										@endforeach
 										</tbody>

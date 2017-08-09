@@ -171,7 +171,7 @@ return [
 
         App\Providers\RouteServiceProvider::class,
         Laravel\Dusk\DuskServiceProvider::class,
-        Laracademy\Commands\MakeServiceProvider::class,
+        // Laracademy\Commands\MakeServiceProvider::class,
         /*
          * Application Service Providers...
          */

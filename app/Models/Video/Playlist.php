@@ -99,10 +99,10 @@ class Playlist extends Model
            return json_encode($validate);
 
         }
-        \Log::info('validation passed: going ahead for editing');
+
         $playlist = Playlist::find($id);
-    	$playlist['title'] = $request['title'];
-        $playlist['description'] = $request['description'];
+    	$playlist->title = $request['title'];
+        $playlist->description = $request['description'];
     	$playlist->save();
     	PlaylistVideo::updatePlaylistVideos($id, $request);
         Playlist::updateTargetStores($request, $id);

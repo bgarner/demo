@@ -515,7 +515,6 @@ TABLE
             ,
                 true,
             ),
-<<<<<<< HEAD
             'Row with formatted cells containing a newline' => array(
                 array(),
                 array(
@@ -545,8 +544,6 @@ TABLE
             ,
                 true,
             ),
-=======
->>>>>>> 56d72c70e... composer updated
         );
     }
 
