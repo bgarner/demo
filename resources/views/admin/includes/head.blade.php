@@ -38,9 +38,6 @@
 				margin-left: 10px;
 			}
 
-
-
-
 	.modal-dialog{
 	  height:95%;
 	}

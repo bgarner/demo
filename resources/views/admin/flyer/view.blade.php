@@ -8,6 +8,18 @@
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 	<link rel="stylesheet" href="/css/plugins/dataTables/datatables.min.css">
 	{{-- <link rel="stylesheet" href="/css/plugins/dataTables/dataTables.tableTools.min.css"> --}}
+	<style>
+		.modal-dialog{
+		    overflow-y: initial !important
+		}
+		.modal-body{
+			top:120px;
+			padding:0px 30px;
+		    height: 80% !important;
+		    overflow-y: auto;
+		    overflow-x: hidden;
+		}
+    </style>
 </head>
 
 <body class="fixed-navigation adminview">
