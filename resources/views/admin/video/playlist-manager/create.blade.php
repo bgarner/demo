@@ -7,6 +7,12 @@
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
     <link rel="stylesheet" type="text/css" href="/css/custom/tree.css">
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
+	<style>
+        .modal-body{
+            top: 120px;
+            height: 90% !important; 
+        }
+    </style>
 </head>
 
 <body class="fixed-navigation adminview">
@@ -113,7 +119,7 @@
 
 
 
-		<div id="video-listing" class="modal fade">
+		<div id="video-listing" class="modal inmodal fade">
 		    <div class="modal-dialog">
 		        <div class="modal-content">
 		            <div class="modal-header">
@@ -121,9 +127,9 @@
 		                <h4 class="modal-title">Select Videos</h4>
 		            </div>
 		            <div class="modal-body">
-		            	
+		            	<ul class="tree">
 						@include('admin.video.playlist-manager.video-list-partial', ['videos'=>$videos])
-						
+						</ul>
 		            </div>
 		            <div class="modal-footer">
 		                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -171,7 +177,7 @@
 			// 	  width:'75%'
 			// });		    
 		    
-
+			$(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
 
 		    $("#add-videos").click(function(){
 		    	$("#video-listing").modal('show');
