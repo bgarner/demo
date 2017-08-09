@@ -19,6 +19,8 @@ use App\Models\Communication\CommunicationType;
 use App\Models\Communication\Communication;
 use App\Models\Feature\FeatureCommunicationTypes;
 use App\Models\Feature\FeatureCommunication;
+use App\Models\Feature\FeatureFlyer;
+use App\Models\Flyer\Flyer;
 use App\Models\Feature\FeatureTarget;
 use App\Models\Utility\Utility;
 
@@ -61,6 +63,7 @@ class FeatureAdminController extends Controller
         $communicationTypes  = CommunicationType::where('banner_id', $banner->id)->get()->pluck('communication_type', 'id');
         $communications      = Communication::getAllCommunication($banner->id)->pluck('subject', 'id');
         $storeAndStoreGroups = Utility::getStoreAndStoreGroupList($banner->id);
+        $flyers = Flyer::getFlyersByBannerId($banner->id);
 
         return view('admin.feature.create')
                 ->with('banner', $banner)
@@ -69,7 +72,8 @@ class FeatureAdminController extends Controller
                 ->with('packages', $packages)
                 ->with('communicationTypes', $communicationTypes)
                 ->with('communications', $communications)
-                ->with('storeAndStoreGroups', $storeAndStoreGroups);
+                ->with('storeAndStoreGroups', $storeAndStoreGroups)
+                ->with('flyers', $flyers);
     }
 
     /**
@@ -134,6 +138,9 @@ class FeatureAdminController extends Controller
         $storeAndStoreGroups         = Utility::getStoreAndStoreGroupList($banner->id);
         $feature_target_stores       = FeatureTarget::where('feature_id', $id)->get()->pluck('store_id')->toArray();
 
+        $flyers = Flyer::getFlyersByBannerId($banner->id);
+        $selected_flyers = FeatureFlyer::getFlyersByFeatureId($id);
+
         return view('admin.feature.edit')->with('feature', $feature)
                                     
                                         ->with('banner', $banner)
@@ -147,7 +154,9 @@ class FeatureAdminController extends Controller
                                         ->with('communications', $communications)
                                         ->with('selected_communications', $selected_communications)
                                         ->with('storeAndStoreGroups', $storeAndStoreGroups)
-                                        ->with('target_stores', $feature_target_stores);
+                                        ->with('target_stores', $feature_target_stores)
+                                        ->with('flyers', $flyers)
+                                        ->with('feature_flyers', $selected_flyers);
                                         
     }
 
