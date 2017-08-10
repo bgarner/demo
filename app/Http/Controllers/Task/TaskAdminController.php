@@ -92,10 +92,6 @@ class TaskAdminController extends Controller
         $task_target_stores = TaskTarget::getTargetStoresByTaskId($id);
         // store list would depend on the Auth::user type and id 
         $storeList = StoreInfo::getStoreListing($banner->id);
-        $all_stores = false;
-        if (count($storeList) == count($task_target_stores)) {
-            $all_stores = true;
-        }
 
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
         $task = Task::find($id);
@@ -109,8 +105,7 @@ class TaskAdminController extends Controller
                                         ->with('banners', $banners)
                                         ->with('navigation', $fileFolderStructure)
                                         ->with('target_stores', $task_target_stores)
-                                        ->with('task_status_list', $task_status_list)
-                                        ->with('all_stores', $all_stores);
+                                        ->with('task_status_list', $task_status_list);
     }
 
     /**

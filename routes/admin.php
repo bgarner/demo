@@ -103,7 +103,7 @@ Route::get('/admin/task/{task_id}/documents', 'Task\TaskDocumentController@show'
 // Route::resource('/admin/component', 'Auth\ComponentAdminController');
 
 //User Groups
-Route::resource('/admin/group', 'Auth\Group\GroupAdminController');
+Route::get('/admin/group', 'Auth\Group\GroupAdminController@index');
 Route::get('/admin/group/{id}/roles', 'Auth\Group\GroupRoleAdminController@show');
 
 //User Roles

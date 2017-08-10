@@ -8,6 +8,12 @@
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
+    <style>
+        .modal-body{
+            top: 120px;
+            height: 90% !important; 
+        }
+    </style>
 </head>
 
 <body class="fixed-navigation adminview">
@@ -138,7 +144,7 @@
 	@include('site.includes.bugreport')
 
 
-	<div id="video-listing" class="modal fade">
+	<div id="video-listing" class="modal inmodal fade">
 	    <div class="modal-dialog">
 	        <div class="modal-content">
 	            <div class="modal-header">

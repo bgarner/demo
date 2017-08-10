@@ -64,11 +64,11 @@
                                             </div>
                                         </div>
 
-                                        {{-- <div class="form-group"><label class="col-sm-2 control-label">Email</label>
+                                        <div class="form-group"><label class="col-sm-2 control-label">Email</label>
                                                 <div class="col-sm-10">
-                                                <input name="email" value="{{$user->email}}" class="form-control">
+                                                <input name="email" value="{{$user->email}}" readonly class="form-control">
                                             </div>
-                                        </div> --}}                                        
+                                        </div>                                        
 
                                         
 
@@ -153,7 +153,7 @@
 
 		        </div>
 
-				@include('site.includes.footer')
+				@include('admin.includes.footer')
 
 			    @include('admin.includes.scripts')
 

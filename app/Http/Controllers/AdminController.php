@@ -38,12 +38,13 @@ class AdminController extends Controller
         
         // $urgentNoticeStats = Analytics::getUrgentNoticeStats();
 
-        return view('admin.index')->with('banner', $banner)
+        return view('admin.index');
+                    // ->with('banner', $banner)
                     // ->with('traffic', $traffic)
                     // ->with('trafficDaily', $trafficDaily)
                     // ->with('commStats', $commStats)
                     // ->with('urgentNoticeStats', $urgentNoticeStats)
-                    ->with('banners', $banners);
+                    // ->with('banners', $banners);
         
 
     }

@@ -23,6 +23,8 @@ abstract class AbstractDumper implements DataDumperInterface, DumperInterface
 {
     const DUMP_LIGHT_ARRAY = 1;
     const DUMP_STRING_LENGTH = 2;
+    const DUMP_COMMA_SEPARATOR = 4;
+    const DUMP_TRAILING_COMMA = 8;
 
     public static $defaultOutput = 'php://output';
 
@@ -44,8 +46,8 @@ abstract class AbstractDumper implements DataDumperInterface, DumperInterface
     {
         $this->flags = (int) $flags;
         $this->setCharset($charset ?: ini_get('php.output_encoding') ?: ini_get('default_charset') ?: 'UTF-8');
-        $this->decimalPoint = (string) 0.5;
-        $this->decimalPoint = $this->decimalPoint[1];
+        $this->decimalPoint = localeconv();
+        $this->decimalPoint = $this->decimalPoint['decimal_point'];
         $this->setOutput($output ?: static::$defaultOutput);
         if (!$output && is_string(static::$defaultOutput)) {
             static::$defaultOutput = $this->outputStream;
@@ -91,32 +93,7 @@ abstract class AbstractDumper implements DataDumperInterface, DumperInterface
         $charset = strtoupper($charset);
         $charset = null === $charset || 'UTF-8' === $charset || 'UTF8' === $charset ? 'CP1252' : $charset;
 
-<<<<<<< HEAD
         $this->charset = $charset;
-=======
-        if ($prev === $charset) {
-            return $prev;
-        }
-        $this->charsetConverter = 'fallback';
-        $supported = true;
-        set_error_handler(function () use (&$supported) { $supported = false; });
-
-        if (function_exists('mb_encoding_aliases') && mb_encoding_aliases($charset)) {
-            $this->charset = $charset;
-            $this->charsetConverter = 'mbstring';
-        } elseif (function_exists('iconv')) {
-            $supported = true;
-            iconv($charset, 'UTF-8', '');
-            if ($supported) {
-                $this->charset = $charset;
-                $this->charsetConverter = 'iconv';
-            }
-        }
-        if ('fallback' === $this->charsetConverter) {
-            $this->charset = 'ISO-8859-1';
-        }
-        restore_error_handler();
->>>>>>> 56d72c70e... composer updated
 
         return $prev;
     }
@@ -146,6 +123,13 @@ abstract class AbstractDumper implements DataDumperInterface, DumperInterface
      */
     public function dump(Data $data, $output = null)
     {
+        $this->decimalPoint = localeconv();
+        $this->decimalPoint = $this->decimalPoint['decimal_point'];
+
+        if ($locale = $this->flags & (self::DUMP_COMMA_SEPARATOR | self::DUMP_TRAILING_COMMA) ? setlocale(LC_NUMERIC, 0) : null) {
+            setlocale(LC_NUMERIC, 'C');
+        }
+
         if ($returnDump = true === $output) {
             $output = fopen('php://memory', 'r+b');
         }
@@ -165,6 +149,9 @@ abstract class AbstractDumper implements DataDumperInterface, DumperInterface
         } finally {
             if ($output) {
                 $this->setOutput($prevOutput);
+            }
+            if ($locale) {
+                setlocale(LC_NUMERIC, $locale);
             }
         }
     }
@@ -203,22 +190,8 @@ abstract class AbstractDumper implements DataDumperInterface, DumperInterface
      */
     protected function utf8Encode($s)
     {
-<<<<<<< HEAD
         if (preg_match('//u', $s)) {
             return $s;
-=======
-        if ('mbstring' === $this->charsetConverter) {
-            return mb_convert_encoding($s, 'UTF-8', mb_check_encoding($s, $this->charset) ? $this->charset : '8bit');
-        }
-        if ('iconv' === $this->charsetConverter) {
-            $valid = true;
-            set_error_handler(function () use (&$valid) { $valid = false; });
-            $c = iconv($this->charset, 'UTF-8', $s);
-            restore_error_handler();
-            if ($valid) {
-                return $c;
-            }
->>>>>>> 56d72c70e... composer updated
         }
 
         if (!function_exists('iconv')) {

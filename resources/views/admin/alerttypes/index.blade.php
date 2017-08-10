@@ -6,6 +6,14 @@
     @include('admin.includes.head')
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
+    <style>
+        .modal-dialog{
+            height: 280px;
+        }
+        .modal-body{
+            padding:50px 30px 30px 30px;
+        }
+    </style>
 </head>
 
 <body class="fixed-navigation adminview">
@@ -100,7 +108,7 @@
 
         </div>
 
-        <div id="add-alerttype-modal" class="modal fade">
+        <div id="add-alerttype-modal" class="modal inmodal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
                 	{!! Form::open(['action' => 'Alert\AlertTypesAdminController@store']) !!}
@@ -125,7 +133,7 @@
             </div>
         </div>
 
-        <div id="edit-alerttype-modal" class="modal fade">
+        <div id="edit-alerttype-modal" class="modal inmodal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
                     

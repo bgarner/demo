@@ -8518,35 +8518,6 @@ body.md-skin {
   border:thin solid #e9e9e9;
 }
 
-
-#folder-listing .modal-dialog{
-  height:95%;
-}
-
-#folder-listing .modal-header{
-  position: absolute;
-  top: 10px;
-  width: 100%;
-}
-
-#folder-listing .modal-body{
-  position: absolute;
-  top: 70px;
-  width: 100%;
-  height: 90% !important;
-}
-
-#folder-listing .modal-body .tree{
-  height: 90% !important;
-  overflow-y: auto;
-}
-
-#folder-listing .modal-footer{
-  position: absolute;
-  bottom: 10px;
-  width: 100%;
-}
-
 .edit_multiple_documents .dropdown-item{
   line-height: 30px;
 }
