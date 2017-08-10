@@ -109,14 +109,14 @@
 
 						        </div>
 
-						        <div class="form-group">
+						        {{--<div class="form-group">
 
 						                <label class="col-sm-2 control-label">Send Reminders</label>
 						                <div class="col-sm-10">
 						                    {!! Form::checkbox('send_reminder', 0, false ,['id'=> 'send_reminder'] ) !!}
 						                </div>
 
-						        </div>
+						        </div>--}}
 
 
 								<div class="hr-line-dashed"></div>
