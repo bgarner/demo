@@ -166,7 +166,7 @@ class Video extends Model
             $video = Video::create($documentdetails);
             $video->save();
             $lastInsertedId= $video->id;
-            Self::updateTargetStores($request, $lastInsertedId);
+            Video::updateTargetStores($request, $lastInsertedId);
         }
 
         return $video ;
@@ -198,7 +198,10 @@ class Video extends Model
         $video->update($metadata);
 
         FeaturedVideo::updateFeaturedOn($id, $request);
-        Self::updateTargetStores($request, $id);
+        if(isset($request->target_banners) || isset($request->target_stores)){
+            Video::updateTargetStores($request, $id);    
+        }
+        
         return $video;
     }
 
@@ -423,26 +426,31 @@ class Video extends Model
         $all_stores = $request['all_stores'];
 
         $video = Video::find($id);
-        VideoTarget::where('video_id', $id)->delete();
-        VideoBanner::where('video_id', $id)->delete();
+        if(VideoBanner::where('video_id', $id)->exists()){
+            VideoBanner::where('video_id', $id)->delete();    
+        }
+
+        if( VideoTarget::where('video_id', $id)->exists()){
+            VideoTarget::where('video_id', $id)->delete(); 
+        }
         
         if( $all_stores == 'on' ){
-
-            // VideoTarget::where('video_id', $id)->delete();
+            $video->all_stores = 1;
+            $video->save();
             $target_banners = $request['target_banners'];
-            \Log::info($target_banners);
             if(! is_array($target_banners) ) {
                 $target_banners = explode(',',  $request['target_banners'] );    
             }
+            
             foreach ($target_banners as $key=>$banner) {
                 VideoBanner::create([
                 'video_id' => $id,
                 'banner_id' => $banner
                 ]);
+                
             }
             
-            $video->all_stores = 1;
-            $video->save();
+            
         }
         
         if (isset($request['target_stores']) && $request['target_stores'] != '' ) {
@@ -457,11 +465,8 @@ class Video extends Model
                     'store_id' => $store
                     ]);    
             }
-            // if(!in_array('0940', $target_stores)){
-            //     // Utility::addHeadOffice($id, 'video_target', 'video_id');
-            // }
+            
         }  
-        
         return;         
     }
 

@@ -5,12 +5,16 @@ $(document).ready(function(){
 		'width':'100%'
 	})
 	storeSelect = $('#targets');
-	var selected = JSON.parse($("#optGroupSelections").val());  
-	console.log(selected);
-	selected = Array.from(new Set(selected));
-	storeSelect.val(null);
-	storeSelect.val(selected);
-	storeSelect.trigger('chosen:updated');
+	var optGroupSelections = $("#optGroupSelections").val();
+	if(typeof(optGroupSelections) !== 'undefined'){
+
+		var selected = JSON.parse(optGroupSelections);  
+		selected = Array.from(new Set(selected));
+		storeSelect.val(null);
+		storeSelect.val(selected);
+		storeSelect.trigger('chosen:updated');	
+	}
+	
 });
 
 
