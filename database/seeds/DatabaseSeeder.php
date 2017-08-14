@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(FeatureCommunicationTypeTableSeeder::class);
         $this->call(FeatureTableSeeder::class);
         $this->call(StoreComponentTableSeeder::class);
+        $this->call(AnalyticsAssetTypesTableSeeder::class);
 
     }
 }
