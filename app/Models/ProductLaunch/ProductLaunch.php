@@ -8,7 +8,7 @@ use League\Csv\Reader;
 use App\Models\Utility\Utility;
 use Carbon\Carbon;
 use App\Models\ProductLaunch\ProductLaunchTarget;
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
 use App\Models\Event\EventType;
 
 class ProductLaunch extends Model

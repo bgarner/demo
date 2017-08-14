@@ -13,7 +13,7 @@ use App\Models\Document\FolderStructure;
 use App\Models\Document\Week;
 use App\Models\Document\FileFolder;
 use App\Models\Document\Document;
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
 
 class DocumentController extends Controller
 {

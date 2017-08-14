@@ -5,8 +5,8 @@ namespace App\Http\ViewCreators;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as RequestFacade; 
-use App\Models\StoreInfo;
-use App\Models\Banner;
+use App\Models\StoreApi\StoreInfo;
+use App\Models\StoreApi\Banner;
 
 class StoreTopbarCreator
 {

@@ -17,7 +17,7 @@ use FFMpeg\FFProbe;
 use FFMpeg\Coordinate\TimeCode;
 use App\Models\Video\VideoTarget;
 use App\Models\Video\VideoBanner;
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 

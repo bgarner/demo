@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Event\Event;
 use App\Models\Event\EventType;
 
-use App\Models\Banner;
+use App\Models\StoreApi\Banner;
 use App\Models\Auth\User\UserBanner;
 use App\Models\Auth\User\UserSelectedBanner;
 

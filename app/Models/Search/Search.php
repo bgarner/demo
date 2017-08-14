@@ -14,7 +14,7 @@ use App\Models\Event\Event;
 use App\Models\Event\EventType;
 use App\Models\Video\Video;
 use App\Models\ProductLaunch\ProductLaunch;
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
 
 class Search extends Model
 {

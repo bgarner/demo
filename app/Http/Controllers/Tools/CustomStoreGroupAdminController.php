@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Tools;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Tools\CustomStoreGroup;
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
 use App\Models\Utility\Utility;
 
 class CustomStoreGroupAdminController extends Controller

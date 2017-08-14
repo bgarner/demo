@@ -4,7 +4,7 @@ namespace App\Models\Auth\Resource;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Auth\Role\RoleResource;
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
 use App\Models\Validation\ResourceValidator;
 
 class Resource extends Model

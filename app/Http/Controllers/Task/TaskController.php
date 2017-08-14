@@ -9,7 +9,7 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Request as RequestFacade;
 use DB;
 
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
 
 class TaskController extends Controller
 {

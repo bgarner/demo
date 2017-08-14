@@ -8,14 +8,14 @@ use Illuminate\Support\Facades\Request as RequestFacade;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
 use App\Skin;
 use App\Models\UrgentNotice\UrgentNotice;
 use App\Models\Utility\Utility;
 use App\Models\Search\Search;
 use App\Models\Communication\Communication;
 use App\Models\Alert\Alert;
-use App\Models\Banner;
+use App\Models\StoreApi\Banner;
 
 class SearchController extends Controller
 {

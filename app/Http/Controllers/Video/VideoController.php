@@ -14,7 +14,7 @@ use App\Models\Video\Tag;
 use App\Models\Video\VideoTag;
 use App\Models\Video\Playlist;
 use App\Models\Video\FeaturedVideo;
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
 
 
 class VideoController extends Controller

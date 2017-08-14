@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use App\Models\Auth\User\UserBanner;
 use App\Models\Auth\User\UserSelectedBanner;
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
 use App\Models\Tools\CustomStoreGroup;
 
 class Utility extends Model

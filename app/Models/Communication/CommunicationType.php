@@ -4,7 +4,7 @@ namespace App\Models\Communication;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
 
 class CommunicationType extends Model
 {

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Auth\User\UserSelectedBanner;
-use App\Models\Banner;
+use App\Models\StoreApi\Banner;
 use App\Models\Auth\Role\Role;
 use App\Models\Auth\Component\Component;
 use App\Models\Auth\Role\RoleComponent;

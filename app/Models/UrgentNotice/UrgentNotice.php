@@ -11,7 +11,7 @@ use App\Models\Utility\Utility;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Validation\UrgentNoticeValidator;
 use App\Models\Auth\User\UserSelectedBanner;
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
 
 
 class UrgentNotice extends Model

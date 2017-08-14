@@ -3,7 +3,7 @@
 namespace App\Models\ManagerDashboard;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
 use App\Models\Communication\Communication;
 use App\Models\Alert\Alert;
 use App\Models\UrgentNotice\UrgentNotice;

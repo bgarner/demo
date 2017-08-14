@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Dashboard\Quicklinks;
 use App\Models\Auth\User\UserSelectedBanner;
-use App\Models\Banner;
+use App\Models\StoreApi\Banner;
 use App\Models\Document\Folder;
 use App\Models\Document\FileFolder;
 use App\Models\Document\FolderStructure;

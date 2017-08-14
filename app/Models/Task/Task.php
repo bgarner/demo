@@ -10,7 +10,7 @@ use App\Models\Task\TaskStatusTypes;
 use App\Models\Task\StoreStatusTypes;
 use App\Models\Auth\Role\Role;
 use App\Models\Auth\User\UserResource;
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
 use App\Models\Utility\Utility;
 use App\Models\Auth\User\UserSelectedBanner;
 use Carbon\Carbon;

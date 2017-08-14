@@ -27,3 +27,6 @@ Route::get('/api/v1/document/{id}', 'Api\V1\ApiController@getDocumentById');
 Route::get('/api/v1/banner/{id}/document/recent/{days}', 'Api\V1\ApiController@getRecentDocuments');
 //get all douments in a folder
 Route::get('/api/v1/folder/{id}/archived', 'Api\V1\ApiController@getArchivedDocuments');
+
+Route::get('/api/banners', 'StoreApi\StoreApiController@getAllBanners');
+Route::get('/api/banner/{id}/stores', 'StoreApi\StoreApiController@getStoresByBannerid');

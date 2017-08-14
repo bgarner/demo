@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Models\Video\Video;
 use App\Models\Video\VideoBanner;
-use App\Models\Banner;
+use App\Models\StoreApi\Banner;
 
 class VideoTableSeeder extends Seeder
 {
