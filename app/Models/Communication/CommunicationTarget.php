@@ -9,6 +9,7 @@ use DB;
 use App\Models\Utility\Utility;
 use App\Models\StoreApi\StoreInfo;
 use App\Models\Communication\Communication;
+use App\Models\StoreApi\Banner;
 
 class CommunicationTarget extends Model
 {
@@ -46,6 +47,26 @@ class CommunicationTarget extends Model
         }
          
         return;
+    }
+
+    public function getTargetStores($id)
+    {
+        $communication = Communication::find($id);
+
+        if(isset($communication->all_stores) && $communication->all_stores){
+            $banner = $communication->banner_id;
+            $stores = Banner::getStoreDetailsByBannerid($banner)->pluck('store_id')->toArray();
+        }
+        else{
+            $stores = CommunicationTarget::where('communication_id', $id)
+                                            ->get()
+                                            ->pluck('store_id')
+                                            ->toArray();    
+        }
+
+        return $stores;
+        
+                                            
     }
 
 }
