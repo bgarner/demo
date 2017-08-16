@@ -10,7 +10,7 @@ use App\Models\Document\Document;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Alert\AlertTarget;
 use App\Models\Auth\User\UserSelectedBanner;
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
 use App\Models\Validation\AlertValidator;
 
 class Alert extends Model

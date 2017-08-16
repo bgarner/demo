@@ -3,8 +3,8 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Support\Facades\Request as RequestFacade;
-use App\Models\StoreInfo;
-use App\Models\Banner;
+use App\Models\StoreApi\StoreInfo;
+use App\Models\StoreApi\Banner;
 use Closure, Session, Config, App;
 
 class UserBanner

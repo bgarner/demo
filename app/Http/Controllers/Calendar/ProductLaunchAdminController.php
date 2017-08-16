@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Banner;
-use App\Models\StoreInfo;
+use App\Models\StoreApi\Banner;
+use App\Models\StoreApi\StoreInfo;
 use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\ProductLaunch\ProductLaunch;
 

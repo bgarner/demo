@@ -5,7 +5,7 @@ namespace App\Models\StoreComponent;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Auth\Role\RoleComponent;
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
 
 class StoreComponent extends Model
 {

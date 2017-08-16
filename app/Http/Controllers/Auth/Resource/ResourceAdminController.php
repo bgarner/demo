@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth\Resource;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Auth\User\UserSelectedBanner;
-use App\Models\Banner;
+use App\Models\StoreApi\Banner;
 use App\Models\Auth\Resource\Resource;
 use App\Models\Auth\Resource\ResourceTypes;
 use App\Models\Auth\Role\Role;

@@ -3,7 +3,7 @@
 namespace App\Models\Auth\User;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Banner;
+use App\Models\StoreApi\Banner;
 
 class UserSelectedBanner extends Model
 {

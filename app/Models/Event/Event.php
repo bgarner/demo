@@ -5,7 +5,7 @@ namespace App\Models\Event;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Tag\ContentTag;
-use App\Models\Banner;
+use App\Models\StoreApi\Banner;
 use App\Models\Auth\User\UserBanner;
 use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Event\EventType;
@@ -14,7 +14,7 @@ use App\Models\Validation\EventValidator;
 use App\Models\Event\EventAttachment;
 use App\Models\ProductLaunch\ProductLaunch;
 use App\Models\Utility\Utility;
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
 
 class Event extends Model
 {

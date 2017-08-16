@@ -3,7 +3,7 @@
 namespace App\Models\Auth\Role;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
 use App\Models\Auth\Resource\Resource;
 
 class RoleResource extends Model

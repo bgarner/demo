@@ -8,7 +8,7 @@ use App\Models\Utility\Utility;
 use App\Models\Validation\PlaylistValidator;
 use App\Models\Validation\PlaylistEditValidator;
 use App\Models\Auth\User\UserBanner;
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
 use App\Models\Video\Video;
 use App\Models\Video\PlaylistVideo;
 use App\Models\Video\PlaylistBanner;

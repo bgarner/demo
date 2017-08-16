@@ -21,7 +21,7 @@ use App\Models\Validation\DocumentValidator;
 use App\Models\Feature\FeatureDocument;
 use App\Models\Communication\CommunicationDocument;
 use App\Models\UrgentNotice\UrgentNoticeDocument;
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
 
 
 class Document extends Model

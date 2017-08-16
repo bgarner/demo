@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Request as RequestFacade;
 use DB;
 
 use App\Skin;
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
 use App\Models\Community\Donation;
 use App\Models\Community\DonationItem;
 use App\Models\Community\Item;

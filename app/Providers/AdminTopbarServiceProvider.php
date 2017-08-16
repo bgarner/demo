@@ -5,7 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Auth\User\UserBanner;
-use App\Models\Banner;
+use App\Models\StoreApi\Banner;
 
 class AdminTopbarServiceProvider extends ServiceProvider
 {

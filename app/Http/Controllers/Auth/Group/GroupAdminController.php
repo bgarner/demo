@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Auth\Group\Group;
 use App\Models\Auth\User\UserSelectedBanner;
-use App\Models\Banner;
+use App\Models\StoreApi\Banner;
 use App\Models\Auth\Role\Role;
 use App\Models\Auth\Group\GroupRole;
 

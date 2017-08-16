@@ -19,7 +19,7 @@ use App\Models\Validation\FeatureBackgroundValidator;
 use App\Models\Feature\FeatureCommunicationTypes;
 use App\Models\Feature\FeatureTarget;
 use App\Models\Communication\Communication;
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
 
 class Feature extends Model
 {

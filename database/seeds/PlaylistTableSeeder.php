@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Models\Video\Playlist;
 use App\Models\Video\PlaylistBanner;
-use App\Models\Banner;
+use App\Models\StoreApi\Banner;
 
 class PlaylistTableSeeder extends Seeder
 {

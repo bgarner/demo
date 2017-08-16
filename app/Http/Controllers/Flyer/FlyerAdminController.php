@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Flyer\Flyer;
 use App\Models\Flyer\FlyerItem;
-use App\Models\Banner;
+use App\Models\StoreApi\Banner;
 use App\Models\Auth\User\UserSelectedBanner;
 
 class FlyerAdminController extends Controller

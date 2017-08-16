@@ -8,13 +8,13 @@ use DB;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Banner;
+use App\Models\StoreApi\Banner;
 use App\Models\Communication\Communication;
 use App\Models\Feature\Feature;
 use App\Models\Dashboard\Quicklinks;
 use App\Models\Dashboard\DashboardBranding;
 use App\Models\Notification\Notification;
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
 use App\Models\Video\Video;
 use App\Models\Video\FeaturedVideo;
 

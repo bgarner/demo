@@ -8,8 +8,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Request as RequestFacade;
 use App\Models\ProductLaunch\ProductLaunch;
-use App\Models\StoreInfo;
-use App\Models\Banner;
+use App\Models\StoreApi\StoreInfo;
+use App\Models\StoreApi\Banner;
 use App\Models\Flyer\Flyer;
 use App\Models\Flyer\FlyerItem;
 

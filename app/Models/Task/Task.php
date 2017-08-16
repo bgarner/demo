@@ -10,7 +10,7 @@ use App\Models\Task\TaskStatusTypes;
 use App\Models\Task\StoreStatusTypes;
 use App\Models\Auth\Role\Role;
 use App\Models\Auth\User\UserResource;
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
 use App\Models\Utility\Utility;
 use App\Models\Auth\User\UserSelectedBanner;
 use Carbon\Carbon;
@@ -228,8 +228,12 @@ class Task extends Model
 
 	public static function getAllStoreTasksForStoreList($stores)
 	{
-		$allStoreTasks = Task::where('all_stores', 1)->get();
+		
 		$storesGroupedByBannerId = Self::groupStoresByBannerId($stores);
+
+		$banners = array_keys($storesGroupedByBannerId);
+
+		$allStoreTasks = Task::where('all_stores', 1)->whereIn('banner_id', $banners)->get();
 
 		foreach ($allStoreTasks as $task) {
 			$task['stores'] = $storesGroupedByBannerId[$task->banner_id];

@@ -11,7 +11,7 @@ use App\Models\Document\FolderStructure;
 use App\Models\Document\Week;
 use App\Models\Document\FileFolder;
 use App\Models\Document\Document;
-use App\Models\Banner;
+use App\Models\StoreApi\Banner;
 use App\Models\Tag\Tag;
 use App\Models\Tag\ContentTag;
 use App\Models\Auth\User\UserSelectedBanner;

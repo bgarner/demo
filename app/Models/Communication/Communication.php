@@ -14,7 +14,7 @@ use App\Models\Communication\CommunicationType;
 use DB;
 use App\Models\Utility\Utility;
 use App\Models\Validation\CommunicationValidator;
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
 
 class Communication extends Model
 {
