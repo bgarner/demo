@@ -39,7 +39,7 @@ class StoreInfo extends Model
 
     public static function getStoresInfo($banner_id)
     {
-        $storeAPI = env('STORE_API_DOMAIN', false);
+        // $storeAPI = env('STORE_API_DOMAIN', false);
         // $storeInfoJson = file_get_contents( $storeAPI . "/banner/" . $banner_id . "/stores");
         $storeInfoJson = Banner::getStoreDetailsByBannerid($banner_id);
         $storeInfo = json_decode($storeInfoJson);
@@ -168,22 +168,32 @@ class StoreInfo extends Model
         $resource = Resource::find($resource_id);
         $resource_type_name = ResourceTypes::find($resource->resource_type_id)->resource_name;
 
-        $storeApiEndpoint = $storeAPI ."/stores";
-        if( $resource->resource_id != NULL ) {
 
+        switch ($resource_type_name) {
+            case 'store':
+                $storeInfo = [];
+                array_push($storeInfo, Store::getStoreDetailsByStoreNumber($resource->resource_id) );
+                $storeInfo = collect($storeInfo);
+                break;
+
+            case 'district':
+                $storeInfo = Store::getStoreDetailsByDistrictId($resource->resource_id);
+                break;
             
-            $storeApiEndpoint = $storeAPI ."/". $resource_type_name . "/" . $resource->resource_id . "/stores" ;    
+            case 'region':
+                $storeInfo = Store::getStoreDetailsByRegionId($resource->resource_id);
+                break;
+
+            case 'regions':
+                $storeInfo = Store::getAllStores();
+                break;
+
+            default:
+                $storeInfo = [];
+                break;
         }
         
-        $storeInfoJson = file_get_contents( $storeApiEndpoint);
-        $storeInfo = json_decode($storeInfoJson);
-        // $storeList = [];
-        // foreach ($storeInfo as $store) {
-        //     $storeList[$store->store_number] = $store->store_number . " - " . $store->name;
-        // }
-        // return $storeList ;
-
-        return $storeInfo;
+        return json_decode($storeInfo);
     }
 
     

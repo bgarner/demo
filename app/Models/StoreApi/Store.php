@@ -16,7 +16,7 @@ class Store extends Model {
         // Validation rules
     ];
 
-    public static function getAllStores($request)
+    public static function getAllStores($request = null)
     {
     	if(isset($request['province'])){
     		return Store::getStoreDetailsByProvince($request->province);
@@ -103,15 +103,16 @@ class Store extends Model {
     {
 
     	$districts = District::getDistrictDetailsByRegionId($id);
+
     	$stores = [];
     	foreach($districts as $district){
     		foreach ($district->stores as $store) {
-    			array_push($stores, $store);
+                array_push($stores, $store);
     		}
     		
     	}
         if(count($stores)>0){
-    		return $stores;
+    		return collect($stores);
     	}
     	return [];
     }

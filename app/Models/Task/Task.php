@@ -228,8 +228,12 @@ class Task extends Model
 
 	public static function getAllStoreTasksForStoreList($stores)
 	{
-		$allStoreTasks = Task::where('all_stores', 1)->get();
+		
 		$storesGroupedByBannerId = Self::groupStoresByBannerId($stores);
+
+		$banners = array_keys($storesGroupedByBannerId);
+
+		$allStoreTasks = Task::where('all_stores', 1)->whereIn('banner_id', $banners)->get();
 
 		foreach ($allStoreTasks as $task) {
 			$task['stores'] = $storesGroupedByBannerId[$task->banner_id];
