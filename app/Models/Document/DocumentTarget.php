@@ -30,7 +30,7 @@ class DocumentTarget extends Model
 
         if(isset($document->all_stores) && $document->all_stores){
             $banner = $document->banner_id;
-            $stores = Banner::getStoreDetailsByBannerid($banner)->pluck('store_id')->toArray();
+            $stores = Banner::getStoreDetailsByBannerid($banner)->pluck('store_number')->toArray();
         }
         else{
             $stores = DocumentTarget::where('document_id', $id)

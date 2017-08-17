@@ -36,25 +36,6 @@ class Analytics extends Model
  		$event->save();
     }
 
-    public static function getCommunicationStats()
-    {
-    	
-        $comms = AnalyticsCollection::getActiveCommunicationStats();
-        return $comms;
-    }
-
-    public static function getUrgentNoticeStats()
-    {
-    	$notices = AnalyticsCollection::getActiveUrgentNoticeStats();
-    	return $notices;
-    }
-
-    public static function getAlertsStats()
-    {
-        $alerts = AnalyticsCollection::getActiveAlertsStats();
-        return $alerts;
-    }
-
 
     public static function getLastXActivitiesByStore($storeNumber, $fetch=50)
     {

@@ -14,7 +14,7 @@ use App\Models\Communication\Communication;
 use App\User;
 use App\Models\Auth\User\UserBanner;
 use App\Models\Auth\User\UserSelectedBanner;
-use App\Models\Analytics\Analytics;
+use App\Models\Analytics\AnalyticsCollection;
 
 
 class AdminController extends Controller
@@ -29,12 +29,14 @@ class AdminController extends Controller
     public function index(Request $request)
     {
 
-        $commStats = Analytics::getCommunicationStats();
-        $urgentNoticeStats = Analytics::getUrgentNoticeStats();
+        $commStats = AnalyticsCollection::getActiveCommunicationStats();
+        $urgentNoticeStats = AnalyticsCollection::getActiveUrgentNoticeStats();
+        $taskStats = AnalyticsCollection::getTaskStats();
 
         return view('admin.index')
                     ->with('commStats', $commStats)
-                    ->with('urgentNoticeStats', $urgentNoticeStats);
+                    ->with('urgentNoticeStats', $urgentNoticeStats)
+                    ->with('taskStats', $taskStats);
     }
 
     /**

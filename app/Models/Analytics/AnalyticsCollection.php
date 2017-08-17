@@ -34,7 +34,6 @@ class AnalyticsCollection extends Model
     public static function getActiveUrgentNoticeStats()
     {
     	return AnalyticsCollection::join('urgent_notices', 'urgent_notices.id', '=', 'analytics_collection.resource_id' )
-    							// ->join('communication_types', 'communication_types.id', '=', 'communications.communication_type_id')
     							->where('asset_type_id', 3)
     							->where('urgent_notices.start', '>=', Carbon::now()->subDays(120))
     							->select('urgent_notices.*', 'analytics_collection.opened_total', 'analytics_collection.unopened_total', 'analytics_collection.sent_to_total', 
@@ -51,5 +50,25 @@ class AnalyticsCollection extends Model
 
 
     }
+
+    public static function getTaskStats()
+    {
+    	
+    	return AnalyticsCollection::join('tasks', 'tasks.id', '=', 'analytics_collection.resource_id' )
+    							->where('asset_type_id', 4)
+    							->select('tasks.*', 'analytics_collection.opened_total', 'analytics_collection.unopened_total', 'analytics_collection.sent_to_total', 
+    								'analytics_collection.opened', 'analytics_collection.unopened', 'analytics_collection.sent_to'
+    							 )
+    							->get()
+    							->each(function($item){
+    								$item->readPerc = round (($item->opened_total/$item->sent_to_total)*100);
+    								$item->opened = json_encode(unserialize($item->opened));
+    								$item->unopened = json_encode(unserialize($item->unopened));
+    								$item->sent_to = json_encode(unserialize($item->sent_to));
+    							});
+    	//get overdue tasks with completion details
+    }
+
+
 
 }

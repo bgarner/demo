@@ -9,9 +9,34 @@ use App\Models\Analytics\AnalyticsCollection;
 use App\Models\Communication\CommunicationTarget;
 use App\Models\Document\DocumentTarget;
 use App\Models\UrgentNotice\UrgentNoticeTarget;
+use App\Models\Task\Task;
+use App\Models\Task\TaskStoreStatus;
+use App\Models\Task\TaskTarget;
+use Carbon\Carbon;
 
 class AnalyticsTask extends Model
 {
+    
+     public static function compileAnalytics()
+    {
+        AnalyticsCollection::truncate();
+
+        $compiledCommunicationAnalytics = Self::compileCommunicationAnalytics();
+        Self::storeAnalyticsCollection($compiledCommunicationAnalytics);
+
+        $compiledAlertAnalytics = Self::compileAlertAnalytics();
+        Self::storeAnalyticsCollection($compiledAlertAnalytics);
+
+        $compiledUrgentNoticeAnalytics = Self::compileUrgentNoticeAnalytics();
+        Self::storeAnalyticsCollection($compiledUrgentNoticeAnalytics);
+
+
+        $compiledTaskAnalytics = Self::compileTaskAnalytics();
+        Self::storeAnalyticsCollection($compiledTaskAnalytics);
+
+        return;
+    }
+
     public static function compileCommunicationAnalytics()
     {
 		$compiledAnalytics = \DB::select( 
@@ -69,22 +94,47 @@ class AnalyticsTask extends Model
 
     }
 
-
-
-    public static function compileAnalytics()
+    public static function compileTaskAnalytics()
     {
-    	AnalyticsCollection::truncate();
+        $today = Carbon::now();
+        $tasks = Task::all();
+        $asset_type_id  = AnalyticsAssetTypes::where('type', 'task')->first()->id;
 
-    	$compiledCommunicationAnalytics = Self::compileCommunicationAnalytics();
-    	Self::storeAnalyticsCollection($compiledCommunicationAnalytics);
+        foreach ($tasks as $key=>$task) {
 
-    	$compiledAlertAnalytics = Self::compileAlertAnalytics();
-    	Self::storeAnalyticsCollection($compiledAlertAnalytics);
+            $completedByStores = TaskStoreStatus::where('task_id', $task->id)
+                                                ->where('status_type_id', '2')
+                                                ->get()->pluck('store_id')->toArray();
+            if(count($completedByStores) <= 0) {
+                $completedByStores = [];
+            }
+            $model = new TaskTarget();
+            $sent_to = $model->getTargetStores($task->id);
+            $notCompletedByStores = [];
 
-    	$compiledUrgentNoticeAnalytics = Self::compileUrgentNoticeAnalytics();
-    	Self::storeAnalyticsCollection($compiledUrgentNoticeAnalytics);
+            if(count($sent_to) == count($completedByStores) && $task->due_date < $today ){
+                $tasks->forget($key);
+                continue;
+            }
+            foreach ($sent_to as $store) {
+                if(!in_array($store, $completedByStores)){
+                    array_push($notCompletedByStores, $store);
+                }
+            }
 
-    	return;
+            $task->resource_id = $task->id;
+            $task->opened_by = $completedByStores;
+            $task->opened_total = count($completedByStores);
+            $task->sent_to = $sent_to;
+            $task->sent_to_total = count($sent_to);
+            $task->not_opened_by = $notCompletedByStores;
+            $task->not_opened_by_total = count($notCompletedByStores);
+            $task->asset_type_id = $asset_type_id;
+        }
+
+        return $tasks;
+
+
     }
 
     public static function storeAnalyticsCollection($compiledAnalytics)
@@ -98,7 +148,7 @@ class AnalyticsTask extends Model
     			'unopened_total' => $ca->not_opened_by_total,
     			'sent_to_total'  => $ca->sent_to_total,
     			'opened'         => serialize($ca->opened_by),
-    			'unopened'       => serialize($ca->not_open_by),
+    			'unopened'       => serialize($ca->not_opened_by),
     			'sent_to'        => serialize($ca->sent_to)
 
     		]);
@@ -106,8 +156,6 @@ class AnalyticsTask extends Model
 
     	return;	
     }
-
-
 
     private static function processAnalytics($compiledAnalytics, $asset_type_id, $target_table)
     {
@@ -125,7 +173,7 @@ class AnalyticsTask extends Model
             }
             $ca->sent_to = $sent_to;
             $ca->sent_to_total = count($sent_to);
-            $ca->not_open_by = $notOpenedByStore;
+            $ca->not_opened_by = $notOpenedByStore;
             $ca->not_opened_by_total = count($notOpenedByStore);
             $ca->asset_type_id = $asset_type_id;
 

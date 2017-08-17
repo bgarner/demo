@@ -14,13 +14,13 @@ class UrgentNoticeTarget extends Model
     protected $fillable = ['urgent_notice_id', 'store_id', 'is_read'];
     protected $dates = ['deleted_at'];
 
-    public static function getTargetStores($id)
+    public function getTargetStores($id)
     {
         $urgentnotice = UrgentNotice::find($id);
 
         if(isset($urgentnotice->all_stores) && $urgentnotice->all_stores){
             $banner = $urgentnotice->banner_id;
-            $stores = Banner::getStoreDetailsByBannerid($banner)->pluck('store_id')->toArray();
+            $stores = Banner::getStoreDetailsByBannerid($banner)->pluck('store_number')->toArray();
         }
         else{
             $stores = UrgentNoticeTarget::where('urgent_notice_id', $id)

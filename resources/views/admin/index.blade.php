@@ -142,6 +142,58 @@
                         </div>
 
                         </div>
+                        <div class="ibox">
+
+                        <div class="ibox-content">
+
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h2>Tasks <small>(Last 7 Days)</small></h2>
+                                    
+                                    <table class="table table-stripped" id="task_analytics">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Title</th>
+                                                <th>Due Date</th>
+                                                <th>Completed</th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($taskStats as $task)
+                                        <tr class="task-details-control">
+                                            <td>
+                                                @if($task->banner_id == 1)
+                                                    <small class="label label-sm label-inverse">SC</small>&nbsp;&nbsp;
+                                                @else 
+                                                    <small class="label label-sm label-warning">Atmo</small>&nbsp;&nbsp;
+                                                @endif
+                                            </td>
+                                            <td>{{ $task->title }}</td>
+                                            <td>{{ $task->due_date }}</td>
+                                            <td data-read-perc = {{$task->readPerc}}>
+                                            
+                                                <canvas id="taskChart_{{ $task->id }}" width="45" height="45" style="width: 45px; height: 45px;"></canvas>
+                                            </td>
+                                            <td >{{$task->opened}}</td>
+                                            <td >{{$task->unopened}}</td>
+                                            <td >{{$task->sent_to}}</td>
+                                        </tr>
+                                        
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        </div>
 
                     </div>
                 </div>
@@ -199,6 +251,23 @@
                  "searching": false
             });
 
+            var taskTable = $('#task_analytics').DataTable({
+                "info"   :false,
+                "bPaginate": false,
+                "paging":   false,
+                "columns": [    
+                   null,
+                   null,null,null,
+                   {"visible": false},
+                   {"visible": false},
+                   {"visible": false}
+                 ],
+                 "searching": false
+            });
+
+
+            
+
             @foreach($commStats as $c)
                 var commData_{{$c->id}} = [
                     {
@@ -246,7 +315,7 @@
                  });
             @endforeach 
 
-             @foreach($urgentNoticeStats as $c)
+            @foreach($urgentNoticeStats as $c)
                 var urgentNoticeData_{{$c->id}} = [
                     {
                         value: {{ $c->opened_total }},
@@ -293,6 +362,53 @@
                  });
             @endforeach
 
+            @foreach($taskStats as $c)
+                var taskData_{{$c->id}} = [
+                    {
+                        value: {{ $c->opened_total }},
+                        color: "#ee0000",
+                        //color: "#a3e1d4",
+                        highlight: "#1ab394"
+               
+                    },
+                    {
+                        value: {{ $c->unopened_total }},
+                        color: "#dedede",
+                        highlight: "#1ab394",
+                    }
+                ];
+
+               var ctx = document.getElementById("taskChart_{{ $c->id }}").getContext("2d");
+               var taskChart_{{ $c->id }} = new Chart(ctx).Doughnut(taskData_{{ $c->id }}, { 
+                    segmentShowStroke: true,
+                    segmentStrokeColor: "#fff",
+                    segmentStrokeWidth: 2,
+                    percentageInnerCutout: 70, // This is 0 for Pie charts
+                    animationSteps: 100,
+                    animationEasing: "easeOutBounce",
+                    animateRotate: true,
+                    animateScale: false,
+                    showTooltips: false,
+                    onAnimationComplete: function(){
+
+                          var canvas = document.getElementById("taskChart_{{ $c->id }}");
+                          var ctx = document.getElementById("taskChart_{{ $c->id }}").getContext("2d");
+
+                          var cx = canvas.width / 2;
+                          var cy = canvas.height / 2;
+
+                          ctx.textAlign = 'center';
+                          ctx.textBaseline = 'middle';
+                          ctx.font = '10px arial';
+                          ctx.fillStyle = '#333333';
+                          ctx.fillText("{{ $c->readPerc }}%", cx, cy);
+
+                      }
+                      
+      
+                 });
+            @endforeach
+
             $('#communication_analytics tbody').on('click', 'tr.details-control', function () {
                 var tr = $(this);
                 var row = table.row( tr );
@@ -312,6 +428,23 @@
             $('#urgent_notice_analytics tbody').on('click', 'tr.un-details-control', function () {
                 var tr = $(this);
                 var row = urgentNoticeTable.row( tr );
+         
+                if ( row.child.isShown() ) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                }
+                else {
+                    // Open this row
+                    row.child( format(row.data()) ).show();
+                    tr.addClass('shown');
+                }
+            } );
+
+
+            $('#task_analytics tbody').on('click', 'tr.task-details-control', function () {
+                var tr = $(this);
+                var row = taskTable.row( tr );
          
                 if ( row.child.isShown() ) {
                     // This row is already open - close it
