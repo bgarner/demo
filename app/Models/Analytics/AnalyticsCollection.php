@@ -66,7 +66,25 @@ class AnalyticsCollection extends Model
     								$item->unopened = json_encode(unserialize($item->unopened));
     								$item->sent_to = json_encode(unserialize($item->sent_to));
     							});
-    	//get overdue tasks with completion details
+    	
+    }
+
+    public static function getVideoStats()
+    {
+    	
+    	return AnalyticsCollection::join('videos', 'videos.id', '=', 'analytics_collection.resource_id' )
+    							->where('asset_type_id', 5)
+    							->select('videos.*', 'analytics_collection.opened_total', 'analytics_collection.unopened_total', 'analytics_collection.sent_to_total', 
+    								'analytics_collection.opened', 'analytics_collection.unopened', 'analytics_collection.sent_to'
+    							 )
+    							->get()
+    							->each(function($item){
+    								$item->readPerc = round (($item->opened_total/$item->sent_to_total)*100);
+    								$item->opened = json_encode(unserialize($item->opened));
+    								$item->unopened = json_encode(unserialize($item->unopened));
+    								$item->sent_to = json_encode(unserialize($item->sent_to));
+    							});
+    	
     }
 
 

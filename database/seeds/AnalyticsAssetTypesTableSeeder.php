@@ -10,6 +10,7 @@ class AnalyticsAssetTypesTableSeeder extends Seeder
     	['id' => 2 , 'type' => 'alert'],
     	['id' => 3 , 'type' => 'urgentnotice'],
     	['id' => 4 , 'type' => 'task'],
+        ['id' => 5 , 'type' => 'video'],
 
     ];
     /**
