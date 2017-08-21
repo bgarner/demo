@@ -33,8 +33,8 @@ class AdminController extends Controller
         $urgentNoticeStats = AnalyticsCollection::getActiveUrgentNoticeStats();
         $taskStats = AnalyticsCollection::getTaskStats();
         $videoStats = AnalyticsCollection::getVideoStats();
-        
 
+        
         return view('admin.index')
                     ->with('commStats', $commStats)
                     ->with('urgentNoticeStats', $urgentNoticeStats)

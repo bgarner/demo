@@ -76,7 +76,7 @@
                                             <td>{{ $comm->subject }}
                                             <span class="label label-sm label-{{ $comm->colour }}">{{ $comm->communication_type }}</span></td>
                                             <td>{{ $comm->send_at }}</td>
-                                            <td data-read-perc = {{$comm->readPerc}}>
+                                            <td data-order="{{$comm->readPerc}}" data-read-perc = {{$comm->readPerc}}>
                                             
                                                 <canvas id="commChart_{{ $comm->id }}" width="45" height="45" style="width: 45px; height: 45px;"></canvas>
                                             </td>
@@ -94,9 +94,9 @@
 
                         </div>
 
-                        </div>
+                    </div>
 
-                        <div class="ibox">
+                    <div class="ibox">
                         <div class="ibox-title">
                             <h2>Urgent Notice <small>(Last 7 Days)</small></h2>
                             <div class="ibox-tools">
@@ -135,7 +135,7 @@
                                             </td>
                                             <td>{{ $urgentNotice->title }}</td>
                                             <td>{{ $urgentNotice->start }}</td>
-                                            <td data-read-perc = {{$urgentNotice->readPerc}}>
+                                            <td data-order="{{$urgentNotice->readPerc}}" data-read-perc = {{$urgentNotice->readPerc}}>
                                             
                                                 <canvas id="urgentNoticeChart_{{ $urgentNotice->id }}" width="45" height="45" style="width: 45px; height: 45px;"></canvas>
                                             </td>
@@ -153,8 +153,8 @@
 
                         </div>
 
-                        </div>
-                        <div class="ibox">
+                    </div>
+                    <div class="ibox">
                         <div class="ibox-title">
                             <h2>Tasks</h2>
                             <div class="ibox-tools">
@@ -194,7 +194,7 @@
                                             </td>
                                             <td>{{ $task->title }}</td>
                                             <td>{{ $task->due_date }}</td>
-                                            <td data-read-perc = {{$task->readPerc}}>
+                                            <td data-order="{{$task->readPerc}}" data-read-perc = {{$task->readPerc}}>
                                             
                                                 <canvas id="taskChart_{{ $task->id }}" width="45" height="45" style="width: 45px; height: 45px;"></canvas>
                                             </td>
@@ -212,9 +212,9 @@
 
                         </div>
 
-                        </div>
+                    </div>
 
-                        <div class="ibox">
+                    <div class="ibox">
                         <div class="ibox-title">
                             <h2>Videos</h2>
                             <div class="ibox-tools">
@@ -235,8 +235,8 @@
                                             <tr>
                                                 <th></th>
                                                 <th>Title</th>
-                                                <th>Due Date</th>
-                                                <th>Completed</th>
+                                                <th>Thumbnail</th>
+                                                <th>Seen</th>
                                                 <th></th>
                                                 <th></th>
                                                 <th></th>
@@ -244,17 +244,11 @@
                                         </thead>
                                         <tbody>
                                         @foreach($videoStats as $video)
-                                        <tr class="task-details-control">
-                                            <td>
-                                                @if($video->banner_id == 1)
-                                                    <small class="label label-sm label-inverse">SC</small>&nbsp;&nbsp;
-                                                @else 
-                                                    <small class="label label-sm label-warning">Atmo</small>&nbsp;&nbsp;
-                                                @endif
-                                            </td>
+                                        <tr class="video-details-control">
+                                            <td></td>
                                             <td>{{ $video->title }}</td>
-                                            <td>{{ $video->due_date }}</td>
-                                            <td data-read-perc = {{$video->readPerc}}>
+                                            <td><img src="/video/thumbs/{{$video->thumbnail}}" style="width: 35%" /></td>
+                                            <td data-order="{{$video->readPerc}}" data-read-perc = {{$video->readPerc}}>
                                             
                                                 <canvas id="videoChart_{{ $video->id }}" width="45" height="45" style="width: 45px; height: 45px;"></canvas>
                                             </td>
@@ -272,7 +266,7 @@
 
                         </div>
 
-                        </div>
+                    </div>
 
                     </div>
                 </div>
@@ -352,9 +346,10 @@
                 "bPaginate": false,
                 "paging":   false,
                 "columns": [    
-                   null,
+                   {"visible": false},
                    {'width': '40%'},
-                   null,null,
+                   {'width': '40%'},
+                   null,
                    {"visible": false},
                    {"visible": false},
                    {"visible": false}
@@ -605,7 +600,7 @@
 
             $('#video_analytics tbody').on('click', 'tr.video-details-control', function () {
                 var tr = $(this);
-                var row = taskTable.row( tr );
+                var row = videoTable.row( tr );
          
                 if ( row.child.isShown() ) {
                     // This row is already open - close it
@@ -622,19 +617,27 @@
 
             function format ( d ) {
                 // `d` is the original data object for the row
-                
+                var opened = JSON.parse(d[4]);
+                console.log(opened);
+                $.each( opened, function( key, value ) { console.log(value) });
+                var unopened = JSON.parse(d[5]);
+                console.log(unopened);
+                var sent_to = JSON.parse(d[6]);
+                console.log(sent_to);
                 return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
                     '<tr>'+
                         '<td>Opened by Stores:</td>'+
-                        '<td>'+ JSON.parse(d[4])+'</td>'+
+                        '<td>'+
+                        $.each( opened, function( key, value ) { value });
+                        +'</td>'+
                     '</tr>'+
                     '<tr>'+
                         '<td>Not Opened by Stores:</td>'+
-                        '<td>'+JSON.parse(d[5])+'</td>'+
+                        '<td>'+$.each( unopened, function( key, value ) { value });+'</td>'+
                     '</tr>'+
                     '<tr>'+
                         '<td>Sent to Stores</td>'+
-                        '<td>'+ JSON.parse(d[6]) +'</td>'+
+                        '<td>'+$.each( sent_to, function( key, value ) { value });+'</td>'+
                     '</tr>'+
                 '</table>';
             }

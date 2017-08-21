@@ -53,7 +53,7 @@ class AnalyticsTask extends Model
 								);
 		$asset_type_id  = AnalyticsAssetTypes::where('type', 'communication')->first()->id;
 
-        $compiledAnalytics = Self::processAnalytics($compiledAnalytics, $asset_type_id, 'CommunicationTarget');
+        $compiledAnalytics = Self::processAnalytics($compiledAnalytics, $asset_type_id, 'CommunicationTarget', 'Communication');
     	
     	return $compiledAnalytics;
 
@@ -72,7 +72,7 @@ class AnalyticsTask extends Model
 								);
 		$asset_type_id  = AnalyticsAssetTypes::where('type', 'alert')->first()->id;
 
-        $compiledAnalytics = Self::processAnalytics($compiledAnalytics, $asset_type_id, 'DocumentTarget');
+        $compiledAnalytics = Self::processAnalytics($compiledAnalytics, $asset_type_id, 'DocumentTarget', 'Alert');
 
     	return $compiledAnalytics;
 
@@ -91,7 +91,7 @@ class AnalyticsTask extends Model
 								);
 		$asset_type_id  = AnalyticsAssetTypes::where('type', 'urgentnotice')->first()->id;
 
-        $compiledAnalytics = Self::processAnalytics($compiledAnalytics, $asset_type_id, 'UrgentNoticeTarget');
+        $compiledAnalytics = Self::processAnalytics($compiledAnalytics, $asset_type_id, 'UrgentNoticeTarget', 'UrgentNotice');
 
     	return $compiledAnalytics;
 
@@ -153,17 +153,18 @@ class AnalyticsTask extends Model
                                 );
         $asset_type_id  = AnalyticsAssetTypes::where('type', 'video')->first()->id;
 
-        $compiledAnalytics = Self::processAnalytics($compiledAnalytics, $asset_type_id, 'VideoTarget');
+        $compiledAnalytics = Self::processAnalytics($compiledAnalytics, $asset_type_id, 'VideoTarget', 'Video');
 
         return $compiledAnalytics;
     }
 
     
-    private static function processAnalytics($compiledAnalytics, $asset_type_id, $target_table)
+    private static function processAnalytics($compiledAnalytics, $asset_type_id, $target_table, $resource_model)
     {
+        $resourceModel = new $resource_model();
         foreach ($compiledAnalytics as $key=>$ca) {
 
-            if(Video::find($ca->resource_id)){
+            if( $resourceModel->find($ca->resource_id)){
                 $openedByStore = explode(",", $ca->opened_by);
                 $ca->opened_by = $openedByStore;
                 $notOpenedByStore = [];
