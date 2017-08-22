@@ -6,6 +6,16 @@
     @include('admin.includes.head')
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
+    <style>
+        
+        .store{
+            /*border:thin solid lime;*/
+            padding: 0px 5px;
+            cursor: pointer;
+            margin: 0px 5px;
+            display: inline-block;
+        }
+    </style>
 </head>
 
 <body class="fixed-navigation adminview">
@@ -616,30 +626,55 @@
 
 
             function format ( d ) {
+                
                 // `d` is the original data object for the row
-                var opened = JSON.parse(d[4]);
-                console.log(opened);
-                $.each( opened, function( key, value ) { console.log(value) });
-                var unopened = JSON.parse(d[5]);
-                console.log(unopened);
-                var sent_to = JSON.parse(d[6]);
-                console.log(sent_to);
-                return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
-                    '<tr>'+
+
+                var opened = getStores(JSON.parse(d[4]));
+                var unopened = getStores(JSON.parse(d[5]));
+                var sent_to = getStores(JSON.parse(d[6]));
+
+                // return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+                return '<tr>'+
                         '<td>Opened by Stores:</td>'+
-                        '<td>'+
-                        $.each( opened, function( key, value ) { value });
-                        +'</td>'+
+                        '<td>'+opened+ '</td>'+
                     '</tr>'+
                     '<tr>'+
                         '<td>Not Opened by Stores:</td>'+
-                        '<td>'+$.each( unopened, function( key, value ) { value });+'</td>'+
+                        '<td>'+unopened+'</td>'+
                     '</tr>'+
                     '<tr>'+
                         '<td>Sent to Stores</td>'+
-                        '<td>'+$.each( sent_to, function( key, value ) { value });+'</td>'+
-                    '</tr>'+
-                '</table>';
+                        '<td>'+sent_to+'</td>'+
+                    '</tr>';
+                // '</table>';
+
+                // return '<div style="padding-left:50px;">'+
+                //     '<div class="store-row">'+
+                //         '<span>Opened by Stores:</span>'+
+                //         opened+
+                //     '</div>'+
+                //     '<div class="store-row">'+
+                //         '<span>Not Opened by Stores:</span>'+
+                //             unopened+
+                //     '</div>'+
+                //     '<div class="store-row">'+
+                //         '<span>Sent to Stores</span>'+
+                //         sent_to+
+                //     '</div>'+
+                // '</div>';
+            }
+
+
+            function getStores(opened){
+                var returnString = '<td>';
+                $.each( opened, function( key, value ) { 
+                    returnString += '<span class="store btn btn-xs btn-default">'+value+'</span>' 
+
+                });
+
+                returnString += '</td>';
+
+                return returnString;
             }
 
 
