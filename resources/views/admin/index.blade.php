@@ -357,19 +357,21 @@
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">Start &amp; End</label>
 
-                                                    <div class="col-sm-8">
+                                                    <div class="col-sm-6">
                                                         <div class="input-daterange input-group" id="datepicker">
                                                             <input type="text" class="input-sm form-control datetimepicker-start" name="start_date" id="start_date" value="" />
                                                             <span class="input-group-addon">to</span>
                                                             <input type="text" class="input-sm form-control datetimepicker-end" name="end_date" id="end_date" value="" />
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-2">
+                                                    <div class="col-sm-4">
                                                         <a class="btn btn-default" id="generateVideoReport">Get Report  </a>
+                                                        <a class="btn btn-default hidden" id="downloadVideoReport">Download</a>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
+                                                <input type="text" id="reportJson" class="hidden">
                                                 <table class="table table-stripped hidden" id="video_analytics_by_store">
                                                     <thead>
                                                         <tr>
