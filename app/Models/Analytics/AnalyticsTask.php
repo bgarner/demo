@@ -214,6 +214,20 @@ class AnalyticsTask extends Model
         return; 
     }
 
+    public static function getVideoReportInTimespan($request)
+    {
+        $start = $request->start;
+        $end = $request->end;    
+
+        return Analytics::where('type', '=', 'video')
+                        ->where('created_at', '>', $start)
+                        ->where('created_at', "<", $end)
+                        ->select('store_number' , \DB::raw('count(*) as total_views'))
+                        ->groupBy('store_number')
+                        ->get();
+
+    }
+
 
 }
 /*
