@@ -73,6 +73,7 @@ class PlaylistVideo extends Model
         $playlistVideos = [];
         foreach ($videos as $video) {
             $playlistVideo = [];
+            $playlistVideo['id'] = $video->id;
             $playlistVideo['name'] = $video->title;
             $playlistVideo['description'] = $video->description;
             $playlistVideo['sources'] = [ [ 'src' => "/video/".$video->filename , 'type' => "video/".$video->original_extension ] ];

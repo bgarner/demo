@@ -21,7 +21,7 @@ class VideoViewCountController extends Controller
     public function update(Request $request)
     {
         $id = $request->id;
-        Video::incrementViewCount($id);
+        return Video::incrementViewCount($id);
     }
 
     

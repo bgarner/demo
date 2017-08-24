@@ -149,6 +149,8 @@
                                 </div>
                                 <div class="ibox-content clearfix">
                                     <p id="video-description"></p>
+                                    <input type="text" value="" class="hidden" id="video_id">
+                                    <a id="clicktrack_link" class="trackclick hidden" data-video-id>Click to track</a>
                                 </div>
                             </div>
 
@@ -173,6 +175,7 @@
     <script type="text/javascript" src="/js/vendor/underscore-1.8.3.js"></script>
     <script type="text/javascript" src="/js/vendor/lightbox.min.js"></script>
     <script type="text/javascript" src="/js/custom/site/video/incViewCountFromPlaylist.js?<?php echo time();?>"></script>
+    <script type="text/javascript" src="/js/custom/site/video/incrementViewCount.js?<?php echo time();?>"></script>
     <script type="text/javascript" src="/js/custom/site/video/likedislike.js?<?php echo time();?>"></script>
     <script src="/js/plugins/videojs-playlist/dist/videojs-playlist.js"></script>
     <script src="/js/plugins/videojs-playlist-ui/dist/videojs-playlist-ui.js"></script>
@@ -189,101 +192,16 @@
             var video = videoList[index].duration;
             videoList[index].duration = video;
         })
-        console.log(videoList);
         player.playlist(videoList);
         var video = videoList[0];
         $(".video-details").find("#video-title").text(video.name);
         $(".video-details").find("#video-views").text(video.views);
         $(".video-details").find("#video-since").text(video.sinceCreated);
         $(".video-details").find("#video-description").text(video.description);
+        $(".video-details").find("#clicktrack_link").attr('data-video-id', video.id).trigger('click');
+        $("#video_id").val( video.id );
 
-       //  player.playlist([
-       //  {
-       //        name: 'Disney\'s Oceans 1',
-       //        description: 'Explore the depths of our planet\'s oceans. ' +
-       //          'Experience the stories that connect their world to ours. ' +
-       //          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' +
-       //          'sed do eiusmod tempor incididunt ut labore et dolore magna ' +
-       //          'aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco ' +
-       //          'laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure ' +
-       //          'dolor in reprehenderit in voluptate velit esse cillum dolore eu ' +
-       //          'fugiat nulla pariatur. Excepteur sint occaecat cupidatat non ' +
-       //          'proident, sunt in culpa qui officia deserunt mollit anim id est ' +
-       //          'laborum.',
-       //        duration: 45,
-       //        sources: [
-       //          { src: 'http://vjs.zencdn.net/v/oceans.mp4', type: 'video/mp4' },
-       //          { src: 'http://vjs.zencdn.net/v/oceans.webm', type: 'video/webm' },
-       //        ],
-       //        // you can use <picture> syntax to display responsive images
-       //        thumbnail: [
-       //          // {
-       //          //   srcset: '/js/plugins/videojs-playlist-ui/test/example/oceans.jpg',
-       //          //   type: 'image/jpeg',
-       //          //   media: '(min-width: 400px;)'
-       //          // },
-       //          {
-       //            src: '/js/plugins/videojs-playlist-ui/test/example/oceans-low.jpg'
-       //          }
-       //        ]
-       //  },
-       //  {
-       //    name: 'Disney\'s Oceans 2',
-       //    description: 'Explore the depths of our planet\'s oceans. ' +
-       //      'Experience the stories that connect their world to ours. ' +
-       //      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' +
-       //      'sed do eiusmod tempor incididunt ut labore et dolore magna ' +
-       //      'aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco ' +
-       //      'laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure ' +
-       //      'dolor in reprehenderit in voluptate velit esse cillum dolore eu ' +
-       //      'fugiat nulla pariatur. Excepteur sint occaecat cupidatat non ' +
-       //      'proident, sunt in culpa qui officia deserunt mollit anim id est ' +
-       //      'laborum.',
-       //    duration: 45,
-       //    sources: [
-       //      { src: 'http://media.w3.org/2010/05/sintel/trailer.mp4', type: 'video/mp4' }
-       //    ],
-       //    // you can use <picture> syntax to display responsive images
-       //    thumbnail: [
-       //      // {
-       //      //   srcset: 'http://media.w3.org/2010/05/sintel/poster.png',
-       //      //   type: 'image/jpeg',
-       //      //   media: '(min-width: 400px;)'
-       //      // },
-       //      {
-       //        src: 'http://media.w3.org/2010/05/sintel/poster.png'
-       //      }
-       //    ]
-       //  },
-       //  {
-       //    name: 'Disney\'s Oceans 3',
-       //    description: 'Explore the depths of our planet\'s oceans. ' +
-       //      'Experience the stories that connect their world to ours. ' +
-       //      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' +
-       //      'sed do eiusmod tempor incididunt ut labore et dolore magna ' +
-       //      'aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco ' +
-       //      'laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure ' +
-       //      'dolor in reprehenderit in voluptate velit esse cillum dolore eu ' +
-       //      'fugiat nulla pariatur. Excepteur sint occaecat cupidatat non ' +
-       //      'proident, sunt in culpa qui officia deserunt mollit anim id est ' +
-       //      'laborum.',
-       //    duration: 45,
-       //    sources: [
-       //      { src: 'http://media.w3.org/2010/05/bunny/trailer.mp4', type: 'video/mp4' }
-       //    ],
-       //    // you can use <picture> syntax to display responsive images
-       //    thumbnail: [
-       //      // {
-       //      //   srcset: 'http://media.w3.org/2010/05/bunny/poster.png',
-       //      //   type: 'image/jpeg',
-       //      //   media: '(min-width: 400px;)'
-       //      // },
-       //      {
-       //        src: 'http://media.w3.org/2010/05/bunny/poster.png'
-       //      }
-       //    ]
-       //  }
-       // ]);
+
 
     // Initialize the playlist-ui plugin with no option (i.e. the defaults).
     
@@ -291,17 +209,25 @@
     player.playlist.autoadvance(0);
     player.on('loadedmetadata', function() {
         var duration = player.duration();
-        console.log(duration);
     });
 
     player.on('playlistitem', function() {
       var index = player.playlist.currentItem();
       var video = videoList[index];
-      console.log(video);
       $(".video-details").find("#video-title").text(video.name);
       $(".video-details").find("#video-views").text(video.views);
       $(".video-details").find("#video-since").text(video.sinceCreated);
       $(".video-details").find("#video-description").text(video.description);
+      $(".video-details").find("#clicktrack_link").attr('data-video-id', video.id).trigger('click');
+      $.ajax({
+        url : '/videocount',
+        type: 'POST',
+        data: {
+            id: video.id,
+        },
+    }).done(function( data ){
+        $(".video-details").find("#video-views").text(data);
+    });
 
     });
     </script>
