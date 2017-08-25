@@ -53,7 +53,10 @@ class AnalyticsTask extends Model
 								);
 		$asset_type_id  = AnalyticsAssetTypes::where('type', 'communication')->first()->id;
 
-        $compiledAnalytics = Self::processAnalytics($compiledAnalytics, $asset_type_id, 'CommunicationTarget', 'Communication');
+        $compiledAnalytics = Self::processAnalytics($compiledAnalytics, 
+                                                    $asset_type_id, 
+                                                    'App\\Models\\Communication\CommunicationTarget', 
+                                                    'App\\Models\\Communication\\Communication');
     	
     	return $compiledAnalytics;
 
@@ -72,7 +75,10 @@ class AnalyticsTask extends Model
 								);
 		$asset_type_id  = AnalyticsAssetTypes::where('type', 'alert')->first()->id;
 
-        $compiledAnalytics = Self::processAnalytics($compiledAnalytics, $asset_type_id, 'DocumentTarget', 'Alert');
+        $compiledAnalytics = Self::processAnalytics($compiledAnalytics, 
+                                                    $asset_type_id, 
+                                                    'App\\Models\\Document\\DocumentTarget', 
+                                                    'App\\Models\\Alert\\Alert');
 
     	return $compiledAnalytics;
 
@@ -91,7 +97,10 @@ class AnalyticsTask extends Model
 								);
 		$asset_type_id  = AnalyticsAssetTypes::where('type', 'urgentnotice')->first()->id;
 
-        $compiledAnalytics = Self::processAnalytics($compiledAnalytics, $asset_type_id, 'UrgentNoticeTarget', 'UrgentNotice');
+        $compiledAnalytics = Self::processAnalytics($compiledAnalytics, 
+                                                    $asset_type_id, 
+                                                    'App\\Models\\UrgentNotice\\UrgentNoticeTarget', 
+                                                    'App\\Models\\UrgentNotice\\UrgentNotice');
 
     	return $compiledAnalytics;
 
@@ -153,14 +162,17 @@ class AnalyticsTask extends Model
                                 );
         $asset_type_id  = AnalyticsAssetTypes::where('type', 'video')->first()->id;
 
-        $compiledAnalytics = Self::processAnalytics($compiledAnalytics, $asset_type_id, 'VideoTarget', 'Video');
+        $compiledAnalytics = Self::processAnalytics($compiledAnalytics, 
+                                                    $asset_type_id, 
+                                                    'App\\Models\\Video\\VideoTarget', 
+                                                    'App\\Models\\Video\\Video');
 
         return $compiledAnalytics;
     }
 
     
     private static function processAnalytics($compiledAnalytics, $asset_type_id, $target_table, $resource_model)
-    {
+    {       
         $resourceModel = new $resource_model();
         foreach ($compiledAnalytics as $key=>$ca) {
 
@@ -231,6 +243,5 @@ class AnalyticsTask extends Model
 
 }
 /*
-$a = new App\Models\Analytics\AnalyticsTask;
-$a->compileAnalytics();
+
 */

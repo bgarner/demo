@@ -16,6 +16,7 @@ use App\Models\Auth\User\UserBanner;
 use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Analytics\AnalyticsCollection;
 use Carbon\Carbon;
+use App\Models\Utility\Utility;
 
 class AdminController extends Controller
 {
@@ -34,13 +35,16 @@ class AdminController extends Controller
         $taskStats = AnalyticsCollection::getTaskStats();
         $videoStats = AnalyticsCollection::getVideoStats();
         $today = Carbon::now();
-
+        $lastCompiledTimestamp = AnalyticsCollection::orderBy('created_at', 'desc')->first()->created_at;
+        $prettyLastCompiledTimestamp = Utility::prettifyDateWithTime($lastCompiledTimestamp);
+        
         return view('admin.index')
                     ->with('commStats', $commStats)
                     ->with('urgentNoticeStats', $urgentNoticeStats)
                     ->with('taskStats', $taskStats)
                     ->with('videoStats', $videoStats)
-                    ->with('today', $today);
+                    ->with('today', $today)
+                    ->with('prettyLastCompiledTimestamp', $prettyLastCompiledTimestamp);
     }
 
     /**

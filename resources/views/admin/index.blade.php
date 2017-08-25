@@ -50,14 +50,11 @@
         </div>
 
 		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
+                <div >
                     <h2>Admin Home</h2>
-                    <ol class="breadcrumb">
-
-                    </ol>
                 </div>
-                <div class="col-lg-2">
-
+                <div>
+                    <small class="pull-right"> Last Updated : {{$prettyLastCompiledTimestamp}} </small>
                 </div>
 		</div>
 
