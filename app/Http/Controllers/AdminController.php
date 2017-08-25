@@ -15,7 +15,7 @@ use App\User;
 use App\Models\Auth\User\UserBanner;
 use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Analytics\AnalyticsCollection;
-
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -33,12 +33,14 @@ class AdminController extends Controller
         $urgentNoticeStats = AnalyticsCollection::getActiveUrgentNoticeStats();
         $taskStats = AnalyticsCollection::getTaskStats();
         $videoStats = AnalyticsCollection::getVideoStats();
+        $today = Carbon::now();
 
         return view('admin.index')
                     ->with('commStats', $commStats)
                     ->with('urgentNoticeStats', $urgentNoticeStats)
                     ->with('taskStats', $taskStats)
-                    ->with('videoStats', $videoStats);
+                    ->with('videoStats', $videoStats)
+                    ->with('today', $today);
     }
 
     /**

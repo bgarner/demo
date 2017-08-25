@@ -15,7 +15,7 @@ class AnalyticsCollection extends Model
     	return AnalyticsCollection::join('communications', 'communications.id', '=', 'analytics_collection.resource_id' )
     							->join('communication_types', 'communication_types.id', '=', 'communications.communication_type_id')
     							->where('asset_type_id', 1)
-    							->where('communications.send_at', '>=', Carbon::now()->subDays(120))
+    							->where('communications.send_at', '>=', Carbon::now()->subDays(30))
     							->select('communications.*', 'communication_types.communication_type', 'communication_types.colour', 'analytics_collection.opened_total', 'analytics_collection.unopened_total', 'analytics_collection.sent_to_total', 
     								'analytics_collection.opened', 'analytics_collection.unopened', 'analytics_collection.sent_to'
     							 )
@@ -35,7 +35,7 @@ class AnalyticsCollection extends Model
     {
     	return AnalyticsCollection::join('urgent_notices', 'urgent_notices.id', '=', 'analytics_collection.resource_id' )
     							->where('asset_type_id', 3)
-    							->where('urgent_notices.start', '>=', Carbon::now()->subDays(120))
+    							->where('urgent_notices.start', '>=', Carbon::now()->subDays(30))
     							->select('urgent_notices.*', 'analytics_collection.opened_total', 'analytics_collection.unopened_total', 'analytics_collection.sent_to_total', 
     								'analytics_collection.opened', 'analytics_collection.unopened', 'analytics_collection.sent_to'
     							 )

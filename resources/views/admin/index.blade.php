@@ -28,6 +28,12 @@
         .modal-body{
             padding:50px 30px 30px 30px;
         }
+        /*.overdue_task{
+            background-color: rgb(230, 230, 230);
+        }*/
+        .overdue_task i{
+            color: #ee0101;
+        }
     </style>
 </head>
 
@@ -61,7 +67,7 @@
 
                     <div class="ibox">
                         <div class="ibox-title">
-                            <h2>Communications <small>(Last 7 Days)</small></h2>
+                            <h2>Communications <small>(Last 30 Days)</small></h2>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
@@ -121,7 +127,7 @@
 
                     <div class="ibox">
                         <div class="ibox-title">
-                            <h2>Urgent Notice <small>(Last 7 Days)</small></h2>
+                            <h2>Urgent Notice <small>(Last 30 Days)</small></h2>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
@@ -206,25 +212,36 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($taskStats as $task)
-                                        <tr class="task-details-control">
-                                            <td>
-                                                @if($task->banner_id == 1)
-                                                    <small class="label label-sm label-inverse">SC</small>&nbsp;&nbsp;
-                                                @else 
-                                                    <small class="label label-sm label-warning">Atmo</small>&nbsp;&nbsp;
-                                                @endif
-                                            </td>
-                                            <td>{{ $task->title }}</td>
-                                            <td>{{ $task->due_date }}</td>
-                                            <td data-order="{{$task->readPerc}}" data-read-perc = {{$task->readPerc}}>
-                                            
-                                                <canvas id="taskChart_{{ $task->id }}" width="45" height="45" style="width: 45px; height: 45px;"></canvas>
-                                            </td>
-                                            <td >{{$task->opened}}</td>
-                                            <td >{{$task->unopened}}</td>
-                                            <td >{{$task->sent_to}}</td>
-                                        </tr>
+                                        @foreach($taskStats as $task) 
+                                            @if( $task->due_date < $today)
+                                                <tr class="task-details-control overdue_task">
+                                            @else
+                                                <tr class="task-details-control">
+                                            @endif
+                                                <td>
+                                                    @if($task->banner_id == 1)
+                                                        <small class="label label-sm label-inverse">SC</small>&nbsp;&nbsp;
+                                                    @else 
+                                                        <small class="label label-sm label-warning">Atmo</small>&nbsp;&nbsp;
+                                                    @endif
+                                                </td>
+                                                <td>{{ $task->title }}</td>
+                                                <td class="faa-parent animated-hover">
+                                                    
+                                                    @if( $task->due_date < $today)
+                                                        <i class="fa fa-bell-o faa-shake"></i>
+                                                    @endif
+                                                    {{ $task->due_date }}
+
+                                                </td>
+                                                <td data-order="{{$task->readPerc}}" data-read-perc = {{$task->readPerc}}>
+                                                
+                                                    <canvas id="taskChart_{{ $task->id }}" width="45" height="45" style="width: 45px; height: 45px;"></canvas>
+                                                </td>
+                                                <td >{{$task->opened}}</td>
+                                                <td >{{$task->unopened}}</td>
+                                                <td >{{$task->sent_to}}</td>
+                                            </tr>
                                         
                                         @endforeach
                                         </tbody>
