@@ -1,5 +1,3 @@
-ToDo
-
 UI:
 http://webapplayers.com/inspinia_admin-v2.3/
 
