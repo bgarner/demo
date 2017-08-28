@@ -13,16 +13,7 @@ use App\Models\Document\FolderStructure;
 use App\Models\Document\Week;
 use App\Models\Document\FileFolder;
 use App\Models\Document\Document;
-use App\Models\Banner;
-use App\Models\Document\Package;
-use App\Skin;
-use App\Models\Communication\Communication;
-use App\Models\Communication\CommunicationDocument;
-use App\Models\Communication\CommunicationPackage;
-use App\Models\Communication\CommunicationTarget;
-use App\Models\UrgentNotice\UrgentNotice;
-use App\Models\Alert\Alert;
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
 
 class DocumentController extends Controller
 {
@@ -39,21 +30,7 @@ class DocumentController extends Controller
 
         $storeBanner = $storeInfo->banner_id;
 
-        $banner = Banner::find($storeBanner);
-
-        $isComboStore = $storeInfo->is_combo_store;
-
-        $skin = Skin::getSkin($storeBanner);
-
-        $communicationCount = DB::table('communications_target')
-            ->where('store_id', $storeNumber)
-            ->whereNull('is_read')
-            ->count();        
-
-        
-        $banner = Banner::where('id', $storeBanner)->first();
-
-        $navigation = FolderStructure::getNavigationStructure($banner->id);
+        $navigation = FolderStructure::getNavigationStructure($storeBanner);
 
         $folders = Folder::all();
 
@@ -62,22 +39,11 @@ class DocumentController extends Controller
         if (!isset($defaultFolder)) {
             $defaultFolder = null;
         }
-
-        $urgentNoticeCount = UrgentNotice::getUrgentNoticeCount($storeNumber);
-
-        $alertCount = Alert::getActiveAlertCountByStore($storeNumber);        
         
         return view('site.documents.index')
-            ->with('skin', $skin)
             ->with('navigation', $navigation)
             ->with('folders', $folders)
-            ->with('banner', $banner)
-            ->with('communicationCount', $communicationCount)
-            ->with('alertCount', $alertCount)
-            ->with('defaultFolder' , $defaultFolder)
-            ->with('urgentNoticeCount', $urgentNoticeCount)
-            ->with('banner', $banner)
-            ->with('isComboStore', $isComboStore);
+            ->with('defaultFolder' , $defaultFolder);
 
     }
 

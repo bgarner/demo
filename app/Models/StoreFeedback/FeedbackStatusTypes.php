@@ -10,6 +10,6 @@ class FeedbackStatusTypes extends Model
 
     public static function getFeedbackStatusList()
     {
-    	return FeedbackStatusTypes::all()->lists('name', 'id')->prepend('');
+    	return FeedbackStatusTypes::all()->pluck('name', 'id')->prepend('');
     }
 }

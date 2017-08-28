@@ -1,4 +1,7 @@
-meh
+ToDo
 
 UI:
 http://webapplayers.com/inspinia_admin-v2.3/
+
+1. change Group Id for video and content editors from 2 (users) to 1(admin)
+	Eliminate "user" group

@@ -49,7 +49,12 @@
             <div class="row">
                 <div class="col-lg-12">
                     <br />
-                    <video controls="controls" poster="/video/thumbs/{{$video[0]->thumbnail}}" style="">
+                    <video 
+                        class="video-js vjs-default-skin vjs-big-play-centered"
+                        poster="/video/thumbs/{{$video[0]->thumbnail}}" 
+                        id="video_{{$video[0]->id}}"
+                        data-setup='{"controls": true, "autoplay": false, "preload": "auto", "fluid": true}'
+                        >
                         <source src="/video/{{$video[0]->filename}}" type="video/webm" />
                     </video>
 
@@ -64,7 +69,7 @@
                             </div>
 
                             <div class="pull-right">
-                                    <h2>{{$video[0]->views}} views</h2>
+                                    <h2>{{$video[0]->views}} {{__("views")}}</h2>
                                     <!-- <div class="progress progress-mini" style="margin-bottom: 10px;">
                                         <div style="width: {{$video[0]->ratio}}%;" class="progress-bar"></div>
                                     </div> -->
@@ -80,7 +85,7 @@
 
                             @if( count($playlists) > 0)
                                 <hr />
-                                <h2>Related Playlists</h2>
+                                <h2>{{__("Related Playlists")}}</h2>
                                 @foreach($playlists as $playlist)
                                     <h4><i class="fa fa-list" aria-hidden="true"></i> <a href="../playlist/{{$playlist->id}}">{{ $playlist->title }}</a></h4>
                                 @endforeach
@@ -128,8 +133,11 @@
     <script type="text/javascript" src="/js/vendor/lightbox.min.js"></script>
     <script type="text/javascript" src="/js/custom/site/video/incrementViewCount.js?<?php echo time();?>"></script>
     <script type="text/javascript" src="/js/custom/site/video/likedislike.js?<?php echo time();?>"></script>
-    <script type="text/javascript" src="/js/custom/site/video/playPause.js?<?php echo time();?>"></script>
-
+    <script>
+        var videoId = $(".video-js").attr('id');
+        var player = videojs(videoId);
+       
+    </script>
     @include('site.includes.modal')
 
 </body>

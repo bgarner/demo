@@ -7,6 +7,12 @@
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
     <link rel="stylesheet" type="text/css" href="/css/custom/tree.css">
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
+	<style>
+        .modal-body{
+            top: 120px;
+            height: 90% !important; 
+        }
+    </style>
 </head>
 
 <body class="fixed-navigation adminview">
@@ -61,7 +67,7 @@
 									<form class="form-horizontal" id="createNewPlaylistForm">
 										
 
-										<input type="hidden" name="banner_id" value={{$banner->id}} >
+										{{-- <input type="hidden" name="banner_id" value={{$banner->id}} > --}}
 
 										<div class="form-group">
 											<label class="col-sm-2 control-label">Title</label>
@@ -74,6 +80,8 @@
 											</div>
 
 										</div>
+
+										@include('admin.includes.store-banner-selector', ['optGroupOptions'=> $optGroupOptions, 'optGroupSelections' => $optGroupSelections])
 										
 
 										<div class="form-group">
@@ -111,7 +119,7 @@
 
 
 
-		<div id="video-listing" class="modal fade">
+		<div id="video-listing" class="modal inmodal fade">
 		    <div class="modal-dialog">
 		        <div class="modal-content">
 		            <div class="modal-header">
@@ -119,9 +127,9 @@
 		                <h4 class="modal-title">Select Videos</h4>
 		            </div>
 		            <div class="modal-body">
-		            	
+		            	<ul class="tree">
 						@include('admin.video.playlist-manager.video-list-partial', ['videos'=>$videos])
-						
+						</ul>
 		            </div>
 		            <div class="modal-footer">
 		                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -136,7 +144,7 @@
 		
 
 
-		@include('site.includes.footer')
+		@include('admin.includes.footer')
 
 	    @include('admin.includes.scripts')
 
@@ -148,7 +156,7 @@
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 		<script type="text/javascript" src="/js/custom/admin/videos/playlists/addPlaylist.js"></script>
 		<script type="text/javascript" src="/js/custom/tree.js"></script>
-		<script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
+		<script type="text/javascript" src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
 
 
 		<script type="text/javascript">
@@ -165,11 +173,11 @@
 
     		});
 
-		    $(".chosen").chosen({
-				  width:'75%'
-			});		    
+		 //    $(".chosen").chosen({
+			// 	  width:'75%'
+			// });		    
 		    
-
+			$(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
 
 		    $("#add-videos").click(function(){
 		    	$("#video-listing").modal('show');

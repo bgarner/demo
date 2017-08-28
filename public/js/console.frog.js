@@ -6,6 +6,7 @@
  *  Copyright (C) 2016 Tim Holman, http://tholman.com
  */
 
+
 (function dothething() {
 
   if( !window.console ) {
@@ -16,7 +17,7 @@
   window.console.frog = function() {
 
     var i;
-    
+
     // This looks like a frog, right?
     // Taken from here - http://chris.com/ascii/index.php?art=animals/frogs
     var frog = [[""],
@@ -32,7 +33,7 @@
     var stringOfArgs = args.join(' ');
 
     // Add the bubble if there is something to log!
-    if( stringOfArgs.length > 0 ) {  
+    if( stringOfArgs.length > 0 ) {
       frog[1] = frog[1] + "   ---" + ("-".repeat(stringOfArgs.length)) + "-";
       frog[2] = frog[2] + "-(   " + stringOfArgs + "   )";
       frog[3] = frog[3] + "    ---" + ("-".repeat(stringOfArgs.length)) + "-";

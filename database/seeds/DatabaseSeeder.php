@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,20 +11,28 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Model::unguard();
+        // $this->call(GroupsTableSeeder::class);
+        // $this->call(RolesTableSeeder::class);
+        // $this->call(ComponentsTableSeeder::class);
+        // $this->call(ResourceTypeTableSeeder::class);
+        // $this->call(ResourcesTableSeeder::class);
+        // $this->call(GroupRolesPivotSeeder::class);
+        // $this->call(RoleResourcesPivotSeeder::class);
+        // $this->call(RoleComponentPivotSeeder::class);
+        // $this->call(TaskStatusTypesSeeder::class);
+        // $this->call(TaskStoreStatusTypesSeeder::class);
+        // $this->call(VideoTableSeeder::class);
+        // $this->call(PlaylistTableSeeder::class);
+        // $this->call(FeatureCommunicationTypeTableSeeder::class);
+        // $this->call(FeatureTableSeeder::class);
+        //$this->call(StoreComponentTableSeeder::class);
+        $this->call(AnalyticsAssetTypesTableSeeder::class);
+        $this->call(StoreTableSeeder::class);
+        $this->call(DistrictTableSeeder::class);
+        $this->call(RegionTableSeeder::class);
+        $this->call(DistrictStorePivotSeeder::class);
+        $this->call(DistrictRegionPivotSeeder::class);
+        $this->call(BannerStorePivotSeeder::class);
 
-        // $this->call(UserTableSeeder::class);
-        // 
-        $this->call(EventTypesTableSeeder::class);
-        $this->command->info('Event Types Table seeded!');
-
-        $this->call(EventsTableSeeder::class);
-        $this->command->info('Events Table seeded!');
-
-        $this->call(BannerTableSeeder::class);
-        $this->command->info('Banner Table seeded!');        
-
-        Model::reguard();
     }
- 
 }

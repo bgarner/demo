@@ -42,19 +42,19 @@ $(document).on('click','.alert-create',function(){
 		is_alert = 1;	
 	}
 	var alert_type_id = $("#alert_type").val();
+	var banner_id = $("input[name='banner_id']").val();
 	
+	var target_stores = getTargetStores();
+	var allStores = $("#allStores:checked").val();
+
 	// var start = $("#start").val();
 	// var end = $("#end").val();
-	var banner_id = $("input[name='banner_id']").val();
-	var target_stores  = $("#storeSelect").val();
-	var allStores = $("#allStores:checked").val()
+	// var target_stores  = $("#storeSelect").val();
 	 
 	console.log('title : ' + title);
 	console.log('description : ' + description);
 	console.log('is_alert : ' + is_alert); 
 	console.log('alert_type : '+ alert_type_id);
-	// console.log('start : ' + start);
-	// console.log('end : ' + end);
 	console.log('target_stores : ' + target_stores);
 	console.log('banner_id : ' + banner_id);
 	console.log('all stores : ' + allStores);
@@ -115,7 +115,7 @@ $(document).on('click','.alert-create',function(){
 		  		stores : target_stores,
 		  		document_start : document_start,
 		  		document_end : document_end,
-		  		allStores : allStores
+		  		all_stores : allStores
 
 		  		
 		    },

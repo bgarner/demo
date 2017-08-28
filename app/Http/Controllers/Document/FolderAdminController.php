@@ -11,10 +11,10 @@ use App\Models\Document\FolderStructure;
 use App\Models\Document\Week;
 use App\Models\Document\FileFolder;
 use App\Models\Document\Document;
-use App\Models\Banner;
+use App\Models\StoreApi\Banner;
 use App\Models\Tag\Tag;
 use App\Models\Tag\ContentTag;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 
 class FolderAdminController extends Controller
 {
@@ -24,8 +24,7 @@ class FolderAdminController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin.auth');
-        $this->middleware('banner');
+        //
     }
 
     /**
@@ -110,7 +109,7 @@ class FolderAdminController extends Controller
         $banner = UserSelectedBanner::getBanner();
         $banners = Banner::all();
 
-        $tags = Tag::where('banner_id', $banner->id)->lists('name', 'id');
+        $tags = Tag::where('banner_id', $banner->id)->pluck('name', 'id');
         $tag_ids = ContentTag::where('content_id', $id)->where('content_type', 'folder')->get()->pluck('tag_id');
         $selected_tags = Tag::findMany($tag_ids)->pluck('id')->toArray();
 

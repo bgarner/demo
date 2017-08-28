@@ -9,6 +9,9 @@ use App\Models\Utility\Utility;
 use App\Models\Document\Document;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Alert\AlertTarget;
+use App\Models\Auth\User\UserSelectedBanner;
+use App\Models\StoreApi\StoreInfo;
+use App\Models\Validation\AlertValidator;
 
 class Alert extends Model
 {
@@ -19,11 +22,26 @@ class Alert extends Model
     protected $fillable = ['banner_id', 'document_id', 'alert_type_id', 'alert_start', 'alert_end'];
     protected $dates = ['deleted_at'];
 
-    public static function getAllAlerts($banner_id)
+    public static function validateAlert($request)
     {
-    	$alerts = Alert::join('documents', 'alerts.document_id' , '=', 'documents.id')
+         $validateThis = [
+            'document_id'   => $request['document_id'],
+            'alert_type_id' => $request['alert_type_id']
+        ];
+
+        \Log::info($validateThis);
+
+        $v = new AlertValidator();
+        $validationResult = $v->validate($validateThis);
+        return $validationResult;
+    }
+
+    public static function getAllAlerts()
+    {
+    	$banner = UserSelectedBanner::getBanner();
+        $alerts = Alert::join('documents', 'alerts.document_id' , '=', 'documents.id')
     			->join('alert_types', 'alert_types.id', '=', 'alerts.alert_type_id')
-    			->where('alerts.banner_id', $banner_id)
+    			->where('alerts.banner_id', $banner->id)
     			->select('alerts.*', 'alert_types.name as alert_type',
                          'documents.id as document_id',
                          'documents.original_filename as document_name',
@@ -31,15 +49,24 @@ class Alert extends Model
                          'documents.filename as filename',
                          'documents.end as end',
                          'documents.title as document_title',
-                         'documents.original_extension as document_extension')
+                         'documents.original_extension as document_extension',
+                         'documents.all_stores')
     			->get();
 
     	foreach ($alerts as $alert) {
 
-    		$target_stores = \DB::table('alerts_target')->where('alert_id', $alert->id)->lists('store_id');
-    		$alert->count_target_stores = count($target_stores);
-    		$alert->target_stores = implode( ", ", $target_stores );
-    		unset($target_stores);
+    		if(!$alert->all_stores){
+                $target_stores = Document::join('document_target', 'document_target.document_id', '=', 'documents.id')
+                                        ->where('document_target.document_id', $alert->document_id)
+                                        // ->where('document_target.deleted_at', null)
+                                        ->pluck('store_id')
+                                        ->toArray();
+
+                $alert->count_target_stores = count($target_stores);
+                $alert->target_stores = implode( ", ", $target_stores );
+                unset($target_stores);    
+            }
+            
             
             $now = Carbon::now()->toDatetimeString();
             $alert->now = $now;
@@ -57,69 +84,168 @@ class Alert extends Model
     	return $alerts;
     }
 
+    public static function getAlertCountByStoreNumber($request, $storeNumber)
+    {
+        
+        if (isset($request['archives']) && $request['archives']) {
+            return Alert::getAllAlertCountByStore($storeNumber);
+        }
+        else{
+            return Alert::getActiveAlertCountByStore($storeNumber);    
+        }
+    }
+
     public static function getActiveAlertCountByStore($store_id)
     {
         $now = Carbon::now()->toDatetimeString();
+        $banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
 
-        $alert_count = Alert::join('alerts_target', 'alerts.id' , '=', 'alerts_target.alert_id')
+        $allStoreAlertCount = Alert::join('documents', 'documents.id', '=', 'alerts.document_id')
+                                    ->where('documents.all_stores', 1)
+                                    ->where('alerts.banner_id', $banner_id)
+                                    ->where('documents.start', '<=', $now )
+                                    ->where(function($query) use ($now) {
+                                        $query->where('documents.end', '>=', $now)
+                                            ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+                                    })
+                                    ->count();
+
+
+        $targetAlertsCount = Alert::join('document_target', 'alerts.document_id' , '=', 'document_target.document_id')
                             ->join('documents', 'documents.id', '=', 'alerts.document_id')
-                            ->where('store_id', $store_id)
+                            ->where('document_target.store_id', $store_id)
                             ->where('documents.start', '<=', $now )
                             ->where(function($query) use ($now) {
                                 $query->where('documents.end', '>=', $now)
                                     ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
                             })
                             ->count();
-
+        
+        $alert_count = $allStoreAlertCount + $targetAlertsCount;
         return $alert_count;
     }
 
     public static function getAllAlertCountByStore($store_id)
     {
-        $alert_count = Alert::join('alerts_target', 'alerts.id' , '=', 'alerts_target.alert_id')
+        $banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
+        $allStoreAlertCount = Alert::join('documents', 'documents.id', '=', 'alerts.document_id')
+                                    ->where('documents.all_stores', 1)->where('alerts.banner_id', $banner_id)->count();
+
+        $targetAlertsCount = Alert::join('document_target', 'alerts.document_id' , '=', 'document_target.document_id')
                             ->where('store_id', $store_id)
                             ->count();
+ 
+        $alert_count = $allStoreAlertCount + $targetAlertsCount;
 
         return $alert_count;
     }    
 
     public static function getActiveAlertCountByCategory($storeNumber, $alertId)
     {
-         $now = Carbon::now()->toDatetimeString();
+        $banner_id = StoreInfo::getStoreInfoByStoreId($storeNumber)->banner_id;
+        
+        $now = Carbon::now()->toDatetimeString();
+        
+        $allStoreAlertCount = Alert::join('documents', 'documents.id', '=', 'alerts.document_id')
+                                    ->where('alerts.banner_id', $banner_id)
+                                    ->where('documents.all_stores', 1)
+                                    ->where('documents.start', '<=', $now )
+                                    ->where(function($query) use ($now) {
+                                        $query->where('documents.end', '>=', $now)
+                                            ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+                                    })
+                                    ->where('alerts.alert_type_id', $alertId)
+                                    ->count();
+        
+        $targetedAlertCount = Alert::join('document_target', 'alerts.document_id' , '=', 'document_target.document_id')
+                                    ->join('documents', 'documents.id', '=', 'alerts.document_id')
+                                    ->where('document_target.store_id', $storeNumber)
+                                    ->where('alerts.alert_type_id', $alertId)
+                                    ->where('documents.start', '<=', $now )
+                                    ->where(function($query) use ($now) {
+                                        $query->where('documents.end', '>=', $now)
+                                        ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+                                        })
+                                    ->count();
 
-         $count = Alert::join('alerts_target', 'alerts.id' , '=', 'alerts_target.alert_id')
-                            ->join('documents', 'documents.id', '=', 'alerts.document_id')
-                            ->where('store_id', $storeNumber)
-                            ->where('alerts.alert_type_id', $alertId)
-                            ->where('documents.start', '<=', $now )
-                            ->where(function($query) use ($now) {
-                                $query->where('documents.end', '>=', $now)
-                                ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
-                                })
-                            ->count();
-         return $count;
+        $count = $allStoreAlertCount + $targetedAlertCount;
+        return $count;
   
     }
 
 
     public static function getAllAlertCountByCategory($storeNumber, $alertId)
     {
-         $count = DB::table('alerts_target')
-           ->where('store_id', $storeNumber)
-           ->join('alerts', 'alerts.id', '=', 'alerts_target.alert_id')
-           ->where('alerts.alert_type_id', $alertId)
-           ->count();
-         return $count;
+        $banner_id = StoreInfo::getStoreInfoByStoreId($storeNumber)->banner_id;
+
+        $allStoreAlertCount = Alert::join('documents', 'documents.id', '=', 'alerts.document_id')
+                                    ->where('documents.all_stores', 1)
+                                    ->where('alerts.alert_type_id', $alertId)
+                                    ->where('alerts.banner_id', $banner_id)
+                                    ->count();
+
+        $targetedAlertCount = Alert::join('document_target', 'alerts.document_id' , '=', 'document_target.document_id')
+                                    ->where('document_target.store_id', $storeNumber)
+                                    ->where('alerts.alert_type_id', $alertId)
+                                    ->count();                            
+        $count = $allStoreAlertCount + $targetedAlertCount;
+        return $count;
+    }
+
+
+    public static function getAlertsByStoreNumber($request, $storeNumber)
+    {
+        $isValidAlertType = AlertType::isValidAlertType($request['type']);
+
+        $alerts = [];
+        if($isValidAlertType){
+            $alerts = Alert::getActiveAlertsByCategory($request['type'], $storeNumber);
+        
+        }
+        else{
+            $alerts = Alert::getActiveAlertsByStore($storeNumber);
+        }
+
+        if (isset($request['archives']) && $request['archives']) {
+            
+            if($isValidAlertType){
+                $archivedAlerts = Alert::getArchivedAlertsByCategory($request['type'], $storeNumber);
+                foreach ($archivedAlerts as $aa) {
+                    $alerts->add($aa);
+                }
+            }
+            else{
+
+                $archivedAlerts = Alert::getArchivedAlertsByStore($storeNumber);
+                foreach ($archivedAlerts as $aa) {
+                    $alerts->add($aa);
+                }
+            }
+        }
+
+        return $alerts;
     }
     
     public static function getActiveAlertsByStore($store_id)
     {
 
         $now = Carbon::now()->toDatetimeString();
+        $banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
         
-        $alerts = Alert::join('documents', 'alerts.document_id' , '=', 'documents.id')
-                        ->join('alerts_target' , 'alerts_target.alert_id' , '=', 'alerts.id')
-                        ->where('alerts_target.store_id', '=', $store_id)
+        $allStoreAlerts = Alert::join('documents', 'alerts.document_id' , '=', 'documents.id')
+                        ->where('documents.all_stores', 1)
+                        ->where('documents.start', '<=', $now )
+                        ->where('alerts.banner_id', $banner_id)
+                        ->where(function($query) use ($now) {
+                            $query->where('documents.end', '>=', $now)
+                                ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+                            })
+                        ->select('alerts.*', 'documents.start as start', 'documents.end as end')
+                        ->get();
+        
+        $targetedAlerts = Alert::join('documents', 'alerts.document_id' , '=', 'documents.id')
+                        ->join('document_target' , 'document_target.document_id' , '=', 'alerts.document_id')
+                        ->where('document_target.store_id', '=', $store_id)
                         ->where('documents.start', '<=', $now )
                         ->where(function($query) use ($now) {
                             $query->where('documents.end', '>=', $now)
@@ -127,6 +253,8 @@ class Alert extends Model
                             })
                         ->select('alerts.*', 'documents.start as start', 'documents.end as end')
                         ->get();
+
+        $alerts = $allStoreAlerts->merge($targetedAlerts)->sortByDesc('start');
 
         if (count($alerts) >0) {
             Alert::addStoreViewData($alerts);
@@ -139,11 +267,26 @@ class Alert extends Model
     {
         $now = Carbon::now()->toDatetimeString();
         
+        $banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
         
-        $alerts = Alert::join('documents', 'alerts.document_id' , '=', 'documents.id')
-                        ->join('alerts_target' , 'alerts_target.alert_id' , '=', 'alerts.id')
+        $allStoreAlerts = Alert::join('documents', 'alerts.document_id' , '=', 'documents.id')
                         ->join('alert_types', 'alert_types.id', '=', 'alerts.alert_type_id')
-                        ->where('alerts_target.store_id', '=', $store_id)
+                        ->where('documents.all_stores', 1)
+                        ->where('alerts.banner_id', $banner_id)
+                        ->where('documents.start', '<=', $now )
+                        ->where(function($query) use ($now) {
+                            $query->where('documents.end', '>=', $now)
+                                ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+                        })
+                        ->where('alert_type_id' , $alert_type)
+                        ->select('alerts.*', 'documents.start as start', 'documents.end as end')
+                        ->get();
+
+        
+        $targetedAlerts = Alert::join('documents', 'alerts.document_id' , '=', 'documents.id')
+                        ->join('document_target' , 'document_target.document_id' , '=', 'alerts.document_id')
+                        ->join('alert_types', 'alert_types.id', '=', 'alerts.alert_type_id')
+                        ->where('document_target.store_id', '=', $store_id)
                         ->where('documents.start', '<=', $now )
                         ->where(function($query) use ($now) {
                             $query->where('documents.end', '>=', $now)
@@ -153,6 +296,8 @@ class Alert extends Model
                         ->select('alerts.*', 'documents.start as start', 'documents.end as end')
                         ->get();
         
+        $alerts = $allStoreAlerts->merge($targetedAlerts)->sortByDesc('start');
+
         if (count($alerts) >0) {
             Alert::addStoreViewData($alerts);
         }
@@ -163,15 +308,27 @@ class Alert extends Model
     public static function getArchivedAlertsByStore($store_id)
     {
         $now = Carbon::now()->toDatetimeString();
+
+        $banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
         
-        $alerts = Alert::join('documents', 'alerts.document_id', '=', 'documents.id')
-                        ->join('alerts_target', 'alerts.id', '=', 'alerts_target.alert_id')
-                        ->where('alerts_target.store_id', '=', $store_id)
+        $allStoreAlerts = Alert::join('documents', 'alerts.document_id', '=', 'documents.id')
+                        ->where('documents.all_stores', 1)
+                        ->where('alerts.banner_id', $banner_id)
                         ->where('documents.end', '<=', $now)
                         ->where('documents.end', '!=', '0000-00-00 00:00:00')
                         ->select('alerts.*', 'documents.start as start', 'documents.end as end')
                         ->get();
 
+        
+        $targetedAlerts = Alert::join('documents', 'alerts.document_id', '=', 'documents.id')
+                        ->join('document_target', 'alerts.document_id', '=', 'document_target.document_id')
+                        ->where('document_target.store_id', '=', $store_id)
+                        ->where('documents.end', '<=', $now)
+                        ->where('documents.end', '!=', '0000-00-00 00:00:00')
+                        ->select('alerts.*', 'documents.start as start', 'documents.end as end')
+                        ->get();
+
+        $alerts = $allStoreAlerts->merge($targetedAlerts)->sortByDesc('start');
 
         if (count($alerts) >0) {
             Alert::addStoreViewData($alerts);
@@ -186,15 +343,30 @@ class Alert extends Model
     public static function  getArchivedAlertsByCategory($alert_type, $store_id) {
         
         $now = Carbon::now()->toDatetimeString();
-        $alerts = Alert::join('documents', 'alerts.document_id' , '=', 'documents.id')
-                        ->join('alerts_target' , 'alerts_target.alert_id' , '=', 'alerts.id')
+
+        $banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
+
+        $allStoreAlerts = Alert::join('documents', 'alerts.document_id' , '=', 'documents.id')
                         ->join('alert_types', 'alert_types.id', '=', 'alerts.alert_type_id')
-                        ->where('alerts_target.store_id', '=', $store_id)
+                        ->where('alerts.banner_id', $banner_id)
+                        ->where('documents.all_stores', 1)
                         ->where('documents.end', '<=', $now)
                         ->where('documents.end', '!=', '0000-00-00 00:00:00')
                         ->where('alert_type_id' , $alert_type)
                         ->select('alerts.*', 'documents.start as start', 'documents.end as end')
                         ->get();
+
+        $targetedAlerts = Alert::join('documents', 'alerts.document_id' , '=', 'documents.id')
+                        ->join('document_target' , 'document_target.document_id' , '=', 'alerts.document_id')
+                        ->join('alert_types', 'alert_types.id', '=', 'alerts.alert_type_id')
+                        ->where('document_target.store_id', '=', $store_id)
+                        ->where('documents.end', '<=', $now)
+                        ->where('documents.end', '!=', '0000-00-00 00:00:00')
+                        ->where('alert_type_id' , $alert_type)
+                        ->select('alerts.*', 'documents.start as start', 'documents.end as end')
+                        ->get();
+
+        $alerts = $allStoreAlerts->merge($targetedAlerts)->sortByDesc('start');
 
         if (count($alerts) >0) {
             Alert::addStoreViewData($alerts);
@@ -206,11 +378,43 @@ class Alert extends Model
         return $alerts;
     }
 
+    public static function getActiveAlertsForStoreList($storeNumbersArray)
+      {
+         $now = Carbon::now()->toDatetimeString();
+         $alerts = Alert::join('document_target', 'document_target.document_id' ,  '=', 'alerts.document_id')
+                        ->join('documents', 'documents.id', '=', 'alerts.document_id')
+                        ->join('alert_types', 'alerts.alert_type_id', '=', 'alert_types.id') 
+                        ->whereIn('document_target.store_id', $storeNumbersArray)
+                        ->where('documents.start', '<=', $now )
+                        ->where(function($query) use ($now) {
+                            $query->where('documents.end', '>=', $now)
+                                ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+                        })
+                        ->whereNull('alerts.deleted_at')
+                        ->whereNull('documents.deleted_at')
+                        ->select('documents.*', 'alerts_target.store_id', 'alert_types.name')
+                       ->get()
+                       ->toArray();
+         $compiledAlerts = [];
+
+         foreach ($alerts as $alert) {
+            $index = array_search($alert['id'], array_column($compiledAlerts, 'id'));
+            if(  $index !== false ){
+               array_push($compiledAlerts[$index]->stores, $alert["store_id"]);
+            }
+            else{
+               
+               $alert["stores"] = [];
+               array_push( $alert["stores"] , $alert["store_id"]);
+               array_push( $compiledAlerts , (object) $alert);
+            }
+         }
+         return (object)($compiledAlerts);
+      }       
+
     public static function addStoreViewData($alerts)
     {
         foreach($alerts as $a){
-                // dd($a);
-                
 
                 $a->prettyDate =  Utility::prettifyDate($a->start);
                 $a->since =  Utility::getTimePastSinceDate($a->start);
@@ -229,17 +433,18 @@ class Alert extends Model
             }
     }
 
-    public static function getTargetStoresForDocument($id)
-    {
-    	$document_id = $id;
-    	$alert = Alert::where('document_id', $document_id)->first();
 
-    	if ($alert) {
-    		$alert_id = $alert->id;
-    		return \DB::table('alerts_target')->where('alert_id', $alert_id)->lists('store_id', 'id');
-    	}
-    	
-    	return [];
+    public static function createAlert($request)
+    {
+        
+        $validate = Alert::validateAlert($request);
+
+        if($validate['validation_result'] == 'false') {
+            \Log::info($validate);
+            return json_encode($validate);
+        }
+
+        return Self::markDocumentAsAlert($request, $request['document_id']);
     }
 
     public static function markDocumentAsAlert($request, $id)
@@ -249,28 +454,8 @@ class Alert extends Model
             $alert = Alert::where('document_id', $id)->first();
 
             $alert['alert_type_id'] = $request['alert_type_id'];
-            // $alert['alert_start']   = $request['start'];
-            // $alert['alert_end']     = $request['end'];
 
             $alert->save();
-
-            $target_stores = $request['stores'];
-            
-            if ($target_stores != '') {
-                
-                \DB::table('alerts_target')->where('alert_id', $alert->id)->delete();
-                
-                if(! is_array($target_stores) ) {
-                    $target_stores = explode(',',  $request['stores'] );    
-                }
-                
-                foreach ($target_stores as $store) {
-                    \DB::table('alerts_target')->insert([
-                        'alert_id' => $alert->id,
-                        'store_id' => $store
-                        ]);    
-                }
-            }
 
         }
         else {
@@ -278,27 +463,15 @@ class Alert extends Model
 
             'document_id'   => $id,
             'alert_type_id' => $request['alert_type_id'],
-            // 'alert_start'   => $request['start'],
-            // 'alert_end'     => $request['end'],
+            'alert_start'   => null,
+            'alert_end'     => null,
             'banner_id'     => $request['banner_id']
             ]);
 
-            $target_stores = $request['stores'];
-            if ($target_stores != '') {
-                if(! is_array($target_stores) ) {
-                    $target_stores = explode(',',  $request['stores'] );    
-                }
-                foreach ($target_stores as $store) {
-                    \DB::table('alerts_target')->insert([
-                        'alert_id' => $alert->id,
-                        'store_id' => $store
-                        ]);    
-                }
-            }
         }
         
         
-        return;
+        return $alert;
     }
 
     public static function deleteAlert($document_id)
@@ -309,6 +482,16 @@ class Alert extends Model
             \DB::table('alerts_target')->where('alert_id', $alert->id)->delete();
         }
         return;
+    }
+
+    public static function getAlertCategoryName($id)
+    {
+        if(isset($id) && !empty($id)){
+
+            if( AlertType::find($id) ){
+                return AlertType::where('id', $id)->first()->name;   
+            }
+         }
     }
 
 }

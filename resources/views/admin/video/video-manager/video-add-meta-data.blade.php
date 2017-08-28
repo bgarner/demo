@@ -82,12 +82,12 @@
                                   </div>
                                 </div>
 
-                                <div class="row"> 
-                                  <label class="col-md-2"> Tags</label>             
-                                  <div class="col-md-10">
-                                      {!! Form::select('tags[]', $tags, null, ['class'=>'chosen' , 'multiple'=>'true', 'id'=>"select$vid->id"]) !!}
-                                  </div>
-                                </div>
+                                {{-- <div class="row"> 
+                                      <label class="col-md-2"> Tags</label>             
+                                      <div class="col-md-10">
+                                          {!! Form::select('tags[]', $tags, null, ['class'=>'chosen' , 'multiple'=>'true', 'id'=>"select$vid->id"]) !!}
+                                      </div>
+                                    </div>--}}
                                 <button type="submit" class="meta-data-add btn btn-success hidden" data-id="{{ $vid->id }}">Update</button>
           
                   			</form>
@@ -117,7 +117,7 @@
 </div>
 </div>
 
-                @include('site.includes.footer')
+                @include('admin.includes.footer')
                 
 
                 @include('admin.includes.scripts')

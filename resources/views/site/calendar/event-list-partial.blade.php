@@ -9,7 +9,7 @@
             <br>
             <small class="text-navy">
             @if( strtotime($events[0]->start) < strtotime(date("y-m-d H:i:s")) )
-                {!! $events[0]->since !!} ago
+                {!! $events[0]->since !!} {{ __("ago") }}
             @else
                 in {!! $events[0]->since !!}
             @endif
@@ -20,7 +20,7 @@
             @foreach($events as $e)
             <div class="event row">
                 <div class="event-type col-md-3">
-                    <span class="label label-primary">{!! $e->event_type_name !!}</span>
+                    <span class="label" style="background-color: #{{$e->background_colour}}; color: #{{$e->foreground_colour}};">{!! $e->event_type_name !!}</span>
                 </div>
                 <div class="col-md-9">
                     <div class="event-title">

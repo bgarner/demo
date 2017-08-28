@@ -11,7 +11,7 @@ class UserValidator extends PortalValidator
     	'firstname' => 'required',
     	'lastname'	=> 'required',
     	'email'		=> 'sometimes|required|email|unique:users,email',
-    	'group'		=> 'required|exists:user_groups,id',
+    	'group'		=> 'required|exists:groups,id',
     	'banners'	=> 'required|exists:banners,id',
     	'password'	=> 'sometimes|required|min:8|regex:/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).{8,}$/|confirmed',
     	'password_confirmation' => 'required_with:password'

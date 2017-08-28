@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Support\Facades\Auth;
 
 class AdminAuthenticate
 {
@@ -32,16 +33,16 @@ class AdminAuthenticate
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $guard = null)
     {
-        if ($this->auth->guest()) {
+        if(!Auth::user()){
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
-                return redirect()->guest('admin/login');
+                \Log::info('not authorized : AdminAuthenticate');
+                return redirect()->to('/login');
             }
         }
-        
         return $next($request);
     }
 }

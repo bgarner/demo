@@ -28,7 +28,7 @@ class FeatureDocument extends Model
 	                                    ->orWhere('documents.end', '=', '0000-00-00 00:00:00' );
 	                            })
                                 ->where('document_target.store_id', $store_number)
-                                ->where('document_target.deleted_at', null)
+                                // ->where('document_target.deleted_at', null)
     							->select('documents.*')
     							->get()
     							->each(function($doc){
@@ -49,7 +49,7 @@ class FeatureDocument extends Model
         return self::join('document_target', 'document_target.document_id', '=', 'feature_document.document_id')
                                 ->where('feature_id', $feature_id)
                                 ->where('document_target.store_id', $store_number)
-                                ->where('document_target.deleted_at', null)
+                                // ->where('document_target.deleted_at', null)
                                 ->get()->pluck('document_id')->toArray();
     }
 

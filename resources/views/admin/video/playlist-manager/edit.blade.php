@@ -8,6 +8,12 @@
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
+    <style>
+        .modal-body{
+            top: 120px;
+            height: 90% !important; 
+        }
+    </style>
 </head>
 
 <body class="fixed-navigation adminview">
@@ -58,7 +64,10 @@
 
                                     <form  method="" class="form-horizontal"  enctype="multipart/form-data" >
                                         <input type="hidden" name="playlistID" id="playlistID" value="{{ $playlist->id }}">
-                                        <input type="hidden" name="banner_id" value="{{$banner->id}}">
+
+                                        <input type="hidden" name="optGroupSelections" id="optGroupSelections" value="{{$optGroupSelections}}">
+
+                                        {{-- <input type="hidden" name="banner_id" value="{{$banner->id}}"> --}}
 
                                         <div class="form-group"><label class="col-sm-2 control-label"> Title</label>
                                             <div class="col-sm-10"><input type="text" id="playlist_title" name="playlist_title" class="form-control" value="{{ $playlist->title }}"></div>
@@ -74,6 +83,7 @@
 
 												</div>
 										</div>
+										@include('admin.includes.store-banner-selector', ['optGroupOptions'=> $optGroupOptions, 'optGroupSelections' => $optGroupSelections])
 
                                     </form>
 
@@ -101,7 +111,7 @@
 									<div id="videos-staged-to-remove"></div>
 
 								</div>
-								<div id="videos-selected" class="row"></div>
+								<div id="videos-selected" class="row hidden"></div>
 								</div>
 
                             </div>
@@ -120,7 +130,7 @@
                 </div>
             </div>
 
-				@include('site.includes.footer')
+				@include('admin.includes.footer')
 
 			    @include('admin.includes.scripts')
             </div>
@@ -134,7 +144,7 @@
 	@include('site.includes.bugreport')
 
 
-	<div id="video-listing" class="modal fade">
+	<div id="video-listing" class="modal inmodal fade">
 	    <div class="modal-dialog">
 	        <div class="modal-content">
 	            <div class="modal-header">
@@ -154,10 +164,12 @@
 	    </div>
 	</div>
 
-	<script type="text/javascript" src="/js/custom/admin/videos/playlists/editPlaylist.js"></script>
-	<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
+	<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>	
     <script src="/js/plugins/nestable/jquery.nestable.js"></script>
+    <script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script> 
+    <script type="text/javascript" src="/js/custom/admin/videos/playlists/editPlaylist.js"></script>
     <script src="/js/custom/admin/videos/playlists/changeVideoOrder.js"></script>
+    <script src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
 
 	<script type="text/javascript">
 		$.ajaxSetup({

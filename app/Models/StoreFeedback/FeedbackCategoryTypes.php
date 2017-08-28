@@ -10,6 +10,6 @@ class FeedbackCategoryTypes extends Model
 
     public static function getFeedbackCategoryList()
     {
-    	return FeedbackCategoryTypes::all()->lists('name', 'id')->prepend('');
+    	return FeedbackCategoryTypes::all()->pluck('name', 'id')->prepend('');
     }
 }

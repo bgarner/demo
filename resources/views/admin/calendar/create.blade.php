@@ -5,6 +5,7 @@
     @section('title', 'Calendar')
     @include('admin.includes.head')
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
+    <link rel="stylesheet" type="text/css" href="/css/custom/tree.css">
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 </head>
 
@@ -88,13 +89,18 @@
 
                                                 <label class="col-sm-2 control-label">Start &amp; End <span class="req">*</span></label>
 
-                                                <div class="col-sm-10">
+                                                <div class="col-sm-5">
                                                     <div class="input-daterange input-group" id="datepicker">
                                                         <input type="text" class="input-sm form-control datetimepicker-start" name="start" id="start" value="" />
                                                         <span class="input-group-addon">to</span>
                                                         <input type="text" class="input-sm form-control datetimepicker-end" name="end" id="end" value="" />
                                                     </div>
                                                 </div>
+
+                                                <label class="col-sm-2 control-label">All Day Event &nbsp;<input type="checkbox" class="" value="1" id="all-day" name="all-day" /></label>
+
+
+
                                         </div>
 
                                         <div class="form-group"><label class="col-sm-2 control-label">Description</label>
@@ -118,6 +124,13 @@
                                                 <div class="col-md-10 col-md-offset-2" id="selectedStoresCount"></div>
                                         </div>
 
+                                        <div class="form-group">
+                                            <div class="col-sm-10 col-sm-offset-2">
+                                                <div id="add-folders" class="btn btn-primary btn-outline"><i class="fa fa-plus"></i> Add folders</div>
+                                            </div>
+                                        </div>
+                                        <div id="folders-selected" class="col-sm-offset-2"></div>
+
                                         <div class="hr-line-dashed"></div>
 
 
@@ -138,12 +151,40 @@
 
                     </div>
             </div>
+            <div id="folder-listing" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Select Folders</h4>
+                        </div>
+                        <div class="modal-body">
+                            <ul class="tree">
+                            @foreach ($folderStructure as $folder)
+
+                                @if (isset($folder["is_child"]) && ($folder["is_child"] == 0) )
+
+                                    @include('admin.package.folder-structure-partial', ['folderStructure' =>$folderStructure, 'currentnode' => $folder])
+
+                                @endif
+
+
+                            @endforeach
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="attach-selected-folders">Select Folders</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 	</div>
 
 
 		        </div>
 
-				@include('site.includes.footer')
+				@include('admin.includes.footer')
 
 			    @include('admin.includes.scripts')
 
@@ -153,8 +194,10 @@
                 <script type="text/javascript" src="/js/custom/admin/events/addEvent.js"></script>
                 <script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
                 <script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
-                <script type="text/javascript" src="/js/custom/datetimepicker.js"></script>
+                <script type="text/javascript" src="/js/custom/tree.js"></script>
+                <script type="text/javascript" src="/js/custom/datetimepicker-with-default-time.js"></script>
                 <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
+
 
                 <script type="text/javascript">
                     $.ajaxSetup({
@@ -168,11 +211,12 @@
                     });
 
 
+                    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
+
                     CKEDITOR.replace('description', {
                         filebrowserUploadUrl: "{{route('utilities.ckeditorimages.store',['_token' => csrf_token() ])}}"
 
                     });
-
 
                 </script>
 

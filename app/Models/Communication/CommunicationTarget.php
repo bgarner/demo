@@ -7,67 +7,66 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
 use DB; 
 use App\Models\Utility\Utility;
-
+use App\Models\StoreApi\StoreInfo;
+use App\Models\Communication\Communication;
+use App\Models\StoreApi\Banner;
 
 class CommunicationTarget extends Model
 {
 	protected $table = 'communications_target';
 	protected $fillable = ['communication_id', 'store_id', 'is_read'];
 
-	public static function getTargetedCommunications($storeNumber)
-	{
-        $now = Carbon::now();
-
-        $communications = CommunicationTarget::where('communications_target.store_id', '=', $storeNumber)
-        				->join('communications', 'communications_target.communication_id', '=', 'communications.id')
-                        ->where('communications.send_at' , '<=', $now)
-                        ->where('communications.archive_at', '>=', $now)
-        				->orderBy('communications.send_at', 'desc')
-        				->get();
-
-        foreach ($communications as $c) {
-            $c->prettyDate = Utility::prettifyDate($c->send_at);
-            $c->since = Utility::getTimePastSinceDate($c->send_at);
-            $c->trunc = Communication::truncateHtml(strip_tags($c->body));
-            $c->label_name = Communication::getCommunicationCategoryName($c->communication_type_id);
-            $c->label_colour = Communication::getCommunicationCategoryColour($c->communication_type_id);
-            $c->has_attachments = Communication::hasAttachments($c->id);
-        }
-        return $communications;
-	}
-
-    public static function getTargetedCommunicationsByCategory($storeNumber, $type_id)
+    public static function updateTargetStores($id, $request)
     {
-        $now = Carbon::now();
-
-        $communications = CommunicationTarget::where('communications_target.store_id', '=', $storeNumber)
-                        ->join('communications', 'communications_target.communication_id', '=', 'communications.id')
-                        ->where('communications.send_at' , '<=', $now)
-                        ->where('communications.archive_at', '>=', $now)
-                        ->where('communications.communication_type_id', '=', $type_id)
-                        ->orderBy('communications.send_at', 'desc')
-                        ->get();
-
-        foreach ($communications as $c) {
-            $c->prettyDate = Utility::prettifyDate($c->send_at);
-            $c->since = Utility::getTimePastSinceDate($c->send_at);
-            $c->trunc = Communication::truncateHtml(strip_tags($c->body));
-            $c->label_name = Communication::getCommunicationCategoryName($c->communication_type_id);
-            $c->label_colour = Communication::getCommunicationCategoryColour($c->communication_type_id);
-            $c->has_attachments = Communication::hasAttachments($c->id);
+        $target_stores = $request['target_stores'];
+        $allStores = $request['all_stores'];
+        if($allStores == 'on') {
+            CommunicationTarget::where('communication_id', $id)->delete();
+            $communication = Communication::find($id);
+            $communication->all_stores = 1;
+            $communication->save();
         }
-
-        return $communications;
+        else{
+            CommunicationTarget::where('communication_id', $id)->delete();
+            if (count($target_stores) > 0) {
+                foreach ($target_stores as $store) {
+                    CommunicationTarget::create([
+                        'communication_id' => $id,
+                        'store_id'         => $store
+                    ]);
+                }
+                if(!in_array('0940', $target_stores)){
+                    Utility::addHeadOffice($id, 'communications_target', 'communication_id');    
+                }
+                
+                
+            } 
+            $communication = Communication::find($id);
+            $communication->all_stores = 0;
+            $communication->save();
+        }
+         
+        return;
     }
 
-	public static function markAsRead($id, $store_id)
-	{
-	    $communication = CommunicationTarget::where('communication_id', $id)
-	    				->where('store_id', $store_id)
-	    				->first();
-	    				
-	    $communication->is_read = '1';
-	    $communication->save();
-	}
+    public function getTargetStores($id)
+    {
+        $communication = Communication::find($id);
+
+        if(isset($communication->all_stores) && $communication->all_stores){
+            $banner = $communication->banner_id;
+            $stores = Banner::getStoreDetailsByBannerid($banner)->pluck('store_number')->toArray();
+        }
+        else{
+            $stores = CommunicationTarget::where('communication_id', $id)
+                                            ->get()
+                                            ->pluck('store_id')
+                                            ->toArray();    
+        }
+
+        return $stores;
+        
+                                            
+    }
 
 }

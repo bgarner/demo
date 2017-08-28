@@ -56,10 +56,7 @@
 		                        </div>
 		                        <div class="ibox-content">
 
-
-
 									<form class="form-horizontal" id="createNewCommunicationForm">
-
 
 										<input type="hidden" name="banner_id" value={{$banner->id}} >
 
@@ -97,7 +94,7 @@
 																		data-comm-type="{{$ct->communication_type}}"
 																		data-comm-typecolour="{{$ct->colour}}"
 																		class="comm_type_dropdown_item" >
-																		<a href=""> {{$ct->communication_type}} </a>
+																		<a href="#"> {{$ct->communication_type}} </a>
 																	</li>
 																@else
 																	<li data-comm-typeid="{{$ct->id}}" 
@@ -122,45 +119,93 @@
 										</div>
 
 
-
-										<div class="form-group">
-											<div class="col-sm-10 col-sm-offset-2">
-												<div id="add-documents" class="btn btn-primary btn-outline"><i class="fa fa-plus"></i> Add documents</div>
-											{{-- <div id="add-packages" class="btn btn-primary btn-outline"><i class="fa fa-plus"></i> Add packages</div>	--}}
-											</div>
-										</div>
-										<div class="form-group">
-											<div id="files-selected"></div>
-											<div id="packages-selected"></div>
-										</div>
 										<div class="form-group">
 
 								                <label class="col-sm-2 control-label">Target Stores</label>
 								                <div class="col-sm-10">
-								                    {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
-								                    {!! Form::label('allStores', 'Or select all stores:') !!}
-								                    {!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
+								                	<select name="stores" id="storeSelect" multiple class="chosen">
+										            	<option value="">Select Some Options</option>
+										            	@foreach($storeAndStoreGroups as $option)
+											                
+										                    <option value="{{$option['id']}}"
+										                        
+										                        @if(isset($option["isStoreGroup"]))
+																	data-isStoreGroup = "{{$option['isStoreGroup']}}"
+										                        @endif
+										                        @if(isset($option["stores"]))
+																	data-stores = "{{$option['stores']}}"
+										                        @endif
+										                        
+										                    >
+										                        {{$option['name']}}
+										                    </option>
+											                
+										            	@endforeach
+
+										        	</select>
+										        	{!! Form::label('allStores', 'Or select all stores:') !!}
+										        	{!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
 								                </div>
 
-								        </div>
-
-
-										<div class="hr-line-dashed"></div>
-										<div class="form-group">
-											<div class="col-sm-10 col-sm-offset-2">
-												<a class="btn btn-white" href="/admin/communication"><i class="fa fa-close"></i> Cancel</a>
-												<button class="btn btn-primary communication-create"><i class="fa fa-check"></i> Send New Communication</button>
-								            </div>
-								        </div>
+								        </div>										
 
 									</form>
-
-
-
 
 		                        </div> <!-- ibox-content closes -->
 
 		                    </div><!-- ibox closes -->
+
+		                    <div class="ibox">
+		                        <div class="ibox-title">
+		                            <h5>Documents</h5>
+
+		                            <div class="ibox-tools">
+		                            	
+		                        	</div>
+		                        
+                                    
+		                        </div>
+
+		                        <div class="ibox-content">
+		                        	
+
+
+					                <div class="input-group">
+										<input type="text" class="form-control" name="seach_document" id="search_document" value="" placeholder="Search for document..."/>
+										<span class="input-group-btn" >
+											<div class="btn btn-primary" onclick="showDocumentListing()" >
+											<i class="fa fa-plus"></i> Add documents</div>
+										</span>
+								    </div>
+								    <div id="document-list"></div>
+
+		                        	
+
+									<div id="files-selected">
+                                    	<table class="table table-hover communication-documents-table hidden ">
+                                    		<thead>
+                                    			<tr>
+                                    				<td>Title</td>
+                                    				<td></td>
+                                    				<td>Action</td>
+                                    			</tr>
+                                    		</thead>
+                                    		<tbody>
+                                    		</tbody>
+                                    	</table>
+                                    </div>
+		                                
+		                        </div>
+		                        
+		                    </div><!-- ibox closes-->
+
+		                    <div class="form-group">
+								<div class="col-sm-10 col-sm-offset-2">
+									<a class="btn btn-white" href="/admin/communication"><i class="fa fa-close"></i> Cancel</a>
+									<button class="btn btn-primary communication-create"><i class="fa fa-check"></i> Send New Communication</button>
+					            </div>
+					        </div>
+
 		                </div>
 		            </div>
 
@@ -221,7 +266,7 @@
 		</div>
 
 
-		@include('site.includes.footer')
+		@include('admin.includes.footer')
 
 	    @include('admin.includes.scripts')
 
@@ -232,10 +277,10 @@
 		<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 		<script type="text/javascript" src="/js/custom/admin/communications/addCommunication.js"></script>
-		<script type="text/javascript" src="/js/custom/createpackage.js"></script>
+		<script type="text/javascript" src="/js/custom/admin/communications/documentSelector.js"></script>
 		<script type="text/javascript" src="/js/custom/tree.js"></script>
-		<script type="text/javascript" src="/js/custom/datetimepicker.js"></script>
-		<script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
+		<script type="text/javascript" src="/js/custom/datetimepicker-with-default-time.js"></script>
+		<script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>
 
 		<script type="text/javascript">
 
@@ -261,9 +306,11 @@
 
 		    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
 
-		    $("#add-documents").click(function(){
-		    	$("#document-listing").modal('show');
-		    });
+		    // $("#add-documents").click(function(){
+		    // 	$("#document-listing").modal('show');
+		    // });
+		    
+
 		    $("#add-packages").click(function(){
 		    	$("#package-listing").modal('show');
 		    });

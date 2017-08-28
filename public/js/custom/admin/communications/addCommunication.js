@@ -24,37 +24,6 @@ $("#allStores").change(function(){
 
 
 
-$("#add-documents").click(function(){
-	$("#document-listing").modal('show');
-});
-$("#add-packages").click(function(){
-	$("#package-listing").modal('show');	
-});
-
-
-$('body').on('click', '#attach-selected-files', function(){
-	$("#files-selected").empty();
-	$("#files-selected").append('<label class= "control-label col-sm-2 "> Documents attached</label>');
-	$('input[name^="package_files"]').each(function(){
-		if($(this).is(":checked")){
-			$("#files-selected").append('<div class="selected-files col-sm-10 col-sm-offset-2" data-fileid='+ $(this).val() +'>'+$(this).attr("data-filename")+'</div>')
-		}
-	});
-});
-
-$('body').on('click', '#attach-selected-packages', function(){
-
-	console.log('attach selected-packages');
-	$("#packages-selected").empty();
-	$("#packages-selected").append('<label class= "control-label col-sm-2 ">Packages Attached</label>');
-	$('input[name^="packages"]:checked').each(function(){
-		
-			$("#packages-selected").append('<div class="selected-packages col-sm-10 col-sm-offset-2" data-packageid='+ $(this).val() +'>'+ $(this).attr("data-package-name")+'</div>')		
-		
-		
-	});
-});
-
 
 
 $(document).on('click','.communication-create',function(){
@@ -67,20 +36,20 @@ $(document).on('click','.communication-create',function(){
 	var start = $("#send_at").val();
 	var end = $("#archive_at").val();
 	var banner_id = $("input[name='banner_id']").val();
-	var target_stores  = $("#storeSelect").val();
+	// var target_stores  = $("#storeSelect").val();
+	var target_stores = getTargetStores();
 	var importance = "1";
 	var sender = "";
 	var communication_packages = [];
 	var communication_documents = [];
-	var allStores  = $("allStores:checked").val();
+	var allStores  = $("#allStores:checked").val();
 
-	console.log(communication_type_id);
 	if(!communication_type_id){
 		communication_type_id = $("#default_communication_type").val(); // no category
 
 	}
 
-	$(".selected-files").each(function(){
+	$(".communication-documents").each(function(){
 		communication_documents.push($(this).attr('data-fileid'));
 	});
 	
@@ -122,6 +91,7 @@ $(document).on('click','.communication-create',function(){
 		  		send_at : start,
 		  		archive_at : end,
 		  		banner_id : banner_id,
+		  		all_stores : allStores,
 		  		target_stores : target_stores,
 		  		communication_documents : communication_documents,
 		  		communication_packages : communication_packages

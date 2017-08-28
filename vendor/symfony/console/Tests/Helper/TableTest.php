@@ -11,13 +11,14 @@
 
 namespace Symfony\Component\Console\Tests\Helper;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Helper\TableStyle;
 use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Helper\TableCell;
 use Symfony\Component\Console\Output\StreamOutput;
 
-class TableTest extends \PHPUnit_Framework_TestCase
+class TableTest extends TestCase
 {
     protected $stream;
 
@@ -33,7 +34,7 @@ class TableTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider testRenderProvider
+     * @dataProvider renderProvider
      */
     public function testRender($headers, $rows, $style, $expected, $decorated = false)
     {
@@ -49,7 +50,7 @@ class TableTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider testRenderProvider
+     * @dataProvider renderProvider
      */
     public function testRenderAddRows($headers, $rows, $style, $expected, $decorated = false)
     {
@@ -65,7 +66,7 @@ class TableTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider testRenderProvider
+     * @dataProvider renderProvider
      */
     public function testRenderAddRowsOneByOne($headers, $rows, $style, $expected, $decorated = false)
     {
@@ -82,7 +83,7 @@ class TableTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->getOutputContent($output));
     }
 
-    public function testRenderProvider()
+    public function renderProvider()
     {
         $books = array(
             array('99921-58-10-7', 'Divine Comedy', 'Dante Alighieri'),
@@ -298,10 +299,10 @@ TABLE
                 array(
                     array(
                         new TableCell('9971-5-0210-0', array('rowspan' => 3)),
-                        'Divine Comedy',
+                        new TableCell('Divine Comedy', array('rowspan' => 2)),
                         'Dante Alighieri',
                     ),
-                    array('A Tale of Two Cities', 'Charles Dickens'),
+                    array(),
                     array("The Lord of \nthe Rings", "J. R. \nR. Tolkien"),
                     new TableSeparator(),
                     array('80-902734-1-6', new TableCell("And Then \nThere \nWere None", array('rowspan' => 3)), 'Agatha Christie'),
@@ -309,18 +310,18 @@ TABLE
                 ),
                 'default',
 <<<'TABLE'
-+---------------+----------------------+-----------------+
-| ISBN          | Title                | Author          |
-+---------------+----------------------+-----------------+
-| 9971-5-0210-0 | Divine Comedy        | Dante Alighieri |
-|               | A Tale of Two Cities | Charles Dickens |
-|               | The Lord of          | J. R.           |
-|               | the Rings            | R. Tolkien      |
-+---------------+----------------------+-----------------+
-| 80-902734-1-6 | And Then             | Agatha Christie |
-| 80-902734-1-7 | There                | Test            |
-|               | Were None            |                 |
-+---------------+----------------------+-----------------+
++---------------+---------------+-----------------+
+| ISBN          | Title         | Author          |
++---------------+---------------+-----------------+
+| 9971-5-0210-0 | Divine Comedy | Dante Alighieri |
+|               |               |                 |
+|               | The Lord of   | J. R.           |
+|               | the Rings     | R. Tolkien      |
++---------------+---------------+-----------------+
+| 80-902734-1-6 | And Then      | Agatha Christie |
+| 80-902734-1-7 | There         | Test            |
+|               | Were None     |                 |
++---------------+---------------+-----------------+
 
 TABLE
             ),
@@ -514,12 +515,38 @@ TABLE
             ,
                 true,
             ),
+            'Row with formatted cells containing a newline' => array(
+                array(),
+                array(
+                    array(
+                        new TableCell('<error>Dont break'."\n".'here</error>', array('colspan' => 2)),
+                    ),
+                    new TableSeparator(),
+                    array(
+                        'foo',
+                         new TableCell('<error>Dont break'."\n".'here</error>', array('rowspan' => 2)),
+                    ),
+                    array(
+                        'bar',
+                    ),
+                ),
+                'default',
+                <<<'TABLE'
++-------+------------+
+[39;49m| [39;49m[37;41mDont break[39;49m[39;49m         |[39;49m
+[39;49m| [39;49m[37;41mhere[39;49m               |
++-------+------------+
+[39;49m| foo   | [39;49m[37;41mDont break[39;49m[39;49m |[39;49m
+[39;49m| bar   | [39;49m[37;41mhere[39;49m       |
++-------+------------+
+
+TABLE
+            ,
+                true,
+            ),
         );
     }
 
-    /**
-     * @requires extension mbstring
-     */
     public function testRenderMultiByte()
     {
         $table = new Table($output = $this->getOutputStream());
@@ -642,8 +669,128 @@ TABLE;
         $this->assertEquals($table, $table->addRow(new TableSeparator()), 'fluent interface on addRow() with a single TableSeparator() works');
     }
 
+    public function testRenderMultiCalls()
+    {
+        $table = new Table($output = $this->getOutputStream());
+        $table->setRows(array(
+            array(new TableCell('foo', array('colspan' => 2))),
+        ));
+        $table->render();
+        $table->render();
+        $table->render();
+
+        $expected =
+<<<TABLE
++----+---+
+| foo    |
++----+---+
++----+---+
+| foo    |
++----+---+
++----+---+
+| foo    |
++----+---+
+
+TABLE;
+
+        $this->assertEquals($expected, $this->getOutputContent($output));
+    }
+
+    public function testColumnStyle()
+    {
+        $table = new Table($output = $this->getOutputStream());
+        $table
+            ->setHeaders(array('ISBN', 'Title', 'Author', 'Price'))
+            ->setRows(array(
+                array('99921-58-10-7', 'Divine Comedy', 'Dante Alighieri', '9.95'),
+                array('9971-5-0210-0', 'A Tale of Two Cities', 'Charles Dickens', '139.25'),
+            ));
+
+        $style = new TableStyle();
+        $style->setPadType(STR_PAD_LEFT);
+        $table->setColumnStyle(3, $style);
+
+        $table->render();
+
+        $expected =
+            <<<TABLE
++---------------+----------------------+-----------------+--------+
+| ISBN          | Title                | Author          |  Price |
++---------------+----------------------+-----------------+--------+
+| 99921-58-10-7 | Divine Comedy        | Dante Alighieri |   9.95 |
+| 9971-5-0210-0 | A Tale of Two Cities | Charles Dickens | 139.25 |
++---------------+----------------------+-----------------+--------+
+
+TABLE;
+
+        $this->assertEquals($expected, $this->getOutputContent($output));
+    }
+
+    public function testColumnWith()
+    {
+        $table = new Table($output = $this->getOutputStream());
+        $table
+            ->setHeaders(array('ISBN', 'Title', 'Author', 'Price'))
+            ->setRows(array(
+                array('99921-58-10-7', 'Divine Comedy', 'Dante Alighieri', '9.95'),
+                array('9971-5-0210-0', 'A Tale of Two Cities', 'Charles Dickens', '139.25'),
+            ))
+            ->setColumnWidth(0, 15)
+            ->setColumnWidth(3, 10);
+
+        $style = new TableStyle();
+        $style->setPadType(STR_PAD_LEFT);
+        $table->setColumnStyle(3, $style);
+
+        $table->render();
+
+        $expected =
+            <<<TABLE
++-----------------+----------------------+-----------------+------------+
+| ISBN            | Title                | Author          |      Price |
++-----------------+----------------------+-----------------+------------+
+| 99921-58-10-7   | Divine Comedy        | Dante Alighieri |       9.95 |
+| 9971-5-0210-0   | A Tale of Two Cities | Charles Dickens |     139.25 |
++-----------------+----------------------+-----------------+------------+
+
+TABLE;
+
+        $this->assertEquals($expected, $this->getOutputContent($output));
+    }
+
+    public function testColumnWiths()
+    {
+        $table = new Table($output = $this->getOutputStream());
+        $table
+            ->setHeaders(array('ISBN', 'Title', 'Author', 'Price'))
+            ->setRows(array(
+                array('99921-58-10-7', 'Divine Comedy', 'Dante Alighieri', '9.95'),
+                array('9971-5-0210-0', 'A Tale of Two Cities', 'Charles Dickens', '139.25'),
+            ))
+            ->setColumnWidths(array(15, 0, -1, 10));
+
+        $style = new TableStyle();
+        $style->setPadType(STR_PAD_LEFT);
+        $table->setColumnStyle(3, $style);
+
+        $table->render();
+
+        $expected =
+            <<<TABLE
++-----------------+----------------------+-----------------+------------+
+| ISBN            | Title                | Author          |      Price |
++-----------------+----------------------+-----------------+------------+
+| 99921-58-10-7   | Divine Comedy        | Dante Alighieri |       9.95 |
+| 9971-5-0210-0   | A Tale of Two Cities | Charles Dickens |     139.25 |
++-----------------+----------------------+-----------------+------------+
+
+TABLE;
+
+        $this->assertEquals($expected, $this->getOutputContent($output));
+    }
+
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException \Symfony\Component\Console\Exception\InvalidArgumentException
      * @expectedExceptionMessage Style "absent" is not defined.
      */
     public function testIsNotDefinedStyleException()
@@ -653,7 +800,7 @@ TABLE;
     }
 
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException \Symfony\Component\Console\Exception\InvalidArgumentException
      * @expectedExceptionMessage Style "absent" is not defined.
      */
     public function testGetStyleDefinition()

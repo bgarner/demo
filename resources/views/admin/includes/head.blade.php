@@ -33,10 +33,42 @@
 	<style>
 		.modal-lg{ height: 95%; width: 80% !important; padding: 0; }
 		.modal-content{ height: 100% !important;}
-		.modal-body{ padding: 10px; margin: 0; height: 100% !important; }
+		/*.modal-body{ padding: 10px; margin: 0; height: 100% !important; }*/
 			.modal-body .document-checkbox {
 				margin-left: 10px;
 			}
+
+	.modal-dialog{
+	  height:95%;
+	}
+
+	.modal-header{
+	  position: absolute;
+	  top: 10px;
+	  width: 100%;
+	}
+
+	.modal-body{
+	  position: absolute;
+	  top: 70px;
+	  width: 100%;
+	  height: 95% !important;
+	}
+
+	.modal-body .tree{
+	  	height: 90% !important;
+	  	overflow-y: auto;
+	 	padding-left: 25px;
+    	line-height: 25px;
+	}
+
+	.modal-footer{
+	  position: absolute;
+	  bottom: 10px;
+	  width: 100%;
+	}
 	</style>  
 
 	{{-- <link href="/css/plugins/summernote/summernote-bs3.css" rel="stylesheet"> --}}
+
+	<link rel="stylesheet" href="/css/plugins/dataTables/datatables.min.css">

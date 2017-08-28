@@ -5,9 +5,9 @@ namespace App\Http\Controllers\StoreFeedback;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Models\Banner;
+use App\Models\StoreApi\Banner;
 use App\Http\Controllers\Controller;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\BugReport\BugReport;
 use App\Models\StoreFeedback\FeedbackCategoryTypes;
 use App\Models\StoreFeedback\FeedbackStatusTypes;
@@ -15,6 +15,14 @@ use App\Models\StoreFeedback\FeedbackResponse;
 
 class FeedbackAdminController extends Controller
 {
+    /**
+     * Instantiate a new FeedbackAdminController instance.
+     */
+    public function __construct()
+    {
+        //
+    }
+
     /**
      * Display a listing of the resource.
      *

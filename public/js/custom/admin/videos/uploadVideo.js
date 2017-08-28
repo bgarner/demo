@@ -4,7 +4,7 @@ var previewNode = document.querySelector("#template");
 previewNode.id = "";
 var previewTemplate = previewNode.parentNode.innerHTML;
 previewNode.parentNode.removeChild(previewNode);
-
+var allStores;
 
 var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
     url: "/admin/video", // Set the url
@@ -22,11 +22,14 @@ var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
       done();
     },
     sending: function(file, xhr, formData) {
-       console.log($('#folder-title').attr('data-folderid'));
       // Pass token. You can use the same method to pass any other values as well such as a id to associate the image with for example.
         formData.append("_token", $('[name=_token').val()); // Laravel expect the token post value to be named _token by default
         formData.append("upload_package_id", $('[name=upload_package_id').val());
         formData.append("banner_id", $('[name=banner_id]').val());
+        formData.append("start", $("#start").val());
+        formData.append("target_stores", getTargetStores());
+        formData.append("target_banners", getTargetBanners());
+        formData.append("all_stores", allStores);
     },
     init: function () {
       this.on("success", function (file, response) {
@@ -104,3 +107,17 @@ myDropzone.on('removedfile', function(file) {
     $('#actions .cancel').addClass('disabled');
   }
 });
+
+$(document).ready(function() {
+
+    $(".chosen").chosen({ width:'100%' });
+
+    $('.datepicker-div').show();
+    $('#file-uploader').show();
+    $('#actions').show();
+
+    $('.datetimepicker-start').datetimepicker({
+        format: 'YYYY-MM-DD HH:mm:ss'
+    });
+
+}); 

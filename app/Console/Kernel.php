@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Models\Analytics\AnalyticsTask;
 
 class Kernel extends ConsoleKernel
 {
@@ -13,7 +14,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \App\Console\Commands\Inspire::class,
+        //
     ];
 
     /**
@@ -24,24 +25,19 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('inspire')
-                 ->hourly();
+         $schedule->call(function () {
+            AnalyticsTask::compileAnalytics();
+            \Log::info('scheduler ran');
+        })->everyMinute();
     }
 
     /**
-     * OVERRIDING PARENT CLASS
-     * The bootstrap classes for the application.
+     * Register the Closure based commands for the application.
      *
-     * @var array
+     * @return void
      */
-    protected $bootstrappers = [
-        'Illuminate\Foundation\Bootstrap\DetectEnvironment',
-        'Illuminate\Foundation\Bootstrap\LoadConfiguration',
-        'Illuminate\Foundation\Bootstrap\HandleExceptions',
-        'Illuminate\Foundation\Bootstrap\RegisterFacades',
-        'Illuminate\Foundation\Bootstrap\SetRequestForConsole',
-        'Illuminate\Foundation\Bootstrap\RegisterProviders',
-        'Illuminate\Foundation\Bootstrap\BootProviders',
-        'Bootstrap\ConfigureLogging' // custom logger bootstrapper
-    ];
+    protected function commands()
+    {
+        require base_path('routes/console.php');
+    }
 }
