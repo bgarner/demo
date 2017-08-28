@@ -4,6 +4,8 @@ namespace App\Models\Task;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Utility\Utility;
+use App\Models\StoreApi\Banner;
+use App\Models\Task\TaskTarget;
 
 class TaskTarget extends Model
 {
@@ -49,5 +51,24 @@ class TaskTarget extends Model
 
 		return;
 
+	}
+
+	public function getTargetStores($task_id)
+	{
+		$task = Task::find($task_id);
+
+        if(isset($task->all_stores) && $task->all_stores){
+            $banner = $task->banner_id;
+            $stores = Banner::getStoreDetailsByBannerid($banner)->pluck('store_number')->toArray();
+        }
+        else{
+            $stores = TaskTarget::where('task_id', $task_id)
+                                ->get()
+                                ->pluck('store_id')
+                                ->toArray();    
+        }
+
+
+        return $stores;
 	}
 }

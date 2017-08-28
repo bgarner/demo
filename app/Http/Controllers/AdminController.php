@@ -14,8 +14,9 @@ use App\Models\Communication\Communication;
 use App\User;
 use App\Models\Auth\User\UserBanner;
 use App\Models\Auth\User\UserSelectedBanner;
-use App\Models\Analytics\Analytics;
-
+use App\Models\Analytics\AnalyticsCollection;
+use Carbon\Carbon;
+use App\Models\Utility\Utility;
 
 class AdminController extends Controller
 {
@@ -29,24 +30,21 @@ class AdminController extends Controller
     public function index(Request $request)
     {
 
-
-        // $trafficDaily = Analytics::getTrafficLast24hrs();
-
-        // $traffic = Analytics::getTrafficLast30Days();
-
-        // $commStats = Analytics::getCommunicationStats();
+        $commStats = AnalyticsCollection::getActiveCommunicationStats();
+        $urgentNoticeStats = AnalyticsCollection::getActiveUrgentNoticeStats();
+        $taskStats = AnalyticsCollection::getTaskStats();
+        $videoStats = AnalyticsCollection::getVideoStats();
+        $today = Carbon::now();
+        $lastCompiledTimestamp = AnalyticsCollection::orderBy('created_at', 'desc')->first()->created_at;
+        $prettyLastCompiledTimestamp = Utility::prettifyDateWithTime($lastCompiledTimestamp);
         
-        // $urgentNoticeStats = Analytics::getUrgentNoticeStats();
-
-        return view('admin.index');
-                    // ->with('banner', $banner)
-                    // ->with('traffic', $traffic)
-                    // ->with('trafficDaily', $trafficDaily)
-                    // ->with('commStats', $commStats)
-                    // ->with('urgentNoticeStats', $urgentNoticeStats)
-                    // ->with('banners', $banners);
-        
-
+        return view('admin.index')
+                    ->with('commStats', $commStats)
+                    ->with('urgentNoticeStats', $urgentNoticeStats)
+                    ->with('taskStats', $taskStats)
+                    ->with('videoStats', $videoStats)
+                    ->with('today', $today)
+                    ->with('prettyLastCompiledTimestamp', $prettyLastCompiledTimestamp);
     }
 
     /**

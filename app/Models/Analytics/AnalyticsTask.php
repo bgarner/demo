@@ -9,13 +9,42 @@ use App\Models\Analytics\AnalyticsCollection;
 use App\Models\Communication\CommunicationTarget;
 use App\Models\Document\DocumentTarget;
 use App\Models\UrgentNotice\UrgentNoticeTarget;
+use App\Models\Task\Task;
+use App\Models\Task\TaskStoreStatus;
+use App\Models\Task\TaskTarget;
+use Carbon\Carbon;
+use App\Models\Video\Video;
 
 class AnalyticsTask extends Model
 {
+    
+     public static function compileAnalytics()
+    {
+        AnalyticsCollection::truncate();
+
+        $compiledCommunicationAnalytics = Self::compileCommunicationAnalytics();
+        Self::storeAnalyticsCollection($compiledCommunicationAnalytics);
+
+        $compiledAlertAnalytics = Self::compileAlertAnalytics();
+        Self::storeAnalyticsCollection($compiledAlertAnalytics);
+
+        $compiledUrgentNoticeAnalytics = Self::compileUrgentNoticeAnalytics();
+        Self::storeAnalyticsCollection($compiledUrgentNoticeAnalytics);
+
+        $compiledTaskAnalytics = Self::compileTaskAnalytics();
+        Self::storeAnalyticsCollection($compiledTaskAnalytics);
+
+        $compiledVideoAnalytics = Self::compileVideoAnalytics();
+        Self::storeAnalyticsCollection($compiledVideoAnalytics);
+
+        return;
+    }
+
     public static function compileCommunicationAnalytics()
     {
 		$compiledAnalytics = \DB::select( 
-								\DB::raw( "Select GROUP_CONCAT(DISTINCT `type`) as asset_type, 			`resource_id`, 
+								\DB::raw( "Select GROUP_CONCAT(DISTINCT `type`) as asset_type, 
+                                        `resource_id`, 
 										COUNT(DISTINCT `store_number`) as opened_total,
 										GROUP_CONCAT( DISTINCT `store_number` ) as opened_by
 										from `analytics`
@@ -23,25 +52,12 @@ class AnalyticsTask extends Model
 										group by `resource_id`, `type`") 
 								);
 		$asset_type_id  = AnalyticsAssetTypes::where('type', 'communication')->first()->id;
-    	foreach ($compiledAnalytics as $ca) {
-    		$openedByStore = explode(",", $ca->opened_by);
-    		$ca->opened_by = $openedByStore;
-    		$notOpenedByStore = [];
-    		$sent_to = CommunicationTarget::where('communication_id', $ca->resource_id)->get()->pluck('store_id')->toArray();
-    		foreach ($sent_to as $store) {
-    			if(!in_array($store, $openedByStore)){
-    				array_push($notOpenedByStore, $store);
-    			}
-    		}
-    		$ca->sent_to = $sent_to;
-    		$ca->sent_to_total = count($sent_to);
-    		$ca->not_open_by = $notOpenedByStore;
-    		$ca->not_opened_by_total = count($notOpenedByStore);
-    		$ca->asset_type_id = $asset_type_id;
 
-
-    	}
-
+        $compiledAnalytics = Self::processAnalytics($compiledAnalytics, 
+                                                    $asset_type_id, 
+                                                    'App\\Models\\Communication\CommunicationTarget', 
+                                                    'App\\Models\\Communication\\Communication');
+    	
     	return $compiledAnalytics;
 
     }
@@ -49,7 +65,8 @@ class AnalyticsTask extends Model
     public static function compileAlertAnalytics()
     {
 		$compiledAnalytics = \DB::select( 
-								\DB::raw( "Select GROUP_CONCAT(DISTINCT `type`) as asset_type, 			`resource_id`, 
+								\DB::raw( "Select GROUP_CONCAT(DISTINCT `type`) as asset_type,
+                                        `resource_id`, 
 										COUNT(DISTINCT `store_number`) as opened_total,
 										GROUP_CONCAT( DISTINCT `store_number` ) as opened_by
 										from `analytics`
@@ -58,24 +75,10 @@ class AnalyticsTask extends Model
 								);
 		$asset_type_id  = AnalyticsAssetTypes::where('type', 'alert')->first()->id;
 
-    	foreach ($compiledAnalytics as $ca) {
-    		$openedByStore = explode(",", $ca->opened_by);
-    		$ca->opened_by = $openedByStore;
-    		$notOpenedByStore = [];
-    		$sent_to = DocumentTarget::where('document_id', $ca->resource_id)->get()->pluck('store_id')->toArray();
-    		foreach ($sent_to as $store) {
-    			if(!in_array($store, $openedByStore)){
-    				array_push($notOpenedByStore, $store);
-    			}
-    		}
-    		$ca->sent_to = $sent_to;
-    		$ca->sent_to_total = count($sent_to);
-    		$ca->not_open_by = $notOpenedByStore;
-    		$ca->not_opened_by_total = count($notOpenedByStore);
-    		$ca->asset_type_id = $asset_type_id;
-
-
-    	}
+        $compiledAnalytics = Self::processAnalytics($compiledAnalytics, 
+                                                    $asset_type_id, 
+                                                    'App\\Models\\Document\\DocumentTarget', 
+                                                    'App\\Models\\Alert\\Alert');
 
     	return $compiledAnalytics;
 
@@ -84,7 +87,8 @@ class AnalyticsTask extends Model
     public static function compileUrgentNoticeAnalytics()
     {
 		$compiledAnalytics = \DB::select( 
-								\DB::raw( "Select GROUP_CONCAT(DISTINCT `type`) as asset_type, 			`resource_id`, 
+								\DB::raw( "Select GROUP_CONCAT(DISTINCT `type`) as asset_type,
+                                        `resource_id`, 
 										COUNT(DISTINCT `store_number`) as opened_total,
 										GROUP_CONCAT( DISTINCT `store_number` ) as opened_by
 										from `analytics`
@@ -93,104 +97,151 @@ class AnalyticsTask extends Model
 								);
 		$asset_type_id  = AnalyticsAssetTypes::where('type', 'urgentnotice')->first()->id;
 
-    	foreach ($compiledAnalytics as $ca) {
-    		$openedByStore = explode(",", $ca->opened_by);
-    		$ca->opened_by = $openedByStore;
-    		$notOpenedByStore = [];
-    		$sent_to = UrgentNoticeTarget::where('urgent_notice_id', $ca->resource_id)->get()->pluck('store_id')->toArray();
-    		foreach ($sent_to as $store) {
-    			if(!in_array($store, $openedByStore)){
-    				array_push($notOpenedByStore, $store);
-    			}
-    		}
-    		$ca->sent_to = $sent_to;
-    		$ca->sent_to_total = count($sent_to);
-    		$ca->not_open_by = $notOpenedByStore;
-    		$ca->not_opened_by_total = count($notOpenedByStore);
-    		$ca->asset_type_id = $asset_type_id;
-
-
-    	}
+        $compiledAnalytics = Self::processAnalytics($compiledAnalytics, 
+                                                    $asset_type_id, 
+                                                    'App\\Models\\UrgentNotice\\UrgentNoticeTarget', 
+                                                    'App\\Models\\UrgentNotice\\UrgentNotice');
 
     	return $compiledAnalytics;
 
     }
 
-  //   public static function compileTaskAnalytics()
-  //   {
-		// $compiledAnalytics = \DB::select( 
-		// 						\DB::raw( "Select GROUP_CONCAT(DISTINCT `type`) as asset_type, 			`resource_id`, 
-		// 								COUNT(DISTINCT `store_number`) as opened_total,
-		// 								GROUP_CONCAT( DISTINCT `store_number` ) as opened_by
-		// 								from `analytics`
-		// 								where `type` = 'task'  
-		// 								group by `resource_id`, `type`") 
-		// 						);
-		// $asset_type_id  = AnalyticsAssetTypes::where('type', 'video')->first()->id;
-
-  //   	foreach ($compiledAnalytics as $ca) {
-  //   		$openedByStore = explode(",", $ca->opened_by);
-  //   		$ca->opened_by = $openedByStore;
-  //   		$notOpenedByStore = [];
-  //   		$sent_to = VideoTarget::where('video_id', $ca->resource_id)->get()->pluck('store_id')->toArray();
-  //   		foreach ($sent_to as $store) {
-  //   			if(!in_array($store, $openedByStore)){
-  //   				array_push($notOpenedByStore, $store);
-  //   			}
-  //   		}
-  //   		$ca->sent_to = $sent_to;
-  //   		$ca->sent_to_total = count($sent_to);
-  //   		$ca->not_open_by = $notOpenedByStore;
-  //   		$ca->not_opened_by_total = count($notOpenedByStore);
-  //   		$ca->asset_type_id = $asset_type_id;
-
-
-  //   	}
-
-  //   	return $compiledAnalytics;
-
-  //   }
-
-
-
-    public static function compileAnalytics()
+    public static function compileTaskAnalytics()
     {
-    	AnalyticsCollection::truncate();
+        $today = Carbon::now();
+        $tasks = Task::all();
+        $asset_type_id  = AnalyticsAssetTypes::where('type', 'task')->first()->id;
 
-    	$compiledCommunicationAnalytics = Self::compileCommunicationAnalytics();
-    	Self::storeAnalyticsCollection($compiledCommunicationAnalytics);
+        foreach ($tasks as $key=>$task) {
 
-    	$compiledAlertAnalytics = Self::compileAlertAnalytics();
-    	Self::storeAnalyticsCollection($compiledAlertAnalytics);
+            $completedByStores = TaskStoreStatus::where('task_id', $task->id)
+                                                ->where('status_type_id', '2')
+                                                ->get()->pluck('store_id')->toArray();
+            if(count($completedByStores) <= 0) {
+                $completedByStores = [];
+            }
+            $model = new TaskTarget();
+            $sent_to = $model->getTargetStores($task->id);
+            $notCompletedByStores = [];
 
-    	$compiledUrgentNoticeAnalytics = Self::compileUrgentNoticeAnalytics();
-    	Self::storeAnalyticsCollection($compiledUrgentNoticeAnalytics);
+            if(count($sent_to) == count($completedByStores) && $task->due_date < $today ){
+                $tasks->forget($key);
+                continue;
+            }
+            foreach ($sent_to as $store) {
+                if(!in_array($store, $completedByStores)){
+                    array_push($notCompletedByStores, $store);
+                }
+            }
 
-    	return;
+            $task->resource_id = $task->id;
+            $task->opened_by = $completedByStores;
+            $task->opened_total = count($completedByStores);
+            $task->sent_to = $sent_to;
+            $task->sent_to_total = count($sent_to);
+            $task->not_opened_by = $notCompletedByStores;
+            $task->not_opened_by_total = count($notCompletedByStores);
+            $task->asset_type_id = $asset_type_id;
+        }
+
+        return $tasks;
+
+
+    }
+
+    public static function compileVideoAnalytics()
+    {
+        $compiledAnalytics = \DB::select( 
+                                \DB::raw( "Select GROUP_CONCAT(DISTINCT `type`) as asset_type,
+                                        `resource_id`, 
+                                        COUNT(DISTINCT `store_number`) as opened_total,
+                                        GROUP_CONCAT( DISTINCT `store_number` ) as opened_by
+                                        from `analytics`
+                                        where `type` = 'video'  
+                                        group by `resource_id`, `type`") 
+                                );
+        $asset_type_id  = AnalyticsAssetTypes::where('type', 'video')->first()->id;
+
+        $compiledAnalytics = Self::processAnalytics($compiledAnalytics, 
+                                                    $asset_type_id, 
+                                                    'App\\Models\\Video\\VideoTarget', 
+                                                    'App\\Models\\Video\\Video');
+
+        return $compiledAnalytics;
+    }
+
+    
+    private static function processAnalytics($compiledAnalytics, $asset_type_id, $target_table, $resource_model)
+    {       
+        $resourceModel = new $resource_model();
+        foreach ($compiledAnalytics as $key=>$ca) {
+
+            if( $resourceModel->find($ca->resource_id)){
+                $openedByStore = explode(",", $ca->opened_by);
+                $ca->opened_by = $openedByStore;
+                $notOpenedByStore = [];
+
+                $model = new $target_table();
+                $sent_to = $model->getTargetStores($ca->resource_id);
+                foreach ($sent_to as $store) {
+                    if(!in_array($store, $openedByStore)){
+                        array_push($notOpenedByStore, $store);
+                    }
+                }
+                $ca->sent_to = $sent_to;
+                $ca->sent_to_total = count($sent_to);
+                $ca->not_opened_by = $notOpenedByStore;
+                $ca->not_opened_by_total = count($notOpenedByStore);
+                $ca->asset_type_id = $asset_type_id;    
+            }
+            else{
+                    unset($compiledAnalytics[$key]);
+            }
+            
+
+
+        }
+        return $compiledAnalytics;
+
     }
 
     public static function storeAnalyticsCollection($compiledAnalytics)
     {
-    	
-    	foreach ($compiledAnalytics as $ca) {
-    		AnalyticsCollection::create([
-    			'resource_id'    => $ca->resource_id,
-    			'asset_type_id'  => $ca->asset_type_id,
-    			'opened_total'   => $ca->opened_total,
-    			'unopened_total' => $ca->not_opened_by_total,
-    			'sent_to_total'  => $ca->sent_to_total,
-    			'opened'         => serialize($ca->opened_by),
-    			'unopened'       => serialize($ca->not_open_by),
-    			'sent_to'        => serialize($ca->sent_to)
+        
+        foreach ($compiledAnalytics as $ca) {
 
-    		]);
-    	}
+            AnalyticsCollection::create([
+                'resource_id'    => $ca->resource_id,
+                'asset_type_id'  => $ca->asset_type_id,
+                'opened_total'   => $ca->opened_total,
+                'unopened_total' => $ca->not_opened_by_total,
+                'sent_to_total'  => $ca->sent_to_total,
+                'opened'         => serialize($ca->opened_by),
+                'unopened'       => serialize($ca->not_opened_by),
+                'sent_to'        => serialize($ca->sent_to)
 
-    	return;	
+            ]);
+        }
+
+        return; 
     }
+
+    public static function getVideoReportInTimespan($request)
+    {
+        $start = $request->start;
+        $end = $request->end;    
+
+        return Analytics::where('type', '=', 'video')
+                        ->where('created_at', '>', $start)
+                        ->where('created_at', "<", $end)
+                        ->select('store_number' , \DB::raw('count(*) as total_views'))
+                        ->groupBy('store_number')
+                        ->get();
+
+    }
+
 
 }
 /*
-$a = new App\Models\Analytics\AnalyticsTask;
-$a->compileAnalytics();
+
 */
