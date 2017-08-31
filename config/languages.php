@@ -4,5 +4,6 @@ return [
     'en' => 'English',
     'fr' => 'Français',
     'pa' => 'ਪੰਜਾਬੀ',
-    'cn' => '中文'
+    // 'cn' => '中文',
+    // 'es' => 'Spanish'
 ];
