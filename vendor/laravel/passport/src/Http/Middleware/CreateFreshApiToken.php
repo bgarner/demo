@@ -3,7 +3,6 @@
 namespace Laravel\Passport\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Response;
 use Laravel\Passport\Passport;
 use Laravel\Passport\ApiTokenCookieFactory;
 
@@ -12,7 +11,7 @@ class CreateFreshApiToken
     /**
      * The API token cookie factory instance.
      *
-     * @var ApiTokenCookieFactory
+     * @var \Laravel\Passport\ApiTokenCookieFactory
      */
     protected $cookieFactory;
 
@@ -26,7 +25,7 @@ class CreateFreshApiToken
     /**
      * Create a new middleware instance.
      *
-     * @param  ApiTokenCookieFactory  $cookieFactory
+     * @param  \Laravel\Passport\ApiTokenCookieFactory  $cookieFactory
      * @return void
      */
     public function __construct(ApiTokenCookieFactory $cookieFactory)
@@ -60,8 +59,8 @@ class CreateFreshApiToken
     /**
      * Determine if the given request should receive a fresh token.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Illuminate\Http\Response $response
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Response  $response
      * @return bool
      */
     protected function shouldReceiveFreshToken($request, $response)
@@ -84,13 +83,12 @@ class CreateFreshApiToken
     /**
      * Determine if the response should receive a fresh token.
      *
-     * @param  \Illuminate\Http\Response  $request
+     * @param  \Illuminate\Http\Response  $response
      * @return bool
      */
     protected function responseShouldReceiveFreshToken($response)
     {
-        return $response instanceof Response &&
-                    ! $this->alreadyContainsToken($response);
+        return ! $this->alreadyContainsToken($response);
     }
 
     /**

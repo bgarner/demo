@@ -55,6 +55,9 @@ Route::get('/{storeno}/feature/show/{id}', 'Feature\FeatureController@show');
 //FOLDER - SHOW CONTENT
 Route::get('/{storeno}/folder/{id}', ['uses' => 'Document\FolderController@show']);
 
+//LANGUAGE
+Route::post('/setLanguage', 'Locale\LocaleController@setLanguage');
+
 //MANAGER DASHBOARD
 Route::get('/manager', ['uses' => 'ManagerDashboard\ManagerLoginController@index']);
 Route::get('/manager/dashboard', ['uses' => 'ManagerDashboard\ManagerDashboardController@index']);

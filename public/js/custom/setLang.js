@@ -2,7 +2,7 @@ $('.setUserLang').click(function(){
 
 	var lang = $(this).data('lang');
     var langname = $(this).data('langname');
-    console.log(lang);
+    console.log("set language to: " + langname +" ("+lang+")");
 
 	$.ajax({
 	    url: '/setLanguage',

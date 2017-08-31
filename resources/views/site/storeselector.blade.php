@@ -33,24 +33,20 @@
 
 
             </div>
-            <h3>{{__("Welcome")}}!</h3>
+            <h3>{{__("Welcome")}}</h3>
             <form class="m-t" role="form" action="index.html">
                 <div class="form-group">
                 	<labeL>{{__("Select Your Banner")}}</labeL>
                     <select id="bannerSelect" class="form-control">
 							<option></option>
-						</select>
+					</select>
                 </div>
                 <div class="form-group">
                 	<labeL>{{__("Select Your Store")}}</labeL>
                     <select id="storeSelect" class="form-control">
-						</select>
+					</select>
                 </div>
-{{--                 <button type="submit" class="btn btn-primary block full-width m-b">Login</button> --}}
 
-{{--                 <a href="#"><small>Forgot password?</small></a>
-                <p class="text-muted text-center"><small>Do not have an account?</small></p>
-                <a class="btn btn-sm btn-white btn-block" href="register.html">Create an account</a> --}}
             </form>
 
         </div>

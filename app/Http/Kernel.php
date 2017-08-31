@@ -61,4 +61,7 @@ class Kernel extends HttpKernel
         'banner' => \App\Http\Middleware\SetInitialBanner::class,
         'componentaccess'   => \App\Http\Middleware\RoleComponentAccess::class
     ];
+
 }
+
+
