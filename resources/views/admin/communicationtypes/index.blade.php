@@ -82,7 +82,7 @@
 
 
 											<td>{{ $ct->id }}</td>
-											<td><i class="fa fa-circle text-{{ $ct->colour }}"></i> &nbsp; <a>{{ $ct->communication_type }}</a></td>
+											<td><i class="fa fa-circle text-{{ $ct->colour }}"></i> &nbsp;{{ $ct->communication_type }}</td>
 
 
 											<td>
