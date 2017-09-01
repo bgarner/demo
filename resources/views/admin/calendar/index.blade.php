@@ -79,8 +79,8 @@
     											<td>{{ mb_strimwidth($event->description, 0, 50, "...") }}</td>
                                                 <td><span class="label label-sm" style="background-color: #{{$event->background_colour}}; color: #{{$event->foreground_colour}}; ">
                                                         {{ $event->event_type }}</span> </td>
-    											<td>{{ $event->start }}</td>
-    											<td>{{ $event->end }}</td>
+    											<td data-order="{{$event->start}}">{{ $event->prettyStartDate }}</td>
+    											<td data-order="{{$event->end}}">{{ $event->prettyEndDate }}</td>
 
     											<td>
 
@@ -119,7 +119,7 @@
             			responsive: true,
             			fixedHeader: true,
                         "columns": [
-                            null,
+                            { 'visible' : false },
                             { "width": "25%" },
                             null,
                             null,
