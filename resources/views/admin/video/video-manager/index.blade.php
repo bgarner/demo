@@ -60,7 +60,7 @@
 											<td>Title</td>
 											<td>Thumbnail</td>
 											<td>Description</td>
-											<td>Uploader</td>
+											<!-- <td>Uploader</td> -->
 											<td>Actions</td>
 										</tr>
 										</thead>
@@ -75,7 +75,7 @@
 		                            		<td>{!! $video->link !!}</a></td>
 		                            		<td> <img src="/video/thumbs/{{$video->thumbnail}}" height="75" width="125"> </td>
 		                            		<td> {{$video->description}} </td>
-		                            		<td> {{$video->uploaderFirstName}} {{$video->uploaderLastName}} </td>
+		                            		{{--<td> {{$video->uploaderFirstName}} {{$video->uploaderLastName}} </td>--}}
 		                            		<td>
 		                            			<a href="/admin/video/{{$video->id}}/uploadthumbnail" class="btn btn-primary btn-sm btn-outline" title="Upload Video Thumbnail" data-videoId = "{{$video->id}}"><i class="fa fa-film"></i></a>
 		                            			<a href="/admin/video/{{$video->id}}/edit" class=" btn btn-primary btn-sm btn-outline"><i class="fa fa-pencil"></i></a>
