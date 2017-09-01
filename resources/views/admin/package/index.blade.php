@@ -106,7 +106,7 @@
 				            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				        }
 					});
-					 $(".datatable").dataTable( 
+					$(".datatable").dataTable( 
 		        	{
 		        		"order": [[ 0, 'desc' ]],
 						"columns": [	
