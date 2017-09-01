@@ -55,21 +55,23 @@
 
 		                            <div class="table-responsive">
 
-										<table class="table table-hover issue-tracker">
-
+										<table class="table table-hover issue-tracker datatable">
+										<thead>
 										<tr>
-											
+											<td>Id</td>
 											<td>Title</td>
 											<td>Label</td>
 											
 											<td>Actions</td>
 
 										</tr>
+										</thead>
+										<tbody>
 										@foreach($packages as $package)
 										<tr>
 
 
-											
+											<td>{{$package->id}}</td>
 											<td><a href="/admin/package/{{ $package->id }}/edit">{{ $package->package_name }}</a></td>
 											<td>{{$package->package_screen_name}}</td>
 											<td>
@@ -79,7 +81,7 @@
 											</td>
 										</tr>
 										@endforeach
-
+										</tbody>
 										</table>
 
 										
@@ -104,6 +106,20 @@
 				            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				        }
 					});
+					 $(".datatable").dataTable( 
+		        	{
+		        		"order": [[ 0, 'desc' ]],
+						"columns": [	
+						    { "visible": false },
+						    { "width": "45%" },
+						    { "width": "45%" },
+						    { "width" : "10%" , "sortable" : false}
+						  ],
+						pageLength: 50,
+						responsive: true,
+						fixedHeader: true
+					}
+				);
 
 				</script>
 
