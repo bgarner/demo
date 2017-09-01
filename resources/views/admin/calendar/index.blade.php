@@ -118,6 +118,7 @@
                         pageLength: 50,
             			responsive: true,
             			fixedHeader: true,
+                        "order": [[ 0, 'desc' ]],
                         "columns": [
                             { 'visible' : false },
                             { "width": "25%" },
