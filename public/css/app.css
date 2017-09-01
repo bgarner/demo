@@ -8521,3 +8521,10 @@ body.md-skin {
 .edit_multiple_documents .dropdown-item{
   line-height: 30px;
 }
+.unread-feedback{
+  font-weight: 600;
+  color: inherit; 
+}
+.flyerItem{
+  cursor: pointer;
+}

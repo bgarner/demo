@@ -64,9 +64,10 @@
 											</tr>
 			                            	@foreach($tags as $tag)
 			                            	<tr id="tag-{{$tag->id}}">
-												<td class="tag_name">{{$tag->name}}</td>
+												<td class="tag_name">
+													<a href="/admin/tag/{{$tag->id}}/edit" class="edit-tag" id="{{$tag->id}}">{{$tag->name}}</a></td>
 												<td>
-													<a href="/admin/tag/{{$tag->id}}/edit" class="edit-tag btn btn-primary" id="{{$tag->id}}"><i class="fa fa-pencil"></i></a>
+													
 													<div class="delete-tag btn btn-danger" id="{{$tag->id}}"><i class="fa fa-trash"></i></div>
 												</td>
 											</tr>
