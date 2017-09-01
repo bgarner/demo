@@ -1,4 +1,7 @@
-@if (Request::is('admin/feature') || Request::is('admin/feature/*'))
+@if (   Request::is('admin/feature') || 
+        Request::is('admin/package') || 
+        Request::is('admin/feature/*') || 
+        Request::is('admin/package/*'))
     <li class="active">
     @else
     <li>

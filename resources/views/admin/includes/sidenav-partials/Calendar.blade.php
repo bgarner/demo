@@ -1,4 +1,10 @@
- @if (Request::is('admin/calendar/*') || Request::is('admin/calendar') || Request::is('admin/eventtypes') || Request::is('admin/eventtypes/*')) 
+ @if (  Request::is('admin/calendar/*') || 
+        Request::is('admin/calendar') || 
+        Request::is('admin/eventtypes') || 
+        Request::is('admin/productlaunch') || 
+        Request::is('admin/eventtypes/*') || 
+        Request::is('admin/productlaunch/*')
+        ) 
     <li class="active">
     @else
     <li>

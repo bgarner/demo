@@ -1,4 +1,9 @@
-@if (Request::is('admin/video/*') || Request::is('admin/video') || Request::is('admin/tag') || Request::is('admin/tag/*') || Request::is('admin/playlist') || Request::is('admin/playlist/*') ) 
+@if (Request::is('admin/video/*') || 
+	 Request::is('admin/video') || 
+	 Request::is('admin/tag') || 
+	 Request::is('admin/tag/*') || 
+	 Request::is('admin/playlist') || 
+	 Request::is('admin/playlist/*') ) 
 <li class="active">
 @else
 <li>
