@@ -68,19 +68,20 @@
 									@foreach($communications as $communication)
 									<tr>
 										<td>{{ $communication->id }}</td>
-										<td>{{ $communication->subject }}</td>
+										<td><a href="/admin/communication/{{ $communication->id }}/edit" >{{ $communication->subject }}</a></td>
 										<td><span class="label label-sm label-{{$communication->label_colour}}">{{$communication->label_name}}</span></td>
 										<td data-order="{{$communication->send_at}}">{{ $communication->prettySentAtDate }}</td>
 										
 										<td>
-											<a href="/admin/communication/{{ $communication->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
-											<a data-communication="{{ $communication->id }}" id="communication{{ $communication->id }}" class="delete-communication btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+											{{-- <a href="/admin/communication/{{ $communication->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a> --}}
 											<a  data-communicationid="{{ $communication->id }}" 
 												data-communicationname="{{ $communication->subject }}"
 												id="copy-communication" 
-												class="btn btn-primary btn-sm">
+												class="btn btn-primary btn-outline btn-sm">
 												<i class="fa fa-clipboard"></i>
 											</a>
+											<a data-communication="{{ $communication->id }}" id="communication{{ $communication->id }}" class="delete-communication btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+											
 
 										</td>
 									</tr>
