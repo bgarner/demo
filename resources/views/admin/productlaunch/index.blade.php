@@ -59,6 +59,7 @@
 	                    		<thead>
 	                    			<tr role="row">
 	                    				<th>Launch Date</th>
+	                    				<th>Type</th>
 	                    				<th>Style Number</th>
 	                    				<th>Vendor Code</th>
 	                    				<th>Dept</th>
@@ -75,6 +76,7 @@
 	                    			@foreach($productLaunches as $productLaunch)
 										<tr class="" role="row">
 											<td>{{$productLaunch->launch_date}}</td>
+											<td>{{$productLaunch->event_type}}</td>
 											<td>{{$productLaunch->style_number}}</td>
 											<td>{{$productLaunch->vendor_code}}</td>
 											<td>{{$productLaunch->dpt_name}}</td>
