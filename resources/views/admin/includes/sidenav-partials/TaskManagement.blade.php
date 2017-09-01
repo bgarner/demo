@@ -3,5 +3,5 @@
 @else
 <li>
 @endif
-     <a href="/admin/task"><i class="fa fa-tasks"></i> <span class="nav-label">Task Management</span></a>
+     <a href="/admin/task"><i class="fa fa-tasks"></i> <span class="nav-label">Tasks</span></a>
 </li>

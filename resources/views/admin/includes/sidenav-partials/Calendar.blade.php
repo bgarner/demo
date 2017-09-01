@@ -5,9 +5,9 @@
     @endif
         <a href="/admin/calendar"><i class="fa fa-calendar"></i> <span class="nav-label">Calendar</span><span class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse">
-            <li><a href="/admin/calendar">Manage Events</a></li>
-            <li><a href="/admin/eventtypes">Manage Event Types</a></li>
-            <li><a href="/admin/productlaunch">Manage Product Launches</a></li>
+            <li><a href="/admin/calendar">Events</a></li>
+            <li><a href="/admin/eventtypes">Event Types</a></li>
+            <li><a href="/admin/productlaunch">Product Launches</a></li>
         </ul>
     </li>
 
