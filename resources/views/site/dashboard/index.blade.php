@@ -117,7 +117,7 @@
                             <h2>{{__("Quick Links")}}</h2>
                         </div>
 
-                        <div class="ibox-content">
+                        <div class="ibox-content" id="ql-container">
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover">
                                     <tbody>
@@ -141,7 +141,7 @@
                             <h2>{{__("Latest Communications")}}</h2>
                         </div>
 
-                        <div class="ibox-content">
+                        <div class="ibox-content" id="comm-container">
                             <div class="feed-activity-list" style="padding-bottom: 10px">
 
                             @if (count($communications) > 0)
@@ -185,7 +185,7 @@
                         <h2>{{__("Recent Uploads")}}</h2>
                     </div>
 
-                    <div class="ibox-content" style="max-height: 328px; overflow: auto;">
+                    <div class="ibox-content" id="notification-container" >
 
                             <div class="feed-activity-list">
 
@@ -224,6 +224,11 @@
 
     <script>
         console.frog("Ribbit");
+        $(document).ready(function(){
+            var height = $("#ql-container").height();
+            $("#notification-container").height(height).css("overflow", "auto");
+            $("#comm-container").height(height).css("overflow", "auto");
+        })
     </script>
 </body>
 </html>
