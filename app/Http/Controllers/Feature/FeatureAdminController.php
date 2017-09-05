@@ -39,13 +39,11 @@ class FeatureAdminController extends Controller
     public function index()
     {
         $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
         $features = Feature::where('banner_id', $banner->id)->get();
         
         return view('admin.feature.index')
                 ->with('features', $features)
-                ->with('banner', $banner)
-                ->with('banners', $banners);
+                ->with('banner', $banner);
     }
 
     /**
@@ -56,7 +54,6 @@ class FeatureAdminController extends Controller
     public function create()
     {
         $banner              = UserSelectedBanner::getBanner();
-
         $packages            = Package::where('banner_id', $banner->id)->get();
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
         $communicationTypes  = CommunicationType::where('banner_id', $banner->id)->get()->pluck('communication_type', 'id');

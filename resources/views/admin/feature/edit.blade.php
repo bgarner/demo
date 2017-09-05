@@ -51,8 +51,7 @@
 		                        <div class="ibox-title">
 		                            <h5>Edit Feature: {{ $feature->title }}</h5>
 		                            <div class="ibox-tools">
-		                                <a href="/admin/feature/create" class="btn btn-primary" role="button"><i class="fa fa-plus"></i> Add New Feature</a>
-                                        
+		                                
 		                            </div>
 		                        </div>
 		                        <div class="ibox-content">

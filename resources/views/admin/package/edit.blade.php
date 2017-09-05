@@ -51,7 +51,6 @@
 		                        <div class="ibox-title">
 		                            <h5>Edit Package: {{ $package->package_name }}</h5>
 		                            <div class="ibox-tools">
-		                                <a href="/admin/package/create" class="btn btn-primary" role="button"><i class="fa fa-plus"></i> Add New Package</a>
                                         
 		                            </div>
 		                        </div>

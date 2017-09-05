@@ -50,7 +50,6 @@
 		                        <div class="ibox-title">
 		                            <h5>Edit Urgent Notice: {{ $urgent_notice->title }}</h5>
 		                            <div class="ibox-tools">
-		                                <a href="/admin/urgentnotice/create" class="btn btn-primary" role="button"><i class="fa fa-plus"></i> Add New urgent Notice</a>
                                         
 		                            </div>
 		                        </div>
