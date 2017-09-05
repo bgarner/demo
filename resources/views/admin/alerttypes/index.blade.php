@@ -10,9 +10,7 @@
         .modal-dialog{
             height: 280px;
         }
-        .modal-body{
-            padding:50px 30px 30px 30px;
-        }
+        
     </style>
 </head>
 

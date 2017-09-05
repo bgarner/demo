@@ -251,6 +251,7 @@ return [
         'App\Http\Controllers\AdminSelectedBannerController'                    => 'Home',
         'App\Http\Controllers\Dashboard\DashboardAdminController'               => 'Dashboard',
         'App\Http\Controllers\Dashboard\DashboardBackgroundAdminController'     => 'Dashboard',
+        'App\Http\Controllers\Dashboard\QuicklinksAdminController'              => 'Dashboard',    
         'App\Http\Controllers\Document\PackageAdminController'                  => 'Featured Content',
         'App\Http\Controllers\Feature\FeatureAdminController'                   => 'Featured Content',
         'App\Http\Controllers\Feature\FeatureThumbnailAdminController'          => 'Featured Content',

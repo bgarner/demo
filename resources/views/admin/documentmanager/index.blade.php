@@ -12,12 +12,6 @@
         .top-level-folder{
             color: #444;
         }
-        .modal-dialog{
-            height: 280px;
-        }
-        .modal-body{
-            padding:50px 30px 30px 30px;
-        }
 
     </style>
     <link rel="stylesheet" type="text/css" href="/css/custom/tree.css">

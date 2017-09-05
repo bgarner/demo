@@ -18,13 +18,14 @@
 	body .modal-ql-file .modal-content{
 		width: 900px !important;
 		margin-left:-150px; 
-		padding-left: 10px;
 		padding-right: 10px;
+		height: 700px !important;
 		/*margin: 0 auto;*/
 	}
 
 	body .modal-ql-file .modal-body{
-
+		padding-left: 20px !important;
+		padding-right: 20px !important;
 	}
 
 	.modal-ql-file .ibox-title{
@@ -155,7 +156,7 @@
 							            <div class="modal-body">
 								           <div class="row">
 
-									           <div class="col-md-3" style="direction:rtl;max-height:500px;overflow:auto;">
+									           <div class="col-md-4" style="direction:rtl;max-height:500px;overflow:auto;">
 
 						                            <div class="file-manager" style="direction:ltr;">
 
@@ -165,7 +166,6 @@
 						                                    <ol class="breadcrumbs"></ol>
 						                                    <input type="hidden" name="default_folder" value="">
 						                                    <input type="hidden" name="banner_id" value={{$banner->id}}>
-						                            {{--         @include('admin.documentmanager.document-table') --}}
 						                                    </div>
 						                                    <div id="package-viewer" class="hidden">
 						                                    @include('admin.package.view')
@@ -174,23 +174,9 @@
 
 						                                <div class="clearfix"></div>
 						                            </div>
-										            {{--
-										            	<ul class="tree">
-										            	@foreach ($navigation as $nav) 
-														
-															@if (isset($nav["is_child"]) && ($nav["is_child"] == 0) )
-																
-																@include('admin.package.file-folder-structure-partial', ['navigation' =>$navigation, 'currentnode' => $nav])
-																
-															@endif
-
-														@endforeach
-														</ul>
-
-														--}}
 												</div>
 
-												<div class="col-md-9" style="max-height:500px;overflow:auto;">
+												<div class="col-md-8" style="max-height:500px;overflow:auto;">
 													<div class="">
                                         				<h6 id="folder-title"></h6>
                                        			 		<div class="ibox-tools"></div>
