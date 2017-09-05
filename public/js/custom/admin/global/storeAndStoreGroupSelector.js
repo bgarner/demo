@@ -34,7 +34,7 @@ var processStorePaste = function(){
 
 var getTargetStores = function(){
 
-	var options = $( ".chosen option:selected" );
+	var options = $( ".storeSelect option:selected" );
 	var targetStores = [];
 	
 	for (var i = 0; i < options.length; i++) {

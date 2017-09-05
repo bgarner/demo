@@ -12,7 +12,7 @@
         @foreach($documents as $document)
 
         <tr class="feature-documents">
-            <td data-document-id="{{$document->id}}" > {{$document->original_filename}} </td>
+            <td data-document-id="{{$document->id}}" > {!!$document->link_with_icon!!} </td>
             <td></td>
             <td> <a data-document-id="{{$document->id}}" id="file{{$document->id}}" class="remove-file btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>
         </tr>

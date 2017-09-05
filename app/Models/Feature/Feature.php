@@ -212,7 +212,7 @@ class Feature extends Model
         Feature::removePackages($request->remove_package, $id);
         Feature::updateCommunicationTypes($request['communication_type'], $feature->id);
         FeatureCommunication::updateFeatureCommunications($request['communications'], $feature->id);
-        FeatureTarget::updateFeatureTarget($feature_id, $request);
+        FeatureTarget::updateFeatureTarget($feature->id, $request);
         return $feature;
 
     }
@@ -408,39 +408,6 @@ class Feature extends Model
         return;
     }
 
-    public static function getTopListedDocumentsByFeatureId($feature_id)
-    {
-        $documents =  FeatureDocument::join('documents', 'feature_document.document_id', '=', 'documents.id')
-                                    ->where('feature_id', $feature_id)->get();
-        return $documents; 
-    }
-
-    public static function getPackageDetailsByFeatureId($feature_id)
-    {
-        $packages = FeaturePackage::join('packages', 'feature_package.package_id', '=', 'packages.id')
-                                ->where('feature_package.feature_id', '=', $feature_id)->get();
-        return $packages;
-    }
-
-    public static function getFeatureCommunications($feature_id, $storeNumber)
-    {
-        $featureCommunicationTypes = FeatureCommunicationTypes::getCommunicationTypeId($feature_id);
-
-        $mergedCommunications = [];
-
-        foreach ($featureCommunicationTypes as $type) {
-            $communications  = Communication::getActiveCommunicationsByCategory($storeNumber, $type);
-            $mergedCommunications = $communications->merge($mergedCommunications);
-        }
-
-        $featureCommunications = FeatureCommunication::getCommunicationId($feature_id);
-        foreach ($featureCommunications as $comm) {
-            $communications = Communication::getCommunicationById($comm);
-            $mergedCommunications->push($communications);
-        }
-
-        return $mergedCommunications;
-    }
 
     public static function getActiveFeaturesByBanner($banner_id)
     {

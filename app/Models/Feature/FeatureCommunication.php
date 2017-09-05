@@ -35,4 +35,24 @@ class FeatureCommunication extends Model
         $communications = FeatureCommunication::where('feature_id', $feature_id)->get()->pluck('communication_id')->toArray();
         return $communications;
     }
+
+    public static function getFeatureCommunications($feature_id, $storeNumber)
+    {
+        $featureCommunicationTypes = FeatureCommunicationTypes::getCommunicationTypeId($feature_id);
+
+        $mergedCommunications = [];
+
+        foreach ($featureCommunicationTypes as $type) {
+            $communications  = Communication::getActiveCommunicationsByCategory($storeNumber, $type);
+            $mergedCommunications = $communications->merge($mergedCommunications);
+        }
+
+        $featureCommunications = FeatureCommunication::getCommunicationId($feature_id);
+        foreach ($featureCommunications as $comm) {
+            $communications = Communication::getCommunicationById($comm);
+            $mergedCommunications->push($communications);
+        }
+
+        return $mergedCommunications;
+    }
 }

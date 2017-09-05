@@ -12,7 +12,7 @@ class FeatureTarget extends Model
 
     public static function updateFeatureTarget($id, $request)
     {
-        $target_stores = json_decode($request['target_stores']);
+        $target_stores = $request['target_stores'];
         $allStores = $request['all_stores'];
         if($allStores == 'on') {
             FeatureTarget::where('feature_id', $id)->delete();

@@ -388,7 +388,7 @@
 	        <div class="modal-content">
 	            <div class="modal-header">
 	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	                <h4 class="modal-title">Select Folders</h4>
+	                <h4 class="modal-title">Select Packages</h4>
 	            </div>
 	            <div class="modal-body">
 	            	<ul class="tree">
@@ -429,6 +429,7 @@
 	<script type="text/javascript" src="/js/custom/tree.js"></script>
 	<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 	<script src="/js/custom/datetimepicker.js"></script>
+	<script type="text/javascript" src="/js/custom/site/launchModal.js" ></script>
 	<script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>
 	
 	<script type="text/javascript">
@@ -445,7 +446,7 @@
     	});
 
 	</script>
-
+	@include('site.includes.modal')
 	
 </body>
 </html>
