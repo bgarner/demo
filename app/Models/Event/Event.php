@@ -255,7 +255,11 @@ class Event extends Model
         return Event::join('event_types', 'events.event_type', '=', 'event_types.id')
                     ->where('events.banner_id', $banner->id)
                     ->select('events.*', 'event_types.event_type', 'event_types.foreground_colour', 'event_types.background_colour' )      
-                    ->get();
+                    ->get()
+                    ->each(function($item){
+                        $item->prettyStartDate = Utility::prettifyDate($item->start);
+                        $item->prettyEndDate = Utility::prettifyDate($item->end);
+                    });
     }
 
 }

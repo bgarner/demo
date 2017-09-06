@@ -31,4 +31,15 @@ class FeaturePackage extends Model
     {
         return FeaturePackage::where('feature_id', $feature_id)->get()->pluck('package_id')->toArray();
     }
+
+    public static function getPackageByFeatureId($id)
+    {
+        $feature_packages = FeaturePackage::where('feature_id', $id)->get()->pluck('package_id');
+        $selected_packages = [];
+        foreach ($feature_packages as $package_id) {
+            $package = Package::find($package_id);
+            array_push($selected_packages, $package);
+        }
+        return $selected_packages;
+    }
 }

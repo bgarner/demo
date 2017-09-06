@@ -56,7 +56,6 @@
 		                        <div class="ibox-title">
 		                            <h5>Edit Playlist: {{ $playlist->title }}</h5>
 		                            <div class="ibox-tools">
-		                                <a href="/admin/playlist/create" class="btn btn-primary" role="button"><i class="fa fa-plus"></i> Add New Playlist</a>
 
 		                            </div>
 		                        </div>

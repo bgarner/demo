@@ -39,13 +39,11 @@ class FeatureAdminController extends Controller
     public function index()
     {
         $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
         $features = Feature::where('banner_id', $banner->id)->get();
         
         return view('admin.feature.index')
                 ->with('features', $features)
-                ->with('banner', $banner)
-                ->with('banners', $banners);
+                ->with('banner', $banner);
     }
 
     /**
@@ -56,18 +54,15 @@ class FeatureAdminController extends Controller
     public function create()
     {
         $banner              = UserSelectedBanner::getBanner();
-        $banners             = Banner::all();
-
         $packages            = Package::where('banner_id', $banner->id)->get();
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
         $communicationTypes  = CommunicationType::where('banner_id', $banner->id)->get()->pluck('communication_type', 'id');
         $communications      = Communication::getAllCommunication($banner->id)->pluck('subject', 'id');
         $storeAndStoreGroups = Utility::getStoreAndStoreGroupList($banner->id);
-        $flyers = Flyer::getFlyersByBannerId($banner->id);
+        $flyers              = Flyer::getFlyersByBannerId($banner->id);
 
         return view('admin.feature.create')
                 ->with('banner', $banner)
-                ->with('banners', $banners)
                 ->with('navigation', $fileFolderStructure)
                 ->with('packages', $packages)
                 ->with('communicationTypes', $communicationTypes)
@@ -107,28 +102,14 @@ class FeatureAdminController extends Controller
     public function edit($id)
     {
         $banner              = UserSelectedBanner::getBanner();
-        $banners             = Banner::all();
         $feature             = Feature::find($id);
 
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
-        $feature_documents   = FeatureDocument::where('feature_id', $id)->get()->pluck('document_id');
-        $selected_documents  = array();
-        foreach ($feature_documents as $doc_id) {
-            
-            $doc              = Document::find($doc_id);
-            $doc->folder_path = Document::getFolderPathForDocument($doc_id);
-            array_push($selected_documents, $doc );
-            
-        }
+        $selected_documents   = FeatureDocument::getDocumentByFeatureId($id);
 
         $packages          = Package::where('banner_id', $banner->id)->get();
-        $feature_packages  = FeaturePackage::where('feature_id', $id)->get()->pluck('package_id');
-        $selected_packages = [];
-        foreach ($feature_packages as $package_id) {
-            $package = Package::find($package_id);
-            array_push($selected_packages, $package);
-        }
-
+        $selected_packages = FeaturePackage::getPackageByFeatureId($id);
+        
         $communicationTypes           = CommunicationType::where('banner_id', $banner->id)->get()->pluck('communication_type', 'id');
         $selected_communication_types = FeatureCommunicationTypes::getCommunicationTypeId($id);
         
@@ -144,7 +125,6 @@ class FeatureAdminController extends Controller
         return view('admin.feature.edit')->with('feature', $feature)
                                     
                                         ->with('banner', $banner)
-                                        ->with('banners', $banners)
                                         ->with('navigation', $fileFolderStructure)
                                         ->with('feature_documents', $selected_documents )
                                         ->with('packages', $packages)
@@ -186,13 +166,13 @@ class FeatureAdminController extends Controller
 
     public function getFeatureDocumentPartial($feature_id)
     {
-        $documents = Feature::getTopListedDocumentsByFeatureId($feature_id);
+        $documents = FeatureDocument::getDocumentByFeatureId($feature_id);
         return view('admin.feature.feature-documents-partial')->with('documents', $documents);
     }
 
     public function getFeaturePackagePartial($feature_id)
     {
-        $packages = Feature::getPackageDetailsByFeatureId($feature_id);
+        $packages = FeaturePackage::getPackageByFeatureId($feature_id);
 
         return view('admin.feature.feature-packages-partial')->with('packages', $packages);
     }

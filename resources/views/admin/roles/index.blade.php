@@ -73,7 +73,7 @@
 
 										<tr>
 
-											<td class="col-xs-2">{{ $role->role_name }}</td>
+											<td class="col-xs-2"><a href="/admin/role/{{ $role->id }}/edit">{{ $role->role_name }}</a></td>
 											<td class="col-xs-2">
 												
 												@foreach($role->groups as $group)
@@ -89,7 +89,7 @@
 											</td>
 											
 											<td class="col-xs-2">
-												<a href="/admin/role/{{ $role->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+												
 
 												<a data-roleId="{{ $role->id }}" id="role{{ $role->id }}" class="role-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 

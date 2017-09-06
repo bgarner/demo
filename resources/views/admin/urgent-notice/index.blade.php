@@ -55,8 +55,8 @@
 
 		                            <div class="table-responsive">
 
-										<table class="table table-hover issue-tracker">
-
+										<table class="table table-hover issue-tracker datatable">
+										<thead>
 										<tr>
 											<td>id</td>
 											<td>Title</td>
@@ -64,6 +64,8 @@
 											<td></td>
 
 										</tr>
+										</thead>
+										<tbody>
 										@foreach($urgent_notices as $urgent_notice)
 										<tr>
 
@@ -78,7 +80,7 @@
 											</td>
 										</tr>
 										@endforeach
-
+										</tbody>
 										</table>
 
 										
@@ -102,6 +104,20 @@
 				        headers: {
 				            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				        }
+					});
+					$(".datatable").dataTable({
+			    			"order": [[ 0, 'desc' ]],
+						
+							"columns": [	
+							    { "visible": false },
+							    null,
+							    
+							    { "width" : "10%" , "sortable" : false}
+							  ],
+							pageLength: 50,
+							responsive: true,
+							fixedHeader: true
+						
 					});
 
 				</script>

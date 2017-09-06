@@ -48,7 +48,6 @@
 		                        <div class="ibox-title">
 		                            <h5>Edit Admin: {{ $user->firstname }} {{ $user->lastname}} </h5>
                                     <div class="ibox-tools">
-                                        <a href="/admin/user/create" class="btn btn-primary" role="button"><i class="fa fa-plus"></i> Add New Admin</a>
                                         
                                     </div>
 		                        </div>

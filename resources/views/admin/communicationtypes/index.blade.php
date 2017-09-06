@@ -69,20 +69,22 @@
 
 		                            <div class="table-responsive">
 
-										<table class="table table-hover issue-tracker">
-
-										<tr>
+										<table class="table table-hover issue-tracker datatable">
+										<thead>	
+											<tr>
 											<td>id</td>
 											<td>Communication Type</td>
 											<td></td>
 										</tr>
+										</thead>
+										<tbody>
 										@foreach($communicationtypes as $ct)
 											@if ( ($banner->id == 1 && $ct->id !="1")  || ($banner->id == 2 && $ct->id !="2") )
 										<tr>
 
 
 											<td>{{ $ct->id }}</td>
-											<td><i class="fa fa-circle text-{{ $ct->colour }}"></i> &nbsp; <a>{{ $ct->communication_type }}</a></td>
+											<td><i class="fa fa-circle text-{{ $ct->colour }}"></i> &nbsp;{{ $ct->communication_type }}</td>
 
 
 											<td>
@@ -93,7 +95,7 @@
 										</tr>
 											@endif
 										@endforeach
-
+										</tbody>
 										</table>
 
 {{-- 										{!! $events->render() !!} --}}
@@ -117,6 +119,19 @@
 				        headers: {
 				            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				        }
+					});
+
+					$(".datatable").dataTable({
+						
+							"columns": [	
+							    { "visible": false },
+							    null,
+							    { "width" : "10%" , "sortable" : false}
+							  ],
+							pageLength: 50,
+							responsive: true,
+							fixedHeader: true
+						
 					});
 
 				</script>

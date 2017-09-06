@@ -12,13 +12,6 @@
 		.modal-dialog{
 		    overflow-y: initial !important
 		}
-		.modal-body{
-			top:120px;
-			padding:0px 30px;
-		    height: 80% !important;
-		    overflow-y: auto;
-		    overflow-x: hidden;
-		}
     </style>
 </head>
 

@@ -65,9 +65,9 @@
 		                            	@foreach($playlists as $playlist)
 		                            	<tr>
 		                            		
-		                            		<td>{!! $playlist->title !!}</a></td>
+		                            		<td><a href="/admin/playlist/{{$playlist->id}}/edit">{!! $playlist->title !!}</a></td>
 		                            		<td>
-		                            			<a href="/admin/playlist/{{$playlist->id}}/edit" class=" btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+		                            			
 		                            			<a data-playlist="{{$playlist->id}}" id="playlist{{$playlist->id}}" class="playlist-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 
 		                            		</td>

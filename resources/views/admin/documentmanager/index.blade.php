@@ -12,12 +12,6 @@
         .top-level-folder{
             color: #444;
         }
-        .modal-dialog{
-            height: 280px;
-        }
-        .modal-body{
-            padding:50px 30px 30px 30px;
-        }
 
     </style>
     <link rel="stylesheet" type="text/css" href="/css/custom/tree.css">
@@ -106,21 +100,25 @@
                                                     <li id="edit_end_date"><a>End Date</a></li>
                                                 </ul>
                                             </span>
-                                            <a id="add-files" class="hidden" data-folderId="" href="/admin/document/create">
-                                                <button type="button" class="btn btn-primary">
-                                                    <i class="fa fa-plus"></i> Add Files
+                                            <a id="add-files" class="hidden" data-folderId="" href="/admin/document/create" title="Add Documents">
+                                                <button type="button" class="btn btn-primary btn-outline">
+                                                    <i class="fa fa-plus"></i> <i class="fa fa-file-o"></i>
                                                 </button>
                                             </a>
-                                            <a id="add-folder" href="/admin/folder/create">
-                                                <button type="button" class="btn btn-primary">
-                                                    <i class="fa fa-plus"></i> <i class="fa fa-folder-o"></i>
+                                            <a id="add-folder" href="/admin/folder/create" title="Add Folder">
+                                                <button type="button" class="btn btn-primary btn-outline">
+                                                    <i class="fa fa-plus"></i> <i class="fa fa-folder"></i>
                                                 </button>
                                             </a>
-                                            <a id="edit-folder" class="hidden" href="">
-                                                <button type="button" class="btn btn-primary"><i class="fa fa-pencil"></i></button>
+                                            <a id="edit-folder" class="hidden" href="" title="Edit Folder">
+                                                <button type="button" class="btn btn-primary btn-outline"><i class="fa fa-pencil"></i></button>
                                             </a>
-                                            <button type="button" class="btn btn-primary hidden" id="copy-folder" ><i class="fa fa-clipboard"></i></button>
-                                            <a id="delete-folder" class="hidden" href=""><button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button></a>
+                                            <button type="button" class="btn btn-primary btn-outline" id="copy-folder" ><i class="fa fa-clipboard" title="Copy Folder"></i></button>
+                                            <a id="delete-folder" class="hidden" href="" title="Delete Folder">
+                                                <button type="button" class="btn btn-danger">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </a>
 
 
                                         </div>

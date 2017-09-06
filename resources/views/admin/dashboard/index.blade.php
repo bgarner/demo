@@ -57,8 +57,8 @@
 			                       		<input type="text" id="dashboard_title" hidden value="{{$banner->title}}">
 										<input type="text" id="dashboard_subtitle" hidden value="{{$banner->subtitle}}">
 										<div class="row">
-
-												<div class="col-md-6">
+{{--
+												<div class="col-md-12">
 
 													<div class="form-group">
 
@@ -80,24 +80,27 @@
 
 													</div>
 													
-												</div>
+												</div> 
 
-												<div class="col-md-6">
+
+												 <div class="col-md-12">
 
 													<label class="control-label">Background</label>
 
-													<div class="row">
-														<div class="col-sm-8">
+													<div class="row"> 
+--}}
+														<div class="col-sm-12">
 															<img id="background-preview" src="/images/dashboard-banners/{{ $banner->background }}" width="100%" style="padding-bottom: 15px;" />
 															
 															<input id="dashboardbackground" name="dashboardbackground[]" type="file" multiple class="file-loading">
 															<input type="hidden" value="{{ $banner->id }}" name="banner_id" id="banner_id">
 
 														</div>
-														<div class="col-sm-4">
+														<div class="col-sm-12">
 															<small><p>For best results, background images should have an aspect ratio of 16:9 and be at least 1000 pixels wide.</p></small>
 														</div>
-													</div>
+{{-- 													</div>
+ --}}
 
 {{--
 		                        		<h4>Choose from Existing</h4>	
@@ -117,9 +120,10 @@
 													
 													
 									
-												</div>
+												<!-- </div> -->
 										</div>
 
+{{-- 
 			                        	<div class="row">
 			    
 											<div class="form-group">
@@ -131,7 +135,8 @@
 				                            </div>
 
 
-			                        	</div>
+			                        	</div> 
+--}}
 
 			                            
 			                        </div>
@@ -295,7 +300,7 @@
 		<script src="/js/custom/admin/dashboard/uploadBackground.js"></script>
 		<script src="/js/custom/admin/dashboard/setNotificationPreferences.js"></script>
 		<script src="/js/custom/admin/dashboard/updateDashboardTitle.js"></script>
-		<script src="/js/custom/admin/dashboard/setNotificationPreferences.js"></script>
+		<!-- <script src="/js/custom/admin/dashboard/setNotificationPreferences.js"></script> -->
 
 		<script>
 

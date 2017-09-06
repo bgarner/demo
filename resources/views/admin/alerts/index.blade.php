@@ -58,7 +58,7 @@
 
 		                            <div class="table-responsive">
 
-										<table class="table table-hover issue-tracker tablesorter">
+										<table class="table table-hover issue-tracker tablesorter datatable">
 											<thead>
 												<tr>
 													<td>Type</td>
@@ -84,27 +84,27 @@
 										
 											<td>
 												@if($alert->count_target_stores > 0)
-													<button type="button" class="btn btn-primary" data-container="body" data-toggle="popover" data-placement="top" data-content="{{$alert->target_stores}}" data-original-title="" title="" aria-describedby="popover199167">
+													<button type="button" class="btn btn-primary btn-outline" data-container="body" data-toggle="popover" data-placement="top" data-content="{{$alert->target_stores}}" data-original-title="" title="" aria-describedby="popover199167">
 						                                {{$alert->count_target_stores}} Stores
 						                            </button>
 													
 												@elseif(isset($alert->all_stores) && $alert->all_stores)
-													<button type="button" class="btn btn-primary">All Stores</button>
+													<button type="button" class="btn btn-primary btn-outline">All Stores</button>
 												@else
 													&mdash;
 												@endif
 											</td>
 											
 
-											<td data-start-date ="{{$alert->start}}" >{{ $alert->prettyStart }}</td>
-											<td data-end-date ="{{$alert->end}}">{{ $alert->prettyEnd }}</td>
+											<td data-order ="{{$alert->start}}" >{{ $alert->prettyStart }}</td>
+											<td data-order ="{{$alert->end}}">{{ $alert->prettyEnd }}</td>
 											<td >
 												{{$alert->active}}
 
 											</td>
 
 											<td>
-												<a href="/admin/document/{{ $alert->document_id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+												<a href="/admin/document/{{ $alert->document_id }}/edit" class="btn btn-primary btn-sm btn-outline"><i class="fa fa-pencil"></i></a>
 												<a data-alert="{{ $alert->id }}" id="alert{{ $alert->id }}" class="delete-alert btn btn-danger btn-sm"><i class="fa fa-ban"></i></a>
 
 											</td>
@@ -132,48 +132,25 @@
 				<script type="text/javascript" src="/js/custom/admin/alerts/deleteAlert.js"></script>
 				<script type="text/javascript" src="/js/vendor/tablesorter.min.js"></script>
 				<script type="text/javascript" src="/js/custom/site/launchModal.js" ></script>
-				<script type="text/javascript">
-					
-					$.tablesorter.addParser({
-						// set a unique id
-						id: 'portalDates',
-						is: function(s) {
-							// return false so this parser is not auto detected
-							return false;
-						},
-						format: function(s,table, cell, cellIndex) {
-							// format your data for normalization
-							
-							if (cellIndex === 3) {
-								return $(cell).attr("data-start-date");
-							}
-							else if (cellIndex === 4) {
-								return $(cell).attr("data-end-date");
-							}
-						},
-						// set type, either numeric or text
-						type: 'text'
+				<script type="text/javascript">	
+
+					$(".datatable").dataTable({
+			    			"order": [[ 0, 'desc' ]],
+						
+							"columns": [	
+							    { "visible": false },
+							    { "width": "45%" },
+							    null,
+							    null,
+							    null,
+							    null,
+							    { "width" : "10%" , "sortable" : false}
+							  ],
+							pageLength: 50,
+							responsive: true,
+							fixedHeader: true
+						
 					});
-
-
-					$.ajaxSetup({
-				        headers: {
-				            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				        }
-					});
-
-					
-					
-					$(function() {
-						$("table").tablesorter({
-							sortList: [[3,1]],
-							headers: {
-								3:{ sorter:'portalDates'},
-								4:{ sorter:'portalDates'},
-								'.actions' : { sorter:false},
-							}
-						});
-					}); 
 
 				</script>
 				@include('site.includes.modal')
