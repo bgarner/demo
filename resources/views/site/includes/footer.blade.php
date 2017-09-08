@@ -1,7 +1,9 @@
 
             <div class="footer fixed clearfix">
         	<div class="pull-left">
+                <a href="#"><i class="toggle-ibox fa fa-eye" aria-hidden="true" ></i></a>&nbsp;
                 <small> {{ $bannerInfo->title }} &copy; {{ date("Y") }}</small>
+
 
             </div>
             <div class="pull-right">
