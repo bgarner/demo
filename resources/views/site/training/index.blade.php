@@ -6,6 +6,17 @@
     @include('site.includes.head')
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
+
+	<style>
+    #page-wrapper{
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 65%, rgba(0, 0, 0, 1) 100%), url('/images/dashboard-banners/ski.jpg') no-repeat 0px 50px;
+        background-size: cover !important;
+        overflow: hidden;
+    }
+
+    
+    </style>
+
 </head>
 
 <body class="fixed-navigation adminview">
@@ -16,33 +27,17 @@
 	        </div>
 	    </nav>
 
-	<div id="page-wrapper" class="gray-bg" >
+	<div id="page-wrapper" class="gray-bg">
+	
+
 		<div class="row border-bottom">
 			@include('site.includes.topbar')
         </div>
 
-		<div class="row wrapper border-bottom white-bg page-heading">
-            <div class="col-lg-12">
-                <h2>Flyers</h2>
-            </div>
-        </div>
+        <div class="wrapper wrapper-content">
+               <h1 style="color: #fff; font-size: 65px; text-transform: uppercase; font-family: GalaxiePolarisCondensed-Bold;text-shadow: 3px 3px 23px rgba(0, 0, 0, 1);padding-bottom: 10px; margin-top: 0px; padding-top: 0px;">Training: Winter FY18</h1>
 
-
-		<div class="wrapper wrapper-content  animated fadeInRight">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="ibox">
-
-                        <div class="ibox-content">
-
-                        training
-
-                        </div>
-
-                    </div>
-                </div>
-		    </div>
-		</div>
+   </div>
 
 		@include('site.includes.footer')
 
