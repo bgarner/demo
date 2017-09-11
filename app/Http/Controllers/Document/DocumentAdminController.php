@@ -95,7 +95,7 @@ class DocumentAdminController extends Controller
 
         $parent      = $request->get('parent');
         
-        $tags        = Tag::where('banner_id', $banner->id)->pluck('name', 'id');
+        $tags        = Tag::all();
 
         $alert_types = ["" =>'Select one'];
 

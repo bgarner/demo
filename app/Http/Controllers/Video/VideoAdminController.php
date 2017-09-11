@@ -46,13 +46,11 @@ class VideoAdminController extends Controller
     {
         
         $banners = UserBanner::getAllBanners()->pluck('name', 'id')->toArray();
-        // $storeList = Utility::getStoreListForAdmin();
         $packageHash = sha1(time() . time());
         $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
         
         return view('admin.video.video-manager.video-upload')
             ->with('packageHash', $packageHash)
-            // ->with('storeList', $storeList);
             ->with('optGroupOptions', $optGroupOptions)
             ->with('banners', $banners);
     }
@@ -84,10 +82,13 @@ class VideoAdminController extends Controller
         
         $videos = Video::where('upload_package_id', $package)->get();
 
+        $tags = Tag::all()->pluck('name');
+
         return view('admin.video.video-manager.video-add-meta-data')
                 ->with('videos', $videos)
                 ->with('banner', $banner)
-                ->with('banners', $banners);
+                ->with('banners', $banners)
+                ->with('tags', $tags);
             
     }    
 
@@ -125,12 +126,14 @@ class VideoAdminController extends Controller
         $video = Video::getVideoById($id);
         $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
         $optGroupSelections = json_encode(Video::getSelectedStoresAndBannersByVideoId($id));
-        
         $banners = UserBanner::getAllBanners()->pluck('name', 'id')->toArray();
+        $tags = Tag::all()->pluck('name');
+
         return view('admin.video.video-manager.edit')->with('video', $video)
                                                     ->with('optGroupOptions', $optGroupOptions)
                                                     ->with('banners', $banners)
-                                                    ->with('optGroupSelections', $optGroupSelections);
+                                                    ->with('optGroupSelections', $optGroupSelections)
+                                                    ->with('tags', $tags);
     }
 
     /**

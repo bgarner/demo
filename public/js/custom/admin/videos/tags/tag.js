@@ -1,3 +1,7 @@
+$("#add-tag").click(function(){
+	$("#add-tag-modal").modal('show');
+});
+
 $(".delete-tag").click(function(){
 
 		var tag_id = $(this).attr('id');

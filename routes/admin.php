@@ -54,7 +54,7 @@ Route::resource('/admin/calendar', 'Calendar\CalendarAdminController');
 Route::resource('/admin/eventtypes', 'Calendar\EventTypesAdminController');
 
 //Tags
-Route::resource('/admin/tag', 'Tag\TagAdminController');
+// Route::resource('/admin/tag', 'Tag\TagAdminController');
 
 //Quicklinks
 Route::resource('/admin/quicklink', 'Dashboard\QuicklinksAdminController');

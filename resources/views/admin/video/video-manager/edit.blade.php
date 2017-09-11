@@ -6,6 +6,7 @@
     @include('admin.includes.head')
 
   <meta name="csrf-token" content="{!! csrf_token() !!}"/>
+  <link rel="stylesheet" href="/css/plugins/select/select2.min.css">
 </head>
 
 <body class="fixed-navigation adminview">
@@ -128,6 +129,13 @@
                                 
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            {!! Form::label('tags', 'Tags' , ['class'=>'col-sm-2 control-label']) !!}
+                            <div class="col-sm-10">
+                              {!! Form::select('tags', $tags, $video->tags, ['class'=>'select', 'multiple'=>'multiple' , 'id'=>'tags'])  !!}
+                            </div>
+                        </div>
                           
 
                         <div class="form-group">
@@ -164,6 +172,7 @@
 
         </script>
         <script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script> 
+        <script type="text/javascript" src="/js/plugins/select/select2.min.js"></script> 
         <script type="text/javascript" src="/js/custom/admin/videos/editVideo.js"></script> 
         
         <script type="text/javascript">

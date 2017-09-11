@@ -4,6 +4,30 @@ $(document).ready(function(){
 	$(".chosen-select").chosen({
 		'width':'100%'
 	})
+	$("#tags").select2({ 
+		width: '100%' , 
+		tags: true,
+		createTag: function (params) {
+    		var term = $.trim(params.term);
+
+		    if (term === '') {
+		      return null;
+		    }
+
+		    $.post("/admin/tag/create",{ tag_name: term })
+            .done( function(data){
+                $(check).fadeIn(1000);
+                $('.error').remove()
+            });
+
+		    return {
+		      id: term,
+		      text: term,
+		      newTag: true
+		    }
+		}
+  	});
+
 	storeSelect = $('#targets');
 	var optGroupSelections = $("#optGroupSelections").val();
 	if(typeof(optGroupSelections) !== 'undefined'){
@@ -18,7 +42,7 @@ $(document).ready(function(){
 });
 
 
-$(".chosen").on('change', function (event,el) {
+$("#targets").on('change', function (event,el) {
 
 	var options = $( ".chosen option:selected" );
 	allStores = 'off';
@@ -44,6 +68,10 @@ $(".chosen").on('change', function (event,el) {
 
 	}
 	
+});
+
+$("#tags").on('change', function(event, element){
+	console.log(element);
 });
 	
 $("body").on('paste', '.search-field input', function(e) {

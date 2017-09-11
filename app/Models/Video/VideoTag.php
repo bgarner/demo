@@ -12,4 +12,14 @@ class VideoTag extends Model
     protected $table = 'video_tags';
     protected $fillable = ['video_id', 'tag_id'];
     protected $dates = ['deleted_at'];
+
+    public static function getTagsByVideoId($id)
+    {
+    	$tags = VideoTag::join('tags', 'tags.id', '=', 'video_tags.tag_id')
+    							->where('video_id', $id)
+    							// ->select('tags.*')
+    							->get()
+    							->pluck('tag_id');
+    	return $tags;
+    }
 }

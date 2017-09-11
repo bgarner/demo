@@ -121,6 +121,7 @@ class Video extends Model
             $video->icon              = Utility::getIcon($video->original_extension);
             $video->prettyDateCreated = Utility::prettifyDate($video->created_at);
             $video->prettyDateUpdated = Utility::prettifyDate($video->updated_at);
+            $video->tags              = VideoTag::getTagsByVideoId($video->id);
         }
                         
                         
@@ -259,6 +260,7 @@ class Video extends Model
     public static function getVideoById($id)
     {
         $video = Video::find($id);
+        $video->tags = VideoTag::getTagsByVideoId($id);
 
         $featuredOnBanner = FeaturedVideo::getFeaturedBannerByVideoId($id);
 
