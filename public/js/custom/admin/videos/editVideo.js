@@ -8,17 +8,13 @@ $(document).ready(function(){
 		width: '100%' , 
 		tags: true,
 		createTag: function (params) {
+			console.log(params);
     		var term = $.trim(params.term);
 
 		    if (term === '') {
 		      return null;
 		    }
-
-		    $.post("/admin/tag/create",{ tag_name: term })
-            .done( function(data){
-                $(check).fadeIn(1000);
-                $('.error').remove()
-            });
+		    console.log(term);
 
 		    return {
 		      id: term,
@@ -26,7 +22,16 @@ $(document).ready(function(){
 		      newTag: true
 		    }
 		}
-  	});
+  	}).on('select2:select', function (evt) {
+	    if(evt.params.data.newTag){
+	    	console.log('firing ajax');
+	    	$.post("/admin/tag",{ tag_name: evt.params.data.text })
+	    	.done(function(data){
+	    		console.log(data);
+	    	});
+	    }
+
+	});
 
 	storeSelect = $('#targets');
 	var optGroupSelections = $("#optGroupSelections").val();
@@ -40,7 +45,6 @@ $(document).ready(function(){
 	}
 	
 });
-
 
 $("#targets").on('change', function (event,el) {
 
@@ -70,10 +74,6 @@ $("#targets").on('change', function (event,el) {
 	
 });
 
-$("#tags").on('change', function(event, element){
-	console.log(element);
-});
-	
 $("body").on('paste', '.search-field input', function(e) {
 	
 	setTimeout(function(e) {
@@ -156,7 +156,8 @@ $(document).on('click','.video-update',function(){
 
 	var featuredOn = $("#featuredOn").val();
 
-	var tags = $("#tagsSelected").val();
+	var tags = $("#tags").val();
+	console.log(tags);
 	
      if(hasError == false) {
 
