@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Request as RequestFacade;
 
+use App\Models\Video\Playlist;
+use App\Models\Video\PlaylistVideo;
+
 class TrainingController extends Controller
 {
     public $storeNumber;
@@ -17,6 +20,8 @@ class TrainingController extends Controller
 
     public function index(Request $request)
     {
-        return view('site.training.index');
+    	$videoList = PlaylistVideo::getPlaylistVideos(63);
+        return view('site.training.index')
+        	->with('videoList', $videoList);
     }    
 }
