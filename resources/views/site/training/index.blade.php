@@ -30,13 +30,8 @@
 	<div id="page-wrapper" class="gray-bg">
 	
 		<div id="background-caption" class="hide">
-			<h4>This is the title</h4>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			<h4>Diederich Wolfgang - P/T Footwear Associate - 314 West Edmonton Mall</h4>
+			<p>Diederich is a hardcore skiier, obvs. He thinks he will be in one of those Warren Miller DVDs. That's the reason we are featuring a picture of him skiing. Seriously. Have you ever had a powder day like this? I don't know how Diederich affords to find this powder on his part-time wage, but he does. He might have something on the side.</p>
 		</div>
 
 		<div class="row border-bottom">
@@ -75,34 +70,51 @@
 			</div>
 
 			<div class="row">
+				<a href="#">
 				<div class="col-md-3">
-					<div class="ibox float-e-margins">
-	                	<div class="ibox-content">
-	 						HG
-	                	</div>
+					<div class="widget navy-bg no-padding ibox">
+	                	<div class="p-m">
+                        <h1 class="m-xs">Hardgoods</h1>
+						</div>
+	                	<img src="/images/cut.jpg" class="img-responsive" />
 					</div>
 				</div>
+				</a>
+
+
+				<a href="#">
 				<div class="col-md-3">
-					<div class="ibox float-e-margins">
-	                	<div class="ibox-content">
-	 						SG
-	                	</div>
+					<div class="widget yellow-bg no-padding ibox">
+	                	<div class="p-m">
+                        <h1 class="m-xs">Softgoods</h1>
+						</div>
+	                	<img src="/images/the-north-face-waterproof-jackets.jpg" class="img-responsive" />
 					</div>
 				</div>
+				</a>
+
+				<a href="#">
 				<div class="col-md-3">
-					<div class="ibox float-e-margins">
-	                	<div class="ibox-content">
-	 						FW
-	                	</div>
+					<div class="widget red-bg no-padding ibox">
+	                	<div class="p-m">
+                        <h1 class="m-xs">Footwear</h1>
+						</div>
+	                	<img src="/images/cut.jpg" class="img-responsive" />
 					</div>
 				</div>
+				</a>
+
+
+				<a href="#">
 				<div class="col-md-3">
-					<div class="ibox float-e-margins">
-	                	<div class="ibox-content">
-	 						People
-	                	</div>
+					<div class="widget lazur-bg no-padding ibox">
+	                	<div class="p-m">
+                        <h1 class="m-xs">People</h1>
+						</div>
+	                	<img src="/images/cut.jpg" class="img-responsive" />
 					</div>
-				</div>												
+				</div>
+				</a>											
 			</div>
 
 			<div class="row">
