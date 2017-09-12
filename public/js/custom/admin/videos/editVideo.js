@@ -7,6 +7,7 @@ $(document).ready(function(){
 	$("#tags").select2({ 
 		width: '100%' , 
 		tags: true,
+		multiple: true,
 		createTag: function (params) {
 			console.log(params);
     		var term = $.trim(params.term);
@@ -17,19 +18,24 @@ $(document).ready(function(){
 		    console.log(term);
 
 		    return {
-		      id: term,
-		      text: term,
+		      id: term, //id of new option 
+		      text: term, //text of new option 
 		      newTag: true
 		    }
 		}
   	}).on('select2:select', function (evt) {
+  		console.log(evt);
 	    if(evt.params.data.newTag){
-	    	console.log('firing ajax');
+	    	evt.params.data.newTag = false;
 	    	$.post("/admin/tag",{ tag_name: evt.params.data.text })
-	    	.done(function(data){
-	    		console.log(data);
+	    	.done(function(tag){
+	    		
+	    		//change the id of the newly added tag to be the id from db
+				$('#tags option[value='+tag.name+']').val(tag.id);
+
 	    	});
 	    }
+	    $('select2').find(':selected').remove();
 
 	});
 

@@ -54,8 +54,8 @@ class TagAdminController extends Controller
      */
     public function store(Request $request)
     {
-        Tag::storeTag($request);
-        return redirect()->action('Video\TagAdminController@index');
+        return Tag::storeTag($request);
+        // return redirect()->action('Video\TagAdminController@index');
     }
 
     /**
