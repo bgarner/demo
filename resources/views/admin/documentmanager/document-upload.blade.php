@@ -68,20 +68,20 @@
                                 <select name="stores" id="storeSelect" multiple class="chosen">
                                     <option value="">Select Some Options</option>
                                     @foreach($storeAndStoreGroups as $option)
-                                        
+
                                         <option value="{{$option['id']}}"
-                                            
+
                                             @if(isset($option["isStoreGroup"]))
                                                 data-isStoreGroup = "{{$option['isStoreGroup']}}"
                                             @endif
                                             @if(isset($option["stores"]))
                                                 data-stores = "{{$option['stores']}}"
                                             @endif
-                                            
+
                                         >
                                             {{$option['name']}}
                                         </option>
-                                        
+
                                     @endforeach
 
                                 </select>
@@ -236,7 +236,7 @@
             <!-- <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script> -->
             <script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>
 
-            
+
 
             <script type="text/javascript">
             $.ajaxSetup({
