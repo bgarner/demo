@@ -182,7 +182,7 @@ class Video extends Model
 
         $tags = $request->get('tags');
         if ($tags != null) {
-            Video::updateTags($id, $tags);
+            VideoTag::updateTags($id, $tags);
         }
 
         $title          = $request->get('title');
@@ -206,18 +206,7 @@ class Video extends Model
         return $video;
     }
 
-    public static function updateTags($id, $tags)
-    {
-        VideoTag::where('video_id', $id)->delete();
-        foreach ($tags as $tag) {
-            VideoTag::create([
-               'video_id'     => $id,
-               'tag_id'         => $tag
-            ]);
-        }
-
-        return;
-    }
+    
 
     public static function getPlaylistsThatContainSpecificVideo($id)
     {

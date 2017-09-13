@@ -129,14 +129,10 @@
                                 
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            {!! Form::label('tags', 'Tags' , ['class'=>'col-sm-2 control-label']) !!}
-                            <div class="col-sm-10">
-                              {!! Form::select('tags', $tags, $video->tags, ['class'=>'select', 'multiple'=>'multiple' , 'id'=>'tags'])  !!}
-                            </div>
+                        
+                        <div id="tag-selector-container">
+                        @include('admin.video.tag.tag-partial', ['tags'=>$tags, 'selected_tags'=>$video->tags])
                         </div>
-                          
 
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-2">

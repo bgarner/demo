@@ -1,43 +1,11 @@
 var allStores;
 $(document).ready(function(){
 
+	
 	$(".chosen-select").chosen({
 		'width':'100%'
 	})
-	$("#tags").select2({ 
-		width: '100%' , 
-		tags: true,
-		multiple: true,
-		createTag: function (params) {
-			console.log(params);
-    		var term = $.trim(params.term);
-
-		    if (term === '') {
-		      return null;
-		    }
-		    console.log(term);
-
-		    return {
-		      id: term, //id of new option 
-		      text: term, //text of new option 
-		      newTag: true
-		    }
-		}
-  	}).on('select2:select', function (evt) {
-  		console.log(evt);
-	    if(evt.params.data.newTag){
-	    	evt.params.data.newTag = false;
-	    	$.post("/admin/tag",{ tag_name: evt.params.data.text })
-	    	.done(function(tag){
-	    		
-	    		//change the id of the newly added tag to be the id from db
-				$('#tags option[value='+tag.name+']').val(tag.id);
-
-	    	});
-	    }
-	    $('select2').find(':selected').remove();
-
-	});
+	initializeTagSelector();
 
 	storeSelect = $('#targets');
 	var optGroupSelections = $("#optGroupSelections").val();
@@ -88,6 +56,28 @@ $("body").on('paste', '.search-field input', function(e) {
         
 
 });
+
+var initializeTagSelector = function(){
+	
+	$("#tags").select2({ 
+		width: '100%' , 
+		tags: true,
+		multiple: true,
+		createTag: function (params) {
+    		var term = $.trim(params.term);
+
+		    if (term === '') {
+		      return null;
+		    }
+
+		    return {
+		      id: term, //id of new option 
+		      text: term, //text of new option 
+		      newTag: true
+		    }
+		}
+	});
+}
 
 var processStorePaste = function(){
 
@@ -145,6 +135,34 @@ var getTargetBanners = function(){
 	}
 	return targetBanners;
 }
+
+
+$("body").on('select2:select', $("#tags"), function (evt) {
+
+		var video_id = $("#videoId").val();
+	    if(evt.params.data.newTag){
+	    	$.post("/admin/tag",{ tag_name: evt.params.data.text })
+	    	.done(function(tag){
+	    		
+	    		//change the id of the newly added tag to be the id from db
+				$('#tags option[value="'+tag.name+'"]').val(tag.id);
+				
+				var selectedTags = $("#tags").val();
+				//update tag video mapping
+				$.post("/admin/videotag",{ 'video_id' : video_id, 'tags': selectedTags })
+				.done(function(){
+					$('#tags').select2('destroy');
+					$("#tag-selector-container").load("/admin/videotag/"+video_id, function(){
+						initializeTagSelector();
+						$("#tags").focus();
+
+					});	
+				});				
+
+	    	});
+	    }
+
+	});
 
 
 $(document).on('click','.video-update',function(){
