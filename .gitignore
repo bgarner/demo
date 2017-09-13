@@ -13,6 +13,7 @@
 Homestead.yaml
 Homestead.json
 .env
+.env.dusk.local
 .floo
 .flooignore
 /public/js/env.js
