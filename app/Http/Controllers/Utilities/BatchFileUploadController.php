@@ -17,9 +17,9 @@ class BatchFileUploadController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function index()
     {
-        return view('admin.documentmanager.document-upload');
+        return view('admin.utilities.batch-upload');
     }
 
     /**
