@@ -30,7 +30,6 @@ class VideoTag extends Model
     {
     	$tags = VideoTag::join('tags', 'tags.id', '=', 'video_tags.tag_id')
     							->where('video_id', $id)
-    							// ->select('tags.*')
     							->get()
     							->pluck('tag_id');
     	return $tags;

@@ -177,6 +177,7 @@
             });
 
         </script>
+
         
         @include('site.includes.bugreport')
 

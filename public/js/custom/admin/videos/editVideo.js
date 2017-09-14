@@ -57,28 +57,6 @@ $("body").on('paste', '.search-field input', function(e) {
 
 });
 
-var initializeTagSelector = function(){
-	
-	$("#tags").select2({ 
-		width: '100%' , 
-		tags: true,
-		multiple: true,
-		createTag: function (params) {
-    		var term = $.trim(params.term);
-
-		    if (term === '') {
-		      return null;
-		    }
-
-		    return {
-		      id: term, //id of new option 
-		      text: term, //text of new option 
-		      newTag: true
-		    }
-		}
-	});
-}
-
 var processStorePaste = function(){
 
     	var storesString = $(".search-field").find('input').val();
@@ -135,7 +113,27 @@ var getTargetBanners = function(){
 	}
 	return targetBanners;
 }
+var initializeTagSelector = function(){
+	
+	$("#tags").select2({ 
+		width: '100%' , 
+		tags: true,
+		multiple: true,
+		createTag: function (params) {
+    		var term = $.trim(params.term);
 
+		    if (term === '') {
+		      return null;
+		    }
+
+		    return {
+		      id: term, //id of new option 
+		      text: term, //text of new option 
+		      newTag: true
+		    }
+		}
+	});
+}
 
 $("body").on('select2:select', $("#tags"), function (evt) {
 
@@ -163,7 +161,6 @@ $("body").on('select2:select', $("#tags"), function (evt) {
 	    }
 
 	});
-
 
 $(document).on('click','.video-update',function(){
   	

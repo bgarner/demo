@@ -6,6 +6,7 @@
     @include('admin.includes.head')
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
     <link rel="stylesheet" type="text/css" href="/css/custom/tree.css">
+    <link rel="stylesheet" href="/css/plugins/select/select2.min.css">
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 	<style>
         .modal-body{
@@ -94,6 +95,10 @@
 											<div id="videos-selected"></div>
 											
 										</div>
+
+										<div id="tag-selector-container">
+											@include('admin.video.tag.tag-partial')
+										</div>
 										
 										<div class="form-group">
 											<div class="col-sm-10 col-sm-offset-2">
@@ -157,6 +162,7 @@
 		<script type="text/javascript" src="/js/custom/admin/videos/playlists/addPlaylist.js"></script>
 		<script type="text/javascript" src="/js/custom/tree.js"></script>
 		<script type="text/javascript" src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
+		<script type="text/javascript" src="/js/plugins/select/select2.min.js"></script>
 
 
 		<script type="text/javascript">
@@ -173,16 +179,14 @@
 
     		});
 
-		 //    $(".chosen").chosen({
-			// 	  width:'75%'
-			// });		    
 		    
 			$(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
 
 		    $("#add-videos").click(function(){
 		    	$("#video-listing").modal('show');
 		    });
-		   
+		   	
+		   	initializeTagSelector();
 
 
 		</script>

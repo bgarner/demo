@@ -327,4 +327,12 @@ class Playlist extends Model
         return $playlists;
     }
 
+    public static function getPlaylistById($playlistId)
+    {
+        $playlist = Playlist::find($playlistId);
+        $playlist->tags = PlaylistTag::getTagsByPlaylistId($playlistId);
+
+        return $playlist;
+    }
+
 }

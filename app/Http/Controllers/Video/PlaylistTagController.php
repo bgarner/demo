@@ -9,6 +9,14 @@ use App\Models\Video\Tag;
 
 class PlaylistTagController extends Controller
 {
+    public function create()
+    {
+    	$tags = Tag::all()->pluck('name', 'id');	
+    	$selected_tags = [];
+    	return view('admin.video.tag.tag-partial')
+    			->with('tags', $tags)
+    			->with('selected_tags', $selected_tags);
+    }
     public function show($resource_id)
     {
     	$tags = Tag::all()->pluck('name', 'id');
@@ -21,6 +29,9 @@ class PlaylistTagController extends Controller
 
     public function store(Request $request)
     {
-    	//
+    	$playlist_id = $request->playlist_id;
+    	$tags = $request->tags;
+    	PlaylistTag::updateTags($playlist_id, $tags);
+    	return;
     }
 }
