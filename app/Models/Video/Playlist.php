@@ -106,6 +106,10 @@ class Playlist extends Model
     	$playlist->save();
     	PlaylistVideo::updatePlaylistVideos($id, $request);
         Playlist::updateTargetStores($request, $id);
+        $tags = $request->get('tags');
+        if ($tags != null) {
+            PlaylistTag::updateTags($id, $tags);
+        }
     	return $playlist;
     }
 

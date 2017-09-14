@@ -100,12 +100,14 @@ $(document).on('click','.playlist-update',function(){
 	$(".selected-videos").each(function(){
 		playlist_videos.push($(this).find('td:first').attr('data-video-id'));
 	});
+	var tags = $("#tags").val();
 
 	console.log(title);
 	console.log(remove_videos);
 	console.log(playlist_videos);
+	console.log(tags);
 
-     if(hasError == false) {
+    if(hasError == false) {
      	
 		$.ajax({
 		    url: '/admin/playlist/' + playlistID ,
@@ -116,6 +118,7 @@ $(document).on('click','.playlist-update',function(){
 		    	description : description,
 		    	playlist_videos:  playlist_videos,
 		    	remove_videos: remove_videos,
+		    	tags : tags,
 		    	all_stores : getAllStoreStatus(),
 		    	target_stores : getTargetStores(),
 		    	target_banners : getTargetBanners()
@@ -149,7 +152,6 @@ $(document).on('click','.playlist-update',function(){
 		    }
 		}).done(function(response){
 			console.log(response);
-			console.log("********");
 			$(".existing-videos-container").load("/admin/playlistvideos/"+playlistID);
 			$("#videos-staged-to-remove").empty();
 			$("#videos-selected").empty();

@@ -178,7 +178,6 @@ $(document).on('click','.video-update',function(){
 	var featuredOn = $("#featuredOn").val();
 
 	var tags = $("#tags").val();
-	console.log(tags);
 	
      if(hasError == false) {
 

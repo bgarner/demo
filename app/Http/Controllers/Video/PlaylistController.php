@@ -21,9 +21,10 @@ class PlaylistController extends Controller
     public function show(Request $request)
     {
         $videoList = PlaylistVideo::getPlaylistVideos($request->id);
+        $formattedVideoList = PlaylistVideo::fomatPlaylistVideos($videoList);
         $playlistMeta = Playlist::getPlaylistMetaData($request->id);
         return view('site.video.playlist')
             ->with('playlistMeta', $playlistMeta)
-            ->with('videoList', $videoList);
+            ->with('videoList', $formattedVideoList);
     }
 }
