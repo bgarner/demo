@@ -32,7 +32,6 @@ class TagAdminController extends Controller
         $banners = Banner::all();
         $tags = Tag::where('banner_id', $banner->id)->get();
         return view('admin.video.tag.index')->with('banner', $banner)
-                                    ->with('banners', $banners)
                                     ->with('tags', $tags);
     }
 
