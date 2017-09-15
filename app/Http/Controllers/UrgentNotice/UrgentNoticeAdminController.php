@@ -54,7 +54,6 @@ class UrgentNoticeAdminController extends Controller
     {
         
         $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
 
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
         $folderStructure = FolderStructure::getNavigationStructure($banner->id);
@@ -65,7 +64,6 @@ class UrgentNoticeAdminController extends Controller
         
         return view('admin.urgent-notice.create')
                     ->with('banner', $banner)
-                    ->with('banners',$banners)
                     ->with('navigation', $fileFolderStructure)
                     ->with('folderStructure', $folderStructure)
                     ->with('attachment_types', $attachment_types)
@@ -105,13 +103,11 @@ class UrgentNoticeAdminController extends Controller
     {
         
         $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
 
         $urgent_notice = UrgentNotice::find($id);
         
         $attached_folders = [];
         $attached_documents = [];
-
 
         $attached_documents = UrgentNoticeDocument::getDocuments($id);
         $attached_folders = UrgentNoticeFolder::getFolders($id);
@@ -123,8 +119,7 @@ class UrgentNoticeAdminController extends Controller
         
         $attachment_types = UrgentNoticeAttachmentType::all();
         
-        return view('admin.urgent-notice.edit')->with('banners', $banners)
-                                            ->with('banner', $banner)
+        return view('admin.urgent-notice.edit')->with('banner', $banner)
                                             ->with('urgent_notice', $urgent_notice)
                                             ->with('attached_folders', $attached_folders)
                                             ->with('attached_documents', $attached_documents)

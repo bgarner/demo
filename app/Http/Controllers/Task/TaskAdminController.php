@@ -45,14 +45,12 @@ class TaskAdminController extends Controller
     public function create()
     {
         $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
         $storeList = StoreInfo::getStoreListing($banner->id);
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
 
         return view('admin.task.create')
                                         ->with('banner', $banner)
                                         ->with('storeList', $storeList)
-                                        ->with('banners', $banners)
                                         ->with('navigation', $fileFolderStructure);
     }
 
@@ -87,7 +85,6 @@ class TaskAdminController extends Controller
     public function edit($id)
     {
         $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
         
         $task_target_stores = TaskTarget::getTargetStoresByTaskId($id);
         // store list would depend on the Auth::user type and id 
@@ -102,7 +99,6 @@ class TaskAdminController extends Controller
                                         ->with('task_documents', $task_documents)
                                         ->with('banner', $banner)
                                         ->with('storeList', $storeList)
-                                        ->with('banners', $banners)
                                         ->with('navigation', $fileFolderStructure)
                                         ->with('target_stores', $task_target_stores)
                                         ->with('task_status_list', $task_status_list);

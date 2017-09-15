@@ -32,12 +32,10 @@ class FeedbackAdminController extends Controller
     {        
         
         $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
         $feedbacks = BugReport::getAllBugReports($banner->id);
 
         return view('admin.storefeedback.index')->with('feedbacks', $feedbacks)
-                                                ->with('banner', $banner)
-                                                ->with('banners', $banners);
+                                                ->with('banner', $banner);
 
         
     }
@@ -83,14 +81,12 @@ class FeedbackAdminController extends Controller
     public function edit($id)
     {
         $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
         $feedback = BugReport::getBugReportById($id);
         $feedback_category_list = FeedbackCategoryTypes::getFeedbackCategoryList();
         $feedback_status_list = FeedbackStatusTypes::getFeedbackStatusList();
         
         return view('admin.storefeedback.edit')->with('feedback', $feedback)
                                                 ->with('banner', $banner)
-                                                ->with('banners', $banners)
                                                 ->with('feedback_category_list', $feedback_category_list)
                                                 ->with('feedback_status_list', $feedback_status_list);     
     }

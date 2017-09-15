@@ -29,10 +29,8 @@ class TagAdminController extends Controller
     {
 
         $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
-        $tags = Tag::where('banner_id', $banner->id)->get();
+        $tags = Tag::all();
         return view('admin.tag.index')->with('banner', $banner)
-                                    ->with('banners', $banners)
                                     ->with('tags', $tags);
     }
 
