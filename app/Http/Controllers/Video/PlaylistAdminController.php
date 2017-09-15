@@ -12,6 +12,7 @@ use App\Models\Video\Playlist;
 use App\Models\Video\PlaylistVideo;
 use App\Models\Video\Video;
 use App\Models\Utility\Utility;
+use App\Models\Video\Tag;
 
 class PlaylistAdminController extends Controller
 {
@@ -49,10 +50,14 @@ class PlaylistAdminController extends Controller
         $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
         $optGroupSelections = json_encode([]);
         $videos = Video::getAllVideosForAdmin();
+        $tags = Tag::all()->pluck('name', 'id'); 
+        $selected_tags = [];
         return view('admin.video.playlist-manager.create')
                 ->with('videos', $videos)
                 ->with('optGroupSelections', $optGroupSelections)
-                ->with('optGroupOptions', $optGroupOptions);
+                ->with('optGroupOptions', $optGroupOptions)
+                ->with('tags', $tags)
+                ->with('selected_tags', $selected_tags);
 
     }
 
@@ -88,7 +93,7 @@ class PlaylistAdminController extends Controller
     public function edit($id)
     {
         
-        $playlist = Playlist::find($id);
+        $playlist = Playlist::getPlaylistById($id);
         $videos = Video::getAllVideosForAdmin();
 
 
@@ -103,12 +108,15 @@ class PlaylistAdminController extends Controller
         $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
         $optGroupSelections = json_encode(Playlist::getSelectedStoresAndBannersByPlaylistId($id));
 
+        $tags = Tag::all()->pluck('name', 'id');
+
         return view('admin.video.playlist-manager.edit')
                 ->with('playlist', $playlist)
                 ->with('videos', $videos)
                 ->with('playlist_videos', $selectedVideos)
                 ->with('optGroupOptions', $optGroupOptions)
-                ->with('optGroupSelections', $optGroupSelections);
+                ->with('optGroupSelections', $optGroupSelections)
+                ->with('tags', $tags);
 
     }
 

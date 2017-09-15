@@ -28,11 +28,8 @@ class TagAdminController extends Controller
      */
     public function index()
     {
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
-        $tags = Tag::where('banner_id', $banner->id)->get();
-        return view('admin.video.tag.index')->with('banner', $banner)
-                                    ->with('tags', $tags);
+        $tags = Tag::all();
+        return view('admin.video.tag.index')->with('tags', $tags);
     }
 
     /**
@@ -42,16 +39,9 @@ class TagAdminController extends Controller
      */
     public function create()
     {
-        $user_id = \Auth::user()->id;
-        $banner_ids = UserBanner::where('user_id', $user_id)->get()->pluck('banner_id');
-        $banners = Banner::whereIn('id', $banner_ids)->get();        
-        $banner_id = UserSelectedBanner::where('user_id', \Auth::user()->id)->first()->selected_banner_id;
-        $banner  = Banner::find($banner_id);
+   
+        return view('admin.video.tag.create');
 
-        
-        return view('admin.video.tag.create')
-            ->with('banner', $banner)
-            ->with('banners', $banners);
     }
 
     /**
@@ -62,8 +52,8 @@ class TagAdminController extends Controller
      */
     public function store(Request $request)
     {
-        Tag::storeTag($request);
-        return ($request->all());
+        return Tag::storeTag($request);
+        // return redirect()->action('Video\TagAdminController@index');
     }
 
     /**

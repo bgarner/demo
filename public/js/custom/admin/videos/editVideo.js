@@ -1,9 +1,12 @@
 var allStores;
 $(document).ready(function(){
 
+	
 	$(".chosen-select").chosen({
 		'width':'100%'
 	})
+	initializeTagSelector();
+
 	storeSelect = $('#targets');
 	var optGroupSelections = $("#optGroupSelections").val();
 	if(typeof(optGroupSelections) !== 'undefined'){
@@ -17,8 +20,7 @@ $(document).ready(function(){
 	
 });
 
-
-$(".chosen").on('change', function (event,el) {
+$("#targets").on('change', function (event,el) {
 
 	var options = $( ".chosen option:selected" );
 	allStores = 'off';
@@ -45,7 +47,7 @@ $(".chosen").on('change', function (event,el) {
 	}
 	
 });
-	
+
 $("body").on('paste', '.search-field input', function(e) {
 	
 	setTimeout(function(e) {
@@ -111,7 +113,54 @@ var getTargetBanners = function(){
 	}
 	return targetBanners;
 }
+var initializeTagSelector = function(){
+	
+	$("#tags").select2({ 
+		width: '100%' , 
+		tags: true,
+		multiple: true,
+		createTag: function (params) {
+    		var term = $.trim(params.term);
 
+		    if (term === '') {
+		      return null;
+		    }
+
+		    return {
+		      id: term, //id of new option 
+		      text: term, //text of new option 
+		      newTag: true
+		    }
+		}
+	});
+}
+
+$("body").on('select2:select', $("#tags"), function (evt) {
+
+		var video_id = $("#videoId").val();
+	    if(evt.params.data.newTag){
+	    	$.post("/admin/tag",{ tag_name: evt.params.data.text })
+	    	.done(function(tag){
+	    		
+	    		//change the id of the newly added tag to be the id from db
+				$('#tags option[value="'+tag.name+'"]').val(tag.id);
+				
+				var selectedTags = $("#tags").val();
+				//update tag video mapping
+				$.post("/admin/videotag",{ 'video_id' : video_id, 'tags': selectedTags })
+				.done(function(){
+					$('#tags').select2('destroy');
+					$("#tag-selector-container").load("/admin/videotag/"+video_id, function(){
+						initializeTagSelector();
+						$("#tags").focus();
+
+					});	
+				});				
+
+	    	});
+	    }
+
+	});
 
 $(document).on('click','.video-update',function(){
   	
@@ -128,7 +177,7 @@ $(document).on('click','.video-update',function(){
 
 	var featuredOn = $("#featuredOn").val();
 
-	var tags = $("#tagsSelected").val();
+	var tags = $("#tags").val();
 	
      if(hasError == false) {
 

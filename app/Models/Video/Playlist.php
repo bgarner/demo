@@ -106,6 +106,10 @@ class Playlist extends Model
     	$playlist->save();
     	PlaylistVideo::updatePlaylistVideos($id, $request);
         Playlist::updateTargetStores($request, $id);
+        $tags = $request->get('tags');
+        if ($tags != null) {
+            PlaylistTag::updateTags($id, $tags);
+        }
     	return $playlist;
     }
 
@@ -325,6 +329,14 @@ class Playlist extends Model
         $playlists = $allStorePlaylists->merge($targetedPlaylists)->unique('id')->sortByDesc('created_at');
 
         return $playlists;
+    }
+
+    public static function getPlaylistById($playlistId)
+    {
+        $playlist = Playlist::find($playlistId);
+        $playlist->tags = PlaylistTag::getTagsByPlaylistId($playlistId);
+
+        return $playlist;
     }
 
 }

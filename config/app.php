@@ -271,6 +271,8 @@ return [
         'App\Http\Controllers\UrgentNotice\UrgentNoticeAdminController'         => 'Alerts and Notices',
         'App\Http\Controllers\Video\VideoAdminController'                       => 'Videos',
         'App\Http\Controllers\Video\TagAdminController'                         => 'Videos',
+        'App\Http\Controllers\Video\VideoTagController'                         => 'Videos',
+        'App\Http\Controllers\Video\PlaylistTagController'                      => 'Videos',
         'App\Http\Controllers\Video\PlaylistAdminController'                    => 'Videos',
         'App\Http\Controllers\Video\PlaylistVideoOrderController'               => 'Videos',
         'App\Http\Controllers\User\UserAdminController'                         => 'User and Group Management',
