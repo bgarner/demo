@@ -80,7 +80,6 @@ class VideoAdminController extends Controller
         return view('admin.video.video-manager.video-add-meta-data')
                 ->with('videos', $videos)
                 ->with('banner', $banner);
-            
     }    
 
     /**
@@ -117,12 +116,14 @@ class VideoAdminController extends Controller
         $video = Video::getVideoById($id);
         $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
         $optGroupSelections = json_encode(Video::getSelectedStoresAndBannersByVideoId($id));
-        
         $banners = UserBanner::getAllBanners()->pluck('name', 'id')->toArray();
+        $tags = Tag::all()->pluck('name', 'id');
+
         return view('admin.video.video-manager.edit')->with('video', $video)
                                                     ->with('optGroupOptions', $optGroupOptions)
                                                     ->with('banners', $banners)
-                                                    ->with('optGroupSelections', $optGroupSelections);
+                                                    ->with('optGroupSelections', $optGroupSelections)
+                                                    ->with('tags', $tags);
     }
 
     /**

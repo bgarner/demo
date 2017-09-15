@@ -6,7 +6,7 @@
     @include('admin.includes.head')
 
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
-
+    <link rel="stylesheet" href="/css/plugins/select/select2.min.css">
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
     <style>
         .modal-body{
@@ -83,6 +83,11 @@
 												</div>
 										</div>
 										@include('admin.includes.store-banner-selector', ['optGroupOptions'=> $optGroupOptions, 'optGroupSelections' => $optGroupSelections])
+
+
+                                        <div id="tag-selector-container">
+                                            @include('admin.video.tag.tag-partial', ['tags'=>$tags, 'selected_tags'=>$playlist->tags])
+                                        </div>
 
                                     </form>
 
@@ -166,9 +171,11 @@
 	<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>	
     <script src="/js/plugins/nestable/jquery.nestable.js"></script>
     <script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script> 
+    <script type="text/javascript" src="/js/plugins/select/select2.min.js"></script> 
     <script type="text/javascript" src="/js/custom/admin/videos/playlists/editPlaylist.js"></script>
     <script src="/js/custom/admin/videos/playlists/changeVideoOrder.js"></script>
     <script src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
+
 
 	<script type="text/javascript">
 		$.ajaxSetup({
@@ -195,6 +202,8 @@
     		 $('#videoplaylist').nestable({
     			 group: 1
     		 }).on('change', serializeVideoData);
+
+             initializeTagSelector();
 
     	 });
     </script>

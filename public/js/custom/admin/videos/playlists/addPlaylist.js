@@ -1,3 +1,10 @@
+var initializeTagSelector = function(){
+	
+	$("#tags").select2({ 
+		width: '100%'
+	});
+}
+
 $("#add-videos").click(function(){
 	$("#video-listing").modal('show');
 });

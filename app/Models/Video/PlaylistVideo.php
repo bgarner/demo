@@ -31,7 +31,6 @@ class PlaylistVideo extends Model
             $video->prettyDateCreated = Utility::prettifyDate($video->created_at);
         }
         
-        $playlist_videos = Self::fomatPlaylistVideos($playlist_videos);
         return $playlist_videos;
 
 

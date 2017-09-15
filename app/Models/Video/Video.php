@@ -121,6 +121,7 @@ class Video extends Model
             $video->icon              = Utility::getIcon($video->original_extension);
             $video->prettyDateCreated = Utility::prettifyDate($video->created_at);
             $video->prettyDateUpdated = Utility::prettifyDate($video->updated_at);
+            $video->tags              = VideoTag::getTagsByVideoId($video->id);
         }
                         
                         
@@ -181,7 +182,7 @@ class Video extends Model
 
         $tags = $request->get('tags');
         if ($tags != null) {
-            Video::updateTags($id, $tags);
+            VideoTag::updateTags($id, $tags);
         }
 
         $title          = $request->get('title');
@@ -205,18 +206,7 @@ class Video extends Model
         return $video;
     }
 
-    public static function updateTags($id, $tags)
-    {
-        VideoTag::where('video_id', $id)->delete();
-        foreach ($tags as $tag) {
-            VideoTag::create([
-               'video_id'     => $id,
-               'tag_id'         => $tag
-            ]);
-        }
-
-        return;
-    }
+    
 
     public static function getPlaylistsThatContainSpecificVideo($id)
     {
@@ -259,6 +249,7 @@ class Video extends Model
     public static function getVideoById($id)
     {
         $video = Video::find($id);
+        $video->tags = VideoTag::getTagsByVideoId($id);
 
         $featuredOnBanner = FeaturedVideo::getFeaturedBannerByVideoId($id);
 

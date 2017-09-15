@@ -17,11 +17,10 @@ class Tag extends Model
     public static function storeTag($request)
     {
         $banner = UserSelectedBanner::getBanner();
-    	Tag::create([
-    		'name' => $request['tag_name'],
-    		'banner_id' => $banner->id
+    	$tag = Tag::create([
+    		'name' => $request['tag_name']
     	]);
-    	return;
+    	return $tag;
     }
 
     public static function updateTag($id, $request)
