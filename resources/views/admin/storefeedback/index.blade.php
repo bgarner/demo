@@ -137,7 +137,7 @@
 
 		</script>
 
-		<script type="text/javascript" src="/js/custom/admin/storefeedback/deleteFeedback.js"></script>
+		<!-- <script type="text/javascript" src="/js/custom/admin/storefeedback/deleteFeedback.js"></script> -->
 		
 
 		@include('site.includes.bugreport')

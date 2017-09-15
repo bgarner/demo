@@ -55,8 +55,6 @@ class DocumentAdminController extends Controller
     {
 
         $banner      = UserSelectedBanner::getBanner();
-        $banners     = Banner::all();
-        // $storeList   = StoreInfo::getStoreListing($banner->id);
         $storeAndStoreGroups = Utility::getStoreAndStoreGroupList($banner->id);
         $packageHash = sha1(time() . time());
         $folders     = Folder::all();
@@ -64,9 +62,7 @@ class DocumentAdminController extends Controller
             ->with('folders', $folders)
             ->with('packageHash', $packageHash)
             ->with('banner', $banner)
-            // ->with('storeList', $storeList)
-            ->with('storeAndStoreGroups', $storeAndStoreGroups)
-            ->with('banners', $banners);  
+            ->with('storeAndStoreGroups', $storeAndStoreGroups);
     }
 
     /**
@@ -91,11 +87,8 @@ class DocumentAdminController extends Controller
         $package     = $request->get('package');
 
         $banner      = UserSelectedBanner::getBanner();
-        $banners     = Banner::all();
 
         $parent      = $request->get('parent');
-        
-        $tags        = Tag::all();
 
         $alert_types = ["" =>'Select one'];
 
@@ -108,9 +101,7 @@ class DocumentAdminController extends Controller
         return view('admin.document-meta.document-add-meta-data')
                 ->with('documents', $documents)
                 ->with('banner', $banner)
-                ->with('banners', $banners)
                 ->with('folder_id', $parent)
-                ->with('tags', $tags)
                 ->with('alert_types', $alert_types )
                 ->with('documentContext', json_encode($documentContext));
             
@@ -148,9 +139,6 @@ class DocumentAdminController extends Controller
     {
         $document            = Document::find($id);
         $banner              = UserSelectedBanner::getBanner();
-        $banners             = Banner::all();
-
-        // $storeList           = StoreInfo::getStoreListing($banner->id);
         $target_stores       = DocumentTarget::getTargetStoresForDocument($id);
         
         $alert_types         = ["" => 'Select one'];
@@ -167,8 +155,6 @@ class DocumentAdminController extends Controller
 
         return view('admin.document-meta.document-edit-meta-data')->with('document', $document)
                                                     ->with('banner', $banner)
-                                                    ->with('banners', $banners)
-                                                    // ->with('storeList', $storeList)
                                                     ->with('target_stores', $target_stores)
                                                     ->with('alert_types', $alert_types ) 
                                                     ->with('alert_details', $alert_details)

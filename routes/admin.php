@@ -91,6 +91,11 @@ Route::post('/admin/playlisttag', 'Video\PlaylistTagController@store');
 //Banner selector
 Route::resource('/admin/banner' , 'AdminSelectedBannerController');
 
+//Batch File Uploader
+Route::resource('/admin/batchfileupload', 'Utilities\BatchFileUploadController');
+Route::resource('/admin/batchvideoupload', 'Utilities\BatchVideoUploadController');
+Route::resource('/admin/batchthumbnailupload', 'Utilities\BatchThumbnailUploadController');
+
 //Ckeditor Images
 Route::resource('/utilities/ckeditorimages', 'Utilities\CkeditorImageController',
 					['names' => ['store' => 'utilities.ckeditorimages.store'] ]

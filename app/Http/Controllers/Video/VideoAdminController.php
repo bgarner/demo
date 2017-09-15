@@ -44,15 +44,12 @@ class VideoAdminController extends Controller
      */
     public function create()
     {
-        
-        $banners = UserBanner::getAllBanners()->pluck('name', 'id')->toArray();
         $packageHash = sha1(time() . time());
         $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
         
         return view('admin.video.video-manager.video-upload')
             ->with('packageHash', $packageHash)
-            ->with('optGroupOptions', $optGroupOptions)
-            ->with('banners', $banners);
+            ->with('optGroupOptions', $optGroupOptions);
     }
 
     /**
@@ -78,18 +75,11 @@ class VideoAdminController extends Controller
 
         $banner = UserSelectedBanner::getBanner();
         
-        $banners = Banner::all();
-        
         $videos = Video::where('upload_package_id', $package)->get();
-
-        $tags = Tag::all()->pluck('name');
 
         return view('admin.video.video-manager.video-add-meta-data')
                 ->with('videos', $videos)
-                ->with('banner', $banner)
-                ->with('banners', $banners)
-                ->with('tags', $tags);
-            
+                ->with('banner', $banner);
     }    
 
     /**
@@ -170,13 +160,11 @@ class VideoAdminController extends Controller
     public function uploadThumbnail($id)
     {
         $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();     
         $video = Video::find($id);
         
         return view('admin.video.video-manager.thumbnail-upload')
             ->with('video', $video)
-            ->with('banner', $banner)
-            ->with('banners', $banners); 
+            ->with('banner', $banner);
     }
 
 

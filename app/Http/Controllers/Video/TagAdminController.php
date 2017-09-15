@@ -30,8 +30,6 @@ class TagAdminController extends Controller
     {
         $tags = Tag::all();
         return view('admin.video.tag.index')->with('tags', $tags);
-
-                                    
     }
 
     /**

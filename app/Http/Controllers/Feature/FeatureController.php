@@ -67,7 +67,7 @@ class FeatureController extends Controller
 
         $selected_packages            = FeaturePackage::getFeaturePackages($feature->id);
 
-        $feature_communications       = Feature::getFeatureCommunications($feature->id, $storeNumber);
+        $feature_communications       = FeatureCommunication::getFeatureCommunications($feature->id, $storeNumber);
 
         $notifications                = Notification::getNotificationsByFeature($feature->id, $storeNumber);
 
