@@ -58,9 +58,11 @@
                     <div class="form-container">
 
                         <select name="directory" id="directory">
-                            <option value="">Files</option>
+                            <option value="files">Files</option>
+                            <option value="files/flyer">Flyer</option>
+                            <option value="files/productlaunch">Product Launch Data</option>
                             <option value="video">Videos</option>
-                            <option value="thumbnails">Video Thumnails</option>
+                            <option value="video/thumbs">Video Thumnails</option>
                         </select>
 
 

@@ -626,13 +626,15 @@ class Document extends Model
         $original_filename = $metadata["originalName"];
 
         if($request->dir){
-            $directory = public_path() . '/files/' . $request->dir;
+            $directory = public_path() . '/' . $request->dir;
         } else {
-            $directory = public_path() . '/files';
+            $directory = public_path() . '/';
         }
 
         $request->file('document')->move($directory, $original_filename);
-        //$request->file('document')->move($directory);
+
+        \Log::info( $original_filename . " uploaded to " . $directory);
+
         return;
     }
 
