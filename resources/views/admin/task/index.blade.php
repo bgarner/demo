@@ -68,12 +68,12 @@
 								@foreach($tasks as $task)
 								<tr>
 
-									<td>{{ $task->title }}</td>
+									<td><a href="/admin/task/{{ $task->id }}/edit">{{ $task->title }}</a></td>
 									<td>{{ $task->description }}</td>
 									<td>{{ $task->prettyDueDate }}</td>
 									
 									<td>
-										<a href="/admin/task/{{ $task->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+										
 										<a data-task="{{ $task->id }}" id="task{{ $task->id }}" class="delete-task btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 
 									</td>

@@ -90,10 +90,10 @@
 											
 										</td>	
 									@else
-									<tr class="feedback-list-item unread">
+									<tr class="feedback-list-item ">
 										<td></td>
 										<td >
-											<div>
+											<div class="unread-feedback">
 											{!! $feedback->description !!}
 											</div>
 										</td>	
@@ -103,7 +103,7 @@
 									<td>{!! $feedback->store_number !!}</td>
 									
 									<td>
-										<a href="/admin/feedback/{{ $feedback->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+										<a href="/admin/feedback/{{ $feedback->id }}/edit" class="btn btn-primary btn-sm btn-outline"><i class="fa fa-pencil"></i></a>
 										<a data-feedback="{{ $feedback->id }}" id="feedback{{ $feedback->id }}" class="delete-feedback btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 
 									</td>
@@ -137,7 +137,7 @@
 
 		</script>
 
-		<script type="text/javascript" src="/js/custom/admin/storefeedback/deleteFeedback.js"></script>
+		<!-- <script type="text/javascript" src="/js/custom/admin/storefeedback/deleteFeedback.js"></script> -->
 		
 
 		@include('site.includes.bugreport')

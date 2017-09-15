@@ -46,12 +46,26 @@ class FeatureDocument extends Model
 
     public static function getFeaturedDocumentArray($feature_id, $store_number)
     {
-        return self::join('document_target', 'document_target.document_id', '=', 'feature_document.document_id')
+        return Self::join('document_target', 'document_target.document_id', '=', 'feature_document.document_id')
                                 ->where('feature_id', $feature_id)
                                 ->where('document_target.store_id', $store_number)
-                                // ->where('document_target.deleted_at', null)
                                 ->get()->pluck('document_id')->toArray();
     }
+
+    public static function getDocumentByFeatureId($id)
+    {
+        $feature_documents = FeatureDocument::where('feature_id', $id)->get()->pluck('document_id');
+        $selected_documents  = array();
+        foreach ($feature_documents as $doc_id) {
+            $doc              = Document::find($doc_id);
+            $doc->folder_path = Document::getFolderPathForDocument($doc_id);
+            $doc->link_with_icon = Utility::getModalLink($doc->filename, $doc->title, $doc->original_extension, $doc->id, 1);
+            array_push($selected_documents, $doc );
+            
+        }
+        return $selected_documents;    
+    }
+    
 
 
 }

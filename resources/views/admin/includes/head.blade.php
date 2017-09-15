@@ -33,36 +33,48 @@
 	<style>
 		.modal-lg{ height: 95%; width: 80% !important; padding: 0; }
 		.modal-content{ height: 100% !important;}
-		/*.modal-body{ padding: 10px; margin: 0; height: 100% !important; }*/
+		.modal-body{ padding: 10px; margin: 0; height: 100% !important; }
 			.modal-body .document-checkbox {
 				margin-left: 10px;
 			}
 
-	.modal-dialog{
+	#folder-listing .modal-dialog, #document-listing .modal-dialog, #package-listing .modal-dialog, #video-listing .modal-dialog{
 	  height:95%;
 	}
 
-	.modal-header{
+	#folder-listing .modal-header, #document-listing .modal-header, #package-listing .modal-header{
 	  position: absolute;
 	  top: 10px;
 	  width: 100%;
 	}
+	#video-listing .modal-header{
+	  position: absolute;
+	  width: 100%;
+	}
 
-	.modal-body{
+	#folder-listing .modal-body, #document-listing .modal-body, #package-listing .modal-body{
 	  position: absolute;
 	  top: 70px;
 	  width: 100%;
 	  height: 95% !important;
+	  padding:10px;
+	}
+	#video-listing .modal-body{
+	  position: absolute;
+	  top: 95px;
+	  width: 100%;
+	  height: 95% !important;
+	  padding:10px;
 	}
 
-	.modal-body .tree{
+	#folder-listing .modal-body .tree, #document-listing .modal-body .tree, #package-listing .modal-body .tree, #video-listing .modal-body .tree{
 	  	height: 90% !important;
 	  	overflow-y: auto;
 	 	padding-left: 25px;
     	line-height: 25px;
 	}
 
-	.modal-footer{
+	#folder-listing .modal-footer, #document-listing .modal-footer, #package-listing .modal-footer, #video-listing .modal-footer {
 	  position: absolute;
 	  bottom: 10px;
 	  width: 100%;

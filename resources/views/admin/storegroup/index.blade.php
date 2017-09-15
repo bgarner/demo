@@ -59,7 +59,7 @@
 
 		                            <div class="table-responsive">
 
-										<table class="table table-hover issue-tracker tablesorter">
+										<table class="table table-hover issue-tracker tablesorter datatable">
 											<thead>
 												<tr>
 													<td>Group Name</td>
@@ -72,7 +72,7 @@
 
 										<tr>
 
-											<td class="col-xs-2">{{ $storegroup->group_name }}</td>
+											<td class="col-xs-2"><a href="/admin/storegroup/{{ $storegroup->id }}/edit">{{ $storegroup->group_name }}</a></td>
 											<td class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
 												{{-- @foreach($storegroup->components as $component)
 													<span class="label">{!! $component->component_name !!}</span>
@@ -85,7 +85,7 @@
 											</td>
 											
 											<td class="col-xs-2">
-												<a href="/admin/storegroup/{{ $storegroup->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+												
 
 												<a data-groupId="{{ $storegroup->id }}" id="group{{ $storegroup->id }}" class="group-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 

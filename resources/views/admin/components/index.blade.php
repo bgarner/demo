@@ -72,7 +72,9 @@
 
 										<tr>
 
-											<td >{{ $component->component_name }}</td>
+											<td >
+											<a href="/admin/component/{{ $component->id }}/edit">
+											{{ $component->component_name }} </a></td>
 											<td >
 												@foreach($component->roles as $role)
 													<span class="label">{!! $role->role_name !!}</span>
@@ -82,7 +84,7 @@
 											</td>
 											
 											<td>
-												<a href="/admin/component/{{ $component->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+												
 
 												<a data-componentId="{{ $component->id }}" id="component{{ $component->id }}" class="component-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 

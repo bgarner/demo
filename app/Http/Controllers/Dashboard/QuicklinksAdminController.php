@@ -36,7 +36,6 @@ class QuicklinksAdminController extends Controller
     public function create()
     {
         $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
 
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
         $folderStructure = FolderStructure::getNavigationStructure($banner->id);
@@ -45,7 +44,6 @@ class QuicklinksAdminController extends Controller
         
         return view('admin.quicklinks.create')
                     ->with('banner', $banner)
-                    ->with('banners',$banners)
                     ->with('navigation', $fileFolderStructure)
                     ->with('folderStructure', $folderStructure)
                     ->with('quicklink_types', $quicklink_types);

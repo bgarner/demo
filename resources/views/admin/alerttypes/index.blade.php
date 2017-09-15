@@ -10,9 +10,7 @@
         .modal-dialog{
             height: 280px;
         }
-        .modal-body{
-            padding:50px 30px 30px 30px;
-        }
+        
     </style>
 </head>
 
@@ -77,12 +75,15 @@
 								</tr>
 								@foreach($alerttypes as $at)
 								<tr id="alertType{{$at->id}}">	
-									<td>{{ $at->name }}</td>
+									<td><a class="edit-alerttype" data-alertype-id="{{ $at->id }}" href="/admin/alerttypes/{{$at->id}}/edit">
+                                            {{ $at->name }}
+                                        </a>
+                                    </td>
 									<td>
-										<a class="edit-alerttype" data-alertype-id="{{ $at->id }}" href="/admin/alerttypes/{{$at->id}}/edit">
+										{{-- <a class="edit-alerttype" data-alertype-id="{{ $at->id }}" href="/admin/alerttypes/{{$at->id}}/edit">
 											<button class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i>
 											</button>
-										</a>
+										</a> --}}
 										
 										<a class="delete-alerttype" data-alertCount="{{$at->alertCount}}" data-alertType-id="{{ $at->id }}"
 											data-alertType="{{$at->name}}"
