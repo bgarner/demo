@@ -621,13 +621,18 @@ class Document extends Model
 
     public static function batchUpload($request)
     {
+
+        $metadata = Document::getDocumentMetaData($request->file('document'));
+        $original_filename = $metadata["originalName"];
+
         if($request->dir){
-            $directory = public_path() . '/files/' . $dir;
+            $directory = public_path() . '/files/' . $request->dir;
         } else {
             $directory = public_path() . '/files';
         }
 
-        $request->file('document')->move($directory);
+        $request->file('document')->move($directory, $original_filename);
+        //$request->file('document')->move($directory);
         return;
     }
 

@@ -58,8 +58,8 @@
                     <div class="form-container">
 
                         <select name="directory" id="directory">
-                            <option value="files">Files</option>
-                            <option value="videos">Videos</option>
+                            <option value="">Files</option>
+                            <option value="video">Videos</option>
                             <option value="thumbnails">Video Thumnails</option>
                         </select>
 
@@ -184,7 +184,7 @@
                 var directory = $("select[name='directory']").val();
 
                   $.ajax({
-                        url : '/admin/document',
+                        url : '/admin/batchfileupload',
                         data : {
                               dir : directory
                         }

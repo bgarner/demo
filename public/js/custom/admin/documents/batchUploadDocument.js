@@ -23,7 +23,7 @@ var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
     sending: function(file, xhr, formData) {
       // Pass token. You can use the same method to pass any other values as well such as a id to associate the image with for example.
         formData.append("_token", $('[name=_token').val()); // Laravel expect the token post value to be named _token by default
-        // formData.append("folder_id", $('#folder_id').val());
+        formData.append("dir", $('#directory').val());
         // formData.append("upload_package_id", $('[name=upload_package_id').val());
         // formData.append("banner_id", $('[name=banner_id]').val());
         // formData.append("isWeekFolder", $('#folder-title').attr('data-isweekfolder') );
@@ -77,16 +77,11 @@ myDropzone.on("queuecomplete", function (progress) {
     var folder_id = $('#folder_id').val();
     $(".file-row .delete").hide();
 //    window.location = '/admin/document/add-meta-data?package=' + upload_package_id + "&banner_id=" + banner_id + "&parent=" + folder_id;
-    var metadatalink = $("<a class='btn btn-primary next-action' href='/admin/document/add-meta-data?package="+upload_package_id+"&banner_id="+ banner_id +"&parent="+ folder_id +"'><i class='fa fa-check'></i> Review Documents</a>");
     //$(metadatalink).appendTo("#file-uploader #container");
     //
     $( ".file-actions .btn" ).fadeOut( "slow", function() {
       $( ".file-actions" ).empty();
-      $(metadatalink).appendTo(".file-actions");
     });
-
-
-
 });
 
 // Setup the buttons for all transfers
