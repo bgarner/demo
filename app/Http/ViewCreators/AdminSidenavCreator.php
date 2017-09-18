@@ -22,7 +22,7 @@ class AdminSidenavCreator
      */
     public function __construct()
     {
-        $this->components = RoleComponent::getAccessibleComponentNameList();
+        // $this->components = RoleComponent::getAccessibleComponentNameList();
     }
 
     /**
@@ -33,7 +33,7 @@ class AdminSidenavCreator
      */
     public function compose(View $view)
     {
-        
-        $view->with('roleComponents', $this->components);
+
+        // $view->with('roleComponents', $this->components);
     }
 }

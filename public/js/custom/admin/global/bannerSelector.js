@@ -1,10 +1,10 @@
 $(document).ready(function(){
 
 	console.log('selected banner : ' + localStorage.getItem('admin-banner'));
-	$(".navbar-brand").append('<a href="/admin">'+ localStorage.getItem('admin-banner') +'</a>');
-	
+	$(".current-banner").append(localStorage.getItem('admin-banner'));
+
 	$(".banner-switch").click(function(){
-		
+
 		localStorage.setItem('admin-banner-id', $(this).attr('data-banner-id'));
 		localStorage.setItem('admin-banner', $(this).text());
 

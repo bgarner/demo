@@ -12,7 +12,7 @@
         .modal-dialog{
             height: 380px;
         }
-        
+
     </style>
 </head>
 
@@ -25,9 +25,9 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
+		{{-- <div class="row border-bottom">
 			@include('admin.includes.topbar')
-        </div>
+        </div> --}}
 
 		<div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-12">
@@ -40,19 +40,19 @@
                             <strong>Flyer</strong>
                         </li>
                     </ol>
-                
+
                 <div class="col-lg-2">
 
                 </div>
             </div>
-        </div>        
+        </div>
 
 
 		<div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="ibox">
-                    
+
                         <div class="ibox-title">
 
                             <div class="ibox-tools">
@@ -61,8 +61,8 @@
                             </div>
                         </div>
 
-                        <div class="ibox-content">       	
-			                    
+                        <div class="ibox-content">
+
 	                    	<table class="table dataTable" id="flyerDataTable">
 	                    		<thead>
 	                    			<tr role="row">
@@ -80,15 +80,15 @@
 											<td>{{ $flyer->end_date }}</td>
 											<td>
 												<a href="#" class="editFlyer btn btn-primary btn-sm btn-outline" id="flyer{{ $flyer->id }}" data-flyer-id="{{ $flyer->id }}" title="Edit Flyer"><i class="fa fa-pencil"></i></a>
-												
+
 												<a data-flyer-id="{{ $flyer->id }}" id="flyer{{ $flyer->id }}" title="Delete Flyer" class="delete-flyer btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 											</td>
 										</tr>
 	                    			@endforeach
-				                    
+
 				                </tbody>
 			                </table>
-					               
+
                         </div>
 
                     </div>
@@ -100,11 +100,11 @@
 
 	    @include('admin.includes.scripts')
 
-	
+
 		<script type="text/javascript" src="/js/plugins/dataTables/datatables.min.js"></script>
 		<script type="text/javascript" src="/js/custom/admin/flyers/editFlyer.js"></script>
 		<script type="text/javascript" src="/js/custom/admin/flyers/deleteFlyer.js"></script>
-		
+
 
 		<script>
 			$.ajaxSetup({
@@ -124,7 +124,7 @@
 
 
 		</script>
-		
+
 
 		@include('site.includes.modal')
         @include('admin.folder.foldermodal')

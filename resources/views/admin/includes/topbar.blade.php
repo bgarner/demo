@@ -4,7 +4,7 @@
 </div>
     <ul class="nav navbar-top-links navbar-right">
 
-         @include('admin.banner', ['banners'=>$banners])
+         {{-- @include('admin.banner', ['banners'=>$banners]) --}}
 
 
         <li>
