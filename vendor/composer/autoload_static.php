@@ -1307,6 +1307,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'UpdateCommunicationsTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_11_195751_update_communications_table.php',
         'UpdateDocumentTargetTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_15_215303_update_document_target_table.php',
         'UpdateDocumentsTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_12_152143_update_documents_table.php',
+        'UpdateDocumentsTableRemoveEnddateConstraint' => __DIR__ . '/../..' . '/database/migrations/2017_09_15_195859_update_documents_table_remove_enddate_constraint.php',
         'UpdateEventTypeTableWithColours' => __DIR__ . '/../..' . '/database/migrations/2017_06_19_202749_update_event_type_table_with_colours.php',
         'UpdateEventsTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_11_165610_update_events_table.php',
         'UpdateFeaturesTable' => __DIR__ . '/../..' . '/database/migrations/2017_07_18_203705_update_features_table.php',

@@ -832,6 +832,7 @@ return array(
     'UpdateCommunicationsTable' => $baseDir . '/database/migrations/2017_05_11_195751_update_communications_table.php',
     'UpdateDocumentTargetTable' => $baseDir . '/database/migrations/2017_05_15_215303_update_document_target_table.php',
     'UpdateDocumentsTable' => $baseDir . '/database/migrations/2017_05_12_152143_update_documents_table.php',
+    'UpdateDocumentsTableRemoveEnddateConstraint' => $baseDir . '/database/migrations/2017_09_15_195859_update_documents_table_remove_enddate_constraint.php',
     'UpdateEventTypeTableWithColours' => $baseDir . '/database/migrations/2017_06_19_202749_update_event_type_table_with_colours.php',
     'UpdateEventsTable' => $baseDir . '/database/migrations/2017_05_11_165610_update_events_table.php',
     'UpdateFeaturesTable' => $baseDir . '/database/migrations/2017_07_18_203705_update_features_table.php',

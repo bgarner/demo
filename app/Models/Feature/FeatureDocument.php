@@ -25,7 +25,8 @@ class FeatureDocument extends Model
     							->where('documents.start', '<=', $now )
 	                            ->where(function($query) use ($now) {
 	                                $query->where('documents.end', '>=', $now)
-	                                    ->orWhere('documents.end', '=', '0000-00-00 00:00:00' );
+	                                    ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                        ->orWhere('documents.end', '=', NULL );
 	                            })
                                 ->where('document_target.store_id', $store_number)
                                 // ->where('document_target.deleted_at', null)

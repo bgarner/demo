@@ -98,6 +98,7 @@
                                                 <ul class="dropdown-menu" aria-labelledby="edit_selected">
                                                     <li id="edit_start_date"><a>Start Date</a></li>
                                                     <li id="edit_end_date"><a>End Date</a></li>
+                                                    <li id="delete-multiple"><a>Delete</a></li>
                                                 </ul>
                                             </span>
                                             <a id="add-files" class="hidden" data-folderId="" href="/admin/document/create" title="Add Documents">
