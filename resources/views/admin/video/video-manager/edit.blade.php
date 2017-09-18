@@ -6,6 +6,7 @@
     @include('admin.includes.head')
 
   <meta name="csrf-token" content="{!! csrf_token() !!}"/>
+  <link rel="stylesheet" href="/css/plugins/select/select2.min.css">
 </head>
 
 <body class="fixed-navigation adminview">
@@ -128,7 +129,10 @@
                                 
                             </div>
                         </div>
-                          
+                        
+                        <div id="tag-selector-container">
+                        @include('admin.video.tag.tag-partial', ['tags'=>$tags, 'selected_tags'=>$video->tags])
+                        </div>
 
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-2">
@@ -164,6 +168,7 @@
 
         </script>
         <script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script> 
+        <script type="text/javascript" src="/js/plugins/select/select2.min.js"></script> 
         <script type="text/javascript" src="/js/custom/admin/videos/editVideo.js"></script> 
         
         <script type="text/javascript">
@@ -172,6 +177,7 @@
             });
 
         </script>
+
         
         @include('site.includes.bugreport')
 

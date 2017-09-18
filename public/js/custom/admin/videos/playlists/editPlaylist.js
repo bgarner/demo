@@ -1,3 +1,51 @@
+var initializeTagSelector = function(){
+	
+	$("#tags").select2({ 
+		width: '100%' , 
+		tags: true,
+		multiple: true,
+		createTag: function (params) {
+    		var term = $.trim(params.term);
+
+		    if (term === '') {
+		      return null;
+		    }
+
+		    return {
+		      id: term, //id of new option 
+		      text: term, //text of new option 
+		      newTag: true
+		    }
+		}
+	});
+}
+
+$("body").on('select2:select', $("#tags"), function (evt) {
+
+	var playlist_id = $("#playlistID").val();
+    if(evt.params.data.newTag){
+    	$.post("/admin/tag",{ tag_name: evt.params.data.text })
+    	.done(function(tag){
+    		
+    		//change the id of the newly added tag to be the id from db
+			$('#tags option[value="'+tag.name+'"]').val(tag.id);
+			
+			var selectedTags = $("#tags").val();
+			//update tag playlist mapping
+			$.post("/admin/playlisttag",{ 'playlist_id' : playlist_id, 'tags': selectedTags })
+			.done(function(){
+				$('#tags').select2('destroy');
+				$("#tag-selector-container").load("/admin/playlisttag/"+playlist_id, function(){
+					initializeTagSelector();
+					$("#tags").focus();
+
+				});	
+			});				
+
+    	});
+    }
+
+});
 $("#add-more-videos").click(function(){
 	$("#video-listing").modal('show');
 });
@@ -52,12 +100,14 @@ $(document).on('click','.playlist-update',function(){
 	$(".selected-videos").each(function(){
 		playlist_videos.push($(this).find('td:first').attr('data-video-id'));
 	});
+	var tags = $("#tags").val();
 
 	console.log(title);
 	console.log(remove_videos);
 	console.log(playlist_videos);
+	console.log(tags);
 
-     if(hasError == false) {
+    if(hasError == false) {
      	
 		$.ajax({
 		    url: '/admin/playlist/' + playlistID ,
@@ -68,6 +118,7 @@ $(document).on('click','.playlist-update',function(){
 		    	description : description,
 		    	playlist_videos:  playlist_videos,
 		    	remove_videos: remove_videos,
+		    	tags : tags,
 		    	all_stores : getAllStoreStatus(),
 		    	target_stores : getTargetStores(),
 		    	target_banners : getTargetBanners()
@@ -101,7 +152,6 @@ $(document).on('click','.playlist-update',function(){
 		    }
 		}).done(function(response){
 			console.log(response);
-			console.log("********");
 			$(".existing-videos-container").load("/admin/playlistvideos/"+playlistID);
 			$("#videos-staged-to-remove").empty();
 			$("#videos-selected").empty();

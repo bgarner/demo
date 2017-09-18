@@ -4,6 +4,7 @@ namespace App\Models\Feature;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Communication\Communication;
 
 class FeatureCommunication extends Model
 {
@@ -50,7 +51,7 @@ class FeatureCommunication extends Model
         $featureCommunications = FeatureCommunication::getCommunicationId($feature_id);
         foreach ($featureCommunications as $comm) {
             $communications = Communication::getCommunicationById($comm);
-            $mergedCommunications->push($communications);
+            array_push($mergedCommunications, $communications);
         }
 
         return $mergedCommunications;

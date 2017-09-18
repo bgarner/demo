@@ -5,7 +5,7 @@
     @section('title', 'Upload New Documents')
     @include('admin.includes.head')
     <meta name="csrf-token" content="{!! csrf_token() !!}"/>
-    <link rel="stylesheet" type="text/css" href="/css/plugins/chose/chosen.css">
+    <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
 </head>
 
 <body class="fixed-navigation adminview">
@@ -53,13 +53,6 @@
                      <table class="table table-hover issue-tracker">
 
                           <tbody>
-
-                         <!--  <tr>
-                            <td>File Name</td>
-                            <td>Title</td>
-                            <td>Description</td>
-                            <td>Tags</td>
-                          </tr> -->
                       
                   	@foreach($videos as $vid)
                   		<tr> <h4> Add data for <i> {{ $vid->original_filename }} </i></h4> </tr>
@@ -82,12 +75,12 @@
                                   </div>
                                 </div>
 
-                                {{-- <div class="row"> 
-                                      <label class="col-md-2"> Tags</label>             
-                                      <div class="col-md-10">
-                                          {!! Form::select('tags[]', $tags, null, ['class'=>'chosen' , 'multiple'=>'true', 'id'=>"select$vid->id"]) !!}
-                                      </div>
-                                    </div>--}}
+                                <div class="row"> 
+                                    <label class="col-md-2"> Tags</label>             
+                                    <div class="col-md-10">
+                                        {!! Form::select('tags[]', $tags, null, ['class'=>'chosen' , 'multiple'=>'true', 'id'=>"select$vid->id"]) !!}
+                                    </div>
+                                </div>
                                 <button type="submit" class="meta-data-add btn btn-success hidden" data-id="{{ $vid->id }}">Update</button>
           
                   			</form>

@@ -251,7 +251,7 @@ return [
         'App\Http\Controllers\AdminSelectedBannerController'                    => 'Home',
         'App\Http\Controllers\Dashboard\DashboardAdminController'               => 'Dashboard',
         'App\Http\Controllers\Dashboard\DashboardBackgroundAdminController'     => 'Dashboard',
-        'App\Http\Controllers\Dashboard\QuicklinksAdminController'              => 'Dashboard',    
+        'App\Http\Controllers\Dashboard\QuicklinksAdminController'              => 'Dashboard',
         'App\Http\Controllers\Document\PackageAdminController'                  => 'Featured Content',
         'App\Http\Controllers\Feature\FeatureAdminController'                   => 'Featured Content',
         'App\Http\Controllers\Feature\FeatureThumbnailAdminController'          => 'Featured Content',
@@ -271,6 +271,8 @@ return [
         'App\Http\Controllers\UrgentNotice\UrgentNoticeAdminController'         => 'Alerts and Notices',
         'App\Http\Controllers\Video\VideoAdminController'                       => 'Videos',
         'App\Http\Controllers\Video\TagAdminController'                         => 'Videos',
+        'App\Http\Controllers\Video\VideoTagController'                         => 'Videos',
+        'App\Http\Controllers\Video\PlaylistTagController'                      => 'Videos',
         'App\Http\Controllers\Video\PlaylistAdminController'                    => 'Videos',
         'App\Http\Controllers\Video\PlaylistVideoOrderController'               => 'Videos',
         'App\Http\Controllers\User\UserAdminController'                         => 'User and Group Management',
@@ -286,7 +288,8 @@ return [
         'App\Http\Controllers\Tools\CustomStoreGroupAdminController'            => 'Tools',
         'App\Http\Controllers\StoreComponent\StoreComponentAdminController'     => 'Components',
         'App\Http\Controllers\Flyer\FlyerAdminController'                       => 'Flyer',
-        'App\Http\Controllers\Flyer\FlyerItemAdminController'                   => 'Flyer'
+        'App\Http\Controllers\Flyer\FlyerItemAdminController'                   => 'Flyer',
+        'App\Http\Controllers\Utilities\BatchFileUploadController'              => 'Batch File Upload'
 
 
 

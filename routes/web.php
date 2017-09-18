@@ -75,6 +75,9 @@ Route::get('/{storeno}/tools/fwinitials', array('uses' => 'Tools\FootwearInitial
 Route::post('/getFlyerBoxes', 'Tools\FlyerPageSelectionController@show');
 Route::post('/getFlyerBoxData', 'Tools\FlyerBoxSelectionController@show');
 
+//TRAINING
+Route::get('/{storeno}/training', array('uses' => 'Training\TrainingController@index'));
+
 //URGENT NOTICES
 Route::get('/{storeno}/urgentnotice', array('uses' => 'UrgentNotice\UrgentNoticeController@index'));
 Route::get('/{storeno}/urgentnotice/show/{id}', array('uses' => 'UrgentNotice\UrgentNoticeController@show'));

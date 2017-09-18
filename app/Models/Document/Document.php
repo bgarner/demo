@@ -277,13 +277,13 @@ class Document extends Model
 
     public static function updateDocument($request, $id) {
 
-        
+
         \Log::info($request->all());
 
         $document       = Document::find($id);
 
         if(isset($request['title'])){
-            $document['title']  = $request->get('title');            
+            $document['title']  = $request->get('title');
         }
         if(isset($request['description']) ){
             $document['description'] = $request->get('description');
@@ -325,23 +325,23 @@ class Document extends Model
     }
 
     public static function replaceDocument($request, $id)
-    {   
+    {
 
         //validate document type
         $v = \Validator::make(
-                    ['filename' => $request->file('document')], 
+                    ['filename' => $request->file('document')],
                     ['filename'    => 'required|mimes:jpeg,bmp,png,pdf,xls,xlsx,xlsm,webm']
                 );
-        
+
         $response = ['validation_result' => 'true'] ;
 
         if ($v->fails())
         {
             $response =  ['validation_result' => 'false', 'errors' => $v->errors()];
             if($response['validation_result'] == 'false'){
-                return $response;    
+                return $response;
             }
-            
+
         }
 
         $metadata = Document::getDocumentMetaData($request->file('document'));
@@ -558,28 +558,28 @@ class Document extends Model
                 DocumentTarget::where('document_id', $document->id)->delete();
                 $target_stores = $request['stores'];
                 if(! is_array($target_stores) ) {
-                    $target_stores = explode(',',  $request['stores'] );    
+                    $target_stores = explode(',',  $request['stores'] );
                 }
                 foreach ($target_stores as $key=>$store) {
                     DocumentTarget::insert([
                         'document_id' => $document->id,
                         'store_id' => $store
-                        ]);    
+                        ]);
                 }
                 if(!in_array('0940', $target_stores)){
                     Utility::addHeadOffice($document->id, 'document_target', 'document_id');
                 }
 
-            } 
+            }
         }
-         
-        return;  
+
+        return;
     }
 
     public static function getDocumentsForStore($global_folder_id, $storeNumber)
     {
         $now = Carbon::now()->toDatetimeString();
-        
+
         $banner_id = StoreInfo::getStoreInfoByStoreId($storeNumber)->banner_id;
 
         $allStoreDocuments = Document::join('file_folder', 'file_folder.document_id', '=', 'documents.id')
@@ -590,7 +590,7 @@ class Document extends Model
                                     ->where(function($query) use ($now) {
                                         $query->where('documents.end', '>=', $now)
                                             ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
-                                            ->orWhere('documents.end', '=', NULL ); 
+                                            ->orWhere('documents.end', '=', NULL );
                                     })
                                     ->where('documents.deleted_at', '=', null)
                                     ->select('documents.*')
@@ -625,6 +625,25 @@ class Document extends Model
                             ->where('documents.deleted_at', '=', null)
                             ->select('documents.*')
                             ->get();
+    }
+
+    public static function batchUpload($request)
+    {
+
+        $metadata = Document::getDocumentMetaData($request->file('document'));
+        $original_filename = $metadata["originalName"];
+
+        if($request->dir){
+            $directory = public_path() . '/' . $request->dir;
+        } else {
+            $directory = public_path() . '/';
+        }
+
+        $request->file('document')->move($directory, $original_filename);
+
+        \Log::info( $original_filename . " uploaded to " . $directory);
+
+        return;
     }
 
 }
