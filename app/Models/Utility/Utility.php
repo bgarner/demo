@@ -199,7 +199,7 @@ class Utility extends Model
 
 	public static function prettifyDate($date)
 	{
-		if($date == '0000-00-00 00:00:00') {
+		if($date == '0000-00-00 00:00:00' || $date == NULL) {
 			return "";
 		}
 		//$prettyDate = Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('D, M d, Y h:i a');
@@ -209,7 +209,7 @@ class Utility extends Model
 
 	public static function prettifyDateWithTime($date)
 	{
-		if($date == '0000-00-00 00:00:00') {
+		if($date == '0000-00-00 00:00:00' || $date == NULL) {
 			return "";
 		}
 		$prettyDate = Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('D, M d, Y h:i a');

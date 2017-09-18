@@ -34,7 +34,8 @@ class Search extends Model
     							->where('start', '<=', $today )
     							->where(function($q) use($today) {
     								$q->where('end', '>=', $today)
-    								->orWhere('end', '=', '0000-00-00 00:00:00');
+    								->orWhere('end', '=', '0000-00-00 00:00:00')
+                                    ->orWhere('end', '=', NULL);
     							})
                                 ->where('document_target.store_id', $store)
                                 ->select('documents.*')
@@ -47,7 +48,8 @@ class Search extends Model
                                     ->where('start', '<=', $today )
                                     ->where(function($q) use($today) {
                                         $q->where('end', '>=', $today)
-                                        ->orWhere('end', '=', '0000-00-00 00:00:00');
+                                        ->orWhere('end', '=', '0000-00-00 00:00:00')
+                                        ->orWhere('end', '=', NULL);
                                     })
                                     ->select('documents.*')
                                     ->get()
@@ -91,6 +93,7 @@ class Search extends Model
                                 ->where('title', 'LIKE', '%'.$term.'%')
                                 ->where('end', '<=', $today )
                                 ->where('end', '!=', '0000-00-00 00:00:00')
+                                ->where('end', '!=', NULL)
                                 ->where('document_target.store_id', $store)
                                 ->select('documents.*')
                                 ->get()
@@ -100,6 +103,7 @@ class Search extends Model
                                     ->where('title', 'LIKE', '%'.$term.'%')    
                                     ->where('end', '<=', $today )
                                     ->where('end', '!=', '0000-00-00 00:00:00')                    
+                                    ->where('end', '!=', NULL)
                                     ->select('documents.*')
                                     ->get()
                                 );
@@ -292,7 +296,8 @@ class Search extends Model
     							->where('documents.start', '<=', $today )
                                 ->where(function($query) use ($today) {
                                     $query->where('documents.end', '>=', $today)
-                                        ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+                                        ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                        ->orWhere('documents.end', '=', NULL ); 
                                 })
     							->get()
     				);
@@ -304,7 +309,8 @@ class Search extends Model
                                 ->where('documents.start', '<=', $today )
                                 ->where(function($query) use ($today) {
                                     $query->where('documents.end', '>=', $today)
-                                        ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+                                        ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                        ->orWhere('documents.end', '=', NULL ); 
                                 })
                                 ->get()
                     );
@@ -344,6 +350,7 @@ class Search extends Model
                                 ->where('document_target.store_id', $store)
                                 ->where('documents.end', '<=', $today )
                                 ->where('documents.end', '!=', '0000-00-00 00:00:00') 
+                                ->where('documents.end', '!=', NULL) 
                                 ->get()
                     );
             $allStoreAlerts = $allStoreAlerts->merge(
@@ -351,7 +358,8 @@ class Search extends Model
                                     ->where('documents.all_stores', 1)
                                     ->where('title', 'LIKE', '%'.$term.'%')    
                                     ->where('documents.end', '<=', $today )
-                                    ->where('documents.end', '!=', '0000-00-00 00:00:00')                    
+                                    ->where('documents.end', '!=', '0000-00-00 00:00:00')     
+                                    ->where('documents.end', '!=', NULL)                    
                                     ->select('documents.*')
                                     ->get()
                                 );
