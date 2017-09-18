@@ -17,26 +17,6 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Communications</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li class="active">
-                            <strong>Communications</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
         	<div class="row">
@@ -57,7 +37,7 @@
 								<table class="table datatable">
 									<thead>
 										<tr>
-											<td>Id</td>	
+											<td>Id</td>
 											<td>Subject</td>
 											<td>Type</td>
 											<td>Start</td>
@@ -71,17 +51,17 @@
 										<td><a href="/admin/communication/{{ $communication->id }}/edit" >{{ $communication->subject }}</a></td>
 										<td><span class="label label-sm label-{{$communication->label_colour}}">{{$communication->label_name}}</span></td>
 										<td data-order="{{$communication->send_at}}">{{ $communication->prettySentAtDate }}</td>
-										
+
 										<td>
 											{{-- <a href="/admin/communication/{{ $communication->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a> --}}
-											<a  data-communicationid="{{ $communication->id }}" 
+											<a  data-communicationid="{{ $communication->id }}"
 												data-communicationname="{{ $communication->subject }}"
-												id="copy-communication" 
+												id="copy-communication"
 												class="btn btn-primary btn-outline btn-sm">
 												<i class="fa fa-clipboard"></i>
 											</a>
 											<a data-communication="{{ $communication->id }}" id="communication{{ $communication->id }}" class="delete-communication btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
-											
+
 
 										</td>
 									</tr>
@@ -110,11 +90,11 @@
 	        }
 		});
 
-        $(".datatable").dataTable( 
+        $(".datatable").dataTable(
         	{
     			"order": [[ 0, 'desc' ]],
-			
-				"columns": [	
+
+				"columns": [
 				    { "visible": false },
 				    { "width": "45%" },
 				    null,
@@ -133,7 +113,7 @@
 
 	<script type="text/javascript" src="/js/custom/admin/communications/deleteCommunication.js"></script>
 	<script type="text/javascript" src="/js/custom/admin/communications/copyCommunication.js"></script>
-	
+
 
 	@include('site.includes.bugreport')
 

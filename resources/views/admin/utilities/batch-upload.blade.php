@@ -22,26 +22,7 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
 
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Batch File Upload</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li class="active">
-                            <strong>Batch File Upload</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
@@ -51,7 +32,13 @@
 
 
                 <div class="ibox">
+                    <div class="ibox-title">
+                            <h5>Bulk File Upload</h5>
 
+                            <div class="ibox-tools">
+
+                            </div>
+                        </div>
 
                 <div class="ibox-content form-group form-horizontal">
 

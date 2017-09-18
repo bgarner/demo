@@ -27,22 +27,7 @@
     </nav>
 
     <div id="page-wrapper" class="gray-bg">
-        <div class="row border-bottom">
-            @include('admin.includes.topbar')
-        </div>
 
-       <div class="row wrapper border-bottom white-bg page-heading">
-            <div class="col-lg-10">
-                <h2>Upload Videos <span id="folder-name-for-upload"></span></h2>
-                <ol class="breadcrumb">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/admin/video">Videos</a></li>
-                </ol>
-            </div>
-            <div class="col-lg-2">
-
-            </div>
-        </div>
 
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
@@ -53,13 +38,13 @@
 
                 <div class="ibox">
 
-                <!--
+
                 <div class="ibox-title">
-                    <h5>Event Types</h5>
+                    <h5>Video Upload</h5>
 
                     <div class="ibox-tools">
                     </div>
-                </div> -->
+                </div>
 
                 <div class="ibox-content form-group form-horizontal">
 
@@ -95,13 +80,13 @@
                                     @foreach($optGroupOptions as $optionGroups)
                                         <optgroup label="{{$optionGroups['optgroup-label']}}">
                                         @foreach($optionGroups["options"] as $key=>$value)
-                                            <option value={{$key}} 
-                                                
+                                            <option value={{$key}}
+
                                                 @forelse($value['data-attributes'] as $attr=>$val )
                                                     data-{{$attr}} = {{$val}}
                                                 @empty
                                                 @endforelse
-                                                
+
                                             >
                                                 {{$value['option-label']}}
                                             </option>
@@ -111,7 +96,7 @@
 
                                 </select>
                             </div>
-                        </div> 
+                        </div>
 
 
 
@@ -147,12 +132,12 @@
 
 					            <div>
 					                <p style="display: inline;"class="name" data-dz-name></p> ( <p style="display: inline;" class="size" data-dz-size></p> )
-                                    
+
 					                <strong class="error text-danger" data-dz-errormessage></strong>
 					            </div>
 
 					            <div>
-					                  
+
 					                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" style="width: 200px;">
 					                  <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
 					                </div>
@@ -184,7 +169,7 @@
                        <div id="actions" class="row">
                         {!! csrf_field() !!}
                         <input type="hidden" name="upload_package_id"  id="upload_package_id" value="{{ $packageHash }}" />
-                        
+
                        <!--  <input type="hidden" id="banner_id" name="banner_id" value="" /> -->
 
 
@@ -213,14 +198,14 @@
                                 <i class="glyphicon glyphicon-ban-circle"></i>
                                 <span>Cancel upload</span>
                             </button>
-                          </div>                          
+                          </div>
 
                         </div>
 
 
-				
 
-          
+
+
                 </div> <!-- end ibox content -->
                 </div> <!-- end ibox -->
 
@@ -230,16 +215,16 @@
 
 		</div>
 
-                    
+
 
 	</div>
 </div>
 
-{{-- 
+{{--
             @include('site.includes.modal') --}}
 
             @include('admin.includes.footer')
-        
+
             @include('admin.includes.scripts')
 
             <script type="text/javascript" src="/js/vendor/underscore-1.8.3.js"></script>
@@ -251,8 +236,8 @@
             <script type="text/javascript" src="/js/custom/admin/videos/uploadVideo.js"></script>
             <!-- <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script> -->
             <script type="text/javascript" src="/js/custom/admin/videos/editVideo.js"></script>
-            
-            
+
+
             <script type="text/javascript">
             $.ajaxSetup({
                 headers: {

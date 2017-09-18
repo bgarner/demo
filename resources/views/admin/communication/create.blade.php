@@ -18,29 +18,6 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Communications</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li class="active">
-                            <a href="/admin/communication">Communications</a>
-                        </li>
-                        <li class="active">
-                        	<strong>Create New Communication</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
@@ -97,7 +74,7 @@
 																		<a href="#"> {{$ct->communication_type}} </a>
 																	</li>
 																@else
-																	<li data-comm-typeid="{{$ct->id}}" 
+																	<li data-comm-typeid="{{$ct->id}}"
 																		data-comm-type="{{$ct->communication_type}}"
 																		data-comm-typecolour="{{$ct->colour}}"
 																		class="comm_type_dropdown_item" >
@@ -126,20 +103,20 @@
 								                	<select name="stores" id="storeSelect" multiple class="chosen">
 										            	<option value="">Select Some Options</option>
 										            	@foreach($storeAndStoreGroups as $option)
-											                
+
 										                    <option value="{{$option['id']}}"
-										                        
+
 										                        @if(isset($option["isStoreGroup"]))
 																	data-isStoreGroup = "{{$option['isStoreGroup']}}"
 										                        @endif
 										                        @if(isset($option["stores"]))
 																	data-stores = "{{$option['stores']}}"
 										                        @endif
-										                        
+
 										                    >
 										                        {{$option['name']}}
 										                    </option>
-											                
+
 										            	@endforeach
 
 										        	</select>
@@ -147,7 +124,7 @@
 										        	{!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
 								                </div>
 
-								        </div>										
+								        </div>
 
 									</form>
 
@@ -160,14 +137,14 @@
 		                            <h5>Documents</h5>
 
 		                            <div class="ibox-tools">
-		                            	
+
 		                        	</div>
-		                        
-                                    
+
+
 		                        </div>
 
 		                        <div class="ibox-content">
-		                        	
+
 
 
 					                <div class="input-group">
@@ -179,7 +156,7 @@
 								    </div>
 								    <div id="document-list"></div>
 
-		                        	
+
 
 									<div id="files-selected">
                                     	<table class="table table-hover communication-documents-table hidden ">
@@ -194,9 +171,9 @@
                                     		</tbody>
                                     	</table>
                                     </div>
-		                                
+
 		                        </div>
-		                        
+
 		                    </div><!-- ibox closes-->
 
 		                    <div class="form-group">
@@ -309,7 +286,7 @@
 		    // $("#add-documents").click(function(){
 		    // 	$("#document-listing").modal('show');
 		    // });
-		    
+
 
 		    $("#add-packages").click(function(){
 		    	$("#package-listing").modal('show');

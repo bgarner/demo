@@ -25,14 +25,14 @@ class DatabaseSeeder extends Seeder
         // $this->call(PlaylistTableSeeder::class);
         // $this->call(FeatureCommunicationTypeTableSeeder::class);
         // $this->call(FeatureTableSeeder::class);
-        //$this->call(StoreComponentTableSeeder::class);
-        $this->call(AnalyticsAssetTypesTableSeeder::class);
-        $this->call(StoreTableSeeder::class);
-        $this->call(DistrictTableSeeder::class);
-        $this->call(RegionTableSeeder::class);
-        $this->call(DistrictStorePivotSeeder::class);
-        $this->call(DistrictRegionPivotSeeder::class);
-        $this->call(BannerStorePivotSeeder::class);
+        // $this->call(StoreComponentTableSeeder::class);
+        // $this->call(AnalyticsAssetTypesTableSeeder::class);
+        // $this->call(StoreTableSeeder::class);
+        // $this->call(DistrictTableSeeder::class);
+        // $this->call(RegionTableSeeder::class);
+        // $this->call(DistrictStorePivotSeeder::class);
+        // $this->call(DistrictRegionPivotSeeder::class);
+        // $this->call(BannerStorePivotSeeder::class);
 
     }
 }

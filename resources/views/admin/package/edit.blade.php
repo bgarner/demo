@@ -4,7 +4,7 @@
 <head>
     @section('title', 'Package')
     @include('admin.includes.head')
-    
+
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
 	<link rel="stylesheet" type="text/css" href="/css/custom/tree.css">
 
@@ -20,29 +20,6 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Edit an Package</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li>
-                            <a href="/admin/package">Package</a>
-                        </li>
-                        <li class="active">
-                            <strong>Edit a Package</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
@@ -51,7 +28,7 @@
 		                        <div class="ibox-title">
 		                            <h5>Edit Package: {{ $package->package_name }}</h5>
 		                            <div class="ibox-tools">
-                                        
+
 		                            </div>
 		                        </div>
 		                        <div class="ibox-content">
@@ -77,27 +54,27 @@
                             	<div class="ibox-title">
                             		<h5> Files </h5>
                             		<div class="ibox-tools">
-                            			
+
                             			<div id="add-more-files" class="btn btn-primary btn-outline col-md-offset-8" role="button" ><i class="fa fa-plus"></i> Add More Files</div>
                             		</div>
 
                             	</div>
                             	<div class="ibox-content">
-	                                
+
 	                                <div class="existing-files row" >
-	                                	
+
 										<div class="form-group"><label class="col-sm-2 control-label">Files Attached</label>
 											<div class="existing-files-container col-md-10">
 												@include('admin.package.package-documents-partial', ['documentDetails'=> $documentDetails])
-												
-												
+
+
 											</div>
 										</div>
 										<div id="files-staged-to-remove"></div>
-										
+
 									</div>
 									<div id="files-selected" class="row"></div>
-								</div>	<!-- ibox content -->	
+								</div>	<!-- ibox content -->
 
                             </div><!-- ibox closes -->
 
@@ -105,7 +82,7 @@
                             	<div class="ibox-title">
                             		<h5> Folders </h5>
                             		<div class="ibox-tools">
-                            			
+
                             			<div id="add-more-folders" class="btn btn-primary btn-outline col-md-offset-8" role="button" ><i class="fa fa-plus"></i> Add More Folders</div>
                             		</div>
                             	</div>
@@ -114,16 +91,16 @@
                                      <div class="existing-folders row" >
 										<div class="form-group"><label class="col-sm-2 control-label">Folders Attached</label>
 											<div class="existing-folders-container col-md-10" >
-												
+
 												@include('admin.package.package-folders-partial', ['folders' => $folders])
-												
-												 
+
+
 											</div>
 										</div>
 									</div>
 									<div id="folders-selected" class="row"></div>
 									<div id="folders-staged-to-remove"></div>
-									
+
 								</div><!-- ibox content closes -->
 							</div><!-- ibox closes -->
 
@@ -136,13 +113,13 @@
 
                                 </div>
                             </div>
-                        
+
 
 
                     </div>
                 </div>
 
-		           
+
 
         </div>
 
@@ -153,14 +130,14 @@
 
 
 
- 
 
 
-  
+
+
 
 	@include('site.includes.bugreport')
 
-	
+
 	<div id="document-listing" class="modal fade">
 	    <div class="modal-dialog">
 	        <div class="modal-content">
@@ -170,12 +147,12 @@
 	            </div>
 	            <div class="modal-body">
 	            	<ul class="tree">
-	            	@foreach ($navigation as $nav) 
-					
+	            	@foreach ($navigation as $nav)
+
 						@if (isset($nav["is_child"]) && ($nav["is_child"] == 0) )
-							
+
 							@include('admin.package.file-folder-structure-partial', ['navigation' =>$navigation, 'currentnode' => $nav])
-							
+
 						@endif
 
 					@endforeach
@@ -199,11 +176,11 @@
 	            <div class="modal-body">
 	            	<ul class="tree">
 	            	@foreach ($folderStructure as $folder)
-					
+
 						@if (isset($folder["is_child"]) && ($folder["is_child"] == 0) )
-							
+
 							@include('admin.package.folder-structure-partial', ['folderStructure' =>$folderStructure, 'currentnode' => $folder])
-							
+
 						@endif
 
 
@@ -230,7 +207,7 @@
 		});
 
         $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
-        
+
 
 	</script>
 </body>

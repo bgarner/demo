@@ -17,26 +17,11 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Features</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li class="active">
-                            <strong>Features</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
+        {{-- <div class="row wrapper border-bottom white-bg">
+            <div class="col-lg-12">
+                <h2>Features</h2>
+            </div>
+        </div> --}}
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
@@ -102,10 +87,10 @@
 				            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				        }
 					});
-					$(".datatable").dataTable( 
+					$(".datatable").dataTable(
 		        	{
 		        		"order": [[ 0, 'desc' ]],
-						"columns": [	
+						"columns": [
 						    { "visible": false },
 						    null,
 						    null,

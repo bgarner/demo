@@ -17,26 +17,6 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Store Components</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li class="active">
-                            <strong>Store Components</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
         	<div class="row">
@@ -47,7 +27,7 @@
 
 	                        <div class="ibox-tools">
 
-	                            
+
 	                        </div>
 	                    </div>
 	                    <div class="ibox-content">
@@ -57,7 +37,7 @@
 								<table class="table datatable">
 									<thead>
 										<tr>
-											<td>Id</td>	
+											<td>Id</td>
 											<td>Component Name</td>
 											<td>Component Label</td>
 											<td>Action</td>
@@ -69,18 +49,18 @@
 										<td >{{ $store_component->id }}</td>
 										<td>{{ $store_component->component_name }}</td>
 										<td>{{ $store_component->component_label }}</td>
-										
-										<td>
-											<a  href="#" 
-												@if($store_component->state == 'on')
-												class="btn btn-primary btn-xs component-edit" 
-												@else
-												class="btn btn-default btn-xs component-edit" 
-												@endif
-												title="Toggle Visibility" 
 
-												data-state='{{$store_component->state}}' 
-												id="store_component_{{$store_component->id}}" 
+										<td>
+											<a  href="#"
+												@if($store_component->state == 'on')
+												class="btn btn-primary btn-xs component-edit"
+												@else
+												class="btn btn-default btn-xs component-edit"
+												@endif
+												title="Toggle Visibility"
+
+												data-state='{{$store_component->state}}'
+												id="store_component_{{$store_component->id}}"
 												data-component-id="{{$store_component->id}}">
 
 												@if($store_component->state == 'on')
@@ -118,10 +98,10 @@
 	        }
 		});
 
-        $(".datatable").dataTable( 
+        $(".datatable").dataTable(
         	{
-			
-				"columns": [	
+
+				"columns": [
 				    { "visible": false },
 				    { "width": "45%" },
 				    null,
@@ -136,7 +116,7 @@
 		);
 
 	</script>
-	
+
 
 	@include('site.includes.bugreport')
 

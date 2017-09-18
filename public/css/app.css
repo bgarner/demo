@@ -8552,3 +8552,7 @@ ul.banner-selector-menu{
 .banner-selector-menu .active{
     border: 0 !important;
 }
+
+#file-table td{
+    font-size: 12px;
+}

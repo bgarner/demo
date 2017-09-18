@@ -16,29 +16,6 @@
 	        </div>
 	    </nav>
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Urgent Notices</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li>
-                            <a>Urgent Notice</a>
-                        </li>
-                        <li class="active">
-                            <strong>Manage Urgent Notices</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
@@ -60,7 +37,7 @@
 										<tr>
 											<td>id</td>
 											<td>Title</td>
-											
+
 											<td></td>
 
 										</tr>
@@ -72,7 +49,7 @@
 
 											<td>{{ $urgent_notice->id }}</td>
 											<td><a href="/admin/urgentnotice/{{ $urgent_notice->id }}/edit">{{ $urgent_notice->title }}</a></td>
-											
+
 											<td>
 
 												<a data-urgent-notice-id="{{ $urgent_notice->id }}" id="urgent_notice{{$urgent_notice->id}}" class="urgent-notice-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
@@ -83,7 +60,7 @@
 										</tbody>
 										</table>
 
-										
+
 
 		                            </div>
 		                        </div>
@@ -107,17 +84,17 @@
 					});
 					$(".datatable").dataTable({
 			    			"order": [[ 0, 'desc' ]],
-						
-							"columns": [	
+
+							"columns": [
 							    { "visible": false },
 							    null,
-							    
+
 							    { "width" : "10%" , "sortable" : false}
 							  ],
 							pageLength: 50,
 							responsive: true,
 							fixedHeader: true
-						
+
 					});
 
 				</script>
