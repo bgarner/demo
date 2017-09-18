@@ -25,3 +25,38 @@ $(document).on("click", ".deleteFile", function() {
     });
 	return false; 
 });
+
+$(document).on('click', "#delete-multiple", function(){
+
+	var selectedDocuments = $(".select_document:checked");
+	swal({
+	    title: "Are you sure?",
+	    text: selectedDocuments.length + " documents will be deleted.",
+	    type: "warning",
+	    showCancelButton: true,
+	    confirmButtonColor: "#DD6B55",
+	    confirmButtonText: "Yes, delete it!",
+	    closeOnConfirm: false
+	}, function () {
+		
+		var selectedDocuments = $(".select_document:checked");
+		$.each(selectedDocuments, function(index, doc){
+			var document_id = $(this).attr('data-fileid');	
+			var selector = "#file"+document_id;	
+			$.ajax({
+			    url: '/admin/document/'+ document_id,
+			    type: 'DELETE',
+			    success: function(result) {
+			        $(selector).closest('tr').fadeOut(1000);
+			    }
+			});
+		}).promise().done( 
+						function(selectedDocuments){ 
+							swal("Deleted!", selectedDocuments.length+ " files  deleted.", "success"); 
+						}
+					);
+        
+    });
+	return false; 
+
+});
