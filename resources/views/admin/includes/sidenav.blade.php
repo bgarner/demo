@@ -17,6 +17,7 @@
             <br />
 
             <ul class="banner-selector-menu metismenu text-xs">
+                <span style="font-size: 10px;" class="text-muted">Current Banner</span>
             <li>
                 <a href="#">
                     <i class="fa fa-flag" aria-hidden="true"></i>&nbsp;&nbsp;<span class="text-xs current-banner"></span><span class="fa arrow"></span>
