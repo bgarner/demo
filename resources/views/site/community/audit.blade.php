@@ -11,6 +11,14 @@
     <style>
     .ui-datepicker{z-index:9999 !important;}
     .req{ font-size: 10px; }
+    .step{
+        padding: 10px;
+    }
+    .m-progress-bar {
+    min-height: 1em;
+    background: #c12d2d;
+    width: 5%;
+}
     </style>
 </head>
 
@@ -120,13 +128,11 @@
 
 
     @include('site.includes.footer')
-
-    <script type="text/javascript" src="/js/plugins/fullcalendar/moment.min.js"></script>
     @include('site.includes.scripts')
-
-
     @include('site.includes.modal')
-    @include('site.includes.donation-modal')
+    @include('site.includes.donation-modal-copy')
+    <script type="text/javascript" src="/js/plugins/multi-step-modal-master/multi-step-modal.js"></script>
+    <script type="text/javascript" src="/js/plugins/fullcalendar/moment.min.js"></script>
     <script type="text/javascript" src="/js/vendor/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript" src="/js/custom/site/community/donationform.js"></script>
 
@@ -147,6 +153,10 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        
+        sendEvent = function(sel, step) {
+            $(sel).trigger('next.m.' + step);
+        }
     </script>
 
 </body>
