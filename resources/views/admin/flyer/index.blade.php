@@ -74,10 +74,16 @@
 	                    		</thead>
 	                    		<tbody>
 	                    			@foreach($flyers as $flyer)
-										<tr class="flyer" role="row" data-flyer-id="{{$flyer->id}}">
+										<tr role="row" data-flyer-id="{{$flyer->id}}" 
+											@if($flyer->archived)
+												class="flyer archived"
+											@else
+												class="flyer"
+											@endif
+											>
 											<td><a href="/admin/flyer/{{ $flyer->id }}" title="View Flyer">{{ $flyer->flyer_name }}</a></td>
-											<td>{{ $flyer->start_date }}</td>
-											<td>{{ $flyer->end_date }}</td>
+											<td >{{ $flyer->start_date }}</td>
+											<td >{{ $flyer->end_date }}</td>
 											<td>
 												<a href="#" class="editFlyer btn btn-primary btn-sm btn-outline" id="flyer{{ $flyer->id }}" data-flyer-id="{{ $flyer->id }}" title="Edit Flyer"><i class="fa fa-pencil"></i></a>
 												
@@ -113,12 +119,23 @@
 		        }
 			});
 	        $(document).ready(function(){
-	            $('.dataTable').DataTable({
-	                pageLength: 50,
-	                responsive: true,
-	                fixedHeader: true
 
-	            });
+            	$(".dataTable").dataTable({
+		    			"order": [[ 1, 'desc' ]],
+					
+						"columns": [	
+						    
+						    { "width": "45%" },
+						    null,
+						    null,
+						    null
+						  ],
+						pageLength: 50,
+						responsive: true,
+						fixedHeader: true
+					
+				});
+
 
 			});
 

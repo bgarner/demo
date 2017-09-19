@@ -29,11 +29,12 @@ class FlyerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $flyers = Flyer::getFlyersByBannerId($this->banner->id);
+        $flyers = Flyer::getFlyersByBannerId($this->banner->id, $request);
         return view('site.flyer.index')
-            ->with('flyers', $flyers);
+            ->with('flyers', $flyers)
+            ->with('archives', $request['archives']);
 
     }
 
