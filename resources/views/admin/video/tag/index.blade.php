@@ -22,7 +22,7 @@
                 <div class="col-lg-12">
                     <div class="ibox">
                         <div class="ibox-title">
-                            <h5>Tags</h5>
+                            <h5>Video Tags</h5>
 
                             <div class="ibox-tools">
 

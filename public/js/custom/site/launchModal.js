@@ -12,7 +12,7 @@ $("body").on("click", ".launchVideoViewer", function(e){
 
 	$("#videomodal").find('iframe').css({backgroundColor: 'transparent'});
 
-	trackEvent( $(this), localStorage.getItem('userStoreNumber') );
+	//trackEvent( $(this), localStorage.getItem('userStoreNumber') );
 });
 
 $('body').on('hidden.bs.modal', function () {

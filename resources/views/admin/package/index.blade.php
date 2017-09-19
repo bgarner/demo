@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    @section('title', 'Package')
+    @section('title', 'Packages')
     @include('admin.includes.head')
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
@@ -28,7 +28,7 @@
 		                <div class="col-lg-12">
 		                    <div class="ibox">
 		                        <div class="ibox-title">
-		                            <h5>Package List</h5>
+		                            <h5>Packages</h5>
 		                            <div class="ibox-tools">
 		                                <a href="/admin/package/create" class="btn btn-primary btn"><i class="fa fa-plus"></i> Add New Package</a>
 		                            </div>
