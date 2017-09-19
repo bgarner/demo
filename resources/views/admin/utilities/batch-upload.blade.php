@@ -33,7 +33,7 @@
 
                 <div class="ibox">
                     <div class="ibox-title">
-                            <h5>Bulk File Upload</h5>
+                            <h5>Batch File Upload</h5>
 
                             <div class="ibox-tools">
 
