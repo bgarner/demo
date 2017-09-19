@@ -25,27 +25,6 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		{{-- <div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div> --}}
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-            <div class="col-lg-12">
-                <h2>Flyer</h2>
-                <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li class="active">
-                            <strong>Flyer</strong>
-                        </li>
-                    </ol>
-
-                <div class="col-lg-2">
-
-                </div>
-            </div>
-        </div>
 
 
 		<div class="wrapper wrapper-content animated fadeInRight">
@@ -54,7 +33,7 @@
                     <div class="ibox">
 
                         <div class="ibox-title">
-
+                            <h5>Flyers</h5>
                             <div class="ibox-tools">
 
                                 <a href="/admin/flyer/create" class="btn btn-primary btn"><i class="fa fa-plus"></i> New Flyer</a>
