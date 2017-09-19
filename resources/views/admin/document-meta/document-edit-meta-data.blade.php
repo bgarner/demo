@@ -17,33 +17,7 @@
           </div>
       </nav>
 
-  <div id="page-wrapper" class="gray-bg" >
-    <div class="row border-bottom">
-      @include('admin.includes.topbar')
-        </div>
-
-    <div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Edit Document</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li>
-                            <a href="/admin/document/manager">Document Manager</a>
-                        </li>
-                        <li>
-                            Edit
-                        </li>
-                        <li class="active">
-                            <strong>{{$document->title}}</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-    </div>
+  <div id="page-wrapper" class="gray-bg">
 
     <div class="wrapper wrapper-content  animated fadeInRight">
         <div class="row">
@@ -55,7 +29,7 @@
 
                         <div class="ibox-tools">
 
-                          
+
                         </div>
                     </div>
                     <div class="ibox-content">
@@ -77,27 +51,27 @@
                                         </div>
                                     </div>
                                 </div>
-                              
+
                                 <div class="form-group">
 
                                     <label class="col-sm-2 control-label">Start <span class="req">*</span> &amp; End</label>
 
                                     <div class="col-sm-10">
                                         <div class="input-daterange input-group" id="datepicker">
-                                              
+
                                             <input type="text" class="input-sm form-control datetimepicker-start" name="document_start" id="document_start" value="{{$document->start}}" />
                                             <span class="input-group-addon">to</span>
                                             <input type="text" class="input-sm form-control datetimepicker-end" name="document_end" id="document_end" value="{{$document->end}}" />
-                                              
+
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                            
+
                                     <label class="col-sm-2 control-label">Target Stores <span class="req">*</span></label>
                                     <div class="col-sm-10">
-                                    
+
                                     {{--@if($document->all_stores)
                                         {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
                                         {!! Form::label('allStores', 'Or select all stores:') !!}
@@ -114,9 +88,9 @@
                                        <select name="stores" id="storeSelect" multiple class="chosen">
                                             <option value="">Select Some Options</option>
                                             @foreach($storeAndStoreGroups as $option)
-                                                
+
                                                 <option value="{{$option['id']}}"
-                                                    
+
                                                     @if(isset($option["isStoreGroup"]))
                                                         data-isStoreGroup = "{{$option['isStoreGroup']}}"
                                                     @endif
@@ -127,17 +101,17 @@
                                                     @if(in_array($option['id'], $target_stores))
                                                         selected
                                                     @endif
-                                                    
+
                                                 >
                                                     {{$option['name']}}
                                                 </option>
-                                                
+
                                             @endforeach
 
                                         </select>
 
                                         @if($document->all_stores)
-                                        
+
                                             {!! Form::label('allStores', 'Or select all stores:') !!}
                                             {!! Form::checkbox('allStores', null, true ,['id'=> 'allStores'] ) !!}
                                         @else
@@ -148,8 +122,8 @@
                                     </div>
 
                                 </div>
-     
-                              
+
+
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label"> This document is an alert</label>
                                     <div class="col-sm-1">
@@ -158,7 +132,7 @@
                                         @else
                                         <input type="checkbox" id="is_alert" name="is_alert" value=1>
                                         @endif
-                                    
+
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -172,7 +146,7 @@
                                     </div>
                                 </div>
 
-                              
+
 
 
                                 <div class="form-group">
@@ -184,7 +158,7 @@
                                 </div>
                             </form>
                     </div><!-- ibox content closes -->
-                     
+
             </div> <!-- ibox closes -->
 
             <div class="ibox">
@@ -192,20 +166,20 @@
                     <h5>Update Document</h5>
 
                     <div class="ibox-tools">
-                        
+
                     </div>
-                
-                    
+
+
                 </div>
 
                 <div class="ibox-content">
-              
+
                    <!--  <div class="form-group">
 
 
                         <input type="file" name="document" class="file hidden">
                         <div class="input-group col-xs-12">
-                           
+
                             <input type="text" class="form-control" disabled placeholder="Upload Document">
                             <span class="input-group-btn">
                                 <button class="browse btn btn-primary" type="button"><i class="fa fa-search"></i> Browse</button>
@@ -218,17 +192,17 @@
                     <div class="row">
                          <label class="control-label col-sm-2"> New Document </label>
                         <div class="col-sm-10">
-                            
+
                             <input id="updatedDocument" name="updatedDocument[]" type="file" multiple class="file-loading">
                             <input type="hidden" value="{{ $document->id }}" name="document_id" id="document_id">
 
                         </div>
-                        
+
                     </div>
-                    
-                        
+
+
                 </div>
-                
+
             </div><!-- ibox closes-->
 
 
@@ -244,11 +218,11 @@
                         <div class="modal-body">
                             <ul class="tree">
                             @foreach ($folderStructure as $folder)
-                            
+
                                 @if (isset($folder["is_child"]) && ($folder["is_child"] == 0) )
-                                    
+
                                     @include('admin.package.folder-structure-partial', ['folderStructure' =>$folderStructure, 'currentnode' => $folder])
-                                    
+
                                 @endif
 
 
@@ -272,7 +246,7 @@
           @include('admin.includes.scripts')
 
           <script src="/js/custom/datetimepicker.js"></script>
-          
+
         <script type="text/javascript">
           $.ajaxSetup({
                 headers: {
@@ -281,7 +255,7 @@
           });
 
         </script>
-        <script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>  
+        <script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
         <script type="text/javascript" src="/js/custom/tree.js"></script>
         <script src="/js/plugins/fileinput/fileinput.js"></script>
         <script type="text/javascript">
@@ -291,7 +265,7 @@
             $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
 
             $("#updatedDocument").fileinput();
-                      
+
         </script>
         <script type="text/javascript" src="/js/custom/admin/alerts/createAlert.js"></script>
         <!-- <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script> -->

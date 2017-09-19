@@ -27,22 +27,6 @@
     </nav>
 
     <div id="page-wrapper" class="gray-bg">
-        <div class="row border-bottom">
-            @include('admin.includes.topbar')
-        </div>
-
-       <div class="row wrapper border-bottom white-bg page-heading">
-            <div class="col-lg-10">
-                <h2>Library</h2>
-                <ol class="breadcrumb">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/admin/document/manager">Library</a></li>
-                </ol>
-            </div>
-            <div class="col-lg-2">
-
-            </div>
-        </div>
 
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
@@ -64,7 +48,7 @@
                                     <div id="package-viewer" class="hidden">
                                     @include('admin.package.view')
                                     </div>
-                                    
+
 
                                 <div class="clearfix"></div>
                             </div>
@@ -72,7 +56,7 @@
                     </div>
                 </div>
                 <div class="col-lg-9 animated fadeInRight">
-                    
+
                     <div class="row">
 
                         <div class="col-lg-12">
@@ -83,14 +67,14 @@
 
 
                                 <div class="ibox float-e-margins">
-                                
+
 
                                     <div class="ibox-title">
-                                        
+
                                         <h5 id="folder-title"> <i class="fa fa-folder-open"></i> {{$banner->name}}</h5>
-                                    
+
                                         <div class="ibox-tools">
-                                            
+
                                             <span class="dropdown" id="edit_multiple_documents" >
                                                 <button class="btn btn-warning dropdown-toggle" type="button" id="edit_selected" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     Edit Selected
@@ -126,8 +110,8 @@
                                     </div>
 
 
-                                    <div class="ibox-content">                                            
-                                            <table class="table tablesorter" id="file-table"> 
+                                    <div class="ibox-content">
+                                            <table class="table tablesorter" id="file-table">
                                             </table>
                                     </div>
                                     <div>
@@ -144,12 +128,12 @@
 
 
                             </div> <!-- file-container closes -->
-                        </div>                
- 
+                        </div>
+
 
                     </div> <!-- row closes -->
 
-          
+
                 </div>
 
                 <div id="start_date_selector" class="modal fade">
@@ -191,7 +175,7 @@
 
             </div>
 
-                    
+
 
         </div>
     </div>
@@ -202,10 +186,10 @@
 
 </div>
 
-    
+
 
     @include('admin.includes.footer')
-        
+
 
     @include('admin.includes.scripts')
 
@@ -240,7 +224,7 @@
             });
 
             $(document).ready(function() {
-               
+
                 $(".tree").treed({openedClass : 'fa-folder-open', closedClass : 'fa-folder'});
 
                 var defaultFolderId = $("input[name='default_folder']").val();
@@ -261,7 +245,7 @@
                     });
                 }
 
-            }); 
+            });
         </script>
 
         @include('site.includes.modal')

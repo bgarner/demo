@@ -13,7 +13,7 @@
   <link rel="stylesheet" type="text/css" href="/css/vendor/dropzone.css">
   <link rel="stylesheet" type="text/css" href="/css/custom/document-upload.css">
   <link rel="stylesheet" type="text/css" href="/css/vendor/lightbox.css">
-  <link rel="stylesheet" type="text/css" href="/css/custom/package.css">    
+  <link rel="stylesheet" type="text/css" href="/css/custom/package.css">
 
   <meta name="csrf-token" content="{!! csrf_token() !!}"/>
 </head>
@@ -28,10 +28,7 @@
       </nav>
 
   <div id="page-wrapper" class="gray-bg" >
-    <div class="row border-bottom">
-      @include('admin.includes.topbar')
-        </div>
-
+      
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
                     <h2>Upload New Documents</h2>
@@ -58,7 +55,7 @@
       <div id="folder-title" data-folderId= "" data-isWeekFolder = "">
         <h2></h2>
       </div>
-      <table class="table tablesorter" id="file-table"> 
+      <table class="table tablesorter" id="file-table">
       </table>
 
     </div>
@@ -141,7 +138,7 @@
 <!--       <script type="text/javascript" src="/js/vendor/dropzone.js"></script> -->
 <script type="text/javascript" src="/js/custom/admin/documents/uploadDocument.js"></script>
 <script type="text/javascript" src="/js/vendor/tablesorter.min.js"></script>
-<script type="text/javascript" src="/js/vendor/lightbox.min.js"></script>        
+<script type="text/javascript" src="/js/vendor/lightbox.min.js"></script>
 
 <script type="text/javascript">
   $.ajaxSetup({
@@ -154,7 +151,7 @@ $(document).ready(function() {
 
     $(".dropdown-toggle").dropdown();
     $(".tree").treed({openedClass : 'glyphicon glyphicon-folder-open', closedClass : 'glyphicon glyphicon-folder-close'});
-    
+
     var defaultFolderId = $("input[name='default_folder']").val();
     if (defaultFolderId) {
       var folder = $("#"+defaultFolderId);
@@ -175,8 +172,8 @@ $(document).ready(function() {
 
     }
 
-         
-});            
+
+});
 
 </script>
 
@@ -186,4 +183,3 @@ $(document).ready(function() {
 
 </body>
 </html>
-

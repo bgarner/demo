@@ -4,10 +4,10 @@
 <head>
     @section('title', 'Feature')
     @include('admin.includes.head')
-    
+
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
     <link rel="stylesheet" type="text/css" href="/css/custom/feature.css">
-	
+
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 </head>
 
@@ -20,29 +20,6 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Edit a Feature</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li>
-                            <a href="/admin/feature">Feature</a>
-                        </li>
-                        <li class="active">
-                            <strong>Edit a Feature</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
@@ -51,7 +28,7 @@
 		                        <div class="ibox-title">
 		                            <h5>Edit Feature: {{ $feature->title }}</h5>
 		                            <div class="ibox-tools">
-		                                
+
 		                            </div>
 		                        </div>
 		                        <div class="ibox-content">
@@ -86,13 +63,13 @@
 
 						                <label class="col-sm-2 control-label">Target Stores <span class="req">*</span></label>
 						                <div class="col-sm-10">
-						                	
+
 		                                        <select name="stores" id="storeSelect" multiple class="chosen">
 									            	<option value="">Select Some Options</option>
 									            	@foreach($storeAndStoreGroups as $option)
-										                
+
 									                    <option value="{{$option['id']}}"
-									                        
+
 									                        @if(isset($option["isStoreGroup"]))
 																data-isStoreGroup = "{{$option['isStoreGroup']}}"
 									                        @endif
@@ -103,17 +80,17 @@
 									                        @if(in_array($option['id'], $target_stores))
 																selected
 									                        @endif
-									                        
+
 									                    >
 									                        {{$option['name']}}
 									                    </option>
-										                
+
 									            	@endforeach
 
 										        </select>
 
 										        @if($feature->all_stores)
-		                                        
+
 		                                        	{!! Form::label('allStores', 'Or select all stores:') !!}
 		                                        	{!! Form::checkbox('allStores', null, true ,['id'=> 'allStores'] ) !!}
 		                                    	@else
@@ -124,9 +101,9 @@
 						                </div>
 						        </div>
 
-						        
+
                                         <div class="form-group">
-                                        	
+
                                         	<label class="col-sm-2 control-label">Thumbnail <span class="req">*</span></label>
                                         	<div class="thumbnail-preview col-sm-5">
                                         		<img src="/images/featured-covers/{{$feature->thumbnail}}">
@@ -136,7 +113,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                        	
+
                                         	<label class="col-sm-2 control-label">Background <span class="req">*</span></label>
                                         	<div class="background-preview col-sm-5">
                                         		<img src="/images/featured-backgrounds/{{$feature->background_image}}">
@@ -145,9 +122,9 @@
 
                                         </div>
                                         </form>
-                                        
 
-                                       
+
+
 
 
                                 </div>
@@ -157,25 +134,25 @@
                             	<div class="ibox-title">
                             		<h5> Documents </h5>
                             		<div class="ibox-tools">
-                            			
+
                             			<div id="add-more-files" class="btn btn-primary btn-outline col-md-offset-8" role="button" ><i class="fa fa-plus"></i> Add More Documents</div>
                             		</div>
 
                             	</div>
                             	<div class="ibox-content">
                                 <div class="existing-files row" >
-                                	
+
 									<!-- <div class="form-group"><label class="col-sm-2 control-label">Files Attached</label> -->
 										<div class="existing-files-container">
 											@include('admin.feature.feature-documents-partial', ['documents'=>$feature_documents])
-											
+
 										</div>
 									<!-- </div> -->
 									<div id="files-staged-to-remove"></div>
-									
+
 								</div>
 								<div id="files-selected" class="row"></div>
-								</div>		
+								</div>
 
                             </div>
 
@@ -183,21 +160,21 @@
                             	<div class="ibox-title">
                             		<h5> Packages </h5>
                             		<div class="ibox-tools">
-                            			
+
                             			<div id="add-more-packages" class="btn btn-primary btn-outline col-md-offset-8" role="button" ><i class="fa fa-plus"></i> Add More Packages</div>
                             		</div>
                             	</div>
                             	<div class="ibox-content">
 
                                      <div class="existing-folders row" >
-										
+
 										<div class="existing-folders-container " >
-											
+
 											@include('admin.feature.feature-packages-partial', ['packages'=>$feature_packages])
 
 										</div> <!-- existing-folders-container closes -->
-													
-										
+
+
 									</div><!-- existing-folders closes -->
 									<div id="packages-selected" class="row">
 
@@ -205,7 +182,7 @@
 									<div id="packages-staged-to-remove">
 
 									</div>
-									
+
 								</div> <!-- ibox content closes -->
 							</div>
 
@@ -214,21 +191,21 @@
                             	<div class="ibox-title">
                             		<h5> Flyers </h5>
                             		<div class="ibox-tools">
-                            			
+
                             			<div id="add-more-flyers" class="btn btn-primary btn-outline col-md-offset-8" role="button" ><i class="fa fa-plus"></i> Add More Flyers</div>
                             		</div>
                             	</div>
                             	<div class="ibox-content">
 
                                      <div class="existing-flyers row" >
-										
+
 										<div class="existing-flyers-container " >
-											
+
 											@include('admin.feature.feature-flyers-partial', ['flyers'=>$feature_flyers])
 
 										</div> <!-- existing-flyers-container closes -->
-													
-										
+
+
 									</div><!-- existing-folders closes -->
 									<div id="flyers-selected" class="row">
 
@@ -236,7 +213,7 @@
 									<div id="flyers-staged-to-remove">
 
 									</div>
-									
+
 								</div> <!-- ibox content closes -->
 							</div>
 
@@ -247,7 +224,7 @@
 		                            <h5>Communication Types</h5>
 
 		                            <div class="ibox-tools">
-		                            	
+
 		                            </div>
 		                        </div>
 		                        <div class="ibox-content">
@@ -255,7 +232,7 @@
 			                        	<div class="form-group">
 	                                    	<label class="col-sm-2 control-label">Communication Types</label>
 	                                    	<div class="col-md-10">
-	                                    		
+
 	                                    		{!! Form::select('communicationTypes[]', $communicationTypes, $selected_communication_types, ['class'=>'chosen', 'multiple'=>'multiple', 'id'=>'communicationType']) !!}
 	                                    	</div>
 	                                    </div>
@@ -265,7 +242,7 @@
 	                                    <div class="form-group">
 	                                    	<label class="col-sm-2 control-label">Communications</label>
 	                                    	<div class="col-md-10">
-	                                    		
+
 	                                    		{!! Form::select('communications[]', $communications, $selected_communications, ['class'=>'chosen', 'multiple'=>'multiple', 'id'=>'communications']) !!}
 	                                    	</div>
 	                                    </div>
@@ -279,7 +256,7 @@
 							<div class="ibox">
                             	<div class="ibox-title">
                             		<h5> Notifications </h5>
-                            		
+
                             	</div>
 								<div class="ibox-content">
 
@@ -287,8 +264,8 @@
 											<div class="form-group">
 												<label class="col-sm-2 control-label">Latest Updates <span class="req">*</span></label>
 												<div class="latest-updates-container col-md-10" >
-													
-													
+
+
 													<div class="row">
 
 														@if( $feature['update_type_id'] == 1 )
@@ -313,14 +290,14 @@
 														</div>
 														@endif
 													</div>
-													
-													
-													
+
+
+
 												</div>
 											</div>
 										</div>
-										
-										
+
+
 									</div>
 							</div>
 
@@ -333,7 +310,7 @@
 
                                 </div>
                             </div>
-                                    
+
 
 
                     </div>
@@ -344,16 +321,16 @@
 
 			    @include('admin.includes.scripts')
             </div>
-	
 
 
-		     
 
 
-    
+
+
+
 	@include('site.includes.bugreport')
 
-	
+
 	<div id="document-listing" class="modal fade">
 	    <div class="modal-dialog">
 	        <div class="modal-content">
@@ -363,12 +340,12 @@
 	            </div>
 	            <div class="modal-body">
 	            	<ul class="tree">
-	            	@foreach ($navigation as $nav) 
-					
+	            	@foreach ($navigation as $nav)
+
 						@if (isset($nav["is_child"]) && ($nav["is_child"] == 0) )
-							
+
 							@include('admin.package.file-folder-structure-partial', ['navigation' =>$navigation, 'currentnode' => $nav])
-							
+
 						@endif
 
 					@endforeach
@@ -430,7 +407,7 @@
 	<script src="/js/custom/datetimepicker.js"></script>
 	<script type="text/javascript" src="/js/custom/site/launchModal.js" ></script>
 	<script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>
-	
+
 	<script type="text/javascript">
 		$.ajaxSetup({
 	        headers: {
@@ -438,7 +415,7 @@
 	        }
 		});
 
-    	$(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});    
+    	$(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
 
     	$(".chosen").chosen({
     		'width':'100%'
@@ -446,6 +423,6 @@
 
 	</script>
 	@include('site.includes.modal')
-	
+
 </body>
 </html>

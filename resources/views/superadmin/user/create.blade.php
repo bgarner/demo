@@ -8,7 +8,7 @@
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 </head>
 
-<body class="fixed-navigation">
+<body class="fixed-navigation adminview">
     <div id="wrapper">
 	    <nav class="navbar-default navbar-static-side" role="navigation">
 	        <div class="sidebar-collapse">
@@ -17,29 +17,6 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Add an Admin User</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin/home">Home</a>
-                        </li>
-                        <li>
-                            <a href="/admin/user">User</a>
-                        </li>
-                        <li class="active">
-                            <strong>Add an Admin</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
@@ -49,13 +26,13 @@
 		                            <h5>Add Admin </h5>
                                     <div class="ibox-tools">
                                         <a href="/admin/user/create" class="btn btn-primary" role="button"><i class="fa fa-plus"></i> Add New Admin</a>
-                                        
+
                                     </div>
 		                        </div>
 		                        <div class="ibox-content">
 
                                     <form method="get" class="form-horizontal" autocomplete="off">
-                                         
+
                                         <div class="form-group"><label class="col-sm-2 control-label">Name</label>
                                             <div class="col-sm-10">
                                                 <input name="firstname" value class="form-control" placeholder="First Name">
@@ -68,9 +45,9 @@
                                             <div class="col-sm-10">
                                                 <input name="email" value class="form-control">
                                             </div>
-                                        </div>                                        
+                                        </div>
 
-                                        
+
 
                                         <div class="form-group"><label class="col-sm-2 control-label">Group</label>
                                             <div class="col-sm-10">
@@ -115,7 +92,7 @@
 
                                                 <div class="col-sm-10">
 
-                                                    {!! Form::select('banners[]', $banners_list, null, ['class'=>'chosen', 'multiple'=>'true', 'id'=>'select-banner']) !!}  
+                                                    {!! Form::select('banners[]', $banners_list, null, ['class'=>'chosen', 'multiple'=>'true', 'id'=>'select-banner']) !!}
                                                 </div>
                                         </div>
 

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    @section('title', 'Package')
+    @section('title', 'Packages')
     @include('admin.includes.head')
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
@@ -16,36 +16,19 @@
 	        </div>
 	    </nav>
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
 
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Packages</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li>
-                            <a>Package</a>
-                        </li>
-                        <li class="active">
-                            <strong>Manage Packages</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
+        {{-- <div class="row wrapper border-bottom white-bg">
+            <div class="col-lg-12">
+                <h2>Packages</h2>
+            </div>
+        </div> --}}
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
 		                <div class="col-lg-12">
 		                    <div class="ibox">
 		                        <div class="ibox-title">
-		                            <h5>Package List</h5>
+		                            <h5>Packages</h5>
 		                            <div class="ibox-tools">
 		                                <a href="/admin/package/create" class="btn btn-primary btn"><i class="fa fa-plus"></i> Add New Package</a>
 		                            </div>
@@ -61,7 +44,7 @@
 											<td>Id</td>
 											<td>Title</td>
 											<td>Label</td>
-											
+
 											<td>Actions</td>
 
 										</tr>
@@ -84,7 +67,7 @@
 										</tbody>
 										</table>
 
-										
+
 
 		                            </div>
 		                        </div>
@@ -106,10 +89,10 @@
 				            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				        }
 					});
-					$(".datatable").dataTable( 
+					$(".datatable").dataTable(
 		        	{
 		        		"order": [[ 0, 'desc' ]],
-						"columns": [	
+						"columns": [
 						    { "visible": false },
 						    { "width": "45%" },
 						    { "width": "45%" },

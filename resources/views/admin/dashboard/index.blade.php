@@ -19,26 +19,12 @@
 	    </nav>
 
 		<div id="page-wrapper" class="gray-bg" >
-			<div class="row border-bottom">
-				@include('admin.includes.topbar')
-	        </div>
 
-			<div class="row wrapper border-bottom white-bg page-heading">
-	                <div class="col-lg-10">
-	                    <h2>Dashboard</h2>
-	                    <ol class="breadcrumb">
-	                        <li>
-	                            <a href="/admin">Home</a>
-	                        </li>
-	                        <li class="active">
-	                            <strong>Dashboard</strong>
-	                        </li>
-	                    </ol>
-	                </div>
-	                <div class="col-lg-2">
-
-	                </div>
-			</div>
+            <div class="row wrapper border-bottom white-bg">
+                <div class="col-lg-12">
+                    <h2>Dashboard</h2>
+                </div>
+            </div>
 
 			<div class="wrapper wrapper-content  animated fadeInRight">
 			            <div class="row">
@@ -67,8 +53,8 @@
 														</div>
 														<div class="col-sm-offset-2">
 														{!! Form::input('text', 'dashboard_title', $banner->title , ['class' => 'form-control'] ) !!}
-														</div>	
-														
+														</div>
+
 													</div>
 													<div class="form-group">
 														<div class="col-sm-2">
@@ -79,19 +65,19 @@
 														</div>
 
 													</div>
-													
-												</div> 
+
+												</div>
 
 
 												 <div class="col-md-12">
 
 													<label class="control-label">Background</label>
 
-													<div class="row"> 
+													<div class="row">
 --}}
 														<div class="col-sm-12">
 															<img id="background-preview" src="/images/dashboard-banners/{{ $banner->background }}" width="100%" style="padding-bottom: 15px;" />
-															
+
 															<input id="dashboardbackground" name="dashboardbackground[]" type="file" multiple class="file-loading">
 															<input type="hidden" value="{{ $banner->id }}" name="banner_id" id="banner_id">
 
@@ -103,7 +89,7 @@
  --}}
 
 {{--
-		                        		<h4>Choose from Existing</h4>	
+		                        		<h4>Choose from Existing</h4>
 			                        		@foreach($oldBackgrounds as $ob)
 			                        			<div class="backgroundOption">
 			                        				@if( "images/dashboard-banners/" . $banner->background == $ob )
@@ -113,19 +99,19 @@
 			                        				<img src="/{{ $ob }}"  height="100"/>
 
 			                        			</div>
-			                        		@endforeach 
+			                        		@endforeach
 			                        		<br /><br />
 
---}}		
-													
-													
-									
+--}}
+
+
+
 												<!-- </div> -->
 										</div>
 
-{{-- 
+{{--
 			                        	<div class="row">
-			    
+
 											<div class="form-group">
 				                                <div class="ibox-tools">
 				                                	<br /><br />
@@ -135,10 +121,10 @@
 				                            </div>
 
 
-			                        	</div> 
+			                        	</div>
 --}}
 
-			                            
+
 			                        </div>
 
 			                    </div>
@@ -159,7 +145,7 @@
 			                                <ol class="dd-list">
 			                                	{{-- <div class="dd-placeholder" style="height: 42px;"></div> --}}
 			                                    @foreach($features as $f)
-			                                 
+
 			                                    <li class="dd-item" data-id="{{ $f->id }}">
 			                                        	<span class="pull-left"><div class="dd-handle"><i class="fa fa-bars"></i></div></span>
 			                                            {{-- <span class="pull-right"><a data-event="" id="" class="event-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></span> --}}
@@ -167,11 +153,11 @@
 			                                     </li>
 			                                    @endforeach
 			                                </ol>
-			                            </div> 
+			                            </div>
 			                        </div>
 
 			                    </div>
-			                    
+
 
 			                    <div class="ibox">
 			                        <div class="ibox-title">
@@ -191,20 +177,20 @@
 			                                    		case 1:
 			                                    			$icon = '<i class="fa fa-folder"></i>';
 			                                    			$type = "Folder";
-			                                    			$link = '<a href="/admin/document/manager#!/'.$ql->url.'">'.$ql->link_name.'</a>';		
+			                                    			$link = '<a href="/admin/document/manager#!/'.$ql->url.'">'.$ql->link_name.'</a>';
 			                                    			break;
-			                                    		case 2: 
-			                                    			$icon = '<i class="fa fa-file-o"></i>';		
+			                                    		case 2:
+			                                    			$icon = '<i class="fa fa-file-o"></i>';
 			                                    			$type = "File";
 			                                    			$link = '<a class="launchPDFViewer" data-toggle="modal" data-file="/viewer/?file=/files/" data-target="#fileviewmodal" > '. $ql->link_name.'</a>';
 			                                    			break;
 			                                    		case 3:
-			                                    			$icon = '<i class="fa fa-external-link"></i>';		
+			                                    			$icon = '<i class="fa fa-external-link"></i>';
 			                                    			$type = "Link";
 			                                    			$link = '<a target="_blank" href="'. $ql->url .'">'. $ql->link_name .'</a>';
 			                                    			break;
 			                                    		default:
-			                                    			$icon = '<i class="fa fa-cog"></i>';		
+			                                    			$icon = '<i class="fa fa-cog"></i>';
 			                                    			break;
 
 			                                    	}?>
@@ -219,13 +205,13 @@
 			                                     </li>
 			                                    @endforeach
 			                                </ol>
-			                            </div>     	
+			                            </div>
 
 			                        </div>
 
 			                    </div>
 
-		                    
+
 
 			                    <div class="ibox">
 			                        <div class="ibox-title">
@@ -237,10 +223,10 @@
 												<div class="form-group">
 													<label class="col-sm-2 control-label">Get Latest Updates</label>
 													<div class="latest-updates-container col-md-10" >
-														
+
 															<input type="text" id="update_type_id" hidden value={{$banner->update_type_id}}>
 															<input type="text" id="update_window_size" hidden value={{$banner->update_window_size}}>
-															
+
 															<div class="latest-update-option col-md-8" id="latest-update-option-1">
 																{!! Form::radio('latest_updates_option', '1') !!} By Days
 																{!! Form::input('text', 'update_frequency', null, ['class='=>'update_frequency', 'disabled'=> 'disabled', 'placeholder'=>'Number of Days']) !!}
@@ -250,13 +236,13 @@
 																{!! Form::radio('latest_updates_option', '2') !!} By Documents
 																{!! Form::input('text', 'update_frequency', null, ['class='=>'update_frequency', 'disabled'=> 'disabled', 'placeholder'=>'Number of Documents']) !!}
 															</div>
-														
+
 													</div>
 
-													
+
 												</div>
 										</div><!--latest-update row -->
-										<div class="row">			
+										<div class="row">
 												<div class="form-group">
 					                                <div class="ibox-tools">
 					                               		<button class="btn btn-white" id="cancel-notification-preferences" ><i class="fa fa-close"></i> Cancel</a>
@@ -264,11 +250,11 @@
 
 					                                </div>
 					                            </div>
-												
-										</div>
-			                        </div><!-- ibox-content ends --> 
 
-			                    </div><!-- ibox ends -->	
+										</div>
+			                        </div><!-- ibox-content ends -->
+
+			                    </div><!-- ibox ends -->
 
 
 			                </div>
@@ -313,16 +299,16 @@
 			    });
 
 				var serializeQuicklinksData = function (e) {
-	                 var list = e.length ? e : $(e.target);			                        
+	                 var list = e.length ? e : $(e.target);
 	                 var data = list.nestable('serialize');
 	                 updateQuicklinksOrder(data);
 	             };
 
 				var serializeFeaturedContentData = function (e) {
-	                 var list = e.length ? e : $(e.target);			                        
+	                 var list = e.length ? e : $(e.target);
 	                 var data = list.nestable('serialize');
 	                 updateFeaturesOrder(data);
-	             };			             
+	             };
 
 	             $('#quicklinkslist').nestable({
 	                 group: 1
@@ -336,7 +322,7 @@
 	             setNotificationType();
 
 	         });
-		</script>				
+		</script>
 
 
 		@include('site.includes.bugreport')

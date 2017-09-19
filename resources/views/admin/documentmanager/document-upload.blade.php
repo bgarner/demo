@@ -18,9 +18,6 @@
     </nav>
 
     <div id="page-wrapper" class="gray-bg">
-        <div class="row border-bottom">
-            @include('admin.includes.topbar')
-        </div>
 
        <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">

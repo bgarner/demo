@@ -17,29 +17,6 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Manage User Roles</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li>
-                            <a>Roles</a>
-                        </li>
-                        <li class="active">
-                            <strong>Manage User Roles</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
@@ -50,7 +27,7 @@
 
 		                            <div class="ibox-tools">
 										 <a href="/admin/role/create" class="btn btn-primary btn"><i class="fa fa-plus"></i> Add New Role</a>
-		                                
+
 		                            </div>
 		                        </div>
 		                        <div class="ibox-content">
@@ -75,11 +52,11 @@
 
 											<td class="col-xs-2"><a href="/admin/role/{{ $role->id }}/edit">{{ $role->role_name }}</a></td>
 											<td class="col-xs-2">
-												
+
 												@foreach($role->groups as $group)
 													<span class="label"> {!! $group->name !!} </span>
 												@endforeach
-										
+
 
 											</td>
 											<td class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -87,9 +64,9 @@
 													<span class="label">{!! $component->component_name !!}</span>
 												@endforeach
 											</td>
-											
+
 											<td class="col-xs-2">
-												
+
 
 												<a data-roleId="{{ $role->id }}" id="role{{ $role->id }}" class="role-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 
@@ -113,11 +90,11 @@
 
 			    @include('admin.includes.scripts')
 
-				
+
 
 				<script type="text/javascript" src="/js/custom/admin/roles/deleteRole.js"></script>
 				<script type="text/javascript">
-					
+
 					$.ajaxSetup({
 				        headers: {
 				            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

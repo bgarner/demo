@@ -17,29 +17,6 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Create an Alert</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li>
-                            <a href="/admin/calendar">Alert</a>
-                        </li>
-                        <li class="active">
-                            <strong>Create an Alert</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
@@ -58,7 +35,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Document <span class="req">*</span></label>
                                            <!--  <div class="col-sm-4">
-                                                
+
                                                 <input type="text" id="alert_document" name="alert_document" class="form-control">
                                             </div> -->
                                             <div class="col-sm-10">
@@ -83,8 +60,8 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        
-                                        
+
+
 
 
 

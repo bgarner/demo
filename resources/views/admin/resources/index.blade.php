@@ -17,29 +17,6 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Manage Resources</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li>
-                            <a>Groups</a>
-                        </li>
-                        <li class="active">
-                            <strong>Manage Resources</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
@@ -50,7 +27,7 @@
 
 		                            <div class="ibox-tools">
 										 <a href="/admin/resource/create" class="btn btn-primary btn"><i class="fa fa-plus"></i> Add New Resource</a>
-		                                
+
 		                            </div>
 		                        </div>
 		                        <div class="ibox-content">
@@ -77,10 +54,10 @@
 												{{-- @foreach($resource->roles as $role) --}}
 													<span class="label"> {!! $resource->role !!} </span>
 												{{-- @endforeach		  --}}
-										
+
 
 											</td>
-											
+
 											<td class="col-xs-2">
 												{{--<a href="/admin/resource/{{ $resource->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>--}}
 
@@ -106,12 +83,12 @@
 
 			    @include('admin.includes.scripts')
 
-				
+
 
 				<script type="text/javascript" src="/js/custom/admin/resources/deleteResource.js"></script>
 				<script type="text/javascript" src="/js/vendor/tablesorter.min.js"></script>
 				<script type="text/javascript">
-					
+
 					$.tablesorter.addParser({
 						// set a unique id
 						id: 'portalDates',
@@ -121,7 +98,7 @@
 						},
 						format: function(s,table, cell, cellIndex) {
 							// format your data for normalization
-							
+
 							if (cellIndex === 3) {
 								return $(cell).attr("data-start-date");
 							}
@@ -140,8 +117,8 @@
 				        }
 					});
 
-					
-					
+
+
 					$(function() {
 						$("table").tablesorter({
 							sortList: [[3,1]],
@@ -151,7 +128,7 @@
 								'.actions' : { sorter:false},
 							}
 						});
-					}); 
+					});
 
 				</script>
 				@include('site.includes.bugreport')

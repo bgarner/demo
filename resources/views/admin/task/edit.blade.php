@@ -19,29 +19,6 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Tasks</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li class="active">
-                            <a href="/admin/task">Tasks</a>
-                        </li>
-                        <li class="active">
-                        	<strong>Edit Task</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
             <div class="row">
@@ -56,8 +33,6 @@
                             </div>
                         </div>
                         <div class="ibox-content">
-
-
 
 							<form class="form-horizontal" id="updateTaskForm">
 
@@ -76,8 +51,8 @@
 						                <div class="col-sm-10">
 						                    <div class="input-daterange input-group" id="datepicker">
 						                        <input type="text" class="input-sm form-control datetimepicker-start" name="publish_date" id="publish_date" value="{{$task->publish_date}}" />
-						                       
-						                        
+
+
 						                    </div>
 						                </div>
 						        </div>
@@ -99,13 +74,13 @@
 						                <div class="col-sm-10">
 						                    <div class="input-daterange input-group" id="datepicker">
 						                        <input type="text" class="input-sm form-control datetimepicker-end" name="due_date" id="due_date" value="{{$task->due_date}}" />
-						                       
-						                        
+
+
 						                    </div>
 						                </div>
 						        </div>
 
-								
+
 
 								<!-- <div class="existing-files row"> -->
 									<div class="form-group">
@@ -150,9 +125,9 @@
 						                <label class="col-sm-2 control-label">Update Task Status
 						                </label>
 						                <div class="col-sm-3">
-						                	
+
 		                                        {!! Form::select('status_type_id', $task_status_list, null, [ 'class'=>'chosen', 'id'=> 'status_type_id']) !!}
-		                                    
+
 						                </div>
 
 						        </div>

@@ -238,7 +238,8 @@ h5 {
 }
 .nav-header {
   padding: 33px 25px;
-  background: url("/images/patterns/header-profile.png") repeat;
+  background: url("/images/patterns/congruent_pentagon_blue.jpg") repeat;
+  background-color: #293846;
 }
 .pace-done .nav-header {
   transition: all 0.5s;
@@ -8198,9 +8199,7 @@ body.md-skin {
 
 
 }
-.banner-switch{
 
-}
 
 #folder-title{
   font-size: 20px;
@@ -8523,8 +8522,37 @@ body.md-skin {
 }
 .unread-feedback{
   font-weight: 600;
-  color: inherit; 
+  color: inherit;
 }
 .flyerItem{
   cursor: pointer;
+}
+
+ul.banner-selector-menu{
+    padding: 10px 0px 0px 0px;
+    margin: 0 !important;
+    list-style: none;
+}
+
+.banner-selector-menu li{
+    padding: 0 !important;
+    margin: 0 !important;
+
+}
+.banner-selector-menu .nav-second-level{
+    padding-top: 5px;
+}
+.banner-selector-menu .nav-second-level li a{
+    padding: 5px 0px 5px 15px;
+    text-align: left;
+    font-weight: normal !important;
+    font-size: 11px;
+}
+
+.banner-selector-menu .active{
+    border: 0 !important;
+}
+
+#file-table td{
+    font-size: 12px;
 }

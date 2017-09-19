@@ -10,7 +10,7 @@
         .modal-dialog{
             height: 280px;
         }
-        
+
     </style>
 </head>
 
@@ -23,29 +23,6 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Alert Types</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li>
-                            <a>Alert</a>
-                        </li>
-                        <li class="active">
-                            <strong>Manage Alert Types</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
             <div class="row">
@@ -69,12 +46,12 @@
 
 								<table class="table table-hover issue-tracker" id="alerttype_list">
 
-								<tr>								
+								<tr>
 									<td>Alert Type</td>
 									<td></td>
 								</tr>
 								@foreach($alerttypes as $at)
-								<tr id="alertType{{$at->id}}">	
+								<tr id="alertType{{$at->id}}">
 									<td><a class="edit-alerttype" data-alertype-id="{{ $at->id }}" href="/admin/alerttypes/{{$at->id}}/edit">
                                             {{ $at->name }}
                                         </a>
@@ -84,15 +61,15 @@
 											<button class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i>
 											</button>
 										</a> --}}
-										
+
 										<a class="delete-alerttype" data-alertCount="{{$at->alertCount}}" data-alertType-id="{{ $at->id }}"
 											data-alertType="{{$at->name}}"
 										>
 											<button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>
 											</button>
 										</a>
-										
-										
+
+
 									</td>
 								</tr>
 								@endforeach
@@ -118,12 +95,12 @@
                         <h4 class="modal-title">Create New Alert Type</h4>
                     </div>
                     <div class="modal-body">
-                    	
+
                     	<div class="form-group">
                         	<label class="control-label">Alert Type Name <span class="req">*</span></label>
                             <div ><input type="text" class="form-control" name="alert_type" id="alert_type" value=""></div>
                         </div>
-                        
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -137,8 +114,8 @@
         <div id="edit-alerttype-modal" class="modal inmodal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    
-                   
+
+
                 </div>
             </div>
         </div>

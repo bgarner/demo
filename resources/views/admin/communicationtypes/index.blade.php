@@ -17,29 +17,6 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Communication Types</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li>
-                            <a>Communications</a>
-                        </li>
-                        <li class="active">
-                            <strong>Manage Communication Types</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
@@ -57,7 +34,7 @@
 
 		                            <div class="m-b-lg">
 		                   <!--          <div class="alert alert-warning" role="alert"><p><strong>IMPORTANT</strong> - Don't delete an event type if there are existing events of that type.</p></div> -->
-		                            
+
 {{-- 		                                <div class="input-group">
 		                                    <input type="text" placeholder="Search event by title..." class=" form-control">
 		                                    <span class="input-group-btn">
@@ -70,7 +47,7 @@
 		                            <div class="table-responsive">
 
 										<table class="table table-hover issue-tracker datatable">
-										<thead>	
+										<thead>
 											<tr>
 											<td>id</td>
 											<td>Communication Type</td>
@@ -122,8 +99,8 @@
 					});
 
 					$(".datatable").dataTable({
-						
-							"columns": [	
+
+							"columns": [
 							    { "visible": false },
 							    null,
 							    { "width" : "10%" , "sortable" : false}
@@ -131,7 +108,7 @@
 							pageLength: 50,
 							responsive: true,
 							fixedHeader: true
-						
+
 					});
 
 				</script>

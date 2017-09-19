@@ -161,8 +161,8 @@ class Utility extends Model
 				break;
 
 			case "launchVideoViewer":
-				$link = '<a href="#" class="launchVideoViewer trackclick" data-res-id="'.$id.'" data-file="'.$file.'" data-target="#videomodal">'.$icon.$anchortext.'</a>';
-				$anchorOnly = '<a href="#" class="launchVideoViewer trackclick" data-res-id="'.$id.'" data-file="'.$file.'" data-target="#videomodal">';
+				$link = '<a href="#" class="launchVideoViewer" data-res-id="'.$id.'" data-file="'.$file.'" data-target="#videomodal">'.$icon.$anchortext.'</a>';
+				$anchorOnly = '<a href="#" class="launchVideoViewer" data-res-id="'.$id.'" data-file="'.$file.'" data-target="#videomodal">';
 				break;
 
 			case "download":
@@ -281,7 +281,7 @@ class Utility extends Model
 				  	$truncate .= substr($line_matchings[2], 0, $left+$entities_length);
 				  	// maximum lenght is reached, so get off the loop
 				  	break;
-			   	} 
+			   	}
 			   	else {
 				  	$truncate .= $line_matchings[2];
 				  	$total_length += $content_length;
@@ -291,7 +291,7 @@ class Utility extends Model
 				  	break;
 			   	}
 			}
-		} 
+		}
 		else {
 			if (strlen($text) <= $length) {
 		   		return $text;
@@ -323,7 +323,7 @@ class Utility extends Model
 	public static function getStoreAndBannerSelectDropdownOptions()
 	{
 		$banners = Self::getBannerListByAdminId();
-        
+
         $storeList = Self::getStoreListByAdminId();
 
         $optGroupOptions = [];
@@ -332,7 +332,7 @@ class Utility extends Model
         $optGroupBannerOptions['options'] = $banners;
 
         array_push($optGroupOptions, $optGroupBannerOptions);
-        
+
 
         $optGroupStoreOptions = [];
         $optGroupStoreOptions['optgroup-label'] = 'Stores';
@@ -348,14 +348,14 @@ class Utility extends Model
         $storeList = [];
 
         foreach ($banners as $banner) {
-            
+
             $storeInfo = StoreInfo::getStoresInfo($banner->id);
             foreach ($storeInfo as $store) {
                 $storeList[$store->store_number] = $store->store_id . " " . $store->name . " (" . $banner->name .")" ;
             }
-            
+
         }
-        
+
         return $storeList;
     }
 
@@ -378,21 +378,21 @@ class Utility extends Model
         $storeList = [];
 
         foreach ($banners as $banner) {
-            
+
             $storeInfo = StoreInfo::getStoresInfo($banner->id);
             foreach ($storeInfo as $store) {
-                $storeList[$store->store_number] = [ 
+                $storeList[$store->store_number] = [
                 		'option-label' => $store->store_id . " " . $store->name . " (" . $banner->name .")" ,
-                		'data-attributes' => [ 
+                		'data-attributes' => [
                 				'parentBanner' => $store->banner_id,
                 				'optionType'   => 'store'
 
                 			]
                 	];
             }
-            
+
         }
-        
+
         return $storeList;
     }
 
@@ -426,18 +426,18 @@ class Utility extends Model
     {
     	$headOffice = '0940';
     	$banner_id = UserSelectedBanner::getBanner()->id;
-    	
+
 		if($banner_id == 1){
         	$headOffice = '0940';
 	    }else if($banner_id == 2){
 	        $headOffice = 'A0940';
-	    }	
+	    }
 
 	    \DB::table($table)->insert([
 	        $pivotColumn => $contentId,
 	        'store_id'   => $headOffice
-	    ]);    
-                
+	    ]);
+
     }
 
 

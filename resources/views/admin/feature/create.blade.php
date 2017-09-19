@@ -18,29 +18,6 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Features</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li>
-                            <a href="/admin/feature">Features</a>
-                        </li>
-                        <li class="active">
-                            <strong>Create a New Feature</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
@@ -51,12 +28,12 @@
 
 		                            <div class="ibox-tools">
 
-		                                
+
 		                            </div>
 		                        </div>
 		                        <div class="ibox-content">
 		                        	<form method="get" class="form-horizontal" id="createNewFeatureForm" enctype="multipart/form-data">
-                                        
+
                                         <input type="hidden" name="banner_id" value="{{$banner->id}}">
                                         <div class="form-group">
                                         	<label class="col-sm-2 control-label">Feature Title <span class="req">*</span></label>
@@ -86,20 +63,20 @@
 								                	<select name="stores" id="storeSelect" multiple class="chosen">
 										            	<option value="">Select Some Options</option>
 										            	@foreach($storeAndStoreGroups as $option)
-											                
+
 										                    <option value="{{$option['id']}}"
-										                        
+
 										                        @if(isset($option["isStoreGroup"]))
 																	data-isStoreGroup = "{{$option['isStoreGroup']}}"
 										                        @endif
 										                        @if(isset($option["stores"]))
 																	data-stores = "{{$option['stores']}}"
 										                        @endif
-										                        
+
 										                    >
 										                        {{$option['name']}}
 										                    </option>
-											                
+
 										            	@endforeach
 
 										        	</select>
@@ -115,7 +92,7 @@
                                         <div class="form-group">
                                         	<label class="col-sm-2 control-label">Thumbnail <span class="req">*</span></label>
                                         	<div class="col-md-10"><input type="file" name="thumbnail" id="thumbnail" class="form-control "></div>
-                                            
+
                                         </div>
 
                                         <div class="form-group">
@@ -131,14 +108,14 @@
 		                            <h5>Documents</h5>
 
 		                            <div class="ibox-tools">
-		                            	<div class="btn btn-primary btn-outline" type="button" role="button" id="add-documents" > 
-		                            		<i class="fa fa-plus"></i> Add Documents 
+		                            	<div class="btn btn-primary btn-outline" type="button" role="button" id="add-documents" >
+		                            		<i class="fa fa-plus"></i> Add Documents
 		                            	</div>
-		                                
+
 		                            </div>
 		                        </div>
 		                        <div class="ibox-content">
-		                        	
+
                                     <div id="files-selected">
                                     	<table class="table table-hover feature-documents-table hidden ">
                                     		<thead>
@@ -164,7 +141,7 @@
 		                            </div>
 		                        </div>
 		                        <div class="ibox-content">
-		                        	
+
                                     <div id="packages-selected">
                                     	<table class="table table-hover feature-packages-table hidden">
                                     		<thead>
@@ -188,7 +165,7 @@
 		                            <h5>Communications</h5>
 
 		                            <div class="ibox-tools">
-		                            	
+
 		                            </div>
 		                        </div>
 		                        <div class="ibox-content">
@@ -197,7 +174,7 @@
 			                        	<div class="form-group">
 	                                    	<label class="col-sm-2 control-label">Communication Types</label>
 	                                    	<div class="col-md-10">
-	                                    		
+
 	                                    		{!! Form::select('communicationTypes[]', $communicationTypes, null, ['class'=>'chosen', 'multiple'=>'multiple', 'id'=>'communicationTypes']) !!}
 	                                    	</div>
 	                                    </div>
@@ -207,7 +184,7 @@
 	                                    <div class="form-group">
 	                                    	<label class="col-sm-2 control-label">Communications</label>
 	                                    	<div class="col-md-10">
-	                                    		
+
 	                                    		{!! Form::select('communications[]', $communications, null, ['class'=>'chosen', 'multiple'=>'multiple', 'id'=>'communications']) !!}
 	                                    	</div>
 	                                    </div>
@@ -225,11 +202,11 @@
 
 		                        </div>
 		                        <div class="ibox-content">
-		                        	
+
                                     <div class="form-group">
                                     	<div class="row">
                                     		<label class="col-sm-2 control-label">Latest Updates <span class="req">*</span></label>
-										
+
 											<div class="latest-updates-container col-sm-10">
 												<div class="latest-update-option ">
 													{!! Form::radio('latest_updates_option', '1') !!} By Days
@@ -239,9 +216,9 @@
 													{!! Form::radio('latest_updates_option', '2') !!} By Documents
 													{!! Form::input('text', 'update_frequency', null, [ 'class' => 'update_frequency','disabled'=> 'disabled', 'placeholder'=>'Number of Documents']) !!}
 												</div>
-												
+
 											</div>
-										
+
 									</div>
 		                        </div>
 		                    </div>
@@ -265,9 +242,9 @@
 
 			    @include('admin.includes.scripts')
 
-				
 
-				
+
+
 
 				@include('site.includes.bugreport')
 
@@ -280,12 +257,12 @@
 				            </div>
 				            <div class="modal-body">
 				            	<ul class="tree">
-				            	@foreach ($navigation as $nav) 
-								
+				            	@foreach ($navigation as $nav)
+
 									@if (isset($nav["is_child"]) && ($nav["is_child"] == 0) )
-										
+
 										@include('admin.package.file-folder-structure-partial', ['navigation' =>$navigation, 'currentnode' => $nav])
-										
+
 									@endif
 
 								@endforeach
@@ -346,7 +323,7 @@
 				<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 				<script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>
 				<script src="/js/custom/datetimepicker-with-default-time.js"></script>
-				
+
 				<script type="text/javascript">
 					$.ajaxSetup({
 				        headers: {
@@ -354,7 +331,7 @@
 				        }
 					});
 
-					
+
                     $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
 
                     $(".chosen").chosen({
@@ -362,7 +339,7 @@
                     });
 
 				</script>
-				
+
 
 			</body>
 			</html>

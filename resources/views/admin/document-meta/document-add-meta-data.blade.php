@@ -18,9 +18,6 @@
 		</nav>
 
 		<div id="page-wrapper" class="gray-bg">
-				<div class="row border-bottom">
-						@include('admin.includes.topbar')
-				</div>
 
 			 <div class="row wrapper border-bottom white-bg page-heading">
 						<div class="col-lg-10">
@@ -28,7 +25,7 @@
 								<ol class="breadcrumb">
 										<li><a href="/">Home</a></li>
 										<li><a href="/document">Documents</a></li>
-								</ol> 
+								</ol>
 						</div>
 						<div class="col-lg-2">
 
@@ -47,7 +44,7 @@
 							</div>
 
 							<div class="ibox-content">
-			
+
 								<input type="hidden" name="banner_id" value="{{$banner->id}}">
 								<!-- <input type="hidden" name="fo_id" value="{{$banner->id}}"> -->
 								<input type="hidden" name="folder_id" value="{{ $_REQUEST['parent'] }}">
@@ -64,32 +61,32 @@
 									<td>Start &amp; End</td>
 
 								</tr>
-									
+
 								@foreach($documents as $doc)
-									
+
 								<tr>
 								<form id="metadataform{{ $doc->id }}">
-									
+
 									<input type="hidden" name="file_id" value="{{ $doc->id }}">
 
 									<td>{{ $doc->original_filename }}</td>
 									<td><input type="text" style="width: 400px;" class="form-control" name="title{{ $doc->id }}" id="title{{ $doc->id }}" value="{{$doc->title}}"></td>
-									
+
 									<td>
 										<input type="checkbox" value="" id="isAlert{{$doc->id}}" class="isAlert" data-file-id="{{$doc->id}}">
 										{!! Form::select('alert_type', $alert_types, null, [ 'class'=>'chosen alertType', 'id'=> 'alertType'.$doc->id]) !!}
 									</td>
 									<td>
-										
+
 										<div class="input-daterange input-group" id="datepicker">
 												<input type="text" class="input-sm form-control datetimepicker-start" name="start" id="start{{$doc->id}}" value="{{$doc->start}}" />
 												<span class="input-group-addon">to</span>
 												<input type="text" class="input-sm form-control datetimepicker-end" name="end" id="end{{$doc->id}}" value="{{$doc->end}}" />
 										</div>
-									
+
 									</td>
 									<button type="submit" class="meta-data-add btn btn-success hidden" data-id="{{ $doc->id }}">Update</button>
-	
+
 								</form>
 
 								</tr>
@@ -100,9 +97,9 @@
 							<div class="row">
 								<div class="form-group">
 									<div class="ibox-tools">
-						 
+
 										 <button type="submit" class="meta-data-done btn btn-success" style="margin-right: 24px;"><i class="fa fa-check"></i> Done</button>
-								
+
 									</div>
 								</div>
 								{{-- <div class="col-md-1">
@@ -136,7 +133,7 @@
 	<script type="text/javascript" src="/js/custom/submitmetadata.js"></script>
 	<script src="/js/custom/datetimepicker.js"></script>
 	<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
-				
+
 	<script type="text/javascript">
 
 
@@ -149,7 +146,7 @@
 		$(document).ready(function() {
 
 				var form = $("#example-advanced-form").show();
-				 
+
 				form.steps({
 						headerTag: "h3",
 						bodyTag: "fieldset",
@@ -216,7 +213,7 @@
 				fillBreadCrumbs(data);
 				$("#folder-name-for-upload").html("to  <i>"+data.folder.name+"</i>");
 
-		}); 
+		});
 
 		function getParameterByName(name) {
 				name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -226,13 +223,13 @@
 		}
 
 		$(".isAlert").change(function(){
-			
+
 			var file_id = $(this).attr('data-file-id');
 			if( $(this).is(':checked') ){
 		        $("#alertType"+file_id+"_chosen").show();
    			}
    			else{
-   				$("#alertType"+file_id+"_chosen").hide();	
+   				$("#alertType"+file_id+"_chosen").hide();
    			}
 		});
 

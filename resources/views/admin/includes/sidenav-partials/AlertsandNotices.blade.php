@@ -1,4 +1,4 @@
-@if (Request::is('admin/alert/*') || Request::is('admin/alert') || Request::is('admin/urgentnotice') || Request::is('admin/urgentnotice/*')) 
+@if (Request::is('admin/alert/*') || Request::is('admin/alerttypes') || Request::is('admin/alert') || Request::is('admin/urgentnotice') || Request::is('admin/urgentnotice/*')) 
 <li class="active">
 @else
 <li>
