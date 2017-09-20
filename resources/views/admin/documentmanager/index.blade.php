@@ -5,6 +5,7 @@
     @section('title', 'Document Manager')
     @include('admin.includes.head')
     <style type="text/css">
+
         .action{
             white-space: nowrap;
         }
@@ -12,6 +13,8 @@
         .top-level-folder{
             color: #444;
         }
+
+
 
     </style>
     <link rel="stylesheet" type="text/css" href="/css/custom/tree.css">
@@ -30,7 +33,7 @@
 
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="ibox float-e-margins">
                         <div class="ibox-content">
                             <div class="file-manager">
@@ -55,11 +58,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-9 animated fadeInRight">
+                <div class="col-lg-9 col-md-8 col-sm-6 animated fadeInRight">
 
                     <div class="row">
 
-                        <div class="col-lg-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
 
 
                             <div id="file-container" class="ibox">
