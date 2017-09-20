@@ -164,13 +164,13 @@
             
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary step step-1" data-step="1" onclick="sendEvent('#newdonationmodal', 2)" style="display: none;">Continue</button>
+                <button type="button" class="btn btn-primary step step-1" data-step="1" onclick="validateStep1()" style="display: none;">Continue</button>
                 <button type="button" class="btn btn-primary step-2" data-step="2" onclick="sendEvent('#newdonationmodal', 1)" style="display: none;">Back</button>
-                <button type="button" class="btn btn-primary step step-2" data-step="2" onclick="sendEvent('#newdonationmodal', 3)" style="display: none;">Continue</button>
+                <button type="button" class="btn btn-primary step step-2" data-step="2" onclick="validateStep2()" style="display: none;">Continue</button>
                 <button type="button" class="btn btn-primary step-3" data-step="3" onclick="sendEvent('#newdonationmodal', 2)" style="display: none;">Back</button>
-                <button type="button" class="btn btn-primary step step-3" data-step="3" onclick="sendEvent('#newdonationmodal', 4)" style="display: none;">Continue</button>
+                <button type="button" class="btn btn-primary step step-3" data-step="3" onclick="validateStep3()" style="display: none;">Continue</button>
                 <button type="button" class="btn btn-primary step-4" data-step="4" onclick="sendEvent('#newdonationmodal', 3)" style="display: none;">Back</button>
-                <button type="button" class="btn btn-primary step step-4" data-step="4" onclick="sendEvent('#newdonationmodal', 4)" style="display: none;">Submit</button>
+                <button type="button" class="btn btn-primary step step-4" data-step="4" onclick="validateStep4()" style="display: none;">Submit</button>
             </div>
         </div>
     </div>

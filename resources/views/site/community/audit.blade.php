@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    @section('title', '__(Community Fund)')
+    @section('title', __('Community Fund'))
     @include('site.includes.head')
     <link rel="stylesheet" media="screen" href="/css/plugins/iCheck/custom.css">
     <link rel="stylesheet" media="screen" href="/css/custom/site/community/donations.css">
@@ -11,7 +11,7 @@
     <style>
     .ui-datepicker{z-index:9999 !important;}
     .req{ font-size: 10px; }
-    .step{
+    .modal-body.step{
         padding: 10px;
     }
     .m-progress-bar {
@@ -154,9 +154,7 @@
             }
         });
         
-        sendEvent = function(sel, step) {
-            $(sel).trigger('next.m.' + step);
-        }
+        
     </script>
 
 </body>
