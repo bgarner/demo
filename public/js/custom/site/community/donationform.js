@@ -262,12 +262,11 @@ var submitForm = function(){
 							};
 			giftcards.push(giftcard);
 
-
 		});
 
 		var notes = $("#notes").val();
 
-		var approval = $("#approval").is(':checked');
+		var approval = $("#approval").is(':checked')?1:0;
 
 		$.ajax({
 		    url: '/savedonation',

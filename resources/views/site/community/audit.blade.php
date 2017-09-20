@@ -44,85 +44,73 @@
 
 
         <div class="wrapper wrapper-content">
-                <div class="row">
+            <div class="row">
 
-                    <div class="col-lg-12 animated fadeInRight">
-                        <div class="mail-box-header">
-                            <div class="row">
-                                <div class="col-md-12">
+                <div class="col-lg-12 animated fadeInRight">
+                    <div class="mail-box-header">
+                        <div class="row">
+                            <div class="col-md-12">
 
-                                <h1 class="pull-left">{{__("Total Donations")}}: &nbsp;&nbsp;&nbsp; <strong>{{ $totalDonation }}</strong></h1>
+                            <h1 class="pull-left">{{__("Total Donations")}}: &nbsp;&nbsp;&nbsp; <strong>{{ $totalDonation }}</strong></h1>
 
-                                <a href="#" class="pull-right btn btn-outline btn-primary dim" data-toggle="modal" data-target="#newdonationmodal"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;&nbsp;{{__("New Donation")}}</a>
+                            <a href="#" class="pull-right btn btn-outline btn-primary dim" data-toggle="modal" data-target="#newdonationmodal"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;&nbsp;{{__("New Donation")}}</a>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div class="table-responsive clearfix">
+
+                                    <table class="table table-striped table-bordered datatable" id="community_donation_table" >
+                                        <thead>
+                                        <tr role="row">
+                                            <th></th>
+                                            <th>Date Submitted</th>
+                                            <th>{{__("Organization Name")}}</th>
+                                            <th >{{__("Event/Team Name")}}</th>
+                                            <th>{{__("Receipt Date")}}</th>
+                                            <th>{{__("Donation Type")}}</th>
+                                            <th>{{__("Amount")}}</th>
+                                            <th>{{__("DM Approval")}}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+
+                                            @foreach($donations as $donation)
+                                            <tr class="{{ $donation->evenodd }}" role="row">
+                                                <td>{{$donation->id}}</td>
+                                                <td data-order="{{$donation->created_at}}">{{$donation->pretty_created_at}}</td>
+                                                <td class="">{{ $donation->item }} {{ $donation->recipient_organization }}</td>
+                                                <td class="">{{ $donation->event_or_team_name }}</td>
+                                                <td class="">{{ $donation->receipt_date }}</td>
+                                                <td class="">{{ $donation->donation_type }}</td>
+                                                <td class="">{{ $donation->amount }}</td>
+
+                                                <td class="center">
+                                                    @if( $donation->dm_approval == 1)
+                                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                                    @else
+                                                         -
+                                                    @endif
+                                                </td>
+
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+
+                                    </table>
+
                                 </div>
                             </div>
 
-                    <div class="row">
-                                <div class="col-md-12">
-
-
-
-
-                    <div class="table-responsive clearfix">
-
-                    {{-- <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div> --}}
-                    <br />
-                    <table class="table table-striped table-bordered table-hover dataTables-example dataTable" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" role="grid">
-                    <thead>
-                    <tr role="row">
-                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" style="width: 157px;">{{__("Organization Name")}}</th>
-
-                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" style="width: 157px;">{{__("Event/Team Name")}}</th>
-
-                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 196px;">{{__("Receipt Date")}}</th>
-
-                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 176px;">{{__("Donation Type")}}</th>
-
-                        <th class="sorting_desc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 133px;" aria-sort="descending">{{__("Amount")}}</th>
-
-                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 92px;">{{__("DM Approval")}}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-
-                    @foreach($donations as $donation)
-                    <tr class="gradeA {{ $donation->evenodd }}" role="row">
-                        <td class="">{{ $donation->item }} {{ $donation->recipient_organization }}</td>
-                        <td class="">{{ $donation->event_or_team_name }}</td>
-                        <td class="">{{ $donation->receipt_date }}</td>
-                        <td class="">{{ $donation->donation_type }}</td>
-                        <td class="">{{ $donation->amount }}</td>
-
-                        <td class="center">
-                            @if( $donation->dm_approval == 1)
-                            <i class="fa fa-check" aria-hidden="true"></i>
-                            @else
-                                 -
-                            @endif
-                        </td>
-
-                    </tr>
-                    @endforeach
-
-
-
-                    </tbody>
-
-                    </table>
-
-                    </div>
-                        </div>
-
-
-
-
-                            </div>
-
                         </div>
 
                     </div>
+
                 </div>
+            </div>
         </div>
 
 
@@ -153,6 +141,28 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        $(".datatable").dataTable(
+            {
+                "order": [[ 0, 'desc' ]],
+
+                "columns": [
+                    { "visible": false },
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                  ],
+                pageLength: 50,
+                responsive: true,
+                fixedHeader: true,
+                info:     false,
+                bPaginate: false,
+            }
+        );
         
         
     </script>

@@ -166,7 +166,7 @@
 
                 <h5>DISTRICT MANAGER APPROVAL</h5>
                 <div class="form-group">
-                    <div >
+                    <div>
                          <input type="checkbox" id="approval" name="approval" />&nbsp;&nbsp;Yes, I have approval from my District Manager for this donation.</label>
                     </div>
                 </div>
