@@ -65,7 +65,7 @@
                 </div>    
             </div>
             <div class="modal-body step step-3">
-                 <div class="form-group">
+                <div class="form-group">
                     <label class="control-label"><small><span class="req">*</span>Name</small></label>
                     <div><input type="text" class="form-control input-sm" id="pickup_name" name="pickup_name"></div>
                 </div> 
@@ -109,44 +109,54 @@
                     </div>
                 </div>     
 
-                <div id="prodcutfields">
-                    <div class="form-group">
-                        <label class="control-label"><small><span class="req">*</span>Product Name</small></label>
-                        <div><input type="text" class="form-control input-sm" id="product_name" name="product_name"></div>
-                    </div>  
+                <div id="productfields">
+                    <div >
+                        <span id="add-product" ><i class="fa fa-plus"> Product</i></span>
+                    </div>
+                    <div class="product well" id="product1" data-product-number=1>
+                        <div class="form-group">
+                            <label class="control-label"><small><span class="req">*</span>Product Name</small></label>
+                            <div><input type="text" class="form-control input-sm" id="product_name" name="product_name"></div>
+                        </div>  
 
-                    <div class="form-group">
-                        <label class="control-label"><small><span class="req">*</span>Style Number</small></label>
-                        <div><input type="text" class="form-control input-sm" id="style_number" name="style_number"></div>
-                    </div>                          
+                        <div class="form-group">
+                            <label class="control-label"><small><span class="req">*</span>Style Number</small></label>
+                            <div><input type="text" class="form-control input-sm" id="style_number" name="style_number"></div>
+                        </div>                          
 
-                    <div class="form-group">
-                        <label class="control-label"><small><span class="req">*</span>UPC Number</small></label>
-                        <div><input type="text" class="form-control input-sm" id="upc" name="upc"></div>
-                    </div>                                                  
+                        <div class="form-group">
+                            <label class="control-label"><small><span class="req">*</span>UPC Number</small></label>
+                            <div><input type="text" class="form-control input-sm" id="upc" name="upc"></div>
+                        </div>                                                  
 
-                    <div class="form-group">
-                        <label class="control-label"><small><span class="req">*</span>Value</small></label>
-                        <div class="input-group date col-sm-7" style="padding-left: 15px;">
-                            <span class="input-group-addon">$</span>
-                            <input type="text" class="form-control input-sm" value="" id="product_value" name="product_value">
-                        </div>
-                    </div>   
+                        <div class="form-group">
+                            <label class="control-label"><small><span class="req">*</span>Value</small></label>
+                            <div class="input-group date col-sm-7" style="padding-left: 15px;">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control input-sm" value="" id="product_value" name="product_value">
+                            </div>
+                        </div>  
+                    </div> 
                 </div>
 
-                <div id="giftcardfields">                                                                                                                  
-                    <div class="form-group">
-                        <label class="control-label"><small><span class="req">*</span>Gift Card Number</small></label>
-                        <div><input type="text" class="form-control input-sm" id="gc_number" name="gc_number"></div>
-                    </div>  
+                <div id="giftcardfields">
+                    <div >
+                        <span id="add-gift-card" ><i class="fa fa-plus"> Gift Card</i></span>
+                    </div>
+                    <div class="giftcard well" id="giftcard1" data-giftcard-number=1>
+                        <div class="form-group">
+                            <label class="control-label"><small><span class="req">*</span>Gift Card Number</small></label>
+                            <div><input type="text" class="form-control input-sm" id="gc_number" name="gc_number"></div>
+                        </div>  
 
-                    <div class="form-group">
-                        <label class="control-label"><small><span class="req">*</span>Value</small></label>
-                        <div class="input-group date col-sm-7" style="padding-left: 15px;">
-                            <span class="input-group-addon">$</span>
-                            <input type="text" class="form-control input-sm" value="" id="gc_value" name="gc_value">
-                        </div>
-                    </div>  
+                        <div class="form-group">
+                            <label class="control-label"><small><span class="req">*</span>Value</small></label>
+                            <div class="input-group date col-sm-7" style="padding-left: 15px;">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control input-sm" value="" id="gc_value" name="gc_value">
+                            </div>
+                        </div>  
+                    </div>
 
                 </div>
                 <div class="form-group">

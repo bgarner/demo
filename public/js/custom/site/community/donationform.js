@@ -169,21 +169,39 @@ $('select').on('change', function() {
 
   switch(this.value){
   	case "giftcard":
-  		$("#prodcutfields").hide();
+  		$("#productfields").hide();
   		$("#giftcardfields").show();
   		break;
 
   	case "product":
   		$("#giftcardfields").hide();
-  		$("#prodcutfields").show();
+  		$("#productfields").show();
   		break;
 
   	default:
   		$("#giftcardfields").hide();
-  		$("#prodcutfields").hide();
+  		$("#productfields").hide();
   		break;
   }
 
+});
+
+$("body").on('click', '#add-gift-card', function(){
+	var index = $(".giftcard").length +1;
+	var newGiftCard = '<div class="giftcard well" id="giftcard'+index+'">';
+	newGiftCard += $("#giftcard1").html();
+	newGiftCard += '</div>';
+
+	$("#giftcardfields").append(newGiftCard);
+});
+
+$("body").on('click', '#add-product', function(){
+	var index = $(".product").length +1;
+	var newProduct = '<div class="product well" id="product'+index+'">';
+	newProduct += $("#product1").html();
+	newProduct += '</div>';
+
+	$("#productfields").append(newProduct);
 });
 
 
@@ -214,13 +232,38 @@ var submitForm = function(){
 
 		var donationtype = $("#donationtype").val();
 
-		var product_name = $("#product_name").val();
-		var style_number = $("#style_number").val();
-		var upc = $("#upc").val();
-		var product_value = $("#product_value").val();
+		var productCards = $("#productfields .product");
+		var products = [];
+		$(productCards).each(function(index, value){
+			
+			var product_name = $(this).find("#product_name").val();
+			var style_number = $(this).find("#style_number").val();
+			var upc = $(this).find("#upc").val();
+			var product_value = $(this).find("#product_value").val();
+			var product = { 
+							'product_name' : product_name, 
+							'style_number': style_number, 
+							'upc': upc, 
+							'product_value':product_value  };
+			products.push(product);
 
-		var gc_number = $("#gc_number").val();
-		var gc_value = $("#gc_value").val();
+
+		});
+
+		var giftCards = $("#giftcardfields .giftcard");
+		var giftcards = [];
+		$(giftCards).each(function(index, value){
+			
+			var gc_number = $(this).find("#gc_number").val();
+			var gc_value = $(this).find("#gc_value").val();
+			var giftcard = { 
+							'gc_number' : gc_number, 
+							'gc_value': gc_value, 
+							};
+			giftcards.push(giftcard);
+
+
+		});
 
 		var notes = $("#notes").val();
 
@@ -243,12 +286,8 @@ var submitForm = function(){
 				pickup_email: pickup_email,
 				pickup_date: pickup_date,
 				donationtype: donationtype,
-				product_name: product_name,
-				style_number: style_number,
-				upc: upc,
-				product_value: product_value,
-				gc_number: gc_number,
-				gc_value: gc_value,
+				products: products,
+				giftcards : giftcards,
 				notes: notes,
 				approval: approval
 	
@@ -298,5 +337,5 @@ var submitForm = function(){
 			$("#approval").attr('checked', false);
 
 		}); 
-						
+
 	};

@@ -67,17 +67,21 @@ class Donation extends Model
 
     public static function getDonationValue($id)
     {
-        $item = DonationItem::where('donation_id', $id)->get();
-        $item_details = Item::where('id', $item[0]->item_id)->get();
-        $amount = $item_details[0]->value;
-        return $amount;       
+        $amount = DonationItem::join('community_donated_items', 'community_donated_items.id', '=', 'community_donations_items.item_id')
+                            ->where('donation_id', $id)
+                            ->select('community_donated_items.*')
+                            ->sum('value');  
+        return $amount;   
     }
 
     public static function getDonationType($id)
     {
-        $item = DonationItem::where('donation_id', $id)->get();
-        $item_details = Item::where('id', $item[0]->item_id)->get();
-        $type = $item_details[0]->donation_type;
+        $item = DonationItem::join('community_donated_items', 'community_donated_items.id', '=', 'community_donations_items.item_id')
+                            ->where('donation_id', $id)
+                            ->select('community_donated_items.*')
+                            ->first();
+        
+        $type = $item["donation_type"];
         switch($type){
             case 1:
                 $donation_type = "Gift Card";

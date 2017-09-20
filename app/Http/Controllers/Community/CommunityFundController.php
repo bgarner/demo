@@ -43,8 +43,8 @@ class CommunityFundController extends Controller
     public function store(Request $request)
     {
         $donation_id = Donation::store($request);
-        $item_id = Item::store($request);
-        DonationItem::store($donation_id, $item_id);
+        $item_id = Item::store($request, $donation_id);
+        
     }
 
     /**
