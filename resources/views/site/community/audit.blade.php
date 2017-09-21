@@ -19,6 +19,9 @@
         background: #c12d2d;
         width: 5%;
     }
+    .details-control{
+        cursor: pointer;
+    }
     .donationProduct{
         text-transform: capitalize;
     }
@@ -77,6 +80,7 @@
                                             <th>{{__("Amount")}}</th>
                                             <th>{{__("DM Approval")}}</th>
                                             <th></th>
+                                            <th></th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -101,6 +105,9 @@
                                                 </td>
                                                 <td>
                                                     {{$donation->donation_details}}
+                                                </td>
+                                                <td>
+                                                    {{$donation->notes}}
                                                 </td>
 
                                             </tr>

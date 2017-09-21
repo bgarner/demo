@@ -19,6 +19,7 @@ $(function () {
             null,
             null,
             null,
+            { "visible": false },
             { "visible": false }
           ],
         "pageLength"  : 50,
@@ -48,7 +49,7 @@ $(function () {
     function format ( d ) {
 
             var details = JSON.parse(d[8]);
-            console.log(details);
+            console.log(d[9]);
             var returnString = '<table class="table "><thead><tr>'+
                                 '<td colspan="2" class="donationProduct">Product</td>'+
                                 '<td colspan="2">Style Number/Giftcard Number</td>'+
@@ -63,6 +64,10 @@ $(function () {
             });
 
             returnString += '</tbody></table>';
+            if(d[9] != ''){
+            	returnString += '<div class="well"><b>Notes: </b>'+ d[9] +'</div>';	
+            }
+            
             return returnString;
             
         }
