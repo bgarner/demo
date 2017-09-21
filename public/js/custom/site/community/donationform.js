@@ -31,7 +31,7 @@ $(function () {
     );
     donationTable.column( 8 ).visible( false );
 
-   $('.datatable tbody').on('click', 'tr.details-control', function () {
+    $('.datatable tbody').on('click', 'tr.details-control', function () {
             var tr = $(this);
             var row = donationTable.row( tr );
 
@@ -49,7 +49,6 @@ $(function () {
     function format ( d ) {
 
             var details = JSON.parse(d[8]);
-            console.log(d[9]);
             var returnString = '<table class="table "><thead><tr>'+
                                 '<td colspan="2" class="donationProduct">Product</td>'+
                                 '<td colspan="2">Style Number/Giftcard Number</td>'+
@@ -70,7 +69,7 @@ $(function () {
             
             return returnString;
             
-        }
+    }
 });
 sendEvent = function(sel, step) {	
     $(sel).trigger('next.m.' + step);    
@@ -166,8 +165,6 @@ var validateStep4 = function(){
 	var gc_value = modal.find("#gc_value").val();
 
 	var approval = modal.find("#approval").is(':checked')?1:0;
-
-	console.log(approval);
 	
 	var hasError = false;
 
@@ -208,7 +205,7 @@ var validateStep4 = function(){
 	if(donationtype == "giftcard"){
 
 		if(gc_number == '') {
-			$("#gc_number").parent().css('borderColor', '#c00');
+			$("#gc_number").css('borderColor', '#c00');
 			hasError = true;
 			$(window).scrollTop(0);
 		}
@@ -220,14 +217,6 @@ var validateStep4 = function(){
 		}			
 	
 	}
-
-	console.log(hasError);
-	// if(( parseInt(gc_value) >100 || parseInt(product_value) >100 )&& approval == 0)
-	// {
-	// 	$("#approval").css('borderColor', '#c00');
-	// 	hasError = true;
-	// 	$(window).scrollTop(0);
-	// }
 
 	if(hasError){
 		return false;
