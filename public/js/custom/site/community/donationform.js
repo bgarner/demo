@@ -1,3 +1,72 @@
+$(function () {
+    $('#event_date').datetimepicker({
+        format: "MM/DD/YYYY"
+    });
+
+    $('#pickup_date').datetimepicker({
+        format: "MM/DD/YYYY"
+    });
+
+    var donationTable = $(".datatable").DataTable(
+    {
+        "order": [[ 0, 'desc' ]],
+        "columns": [
+            { "visible": false },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            { "visible": false }
+          ],
+        "pageLength"  : 50,
+        "responsive"  : true,
+        "fixedHeader" : true,
+        "info"        : false,
+        "bPaginate"   : false,
+    }
+    );
+    donationTable.column( 8 ).visible( false );
+
+   $('.datatable tbody').on('click', 'tr.details-control', function () {
+            var tr = $(this);
+            var row = donationTable.row( tr );
+
+            if ( row.child.isShown() ) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                // Open this row
+                row.child( format(row.data()) ).show();
+                tr.addClass('shown');
+            }
+    } );
+    function format ( d ) {
+
+            var details = JSON.parse(d[8]);
+            console.log(details);
+            var returnString = '<table class="table "><thead><tr>'+
+                                '<td colspan="2" class="donationProduct">Product</td>'+
+                                '<td colspan="2">Style Number/Giftcard Number</td>'+
+                                '<td colspan="2">Value</td>'+
+                                '</tr></thead><tbody>';
+            $(details).each(function(index, value){
+                returnString += '<tr>'+
+                    '<td colspan="2">'+value.description.toUpperCase()+'</td>'+
+                    '<td colspan="2">'+value.style_number+'</td>'+
+                    '<td colspan="2">'+value.value+'</td>'+
+                    '</tr>';
+            });
+
+            returnString += '</tbody></table>';
+            return returnString;
+            
+        }
+});
 sendEvent = function(sel, step) {	
     $(sel).trigger('next.m.' + step);    
 };

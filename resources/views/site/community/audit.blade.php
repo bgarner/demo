@@ -15,10 +15,13 @@
         padding: 10px;
     }
     .m-progress-bar {
-    min-height: 1em;
-    background: #c12d2d;
-    width: 5%;
-}
+        min-height: 1em;
+        background: #c12d2d;
+        width: 5%;
+    }
+    .donationProduct{
+        text-transform: capitalize;
+    }
     </style>
 </head>
 
@@ -66,20 +69,21 @@
                                         <thead>
                                         <tr role="row">
                                             <th></th>
-                                            <th>Date Submitted</th>
+                                            <th>{{__("Date Submitted")}}</th>
                                             <th>{{__("Organization Name")}}</th>
                                             <th >{{__("Event/Team Name")}}</th>
                                             <th>{{__("Receipt Date")}}</th>
                                             <th>{{__("Donation Type")}}</th>
                                             <th>{{__("Amount")}}</th>
                                             <th>{{__("DM Approval")}}</th>
+                                            <th></th>
                                         </tr>
                                         </thead>
                                         <tbody>
 
 
                                             @foreach($donations as $donation)
-                                            <tr class="{{ $donation->evenodd }}" role="row">
+                                            <tr class="details-control {{ $donation->evenodd }}" role="row">
                                                 <td>{{$donation->id}}</td>
                                                 <td data-order="{{$donation->created_at}}">{{$donation->pretty_created_at}}</td>
                                                 <td class="">{{ $donation->item }} {{ $donation->recipient_organization }}</td>
@@ -94,6 +98,9 @@
                                                     @else
                                                          -
                                                     @endif
+                                                </td>
+                                                <td>
+                                                    {{$donation->donation_details}}
                                                 </td>
 
                                             </tr>
@@ -126,15 +133,7 @@
 
     <script>
 
-        $(function () {
-            $('#event_date').datetimepicker({
-                format: "MM/DD/YYYY"
-            });
-
-            $('#pickup_date').datetimepicker({
-                format: "MM/DD/YYYY"
-            });
-        });
+        
 
         $.ajaxSetup({
             headers: {
@@ -142,27 +141,6 @@
             }
         });
 
-        $(".datatable").dataTable(
-            {
-                "order": [[ 0, 'desc' ]],
-
-                "columns": [
-                    { "visible": false },
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null
-                  ],
-                pageLength: 50,
-                responsive: true,
-                fixedHeader: true,
-                info:     false,
-                bPaginate: false,
-            }
-        );
         
         
     </script>
