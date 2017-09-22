@@ -19,36 +19,13 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Communications</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li class="active">
-                            <a href="/admin/communication">Communications</a>
-                        </li>
-                        <li class="active">
-                        	<strong>Edit Communication</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="ibox">
                         <div class="ibox-title">
-                            <h5>Edit Communication</h5>
+                            <h5>Edit Communication: {{ $communication->subject }}</h5>
 
                             <div class="ibox-tools">
 
@@ -102,15 +79,15 @@
 													@foreach($communicationTypes as $ct)
 
 														@if( ( $banner->id==1 && $ct->id == 1 ) || ($banner->id==2 && $ct->id == 2) )
-															<li 
+															<li
 																data-comm-typeid="{{$ct->id}}"
 																data-comm-type= "{{$ct->communication_type}}"
 																class="comm_type_dropdown_item" >
 																<a href=""> {{$ct->communication_type}} </a>
 															</li>
 														@else
-															<li data-comm-typeid="{{$ct->id}}" 
-																data-comm-typecolour= "{{$ct->colour}}" 
+															<li data-comm-typeid="{{$ct->id}}"
+																data-comm-typecolour= "{{$ct->colour}}"
 																data-comm-type= "{{$ct->communication_type}}"
 																class="comm_type_dropdown_item" >
 																<a href="#" ><i class="fa fa-circle text-{{$ct->colour}}"></i> {{$ct->communication_type}}</a>
@@ -138,13 +115,13 @@
 
 						                <label class="col-sm-2 control-label">Target Stores</label>
 						                <div class="col-sm-10">
-						                	
+
 		                                        <select name="stores" id="storeSelect" multiple class="chosen">
 									            	<option value="">Select Some Options</option>
 									            	@foreach($storeAndStoreGroups as $option)
-										                
+
 									                    <option value="{{$option['id']}}"
-									                        
+
 									                        @if(isset($option["isStoreGroup"]))
 																data-isStoreGroup = "{{$option['isStoreGroup']}}"
 									                        @endif
@@ -155,17 +132,17 @@
 									                        @if(in_array($option['id'], $target_stores))
 																selected
 									                        @endif
-									                        
+
 									                    >
 									                        {{$option['name']}}
 									                    </option>
-										                
+
 									            	@endforeach
 
 										        </select>
 
 										        @if($communication->all_stores)
-		                                        
+
 		                                        	{!! Form::label('allStores', 'Or select all stores:') !!}
 		                                        	{!! Form::checkbox('allStores', null, true ,['id'=> 'allStores'] ) !!}
 		                                    	@else
@@ -175,14 +152,14 @@
 		                                    	@endif
 						                </div>
 						        </div>
-								
+
 							</form>
 
 
 
 
                         </div> <!--  ibox content closes-->
-                        
+
 
                     </div><!-- ibox closes -->
                     <div class="ibox">
@@ -190,14 +167,14 @@
                             <h5>Documents</h5>
 
                             <div class="ibox-tools">
-                            	
+
                         	</div>
-                        
-                            
+
+
                         </div>
 
                         <div class="ibox-content">
-                      
+
 			                <div class="input-group">
 								<input type="text" class="form-control" name="seach_document" id="search_document" value="" placeholder="Search for document..."/>
 								<span class="input-group-btn" >
@@ -206,14 +183,14 @@
 								</span>
 						    </div>
 						    <div id="document-list"></div>
-							
+
 							<div id="files-selected">
                         		@include('admin.communication.document-partial', ['communication_documents'=>$communication_documents])
 							</div>
 							<div id="files-staged-to-remove"></div>
-                                
+
                         </div>
-                        
+
                     </div><!-- ibox closes-->
                     <div class="form-group">
 						<div class="col-sm-10 col-sm-offset-2">

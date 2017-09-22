@@ -4,7 +4,7 @@
 <head>
     @section('title', 'Urgent Notice')
     @include('admin.includes.head')
-    
+
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
 	<link rel="stylesheet" type="text/css" href="/css/custom/tree.css">
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
@@ -19,29 +19,6 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Edit an Urgent Notice</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li>
-                            <a href="/admin/urgentnotice">Urgent Notice</a>
-                        </li>
-                        <li class="active">
-                            <strong>Edit an Urgent Notice</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
@@ -50,7 +27,7 @@
 		                        <div class="ibox-title">
 		                            <h5>Edit Urgent Notice: {{ $urgent_notice->title }}</h5>
 		                            <div class="ibox-tools">
-                                        
+
 		                            </div>
 		                        </div>
 		                        <div class="ibox-content">
@@ -68,7 +45,7 @@
                                         </div>
 
                                         <div class="hr-line-dashed"></div>
-                                         
+
                                         <div class="form-group">
 
                                                 <label class="col-sm-2 control-label">Start &amp; End</label>
@@ -85,7 +62,7 @@
                                         <div class="hr-line-dashed"></div>
 
                                         <div class="form-group">
-                                            
+
                                             <label class="col-sm-2 control-label">Target Stores</label>
                                             <div class="col-sm-10">
                                             	@if($urgent_notice->all_stores)
@@ -105,30 +82,30 @@
 
                         		</div><!-- ibox content closes -->
                     		</div><!-- ibox closes -->
-                    		
+
                     		<div class="ibox">
                             	<div class="ibox-title">
                             		<h5> Documents </h5>
                             		<div class="ibox-tools">
-                            			
+
                             			<div id="add-more-documents" class="btn btn-primary btn-outline col-md-offset-8" role="button" ><i class="fa fa-plus"></i> Add More Documents</div>
                             		</div>
 
                             	</div>
                             	<div class="ibox-content">
                                 <div class="existing-files row" >
-                                	
+
 									<!-- <div class="form-group"><label class="col-sm-2 control-label">Files Attached</label> -->
 										<div class="existing-files-container">
 											@include('admin.urgent-notice.document-partial', ['documents'=>$attached_documents])
-											
+
 										</div>
 									<!-- </div> -->
 									<div id="files-staged-to-remove"></div>
-									
+
 								</div>
 								<div id="files-selected" class="row"></div>
-								</div>		
+								</div>
 
                             </div>
 
@@ -136,21 +113,21 @@
                             	<div class="ibox-title">
                             		<h5> Folders </h5>
                             		<div class="ibox-tools">
-                            			
+
                             			<div id="add-more-folders" class="btn btn-primary btn-outline col-md-offset-8" role="button" ><i class="fa fa-plus"></i> Add More Folders</div>
                             		</div>
                             	</div>
                             	<div class="ibox-content">
 
                                      <div class="existing-folders row" >
-										
+
 										<div class="existing-folders-container " >
-											
+
 											@include('admin.urgent-notice.folder-partial', ['folders'=>$attached_folders])
 
 										</div> <!-- existing-folders-container closes -->
-													
-										
+
+
 									</div><!-- existing-folders closes -->
 									<div id="folders-selected" class="row">
 
@@ -158,7 +135,7 @@
 									<div id="folders-staged-to-remove">
 
 									</div>
-									
+
 								</div> <!-- ibox content closes -->
 							</div>
 
@@ -172,7 +149,7 @@
 
                         </div>
                     </div>
-                                
+
 
 
                 </div>
@@ -184,10 +161,10 @@
 
 		    @include('admin.includes.scripts')
    	</div>
-	
 
 
-		     
+
+
 
 
     <script type="text/javascript">
@@ -197,14 +174,14 @@
 	        }
 		});
 
-        
-        
+
+
 
 	</script>
 
 	@include('site.includes.bugreport')
 
-				
+
 	<div id="document-listing" class="modal fade">
 	    <div class="modal-dialog">
 	        <div class="modal-content">
@@ -214,12 +191,12 @@
 	            </div>
 	            <div class="modal-body">
 	            	<ul class="tree">
-	            	@foreach ($navigation as $nav) 
-					
+	            	@foreach ($navigation as $nav)
+
 						@if (isset($nav["is_child"]) && ($nav["is_child"] == 0) )
-							
+
 							@include('admin.package.file-folder-structure-partial', ['navigation' =>$navigation, 'currentnode' => $nav])
-							
+
 						@endif
 
 					@endforeach
@@ -243,11 +220,11 @@
 	            <div class="modal-body">
 	            	<ul class="tree">
 	            	@foreach ($folderStructure as $folder)
-					
+
 						@if (isset($folder["is_child"]) && ($folder["is_child"] == 0) )
-							
+
 							@include('admin.package.folder-structure-partial', ['folderStructure' =>$folderStructure, 'currentnode' => $folder])
-							
+
 						@endif
 
 
@@ -263,8 +240,8 @@
 	</div>
 
 
-	<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>	
-	<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>	
+	<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
+	<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
 	<script type="text/javascript" src="/js/custom/admin/urgent-notices/editUrgentNotice.js"></script>
 	<script type="text/javascript" src="/js/custom/tree.js"></script>
 	<script src="/js/custom/datetimepicker.js"></script>
@@ -272,16 +249,15 @@
 	<script type="text/javascript">
 		$(".chosen").chosen({
 	        width:'75%'
-	    });          
+	    });
 
 	    CKEDITOR.replace('description', {
             filebrowserUploadUrl: "{{route('utilities.ckeditorimages.store',['_token' => csrf_token() ])}}"
         });
-	    
+
 	    CKEDITOR.instances['description'].setData($("textarea").attr('value'));
-	    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});            
+	    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
 
 	</script>
 </body>
 </html>
-

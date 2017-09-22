@@ -145,7 +145,8 @@ class Package extends Model
             $query->where('documents.start', '<=', $now )
                 ->where(function($query) use ($now) {
                     $query->where('documents.end', '>=', $now)
-                        ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+                        ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                        ->orWhere('documents.end', '=', NULL ); 
                 });
         }
 

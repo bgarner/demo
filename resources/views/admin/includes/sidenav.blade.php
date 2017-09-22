@@ -1,35 +1,73 @@
 <ul class="nav metismenu" id="side-menu">
-    <li class="nav-header">
-        <div class="dropdown profile-element"> 
-            {{-- <span>
-                <img alt="image" class="img-circle" src="/wireframes/img/profile_small.jpg" />
-            </span> --}}
-            <a data-toggle="dropdown" class="" href="#">
-                <span class="clear">
-                    <span class="block m-t-xs">
-                    <center>
-                    <img src="/images/fgl.png" />
-                    </center>
-                    </span>
 
-                  <span class="text-muted text-xs block"></span><br />
-                 <a href="profile"><span class="text-muted text-xs"></span></a>  
-                 <!-- <a href="/admin/logout"><span class="text-muted text-xs pull-right"> <i class="fa fa-sign-out"></i> Log out</span></a>  -->
+    <li class="nav-header">
+
+        <div class="dropdown profile-element">
+
+            <span class="text-xs block" style="padding-bottom: 10px; color: #DFE4ED;">
+            Welcome, {{ Auth::user()->firstname }}!
+            <a class="navbar-minimalize minimalize-styl-1 btn btn-primary pull-right" style="padding: 2px 4px; font-size: 8px;" href="#"><i class="fa fa-bars"></i> </a>
+            </span>
+            <a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <span class="text-xs">
+                    <i class="fa fa-sign-out"></i> Log out
+                </span>
+            </a>
+
+            <br />
+
+            <ul class="banner-selector-menu metismenu text-xs">
+                <span style="font-size: 10px;" class="text-muted">Current Banner</span>
+            <li>
+                <a href="#">
+                    <i class="fa fa-flag" aria-hidden="true"></i>&nbsp;&nbsp;<span class="text-xs current-banner"></span><span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level collapse">
+                    @foreach($banners as $banner)
+                        <li> <a class="banner-switch text-xs" data-banner-id ={{$banner->id}}> {{$banner->name}} </a>  </li>
+                    @endforeach
+                </ul>
+            </li>
+            </ul>
+
+
+
+
+            {{-- <li class="dropdown">
+            	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Banner <span class="caret"></span></a>
+            	<ul class="dropdown-menu">
+            		@foreach($banners as $banner)
+            			<li> <a class="banner-switch" data-banner-id ={{$banner->id}}> {{$banner->name}} </a>  </li>
+            		@endforeach
+            	</ul>
+            </li> --}}
+
+
+
+
+            <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                {{ csrf_field() }}
+            </form>
+
         </div>
 
         <div class="logo-element">
-            F
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#" style="margin: 1px 5px 10px 15px;"><i class="fa fa-bars"></i></a>
+            <br />
         </div>
+
     </li>
-    
+
+
     @foreach($roleComponents as $component)
 
-        <?php 
+        <?php
         $component = preg_replace('/\s+/', '', $component);
-        $partialName = 'admin.includes.sidenav-partials.' . $component; 
+        $partialName = 'admin.includes.sidenav-partials.' . $component;
          ?>
         @include($partialName)
-        
+
     @endforeach
+
 
 </ul>

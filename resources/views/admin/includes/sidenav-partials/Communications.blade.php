@@ -1,4 +1,4 @@
-    @if (Request::is('admin/communication/*') || Request::is('admin/communication') || Request::is('admin/communicationtypes') || Request::is('/admin/communicationtypes/*'))
+    @if (Request::is('admin/communication/*') || Request::is('admin/communication') || Request::is('admin/communicationtypes') || Request::is('/admin/communicationtypes/create'))
     <li class="active">
     @else
     <li>

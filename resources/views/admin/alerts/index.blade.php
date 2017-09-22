@@ -17,29 +17,6 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Manage Alerts</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li>
-                            <a>Alerts</a>
-                        </li>
-                        <li class="active">
-                            <strong>Manage Alerts</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
@@ -80,21 +57,21 @@
 												{{-- <a href="#" class="launchPDFViewer" data-toggle="modal" data-file="/viewer/?file=/files/{{ $alert->filename }}" data-target="#fileviewmodal">{!!$alert->icon!!} {{ $alert->document_name }}</a> --}}
 
 												{!! $alert->modalLink !!}
-												
-										
+
+
 											<td>
 												@if($alert->count_target_stores > 0)
 													<button type="button" class="btn btn-primary btn-outline" data-container="body" data-toggle="popover" data-placement="top" data-content="{{$alert->target_stores}}" data-original-title="" title="" aria-describedby="popover199167">
 						                                {{$alert->count_target_stores}} Stores
 						                            </button>
-													
+
 												@elseif(isset($alert->all_stores) && $alert->all_stores)
 													<button type="button" class="btn btn-primary btn-outline">All Stores</button>
 												@else
 													&mdash;
 												@endif
 											</td>
-											
+
 
 											<td data-order ="{{$alert->start}}" >{{ $alert->prettyStart }}</td>
 											<td data-order ="{{$alert->end}}">{{ $alert->prettyEnd }}</td>
@@ -127,17 +104,17 @@
 
 			    @include('admin.includes.scripts')
 
-				
+
 
 				<script type="text/javascript" src="/js/custom/admin/alerts/deleteAlert.js"></script>
 				<script type="text/javascript" src="/js/vendor/tablesorter.min.js"></script>
 				<script type="text/javascript" src="/js/custom/site/launchModal.js" ></script>
-				<script type="text/javascript">	
+				<script type="text/javascript">
 
 					$(".datatable").dataTable({
 			    			"order": [[ 0, 'desc' ]],
-						
-							"columns": [	
+
+							"columns": [
 							    { "visible": false },
 							    { "width": "45%" },
 							    null,
@@ -149,7 +126,7 @@
 							pageLength: 50,
 							responsive: true,
 							fixedHeader: true
-						
+
 					});
 
 				</script>

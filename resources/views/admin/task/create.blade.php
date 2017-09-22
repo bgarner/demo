@@ -18,29 +18,6 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Tasks</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li class="active">
-                            <a href="/admin/task">Tasks</a>
-                        </li>
-                        <li class="active">
-                        	<strong>Create New Task</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
             <div class="row">
@@ -88,7 +65,7 @@
 						                    </div>
 						                </div>
 						        </div>
-						       
+
 
 								<div class="form-group">
 									<div class="col-sm-10 col-sm-offset-2">

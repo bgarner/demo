@@ -71,7 +71,9 @@ class Alert extends Model
             $now = Carbon::now()->toDatetimeString();
             $alert->now = $now;
             $alert->active = "No";
-            if ($alert->start <= $now && ($alert->end >= $now || $alert->end == '0000-00-00 00:00:00')) {
+            if ($alert->start <= $now && 
+                ($alert->end >= $now || $alert->end == '0000-00-00 00:00:00' ||$alert->end == NULL)
+                ) {
                 $alert->active = "Yes";
             }
 
@@ -106,7 +108,8 @@ class Alert extends Model
                                     ->where('documents.start', '<=', $now )
                                     ->where(function($query) use ($now) {
                                         $query->where('documents.end', '>=', $now)
-                                            ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+                                            ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                            ->orWhere('documents.end', '=', NULL ); 
                                     })
                                     ->count();
 
@@ -117,7 +120,8 @@ class Alert extends Model
                             ->where('documents.start', '<=', $now )
                             ->where(function($query) use ($now) {
                                 $query->where('documents.end', '>=', $now)
-                                    ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+                                    ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                    ->orWhere('documents.end', '=', NULL ); 
                             })
                             ->count();
         
@@ -152,7 +156,8 @@ class Alert extends Model
                                     ->where('documents.start', '<=', $now )
                                     ->where(function($query) use ($now) {
                                         $query->where('documents.end', '>=', $now)
-                                            ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+                                            ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                            ->orWhere('documents.end', '=', NULL ); 
                                     })
                                     ->where('alerts.alert_type_id', $alertId)
                                     ->count();
@@ -164,7 +169,8 @@ class Alert extends Model
                                     ->where('documents.start', '<=', $now )
                                     ->where(function($query) use ($now) {
                                         $query->where('documents.end', '>=', $now)
-                                        ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+                                        ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                        ->orWhere('documents.end', '=', NULL ); 
                                         })
                                     ->count();
 
@@ -238,7 +244,8 @@ class Alert extends Model
                         ->where('alerts.banner_id', $banner_id)
                         ->where(function($query) use ($now) {
                             $query->where('documents.end', '>=', $now)
-                                ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+                                ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                ->orWhere('documents.end', '=', NULL ); 
                             })
                         ->select('alerts.*', 'documents.start as start', 'documents.end as end')
                         ->get();
@@ -249,7 +256,8 @@ class Alert extends Model
                         ->where('documents.start', '<=', $now )
                         ->where(function($query) use ($now) {
                             $query->where('documents.end', '>=', $now)
-                                ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+                                ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                ->orWhere('documents.end', '=', NULL ); 
                             })
                         ->select('alerts.*', 'documents.start as start', 'documents.end as end')
                         ->get();
@@ -276,7 +284,8 @@ class Alert extends Model
                         ->where('documents.start', '<=', $now )
                         ->where(function($query) use ($now) {
                             $query->where('documents.end', '>=', $now)
-                                ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+                                ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                ->orWhere('documents.end', '=', NULL ); 
                         })
                         ->where('alert_type_id' , $alert_type)
                         ->select('alerts.*', 'documents.start as start', 'documents.end as end')
@@ -290,7 +299,8 @@ class Alert extends Model
                         ->where('documents.start', '<=', $now )
                         ->where(function($query) use ($now) {
                             $query->where('documents.end', '>=', $now)
-                                ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+                                ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                ->orWhere('documents.end', '=', NULL ); 
                         })
                         ->where('alert_type_id' , $alert_type)
                         ->select('alerts.*', 'documents.start as start', 'documents.end as end')
@@ -316,6 +326,7 @@ class Alert extends Model
                         ->where('alerts.banner_id', $banner_id)
                         ->where('documents.end', '<=', $now)
                         ->where('documents.end', '!=', '0000-00-00 00:00:00')
+                        ->where('documents.end', '!=', NULL)
                         ->select('alerts.*', 'documents.start as start', 'documents.end as end')
                         ->get();
 
@@ -325,6 +336,7 @@ class Alert extends Model
                         ->where('document_target.store_id', '=', $store_id)
                         ->where('documents.end', '<=', $now)
                         ->where('documents.end', '!=', '0000-00-00 00:00:00')
+                        ->where('documents.end', '!=', NULL)
                         ->select('alerts.*', 'documents.start as start', 'documents.end as end')
                         ->get();
 
@@ -352,6 +364,7 @@ class Alert extends Model
                         ->where('documents.all_stores', 1)
                         ->where('documents.end', '<=', $now)
                         ->where('documents.end', '!=', '0000-00-00 00:00:00')
+                        ->where('documents.end', '!=', NULL)
                         ->where('alert_type_id' , $alert_type)
                         ->select('alerts.*', 'documents.start as start', 'documents.end as end')
                         ->get();
@@ -362,6 +375,7 @@ class Alert extends Model
                         ->where('document_target.store_id', '=', $store_id)
                         ->where('documents.end', '<=', $now)
                         ->where('documents.end', '!=', '0000-00-00 00:00:00')
+                        ->where('documents.end', '!=', NULL)
                         ->where('alert_type_id' , $alert_type)
                         ->select('alerts.*', 'documents.start as start', 'documents.end as end')
                         ->get();
@@ -388,7 +402,8 @@ class Alert extends Model
                         ->where('documents.start', '<=', $now )
                         ->where(function($query) use ($now) {
                             $query->where('documents.end', '>=', $now)
-                                ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+                                ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                ->orWhere('documents.end', '=', NULL ); 
                         })
                         ->whereNull('alerts.deleted_at')
                         ->whereNull('documents.deleted_at')

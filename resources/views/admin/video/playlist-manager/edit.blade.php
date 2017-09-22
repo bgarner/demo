@@ -11,7 +11,7 @@
     <style>
         .modal-body{
             top: 120px;
-            height: 90% !important; 
+            height: 90% !important;
         }
     </style>
 </head>
@@ -25,29 +25,6 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Edit a Playlist</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li>
-                            <a href="/admin/playlist">Playlist</a>
-                        </li>
-                        <li class="active">
-                            <strong>Edit a Playlist</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
@@ -168,10 +145,10 @@
 	    </div>
 	</div>
 
-	<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>	
+	<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
     <script src="/js/plugins/nestable/jquery.nestable.js"></script>
-    <script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script> 
-    <script type="text/javascript" src="/js/plugins/select/select2.min.js"></script> 
+    <script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
+    <script type="text/javascript" src="/js/plugins/select/select2.min.js"></script>
     <script type="text/javascript" src="/js/custom/admin/videos/playlists/editPlaylist.js"></script>
     <script src="/js/custom/admin/videos/playlists/changeVideoOrder.js"></script>
     <script src="/js/custom/admin/global/storeAndBannerSelector.js"></script>

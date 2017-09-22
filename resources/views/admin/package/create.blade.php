@@ -18,29 +18,6 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Create a Package</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li>
-                            <a href="/admin/package">Package</a>
-                        </li>
-                        <li class="active">
-                            <strong>Create a Package</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
@@ -50,7 +27,7 @@
 		                            <h5>New Package</h5>
 		                            <div class="ibox-tools">
 		                               {{--  <a href="/admin/package/create" class="btn btn-primary" role="button"><i class="fa fa-plus"></i> Add New Package</a> --}}
-                                        
+
 		                            </div>
 		                        </div>
 		                        <div class="ibox-content">
@@ -63,9 +40,9 @@
                                             </ul>
                                         </div>
                                     @endif
-                                    
+
                                     <form method="get" class="form-horizontal" id="createNewPackageForm">
-                                        
+
                                         <input type="hidden" name="banner_id" value="{{$banner->id}}">
                                          <div class="form-group"><label class="col-sm-2 control-label">Name</label>
                                             <div class="col-sm-10"><input type="text" id="name" name="name" class="form-control" value=""></div>
@@ -79,7 +56,7 @@
 
                                         <div class="form-group"><label class="col-sm-2 control-label">Files</label>
                                             <div class="col-md-10">
-                                            	
+
                                                <a class="btn btn-primary btn-outline" type="button" id="add-documents"> <i class="fa fa-plus"></i> Add Documents </a>
                                             </div>
                                         </div>
@@ -92,9 +69,9 @@
                                             </div>
                                         </div>
                                         <div id="folders-selected" class="col-sm-offset-2"></div>
-		
-			
-		
+
+
+
 
                                         <div class="form-group">
                                             <div class="col-sm-10 col-sm-offset-2">
@@ -103,7 +80,7 @@
 
                                             </div>
                                         </div>
-                                        
+
                                     </form>
 
 
@@ -118,12 +95,12 @@
 							            </div>
 							            <div class="modal-body">
 							            	<ul class="tree">
-							            	@foreach ($navigation as $nav) 
-											
+							            	@foreach ($navigation as $nav)
+
 												@if (isset($nav["is_child"]) && ($nav["is_child"] == 0) )
-													
+
 													@include('admin.package.file-folder-structure-partial', ['navigation' =>$navigation, 'currentnode' => $nav])
-													
+
 												@endif
 
 											@endforeach
@@ -147,11 +124,11 @@
 							            <div class="modal-body">
 							            	<ul class="tree">
 							            	@foreach ($folderStructure as $folder)
-											
+
 												@if (isset($folder["is_child"]) && ($folder["is_child"] == 0) )
-													
+
 													@include('admin.package.folder-structure-partial', ['folderStructure' =>$folderStructure, 'currentnode' => $folder])
-													
+
 												@endif
 
 
@@ -180,7 +157,7 @@
 
 @include('site.includes.bugreport')
 
-<script type="text/javascript" src="/js/custom/admin/packages/addPackage.js"></script>	
+<script type="text/javascript" src="/js/custom/admin/packages/addPackage.js"></script>
 <script type="text/javascript" src="/js/custom/tree.js"></script>
 <script type="text/javascript">
     $.ajaxSetup({
@@ -194,19 +171,13 @@
         keyboardNavigation: false,
         forceParse: false,
         autoclose: true
-    });    
-    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});            
+    });
+    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
 
 </script>
 
-		
+
 
 
 </body>
 </html>
-
-			
-	
-
-
-

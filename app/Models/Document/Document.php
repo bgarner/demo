@@ -141,9 +141,14 @@ class Document extends Model
                 'end'               => $request->end
             );
 
+            \Log::info('documentdetails before going into db');
+            \Log::info($documentdetails);
+
             $document = Document::create($documentdetails);
             $document->save();
             $lastInsertedId= $document->id;
+
+            \Log::info($document);
 
             //update file-folder table
             $isWeekFolder = $request->get('isWeekFolder');
@@ -406,18 +411,19 @@ class Document extends Model
                     ->where('file_folder.folder_id', '=', $global_folder_id)
                     ->where('documents.end', '<=', $now)
                     ->where('documents.end', '!=', '0000-00-00 00:00:00')
+                    ->where('documents.end', '!=', NULL)
                     ->where('document_target.store_id', strval($storeNumber))
                     ->where('documents.deleted_at', '=', null)
                     ->select('documents.*')
 
                     ->get();
-        // \Log::info(gettype($files));
 
         $allStoreDocuments = \DB::table('file_folder')
                     ->join('documents', 'file_folder.document_id', '=', 'documents.id')
                     ->where('file_folder.folder_id', '=', $global_folder_id)
                     ->where('documents.end', '<=', $now)
                     ->where('documents.end', '!=', '0000-00-00 00:00:00')
+                    ->where('documents.end', '!=', NULL)
                     ->where('documents.all_stores', 1)
                     ->where('documents.deleted_at', '=', null)
                     ->select('documents.*')
@@ -583,7 +589,8 @@ class Document extends Model
                                     ->where('documents.start', '<=', $now )
                                     ->where(function($query) use ($now) {
                                         $query->where('documents.end', '>=', $now)
-                                            ->orWhere('documents.end', '=', '0000-00-00 00:00:00' );
+                                            ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                            ->orWhere('documents.end', '=', NULL );
                                     })
                                     ->where('documents.deleted_at', '=', null)
                                     ->select('documents.*')
@@ -597,7 +604,8 @@ class Document extends Model
                             ->where('documents.start', '<=', $now )
                             ->where(function($query) use ($now) {
                                 $query->where('documents.end', '>=', $now)
-                                    ->orWhere('documents.end', '=', '0000-00-00 00:00:00' );
+                                    ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                    ->orWhere('documents.end', '=', NULL ); 
                             })
                             ->where('documents.deleted_at', '=', null)
                             ->where('document_target.store_id', strval($storeNumber))

@@ -71,7 +71,8 @@ class Notification extends Model
 	                    ->where('start', '<=', $now)
 	                    ->where(function($query) use ($now) {
 	                        $query->where('documents.end', '>=', $now)
-	                            ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+	                            ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                ->orWhere('documents.end', '=', NULL); 
 	                    })
 	                    ->groupBy('documents.upload_package_id')
 	                    ->select('documents.*', DB::raw('count(*) as count'))
@@ -91,7 +92,8 @@ class Notification extends Model
 	                    ->where('start', '<=', $now)
 	                    ->where(function($query) use ($now) {
 	                        $query->where('documents.end', '>=', $now)
-	                            ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+	                            ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                ->orWhere('documents.end', '=', NULL); 
 	                    })
 	                    ->groupBy('documents.upload_package_id')
 	                    ->select('documents.*', DB::raw('count(*) as count'))
@@ -151,7 +153,8 @@ class Notification extends Model
                         ->where('start', '<=', $now)
                         ->where(function($query) use ($now) {
                             $query->where('documents.end', '>=', $now)
-                                ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+                                ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                ->orWhere('documents.end', '=', NULL); 
                         })
                         ->where('document_target.store_id', '=', $storeNumber)
                         ->orderBy('documents.start', 'desc')
@@ -169,7 +172,8 @@ class Notification extends Model
                         ->where('start', '<=', $now)
                         ->where(function($query) use ($now) {
                             $query->where('documents.end', '>=', $now)
-                                ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+                                ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                ->orWhere('documents.end', '=', NULL); 
                         })
                         ->where('all_stores' , 1)
                         ->orderBy('documents.updated_at', 'desc')
@@ -187,7 +191,8 @@ class Notification extends Model
                         ->where('start', '<=', $now)
                         ->where(function($query) use ($now) {
                             $query->where('documents.end', '>=', $now)
-                                ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+                                ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                ->orWhere('documents.end', '=', NULL); 
                         })
                         ->where('document_target.store_id', '=', $storeNumber)
                         ->orderBy('documents.start', 'desc')
@@ -203,7 +208,8 @@ class Notification extends Model
                         ->where('start', '<=', $now)
                         ->where(function($query) use ($now) {
                             $query->where('documents.end', '>=', $now)
-                                ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+                                ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                ->orWhere('documents.end', '=', NULL); 
                         })
                         ->where('all_stores', 1)
                         ->orderBy('documents.updated_at', 'desc')

@@ -5,6 +5,7 @@ namespace App\Models\Community;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Community\DonationItem;
 
 class Item extends Model
 {
@@ -14,24 +15,54 @@ class Item extends Model
     protected $fillable = ['donation_type', 'title', 'description', 'value', 'style_number', 'upc'];
 
 
-    public static function store($request)
+    public static function store($request, $donation_id)
     {
     	switch($request->donationtype){
     		case "giftcard":
-    			$type = 1;
-    			$value = $request->gc_value;
-    			$description = "giftcard";
-    			$style = $request->gc_number;
-    			$upc = "0";
+    			foreach ($request->giftcards as $giftcard) {
+
+                    \Log::info($giftcard);
+                    $type = 1;
+                    $value = $giftcard["gc_value"];
+                    $description = "giftcard";
+                    $style = $giftcard["gc_number"];
+                    $upc = "0";
+
+                    $item = Item::create([
+
+                        'donation_type'  => $type,
+                        'description' => $description,
+                        'value' => $value,
+                        'style_number' => $style,
+                        'upc' => $upc
+
+                    ]); 
+
+                    DonationItem::store($donation_id, $item->id);
+                }
     			
     			break;
     		case "product":
-    			$type =2;
-    			$value = $request->product_value;
-    			$description = $request->product_name;
-    			$style = $request->style_number;
-    			$upc = $request->upc;
-    			
+    			foreach ($request->products as $product) {
+                    $type =2;
+                    $value = $product["product_value"];
+                    $description = $product["product_name"];
+                    $style = $product["style_number"];
+                    $upc = $product["upc"];
+                           
+        			$item = Item::create([
+
+                        'donation_type'  => $type,
+                        'description' => $description,
+                        'value' => $value,
+                        'style_number' => $style,
+                        'upc' => $upc
+
+                    ]);
+
+                    DonationItem::store($donation_id, $item->id);
+
+                }
     			break;
     		default:
     			$type=1;
@@ -42,19 +73,10 @@ class Item extends Model
     			break;
     	}
 
-    	$item = Item::create([
+    	
 
-    		'donation_type'  => $type,
-    		'description' => $description,
-    		'value' => $value,
-    		'style_number' => $style,
-    		'upc' => $upc
+        
 
- 		]);
-
- 		$item->save();
- 		$insertedId = $item->id;
-    	return $insertedId;
     }
     
 }

@@ -5,6 +5,7 @@
     @section('title', 'Document Manager')
     @include('admin.includes.head')
     <style type="text/css">
+
         .action{
             white-space: nowrap;
         }
@@ -12,6 +13,8 @@
         .top-level-folder{
             color: #444;
         }
+
+
 
     </style>
     <link rel="stylesheet" type="text/css" href="/css/custom/tree.css">
@@ -27,26 +30,10 @@
     </nav>
 
     <div id="page-wrapper" class="gray-bg">
-        <div class="row border-bottom">
-            @include('admin.includes.topbar')
-        </div>
-
-       <div class="row wrapper border-bottom white-bg page-heading">
-            <div class="col-lg-10">
-                <h2>Library</h2>
-                <ol class="breadcrumb">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/admin/document/manager">Library</a></li>
-                </ol>
-            </div>
-            <div class="col-lg-2">
-
-            </div>
-        </div>
 
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
                     <div class="ibox float-e-margins">
                         <div class="ibox-content">
                             <div class="file-manager">
@@ -64,33 +51,31 @@
                                     <div id="package-viewer" class="hidden">
                                     @include('admin.package.view')
                                     </div>
-                                    
+
 
                                 <div class="clearfix"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-9 animated fadeInRight">
-                    
+                <div class="col-lg-9 col-md-8 col-sm-6 col-xs-6 animated fadeInRight">
+
                     <div class="row">
 
-                        <div class="col-lg-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
 
-                            <div id="file-container" class="ibox">
-
-
+                            <div id="file-container" class="" style="height: 100%; width: 100%;">
 
                                 <div class="ibox float-e-margins">
-                                
+
 
                                     <div class="ibox-title">
-                                        
+
                                         <h5 id="folder-title"> <i class="fa fa-folder-open"></i> {{$banner->name}}</h5>
-                                    
+
                                         <div class="ibox-tools">
-                                            
+
                                             <span class="dropdown" id="edit_multiple_documents" >
                                                 <button class="btn btn-warning dropdown-toggle" type="button" id="edit_selected" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     Edit Selected
@@ -98,6 +83,7 @@
                                                 <ul class="dropdown-menu" aria-labelledby="edit_selected">
                                                     <li id="edit_start_date"><a>Start Date</a></li>
                                                     <li id="edit_end_date"><a>End Date</a></li>
+                                                    <li id="delete-multiple"><a>Delete</a></li>
                                                 </ul>
                                             </span>
                                             <a id="add-files" class="hidden" data-folderId="" href="/admin/document/create" title="Add Documents">
@@ -125,8 +111,8 @@
                                     </div>
 
 
-                                    <div class="ibox-content">                                            
-                                            <table class="table tablesorter" id="file-table"> 
+                                    <div class="ibox-content">
+                                            <table class="table tablesorter" id="file-table">
                                             </table>
                                     </div>
                                     <div>
@@ -143,12 +129,12 @@
 
 
                             </div> <!-- file-container closes -->
-                        </div>                
- 
+                        </div>
+
 
                     </div> <!-- row closes -->
 
-          
+
                 </div>
 
                 <div id="start_date_selector" class="modal fade">
@@ -190,7 +176,7 @@
 
             </div>
 
-                    
+
 
         </div>
     </div>
@@ -201,10 +187,10 @@
 
 </div>
 
-    
+
 
     @include('admin.includes.footer')
-        
+
 
     @include('admin.includes.scripts')
 
@@ -239,7 +225,7 @@
             });
 
             $(document).ready(function() {
-               
+
                 $(".tree").treed({openedClass : 'fa-folder-open', closedClass : 'fa-folder'});
 
                 var defaultFolderId = $("input[name='default_folder']").val();
@@ -260,7 +246,7 @@
                     });
                 }
 
-            }); 
+            });
         </script>
 
         @include('site.includes.modal')

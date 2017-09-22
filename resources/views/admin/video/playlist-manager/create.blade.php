@@ -11,7 +11,7 @@
 	<style>
         .modal-body{
             top: 120px;
-            height: 90% !important; 
+            height: 90% !important;
         }
     </style>
 </head>
@@ -25,29 +25,6 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Playlists</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li class="active">
-                            <a href="/admin/playlist">Playlists</a>
-                        </li>
-                        <li class="active">
-                        	<strong>Create New Playlist</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
@@ -66,7 +43,7 @@
 
 
 									<form class="form-horizontal" id="createNewPlaylistForm">
-										
+
 
 										{{-- <input type="hidden" name="banner_id" value={{$banner->id}} > --}}
 
@@ -83,23 +60,23 @@
 										</div>
 
 										@include('admin.includes.store-banner-selector', ['optGroupOptions'=> $optGroupOptions, 'optGroupSelections' => $optGroupSelections])
-										
+
 
 										<div class="form-group">
 											<div class="col-sm-10 col-sm-offset-2">
 												<div id="add-videos" class="btn btn-primary btn-outline"><i class="fa fa-plus"></i> Add videos</div>
-										
+
 											</div>
 										</div>
 										<div class="form-group">
 											<div id="videos-selected"></div>
-											
+
 										</div>
 
 										<div id="tag-selector-container">
 											@include('admin.video.tag.tag-partial')
 										</div>
-										
+
 										<div class="form-group">
 											<div class="col-sm-10 col-sm-offset-2">
 												<a class="btn btn-white" href="/admin/playlist"><i class="fa fa-close"></i> Cancel</a>
@@ -116,7 +93,7 @@
 
 		                    </div><!-- ibox closes -->
 		                </div>
-		            </div>	
+		            </div>
 
 
 		        </div><!-- wrapper closes -->
@@ -144,9 +121,9 @@
 		    </div>
 		</div>
 
-		
 
-		
+
+
 
 
 		@include('admin.includes.footer')
@@ -154,7 +131,7 @@
 	    @include('admin.includes.scripts')
 
 		@include('site.includes.bugreport')
-		
+
 		<script type="text/javascript" src="/js/vendor/moment.js"></script>
 		<script type="text/javascript" src="/js/vendor/bootstrap-datetimepicker.min.js"></script>
 		<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
@@ -166,7 +143,7 @@
 
 
 		<script type="text/javascript">
-			
+
 			$.ajaxSetup({
 		        headers: {
 		            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -179,13 +156,13 @@
 
     		});
 
-		    
+
 			$(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
 
 		    $("#add-videos").click(function(){
 		    	$("#video-listing").modal('show');
 		    });
-		   	
+
 		   	initializeTagSelector();
 
 

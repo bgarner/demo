@@ -8,7 +8,7 @@
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 </head>
 
-<body class="fixed-navigation">
+<body class="fixed-navigation adminview">
     <div id="wrapper">
 	    <nav class="navbar-default navbar-static-side" role="navigation">
 	        <div class="sidebar-collapse">
@@ -17,26 +17,6 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Users</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin/home">Home</a>
-                        </li>
-                        <li class="active">
-                            <strong>Users</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
@@ -67,11 +47,11 @@
 										<tr>
 											<td> {{$user->id}} </td>
 											<td><a href="/admin/user/{{ $user->id }}/edit">{{ $user->firstname }} {{ $user->lastname }}</a></td>
-											
-											
-											
+
+
+
 											<td>
-												
+
 												<a data-user="{{ $user->id }}" id="user{{ $user->id }}" class="delete-user btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 
 											</td>

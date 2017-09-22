@@ -7,7 +7,7 @@
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
     <style>
-        
+
         .store{
             /*border:thin solid lime;*/
             padding: 0px 5px;
@@ -45,18 +45,20 @@
 	        </div>
 	    </nav>
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
 
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div >
-                    <h2>Admin Home</h2>
-                </div>
-                <div>
-                    <small class="pull-right"> Last Updated : {{$prettyLastCompiledTimestamp}} </small>
-                </div>
-		</div>
+
+        <div class="row wrapper border-bottom white-bg">
+            <div class="col-lg-12">
+                <h2>Admin Home</h2>
+                <ol class="breadcrumb">
+                    <li>
+                        Last Updated : {{$prettyLastCompiledTimestamp}}
+                    </li>
+
+                </ol>
+                <br />
+            </div>
+        </div>
 
         <div class="wrapper wrapper-content  animated fadeInRight printable">
             <div class="row">
@@ -73,10 +75,10 @@
                         </div>
                         <div class="ibox-content">
 
-                    
+
                             <div class="row">
                                 <div class="col-md-12">
-                                    
+
                                     <table class="table table-stripped" id="communication_analytics">
                                         <thead>
                                             <tr>
@@ -95,7 +97,7 @@
                                             <td>
                                                 @if($comm->banner_id == 1)
                                                     <small class="label label-sm label-inverse">SC</small>&nbsp;&nbsp;
-                                                @else 
+                                                @else
                                                     <small class="label label-sm label-warning">Atmo</small>&nbsp;&nbsp;
                                                 @endif
                                             </td>
@@ -103,14 +105,14 @@
                                             <span class="label label-sm label-{{ $comm->colour }}">{{ $comm->communication_type }}</span></td>
                                             <td>{{ $comm->send_at }}</td>
                                             <td data-order="{{$comm->readPerc}}" data-read-perc = {{$comm->readPerc}}>
-                                            
+
                                                 <canvas id="commChart_{{ $comm->id }}" width="45" height="45" style="width: 45px; height: 45px;"></canvas>
                                             </td>
                                             <td >{{$comm->opened}}</td>
                                             <td >{{$comm->unopened}}</td>
                                             <td >{{$comm->sent_to}}</td>
                                         </tr>
-                                        
+
                                         @endforeach
                                         </tbody>
                                     </table>
@@ -136,7 +138,7 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    
+
                                     <table class="table table-stripped" id="urgent_notice_analytics">
                                         <thead>
                                             <tr>
@@ -155,21 +157,21 @@
                                             <td>
                                                 @if($urgentNotice->banner_id == 1)
                                                     <small class="label label-sm label-inverse">SC</small>&nbsp;&nbsp;
-                                                @else 
+                                                @else
                                                     <small class="label label-sm label-warning">Atmo</small>&nbsp;&nbsp;
                                                 @endif
                                             </td>
                                             <td>{{ $urgentNotice->title }}</td>
                                             <td>{{ $urgentNotice->start }}</td>
                                             <td data-order="{{$urgentNotice->readPerc}}" data-read-perc = {{$urgentNotice->readPerc}}>
-                                            
+
                                                 <canvas id="urgentNoticeChart_{{ $urgentNotice->id }}" width="45" height="45" style="width: 45px; height: 45px;"></canvas>
                                             </td>
                                             <td >{{$urgentNotice->opened}}</td>
                                             <td >{{$urgentNotice->unopened}}</td>
                                             <td >{{$urgentNotice->sent_to}}</td>
                                         </tr>
-                                        
+
                                         @endforeach
                                         </tbody>
                                     </table>
@@ -194,8 +196,8 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                   
-                                    
+
+
                                     <table class="table table-stripped" id="task_analytics">
                                         <thead>
                                             <tr>
@@ -209,7 +211,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($taskStats as $task) 
+                                        @foreach($taskStats as $task)
                                             @if( $task->due_date < $today)
                                                 <tr class="task-details-control overdue_task">
                                             @else
@@ -218,13 +220,13 @@
                                                 <td>
                                                     @if($task->banner_id == 1)
                                                         <small class="label label-sm label-inverse">SC</small>&nbsp;&nbsp;
-                                                    @else 
+                                                    @else
                                                         <small class="label label-sm label-warning">Atmo</small>&nbsp;&nbsp;
                                                     @endif
                                                 </td>
                                                 <td>{{ $task->title }}</td>
                                                 <td class="faa-parent animated-hover">
-                                                    
+
                                                     @if( $task->due_date < $today)
                                                         <i class="fa fa-bell-o faa-shake"></i>
                                                     @endif
@@ -232,14 +234,14 @@
 
                                                 </td>
                                                 <td data-order="{{$task->readPerc}}" data-read-perc = {{$task->readPerc}}>
-                                                
+
                                                     <canvas id="taskChart_{{ $task->id }}" width="45" height="45" style="width: 45px; height: 45px;"></canvas>
                                                 </td>
                                                 <td >{{$task->opened}}</td>
                                                 <td >{{$task->unopened}}</td>
                                                 <td >{{$task->sent_to}}</td>
                                             </tr>
-                                        
+
                                         @endforeach
                                         </tbody>
                                     </table>
@@ -285,14 +287,14 @@
                                             <td>{{ $video->title }}</td>
                                             <td><img src="/video/thumbs/{{$video->thumbnail}}" style="width: 35%" /></td>
                                             <td data-order="{{$video->readPerc}}" data-read-perc = {{$video->readPerc}}>
-                                            
+
                                                 <canvas id="videoChart_{{ $video->id }}" width="45" height="45" style="width: 45px; height: 45px;"></canvas>
                                             </td>
                                             <td >{{$video->opened}}</td>
                                             <td >{{$video->unopened}}</td>
                                             <td >{{$video->sent_to}}</td>
                                         </tr>
-                                        
+
                                         @endforeach
                                         </tbody>
                                     </table>
@@ -302,7 +304,7 @@
 
                         </div>
 
-                        
+
 
                     </div> --}}
 
@@ -318,7 +320,7 @@
 
                         </div>
                         <div class="ibox-content">
-                            
+
                             <div class="tabs-container">
                                 <ul class="nav nav-tabs">
                                     <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true"> Analytics by Videos </a></li>
@@ -349,14 +351,14 @@
                                                             <td>{{ $video->title }}</td>
                                                             <td><img src="/video/thumbs/{{$video->thumbnail}}" style="width: 35%" /></td>
                                                             <td data-order="{{$video->readPerc}}" data-read-perc = {{$video->readPerc}}>
-                                                            
+
                                                                 <canvas id="videoChart_{{ $video->id }}" width="45" height="45" style="width: 45px; height: 45px;"></canvas>
                                                             </td>
                                                             <td >{{$video->opened}}</td>
                                                             <td >{{$video->unopened}}</td>
                                                             <td >{{$video->sent_to}}</td>
                                                         </tr>
-                                                        
+
                                                         @endforeach
                                                         </tbody>
                                                     </table>
@@ -392,11 +394,11 @@
                                                             <th></th>
                                                             <th>Store Number</th>
                                                             <th>Total Videos Seen</th>
-                                                            
+
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                    
+
                                                     </tbody>
                                                 </table>
 
@@ -427,11 +429,11 @@
     <script src="/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
     <script src="/js/plugins/flot/jquery.flot.spline.js"></script>
     <script src="/js/plugins/flot/jquery.flot.resize.js"></script>
-    <script src="/js/plugins/flot/jquery.flot.pie.js"></script>	
+    <script src="/js/plugins/flot/jquery.flot.pie.js"></script>
     <script type="text/javascript" src="/js/custom/datetimepicker-with-default-time.js"></script>
     <script type="text/javascript" src="/js/custom/site/launchModal.js" ></script>
-    <script type="text/javascript" src="/js/custom/admin/analytics/videoReport.js"></script>	
-    
+    <script type="text/javascript" src="/js/custom/admin/analytics/videoReport.js"></script>
+
    	<!-- ChartJS-->
 	<script src="/js/plugins/chartJs/Chart.min.js"></script>
 
@@ -447,7 +449,7 @@
                 "info"   :false,
                 "bPaginate": false,
                 "paging":   false,
-                "columns": [    
+                "columns": [
                    null,
                    {'width': '40%'},
                    null,null,
@@ -462,7 +464,7 @@
                 "info"   :false,
                 "bPaginate": false,
                 "paging":   false,
-                "columns": [    
+                "columns": [
                    null,
                    {'width': '40%'},
                    null,null,
@@ -477,7 +479,7 @@
                 "info"   :false,
                 "bPaginate": false,
                 "paging":   false,
-                "columns": [    
+                "columns": [
                    null,
                    {'width': '40%'},
                    null,null,
@@ -492,7 +494,7 @@
                 "info"   :false,
                 "bPaginate": false,
                 "paging":   false,
-                "columns": [    
+                "columns": [
                    {"visible": false},
                    {'width': '40%'},
                    {'width': '40%'},
@@ -505,7 +507,7 @@
             });
 
 
-            
+
 
             @foreach($commStats as $c)
                 var commData_{{$c->id}} = [
@@ -514,7 +516,7 @@
                         color: "#ee0000",
                         //color: "#a3e1d4",
                         highlight: "#1ab394"
-               
+
                     },
                     {
                         value: {{ $c->unopened_total }},
@@ -524,7 +526,7 @@
                 ];
 
                var ctx = document.getElementById("commChart_{{ $c->id }}").getContext("2d");
-               var commChart_{{ $c->id }} = new Chart(ctx).Doughnut(commData_{{ $c->id }}, { 
+               var commChart_{{ $c->id }} = new Chart(ctx).Doughnut(commData_{{ $c->id }}, {
                     segmentShowStroke: true,
                     segmentStrokeColor: "#fff",
                     segmentStrokeWidth: 2,
@@ -549,10 +551,10 @@
                           ctx.fillText("{{ $c->readPerc }}%", cx, cy);
 
                       }
-                      
-      
+
+
                  });
-            @endforeach 
+            @endforeach
 
             @foreach($urgentNoticeStats as $c)
                 var urgentNoticeData_{{$c->id}} = [
@@ -561,7 +563,7 @@
                         color: "#ee0000",
                         //color: "#a3e1d4",
                         highlight: "#1ab394"
-               
+
                     },
                     {
                         value: {{ $c->unopened_total }},
@@ -571,7 +573,7 @@
                 ];
 
                var ctx = document.getElementById("urgentNoticeChart_{{ $c->id }}").getContext("2d");
-               var urgentNoticeChart_{{ $c->id }} = new Chart(ctx).Doughnut(urgentNoticeData_{{ $c->id }}, { 
+               var urgentNoticeChart_{{ $c->id }} = new Chart(ctx).Doughnut(urgentNoticeData_{{ $c->id }}, {
                     segmentShowStroke: true,
                     segmentStrokeColor: "#fff",
                     segmentStrokeWidth: 2,
@@ -596,8 +598,8 @@
                           ctx.fillText("{{ $c->readPerc }}%", cx, cy);
 
                       }
-                      
-      
+
+
                  });
             @endforeach
 
@@ -608,7 +610,7 @@
                         color: "#ee0000",
                         //color: "#a3e1d4",
                         highlight: "#1ab394"
-               
+
                     },
                     {
                         value: {{ $c->unopened_total }},
@@ -618,7 +620,7 @@
                 ];
 
                var ctx = document.getElementById("taskChart_{{ $c->id }}").getContext("2d");
-               var taskChart_{{ $c->id }} = new Chart(ctx).Doughnut(taskData_{{ $c->id }}, { 
+               var taskChart_{{ $c->id }} = new Chart(ctx).Doughnut(taskData_{{ $c->id }}, {
                     segmentShowStroke: true,
                     segmentStrokeColor: "#fff",
                     segmentStrokeWidth: 2,
@@ -643,8 +645,8 @@
                           ctx.fillText("{{ $c->readPerc }}%", cx, cy);
 
                       }
-                      
-      
+
+
                  });
             @endforeach
 
@@ -656,7 +658,7 @@
                         color: "#ee0000",
                         //color: "#a3e1d4",
                         highlight: "#1ab394"
-               
+
                     },
                     {
                         value: {{ $c->unopened_total }},
@@ -666,7 +668,7 @@
                 ];
 
                var ctx = document.getElementById("videoChart_{{ $c->id }}").getContext("2d");
-               var videoChart_{{ $c->id }} = new Chart(ctx).Doughnut(videoData_{{ $c->id }}, { 
+               var videoChart_{{ $c->id }} = new Chart(ctx).Doughnut(videoData_{{ $c->id }}, {
                     segmentShowStroke: true,
                     segmentStrokeColor: "#fff",
                     segmentStrokeWidth: 2,
@@ -691,15 +693,15 @@
                           ctx.fillText("{{ $c->readPerc }}%", cx, cy);
 
                       }
-                      
-      
+
+
                  });
             @endforeach
 
             $('#communication_analytics tbody').on('click', 'tr.details-control', function () {
                 var tr = $(this);
                 var row = table.row( tr );
-         
+
                 if ( row.child.isShown() ) {
                     // This row is already open - close it
                     row.child.hide();
@@ -715,7 +717,7 @@
             $('#urgent_notice_analytics tbody').on('click', 'tr.un-details-control', function () {
                 var tr = $(this);
                 var row = urgentNoticeTable.row( tr );
-         
+
                 if ( row.child.isShown() ) {
                     // This row is already open - close it
                     row.child.hide();
@@ -732,7 +734,7 @@
             $('#task_analytics tbody').on('click', 'tr.task-details-control', function () {
                 var tr = $(this);
                 var row = taskTable.row( tr );
-         
+
                 if ( row.child.isShown() ) {
                     // This row is already open - close it
                     row.child.hide();
@@ -748,7 +750,7 @@
             $('#video_analytics tbody').on('click', 'tr.video-details-control', function () {
                 var tr = $(this);
                 var row = videoTable.row( tr );
-         
+
                 if ( row.child.isShown() ) {
                     // This row is already open - close it
                     row.child.hide();
@@ -763,7 +765,7 @@
 
 
             function format ( d ) {
-                
+
                 // `d` is the original data object for the row
 
                 var opened = JSON.parse(d[4]);
@@ -778,12 +780,12 @@
 
             function getStoresString(sent_to, opened){
                 var returnString = '<td>';
-                $.each( sent_to, function( key, value ) { 
+                $.each( sent_to, function( key, value ) {
                     if($.inArray(value, opened) >= 0){
                         returnString += '<span class="store btn btn-xs active-store">'+value+'</span>';
                     }
                     else{
-                        returnString += '<span class="store btn btn-xs btn-default">'+value+'</span>';   
+                        returnString += '<span class="store btn btn-xs btn-default">'+value+'</span>';
                     }
 
                 });

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Flyer\FlyerItem;
 use App\Models\Utility\Utility;
 use App\Models\Validation\FlyerValidator;
+use Carbon\Carbon;
 
 class Flyer extends Model
 {
@@ -70,14 +71,45 @@ class Flyer extends Model
     	return $flyer;
     }
 
-
-    public static function getFlyersByBannerId($banner_id)
+    public static function getFlyersByBannerId($banner_id, $request=null)
     {
-    	$flyers = Self::where('banner_id', $banner_id)->get()->each(function($flyer){
-            $flyer->pretty_start_date = Utility::prettifyDate($flyer->start_date);
-        	$flyer->pretty_end_date = Utility::prettifyDate($flyer->end_date);
-        });
-    	return $flyers;
+        $activeFlyers = Self::getActiveFlyersByBanner($banner_id);
+
+        if ((isset($request['archives']) && !empty($request['archives'])) || !isset($request)) {
+
+            $archivedFlyers = Self::getArchivedFlyersByBannerId($banner_id);
+            foreach ($archivedFlyers as $archivedFlyer) {
+                $activeFlyers->add($archivedFlyer);
+            }
+
+        }
+    	return $activeFlyers;
+    }
+
+    public static function getActiveFlyersByBanner($banner_id)
+    {
+        $now = Carbon::now();
+        return Self::where('banner_id', $banner_id)
+                    ->where('start_date', '<=', $now )
+                    ->where('end_date', '>=', $now )
+                    ->get()
+                    ->each(function($flyer){
+                        $flyer->pretty_start_date = Utility::prettifyDate($flyer->start_date);
+                        $flyer->pretty_end_date = Utility::prettifyDate($flyer->end_date);
+                    });
+    }
+
+    public static function getArchivedFlyersByBannerId($banner_id)
+    {
+        $now = Carbon::now();
+        return Self::where('banner_id', $banner_id)
+                    ->where('end_date', '<', $now )
+                    ->get()
+                    ->each(function($flyer){
+                        $flyer->pretty_start_date = Utility::prettifyDate($flyer->start_date);
+                        $flyer->pretty_end_date = Utility::prettifyDate($flyer->end_date);
+                        $flyer->archived = true;
+                    });
     }
 
     public static function getFlyerDetailsById($flyer_id)

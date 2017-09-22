@@ -17,33 +17,12 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Tags</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li class="active">
-                            <strong>Tags</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
-
 		<div class="wrapper wrapper-content  animated fadeInRight">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="ibox">
                         <div class="ibox-title">
-                            <h5>Tags</h5>
+                            <h5>Video Tags</h5>
 
                             <div class="ibox-tools">
 
@@ -57,7 +36,7 @@
                             <div class="table-responsive">
                             	<table class="table table-hover issue-tracker">
 	                            	<tr>
-										
+
 										<th>Tag</th>
 										<th>Actions</th>
 
@@ -68,7 +47,7 @@
 											<p id="{{$tag->id}}">{{$tag->name}}</p>
 										</td>
 										<td>
-											
+
 											<div class="delete-tag btn btn-danger" id="{{$tag->id}}"><i class="fa fa-trash"></i></div>
 										</td>
 									</tr>
@@ -92,12 +71,12 @@
                         <h4 class="modal-title">Create New Tag</h4>
                     </div>
                     <div class="modal-body">
-                    	
+
                     	<div class="form-group">
                         	<label class="control-label">Tag <span class="req">*</span></label>
                             <div ><input type="text" class="form-control" name="tag_name" id="tag" value=""></div>
                         </div>
-                        
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
