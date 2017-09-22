@@ -15,6 +15,7 @@ use App\Models\Document\FileFolder;
 use App\Models\Task\TaskDocument;
 use App\Models\Task\TaskTarget;
 use App\Models\Task\TaskStatusTypes;
+use App\Models\Utility\Utility;
 
 class TaskAdminController extends Controller
 {
@@ -45,12 +46,14 @@ class TaskAdminController extends Controller
     public function create()
     {
         $banner = UserSelectedBanner::getBanner();
-        $storeList = StoreInfo::getStoreListing($banner->id);
+        // $storeList = StoreInfo::getStoreListing($banner->id);
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
+        $storeAndStoreGroups = Utility::getStoreAndStoreGroupList($banner->id);
 
         return view('admin.task.create')
                                         ->with('banner', $banner)
-                                        ->with('storeList', $storeList)
+                                        // ->with('storeList', $storeList)
+                                        ->with('storeAndStoreGroups', $storeAndStoreGroups)
                                         ->with('navigation', $fileFolderStructure);
     }
 
