@@ -1,5 +1,13 @@
 $(document).ready(function(){
 
+	var banner = localStorage.getItem('admin-banner');
+	if(!banner){
+		$(".current-banner").text( "Select a Banner" );
+		$(".banner-icon").removeClass("fa-flag").addClass("fa-exclamation-triangle");
+        $(".current-banner-anchor").addClass("banner-not-set");
+
+	}
+
 	console.log('selected banner : ' + localStorage.getItem('admin-banner'));
 	$(".current-banner").append(localStorage.getItem('admin-banner'));
 
@@ -11,6 +19,8 @@ $(document).ready(function(){
 		var banner_id = localStorage.getItem("admin-banner-id");
 		var banner = localStorage.getItem("admin-banner");
 
+		$(".banner-icon").removeClass("fa-exclamation-triangle").addClass("fa-flag");
+        $(".current-banner-anchor").removeClass("banner-not-set");
 		console.log('banner_id' + banner_id);
 
 		$.ajax({

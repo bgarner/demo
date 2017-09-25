@@ -8556,3 +8556,8 @@ ul.banner-selector-menu{
 #file-table td{
     font-size: 12px;
 }
+
+
+.banner-not-set{
+  color: #f00 !important;
+}
