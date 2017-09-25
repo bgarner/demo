@@ -18,16 +18,16 @@
 
             <ul class="banner-selector-menu metismenu text-xs">
                 <span style="font-size: 10px;" class="text-muted">Current Banner</span>
-            <li>
-                <a href="#">
-                    <i class="fa fa-flag" aria-hidden="true"></i>&nbsp;&nbsp;<span class="text-xs current-banner"></span><span class="fa arrow"></span>
-                </a>
-                <ul class="nav nav-second-level collapse">
-                    @foreach($banners as $banner)
-                        <li> <a class="banner-switch text-xs" data-banner-id ={{$banner->id}}> {{$banner->name}} </a>  </li>
-                    @endforeach
-                </ul>
-            </li>
+                <li>
+                    <a href="#" class="current-banner-anchor">
+                        <i class="fa fa-flag banner-icon" aria-hidden="true"></i>&nbsp;&nbsp;<span class="text-xs current-banner"></span><span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level collapse">
+                        @foreach($banners as $banner)
+                            <li> <a class="banner-switch text-xs" data-banner-id ={{$banner->id}}> {{$banner->name}} </a>  </li>
+                        @endforeach
+                    </ul>
+                </li>
             </ul>
 
 
