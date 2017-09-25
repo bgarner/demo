@@ -33,7 +33,7 @@ class AdminSidenavComposer
      */
     public function compose(View $view)
     {
-        dd($this->components);
+        //dd($this->components);
         $view->with('roleComponents', $this->components);
     }
 }
