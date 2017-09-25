@@ -77,9 +77,12 @@ class VideoAdminController extends Controller
         
         $videos = Video::where('upload_package_id', $package)->get();
 
+        $tags = Tag::all()->pluck('name', 'id');
+
         return view('admin.video.video-manager.video-add-meta-data')
                 ->with('videos', $videos)
-                ->with('banner', $banner);
+                ->with('banner', $banner)
+                ->with('tags', $tags);
     }    
 
     /**

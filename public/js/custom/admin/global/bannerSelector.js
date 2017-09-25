@@ -5,7 +5,6 @@ $(document).ready(function(){
 		$(".current-banner").text( "Select a Banner" );
 		$(".banner-icon").removeClass("fa-flag").addClass("fa-exclamation-triangle");
         $(".current-banner-anchor").addClass("banner-not-set");
-
 	}
 
 	console.log('selected banner : ' + localStorage.getItem('admin-banner'));
