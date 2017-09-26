@@ -86,7 +86,7 @@ class TasklistAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return Tasklist::updateTasklist($id, $request);
+        return Tasklist::updateTasklist($request, $id);
     }
 
     /**

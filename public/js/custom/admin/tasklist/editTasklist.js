@@ -27,7 +27,7 @@ var stageTask = function(){
 
 	$(".task-table tbody").append(
 		'<tr>'+
-            '<td class="col-sm-10 col-sm-offset-2 task-title" '+
+            '<td class="col-sm-10 col-sm-offset-2 task-title new_task" '+
                 '>'+
                 $("#new_task").val()+
             '</td>'+
@@ -85,17 +85,21 @@ $(document).on('click','.tasklist-update',function(){
 	// var send_reminder = ($("#send_reminder").prop('checked') === true)?1:0;
 	// var status_type_id = $("#status_type_id").val();
 
-	var remove_task = [];
+	var remove_tasks = [];
 	var tasks = [];
 
-	$(".task-title").each(function(index, value){
+	$(".new_task").each(function(index, value){
 		tasks.push($(this).text());
 	});
 
 
 	$(".remove_task").each(function(){
-		remove_task.push($(this).attr('data-taskid'));
+		remove_tasks.push($(this).attr('data-taskid'));
 	});
+
+
+	console.log(tasks);
+	console.log(remove_tasks);
 
     if(title == '' ) {
 		swal("Oops!", "We need a title.", "error"); 
@@ -126,7 +130,7 @@ $(document).on('click','.tasklist-update',function(){
 		  		target_stores  : target_stores,
 		  		all_stores     : all_stores,
 		  		tasks          : tasks,
-		  		remove_task    : remove_task,
+		  		remove_tasks   : remove_tasks,
 		  		// status_type_id : status_type_id
 
 		    },
