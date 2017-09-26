@@ -3,15 +3,20 @@
 namespace App\Models\Task;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Validation\TasklistValidator;
 use App\Models\Utility\Utility;
 use Carbon\Carbon;
 
 class Tasklist extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'tasklists';
 
     protected $fillable = ['title', 'description', 'due_date', 'publish_date'];
+
+    protected $dates = ['deleted_at'];
 
     public static function validateCreateTasklist($request)
 	{
@@ -157,5 +162,19 @@ class Tasklist extends Model
     								->get();
 
     	return $tasklist;
+    }
+
+    public static function deleteTasklist($id)
+    {
+    	
+    	$tasks = Task::join('tasklist_tasks', 'tasks.id', '=', 'tasklist_tasks.task_id')
+    				->where('tasklist_tasks.tasklist_id', $id)
+    				->select('tasks.*')
+    				->get();
+    	foreach ($tasks as $task) {
+    		Task::find($task->id)->delete();
+    	}
+    	Tasklist::find($id)->delete();
+    	return;
     }
 }

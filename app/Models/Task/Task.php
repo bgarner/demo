@@ -2,7 +2,9 @@
 
 namespace App\Models\Task;
 
+
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Validation\TaskValidator;
 use App\Models\Task\TaskTarget;
 use App\Models\Task\TaskDocument;
@@ -17,9 +19,13 @@ use Carbon\Carbon;
 
 class Task extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'tasks';
 
     protected $fillable = ['title', 'description', 'due_date', 'publish_date', 'send_reminder', 'banner_id'];
+
+    protected $dates = ['deleted_at'];
 
 	public static function validateCreateTask($request)
 	{

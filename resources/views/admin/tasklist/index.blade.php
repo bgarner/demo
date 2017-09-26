@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    @section('title', 'Tasks')
+    @section('title', 'Task Lists')
     @include('admin.includes.head')
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
@@ -54,7 +54,7 @@
 
 									<td>
 
-										<a data-task="{{ $tasklist->id }}" id="tasklist{{ $tasklist->id }}" class="delete-task btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+										<a data-tasklist="{{ $tasklist->id }}" id="tasklist{{ $tasklist->id }}" class="delete-tasklist btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 
 									</td>
 								</tr>
@@ -85,7 +85,7 @@
 
 		</script>
 		<script type="text/javascript" src="/js/plugins/ckeditor-custom/ckeditor.js"></script>
-		<!-- <script type="text/javascript" src="/js/custom/admin/tasklists/deleteTasklist.js"></script> -->
+		<script type="text/javascript" src="/js/custom/admin/tasklist/deleteTasklist.js"></script>
 
 
 		@include('site.includes.bugreport')
