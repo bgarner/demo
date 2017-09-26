@@ -326,6 +326,8 @@ class Utility extends Model
 
         $storeList = Self::getStoreListByAdminId();
 
+        $storeGroups = Self::getStoreGroups();
+
         $optGroupOptions = [];
         $optGroupBannerOptions = [];
         $optGroupBannerOptions['optgroup-label'] = 'Banners';
@@ -338,6 +340,11 @@ class Utility extends Model
         $optGroupStoreOptions['optgroup-label'] = 'Stores';
         $optGroupStoreOptions['options'] = $storeList;
         array_push($optGroupOptions, $optGroupStoreOptions);
+
+        $optGroupStoreGroupOptions = [];
+        $optGroupStoreGroupOptions['optgroup-label'] = 'Store Groups';
+        $optGroupStoreGroupOptions['options'] = $storeGroups;
+        array_push($optGroupOptions, $optGroupStoreGroupOptions);
 
         return $optGroupOptions;
 	}
@@ -394,6 +401,23 @@ class Utility extends Model
         }
 
         return $storeList;
+    }
+
+    public static function getStoreGroups()
+    {
+    	$storeGroups = CustomStoreGroup::getAllGroups();
+    	$groupList = [];
+    	foreach ($storeGroups as $group) {
+    		
+            $groupList[$group->id] = [
+        		'option-label' => $group->group_name. " (" . implode(', ', $group->stores) . ")",
+        		'data-attributes' => [
+        				'optionType'   => 'storegroup'
+
+        			]
+            	];
+        }
+        return $groupList;
     }
 
     public static function getStoreAndStoreGroupList($banner_id)
