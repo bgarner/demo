@@ -83,7 +83,6 @@ class Tasklist extends Model
     {
 
 		$validate = Tasklist::validateCreateTasklist($request);
-		\Log::info($validate);
 		if($validate['validation_result'] == 'false') {
 			\Log::info($validate);
 			return json_encode($validate);
@@ -105,6 +104,7 @@ class Tasklist extends Model
 				'publish_date'	=> $request["publish_date"],
 				'due_date'		=> $request["due_date"]
 			]);
+
 		TasklistTarget::updateTargetStores($tasklist->id, $request);
 
 		foreach ($request->tasks as $task) {
@@ -112,11 +112,18 @@ class Tasklist extends Model
 			$request['title'] = $task;
 			$request['send_reminder'] = NULL;
 			$task = Task::createTask($request);
-
-			TasklistTask::create([
-				'tasklist_id' => $tasklist->id,
-				'task_id'	=> $task->id
-			]);
+			
+			//task is a json string if the validation fails while creating task.
+			//if task is not created, tasklist-task map need not exist. 
+			if(!is_string($task)){ 
+				
+				TasklistTask::create([
+					'tasklist_id' => $tasklist->id,
+					'task_id'	=> $task->id
+				]);	
+			}
+			
+			
 		}
 		
 		return $tasklist;
@@ -124,7 +131,6 @@ class Tasklist extends Model
 
     public static function updateTasklist($request, $id)
     {
-    	\Log::info($request->all());
 		$validate = Tasklist::validateEditTasklist($request);
 
 		if($validate['validation_result'] == 'false') {

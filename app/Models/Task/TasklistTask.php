@@ -26,10 +26,12 @@ class TasklistTask extends Model
 				$request['title'] = $task;
 				$request['send_reminder'] = NULL;
 				$task = Task::createTask($request);
-				TasklistTask::create([
-				  'tasklist_id' => $tasklist_id,
-				  'task_id'     => $task->id
-				]);
+				if(!is_string($task)){ 
+					TasklistTask::create([
+					  'tasklist_id' => $tasklist_id,
+					  'task_id'     => $task->id
+					]);
+				}
 			}
 		}
 		return;

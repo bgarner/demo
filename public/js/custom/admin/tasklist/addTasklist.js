@@ -25,6 +25,10 @@ $("#allStores").change(function(){
 
 var stageTask = function(){
 
+	var taskTitle =  $("#new_task").val();
+	if(taskTitle == ''){
+		return false;
+	}
 	$(".task-table tbody").append(
 		'<tr>'+
             '<td class="col-sm-10 col-sm-offset-2 task-title" '+
