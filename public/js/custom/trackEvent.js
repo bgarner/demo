@@ -79,7 +79,6 @@ $("body").on("click", ".trackclick", function(e){
 
 function trackEvent( device, type, resource, store, location, location_id)
 {
-
 	console.log('%c tracked the click! ' + device + ', ' + type + ', ' + resource + ', ' +  store +', ' + loc + ', ' + loc_id + ' ', 'background: #222; color: #bada55; padding: 5px;');
 
 	$.ajax({
@@ -100,10 +99,5 @@ function trackEvent( device, type, resource, store, location, location_id)
 	});
 	// .done(function(response){
 
-
 	// });
-
-
-
-
 }
