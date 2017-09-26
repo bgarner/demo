@@ -352,7 +352,7 @@ class Collection implements ArrayAccess, Arrayable, Countable, IteratorAggregate
     public function eachSpread(callable $callback)
     {
         return $this->each(function ($chunk, $key) use ($callback) {
-            array_push($chunk, $key);
+            $chunk[] = $key;
 
             return $callback(...$chunk);
         });
@@ -481,18 +481,22 @@ class Collection implements ArrayAccess, Arrayable, Countable, IteratorAggregate
         return function ($item) use ($key, $operator, $value) {
             $retrieved = data_get($item, $key);
 
-            switch ($operator) {
-                default:
-                case '=':
-                case '==':  return $retrieved == $value;
-                case '!=':
-                case '<>':  return $retrieved != $value;
-                case '<':   return $retrieved < $value;
-                case '>':   return $retrieved > $value;
-                case '<=':  return $retrieved <= $value;
-                case '>=':  return $retrieved >= $value;
-                case '===': return $retrieved === $value;
-                case '!==': return $retrieved !== $value;
+            try {
+                switch ($operator) {
+                    default:
+                    case '=':
+                    case '==':  return $retrieved == $value;
+                    case '!=':
+                    case '<>':  return $retrieved != $value;
+                    case '<':   return $retrieved < $value;
+                    case '>':   return $retrieved > $value;
+                    case '<=':  return $retrieved <= $value;
+                    case '>=':  return $retrieved >= $value;
+                    case '===': return $retrieved === $value;
+                    case '!==': return $retrieved !== $value;
+                }
+            } catch (Exception $e) {
+                return false;
             }
         };
     }
@@ -840,7 +844,7 @@ class Collection implements ArrayAccess, Arrayable, Countable, IteratorAggregate
     public function mapSpread(callable $callback)
     {
         return $this->map(function ($chunk, $key) use ($callback) {
-            array_push($chunk, $key);
+            $chunk[] = $key;
 
             return $callback(...$chunk);
         });
@@ -1107,7 +1111,7 @@ class Collection implements ArrayAccess, Arrayable, Countable, IteratorAggregate
      * Push all of the given items onto the collection.
      *
      * @param  \Traversable  $source
-     * @return self
+     * @return $this
      */
     public function concat($source)
     {
@@ -1336,7 +1340,7 @@ class Collection implements ArrayAccess, Arrayable, Countable, IteratorAggregate
      */
     public function sortBy($callback, $options = SORT_REGULAR, $descending = false)
     {
-        $results = [];
+        list($values, $results) = [[], []];
 
         $callback = $this->valueRetriever($callback);
 
@@ -1344,16 +1348,19 @@ class Collection implements ArrayAccess, Arrayable, Countable, IteratorAggregate
         // function which we were given. Then, we will sort the returned values and
         // and grab the corresponding values for the sorted keys from this array.
         foreach ($this->items as $key => $value) {
-            $results[$key] = $callback($value, $key);
+            $values[] = $callback($value, $key);
         }
 
-        $descending ? arsort($results, $options)
-                    : asort($results, $options);
+        $keys = array_keys($this->items);
+
+        $order = $descending ? SORT_DESC : SORT_ASC;
+
+        array_multisort($values, $order, $options, $keys, $order);
 
         // Once we have sorted all of the keys in the array, we will loop through them
         // and grab the corresponding model so we can set the underlying items list
         // to the sorted version. Then we'll just return the collection instance.
-        foreach (array_keys($results) as $key) {
+        foreach ($keys as $key) {
             $results[$key] = $this->items[$key];
         }
 
@@ -1533,6 +1540,18 @@ class Collection implements ArrayAccess, Arrayable, Countable, IteratorAggregate
         }, $this->items], $arrayableItems);
 
         return new static(call_user_func_array('array_map', $params));
+    }
+
+    /**
+     * Pad collection to the specified length with a value.
+     *
+     * @param  int  $size
+     * @param  mixed  $value
+     * @return static
+     */
+    public function pad($size, $value)
+    {
+        return new static(array_pad($this->items, $size, $value));
     }
 
     /**
