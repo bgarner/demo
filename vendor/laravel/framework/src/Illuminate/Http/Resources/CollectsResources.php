@@ -3,7 +3,6 @@
 namespace Illuminate\Http\Resources;
 
 use Illuminate\Support\Str;
-use Illuminate\Support\Collection;
 use Illuminate\Pagination\AbstractPaginator;
 
 trait CollectsResources
@@ -36,7 +35,7 @@ trait CollectsResources
     /**
      * Get the resource that this resource collects.
      *
-     * @return string
+     * @return string|null
      */
     protected function collects()
     {

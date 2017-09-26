@@ -7,6 +7,7 @@ use BadMethodCallException;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use Facebook\WebDriver\WebDriverDimension;
+use Facebook\WebDriver\Remote\WebDriverBrowserType;
 
 class Browser
 {
@@ -43,11 +44,29 @@ class Browser
     public static $storeConsoleLogAt;
 
     /**
+     * The browsers that support retrieving logs.
+     *
+     * @var array
+     */
+    public static $supportsRemoteLogs = [
+        WebDriverBrowserType::CHROME,
+        WebDriverBrowserType::SAFARI,
+        WebDriverBrowserType::PHANTOMJS,
+    ];
+
+    /**
      * Get the callback which resolves the default user to authenticate.
      *
      * @var \Closure
      */
     public static $userResolver;
+
+    /**
+     * The default wait time in seconds.
+     *
+     * @var int
+     */
+    public static $waitSeconds = 5;
 
     /**
      * The RemoteWebDriver instance.
@@ -229,13 +248,15 @@ class Browser
      */
     public function storeConsoleLog($name)
     {
-        $console = $this->driver->manage()->getLog('browser');
+        if (in_array($this->driver->getCapabilities()->getBrowserName(), static::$supportsRemoteLogs)) {
+            $console = $this->driver->manage()->getLog('browser');
 
-        if (! empty($console)) {
-            file_put_contents(
-                sprintf('%s/%s.log', rtrim(static::$storeConsoleLogAt, '/'), $name)
-                , json_encode($console, JSON_PRETTY_PRINT)
-            );
+            if (!empty($console)) {
+                file_put_contents(
+                    sprintf('%s/%s.log', rtrim(static::$storeConsoleLogAt, '/'), $name)
+                    , json_encode($console, JSON_PRETTY_PRINT)
+                );
+            }
         }
 
         return $this;
