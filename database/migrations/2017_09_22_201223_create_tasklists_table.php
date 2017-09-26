@@ -19,6 +19,7 @@ class CreateTasklistsTable extends Migration
             $table->text('description');
             $table->dateTime('due_date');
             $table->dateTime('publish_date');
+            $table->boolean('all_stores');
             $table->timestamps();
             $table->softDeletes();
         });

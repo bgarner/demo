@@ -5,7 +5,6 @@ namespace App\Models\Task;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Utility\Utility;
 use App\Models\StoreApi\Banner;
-use App\Models\Task\TaskTarget;
 
 class TaskTarget extends Model
 {

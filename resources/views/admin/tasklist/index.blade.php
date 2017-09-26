@@ -27,7 +27,7 @@
 
 	                        <div class="ibox-tools">
 
-	                            <a href="/admin/task/create" class="btn btn-primary btn"><i class="fa fa-plus"></i> New Task</a>
+	                            <a href="/admin/tasklist/create" class="btn btn-primary btn"><i class="fa fa-plus"></i> New Task List</a>
 	                        </div>
 	                    </div>
 	                    <div class="ibox-content">
@@ -48,13 +48,13 @@
 								@foreach($tasklists as $tasklist)
 								<tr>
 
-									<td><a href="/admin/task/{{ $task->id }}/edit">{{ $tasklist->title }}</a></td>
+									<td><a href="/admin/tasklist/{{ $tasklist->id }}/edit">{{ $tasklist->title }}</a></td>
 									<td>{!! $tasklist->description !!}</td>
 									<td>{{ $tasklist->prettyDueDate }}</td>
 
 									<td>
 
-										<a data-task="{{ $task->id }}" id="task{{ $task->id }}" class="delete-task btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+										<a data-task="{{ $tasklist->id }}" id="tasklist{{ $tasklist->id }}" class="delete-task btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 
 									</td>
 								</tr>
@@ -84,8 +84,8 @@
 			});
 
 		</script>
-
-		<script type="text/javascript" src="/js/custom/admin/tasklists/deleteTasklist.js"></script>
+		<script type="text/javascript" src="/js/plugins/ckeditor-custom/ckeditor.js"></script>
+		<!-- <script type="text/javascript" src="/js/custom/admin/tasklists/deleteTasklist.js"></script> -->
 
 
 		@include('site.includes.bugreport')

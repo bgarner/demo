@@ -69,7 +69,7 @@ $(document).on('click','.task-update',function(){
 	var publish_date = $("#publish_date").val();
 	var due_date = $("#due_date").val();
 	var banner_id = $("input[name='banner_id']").val();
-	var target_stores  = $("#storeSelect").val();
+	var target_stores  = getTargetStores();
 	var all_stores  = $("#allStores:checked").val();
 	var send_reminder = ($("#send_reminder").prop('checked') === true)?1:0;
 	var status_type_id = $("#status_type_id").val();

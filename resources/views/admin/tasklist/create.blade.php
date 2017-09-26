@@ -7,6 +7,11 @@
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
     <link rel="stylesheet" type="text/css" href="/css/custom/tree.css">
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
+	<style>
+	.stagedTask{
+      		margin : 10px 0 10px 0;
+    }
+	</style>
 </head>
 
 <body class="fixed-navigation adminview">
@@ -41,11 +46,11 @@
 								<div class="form-group">
 									<label class="col-sm-2 control-label">Description</label>
 										<div class="col-sm-10">
-											<textarea class="description" name="body" cols="50" rows="10" id="body"></textarea>
+											<textarea class="description" name="description" cols="50" rows="10" id="description"></textarea>
 										</div>
 								</div>
 								<div class="form-group">
-						                <label class="col-sm-2 control-label">Publish Date</label>
+						                <label class="col-sm-2 control-label">Publish Date <span class="req">*</span></label>
 
 						                <div class="col-sm-10">
 						                    <div class="input-daterange input-group" id="datepicker">
@@ -54,7 +59,7 @@
 						                </div>
 						        </div>
 								<div class="form-group">
-						                <label class="col-sm-2 control-label">Due Date</label>
+						                <label class="col-sm-2 control-label">Due Date <span class="req">*</span></label>
 
 						                <div class="col-sm-10">
 						                    <div class="input-daterange input-group" id="datepicker">
@@ -64,18 +69,9 @@
 						        </div>
 
 
-								<div class="form-group">
-									<div class="col-sm-10 col-sm-offset-2">
-										<div id="add-documents" class="btn btn-primary btn-outline"><i class="fa fa-plus"></i> Add Task</div>
-									</div>
-								</div>
-								<div class="form-group">
-									<div id="files-selected"></div>
-								</div>
-
 						        <div class="form-group">
 
-					                <label class="col-sm-2 control-label">Target Stores</label>
+					                <label class="col-sm-2 control-label">Target Stores <span class="req">*</span></label>
 					                <div class="col-sm-10">
 					                	<select name="stores" id="storeSelect" multiple class="chosen">
 							            	<option value="">Select Some Options</option>
@@ -104,10 +100,33 @@
 					        	</div>
 
 								<div class="hr-line-dashed"></div>
+								<div class="input-group">
+									<input type="text" class="form-control" name="new_task" id="new_task" value="" placeholder="Add Task..."/>
+									<span class="input-group-btn" >
+										<a class="btn btn-primary btn-outline" id="add-task" onclick="stageTask()" >
+										<i class="fa fa-plus"></i> Add Task</a>
+									</span>
+							    </div>
+							    <div id="task-list">
+							    	<table class="table table-hover task-table hidden ">
+                                		<thead>
+                                			<tr>
+                                				<td>Title</td>
+                                				<td></td>
+                                				<td>Action</td>
+                                			</tr>
+                                		</thead>
+                                		<tbody>
+                                		</tbody>
+                                	</table>
+							    </div>
+
+								<div class="hr-line-dashed"></div>
+
 								<div class="form-group">
 									<div class="col-sm-10 col-sm-offset-2">
-										<a class="btn btn-white" href="/admin/task"><i class="fa fa-close"></i> Cancel</a>
-										<button class="btn btn-primary task-create"><i class="fa fa-check"></i> Create New Task List</button>
+										<a class="btn btn-white" href="/admin/tasklist"><i class="fa fa-close"></i> Cancel</a>
+										<button class="btn btn-primary tasklist-create"><i class="fa fa-check"></i> Create New Task List</button>
 						            </div>
 						        </div>
 
@@ -133,12 +152,11 @@
 
 		<script type="text/javascript" src="/js/vendor/moment.js"></script>
 		<script type="text/javascript" src="/js/vendor/bootstrap-datetimepicker.min.js"></script>
-		<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
+		<script type="text/javascript" src="/js/plugins/ckeditor-custom/ckeditor.js"></script>
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
-		<script type="text/javascript" src="/js/custom/admin/tasks/addTask.js"></script>
+		<script type="text/javascript" src="/js/custom/admin/tasklist/addTasklist.js"></script>
 		<script type="text/javascript" src="/js/custom/tree.js"></script>
 		<script type="text/javascript" src="/js/custom/datetimepicker-with-default-time.js"></script>
-		<!-- <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script> -->
 		<script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>
 
 		<script type="text/javascript">
@@ -157,17 +175,7 @@
 				  width:'75%'
 			});
 
-		   	CKEDITOR.replace('body', {
-
-    		    filebrowserUploadUrl: "{{route('utilities.ckeditorimages.store',['_token' => csrf_token() ])}}"
-
-    		});
-
-		    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
-
-		    $("#add-documents").click(function(){
-		    	$("#document-listing").modal('show');
-		    });
+    		CKEDITOR.replace('description');
 
 		</script>
 

@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Task;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Task\Tasklist;
+use App\Models\Task\TasklistTarget;
 use App\Models\Utility\Utility;
-
+use App\Models\StoreApi\StoreInfo;
 class TasklistAdminController extends Controller
 {
 	
@@ -66,12 +67,12 @@ class TasklistAdminController extends Controller
     public function edit($id)
     {
         
-        $tasklist_target_stores = TaskTarget::getTargetStoresByTaskId($id);
-        $storeList = StoreInfo::getStoreListing($banner->id);
+        $tasklist_target_stores = TasklistTarget::getTargetStoresByTasklistId($id);
+        $storeList = StoreInfo::getStoreListing(1);
 
         $tasklist = Tasklist::getTasklistById($id);
         
-        return view('admin.task.edit')->with('tasklist', $tasklist)
+        return view('admin.tasklist.edit')->with('tasklist', $tasklist)
                                         ->with('storeList', $storeList)
                                         ->with('target_stores', $tasklist_target_stores);
     }
