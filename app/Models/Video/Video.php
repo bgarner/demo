@@ -102,8 +102,6 @@ class Video extends Model
 
         $allStoreVideos = Video::groupBannersForAllStoreVideos($allStoreVideos);
         
-        
-        
         $targetedVideos = Video::join('video_target', 'video_target.video_id', '=', 'videos.id')
                                 ->whereIn('video_target.store_id', $storeList)
                                 ->select('videos.*', 'video_target.store_id')
@@ -111,9 +109,25 @@ class Video extends Model
 
         $targetedVideos = Video::groupStoresForTargetedVideos($targetedVideos);
 
-        $videos = Playlist::mergeTargetedAndAllStoreAssets($targetedVideos, $allStoreVideos);
+        $storeGroups = CustomStoreGroup::getStoreGroupsForAdmin();
+        $videosForStoreGroups = Video::join('video_store_group', 'video_store_group.video_id', '=', 'videos.id')
+                                            ->whereIn('video_store_group.store_group_id', $storeGroups)
+                                            ->select('videos.*')
+                                            ->get()
+                                            ->each(function($item){
+                                                $storeGroups = VideoStoreGroup::where('video_id', $item->id)->get()->pluck('store_group_id')->toArray();
+                                                $item->storeGroups = $storeGroups;
+                                                $item->stores = [];
+                                                foreach ($storeGroups as $group) {
+                                                    $stores = unserialize(CustomStoreGroup::find($group)->stores);
+                                                    $item->stores = array_merge($item->stores,$stores);
+                                                }
+                                                $item->stores = array_unique( $item->stores);
+                                            });
 
-        // $videos = $allStoreVideos->merge($targetedVideos)->sortByDesc('created_at');
+        $targetedVideos = Video::mergeTargetedAndStoreGroupVideos($targetedVideos, $videosForStoreGroups);
+                                           
+        $videos = Playlist::mergeTargetedAndAllStoreAssets($targetedVideos, $allStoreVideos);
 
         foreach ($videos as $video) {
             $video->uploaderFirstName = User::find($video->uploader)->firstname;
@@ -422,12 +436,6 @@ class Video extends Model
         return;
     }
 
-
-        
-        
-
-   
-
     public static function groupBannersForAllStoreVideos($allStoreVideos)
     {
         $allStoreVideos = $allStoreVideos->toArray();
@@ -449,8 +457,6 @@ class Video extends Model
         return collect($compiledVideos);
     }
 
-
-
     public static function groupStoresForTargetedVideos($targetedVideos)
     {
         $targetedVideos = $targetedVideos->toArray();
@@ -460,8 +466,7 @@ class Video extends Model
             if(  $index !== false ){
                array_push($compiledVideos[$index]->stores, $video["store_id"]);
             }
-            else{
-               
+            else{       
                $video["stores"] = [];
                array_push( $video["stores"] , $video["store_id"]);
                array_push( $compiledVideos , (object) $video);
@@ -470,6 +475,26 @@ class Video extends Model
         }
         
         return collect($compiledVideos);
+    }
+
+    public static function mergeTargetedAndStoreGroupVideos($targetedVideos, $storeGroupVideos)
+    {
+        $targetedVideosArray = $targetedVideos->toArray();
+        $targetedVideoIds = array_column($targetedVideosArray, 'id');
+        foreach ($storeGroupVideos as $video) {
+
+            if(in_array($video->id, $targetedVideoIds)){
+                $targetedVideoStores = $targetedVideos->where('id', $video->id)->first()->stores;
+                $mergedStores = array_merge( $targetedVideoStores, $video->stores);
+                $targetedVideos->where('id', $video->id)->first()->stores = $mergedStores;
+            }
+            else{
+
+                $targetedVideos = $targetedVideos->push((object)$video);                
+            }
+        }
+        return $targetedVideos;
+
     }
 
 
