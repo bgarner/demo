@@ -2,14 +2,15 @@ var videosPlayedThisSession = [];
 
 // $(document).ready(function() {
 
-$('video').click('play', function(event) {
-    var videoid = event.target.id;
-    videoid = videoid.replace("video", "");
-    console.log(videoid);
-    initVideoIncrement(videoid);
-    trackVideo(videoid);
-
-});
+// $('video').click('play', function(event) {
+//     console.log("----------------\nARTIFICAL CLICK\n----------------");
+//     var videoid = event.target.id;
+//     videoid = videoid.replace("video", "");
+//     console.log(videoid);
+//     initVideoIncrement(videoid);
+//     trackVideo(videoid);
+//
+// });
 
 // $(".videoInPlaylist").click(function(event) {
 //

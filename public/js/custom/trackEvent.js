@@ -83,12 +83,16 @@ $("body").on("click", ".trackclick", function(e){
 
 function trackEvent( device, type, resource, store, location, location_id)
 {
-	console.log('%cTrack an Event \n~~~~~~~~~~~~~~~~~~~\n📱 Device: ' + device + ' \n✅ Type: ' + type + ' \n✅ Resource: ' + resource + ' \n✅ Store: ' +  store +' \n✅ Location: ' + loc + ' \n✅ Location ID: ' + loc_id + ' \n🚀 Sent the event!', 'background: #fff; color: #558ada; display: block; padding: 5px; line-height: 20px; 200px;');
+	console.log('%cTrack an Event \n~~~~~~~~~~~~~~~~~~~'+
+		        ' \n📱Device: ' + device + 
+		        ' \n✅ Type: ' + type + 
+		        ' \n✅ Resource: ' + resource + 
+		        ' \n✅ Store: ' + store +
+		        ' \n✅ Location: ' + loc + 
+		        ' \n✅ Location ID: ' + loc_id + 
+		        ' \n🚀 Sent the event!', 
+		        'background: #fff; color: #558ada; display: block; padding: 5px; line-height: 20px; 200px;');
 
-	//if this is playlist, initialize the video incrementer
-	// if(pathArray[3] == "playlist"){
-	// 	initVideoIncrement();
-	// }
 
 	$.ajax({
 	    url: '/clicktrack',

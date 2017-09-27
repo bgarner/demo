@@ -141,7 +141,7 @@
                                     <div class="pull-left">
                                         <h3 id="video-title"></h3>
                                         <p>
-                                            <span id="video-views" class="viewcount"></span> {{__("views")}} &middot; 
+                                            <span id="video-views" class="viewcount"></span> {{__("views")}} &middot;
                                             <span id="video-since"></span> {{__("ago")}}
                                         </p>
                                     </div>
@@ -174,7 +174,6 @@
 
     <script type="text/javascript" src="/js/vendor/underscore-1.8.3.js"></script>
     <script type="text/javascript" src="/js/vendor/lightbox.min.js"></script>
-    <script type="text/javascript" src="/js/custom/site/video/incViewCountFromPlaylist.js?<?php echo time();?>"></script>
     <script type="text/javascript" src="/js/custom/site/video/incrementViewCount.js?<?php echo time();?>"></script>
     <script type="text/javascript" src="/js/custom/site/video/likedislike.js?<?php echo time();?>"></script>
     <script src="/js/plugins/videojs-playlist/dist/videojs-playlist.js"></script>
@@ -219,15 +218,16 @@
       $(".video-details").find("#video-since").text(video.sinceCreated);
       $(".video-details").find("#video-description").text(video.description);
       $(".video-details").find("#clicktrack_link").attr('data-video-id', video.id).trigger('click');
-      $.ajax({
-        url : '/videocount',
-        type: 'POST',
-        data: {
-            id: video.id,
-        },
-    }).done(function( data ){
-        $(".video-details").find("#video-views").text(data);
-    });
+      initVideoIncrement(video.id);
+    //   $.ajax({
+    //     url : '/videocount',
+    //     type: 'POST',
+    //     data: {
+    //         id: video.id,
+    //     },
+    // }).done(function( data ){
+    //     $(".video-details").find("#video-views").text(data);
+    // });
 
     });
     </script>

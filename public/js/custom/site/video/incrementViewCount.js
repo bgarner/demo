@@ -1,21 +1,3 @@
-// $( document ).ready(function() {
-
-// 	var videoid = $("#video_id").val();
-// 	$.ajax({
-// 		url : '/videocount',
-// 	    type: 'POST',
-// 	    data: {
-// 	    	id: videoid,
-// 	    },
-// 	}).done(function( data ){
-// 		console.log(data);
-// 	});
-// });
-
-//call the first time for a single video or first of a playlist
-
-
-
 var start, time, elapsed, firetime;
 
 start = new Date().getTime();
@@ -26,11 +8,9 @@ firetime = '';
 window.setTimeout(videoMeta, 1000);
 window.setTimeout(timer, 1100);
 
-//initVideoIncrement();
-
-function initVideoIncrement(videoid)
+function initVideoIncrement(v)
 {
-    var start, time, elapsed, firetime;
+   // var start, time, elapsed, firetime;
 
     start = new Date().getTime();
     time = 0;
@@ -41,15 +21,19 @@ function initVideoIncrement(videoid)
     // time = 0;
     // elapsed = '0.0';
     // firetime = '';
-    conole.log('reset the timer/meta');
+    console.log('reset the timer/meta');
 
-    var player = videojs(videoid);
+    //var videoId = $(".video-js").attr('id');
+    
+    var videoId = $(".video-details").find("#clicktrack_link").attr('data-video-id', v);
+    var player = videojs(videoId); 
 
     var duration = player.duration();
     firetime = duration/2;
 
     console.log("reset duration: " + player.duration());
-    console.log("reset timer: " + player.currentTime());
+    console.log("current time: " + player.currentTime());
+    console.log("timer: " + elapsed);
     console.log("reset firetime: " + firetime );
 
     timer();
@@ -75,10 +59,10 @@ function timer()
     elapsed = Math.floor(time / 100) / 10;
     if(Math.round(elapsed) == elapsed) { elapsed += '.0'; }
 
-   // document.title = elapsed;
+    document.title = elapsed;
 
     if(elapsed > firetime){
-
+        console.log('👀 This video is marked at watched!')
         var videoid = $("#video_id").val();
         $.ajax({
             url : '/videocount',
@@ -87,7 +71,7 @@ function timer()
                 id: videoid,
             },
         }).done(function( data ){
-            console.log("view count: " + data);
+            console.log("🔺 view count: " + data);
             $('.viewcount').text(data + " views");
 
             //send to analytics
