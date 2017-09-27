@@ -369,15 +369,20 @@ class Utility extends Model
     public static function getBannerListByAdminId()
     {
     	$banners = UserBanner::getAllBanners()->pluck('name', 'id')->toArray();
+    	$bannerList = [];
 		foreach ($banners as $key => $value) {
 			$bannerName = $value;
 			$value = [];
 			$value['option-label'] = $bannerName;
-			$value['data-attributes'] = ['allStores' => 1 , 'optionType'   => 'banner'];
-			$banners[$key] = $value;
+			$value['data-attributes'] = [
+										'allStores'   => 1 ,
+										'optionType'  => 'banner',
+										'resourceId'  => $key
+									];
+			$bannerList['banner'.$key] = $value;
 		}
 
-		return $banners;
+		return $bannerList;
     }
     public static function getStoreListByAdminId()
     {
@@ -388,12 +393,12 @@ class Utility extends Model
 
             $storeInfo = StoreInfo::getStoresInfo($banner->id);
             foreach ($storeInfo as $store) {
-                $storeList[$store->store_number] = [
+                $storeList['store'.$store->store_number] = [
                 		'option-label' => $store->store_id . " " . $store->name . " (" . $banner->name .")" ,
                 		'data-attributes' => [
                 				'parentBanner' => $store->banner_id,
-                				'optionType'   => 'store'
-
+                				'optionType'   => 'store',
+                				'resourceId'   => $store->store_number
                 			]
                 	];
             }
@@ -409,10 +414,11 @@ class Utility extends Model
     	$groupList = [];
     	foreach ($storeGroups as $group) {
     		
-            $groupList[$group->id] = [
+            $groupList['storegroup'.$group->id] = [
         		'option-label' => $group->group_name. " (" . implode(', ', $group->stores) . ")",
         		'data-attributes' => [
-        				'optionType'   => 'storegroup'
+        				'optionType'  => 'storegroup',
+        				'resourceId'  => $group->id
 
         			]
             	];

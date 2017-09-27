@@ -195,6 +195,7 @@ $(document).on('click','.video-update',function(){
 		    	featuredOn : featuredOn,
 		    	target_stores : getTargetStores(),
 		    	target_banners : getTargetBanners(),
+		    	store_groups : getStoreGroups(),
 		    	all_stores : getAllStoreStatus()
 
 		    },

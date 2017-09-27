@@ -52,7 +52,6 @@ class TasklistTarget extends Model
 		$tasklist = Tasklist::find($id);
 
         if(isset($tasklist->all_stores) && $tasklist->all_stores){
-            // $banner = $tasklist->banner_id;
             $banner = 1;
             $stores = Banner::getStoreDetailsByBannerid($banner)->pluck('store_number')->toArray();
         }

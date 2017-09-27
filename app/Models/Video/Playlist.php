@@ -13,6 +13,7 @@ use App\Models\Video\Video;
 use App\Models\Video\PlaylistVideo;
 use App\Models\Video\PlaylistBanner;
 use App\Models\Video\PlaylistTarget;
+use App\Models\Tools\CustomStoreGroup;
 
 class Playlist extends Model
 {
@@ -84,7 +85,7 @@ class Playlist extends Model
    		]);
 
    		PlaylistVideo::updatePlaylistVideos($playlist->id, $request);
-        Playlist::updateTargetStores($request, $playlist->id);
+        PlaylistTarget::updateTargetStores($request, $playlist->id);
    		return $playlist;
 
     }
@@ -105,7 +106,7 @@ class Playlist extends Model
         $playlist->description = $request['description'];
     	$playlist->save();
     	PlaylistVideo::updatePlaylistVideos($id, $request);
-        Playlist::updateTargetStores($request, $id);
+        PlaylistTarget::updateTargetStores($request, $id);
         $tags = $request->get('tags');
         if ($tags != null) {
             PlaylistTag::updateTags($id, $tags);
@@ -113,52 +114,7 @@ class Playlist extends Model
     	return $playlist;
     }
 
-    public static function updateTargetStores($request, $id)
-    {
-
-        $all_stores = $request['all_stores'];
-
-        $video = Playlist::find($id);
-        PlaylistTarget::where('playlist_id', $id)->delete();
-        PlaylistBanner::where('playlist_id', $id)->delete();
-        
-        if( $all_stores == 'on' ){
-
-            $target_banners = $request['target_banners'];
-            \Log::info($target_banners);
-            if(! is_array($target_banners) ) {
-                $target_banners = explode(',',  $request['target_banners'] );    
-            }
-            foreach ($target_banners as $key=>$banner) {
-                PlaylistBanner::create([
-                'playlist_id' => $id,
-                'banner_id' => $banner
-                ]);
-            }
-            
-            $video->all_stores = 1;
-            $video->save();
-        }
-        
-        if (isset($request['target_stores']) && $request['target_stores'] != '' ) {
-                
-            $target_stores = $request['target_stores'];
-            if(! is_array($target_stores) ) {
-                $target_stores = explode(',',  $request['target_stores'] );    
-            }
-            foreach ($target_stores as $store) {
-                PlaylistTarget::insert([
-                    'playlist_id' => $id,
-                    'store_id' => $store
-                    ]);    
-            }
-            // if(!in_array('0940', $target_stores)){
-            // Utility::addHeadOffice($id, 'playlist_target', 'playlist_id');
-            // }
-        }  
-        
-        return;         
-    }
+    
 
     public static function getPlaylistsForAdmin()
     {
@@ -246,8 +202,16 @@ class Playlist extends Model
                                         ->where('playlist_target.store_id', $store_id)
                                         ->select('playlists.*')
                                         ->get();
+
+        $storeGroups = CustomStoreGroup::getStoreGroupsForStore($store_id);
+
+        $targetedPlaylistsForStoreGroups = Playlist::join('playlist_store_group', 'playlist_store_group.playlist_id', '=', 'playlists.id')
+                                            ->whereIn('playlist_store_group.store_group_id', $storeGroups)
+                                            ->select('playlists.*')
+                                            ->get();
+
         $playlists = $targetedPlaylistsForStore->merge($allStorePlaylistsForBanners);
-        
+        $playlists = $playlists->merge($targetedPlaylistsForStoreGroups);
         return $playlists;
     }
 
@@ -262,7 +226,20 @@ class Playlist extends Model
         $targetBanners = PlaylistBanner::where('playlist_id', $playlist_id)->get()->pluck('banner_id')->toArray();
         $targetStores = PlaylistTarget::where('playlist_id', $playlist_id)->get()->pluck('store_id')->toArray();
 
-        $optGroupSelections = array_merge($targetBanners, $targetStores );
+        $storeGroups = PlaylistStoreGroup::where('playlist_id', $playlist_id)->get()->pluck('store_group_id')->toArray();
+
+        $optGroupSelections = [];
+        foreach ($targetBanners as $banner) {
+            array_push($optGroupSelections, 'banner'.$banner);
+        }
+        foreach ($targetStores as $stores) {
+            array_push($optGroupSelections, 'store'.$stores);   
+        }
+        foreach ($storeGroups as $group) {
+            array_push($optGroupSelections, 'storegroup'.$group);   
+        }
+
+
         return( $optGroupSelections );
     }
 

@@ -88,4 +88,18 @@ class CustomStoreGroup extends Model
 		return $storeGroup;
  	}
 
+ 	public static function getStoreGroupsForStore($store_number)
+    {
+    	$storeGroups = CustomStoreGroup::getAllGroups();
+    	$selectedStoreGroups = [];
+    	foreach ($storeGroups as $group) {
+    		if(in_array($store_number, $group->stores)){
+    			array_push($selectedStoreGroups, $group->id);
+    		}
+    	}
+
+    	return $selectedStoreGroups;
+
+    }
+
 }
