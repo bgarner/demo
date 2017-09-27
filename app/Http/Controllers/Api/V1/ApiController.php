@@ -26,7 +26,7 @@ class ApiController extends Controller
 
         $forApi = true;
 
-        return Document::getDocuments($folder_id $forApi);
+        return Document::getDocuments($folder_id, $forApi);
 
     }
 
