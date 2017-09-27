@@ -12,11 +12,49 @@
 // 	});
 // });
 
-var start = new Date().getTime();
-var time = 0;
-var elapsed = '0.0';
-var firetime;
-        
+//call the first time for a single video or first of a playlist
+
+
+
+var start, time, elapsed, firetime;
+
+start = new Date().getTime();
+time = 0;
+elapsed = '0.0';
+firetime = '';
+
+window.setTimeout(videoMeta, 1000);
+window.setTimeout(timer, 1100);
+
+//initVideoIncrement();
+
+function initVideoIncrement(videoid)
+{
+    var start, time, elapsed, firetime;
+
+    start = new Date().getTime();
+    time = 0;
+    elapsed = '0.0';
+    firetime = '';
+
+    // start = new Date().getTime();
+    // time = 0;
+    // elapsed = '0.0';
+    // firetime = '';
+    conole.log('reset the timer/meta');
+
+    var player = videojs(videoid);
+
+    var duration = player.duration();
+    firetime = duration/2;
+
+    console.log("reset duration: " + player.duration());
+    console.log("reset timer: " + player.currentTime());
+    console.log("reset firetime: " + firetime );
+
+    timer();
+}
+
 function videoMeta()
 {
     var videoId = $(".video-js").attr('id');
@@ -29,7 +67,7 @@ function videoMeta()
     console.log("current time: " + player.currentTime());
     console.log("firetime: " + firetime );
 }
-        
+
 function timer()
 {
     time += 100;
@@ -40,7 +78,7 @@ function timer()
    // document.title = elapsed;
 
     if(elapsed > firetime){
-        
+
         var videoid = $("#video_id").val();
         $.ajax({
             url : '/videocount',
@@ -75,7 +113,7 @@ function timer()
 				var device = "Android";
 			}
 
-			trackEvent( device, "video_watch", videoId, localStorage.getItem('userStoreNumber'), loc, loc_id );	
+			trackEvent( device, "video_watch", videoId, localStorage.getItem('userStoreNumber'), loc, loc_id );
 
         });
 
@@ -85,6 +123,3 @@ function timer()
     var diff = (new Date().getTime() - start) - time;
     window.setTimeout(timer, (100 - diff));
 }
-
-window.setTimeout(videoMeta, 1000); 
-window.setTimeout(timer, 1100);  

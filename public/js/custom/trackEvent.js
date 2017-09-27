@@ -1,7 +1,9 @@
+var pathArray = window.location.pathname.split( '/' );
+
 $("body").on("click", ".trackclick", function(e){
 // $( "[data-res-id]" ).live( "click", function () {
 	var device = "Desktop";
-	var pathArray = window.location.pathname.split( '/' );
+
 
 	fileId = $(this).attr("data-res-id");
 	videoId = $(this).attr("data-video-id");
@@ -73,13 +75,20 @@ $("body").on("click", ".trackclick", function(e){
 		return;
 	}
 
+
+
 	trackEvent( device, "file", fileId, localStorage.getItem('userStoreNumber'), loc, loc_id );
 
 });
 
 function trackEvent( device, type, resource, store, location, location_id)
 {
-	console.log('%c tracked the event! ' + device + ', ' + type + ', ' + resource + ', ' +  store +', ' + loc + ', ' + loc_id + ' ', 'background: #222; color: #bada55; padding: 5px;');
+	console.log('%cTrack an Event \n~~~~~~~~~~~~~~~~~~~\n📱 Device: ' + device + ' \n✅ Type: ' + type + ' \n✅ Resource: ' + resource + ' \n✅ Store: ' +  store +' \n✅ Location: ' + loc + ' \n✅ Location ID: ' + loc_id + ' \n🚀 Sent the event!', 'background: #fff; color: #558ada; display: block; padding: 5px; line-height: 20px; 200px;');
+
+	//if this is playlist, initialize the video incrementer
+	// if(pathArray[3] == "playlist"){
+	// 	initVideoIncrement();
+	// }
 
 	$.ajax({
 	    url: '/clicktrack',
@@ -93,7 +102,7 @@ function trackEvent( device, type, resource, store, location, location_id)
 	  		location_id: loc_id
 	    },
 	    success: function(result) {
-	      console.log('click as been tracked');
+	      console.log('%c🎈 Event has been recorded', 'background: #fff; color: #0c0; padding: 5px; position: relative; top: 15px; line-height: 20px;');
 	    }
 
 	});

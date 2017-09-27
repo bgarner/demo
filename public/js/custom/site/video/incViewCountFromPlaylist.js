@@ -5,7 +5,10 @@ var videosPlayedThisSession = [];
 $('video').click('play', function(event) {
     var videoid = event.target.id;
     videoid = videoid.replace("video", "");
+    console.log(videoid);
+    initVideoIncrement(videoid);
     trackVideo(videoid);
+
 });
 
 // $(".videoInPlaylist").click(function(event) {

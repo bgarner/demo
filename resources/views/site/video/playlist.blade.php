@@ -6,7 +6,7 @@
 
     @include('site.includes.head')
 
-    
+
     <link href="/js/plugins/videojs-playlist-ui/dist/videojs-playlist-ui.css" rel="stylesheet">
     <link href="/js/plugins/videojs-playlist-ui/dist/videojs-playlist-ui.vertical.css" rel="stylesheet">
 
@@ -30,7 +30,7 @@
         white-space: nowrap;
         width: 1%
     }
-    
+
     .preview-player-dimensions.vjs-fluid {
       padding-top: 41.66666666666667%;
     }
@@ -123,7 +123,7 @@
                         <!-- <div class="ibox float-e-margins clearfix"> -->
 
                             <input type="text" id="videoList" hidden value="{{$videoList}}">
-                            
+
 
                             <section class="main-preview-player">
                                 <video id="preview-player" class="video-js vjs-fluid vjs-big-play-centered " controls preload="auto"
@@ -141,7 +141,7 @@
                                     <div class="pull-left">
                                         <h3 id="video-title"></h3>
                                         <p>
-                                            <span id="video-views"></span> {{__("views")}} &middot; 
+                                            <span id="video-views" class="viewcount"></span> {{__("views")}} &middot; 
                                             <span id="video-since"></span> {{__("ago")}}
                                         </p>
                                     </div>
@@ -185,7 +185,7 @@
     <script>
         var videoId = $(".video-js").attr('id');
         var player = videojs(videoId, {
-            
+
         });
         var videoList = JSON.parse($("#videoList").val());
         $(videoList).each(function(index){
@@ -204,7 +204,7 @@
 
 
     // Initialize the playlist-ui plugin with no option (i.e. the defaults).
-    
+
     player.playlistUi();
     player.playlist.autoadvance(0);
     player.on('loadedmetadata', function() {
