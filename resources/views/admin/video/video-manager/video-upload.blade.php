@@ -55,50 +55,8 @@
 
                     <div class="form-container">
 
-                        {{--<div class="upload-form select-stores-form row">
-                            <label class="col-sm-2 control-label">Target Stores</label>
-                            <div class="col-sm-10">
-                                {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
-                                {!! Form::label('allStores', 'Or select all stores:', ['class'=>'hidden']) !!}
-                                {!! Form::checkbox('allStores', null, false ,['id'=> 'allStores', 'class'=>'hidden'] ) !!}
-                            </div>
-                        </div>
-                        <div class="select-banners-form row">
-                            <label class="col-sm-2 col-md-2 control-label">Target Banners</label>
-                            <div class="col-sm-10 col-md-10">
-                                {!! Form::select('banners', $banners, null, [ 'class'=>'chosen', 'id'=> 'bannerSelect', 'multiple'=>'true']) !!}
-                            </div>
-                        </div>--}}
-
-
-                        <div class="form-group">
-                            {!! Form::label('targets', 'Select Stores', ['class'=>'col-sm-2 control-label']) !!}
-                            <div class="col-sm-10">
-
-                                <select name="targets[]" id="targets" multiple class="chosen">
-                                    <option value="">Select Some Options</option>
-                                    @foreach($optGroupOptions as $optionGroups)
-                                        <optgroup label="{{$optionGroups['optgroup-label']}}">
-                                        @foreach($optionGroups["options"] as $key=>$value)
-                                            <option value={{$key}}
-
-                                                @forelse($value['data-attributes'] as $attr=>$val )
-                                                    data-{{$attr}} = {{$val}}
-                                                @empty
-                                                @endforelse
-
-                                            >
-                                                {{$value['option-label']}}
-                                            </option>
-                                        @endforeach
-                                        </optgroup>
-                                    @endforeach
-
-                                </select>
-                            </div>
-                        </div>
-
-
+                        
+                        @include('admin.includes.the-ultimate-store-selector', ['optGroupOptions'=> $optGroupOptions ])
 
                         <div class="datepicker-div row">
 
@@ -203,9 +161,6 @@
                         </div>
 
 
-
-
-
                 </div> <!-- end ibox content -->
                 </div> <!-- end ibox -->
 
@@ -234,8 +189,8 @@
             <script type="text/javascript" src="/js/vendor/lightbox.min.js"></script>
             <script type="text/javascript" src="/js/custom/admin/documents/breadcrumb.js"></script>
             <script type="text/javascript" src="/js/custom/admin/videos/uploadVideo.js"></script>
-            <!-- <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script> -->
-            <script type="text/javascript" src="/js/custom/admin/videos/editVideo.js"></script>
+            <script type="text/javascript" src="/js/custom/admin/global/storeandBannerSelector.js"></script>
+            
 
 
             <script type="text/javascript">

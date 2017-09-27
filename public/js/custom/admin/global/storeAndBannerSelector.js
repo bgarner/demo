@@ -7,16 +7,21 @@ $(document).ready(function(){
 		'width':'100%'
 	})
 	storeSelect = $('#targets');
-	console.log($("#optGroupSelections").val());
-	var selected = JSON.parse($("#optGroupSelections").val());  
-	selected = Array.from(new Set(selected));
-	storeSelect.val(null);
-	storeSelect.val(selected);
-	storeSelect.trigger('chosen:updated');
+
+	var optGroupSelections = $("#optGroupSelections").val();
+	if(typeof(optGroupSelections) !== 'undefined'){
+
+		var selected = JSON.parse(optGroupSelections);  
+		selected = Array.from(new Set(selected));
+		console.log(selected);
+		storeSelect.val(null);
+		storeSelect.val(selected);
+		storeSelect.trigger('chosen:updated');	
+	}
 });
 
 
-$(".chosen").on('change', function (event,el) {
+$("#targets").on('change', function (event,el) {
 
 	var options = $( ".chosen option:selected" );
 	allStores = 'off';

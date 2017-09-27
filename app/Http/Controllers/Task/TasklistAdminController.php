@@ -31,8 +31,9 @@ class TasklistAdminController extends Controller
     public function create()
     {
         
-        $storeAndStoreGroups = Utility::getStoreAndStoreGroupList(1);
-        return view('admin.tasklist.create')->with('storeAndStoreGroups', $storeAndStoreGroups);
+        // $storeAndStoreGroups = Utility::getStoreAndStoreGroupList(1);
+        $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
+        return view('admin.tasklist.create')->with('optGroupOptions', $optGroupOptions);
 
     }
 
