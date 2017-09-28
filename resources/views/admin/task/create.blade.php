@@ -75,6 +75,8 @@
 								<div class="form-group">
 									<div id="files-selected"></div>
 								</div>
+
+								@include('admin.includes.the-ultimate-store-selector', ['optGroupOptions' =>$optGroupOptions])
 								{{--<div class="form-group">
 
 						                <label class="col-sm-2 control-label">Target Stores <span class="req">*</span> </label>
@@ -86,35 +88,35 @@
 
 						        </div>--}}
 
-						        <div class="form-group">
+						        {{--<div class="form-group">
 
-								                <label class="col-sm-2 control-label">Target Stores</label>
-								                <div class="col-sm-10">
-								                	<select name="stores" id="storeSelect" multiple class="chosen">
-										            	<option value="">Select Some Options</option>
-										            	@foreach($storeAndStoreGroups as $option)
+					                <label class="col-sm-2 control-label">Target Stores</label>
+					                <div class="col-sm-10">
+					                	<select name="stores" id="storeSelect" multiple class="chosen">
+							            	<option value="">Select Some Options</option>
+							            	@foreach($storeAndStoreGroups as $option)
 
-										                    <option value="{{$option['id']}}"
+							                    <option value="{{$option['id']}}"
 
-										                        @if(isset($option["isStoreGroup"]))
-																	data-isStoreGroup = "{{$option['isStoreGroup']}}"
-										                        @endif
-										                        @if(isset($option["stores"]))
-																	data-stores = "{{$option['stores']}}"
-										                        @endif
+							                        @if(isset($option["isStoreGroup"]))
+														data-isStoreGroup = "{{$option['isStoreGroup']}}"
+							                        @endif
+							                        @if(isset($option["stores"]))
+														data-stores = "{{$option['stores']}}"
+							                        @endif
 
-										                    >
-										                        {{$option['name']}}
-										                    </option>
+							                    >
+							                        {{$option['name']}}
+							                    </option>
 
-										            	@endforeach
+							            	@endforeach
 
-										        	</select>
-										        	{!! Form::label('allStores', 'Or select all stores:') !!}
-										        	{!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
-								                </div>
+							        	</select>
+							        	{!! Form::label('allStores', 'Or select all stores:') !!}
+							        	{!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
+					                </div>
 
-								        </div>
+								</div> --}}
 
 						        {{--<div class="form-group">
 
@@ -195,7 +197,8 @@
 		<script type="text/javascript" src="/js/custom/tree.js"></script>
 		<script type="text/javascript" src="/js/custom/datetimepicker-with-default-time.js"></script>
 		<!-- <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script> -->
-		<script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>
+		<!-- <script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script> -->
+		<script type="text/javascript" src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
 
 		<script type="text/javascript">
 

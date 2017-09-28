@@ -97,7 +97,8 @@ class VideoTarget extends Model
                     ]);    
             }
             
-        }  
+        } 
+        Utility::addHeadOffice($id, 'video_target', 'video_id'); 
         return;         
     }
 }

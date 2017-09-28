@@ -66,10 +66,21 @@ class Video extends Model
         $validateThis = [
 
             'filename'      => $request->file('document'),
-            'start'         => $request->start,
-            'target_stores' => explode(',', $request['target_stores'])
+            'start'         => $request->start
+            // 'target_stores' => explode(',', $request['target_stores'])
 
         ];
+
+        if ($request['target_stores'] != NULL) {
+            $validateThis['target_stores'] = $request['target_stores'];
+        }
+        if ($request['target_banner'] != NULL) {
+            $validateThis['target_banners'] = $request['target_banners'];
+        }
+        if ($request['target_store_groups'] != NULL) {
+            $validateThis['target_store_groups'] = $request['target_store_groups'];
+        }
+
         if ($request['all_stores'] != NULL) {
             $validateThis['allStores'] = $request['all_stores'];
         }
