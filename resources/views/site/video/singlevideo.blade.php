@@ -53,7 +53,7 @@
                         class="video-js vjs-default-skin vjs-big-play-centered"
                         poster="/video/thumbs/{{$video[0]->thumbnail}}" 
                         id="video_{{$video[0]->id}}"
-                        data-setup='{"controls": true, "autoplay": false, "preload": "auto", "fluid": true}'
+                        data-setup='{"controls": true, "autoplay": true, "preload": "auto", "fluid": true}'
                         >
                         <source src="/video/{{$video[0]->filename}}" type="video/webm" />
                     </video>
@@ -69,7 +69,7 @@
                             </div>
 
                             <div class="pull-right">
-                                    <h2>{{$video[0]->views}} {{__("views")}}</h2>
+                                    <h2 class="viewcount">{{$video[0]->views}} {{__("views")}}</h2>
                                     <!-- <div class="progress progress-mini" style="margin-bottom: 10px;">
                                         <div style="width: {{$video[0]->ratio}}%;" class="progress-bar"></div>
                                     </div> -->
@@ -133,11 +133,7 @@
     <script type="text/javascript" src="/js/vendor/lightbox.min.js"></script>
     <script type="text/javascript" src="/js/custom/site/video/incrementViewCount.js?<?php echo time();?>"></script>
     <script type="text/javascript" src="/js/custom/site/video/likedislike.js?<?php echo time();?>"></script>
-    <script>
-        var videoId = $(".video-js").attr('id');
-        var player = videojs(videoId);
-       
-    </script>
+    
     @include('site.includes.modal')
 
 </body>
