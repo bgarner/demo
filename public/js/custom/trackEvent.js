@@ -4,7 +4,6 @@ $("body").on("click", ".trackclick", function(e){
 // $( "[data-res-id]" ).live( "click", function () {
 	var device = "Desktop";
 
-
 	fileId = $(this).attr("data-res-id");
 	videoId = $(this).attr("data-video-id");
 	commId = $(this).attr("data-comm-id");
@@ -84,12 +83,12 @@ $("body").on("click", ".trackclick", function(e){
 function trackEvent( device, type, resource, store, location, location_id)
 {
 	console.log('%cTrack an Event \n~~~~~~~~~~~~~~~~~~~'+
-		        ' \n📱Device: ' + device + 
+		        ' \n📱 Device: ' + device + 
 		        ' \n✅ Type: ' + type + 
 		        ' \n✅ Resource: ' + resource + 
 		        ' \n✅ Store: ' + store +
-		        ' \n✅ Location: ' + loc + 
-		        ' \n✅ Location ID: ' + loc_id + 
+		        ' \n✅ Location: ' + location + 
+		        ' \n✅ Location ID: ' + location_id + 
 		        ' \n🚀 Sent the event!', 
 		        'background: #fff; color: #558ada; display: block; padding: 5px; line-height: 20px; 200px;');
 
@@ -102,8 +101,8 @@ function trackEvent( device, type, resource, store, location, location_id)
 	  		type: type,
 	  		resource_id: resource,
 	  		store_number: store,
-	  		location: loc,
-	  		location_id: loc_id
+	  		location: location,
+	  		location_id: location_id
 	    },
 	    success: function(result) {
 	      console.log('%c🎈 Event has been recorded', 'background: #fff; color: #0c0; padding: 5px; position: relative; top: 15px; line-height: 20px;');

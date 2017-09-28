@@ -1,43 +1,7 @@
-var start, time, elapsed, firetime;
-
-start = new Date().getTime();
-time = 0;
-elapsed = '0.0';
-firetime = '';
-
-window.setTimeout(videoMeta, 1000);
-window.setTimeout(timer, 1100);
-
-function initVideoIncrement(v)
-{
-   // var start, time, elapsed, firetime;
-
-    start = new Date().getTime();
-    time = 0;
-    elapsed = '0.0';
-    firetime = '';
-
-    // start = new Date().getTime();
-    // time = 0;
-    // elapsed = '0.0';
-    // firetime = '';
-    console.log('reset the timer/meta');
-
-    //var videoId = $(".video-js").attr('id');
-    
-    var videoId = $(".video-details").find("#clicktrack_link").attr('data-video-id', v);
-    var player = videojs(videoId); 
-
-    var duration = player.duration();
-    firetime = duration/2;
-
-    console.log("reset duration: " + player.duration());
-    console.log("current time: " + player.currentTime());
-    console.log("timer: " + elapsed);
-    console.log("reset firetime: " + firetime );
-
-    timer();
-}
+var start = new Date().getTime();
+var time = 0;
+var elapsed = '0.0';
+var firetime = '';
 
 function videoMeta()
 {
@@ -59,10 +23,10 @@ function timer()
     elapsed = Math.floor(time / 100) / 10;
     if(Math.round(elapsed) == elapsed) { elapsed += '.0'; }
 
-    document.title = elapsed;
+    //document.title = elapsed;
 
     if(elapsed > firetime){
-        console.log('👀 This video is marked at watched!')
+        
         var videoid = $("#video_id").val();
         $.ajax({
             url : '/videocount',
@@ -71,6 +35,7 @@ function timer()
                 id: videoid,
             },
         }).done(function( data ){
+            console.log('👀 This video is marked at watched!');
             console.log("🔺 view count: " + data);
             $('.viewcount').text(data + " views");
 
@@ -107,3 +72,6 @@ function timer()
     var diff = (new Date().getTime() - start) - time;
     window.setTimeout(timer, (100 - diff));
 }
+
+window.setTimeout(videoMeta, 1000);
+window.setTimeout(timer, 1100);
