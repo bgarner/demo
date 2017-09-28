@@ -28,19 +28,19 @@
 
             <div class="wrapper wrapper-content">
                 <div class="row">
-                    <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3">
+                    <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
 
                         @include('site.alerts.alertssidebar')
 
                     </div>
-                    <div class="col-lg-10 col-md-9 col-sm-9 col-xs-9 animated fadeInRight">
+                    <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 animated fadeInRight">
                         <div class="mail-box-header">
 
                             <div class="row">
                                 <div class="col-md-6">
                                     <h2>
                                     	@if($title == "")
-                                    		{{ ucwords(trans('lang.label.all_alerts')) }}
+                                    		{{ __("All Alerts") }}
                                     	@else
                                     		{{ $title }}
                                     	@endif
@@ -53,7 +53,7 @@
                                     <form class="form-inline" >
                                         <div class="pull-right">
 
-                                            <small style="font-weight: bold; padding-right: 5px;">{{ ucwords(trans('lang.show_archive')) }}</small>
+                                            <small style="font-weight: bold; padding-right: 5px;">{{ __("Show Archive") }}</small>
 
                                                 <div class="switch pull-right">
                                                     <div class="archive-onoffswitch onoffswitch">
@@ -89,10 +89,10 @@
                                 <thead>
                                     <tr>
 
-                                        <th> {{ ucwords(trans('lang.type')) }}</th>
-                                        <th> {{ ucwords(trans('lang.title')) }} </th>
+                                        <th> {{ __("Type") }}</th>
+                                        <th> {{ __("Title") }} </th>
                                         <!-- <th> Description </th> -->
-                                        <th> {{ ucwords(trans('lang.date')) }} </th>
+                                        <th> {{ __("Date") }} </th>
                                     </tr>
                                 </thead>
                                 <tbody>
