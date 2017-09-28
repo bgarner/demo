@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    @section('title', 'Edit Task')
+    @section('title', 'Edit Task List')
     @include('admin.includes.head')
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
     <link rel="stylesheet" type="text/css" href="/css/custom/tree.css">
@@ -36,7 +36,7 @@
 							<form class="form-horizontal" id="updateTaskForm">
 
 								<input type="hidden" id="tasklistId" name="tasklistId" value={{$tasklist->id}}>
-
+								<input type="hidden" name="optGroupSelections" id="optGroupSelections" value="{{$optGroupSelections}}">
 								<div class="form-group">
 									<label class="col-sm-2 control-label">Title</label>
 						            <div class="col-sm-10"><input type="text" id="title" name="title" class="form-control" value="{{ $tasklist->title }}"></div>
@@ -78,22 +78,7 @@
 						                </div>
 						        </div>
 
-								<div class="form-group">
-
-						                <label class="col-sm-2 control-label">Target Stores</label>
-						                <div class="col-sm-10">
-						                	@if($tasklist->all_stores)
-		                                        {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
-		                                        {!! Form::label('allStores', 'Or select all stores:') !!}
-		                                        {!! Form::checkbox('allStores', null, true ,['id'=> 'allStores'] ) !!}
-		                                    @else
-		                                        {!! Form::select('stores', $storeList, $target_stores, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
-		                                        {!! Form::label('allStores', 'Or select all stores:') !!}
-		                                        {!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
-		                                    @endif
-						                </div>
-
-						        </div>
+								@include('admin.includes.the-ultimate-store-selector')
 						        
 
 								<div class="hr-line-dashed"></div>
@@ -140,7 +125,7 @@
                     </div><!-- ibox closes-->
                     <div class="form-group">
 						<div class="col-sm-10 col-sm-offset-2">
-							<a class="btn btn-white" href="/admin/task"><i class="fa fa-close"></i> Cancel</a>
+							<a class="btn btn-white" href="/admin/tasklist"><i class="fa fa-close"></i> Cancel</a>
 							<button class="btn btn-primary tasklist-update"><i class="fa fa-check"></i> Update Task</button>
 			            </div>
 			        </div>
@@ -166,7 +151,7 @@
 		<script type="text/javascript" src="/js/custom/tree.js"></script>
 		<script type="text/javascript" src="/js/custom/datetimepicker.js"></script>
 		<!-- <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script> -->
-		<script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>
+		<script type="text/javascript" src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
 
 
 		<script type="text/javascript">

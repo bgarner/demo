@@ -45,10 +45,6 @@ class Task extends Model
             $validateThis['publish_date'] = $request['publish_date'];
         }
 
-        if ($request['banner_id'] != NULL) {
-            $validateThis['banner_id'] = $request['banner_id'];
-        }
-
         if ($request['target_stores'] != NULL) {
             $validateThis['target_stores'] = $request['target_stores'];
         }
@@ -88,8 +84,15 @@ class Task extends Model
         if ($request['publish_date'] != NULL) {
             $validateThis['publish_date'] = $request['publish_date'];
         }
-        if ($request['banner_id'] != NULL) {
-            $validateThis['banner_id'] = $request['banner_id'];
+
+       	if ($request['target_stores'] != NULL) {
+            $validateThis['target_stores'] = $request['target_stores'];
+        }
+        if ($request['target_banners'] != NULL) {
+            $validateThis['target_banners'] = $request['target_banners'];
+        }
+        if ($request['target_store_groups'] != NULL) {
+            $validateThis['target_store_groups'] = $request['target_store_groups'];
         }
 
 		if ($request['all_stores'] != NULL) {
@@ -110,9 +113,7 @@ class Task extends Model
 
 	public static function createTask($request)
 	{
-		\Log::info($request->all());
 		$validate = Task::validateCreateTask($request);
-		\Log::info($validate);
 		if($validate['validation_result'] == 'false') {
 			\Log::info($validate);
 			return json_encode($validate);
@@ -126,11 +127,6 @@ class Task extends Model
 		$publish_date = Carbon::now();
 		if(isset($request['publish_date'])) {
 			$publish_date = $request['publish_date'];
-		}
-		
-		$banner_id = null;
-		if(isset($request['banner_id'])) {
-			$banner_id = $request['banner_id'];
 		}
 
 		$task = Task::create([
@@ -209,28 +205,6 @@ class Task extends Model
 	
 	public static function getTasksForAdmin()
 	{
-		// $banner = UserSelectedBanner::getBanner();
-		
-  		// $storeList = StoreInfo::getStoreListing($banner->id);
-		// $allStoreTasks = Task::where('all_stores', 1)
-		// 						->where('banner_id', $banner->id)
-		// 						->get()
-		// 						->each(function($task){
-		// 							$task->prettyDueDate = Utility::prettifyDate($task->due_date);
-		// 						});
-
-		
-		// $tasks = Task::join('tasks_target', 'tasks_target.task_id', '=', 'tasks.id')
-		// 			->whereIn('store_id', array_keys($storeList))
-		// 			->select('tasks.*', 'tasks_target.store_id')
-		// 			->get()
-		// 			->each(function($task){
-		// 				$task->prettyDueDate = Utility::prettifyDate($task->due_date);
-		// 			});
-		// $targetedTasks = Task::groupTaskStores($tasks);			
-		// $targetedTasks = $targetedTasks->merge($allStoreTasks)->sortByDesc('created_at');
-		// return $targetedTasks;
-
 		
 		$banners = UserBanner::getAllBanners()->pluck('id')->toArray();
 
@@ -609,12 +583,12 @@ class Task extends Model
     public static function mergeTargetedAndStoreGroupTasks($targetedTasks, $storeGroupTasks)
     {
         $targetedTasksArray = $targetedTasks->toArray();
-        $targetedVideoIds = array_column($targetedTasksArray, 'id');
+        $targetedTaskIds = array_column($targetedTasksArray, 'id');
         foreach ($storeGroupTasks as $task) {
 
-            if(in_array($task->id, $targetedVideoIds)){
-                $targetedVideoTaskstores = $targetedTasks->where('id', $task->id)->first()->stores;
-                $mergedStores = array_merge( $targetedVideoTaskstores, $task->stores);
+            if(in_array($task->id, $targetedTaskIds)){
+                $targetedTaskStores = $targetedTasks->where('id', $task->id)->first()->stores;
+                $mergedStores = array_merge( $targetedTaskStores, $task->stores);
                 $targetedTasks->where('id', $task->id)->first()->stores = $mergedStores;
             }
             else{

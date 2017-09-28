@@ -34,9 +34,6 @@
 
 							<form class="form-horizontal" id="createNewTaskForm">
 
-
-								<input type="hidden" name="banner_id" value={{$banner->id}} >
-
 								<div class="form-group">
 									<label class="col-sm-2 control-label">Title <span class="req">*</span> </label>
 						            <div class="col-sm-10"><input type="text" id="title" name="title" class="form-control" value=""></div>

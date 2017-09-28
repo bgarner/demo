@@ -1,28 +1,3 @@
-$("#allStores").change(function(){
-
-	if ($("#allStores").is(":checked")) {
-
-		$("#storeSelect option").each(function(){
-			$(this).removeAttr('selected');
-		});
-		$("#storeSelect").chosen('chosen:updated');
-
-		$("#storeSelect option").each(function(index){			
-			$(this).prop('selected', 'selected');
-		});
-		$("#storeSelect").chosen();
-		
-	}
-	else if ($("#allStores").not(":checked")) {
-		$("#storeSelect option").each(function(){
-			$(this).removeAttr('selected');
-		});
-		$("#storeSelect").chosen();
-		
-	}
-});
-
-
 var stageTask = function(){
 
 	var taskTitle =  $("#new_task").val();
@@ -67,13 +42,6 @@ $("body").on('click', ".remove-staged-task", function(){
 
 });
 
- 
-
-
-$('body').on('click', ".remove-staged-task", function(){
-    $(this).parent().parent().fadeOut(500).remove();
-});
-
 $(document).on('click','.tasklist-update',function(){
   	
   	var hasError = false;
@@ -83,11 +51,12 @@ $(document).on('click','.tasklist-update',function(){
 	var description = CKEDITOR.instances['description'].getData();
 	var publish_date = $("#publish_date").val();
 	var due_date = $("#due_date").val();
-	// var banner_id = $("input[name='banner_id']").val();
-	var target_stores  = getTargetStores();
-	var all_stores  = $("#allStores:checked").val();
-	// var send_reminder = ($("#send_reminder").prop('checked') === true)?1:0;
-	// var status_type_id = $("#status_type_id").val();
+	var target_stores = getTargetStores();
+	var target_banners = getTargetBanners();
+	var store_groups = getStoreGroups();
+	var all_stores = getAllStoreStatus();
+
+
 
 	var remove_tasks = [];
 	var tasks = [];
@@ -131,11 +100,12 @@ $(document).on('click','.tasklist-update',function(){
 		  		description    : description,
 		  		publish_date   : publish_date,
 		  		due_date       : due_date,
-		  		target_stores  : target_stores,
-		  		all_stores     : all_stores,
 		  		tasks          : tasks,
 		  		remove_tasks   : remove_tasks,
-		  		// status_type_id : status_type_id
+		  		target_stores  : target_stores,
+		  		all_stores     : all_stores,
+		  		target_banners : target_banners,
+		  		store_groups   : store_groups,
 
 		    },
 		    
@@ -191,111 +161,6 @@ $(document).on('click','.tasklist-update',function(){
 		});    	
     }
 
-
-    return false;
-});
-
-$(document).on('click','.tasklist-create',function(){
-  	
-  	var hasError = false;
- 
-	var title = $("#title").val();
-	var description = CKEDITOR.instances['description'].getData();
-	var publish_date = $("#publish_date").val();
-	var due_date = $("#due_date").val();
-	var banner_id = $("input[name='banner_id']").val();
-	var target_stores  = getTargetStores();
-	var task_documents = [];
-	var all_stores  = $("#allStores:checked").val();
-	// var send_reminder = ($("#send_reminder").prop('checked') === true)?1:0;
-	var tasks = [];
-	$(".task-title").each(function(index, value){
-		tasks.push($(this).text());
-	});	
- 
-    if(title == '' ) {
-		swal("Oops!", "We need a title for the tasklist.", "error"); 
-		hasError = true;
-		$(window).scrollTop(0);
-		return false;
-	}
-	if(due_date == '' ) {
-		swal("Oops!", "We need a due date for the tasklist.", "error"); 
-		hasError = true;
-		$(window).scrollTop(0);
-		return false;
-	}
-	
-	if( target_stores == null && typeof all_stores === 'undefined' ) {
-		swal("Oops!", "Target stores not selected.", "error"); 
-		hasError = true;
-		$(window).scrollTop(0);
-		return false;
-	}
-
-	console.log(title);
-
-    if(hasError == false) {
-
-		$.ajax({
-		    url: '/admin/tasklist',
-		    type: 'POST',
-		    dataType: 'json',
-		    data: {
-		  		title : title,
-		  		description : description,
-		  		publish_date : publish_date,
-		  		due_date : due_date,
-		  		banner_id : banner_id,
-		  		target_stores : target_stores,
-		  		all_stores : all_stores,
-		  		tasks : tasks
-		    },
-		    success: function(result) {
-		    	console.log(result);
-		        if(result.validation_result == 'false') {
-		        	var errors = result.errors;
-		        	if(errors.hasOwnProperty("title")) {
-		        		$.each(errors.title, function(index){
-		        			$("#title").parent().append('<div class="req">' + errors.title[index]  + '</div>');	
-		        		}); 	
-		        	}
-		        	if(errors.hasOwnProperty("due_date")) {
-		        		$.each(errors.due_date, function(index){
-		        			$("#due_date").parent().append('<div class="req">' + errors.due_date[index]  + '</div>');	
-		        		}); 	
-		        	}
-		        	
-			        if(errors.hasOwnProperty("target_stores")) {
-			        	$.each(errors.target_stores, function(index){
-			        		$("#storeSelect").parent().append('<div class="req">' + errors.target_stores[index]  + '</div>');	
-			        	});
-			        }
-			        if(errors.hasOwnProperty("tasks")) {
-			        	$.each(errors.tasks, function(index){
-			        		$("#new_task").parent().append('<div class="req">' + errors.tasks[index]  + '</div>');	
-			        	});
-			        }
-		        }
-		        else{
-		        	// $('#createNewTaskForm')[0].reset(); // empty the form
-		        	swal({
-		        		title : 'Nice!',
-		        		text : title + " has been updated",
-		        		type : 'success',
-
-		        	},
-		        	function(){
-		        		window.location.reload();
-		        	})
-		        }
-		        
-		    }
-		}).done(function(response){
-			// $(".search-field").find('input').val('');
-			// processStorePaste();
-		});    	
-    }
 
     return false;
 });

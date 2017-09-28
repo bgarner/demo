@@ -36,7 +36,6 @@
 
 							<form class="form-horizontal" id="updateTaskForm">
 
-								<input type="hidden" name="banner_id" value="{{$banner->id}}" >
 								<input type="hidden" id="taskId" name="taskId" value="{{$task->id}}">
 								<input type="hidden" name="optGroupSelections" id="optGroupSelections" value="{{$optGroupSelections}}">
 

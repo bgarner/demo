@@ -18,7 +18,7 @@ class TasklistAdminController extends Controller
      */
     public function index()
     {
-        $tasklists = Tasklist::getTasklists();
+        $tasklists = Tasklist::getTasklistsForAdmin();
         return view('admin.tasklist.index')->with('tasklists', $tasklists);
 
     }
@@ -31,7 +31,6 @@ class TasklistAdminController extends Controller
     public function create()
     {
         
-        // $storeAndStoreGroups = Utility::getStoreAndStoreGroupList(1);
         $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
         return view('admin.tasklist.create')->with('optGroupOptions', $optGroupOptions);
 
@@ -67,15 +66,14 @@ class TasklistAdminController extends Controller
      */
     public function edit($id)
     {
-        
-        $tasklist_target_stores = TasklistTarget::getTargetStoresByTasklistId($id);
-        $storeList = StoreInfo::getStoreListing(1);
 
         $tasklist = Tasklist::getTasklistById($id);
+        $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
+        $optGroupSelections = json_encode(Tasklist::getSelectedStoresAndBannersByTasklistId($id));
         
         return view('admin.tasklist.edit')->with('tasklist', $tasklist)
-                                        ->with('storeList', $storeList)
-                                        ->with('target_stores', $tasklist_target_stores);
+                                        ->with('optGroupOptions', $optGroupOptions)
+                                        ->with('optGroupSelections', $optGroupSelections);
     }
 
     /**

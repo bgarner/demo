@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Validation\TasklistValidator;
 use App\Models\Utility\Utility;
 use Carbon\Carbon;
+use App\Models\Auth\User\UserBanner;
+use App\Models\StoreApi\StoreInfo;
+use App\Models\Tools\CustomStoreGroup;
+use App\Models\Video\Playlist;
 
 class Tasklist extends Model
 {
@@ -23,7 +27,7 @@ class Tasklist extends Model
 		$validateThis =  [
 
 			'title'   		=> $request['title'],
-			'target_stores' => $request['target_stores']
+			// 'target_stores' => $request['target_stores']
 
 		];
 		if ($request['due_date'] != NULL) {
@@ -31,6 +35,16 @@ class Tasklist extends Model
         }
         if ($request['publish_date'] != NULL) {
             $validateThis['publish_date'] = $request['publish_date'];
+        }
+
+		if ($request['target_stores'] != NULL) {
+            $validateThis['target_stores'] = $request['target_stores'];
+        }
+        if ($request['target_banners'] != NULL) {
+            $validateThis['target_banners'] = $request['target_banners'];
+        }
+        if ($request['target_store_groups'] != NULL) {
+            $validateThis['target_store_groups'] = $request['target_store_groups'];
         }
 
 		if ($request['all_stores'] != NULL) {
@@ -58,13 +72,22 @@ class Tasklist extends Model
             $validateThis['publish_date'] = $request['publish_date'];
         }
 
-		if ($request['all_stores'] != NULL) {
-            $validateThis['allStores'] = $request['all_stores'];
-        }
-
 		if(isset($request['remove_tasks'])){
 			$validateThis['remove_tasks'] = $request['remove_tasks'];
 		}
+		if ($request['target_stores'] != NULL) {
+            $validateThis['target_stores'] = $request['target_stores'];
+        }
+        if ($request['target_banners'] != NULL) {
+            $validateThis['target_banners'] = $request['target_banners'];
+        }
+        if ($request['target_store_groups'] != NULL) {
+            $validateThis['target_store_groups'] = $request['target_store_groups'];
+        }
+
+		if ($request['all_stores'] != NULL) {
+            $validateThis['allStores'] = $request['all_stores'];
+        }
 
 		\Log::info($validateThis);
 		$v = new TasklistValidator();
@@ -72,12 +95,60 @@ class Tasklist extends Model
 	}
 
 
-    public static function getTasklists()
+    public static function getTasklistsForAdmin()
     {
-    	return Tasklist::all()
-    					->each(function($list){
-    						$list->prettyDueDate = Utility::prettifyDate($list->due_date);
-    					});
+    	$banners = UserBanner::getAllBanners()->pluck('id')->toArray();
+
+		//stores in accessible banners
+        $storeList = [];
+        foreach ($banners as $banner) {
+            $storeInfo = StoreInfo::getStoresInfo($banner);
+            foreach ($storeInfo as $store) {
+                array_push($storeList, $store->store_number);
+            }
+        }
+
+        $allStoreTasklists = Tasklist::join('tasklist_banner', 'tasklist_banner.tasklist_id', '=', 'tasklists.id')
+                                ->where('all_stores', 1)
+                                ->whereIn('tasklist_banner.banner_id', $banners)
+                                ->select('tasklists.*', 'tasklist_banner.banner_id')
+                                ->get();
+
+        $allStoreTasklists = Tasklist::groupBannersForAllStoreTasklists($allStoreTasklists);
+        
+        $targetedTasklists = Tasklist::join('tasklist_target', 'tasklist_target.tasklist_id', '=', 'tasklists.id')
+                                ->whereIn('tasklist_target.store_id', $storeList)
+                                ->select('tasklists.*', 'tasklist_target.store_id')
+                                ->get();
+
+        $targetedTasklists = Tasklist::groupTasklistStores($targetedTasklists);
+
+        $storeGroups = CustomStoreGroup::getStoreGroupsForAdmin();
+        $tasksForStoreGroups = Tasklist::join('tasklist_store_group', 'tasklist_store_group.tasklist_id', '=', 'tasklists.id')
+                                            ->whereIn('tasklist_store_group.store_group_id', $storeGroups)
+                                            ->select('tasklists.*')
+                                            ->get()
+                                            ->each(function($item){
+                                                $storeGroups = TasklistStoreGroup::where('tasklist_id', $item->id)->get()->pluck('store_group_id')->toArray();
+                                                $item->storeGroups = $storeGroups;
+                                                $item->stores = [];
+                                                foreach ($storeGroups as $group) {
+                                                    $stores = unserialize(CustomStoreGroup::find($group)->stores);
+                                                    $item->stores = array_merge($item->stores,$stores);
+                                                }
+                                                $item->stores = array_unique( $item->stores);
+                                            });
+
+        $targetedTasklists = Tasklist::mergeTargetedAndStoreGroupTasklists($targetedTasklists, $tasksForStoreGroups);
+                                           
+        $tasklists = Playlist::mergeTargetedAndAllStoreAssets($targetedTasklists, $allStoreTasklists);
+
+        foreach ($tasklists as $tasklist) {
+			$tasklist->prettyDueDate = Utility::prettifyDate($tasklist->due_date);
+        }
+        
+        return $tasklists;
+
     }
     public static function createTaskList($request)
     {
@@ -122,8 +193,6 @@ class Tasklist extends Model
 					'task_id'	=> $task->id
 				]);	
 			}
-			
-			
 		}
 		
 		return $tasklist;
@@ -182,5 +251,86 @@ class Tasklist extends Model
     	}
     	Tasklist::find($id)->delete();
     	return;
+    }
+    public static function groupBannersForAllStoreTasklists($allStoreTasklists)
+    {
+        $allStoreTasklists = $allStoreTasklists->toArray();
+        $compiledTasks = [];
+        foreach ($allStoreTasklists as $task) {
+            $index = array_search($task['id'], array_column($compiledTasks, 'id'));
+            if(  $index !== false ){
+               array_push($compiledTasks[$index]->banners, $task["banner_id"]);
+            }
+            else{
+               
+               $task["banners"] = [];
+               array_push( $task["banners"] , $task["banner_id"]);
+               array_push( $compiledTasks , (object) $task);
+            }
+
+        }
+        
+        return collect($compiledTasks);
+    }
+
+    public static function groupTasklistStores($tasklists)
+	{
+		$tasklists = $tasklists->toArray();
+		$compiledTasklists = [];
+		foreach ($tasklists as $tasklist) {
+	        $index = array_search($tasklist['id'], array_column($compiledTasklists, 'id'));
+	        if(  $index !== false ){
+	           array_push($compiledTasklists[$index]->stores, $tasklist["store_id"]);
+	        }
+	        else{
+	           
+	           $tasklist["stores"] = [];
+	           array_push( $tasklist["stores"] , $tasklist["store_id"]);
+	           array_push( $compiledTasklists , (object) $tasklist);
+	        }
+
+        }
+        
+		return collect($compiledTasklists);
+	}
+
+	public static function mergeTargetedAndStoreGroupTasklists($targetedTasklists, $storeGroupTasklists)
+    {
+        $targetedTasklistsArray = $targetedTasklists->toArray();
+        $targetedTasklistIds = array_column($targetedTasklistsArray, 'id');
+        foreach ($storeGroupTasklists as $tasklist) {
+
+            if(in_array($tasklist->id, $targetedTasklistIds)){
+                $targetedTasklistStores = $targetedTasklists->where('id', $tasklist->id)->first()->stores;
+                $mergedStores = array_merge( $targetedTasklistStores, $tasklist->stores);
+                $targetedTasklists->where('id', $tasklist->id)->first()->stores = $mergedStores;
+            }
+            else{
+
+                $targetedTasklists = $targetedTasklists->push((object)$tasklist);                
+            }
+        }
+        return $targetedTasklists;
+
+    }
+
+	public static function getSelectedStoresAndBannersByTasklistId($tasklist_id)
+    {
+        $targetBanners = TasklistBanner::where('tasklist_id', $tasklist_id)->get()->pluck('banner_id')->toArray();
+        $targetStores = TasklistTarget::where('tasklist_id', $tasklist_id)->get()->pluck('store_id')->toArray();
+        $storeGroups = TasklistStoreGroup::where('tasklist_id', $tasklist_id)->get()->pluck('store_group_id')->toArray();
+
+        $optGroupSelections = [];
+        foreach ($targetBanners as $banner) {
+            array_push($optGroupSelections, 'banner'.$banner);
+        }
+        foreach ($targetStores as $stores) {
+            array_push($optGroupSelections, 'store'.$stores);   
+        }
+        foreach ($storeGroups as $group) {
+            array_push($optGroupSelections, 'storegroup'.$group);   
+        }
+
+        return( $optGroupSelections );
     }
 }

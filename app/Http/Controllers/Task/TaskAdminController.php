@@ -49,9 +49,7 @@ class TaskAdminController extends Controller
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
         $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
 
-        return view('admin.task.create')
-                                        ->with('banner', $banner)
-                                        ->with('optGroupOptions', $optGroupOptions)
+        return view('admin.task.create')->with('optGroupOptions', $optGroupOptions)
                                         ->with('navigation', $fileFolderStructure);
     }
 
@@ -63,7 +61,6 @@ class TaskAdminController extends Controller
      */
     public function store(Request $request)
     {
-        \Log::info($request->all());
         return Task::createTask($request);
     }
 
@@ -98,7 +95,6 @@ class TaskAdminController extends Controller
         
         return view('admin.task.edit')->with('task', $task)
                                         ->with('task_documents', $task_documents)
-                                        ->with('banner', $banner)
                                         ->with('optGroupOptions', $optGroupOptions)
                                         ->with('optGroupSelections', $optGroupSelections)
                                         ->with('navigation', $fileFolderStructure)
