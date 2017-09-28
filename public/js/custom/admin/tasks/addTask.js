@@ -47,11 +47,8 @@ $(document).on('click','.task-create',function(){
 	var description = CKEDITOR.instances['body'].getData();
 	var publish_date = $("#publish_date").val();
 	var due_date = $("#due_date").val();
-	// var banner_id = $("input[name='banner_id']").val();
-	// var target_stores  = getTargetStores();
 	var task_documents = [];
-	// var all_stores  = $("#allStores:checked").val();
-	var send_reminder = ($("#send_reminder").prop('checked') === true)?1:0;
+	// var send_reminder = ($("#send_reminder").prop('checked') === true)?1:0;
 
 	var target_stores = getTargetStores();
 	var target_banners = getTargetBanners();
@@ -99,13 +96,12 @@ $(document).on('click','.task-create',function(){
 		  		description : description,
 		  		publish_date : publish_date,
 		  		due_date : due_date,
-		  		// banner_id : banner_id,
 		  		target_stores : target_stores,
 		  		all_stores : all_stores,
 		    	target_banners : target_banners,
 		    	store_groups : store_groups,
 		  		task_documents : task_documents,
-		  		send_reminder : send_reminder
+		  		
 		    },
 		    success: function(result) {
 		    	console.log(result);

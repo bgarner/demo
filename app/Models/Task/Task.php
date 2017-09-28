@@ -378,8 +378,9 @@ class Task extends Model
 		
 		$banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
 
-		$allStoreTasks = Task::where('all_stores', 1)
-							->where('banner_id', $banner_id)
+		$allStoreTasks = Task::join('task_banner', 'task_banner.task_id', '=', 'tasks.id')
+							->where('all_stores', 1)
+							->where('task_banner.banner_id', $banner_id)
 							->get()
 							->each(function($task, $store_id){
 								$task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
@@ -394,8 +395,20 @@ class Task extends Model
 					->each(function($task){
 						$task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
 					});
+
+		$storeGroups = CustomStoreGroup::getStoreGroupsForStore($store_id);
+
+        $targetedTasksForStoreGroups = Task::join('task_store_group', 'task_store_group.task_id', '=', 'tasks.id')
+                                            ->whereIn('task_store_group.store_group_id', $storeGroups)
+                                            ->select('tasks.*')
+                                            ->get()
+                                            ->each(function($task, $store_id){
+												$task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
+												$task->store_id = $store_id;
+											});
 	
 		$tasks = $targetedTasks->merge($allStoreTasks);
+		$tasks = $tasks->merge($targetedTasksForStoreGroups);
 
 		foreach ($tasks as $key => $task) {
 			
@@ -415,8 +428,9 @@ class Task extends Model
 		$endOfDayToday = Carbon::today()->endOfDay()->format('Y-m-d H:i:s');
 		$banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
 
-		$allStoreTasks = $tasks = Task::where('all_stores', 1)
-									->where('banner_id', $banner_id)
+		$allStoreTasks = $tasks = Task::join('task_banner', 'task_banner.task_id', '=', 'tasks.id')
+									->where('tasks.all_stores', 1)
+									->where('task_banner.banner_id', $banner_id)
 									->where('due_date' , "<", $endOfDayToday)
 									->select('tasks.*')
 									->get()
@@ -436,7 +450,20 @@ class Task extends Model
 						
 					});
 
+		$storeGroups = CustomStoreGroup::getStoreGroupsForStore($store_id);
+
+        $targetedTasksForStoreGroups = Task::join('task_store_group', 'task_store_group.task_id', '=', 'tasks.id')
+                                            ->whereIn('task_store_group.store_group_id', $storeGroups)
+                                            ->where('due_date' , "<", $endOfDayToday)
+                                            ->select('tasks.*')
+                                            ->get()
+                                            ->each(function($task, $store_id){
+												$task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
+												$task->store_id = $store_id;
+											});
+
 		$tasks = $tasks->merge($allStoreTasks);
+		$tasks = $tasks->merge($targetedTasksForStoreGroups);
 
 		foreach ($tasks as $key=>$task) {
 
@@ -480,7 +507,21 @@ class Task extends Model
 						$task->pretty_completed_date = "Completed on " . Utility::prettifyDate($task->completed_on);
 					});
 
+		$storeGroups = CustomStoreGroup::getStoreGroupsForStore($store_id);
+
+        $targetedTasksForStoreGroups = Task::join('task_store_group', 'task_store_group.task_id', '=', 'tasks.id')
+                                            ->join('task_store_status' , 'task_store_status.task_id' , '=', 'tasks.id' )
+                                            ->whereIn('task_store_group.store_group_id', $storeGroups)
+                                            ->where('task_store_status.status_type_id', '2')
+											->select('tasks.*', 'task_store_status.created_at as completed_on')
+											->get()
+                                            ->each(function($task, $store_id){
+												$task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
+												$task->store_id = $store_id;
+											});
+
 		$tasks = $tasks->merge($allStoreTasks);
+		$tasks = $tasks->merge($targetedTasksForStoreGroups);
 		return $tasks;
 	}
 

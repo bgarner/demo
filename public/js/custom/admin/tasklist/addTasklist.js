@@ -30,7 +30,6 @@ $( "#new_task" ).keypress(function( event ) {
 });
  
 
-
 $('body').on('click', ".remove-staged-task", function(){
     $(this).parent().parent().fadeOut(500).remove();
 });

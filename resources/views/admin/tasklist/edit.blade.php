@@ -145,12 +145,10 @@
 		<script type="text/javascript" src="/js/custom/admin/tasklist/editTasklist.js"></script>
 		<script type="text/javascript" src="/js/vendor/moment.js"></script>
 		<script type="text/javascript" src="/js/vendor/bootstrap-datetimepicker.min.js"></script>
-		<!-- <script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script> -->
 		<script type="text/javascript" src="/js/plugins/ckeditor-custom/ckeditor.js"></script>
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 		<script type="text/javascript" src="/js/custom/tree.js"></script>
 		<script type="text/javascript" src="/js/custom/datetimepicker.js"></script>
-		<!-- <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script> -->
 		<script type="text/javascript" src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
 
 
