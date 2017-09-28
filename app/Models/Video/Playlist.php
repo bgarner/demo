@@ -145,6 +145,23 @@ class Playlist extends Model
 
         $targetedPlaylists = Playlist::groupStoresForTargetedPlaylists($targetedPlaylists);
 
+        $storeGroups = CustomStoreGroup::getStoreGroupsForAdmin();
+        $playlistsForStoreGroups = Playlist::join('playlist_store_group','playlist_store_group.playlist_id','=','playlists.id')
+                                            ->whereIn('playlist_store_group.store_group_id', $storeGroups)
+                                            ->select('playlists.*')
+                                            ->get()
+                                            ->each(function($item){
+                                                $storeGroups = PlaylistStoreGroup::where('playlist_id', $item->id)->get()->pluck('store_group_id')->toArray();
+                                                $item->storeGroups = $storeGroups;
+                                                $item->stores = [];
+                                                foreach ($storeGroups as $group) {
+                                                    $stores = unserialize(CustomStoreGroup::find($group)->stores);
+                                                    $item->stores = array_merge($item->stores,$stores);
+                                                }
+                                                $item->stores = array_unique( $item->stores);
+                                            });
+        $targetedVideos = Video::mergeTargetedAndStoreGroupVideos($targetedPlaylists, $playlistsForStoreGroups);
+
         $playlists = Playlist::mergeTargetedAndAllStoreAssets($targetedPlaylists, $allStorePlaylists);
 
 
