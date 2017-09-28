@@ -24,12 +24,12 @@
 
 <div class="wrapper wrapper-content">
         <div class="row">
-            <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
+            <div class="col-lg-2 col-md-3 col-sm-4 col-xs-0">
 
             @include('site.communications.commsidebar')
 
             </div>
-            <div class="col-lg-10 col-md-9 col-sm-8 col-xs-8 animated fadeInRight">
+            <div class="col-lg-10 col-md-9 col-sm-8 col-xs-12 animated fadeInRight">
                 <div class="mail-box-header">
                     <div class="row">
                         <div class="col-md-6">
@@ -136,26 +136,6 @@
     <script src="/js/custom/site/getArchivedContent.js"></script>
     <script src="/js/plugins/iCheck/icheck.min.js"></script>
 
-	<script>
-
-        $( document ).ready(function() {
-            var archiveCheckbox  = $('#archives');
-            var checked = archiveCheckbox.is(":checked");
-
-            if( checked == true){
-                $("a.comm_category_link").each(function() {
-                   var href = $(this).attr("href");
-                   $(this).attr("href", href + '&archives=true');
-                });
-            } else {
-                $("a.comm_category_link").each(function() {
-                   var href = $(this).attr("href");
-                   $(this).attr('href', href.replace(/&?archives=\d+/, ''));
-                });
-            }
-        });
-
-    </script>
 
     @include('site.includes.modal')
 

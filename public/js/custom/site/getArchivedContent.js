@@ -1,5 +1,31 @@
 $(document).ready(function(){
 
+	var archiveCheckbox  = $('#archives');
+	var checked = archiveCheckbox.is(":checked");
+
+	if( checked == true){
+		$("a.comm_category_link").each(function() {
+		   var href = $(this).attr("href");
+		   $(this).attr("href", href + '&archives=true');
+		});
+
+        $("a.alert_category_link").each(function() {
+           var href = $(this).attr("href");
+           $(this).attr("href", href + '&archives=true');
+        });		
+
+	} else {
+		$("a.comm_category_link").each(function() {
+		   var href = $(this).attr("href");
+		   $(this).attr('href', href.replace(/&?archives=\d+/, ''));
+		});
+
+		$("a.alert_category_link").each(function() {
+           var href = $(this).attr("href");
+           $(this).attr('href', href.replace(/&?archives=\d+/, ''));
+        });
+	}
+
 	console.log(localStorage.getItem('archives'));
 	if(localStorage.getItem('archives')) {
 		$("input[name='archives']").prop('checked', true);
