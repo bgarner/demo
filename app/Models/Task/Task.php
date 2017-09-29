@@ -381,6 +381,7 @@ class Task extends Model
 		$allStoreTasks = Task::join('task_banner', 'task_banner.task_id', '=', 'tasks.id')
 							->where('all_stores', 1)
 							->where('task_banner.banner_id', $banner_id)
+							->select('tasks.*')
 							->get()
 							->each(function($task, $store_id){
 								$task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
@@ -431,7 +432,7 @@ class Task extends Model
 		$allStoreTasks = $tasks = Task::join('task_banner', 'task_banner.task_id', '=', 'tasks.id')
 									->where('tasks.all_stores', 1)
 									->where('task_banner.banner_id', $banner_id)
-									->where('due_date' , "<", $endOfDayToday)
+									->where('due_date' , "<=", $endOfDayToday)
 									->select('tasks.*')
 									->get()
 									->each(function($task, $store_id){
@@ -442,7 +443,7 @@ class Task extends Model
 
 		$tasks = Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
 					->where('tasks_target.store_id', $store_id)
-					->where('due_date' , "<", $endOfDayToday)
+					->where('due_date' , "<=", $endOfDayToday)
 					->select('tasks.*', 'tasks_target.store_id')
 					->get()
 					->each(function($task){
@@ -454,7 +455,7 @@ class Task extends Model
 
         $targetedTasksForStoreGroups = Task::join('task_store_group', 'task_store_group.task_id', '=', 'tasks.id')
                                             ->whereIn('task_store_group.store_group_id', $storeGroups)
-                                            ->where('due_date' , "<", $endOfDayToday)
+                                            ->where('due_date' , "<=", $endOfDayToday)
                                             ->select('tasks.*')
                                             ->get()
                                             ->each(function($task, $store_id){
@@ -480,12 +481,15 @@ class Task extends Model
 	public static function getAllCompletedTasksByStoreId($store_id)
 	{
 		$banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
+		$endOfDayToday = Carbon::today()->endOfDay()->format('Y-m-d H:i:s');
 
-		$allStoreTasks = $tasks = Task::join('task_store_status' , 'task_store_status.task_id' , '=', 'tasks.id' )
+		$allStoreTasks = $tasks = Task::join('task_banner', 'task_banner.task_id', '=', 'tasks.id')
+									->join('task_store_status' , 'task_store_status.task_id' , '=', 'tasks.id' )
 									->where('all_stores', 1)
-									->where('banner_id', $banner_id)
+									->where('task_banner.banner_id', $banner_id)
 									->where('task_store_status.store_id', $store_id)
 									->where('task_store_status.status_type_id', '2')
+									->where('due_date' , ">=", $endOfDayToday)
 									->select('tasks.*', 'task_store_status.created_at as completed_on')
 									->get()
 									->each(function($task, $store_id){
@@ -500,6 +504,7 @@ class Task extends Model
 					->where('tasks_target.store_id', $store_id)
 					->where('task_store_status.store_id', $store_id)
 					->where('task_store_status.status_type_id', '2')
+					->where('due_date' , ">=", $endOfDayToday)
 					->select('tasks.*', 'tasks_target.store_id', 'task_store_status.created_at as completed_on')
 					->get()
 					->each(function($task){
@@ -513,6 +518,7 @@ class Task extends Model
                                             ->join('task_store_status' , 'task_store_status.task_id' , '=', 'tasks.id' )
                                             ->whereIn('task_store_group.store_group_id', $storeGroups)
                                             ->where('task_store_status.status_type_id', '2')
+                                            ->where('due_date' , ">=", $endOfDayToday)
 											->select('tasks.*', 'task_store_status.created_at as completed_on')
 											->get()
                                             ->each(function($task, $store_id){

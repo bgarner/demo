@@ -124,7 +124,7 @@ class Tasklist extends Model
         $targetedTasklists = Tasklist::groupTasklistStores($targetedTasklists);
 
         $storeGroups = CustomStoreGroup::getStoreGroupsForAdmin();
-        $tasksForStoreGroups = Tasklist::join('tasklist_store_group', 'tasklist_store_group.tasklist_id', '=', 'tasklists.id')
+        $tasklistsForStoreGroups = Tasklist::join('tasklist_store_group', 'tasklist_store_group.tasklist_id', '=', 'tasklists.id')
                                             ->whereIn('tasklist_store_group.store_group_id', $storeGroups)
                                             ->select('tasklists.*')
                                             ->get()
@@ -139,7 +139,7 @@ class Tasklist extends Model
                                                 $item->stores = array_unique( $item->stores);
                                             });
 
-        $targetedTasklists = Tasklist::mergeTargetedAndStoreGroupTasklists($targetedTasklists, $tasksForStoreGroups);
+        $targetedTasklists = Tasklist::mergeTargetedAndStoreGroupTasklists($targetedTasklists, $tasklistsForStoreGroups);
                                            
         $tasklists = Playlist::mergeTargetedAndAllStoreAssets($targetedTasklists, $allStoreTasklists);
 
@@ -150,6 +150,53 @@ class Tasklist extends Model
         return $tasklists;
 
     }
+
+    public static function getAllTasklistsByStore($store_number)
+    {
+        $banner_id = StoreInfo::getStoreInfoByStoreId($store_number)->banner_id;
+
+
+        $allStoreTasklists = Tasklist::join('tasklist_banner', 'tasklist_banner.tasklist_id', '=', 'tasklists.id')
+                                ->where('all_stores', 1)
+                                ->where('tasklist_banner.banner_id', $banner_id)
+                                ->select('tasklists.*')
+                                ->get();
+        
+        $targetedTasklists = Tasklist::join('tasklist_target', 'tasklist_target.tasklist_id', '=', 'tasklists.id')
+                                ->where('tasklist_target.store_id', $store_number)
+                                ->select('tasklists.*')
+                                ->get();
+
+
+        $storeGroups = CustomStoreGroup::getStoreGroupsForStore($store_number);
+
+        $tasklistsForStoreGroups = Tasklist::join('tasklist_store_group', 'tasklist_store_group.tasklist_id', '=', 'tasklists.id')
+                                            ->whereIn('tasklist_store_group.store_group_id', $storeGroups)
+                                            ->select('tasklists.*')
+                                            ->get();
+                                            
+
+        
+        $tasklists = $allStoreTasklists->merge($targetedTasklists)->merge($tasklistsForStoreGroups);
+        foreach ($tasklists as $tasklist) {
+            $tasklist->prettyDueDate = Utility::prettifyDate($tasklist->due_date);
+        }
+        
+        return $tasklists;
+    }
+
+    public static function getTasklistById($id)
+    {
+        $tasklist = Tasklist::find($id); 
+        $tasklist->tasks = TasklistTask::join('tasks', 'tasks.id', '=', 'tasklist_tasks.task_id')
+                                    ->where('tasklist_id', $id)
+                                    ->select('tasks.*')
+                                    ->get();
+
+        return $tasklist;
+    }
+
+
     public static function createTaskList($request)
     {
 
@@ -178,23 +225,24 @@ class Tasklist extends Model
 
 		TasklistTarget::updateTargetStores($tasklist->id, $request);
 
-		foreach ($request->tasks as $task) {
+        if ($request['tasks'] != NULL) {
+    		foreach ($request->tasks as $task) {
 
-			$request['title'] = $task;
-			$request['send_reminder'] = NULL;
-			$task = Task::createTask($request);
-			
-			//task is a json string if the validation fails while creating task.
-			//if task is not created, tasklist-task map need not exist. 
-			if(!is_string($task)){ 
-				
-				TasklistTask::create([
-					'tasklist_id' => $tasklist->id,
-					'task_id'	=> $task->id
-				]);	
-			}
+    			$request['title'] = $task;
+    			$request['send_reminder'] = NULL;
+    			$task = Task::createTask($request);
+    			
+    			//task is a json string if the validation fails while creating task.
+    			//if task is not created, tasklist-task map need not exist. 
+    			if(!is_string($task)){ 
+    				
+    				TasklistTask::create([
+    					'tasklist_id' => $tasklist->id,
+    					'task_id'	=> $task->id
+    				]);	
+    			}
+    		}
 		}
-		
 		return $tasklist;
     }
 
@@ -228,16 +276,7 @@ class Tasklist extends Model
 		return $tasklist;
     }
 
-    public static function getTasklistById($id)
-    {
-    	$tasklist = Tasklist::find($id); 
-    	$tasklist->tasks = TasklistTask::join('tasks', 'tasks.id', '=', 'tasklist_tasks.task_id')
-    								->where('tasklist_id', $id)
-    								->select('tasks.*')
-    								->get();
-
-    	return $tasklist;
-    }
+   
 
     public static function deleteTasklist($id)
     {

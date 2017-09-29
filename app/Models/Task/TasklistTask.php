@@ -25,6 +25,10 @@ class TasklistTask extends Model
 			foreach ($add_tasks as $task) {
 				$request['title'] = $task;
 				$request['send_reminder'] = NULL;
+				// $task_ids = TasklistTask::where('tasklist_id', $tasklist_id)->get()->pluck('task_id');
+				// foreach ($task_ids as $task_id) {
+				// 	Task::find($task_id)->delete();	
+				// }
 				$task = Task::createTask($request);
 				if(!is_string($task)){ 
 					TasklistTask::create([

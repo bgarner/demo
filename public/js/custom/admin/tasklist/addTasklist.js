@@ -44,9 +44,10 @@ $(document).on('click','.tasklist-create',function(){
 	var due_date = $("#due_date").val();
 	var banner_id = $("input[name='banner_id']").val();
 	var target_stores  = getTargetStores();
-	var task_documents = [];
-	var all_stores  = $("#allStores:checked").val();
-	// var send_reminder = ($("#send_reminder").prop('checked') === true)?1:0;
+	var target_stores = getTargetStores();
+	var target_banners = getTargetBanners();
+	var store_groups = getStoreGroups();
+	var all_stores = getAllStoreStatus();
 	var tasks = [];
 	$(".task-title").each(function(index, value){
 		tasks.push($(this).text());
@@ -84,8 +85,10 @@ $(document).on('click','.tasklist-create',function(){
 		  		publish_date : publish_date,
 		  		due_date : due_date,
 		  		banner_id : banner_id,
-		  		target_stores : target_stores,
-		  		all_stores : all_stores,
+		  		target_stores  : target_stores,
+		  		all_stores     : all_stores,
+		  		target_banners : target_banners,
+		  		store_groups   : store_groups,
 		  		tasks : tasks
 		    },
 		    success: function(result) {

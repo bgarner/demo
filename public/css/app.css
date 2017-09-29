@@ -8485,6 +8485,9 @@ body.md-skin {
 .project-list table tr td{
   vertical-align: top !important;
 }
+#task-container{
+  padding: 10px;
+}
 .task-done{
   float:right;
   padding-right: 20px;

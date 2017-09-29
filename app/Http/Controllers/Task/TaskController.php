@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Request as RequestFacade;
 use DB;
 
 use App\Models\StoreApi\StoreInfo;
+use App\Models\Task\Tasklist;
 
 class TaskController extends Controller
 {
@@ -26,11 +27,13 @@ class TaskController extends Controller
         $tasksDueToday = Task::getTaskDueTodaybyStoreId($storeNumber);
         $tasksNotDueToday = $allIncompleteTasks->diff($tasksDueToday);
         $tasksCompleted = Task::getAllCompletedTasksByStoreId($storeNumber);
+        $tasklists = Tasklist::getAllTasklistsByStore($storeNumber);
     
         return view('site.tasks.index')
                     ->with('tasksDueToday', $tasksDueToday)
                     ->with('tasksDue', $tasksNotDueToday)
-                    ->with('tasksCompleted', $tasksCompleted);
+                    ->with('tasksCompleted', $tasksCompleted)
+                    ->with('tasklists', $tasklists);
     }
 
     /**

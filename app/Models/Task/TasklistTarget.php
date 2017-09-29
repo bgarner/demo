@@ -37,8 +37,8 @@ class TasklistTarget extends Model
                 $target_banners = explode(',',  $request['target_banners'] );    
             }
             
-            foreach ($target_banners as $key=>$banner) {
-                TasklistBanner::create([
+            foreach ($target_banners as $banner) {
+            TasklistBanner::create([
                 'tasklist_id' => $id,
                 'banner_id' => $banner
                 ]);

@@ -32,15 +32,33 @@
 
     <div class="wrapper wrapper-content">
         <div class="row">
-            <!-- <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
+            <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
 
-            side bar
+            @include('site.tasks.tasksidebar')
 
-            </div> -->
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 animated fadeInRight" id="task-container">
-                @include('site.tasks.task-list-partial')
             </div>
+            <div class="col-lg-10 col-md-9 col-sm-8 col-xs-8 animated fadeInRight">
+                <!-- <div class="ibox float-e-margins"> -->
+                    <div class="mail-box-header clearfix">
+                        <h2>
+                        {{--@if($title == "")
+                                    {{__("All Tasks")}} {{ <small>({{ $taskCount }} incomplete)</small> }}
+                                @else
+                                    {{ $title }}
+                                @endif--}}
 
+                                {{__("All Tasks")}}
+                        </h2>
+                    </div>
+                    <div class="mail-box clearfix">
+                         <div id="task-container">
+                        @include('site.tasks.task-list-partial')
+                        </div>
+                    </div>
+
+                <!-- </div> -->
+               
+            </div>
         </div>
     </div>
 
@@ -51,3 +69,4 @@
 
 </body>
 </html>
+
