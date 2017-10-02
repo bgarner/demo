@@ -29,7 +29,7 @@ function timer()
     elapsed = Math.floor(time / 100) / 10;
     if(Math.round(elapsed) == elapsed) { elapsed += '.0'; }
 
-    document.title = elapsed;
+    //document.title = elapsed;
 
     if(elapsed > firetime){
         fire();

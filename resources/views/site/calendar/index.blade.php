@@ -137,6 +137,14 @@
     <script type="text/javascript" src="/js/plugins/fullcalendar/fullcalendar.min.js"></script>
 
     <script type="text/javascript">
+
+    if(screen.width < 370){
+        $('.nav-tabs').addClass('hidden');
+        $('#tab-2').addClass('active');
+        $('#tab-1').removeClass('active');
+    }
+    console.log(screen.width);
+
     $(function() { // document ready
 
         var today = String("{!! $today !!}");
