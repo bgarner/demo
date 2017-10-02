@@ -33,8 +33,8 @@ class StoreSidenavCreator
         $this->alertCount         = Alert::getActiveAlertCountByStore($this->storeNumber);
         $this->communicationCount = Communication::getActiveCommunicationCount($this->storeNumber);
         $this->urgentNoticeCount  = UrgentNotice::getUrgentNoticeCount($this->storeNumber);
-        $this->taskDueTodayCount  = Task::getTaskDueTodaybyStoreId($this->storeNumber)->count();
-        $this->allTasksDueCount   = Task::getAllIncompleteTasksByStoreId($this->storeNumber)->count();
+        $this->allIncompleteTasks = Task::getAllIncompleteTasksByStoreId($this->storeNumber)->count();
+        $this->allCompletedTasks  = Task::getAllCompletedTasksByStoreId($this->storeNumber)->count();
         $this->components         = StoreComponent::getComponents($this->storeNumber);
     }
     /**
@@ -49,8 +49,8 @@ class StoreSidenavCreator
         $view->with('alertCount', $this->alertCount)
             ->with('communicationCount', $this->communicationCount)
             ->with('urgentNoticeCount', $this->urgentNoticeCount)
-            ->with('taskDueTodayCount', $this->taskDueTodayCount)
-            ->with('allTasksDueCount', $this->allTasksDueCount)
+            ->with('incompleteTaskCount', $this->allIncompleteTasks)
+            ->with('completedTaskCount', $this->allCompletedTasks)
             ->with('components', $this->components);
     }
 }

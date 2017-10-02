@@ -8562,3 +8562,6 @@ ul.banner-selector-menu{
 .tasklist_title{
   text-transform: capitalize;
 }
+#task-container .mail-box{
+  padding: 10px;
+}

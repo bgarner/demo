@@ -252,8 +252,11 @@ class Task extends Model
                                            
         $tasks = Playlist::mergeTargetedAndAllStoreAssets($targetedTasks, $allStoreTasks);
 
-        foreach ($tasks as $task) {
+        foreach ($tasks as $key=>$task) {
 			$task->prettyDueDate = Utility::prettifyDate($task->due_date);
+			if(TasklistTask::where('task_id', $task->id)->exists()){
+				$tasks->forget($key);
+			}
         }
         
         return $tasks;

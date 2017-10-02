@@ -7,9 +7,9 @@
             <ul class="folder-list m-b-md" style="padding: 0">
                 <li>
                     <a class="tasklist_title" href="/{{ Request::segment(1) }}/task"> <i class="fa fa-inbox "></i> {{__("All Tasks")}}
-                    {{--@if($communicationCount > 0)
-                    <span class="label label-inverse pull-right">{{ $communicationCount </span>
-                    @endif--}}
+                    
+                    <span class="label label-inverse pull-right">{{ count($allIncompleteTasks) }} </span>
+                    
                     </a>
                 </li>
 
@@ -18,7 +18,7 @@
             <ul class="category-list" style="padding: 0">
             @foreach($tasklists as $tasklist)
 
-                <li><a class="tasklist_title" href="/{{ Request::segment(1) }}/tasklist/{{ $tasklist->id }}"> <span class="label pull-right">{{-- $c->count --}}</span> {{ $tasklist->title }}</a></li>
+                <li><a class="tasklist_title" href="/{{ Request::segment(1) }}/tasklist/{{ $tasklist->id }}">{{ $tasklist->title }} <span class="label pull-right"> {{ count($tasklist->incompleteTasksInList) }}</span> </a></li>
 
             @endforeach
             </ul>

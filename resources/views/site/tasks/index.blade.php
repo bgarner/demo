@@ -31,32 +31,9 @@
         </div>
 
     <div class="wrapper wrapper-content">
-        <div class="row">
-            <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
-
-            @include('site.tasks.tasksidebar')
-
-            </div>
-            <div class="col-lg-10 col-md-9 col-sm-8 col-xs-8 animated fadeInRight">
-                <!-- <div class="ibox float-e-margins"> -->
-                    <div class="mail-box-header clearfix">
-                        <h2>
-                        @if(!isset($title))
-                            {{__("All Tasks")}} {{-- <small>({{ $taskCount }} incomplete)</small> --}}
-                        @else
-                            {{ $title }}
-                        @endif
-                        </h2>
-                    </div>
-                    <div class="mail-box clearfix">
-                         <div id="task-container">
-                        @include('site.tasks.task-list-partial')
-                        </div>
-                    </div>
-
-                <!-- </div> -->
-               
-            </div>
+        <div class="row" id="task-container">
+            @include('site.tasks.task-list-partial')
+            
         </div>
     </div>
 

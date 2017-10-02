@@ -179,6 +179,8 @@ class Tasklist extends Model
         $tasklists = $allStoreTasklists->merge($targetedTasklists)->merge($tasklistsForStoreGroups);
         foreach ($tasklists as $tasklist) {
             $tasklist->prettyDueDate = Utility::prettifyDate($tasklist->due_date);
+            $tasklist->incompleteTasksInList = Tasklist::getAllIncompleteTasksByTasklistId($tasklist->id, $store_number);
+
         }
         
         return $tasklists;

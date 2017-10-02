@@ -39,6 +39,8 @@ var handleTaskUpdate = function(elem){
             
         }
     }).done(function(response){
+
+        $("#sidenav-task-count").text(response.allIncompleteTasks + " / " + (response.tasksCompleted + response.allIncompleteTasks) );
         $("#task-container").html(response.html);
 
     });     

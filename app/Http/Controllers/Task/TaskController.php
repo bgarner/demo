@@ -33,6 +33,7 @@ class TaskController extends Controller
                     ->with('tasksDueToday', $tasksDueToday)
                     ->with('tasksDue', $tasksNotDueToday)
                     ->with('tasksCompleted', $tasksCompleted)
+                    ->with('allIncompleteTasks', $allIncompleteTasks)
                     ->with('tasklists', $tasklists);
     }
 
@@ -51,15 +52,20 @@ class TaskController extends Controller
         $tasksDueToday = Task::getTaskDueTodaybyStoreId($storeNumber);
         $tasksNotDueToday = $allIncompleteTasks->diff($tasksDueToday);
         $tasksCompleted = Task::getAllCompletedTasksByStoreId($storeNumber);
-
+        $tasklists = Tasklist::getAllTasklistsByStore($storeNumber);
 
         $returnHTML = view('site.tasks.task-list-partial')
                     ->with('tasksDueToday', $tasksDueToday)
                     ->with('tasksDue', $tasksNotDueToday)
                     ->with('tasksCompleted', $tasksCompleted)
+                    ->with('allIncompleteTasks', $allIncompleteTasks)
+                    ->with('tasklists', $tasklists)
                     ->render();
 
-        return response()->json(array('html'=>$returnHTML));
+        return response()->json(array('html'=>$returnHTML, 
+                                    'tasksCompleted'=> count($tasksCompleted), 
+                                    'allIncompleteTasks'=> count($allIncompleteTasks)
+                                ));
         
     }
 
