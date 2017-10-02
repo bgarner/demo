@@ -51,6 +51,12 @@ $(document).on('click','.tasklist-create',function(){
 	$(".task-title").each(function(index, value){
 		tasks.push($(this).text());
 	});	
+
+	console.log( target_stores );
+	console.log( target_banners );
+	console.log( store_groups );
+	console.log( all_stores );
+
  
     if(title == '' ) {
 		swal("Oops!", "We need a title for the tasklist.", "error"); 
@@ -65,7 +71,7 @@ $(document).on('click','.tasklist-create',function(){
 		return false;
 	}
 	
-	if( target_stores == null && typeof all_stores === 'undefined' ) {
+	if( target_stores == null || all_stores == null || store_groups == null ) {
 		swal("Oops!", "Target stores not selected.", "error"); 
 		hasError = true;
 		$(window).scrollTop(0);

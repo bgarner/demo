@@ -15,7 +15,7 @@ class TasklistValidator extends PortalValidator
                     'target_stores'  => "sometimes|exists:stores,store_number",
                     'allStores'      => 'sometimes|in:on,off',
                     'target_banners' => 'sometimes|exists:banners,id',
-                    'store_groups'   => 'sometimes|exists:custom_store_groups,id',
+                    'store_groups'   => 'sometimes|exists:custom_store_group,id',
 
     		];
 

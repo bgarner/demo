@@ -6,7 +6,7 @@
 
             <ul class="folder-list m-b-md" style="padding: 0">
                 <li>
-                    <a class="tasklist_title" href="/{{ Request::segment(1) }}/task"> <i class="fa fa-inbox "></i> {{__("All Messages")}}
+                    <a class="tasklist_title" href="/{{ Request::segment(1) }}/task"> <i class="fa fa-inbox "></i> {{__("All Tasks")}}
                     {{--@if($communicationCount > 0)
                     <span class="label label-inverse pull-right">{{ $communicationCount </span>
                     @endif--}}

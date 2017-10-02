@@ -56,7 +56,10 @@ $(document).on('click','.tasklist-update',function(){
 	var store_groups = getStoreGroups();
 	var all_stores = getAllStoreStatus();
 
-
+	console.log( target_stores.length );
+	console.log( target_banners.length );
+	console.log( store_groups.length );
+	console.log( all_stores.length );
 
 	var remove_tasks = [];
 	var tasks = [];
@@ -70,10 +73,6 @@ $(document).on('click','.tasklist-update',function(){
 		remove_tasks.push($(this).attr('data-taskid'));
 	});
 
-
-	console.log(tasks);
-	console.log(remove_tasks);
-
     if(title == '' ) {
 		swal("Oops!", "We need a title.", "error"); 
 		hasError = true;
@@ -81,7 +80,7 @@ $(document).on('click','.tasklist-update',function(){
 		return false;
 	}
 	
-	if( target_stores == null && typeof all_stores === 'undefined' ) {
+	if( target_stores.length <= 0  && target_banners.length <= 0  && store_groups.length <= 0  ) {
 		swal("Oops!", "Target stores not selected.", "error"); 
 		hasError = true;
 		$(window).scrollTop(0);

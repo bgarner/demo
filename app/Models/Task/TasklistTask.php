@@ -3,6 +3,7 @@
 namespace App\Models\Task;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Task\TaskTarget;
 
 class TasklistTask extends Model
 {
@@ -25,10 +26,7 @@ class TasklistTask extends Model
 			foreach ($add_tasks as $task) {
 				$request['title'] = $task;
 				$request['send_reminder'] = NULL;
-				// $task_ids = TasklistTask::where('tasklist_id', $tasklist_id)->get()->pluck('task_id');
-				// foreach ($task_ids as $task_id) {
-				// 	Task::find($task_id)->delete();	
-				// }
+
 				$task = Task::createTask($request);
 				if(!is_string($task)){ 
 					TasklistTask::create([
@@ -38,6 +36,12 @@ class TasklistTask extends Model
 				}
 			}
 		}
+
+		$task_ids = TasklistTask::where('tasklist_id', $tasklist_id)->get()->pluck('task_id');
+		foreach ($task_ids as $task_id) {
+			TaskTarget::updateTargetStores($task_id, $request);
+		}
+		
 		return;
     }
 }

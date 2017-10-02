@@ -43,8 +43,8 @@ class Tasklist extends Model
         if ($request['target_banners'] != NULL) {
             $validateThis['target_banners'] = $request['target_banners'];
         }
-        if ($request['target_store_groups'] != NULL) {
-            $validateThis['target_store_groups'] = $request['target_store_groups'];
+        if ($request['store_groups'] != NULL) {
+            $validateThis['store_groups'] = $request['store_groups'];
         }
 
 		if ($request['all_stores'] != NULL) {
@@ -58,11 +58,10 @@ class Tasklist extends Model
 	}
 
 	public static function validateEditTasklist($request)
-	{
-		$validateThis =  [
+	{	
+        $validateThis =  [
 
-			'title'   		 => $request['title'],
-			'target_stores'  => $request['target_stores']
+			'title'   		 => $request['title']
 
 		];
 		if ($request['due_date'] != NULL) {
@@ -81,8 +80,8 @@ class Tasklist extends Model
         if ($request['target_banners'] != NULL) {
             $validateThis['target_banners'] = $request['target_banners'];
         }
-        if ($request['target_store_groups'] != NULL) {
-            $validateThis['target_store_groups'] = $request['target_store_groups'];
+        if ($request['store_groups'] != NULL) {
+            $validateThis['store_groups'] = $request['store_groups'];
         }
 
 		if ($request['all_stores'] != NULL) {
