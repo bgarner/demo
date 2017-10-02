@@ -21,6 +21,7 @@
                         <li><a data-lang="{{$key}}" data-langname="{{$value}}" href="#" class="setUserLang">{{$value}}</a></li>
                     @endif
                 @endforeach
+                
             </ul>
         </div>
     </div>
