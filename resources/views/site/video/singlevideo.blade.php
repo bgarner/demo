@@ -91,7 +91,8 @@
                                 @endforeach
 
                             @endif
-
+                            <hr />
+                            <h4><a href="../../video"><i class="fa fa-reply" aria-hidden="true"></i> Back to Video Library</a></h4>
                         </div>
                     </div>
 

@@ -67,6 +67,9 @@
                                     <p id="video-description"></p>
                                     <input type="text" value="" class="hidden" id="video_id">
                                     <a id="clicktrack_link" class="trackclick hidden" data-video-id>Click to track</a>
+
+                                    <hr />
+                                    <h4><a href="../../video"><i class="fa fa-reply" aria-hidden="true"></i> Back to Video Library</a></h4>
                                 </div>
                             </div>
 
