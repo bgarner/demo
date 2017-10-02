@@ -8561,3 +8561,11 @@ ul.banner-selector-menu{
 .banner-not-set{
   color: #f00 !important;
 }
+
+
+/* hide the footer on the vdk */
+@media only screen and (max-width: 500px) {
+    .footer {
+        display: none;
+    }
+}
