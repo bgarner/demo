@@ -373,7 +373,7 @@ class Task extends Model
 
 	}
 
-	public static function getAllIncompleteTasksByStoreId($store_id)
+	public static function getAllIncompleteTasksByStoreId($store_id, $tasklist_id = null)
 	{
 		
 		$banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
@@ -424,7 +424,7 @@ class Task extends Model
 
 	}
 
-	public static function getTaskDueTodaybyStoreId($store_id)
+	public static function getTaskDueTodaybyStoreId($store_id, $tasklist_id = null)
 	{
 		$endOfDayToday = Carbon::today()->endOfDay()->format('Y-m-d H:i:s');
 		$banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
@@ -478,7 +478,7 @@ class Task extends Model
 		return $tasks;
 	}
 
-	public static function getAllCompletedTasksByStoreId($store_id)
+	public static function getAllCompletedTasksByStoreId($store_id, $tasklist_id = null)
 	{
 		$banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
 		$endOfDayToday = Carbon::today()->endOfDay()->format('Y-m-d H:i:s');
@@ -524,6 +524,7 @@ class Task extends Model
                                             ->each(function($task, $store_id){
 												$task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
 												$task->store_id = $store_id;
+												$task->pretty_completed_date = "Completed on " . Utility::prettifyDate($task->completed_on);
 											});
 
 		$tasks = $tasks->merge($allStoreTasks);

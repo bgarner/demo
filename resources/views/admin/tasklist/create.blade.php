@@ -125,10 +125,11 @@
 		<script type="text/javascript" src="/js/vendor/bootstrap-datetimepicker.min.js"></script>
 		<script type="text/javascript" src="/js/plugins/ckeditor-custom/ckeditor.js"></script>
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
-		<script type="text/javascript" src="/js/custom/admin/tasklist/addTasklist.js"></script>
+		
 		<script type="text/javascript" src="/js/custom/tree.js"></script>
 		<script type="text/javascript" src="/js/custom/datetimepicker-with-default-time.js"></script>
-		<script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>
+		<script type="text/javascript" src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
+		<script type="text/javascript" src="/js/custom/admin/tasklist/addTasklist.js"></script>
 
 		<script type="text/javascript">
 

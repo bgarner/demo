@@ -44,7 +44,6 @@ $(document).on('click','.tasklist-create',function(){
 	var due_date = $("#due_date").val();
 	var banner_id = $("input[name='banner_id']").val();
 	var target_stores  = getTargetStores();
-	var target_stores = getTargetStores();
 	var target_banners = getTargetBanners();
 	var store_groups = getStoreGroups();
 	var all_stores = getAllStoreStatus();

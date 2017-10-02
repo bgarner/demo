@@ -14,7 +14,18 @@ $(".check-link").click(function(e){
 var handleTaskUpdate = function(elem){
 
     var task_id = elem.attr('data-task-id');
-    var url = 'task/' + task_id ;
+
+    var pathname = window.location.pathname;
+
+    var module = new RegExp('/\*\/tasklist\/\*/');
+
+    if (module.test(pathname)) {
+        var url =  window.location.href + "/task/" + task_id ;            
+    }
+    else{
+        var url =  window.location.href + "/" + task_id ;
+    }
+
     var task_checkbox_status = elem.attr('data-task-completed');
 
     $.ajax({

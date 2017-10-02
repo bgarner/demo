@@ -8559,3 +8559,6 @@ ul.banner-selector-menu{
 #file-table td{
     font-size: 12px;
 }
+.tasklist_title{
+  text-transform: capitalize;
+}

@@ -41,13 +41,11 @@
                 <!-- <div class="ibox float-e-margins"> -->
                     <div class="mail-box-header clearfix">
                         <h2>
-                        {{--@if($title == "")
-                                    {{__("All Tasks")}} {{ <small>({{ $taskCount }} incomplete)</small> }}
-                                @else
-                                    {{ $title }}
-                                @endif--}}
-
-                                {{__("All Tasks")}}
+                        @if(!isset($title))
+                            {{__("All Tasks")}} {{-- <small>({{ $taskCount }} incomplete)</small> --}}
+                        @else
+                            {{ $title }}
+                        @endif
                         </h2>
                     </div>
                     <div class="mail-box clearfix">
