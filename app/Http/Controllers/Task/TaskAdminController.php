@@ -15,6 +15,7 @@ use App\Models\Document\FileFolder;
 use App\Models\Task\TaskDocument;
 use App\Models\Task\TaskTarget;
 use App\Models\Task\TaskStatusTypes;
+use App\Models\Utility\Utility;
 
 class TaskAdminController extends Controller
 {
@@ -32,7 +33,7 @@ class TaskAdminController extends Controller
      */
     public function index()
     {
-        $tasks = Task::getTasksbyBanner();
+        $tasks = Task::getTasksForAdmin();
         return view('admin.task.index')->with('tasks', $tasks);
 
     }
@@ -45,12 +46,10 @@ class TaskAdminController extends Controller
     public function create()
     {
         $banner = UserSelectedBanner::getBanner();
-        $storeList = StoreInfo::getStoreListing($banner->id);
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
+        $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
 
-        return view('admin.task.create')
-                                        ->with('banner', $banner)
-                                        ->with('storeList', $storeList)
+        return view('admin.task.create')->with('optGroupOptions', $optGroupOptions)
                                         ->with('navigation', $fileFolderStructure);
     }
 
@@ -85,10 +84,9 @@ class TaskAdminController extends Controller
     public function edit($id)
     {
         $banner = UserSelectedBanner::getBanner();
-        
-        $task_target_stores = TaskTarget::getTargetStoresByTaskId($id);
-        // store list would depend on the Auth::user type and id 
-        $storeList = StoreInfo::getStoreListing($banner->id);
+    
+        $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
+        $optGroupSelections = json_encode(Task::getSelectedStoresAndBannersByTaskId($id));
 
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
         $task = Task::find($id);
@@ -97,10 +95,9 @@ class TaskAdminController extends Controller
         
         return view('admin.task.edit')->with('task', $task)
                                         ->with('task_documents', $task_documents)
-                                        ->with('banner', $banner)
-                                        ->with('storeList', $storeList)
+                                        ->with('optGroupOptions', $optGroupOptions)
+                                        ->with('optGroupSelections', $optGroupSelections)
                                         ->with('navigation', $fileFolderStructure)
-                                        ->with('target_stores', $task_target_stores)
                                         ->with('task_status_list', $task_status_list);
     }
 

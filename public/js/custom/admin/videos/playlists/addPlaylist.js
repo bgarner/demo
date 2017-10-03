@@ -68,7 +68,8 @@ $(document).on('click','.playlist-create',function(){
 		  		playlist_videos : playlist_videos,
 		  		all_stores : getAllStoreStatus(),
 		  		target_stores : getTargetStores(),
-		  		target_banners : getTargetBanners() 
+		  		target_banners : getTargetBanners(),
+		  		store_groups : getStoreGroups() 
 		  		
 		    },
 		    success: function(result) {

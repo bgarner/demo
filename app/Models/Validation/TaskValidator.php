@@ -11,9 +11,10 @@ class TaskValidator extends PortalValidator
                     'title'           => 'required',
                     'publish_date'    => 'date',
                     'due_date'        => 'required|date|after:publish_date',
-                    'target_stores'   => "required_without:allStores",
-                    'allStores'       => 'in:on',
-                    'banner_id '      => 'sometimes|exists:banners,id',
+                    'target_stores'   => "sometimes|exists:stores,store_number",
+                    'allStores'       => 'sometimes|in:on,off',
+                    'target_banners'  => 'sometimes|exists:banners,id', 
+                    'store_groups'    => 'sometimes|exists:custom_store_groups,id',
                     'documents'       => 'sometimes|exists:documents,id',
                     'remove_document' => 'sometimes|exists:documents,id',
     		];

@@ -2,7 +2,9 @@
 
 namespace App\Models\Task;
 
+
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Validation\TaskValidator;
 use App\Models\Task\TaskTarget;
 use App\Models\Task\TaskDocument;
@@ -13,20 +15,27 @@ use App\Models\Auth\User\UserResource;
 use App\Models\StoreApi\StoreInfo;
 use App\Models\Utility\Utility;
 use App\Models\Auth\User\UserSelectedBanner;
+use App\Models\Auth\User\UserBanner;
 use Carbon\Carbon;
+use App\Models\Tools\CustomStoreGroup;
+use App\Models\Video\Playlist;
 
 class Task extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'tasks';
 
     protected $fillable = ['title', 'description', 'due_date', 'publish_date', 'send_reminder', 'banner_id'];
+
+    protected $dates = ['deleted_at'];
 
 	public static function validateCreateTask($request)
 	{
 		$validateThis =  [
 
-			'title'   		=> $request['title'],
-			'target_stores' => $request['target_stores']
+			'title'   		=> $request['title']
+			// 'target_stores' => explode(',', $request['target_stores'])
 
 		];
 		if ($request['due_date'] != NULL) {
@@ -36,8 +45,14 @@ class Task extends Model
             $validateThis['publish_date'] = $request['publish_date'];
         }
 
-        if ($request['banner_id'] != NULL) {
-            $validateThis['banner_id'] = $request['banner_id'];
+        if ($request['target_stores'] != NULL) {
+            $validateThis['target_stores'] = $request['target_stores'];
+        }
+        if ($request['target_banners'] != NULL) {
+            $validateThis['target_banners'] = $request['target_banners'];
+        }
+        if ($request['target_store_groups'] != NULL) {
+            $validateThis['target_store_groups'] = $request['target_store_groups'];
         }
 
 		if ($request['all_stores'] != NULL) {
@@ -69,8 +84,15 @@ class Task extends Model
         if ($request['publish_date'] != NULL) {
             $validateThis['publish_date'] = $request['publish_date'];
         }
-        if ($request['banner_id'] != NULL) {
-            $validateThis['banner_id'] = $request['banner_id'];
+
+       	if ($request['target_stores'] != NULL) {
+            $validateThis['target_stores'] = $request['target_stores'];
+        }
+        if ($request['target_banners'] != NULL) {
+            $validateThis['target_banners'] = $request['target_banners'];
+        }
+        if ($request['target_store_groups'] != NULL) {
+            $validateThis['target_store_groups'] = $request['target_store_groups'];
         }
 
 		if ($request['all_stores'] != NULL) {
@@ -91,9 +113,7 @@ class Task extends Model
 
 	public static function createTask($request)
 	{
-		\Log::info($request->all());
 		$validate = Task::validateCreateTask($request);
-		\Log::info($validate);
 		if($validate['validation_result'] == 'false') {
 			\Log::info($validate);
 			return json_encode($validate);
@@ -108,11 +128,6 @@ class Task extends Model
 		if(isset($request['publish_date'])) {
 			$publish_date = $request['publish_date'];
 		}
-		
-		$banner_id = null;
-		if(isset($request['banner_id'])) {
-			$banner_id = $request['banner_id'];
-		}
 
 		$task = Task::create([
 			'title' 		=> $request["title"],
@@ -120,7 +135,7 @@ class Task extends Model
 			'publish_date'	=> $publish_date,
 			'due_date'		=> $request["due_date"],
 			'send_reminder'	=> (bool) $request["send_reminder"],
-			'banner_id'		=> $banner_id
+			// 'banner_id'		=> $banner_id
 		]);
 
 		TaskTarget::updateTargetStores($task->id, $request);
@@ -188,28 +203,64 @@ class Task extends Model
 		Task::find($task_id)->delete();
 	}
 	
-	public static function getTasksbyBanner()
+	public static function getTasksForAdmin()
 	{
-		$banner = UserSelectedBanner::getBanner();
-        $storeList = StoreInfo::getStoreListing($banner->id);
-		$allStoreTasks = Task::where('all_stores', 1)
-								->where('banner_id', $banner->id)
-								->get()
-								->each(function($task){
-									$task->prettyDueDate = Utility::prettifyDate($task->due_date);
-								});
-
 		
-		$tasks = Task::join('tasks_target', 'tasks_target.task_id', '=', 'tasks.id')
-					->whereIn('store_id', array_keys($storeList))
-					->select('tasks.*', 'tasks_target.store_id')
-					->get()
-					->each(function($task){
-						$task->prettyDueDate = Utility::prettifyDate($task->due_date);
-					});
-		$targetedTasks = Task::groupTaskStores($tasks);			
-		$targetedTasks = $targetedTasks->merge($allStoreTasks)->sortByDesc('created_at');
-		return $targetedTasks;
+		$banners = UserBanner::getAllBanners()->pluck('id')->toArray();
+
+		//stores in accessible banners
+        $storeList = [];
+        foreach ($banners as $banner) {
+            $storeInfo = StoreInfo::getStoresInfo($banner);
+            foreach ($storeInfo as $store) {
+                array_push($storeList, $store->store_number);
+            }
+        }
+
+        $allStoreTasks = Task::join('task_banner', 'task_banner.task_id', '=', 'tasks.id')
+                                ->where('all_stores', 1)
+                                ->whereIn('task_banner.banner_id', $banners)
+                                ->select('tasks.*', 'task_banner.banner_id')
+                                ->get();
+
+        $allStoreTasks = Task::groupBannersForAllStoreTasks($allStoreTasks);
+        
+        $targetedTasks = Task::join('tasks_target', 'tasks_target.task_id', '=', 'tasks.id')
+                                ->whereIn('tasks_target.store_id', $storeList)
+                                ->select('tasks.*', 'tasks_target.store_id')
+                                ->get();
+
+        $targetedTasks = Task::groupTaskStores($targetedTasks);
+
+        $storeGroups = CustomStoreGroup::getStoreGroupsForAdmin();
+        $tasksForStoreGroups = Task::join('task_store_group', 'task_store_group.task_id', '=', 'tasks.id')
+                                            ->whereIn('task_store_group.store_group_id', $storeGroups)
+                                            ->select('tasks.*')
+                                            ->get()
+                                            ->each(function($item){
+                                                $storeGroups = TaskStoreGroup::where('task_id', $item->id)->get()->pluck('store_group_id')->toArray();
+                                                $item->storeGroups = $storeGroups;
+                                                $item->stores = [];
+                                                foreach ($storeGroups as $group) {
+                                                    $stores = unserialize(CustomStoreGroup::find($group)->stores);
+                                                    $item->stores = array_merge($item->stores,$stores);
+                                                }
+                                                $item->stores = array_unique( $item->stores);
+                                            });
+
+        $targetedTasks = Task::mergeTargetedAndStoreGroupTasks($targetedTasks, $tasksForStoreGroups);
+                                           
+        $tasks = Playlist::mergeTargetedAndAllStoreAssets($targetedTasks, $allStoreTasks);
+
+        foreach ($tasks as $key=>$task) {
+			$task->prettyDueDate = Utility::prettifyDate($task->due_date);
+			if(TasklistTask::where('task_id', $task->id)->exists()){
+				$tasks->forget($key);
+			}
+        }
+        return $tasks;
+
+
 	}
 
 	public static function getActiveTasksByUserId($user_id)
@@ -324,13 +375,15 @@ class Task extends Model
 
 	}
 
-	public static function getAllIncompleteTasksByStoreId($store_id)
+	public static function getAllIncompleteTasksByStoreId($store_id, $tasklist_id = null)
 	{
 		
 		$banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
 
-		$allStoreTasks = Task::where('all_stores', 1)
-							->where('banner_id', $banner_id)
+		$allStoreTasks = Task::join('task_banner', 'task_banner.task_id', '=', 'tasks.id')
+							->where('all_stores', 1)
+							->where('task_banner.banner_id', $banner_id)
+							->select('tasks.*')
 							->get()
 							->each(function($task, $store_id){
 								$task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
@@ -345,8 +398,20 @@ class Task extends Model
 					->each(function($task){
 						$task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
 					});
+
+		$storeGroups = CustomStoreGroup::getStoreGroupsForStore($store_id);
+
+        $targetedTasksForStoreGroups = Task::join('task_store_group', 'task_store_group.task_id', '=', 'tasks.id')
+                                            ->whereIn('task_store_group.store_group_id', $storeGroups)
+                                            ->select('tasks.*')
+                                            ->get()
+                                            ->each(function($task, $store_id){
+												$task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
+												$task->store_id = $store_id;
+											});
 	
 		$tasks = $targetedTasks->merge($allStoreTasks);
+		$tasks = $tasks->merge($targetedTasksForStoreGroups);
 
 		foreach ($tasks as $key => $task) {
 			
@@ -355,20 +420,32 @@ class Task extends Model
 			if($isTaskDoneByStore){
 				$tasks->forget($key);
 			}
+			if(TaskDocument::where('task_id', $task->id)->exists()){
+				$task->documents = TaskDocument::join('documents', 'task_document.document_id', '=', 'documents.id')
+										->where('task_id', $task->id)
+										->select('documents.*')
+										->get()
+										->each(function($doc){
+											$doc->link_with_icon = Utility::getModalLink($doc->filename, $doc->title, $doc->original_extension, $doc->id, 1);
+										});
+
+
+			}
 
 		}
 		return $tasks;
 
 	}
 
-	public static function getTaskDueTodaybyStoreId($store_id)
+	public static function getTaskDueTodaybyStoreId($store_id, $tasklist_id = null)
 	{
 		$endOfDayToday = Carbon::today()->endOfDay()->format('Y-m-d H:i:s');
 		$banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
 
-		$allStoreTasks = $tasks = Task::where('all_stores', 1)
-									->where('banner_id', $banner_id)
-									->where('due_date' , "<", $endOfDayToday)
+		$allStoreTasks = $tasks = Task::join('task_banner', 'task_banner.task_id', '=', 'tasks.id')
+									->where('tasks.all_stores', 1)
+									->where('task_banner.banner_id', $banner_id)
+									->where('due_date' , "<=", $endOfDayToday)
 									->select('tasks.*')
 									->get()
 									->each(function($task, $store_id){
@@ -379,7 +456,7 @@ class Task extends Model
 
 		$tasks = Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
 					->where('tasks_target.store_id', $store_id)
-					->where('due_date' , "<", $endOfDayToday)
+					->where('due_date' , "<=", $endOfDayToday)
 					->select('tasks.*', 'tasks_target.store_id')
 					->get()
 					->each(function($task){
@@ -387,7 +464,20 @@ class Task extends Model
 						
 					});
 
+		$storeGroups = CustomStoreGroup::getStoreGroupsForStore($store_id);
+
+        $targetedTasksForStoreGroups = Task::join('task_store_group', 'task_store_group.task_id', '=', 'tasks.id')
+                                            ->whereIn('task_store_group.store_group_id', $storeGroups)
+                                            ->where('due_date' , "<=", $endOfDayToday)
+                                            ->select('tasks.*')
+                                            ->get()
+                                            ->each(function($task, $store_id){
+												$task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
+												$task->store_id = $store_id;
+											});
+
 		$tasks = $tasks->merge($allStoreTasks);
+		$tasks = $tasks->merge($targetedTasksForStoreGroups);
 
 		foreach ($tasks as $key=>$task) {
 
@@ -396,20 +486,34 @@ class Task extends Model
 			if($isTaskDoneByStore){
 				$tasks->forget($key);
 			}
+			if(TaskDocument::where('task_id', $task->id)->exists()){
+				$task->documents = TaskDocument::join('documents', 'task_document.document_id', '=', 'documents.id')
+										->where('task_id', $task->id)
+										->select('documents.*')
+										->get()
+										->each(function($doc){
+											$doc->link_with_icon = Utility::getModalLink($doc->filename, $doc->title, $doc->original_extension, $doc->id, 1);
+										});
+
+
+			}
 		}
 
 		return $tasks;
 	}
 
-	public static function getAllCompletedTasksByStoreId($store_id)
+	public static function getAllCompletedTasksByStoreId($store_id, $tasklist_id = null)
 	{
 		$banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
+		$endOfDayToday = Carbon::today()->endOfDay()->format('Y-m-d H:i:s');
 
-		$allStoreTasks = $tasks = Task::join('task_store_status' , 'task_store_status.task_id' , '=', 'tasks.id' )
+		$allStoreTasks = $tasks = Task::join('task_banner', 'task_banner.task_id', '=', 'tasks.id')
+									->join('task_store_status' , 'task_store_status.task_id' , '=', 'tasks.id' )
 									->where('all_stores', 1)
-									->where('banner_id', $banner_id)
+									->where('task_banner.banner_id', $banner_id)
 									->where('task_store_status.store_id', $store_id)
 									->where('task_store_status.status_type_id', '2')
+									->where('due_date' , ">=", $endOfDayToday)
 									->select('tasks.*', 'task_store_status.created_at as completed_on')
 									->get()
 									->each(function($task, $store_id){
@@ -424,6 +528,7 @@ class Task extends Model
 					->where('tasks_target.store_id', $store_id)
 					->where('task_store_status.store_id', $store_id)
 					->where('task_store_status.status_type_id', '2')
+					->where('due_date' , ">=", $endOfDayToday)
 					->select('tasks.*', 'tasks_target.store_id', 'task_store_status.created_at as completed_on')
 					->get()
 					->each(function($task){
@@ -431,7 +536,38 @@ class Task extends Model
 						$task->pretty_completed_date = "Completed on " . Utility::prettifyDate($task->completed_on);
 					});
 
+		$storeGroups = CustomStoreGroup::getStoreGroupsForStore($store_id);
+
+        $targetedTasksForStoreGroups = Task::join('task_store_group', 'task_store_group.task_id', '=', 'tasks.id')
+                                            ->join('task_store_status' , 'task_store_status.task_id' , '=', 'tasks.id' )
+                                            ->whereIn('task_store_group.store_group_id', $storeGroups)
+                                            ->where('task_store_status.status_type_id', '2')
+                                            ->where('due_date' , ">=", $endOfDayToday)
+											->select('tasks.*', 'task_store_status.created_at as completed_on')
+											->get()
+                                            ->each(function($task, $store_id){
+												$task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
+												$task->store_id = $store_id;
+												$task->pretty_completed_date = "Completed on " . Utility::prettifyDate($task->completed_on);
+											});
+
 		$tasks = $tasks->merge($allStoreTasks);
+		$tasks = $tasks->merge($targetedTasksForStoreGroups);
+
+
+		foreach ($tasks as $task) {
+			if(TaskDocument::where('task_id', $task->id)->exists()){
+				$task->documents = TaskDocument::join('documents', 'task_document.document_id', '=', 'documents.id')
+										->where('task_id', $task->id)
+										->select('documents.*')
+										->get()
+										->each(function($doc){
+											$doc->link_with_icon = Utility::getModalLink($doc->filename, $doc->title, $doc->original_extension, $doc->id, 1);
+										});
+
+
+			}
+		}
 		return $tasks;
 	}
 
@@ -491,5 +627,64 @@ class Task extends Model
         return $compiledStores;
 	}
 
+	public static function getSelectedStoresAndBannersByTaskId($task_id)
+    {
+        $targetBanners = TaskBanner::where('task_id', $task_id)->get()->pluck('banner_id')->toArray();
+        $targetStores = TaskTarget::where('task_id', $task_id)->get()->pluck('store_id')->toArray();
+        $storeGroups = TaskStoreGroup::where('task_id', $task_id)->get()->pluck('store_group_id')->toArray();
+
+        $optGroupSelections = [];
+        foreach ($targetBanners as $banner) {
+            array_push($optGroupSelections, 'banner'.$banner);
+        }
+        foreach ($targetStores as $stores) {
+            array_push($optGroupSelections, 'store'.$stores);   
+        }
+        foreach ($storeGroups as $group) {
+            array_push($optGroupSelections, 'storegroup'.$group);   
+        }
+
+        return( $optGroupSelections );
+    }
+
+    public static function groupBannersForAllStoreTasks($allStoreTasks)
+    {
+        $allStoreTasks = $allStoreTasks->toArray();
+        $compiledTasks = [];
+        foreach ($allStoreTasks as $task) {
+            $index = array_search($task['id'], array_column($compiledTasks, 'id'));
+            if(  $index !== false ){
+               array_push($compiledTasks[$index]->banners, $task["banner_id"]);
+            }
+            else{
+               
+               $task["banners"] = [];
+               array_push( $task["banners"] , $task["banner_id"]);
+               array_push( $compiledTasks , (object) $task);
+            }
+
+        }
+        
+        return collect($compiledTasks);
+    }
+    public static function mergeTargetedAndStoreGroupTasks($targetedTasks, $storeGroupTasks)
+    {
+        $targetedTasksArray = $targetedTasks->toArray();
+        $targetedTaskIds = array_column($targetedTasksArray, 'id');
+        foreach ($storeGroupTasks as $task) {
+
+            if(in_array($task->id, $targetedTaskIds)){
+                $targetedTaskStores = $targetedTasks->where('id', $task->id)->first()->stores;
+                $mergedStores = array_merge( $targetedTaskStores, $task->stores);
+                $targetedTasks->where('id', $task->id)->first()->stores = $mergedStores;
+            }
+            else{
+
+                $targetedTasks = $targetedTasks->push((object)$task);                
+            }
+        }
+        return $targetedTasks;
+
+    }
 
 }

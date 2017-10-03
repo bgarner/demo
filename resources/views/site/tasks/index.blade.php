@@ -31,16 +31,9 @@
         </div>
 
     <div class="wrapper wrapper-content">
-        <div class="row">
-            <!-- <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
-
-            side bar
-
-            </div> -->
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 animated fadeInRight" id="task-container">
-                @include('site.tasks.task-list-partial')
-            </div>
-
+        <div class="row" id="task-container">
+            @include('site.tasks.task-list-partial')
+            
         </div>
     </div>
 
@@ -51,3 +44,4 @@
 
 </body>
 </html>
+

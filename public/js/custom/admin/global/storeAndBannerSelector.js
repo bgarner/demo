@@ -7,16 +7,20 @@ $(document).ready(function(){
 		'width':'100%'
 	})
 	storeSelect = $('#targets');
-	console.log($("#optGroupSelections").val());
-	var selected = JSON.parse($("#optGroupSelections").val());  
-	selected = Array.from(new Set(selected));
-	storeSelect.val(null);
-	storeSelect.val(selected);
-	storeSelect.trigger('chosen:updated');
+
+	var optGroupSelections = $("#optGroupSelections").val();
+	if(typeof(optGroupSelections) !== 'undefined'){
+
+		var selected = JSON.parse(optGroupSelections);  
+		selected = Array.from(new Set(selected));
+		storeSelect.val(null);
+		storeSelect.val(selected);
+		storeSelect.trigger('chosen:updated');	
+	}
 });
 
 
-$(".chosen").on('change', function (event,el) {
+$("#targets").on('change', function (event,el) {
 
 	var options = $( ".chosen option:selected" );
 	allStores = 'off';
@@ -78,9 +82,9 @@ var getTargetStores = function(){
 	
 	for (var i = 0; i < options.length; i++) {
 	    
-	    var parentBanner = $(options[i]).attr('data-parentBanner');
-	    if(parentBanner){
-	    	var store = $(options[i]).val();
+	    var type = $(options[i]).attr('data-optiontype');
+	    if(type == 'store'){
+	    	var store = $(options[i]).attr('data-resourceid');
 	    	targetStores.push(store);
 	    }    
 
@@ -101,13 +105,30 @@ var getTargetBanners = function(){
 	    var isAllStoreSelected = $(options[i]).attr('data-allStores');
 	    if(isAllStoreSelected){
 	    	allStores = 'on';
-	    	var banner = $(options[i]).val()
+	    	var banner = $(options[i]).attr('data-resourceid');
 	    	targetBanners.push( banner );
 	    	
 	    }	    
 
 	}
 	return targetBanners;
+}
+
+var getStoreGroups = function(){
+
+	var options = $( ".chosen option:selected" );
+	var storeGroups = [];
+	
+	for (var i = 0; i < options.length; i++) {
+	    
+	    var type = $(options[i]).attr('data-optiontype');
+	    if(type == 'storegroup'){
+	    	var group = $(options[i]).attr('data-resourceid');
+	    	storeGroups.push(group);
+	    }    
+
+	}
+	return storeGroups;
 }
 
 var getAllStoreStatus = function()

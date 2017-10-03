@@ -36,8 +36,8 @@
 
 							<form class="form-horizontal" id="updateTaskForm">
 
-								<input type="hidden" name="banner_id" value={{$banner->id}} >
-								<input type="hidden" id="taskId" name="taskId" value={{$task->id}}>
+								<input type="hidden" id="taskId" name="taskId" value="{{$task->id}}">
+								<input type="hidden" name="optGroupSelections" id="optGroupSelections" value="{{$optGroupSelections}}">
 
 								<div class="form-group">
 									<label class="col-sm-2 control-label">Title</label>
@@ -104,23 +104,9 @@
 									</div>
 								</div>
 
-								<div class="form-group">
 
-						                <label class="col-sm-2 control-label">Target Stores</label>
-						                <div class="col-sm-10">
-						                	@if($task->all_stores)
-		                                        {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
-		                                        {!! Form::label('allStores', 'Or select all stores:') !!}
-		                                        {!! Form::checkbox('allStores', null, true ,['id'=> 'allStores'] ) !!}
-		                                    @else
-		                                        {!! Form::select('stores', $storeList, $target_stores, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
-		                                        {!! Form::label('allStores', 'Or select all stores:') !!}
-		                                        {!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
-		                                    @endif
-						                </div>
-
-						        </div>
-						        <div class="form-group">
+						        @include('admin.includes.the-ultimate-store-selector', ['optGroupOptions'=> $optGroupOptions])
+						        {{--<div class="form-group">
 
 						                <label class="col-sm-2 control-label">Update Task Status
 						                </label>
@@ -131,7 +117,7 @@
 						                </div>
 
 						        </div>
-						        {{--<div class="form-group">
+						        <div class="form-group">
 
 						                <label class="col-sm-2 control-label">Send Reminders</label>
 						                <div class="col-sm-10">
@@ -204,11 +190,11 @@
 		<script type="text/javascript" src="/js/custom/admin/tasks/editTask.js"></script>
 		<script type="text/javascript" src="/js/vendor/moment.js"></script>
 		<script type="text/javascript" src="/js/vendor/bootstrap-datetimepicker.min.js"></script>
-		<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
+		<script type="text/javascript" src="/js/plugins/ckeditor-custom/ckeditor.js"></script>
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 		<script type="text/javascript" src="/js/custom/tree.js"></script>
 		<script type="text/javascript" src="/js/custom/datetimepicker.js"></script>
-		<script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
+		<script type="text/javascript" src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
 
 
 		<script type="text/javascript">
@@ -222,10 +208,11 @@
 				  width:'75%'
 			});
 
-		   CKEDITOR.replace('description', {
-    		    filebrowserUploadUrl: "{{route('utilities.ckeditorimages.store',['_token' => csrf_token() ])}}"
+		   // CKEDITOR.replace('description', {
+    	// 	    filebrowserUploadUrl: "{{route('utilities.ckeditorimages.store',['_token' => csrf_token() ])}}"
 
-    		});
+    	// 	});
+    		CKEDITOR.replace('description');
 
 		    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
 

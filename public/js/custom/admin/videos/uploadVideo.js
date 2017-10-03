@@ -28,6 +28,7 @@ var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
         formData.append("banner_id", $('[name=banner_id]').val());
         formData.append("start", $("#start").val());
         formData.append("target_stores", getTargetStores());
+        formData.append("store_groups", getStoreGroups());
         formData.append("target_banners", getTargetBanners());
         formData.append("all_stores", allStores);
     },

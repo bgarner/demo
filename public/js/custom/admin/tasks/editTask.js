@@ -1,32 +1,31 @@
-$("#allStores").change(function(){
+// $("#allStores").change(function(){
 
-	if ($("#allStores").is(":checked")) {
+// 	if ($("#allStores").is(":checked")) {
 
-		$("#storeSelect option").each(function(){
-			$(this).removeAttr('selected');
-		});
-		$("#storeSelect").chosen('chosen:updated');
+// 		$("#storeSelect option").each(function(){
+// 			$(this).removeAttr('selected');
+// 		});
+// 		$("#storeSelect").chosen('chosen:updated');
 
-		$("#storeSelect option").each(function(index){			
-			$(this).prop('selected', 'selected');
-		});
-		$("#storeSelect").chosen();
+// 		$("#storeSelect option").each(function(index){			
+// 			$(this).prop('selected', 'selected');
+// 		});
+// 		$("#storeSelect").chosen();
 		
-	}
-	else if ($("#allStores").not(":checked")) {
-		$("#storeSelect option").each(function(){
-			$(this).removeAttr('selected');
-		});
-		$("#storeSelect").chosen();
+// 	}
+// 	else if ($("#allStores").not(":checked")) {
+// 		$("#storeSelect option").each(function(){
+// 			$(this).removeAttr('selected');
+// 		});
+// 		$("#storeSelect").chosen();
 		
-	}
-});
+// 	}
+// });
 
 
 $("#add-documents").click(function(){
 	$("#document-listing").modal('show');
 });
-
 
 
 $('body').on('click', '#attach-selected-files', function(){
@@ -69,7 +68,7 @@ $(document).on('click','.task-update',function(){
 	var publish_date = $("#publish_date").val();
 	var due_date = $("#due_date").val();
 	var banner_id = $("input[name='banner_id']").val();
-	var target_stores  = $("#storeSelect").val();
+	var target_stores  = getTargetStores();
 	var all_stores  = $("#allStores:checked").val();
 	var send_reminder = ($("#send_reminder").prop('checked') === true)?1:0;
 	var status_type_id = $("#status_type_id").val();
@@ -85,6 +84,16 @@ $(document).on('click','.task-update',function(){
 	$(".selected-files").each(function(){
 		task_documents.push($(this).attr('data-fileid'));
 	});
+
+	var target_stores = getTargetStores();
+	var target_banners = getTargetBanners();
+	var store_groups = getStoreGroups();
+	var all_stores = getAllStoreStatus();
+
+	console.log( target_stores );
+	console.log( target_banners );
+	console.log( store_groups );
+	console.log( all_stores );
 	
 
     if(title == '' ) {
@@ -113,11 +122,13 @@ $(document).on('click','.task-update',function(){
 		  		description : description,
 		  		publish_date : publish_date,
 		  		due_date : due_date,
-		  		target_stores : target_stores,
-		  		all_stores : all_stores,
 		  		task_documents : task_documents,
 		  		remove_document : remove_document,
-		  		status_type_id : status_type_id
+		  		status_type_id : status_type_id,
+		  		target_stores : target_stores,
+		  		all_stores : all_stores,
+		    	target_banners : target_banners,
+		    	store_groups : store_groups,
 
 		    },
 		    
