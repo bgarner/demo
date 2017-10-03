@@ -4,6 +4,9 @@ namespace App\Models\Tools;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Validation\CustomStoreGroupValidator;
+use App\Models\Auth\User\UserBanner;
+use App\Models\StoreApi\Store;
+
 class CustomStoreGroup extends Model
 {
  	protected $table = 'custom_store_group';
@@ -87,5 +90,41 @@ class CustomStoreGroup extends Model
 		$storeGroup->save();
 		return $storeGroup;
  	}
+
+ 	public static function getStoreGroupsForStore($store_number)
+    {
+    	$storeGroups = CustomStoreGroup::getAllGroups();
+    	$selectedStoreGroups = [];
+    	foreach ($storeGroups as $group) {
+    		if(in_array($store_number, $group->stores)){
+    			array_push($selectedStoreGroups, $group->id);
+    		}
+    	}
+
+    	return $selectedStoreGroups;
+
+    }
+
+    public static function getStoreGroupsForAdmin()
+    {
+    	$adminBanners = UserBanner::getAllBanners()->pluck('id')->toArray();
+    	$storeGroups = CustomStoreGroup::getAllGroups();
+
+    	$adminStoreGroups = [];
+    	foreach ($storeGroups as $group) {
+    		
+    		$stores = $group->stores;
+    		foreach ($stores as $store) {
+    			$banner = Store::getStoreDetailsByStoreNumber($store)->banner_id; 
+    			if(in_array($banner, $adminBanners) && ! in_array($group->id, $adminStoreGroups)){
+    				array_push($adminStoreGroups, $group->toArray());
+    			}
+
+    		}
+    	}
+
+    	return $adminStoreGroups;
+        
+    }
 
 }

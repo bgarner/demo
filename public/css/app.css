@@ -8486,6 +8486,9 @@ body.md-skin {
 .project-list table tr td{
   vertical-align: top !important;
 }
+#task-container{
+  padding: 10px;
+}
 .task-done{
   float:right;
   padding-right: 20px;
@@ -8495,6 +8498,9 @@ body.md-skin {
   padding-left: 20px;
 }
 .task_description{
+  padding-left: 25px;
+}
+.task_documents{
   padding-left: 25px;
 }
 
@@ -8558,6 +8564,12 @@ ul.banner-selector-menu{
     font-size: 12px;
 }
 
+.tasklist_title{
+  text-transform: capitalize;
+}
+#task-container .mail-box{
+  padding: 10px;
+}
 
 .banner-not-set{
   color: #f00 !important;

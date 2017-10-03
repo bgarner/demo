@@ -121,7 +121,8 @@ $(document).on('click','.playlist-update',function(){
 		    	tags : tags,
 		    	all_stores : getAllStoreStatus(),
 		    	target_stores : getTargetStores(),
-		    	target_banners : getTargetBanners()
+		    	target_banners : getTargetBanners(),
+		    	store_groups : getStoreGroups()
 
 		    },
 		    

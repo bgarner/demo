@@ -17,8 +17,10 @@ use FFMpeg\FFProbe;
 use FFMpeg\Coordinate\TimeCode;
 use App\Models\Video\VideoTarget;
 use App\Models\Video\VideoBanner;
+use App\Models\Video\VideoStoreGroup;
 use App\Models\StoreApi\StoreInfo;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Models\Tools\CustomStoreGroup;
 
 
 class Video extends Model
@@ -64,10 +66,21 @@ class Video extends Model
         $validateThis = [
 
             'filename'      => $request->file('document'),
-            'start'         => $request->start,
-            'target_stores' => explode(',', $request['target_stores'])
+            'start'         => $request->start
+            // 'target_stores' => explode(',', $request['target_stores'])
 
         ];
+
+        if ($request['target_stores'] != NULL) {
+            $validateThis['target_stores'] = $request['target_stores'];
+        }
+        if ($request['target_banner'] != NULL) {
+            $validateThis['target_banners'] = $request['target_banners'];
+        }
+        if ($request['target_store_groups'] != NULL) {
+            $validateThis['target_store_groups'] = $request['target_store_groups'];
+        }
+
         if ($request['all_stores'] != NULL) {
             $validateThis['allStores'] = $request['all_stores'];
         }
@@ -100,8 +113,6 @@ class Video extends Model
 
         $allStoreVideos = Video::groupBannersForAllStoreVideos($allStoreVideos);
         
-        
-        
         $targetedVideos = Video::join('video_target', 'video_target.video_id', '=', 'videos.id')
                                 ->whereIn('video_target.store_id', $storeList)
                                 ->select('videos.*', 'video_target.store_id')
@@ -109,9 +120,25 @@ class Video extends Model
 
         $targetedVideos = Video::groupStoresForTargetedVideos($targetedVideos);
 
-        $videos = Playlist::mergeTargetedAndAllStoreAssets($targetedVideos, $allStoreVideos);
+        $storeGroups = CustomStoreGroup::getStoreGroupsForAdmin();
+        $videosForStoreGroups = Video::join('video_store_group', 'video_store_group.video_id', '=', 'videos.id')
+                                            ->whereIn('video_store_group.store_group_id', $storeGroups)
+                                            ->select('videos.*')
+                                            ->get()
+                                            ->each(function($item){
+                                                $storeGroups = VideoStoreGroup::where('video_id', $item->id)->get()->pluck('store_group_id')->toArray();
+                                                $item->storeGroups = $storeGroups;
+                                                $item->stores = [];
+                                                foreach ($storeGroups as $group) {
+                                                    $stores = unserialize(CustomStoreGroup::find($group)->stores);
+                                                    $item->stores = array_merge($item->stores,$stores);
+                                                }
+                                                $item->stores = array_unique( $item->stores);
+                                            });
 
-        // $videos = $allStoreVideos->merge($targetedVideos)->sortByDesc('created_at');
+        $targetedVideos = Video::mergeTargetedAndStoreGroupVideos($targetedVideos, $videosForStoreGroups);
+                                           
+        $videos = Playlist::mergeTargetedAndAllStoreAssets($targetedVideos, $allStoreVideos);
 
         foreach ($videos as $video) {
             $video->uploaderFirstName = User::find($video->uploader)->firstname;
@@ -167,7 +194,7 @@ class Video extends Model
             $video = Video::create($documentdetails);
             $video->save();
             $lastInsertedId= $video->id;
-            Video::updateTargetStores($request, $lastInsertedId);
+            VideoTarget::updateTargetStores($request, $lastInsertedId);
         }
 
         return $video ;
@@ -200,7 +227,7 @@ class Video extends Model
 
         FeaturedVideo::updateFeaturedOn($id, $request);
         if(isset($request->target_banners) || isset($request->target_stores)){
-            Video::updateTargetStores($request, $id);    
+            VideoTarget::updateTargetStores($request, $id);    
         }
         
         return $video;
@@ -338,7 +365,16 @@ class Video extends Model
                                         ->where('video_target.store_id', $store_id)
                                         ->select('videos.*')
                                         ->get();
+
+        $storeGroups = CustomStoreGroup::getStoreGroupsForStore($store_id);
+
+        $targetedVideosForStoreGroups = Video::join('video_store_group', 'video_store_group.video_id', '=', 'videos.id')
+                                            ->whereIn('video_store_group.store_group_id', $storeGroups)
+                                            ->select('videos.*')
+                                            ->get();
+
         $videos = $targetedVideosForStore->merge($allStoreVideosForBanners);
+        $videos = $videos->merge($targetedVideosForStoreGroups);
         
         return $videos;
     }
@@ -411,58 +447,6 @@ class Video extends Model
         return;
     }
 
-    public static function updateTargetStores($request, $id)
-    {
-
-        $all_stores = $request['all_stores'];
-
-        $video = Video::find($id);
-        if(VideoBanner::where('video_id', $id)->exists()){
-            VideoBanner::where('video_id', $id)->delete();    
-        }
-
-        if( VideoTarget::where('video_id', $id)->exists()){
-            VideoTarget::where('video_id', $id)->delete(); 
-        }
-        
-        if( $all_stores == 'on' ){
-            $video->all_stores = 1;
-            $video->save();
-            $target_banners = $request['target_banners'];
-            if(! is_array($target_banners) ) {
-                $target_banners = explode(',',  $request['target_banners'] );    
-            }
-            
-            foreach ($target_banners as $key=>$banner) {
-                VideoBanner::create([
-                'video_id' => $id,
-                'banner_id' => $banner
-                ]);
-                
-            }
-            
-            
-        }
-        
-        if (isset($request['target_stores']) && $request['target_stores'] != '' ) {
-                
-            $target_stores = $request['target_stores'];
-            if(! is_array($target_stores) ) {
-                $target_stores = explode(',',  $request['target_stores'] );    
-            }
-            foreach ($target_stores as $store) {
-                VideoTarget::insert([
-                    'video_id' => $id,
-                    'store_id' => $store
-                    ]);    
-            }
-            
-        }  
-        return;         
-    }
-
-   
-
     public static function groupBannersForAllStoreVideos($allStoreVideos)
     {
         $allStoreVideos = $allStoreVideos->toArray();
@@ -484,8 +468,6 @@ class Video extends Model
         return collect($compiledVideos);
     }
 
-
-
     public static function groupStoresForTargetedVideos($targetedVideos)
     {
         $targetedVideos = $targetedVideos->toArray();
@@ -495,8 +477,7 @@ class Video extends Model
             if(  $index !== false ){
                array_push($compiledVideos[$index]->stores, $video["store_id"]);
             }
-            else{
-               
+            else{       
                $video["stores"] = [];
                array_push( $video["stores"] , $video["store_id"]);
                array_push( $compiledVideos , (object) $video);
@@ -505,6 +486,26 @@ class Video extends Model
         }
         
         return collect($compiledVideos);
+    }
+
+    public static function mergeTargetedAndStoreGroupVideos($targetedVideos, $storeGroupVideos)
+    {
+        $targetedVideosArray = $targetedVideos->toArray();
+        $targetedVideoIds = array_column($targetedVideosArray, 'id');
+        foreach ($storeGroupVideos as $video) {
+
+            if(in_array($video->id, $targetedVideoIds)){
+                $targetedVideoStores = $targetedVideos->where('id', $video->id)->first()->stores;
+                $mergedStores = array_merge( $targetedVideoStores, $video->stores);
+                $targetedVideos->where('id', $video->id)->first()->stores = $mergedStores;
+            }
+            else{
+
+                $targetedVideos = $targetedVideos->push((object)$video);                
+            }
+        }
+        return $targetedVideos;
+
     }
 
 
@@ -532,8 +533,19 @@ class Video extends Model
     {
         $targetBanners = VideoBanner::where('video_id', $video_id)->get()->pluck('banner_id')->toArray();
         $targetStores = VideoTarget::where('video_id', $video_id)->get()->pluck('store_id')->toArray();
+        $storeGroups = VideoStoreGroup::where('video_id', $video_id)->get()->pluck('store_group_id')->toArray();
 
-        $optGroupSelections = array_merge($targetBanners, $targetStores );
+        $optGroupSelections = [];
+        foreach ($targetBanners as $banner) {
+            array_push($optGroupSelections, 'banner'.$banner);
+        }
+        foreach ($targetStores as $stores) {
+            array_push($optGroupSelections, 'store'.$stores);   
+        }
+        foreach ($storeGroups as $group) {
+            array_push($optGroupSelections, 'storegroup'.$group);   
+        }
+
         return( $optGroupSelections );
     }
 

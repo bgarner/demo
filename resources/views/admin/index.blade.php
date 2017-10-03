@@ -218,10 +218,8 @@
                                                 <tr class="task-details-control">
                                             @endif
                                                 <td>
-                                                    @if($task->banner_id == 1)
-                                                        <small class="label label-sm label-inverse">SC</small>&nbsp;&nbsp;
-                                                    @else
-                                                        <small class="label label-sm label-warning">Atmo</small>&nbsp;&nbsp;
+                                                    @if(isset($task->tasklist))
+                                                        <small class="label label-sm label-inverse">{{ $task->tasklist }}</small>&nbsp;&nbsp;
                                                     @endif
                                                 </td>
                                                 <td>{{ $task->title }}</td>
@@ -252,61 +250,6 @@
                         </div>
 
                     </div>
-
-                    {{-- <div class="ibox">
-                        <div class="ibox-title">
-                            <h2>Videos</h2>
-                            <div class="ibox-tools">
-                                <a class="btn btn-xs" id="videoReportModal">View Report by Date</a>
-                                <a class="collapse-link">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
-                            </div>
-
-                        </div>
-                        <div class="ibox-content">
-                            <div class="row">
-                                <div class="col-md-12">
-
-                                    <table class="table table-stripped" id="video_analytics">
-                                        <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th>Title</th>
-                                                <th>Thumbnail</th>
-                                                <th>Seen</th>
-                                                <th></th>
-                                                <th></th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($videoStats as $video)
-                                        <tr class="video-details-control">
-                                            <td></td>
-                                            <td>{{ $video->title }}</td>
-                                            <td><img src="/video/thumbs/{{$video->thumbnail}}" style="width: 35%" /></td>
-                                            <td data-order="{{$video->readPerc}}" data-read-perc = {{$video->readPerc}}>
-
-                                                <canvas id="videoChart_{{ $video->id }}" width="45" height="45" style="width: 45px; height: 45px;"></canvas>
-                                            </td>
-                                            <td >{{$video->opened}}</td>
-                                            <td >{{$video->unopened}}</td>
-                                            <td >{{$video->sent_to}}</td>
-                                        </tr>
-
-                                        @endforeach
-                                        </tbody>
-                                    </table>
-
-                                </div>
-                            </div>
-
-                        </div>
-
-
-
-                    </div> --}}
 
                     <div class="ibox">
                         <div class="ibox-title">

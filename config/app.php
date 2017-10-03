@@ -64,7 +64,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'America/Edmonton',
 
     /*
     |--------------------------------------------------------------------------
@@ -285,6 +285,8 @@ return [
         'App\Http\Controllers\Auth\Component\ComponentAdminController'          => 'User and Group Management',
         'App\Http\Controllers\StoreFeedback\FeedbackAdminController'            => 'Store Feedback Management',
         'App\Http\Controllers\Task\TaskAdminController'                         => 'Task Management',
+        'App\Http\Controllers\Task\TasklistAdminController'                     => 'Task Management',
+        'App\Http\Controllers\Task\TaskDocumentController'                      => 'Task Management',
         'App\Http\Controllers\Tools\CustomStoreGroupAdminController'            => 'Tools',
         'App\Http\Controllers\StoreComponent\StoreComponentAdminController'     => 'Components',
         'App\Http\Controllers\Flyer\FlyerAdminController'                       => 'Flyer',

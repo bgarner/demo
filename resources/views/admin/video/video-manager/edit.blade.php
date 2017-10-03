@@ -56,7 +56,8 @@
                           </div>
                         </div>
 
-
+                        @include('admin.includes.the-ultimate-store-selector')
+                        {{--
                         <div class="form-group">
                             {!! Form::label('targets', 'Select Stores', ['class'=>'col-sm-2 control-label']) !!}
                             <div class="col-sm-10">
@@ -84,7 +85,7 @@
                             </div>
 
 
-                        </div>
+                        </div> --}}
 
                         <div class="form-group">
                             <div class="col-sm-1 col-sm-offset-1">
@@ -144,6 +145,7 @@
         </script>
         <script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
         <script type="text/javascript" src="/js/plugins/select/select2.min.js"></script>
+        <script type="text/javascript" src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
         <script type="text/javascript" src="/js/custom/admin/videos/editVideo.js"></script>
 
         <script type="text/javascript">

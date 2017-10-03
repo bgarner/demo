@@ -107,6 +107,7 @@ Route::resource('/admin/feedback/{id}/note' , 'StoreFeedback\NotesAdminControlle
 
 //Tasks
 Route::resource('/admin/task', 'Task\TaskAdminController');
+Route::resource('/admin/tasklist', 'Task\TasklistAdminController');
 Route::get('/admin/task/{task_id}/documents', 'Task\TaskDocumentController@show');
 
 //User Groups

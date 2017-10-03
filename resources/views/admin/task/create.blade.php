@@ -34,9 +34,6 @@
 
 							<form class="form-horizontal" id="createNewTaskForm">
 
-
-								<input type="hidden" name="banner_id" value={{$banner->id}} >
-
 								<div class="form-group">
 									<label class="col-sm-2 control-label">Title <span class="req">*</span> </label>
 						            <div class="col-sm-10"><input type="text" id="title" name="title" class="form-control" value=""></div>
@@ -75,25 +72,9 @@
 								<div class="form-group">
 									<div id="files-selected"></div>
 								</div>
-								<div class="form-group">
 
-						                <label class="col-sm-2 control-label">Target Stores <span class="req">*</span> </label>
-						                <div class="col-sm-10">
-						                    {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
-						                    {!! Form::label('allStores', 'Or select all stores:') !!}
-						                    {!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
-						                </div>
-
-						        </div>
-
-						        {{--<div class="form-group">
-
-						                <label class="col-sm-2 control-label">Send Reminders</label>
-						                <div class="col-sm-10">
-						                    {!! Form::checkbox('send_reminder', 0, false ,['id'=> 'send_reminder'] ) !!}
-						                </div>
-
-						        </div>--}}
+								@include('admin.includes.the-ultimate-store-selector', ['optGroupOptions' =>$optGroupOptions])
+								
 
 
 								<div class="hr-line-dashed"></div>
@@ -159,12 +140,12 @@
 
 		<script type="text/javascript" src="/js/vendor/moment.js"></script>
 		<script type="text/javascript" src="/js/vendor/bootstrap-datetimepicker.min.js"></script>
-		<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
+		<script type="text/javascript" src="/js/plugins/ckeditor-custom/ckeditor.js"></script>
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 		<script type="text/javascript" src="/js/custom/admin/tasks/addTask.js"></script>
 		<script type="text/javascript" src="/js/custom/tree.js"></script>
 		<script type="text/javascript" src="/js/custom/datetimepicker-with-default-time.js"></script>
-		<script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
+		<script type="text/javascript" src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
 
 		<script type="text/javascript">
 
