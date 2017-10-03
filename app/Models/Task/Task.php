@@ -258,7 +258,6 @@ class Task extends Model
 				$tasks->forget($key);
 			}
         }
-        
         return $tasks;
 
 
@@ -421,6 +420,17 @@ class Task extends Model
 			if($isTaskDoneByStore){
 				$tasks->forget($key);
 			}
+			if(TaskDocument::where('task_id', $task->id)->exists()){
+				$task->documents = TaskDocument::join('documents', 'task_document.document_id', '=', 'documents.id')
+										->where('task_id', $task->id)
+										->select('documents.*')
+										->get()
+										->each(function($doc){
+											$doc->link_with_icon = Utility::getModalLink($doc->filename, $doc->title, $doc->original_extension, $doc->id, 1);
+										});
+
+
+			}
 
 		}
 		return $tasks;
@@ -475,6 +485,17 @@ class Task extends Model
 			
 			if($isTaskDoneByStore){
 				$tasks->forget($key);
+			}
+			if(TaskDocument::where('task_id', $task->id)->exists()){
+				$task->documents = TaskDocument::join('documents', 'task_document.document_id', '=', 'documents.id')
+										->where('task_id', $task->id)
+										->select('documents.*')
+										->get()
+										->each(function($doc){
+											$doc->link_with_icon = Utility::getModalLink($doc->filename, $doc->title, $doc->original_extension, $doc->id, 1);
+										});
+
+
 			}
 		}
 
@@ -532,6 +553,21 @@ class Task extends Model
 
 		$tasks = $tasks->merge($allStoreTasks);
 		$tasks = $tasks->merge($targetedTasksForStoreGroups);
+
+
+		foreach ($tasks as $task) {
+			if(TaskDocument::where('task_id', $task->id)->exists()){
+				$task->documents = TaskDocument::join('documents', 'task_document.document_id', '=', 'documents.id')
+										->where('task_id', $task->id)
+										->select('documents.*')
+										->get()
+										->each(function($doc){
+											$doc->link_with_icon = Utility::getModalLink($doc->filename, $doc->title, $doc->original_extension, $doc->id, 1);
+										});
+
+
+			}
+		}
 		return $tasks;
 	}
 

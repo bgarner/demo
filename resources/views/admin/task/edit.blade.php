@@ -104,25 +104,9 @@
 									</div>
 								</div>
 
-								{{--<div class="form-group">
-
-						                <label class="col-sm-2 control-label">Target Stores</label>
-						                <div class="col-sm-10">
-						                	@if($task->all_stores)
-		                                        {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
-		                                        {!! Form::label('allStores', 'Or select all stores:') !!}
-		                                        {!! Form::checkbox('allStores', null, true ,['id'=> 'allStores'] ) !!}
-		                                    @else
-		                                        {!! Form::select('stores', $storeList, $target_stores, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
-		                                        {!! Form::label('allStores', 'Or select all stores:') !!}
-		                                        {!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
-		                                    @endif
-						                </div>
-
-						        </div>--}}
 
 						        @include('admin.includes.the-ultimate-store-selector', ['optGroupOptions'=> $optGroupOptions])
-						        <div class="form-group">
+						        {{--<div class="form-group">
 
 						                <label class="col-sm-2 control-label">Update Task Status
 						                </label>
@@ -133,7 +117,7 @@
 						                </div>
 
 						        </div>
-						        {{--<div class="form-group">
+						        <div class="form-group">
 
 						                <label class="col-sm-2 control-label">Send Reminders</label>
 						                <div class="col-sm-10">

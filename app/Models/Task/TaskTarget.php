@@ -90,20 +90,37 @@ class TaskTarget extends Model
 
 	public function getTargetStores($task_id)
 	{
-		$task = Task::find($task_id);
 
+        $task = Task::find($task_id);
+        
         if(isset($task->all_stores) && $task->all_stores){
-            $banner = $task->banner_id;
-            $stores = Banner::getStoreDetailsByBannerid($banner)->pluck('store_number')->toArray();
+            $banners = TaskBanner::where('task_id', $task->id)->get()->pluck('banner_id')->toArray();
+            $stores = [];
+            foreach ($banners as $banner) {
+                $bannerStores = Banner::getStoreDetailsByBannerid($banner)->pluck('store_number')->toArray();   
+                $stores = array_merge($stores, $bannerStores);
+
+            }
         }
         else{
             $stores = TaskTarget::where('task_id', $task_id)
                                 ->get()
                                 ->pluck('store_id')
                                 ->toArray();    
-        }
+            $storeGroups = TaskStoreGroup::join('custom_store_group', 'custom_store_group.id', '=', 'task_store_group.store_group_id')
+                                ->where('task_id', $task_id)
+                                ->get();
 
+            foreach ($storeGroups as $group) {
+                $groupStores = unserialize($group->stores);
+                $stores = array_merge($stores, $groupStores);
+            }
+                                
+            
+        }
 
         return $stores;
 	}
+
+
 }

@@ -8499,6 +8499,9 @@ body.md-skin {
 .task_description{
   padding-left: 25px;
 }
+.task_documents{
+  padding-left: 25px;
+}
 
 .lang-select{
     border-radius: 0px;

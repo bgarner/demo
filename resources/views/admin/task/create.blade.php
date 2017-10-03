@@ -74,55 +74,7 @@
 								</div>
 
 								@include('admin.includes.the-ultimate-store-selector', ['optGroupOptions' =>$optGroupOptions])
-								{{--<div class="form-group">
-
-						                <label class="col-sm-2 control-label">Target Stores <span class="req">*</span> </label>
-						                <div class="col-sm-10">
-						                    {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
-						                    {!! Form::label('allStores', 'Or select all stores:') !!}
-						                    {!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
-						                </div>
-
-						        </div>--}}
-
-						        {{--<div class="form-group">
-
-					                <label class="col-sm-2 control-label">Target Stores</label>
-					                <div class="col-sm-10">
-					                	<select name="stores" id="storeSelect" multiple class="chosen">
-							            	<option value="">Select Some Options</option>
-							            	@foreach($storeAndStoreGroups as $option)
-
-							                    <option value="{{$option['id']}}"
-
-							                        @if(isset($option["isStoreGroup"]))
-														data-isStoreGroup = "{{$option['isStoreGroup']}}"
-							                        @endif
-							                        @if(isset($option["stores"]))
-														data-stores = "{{$option['stores']}}"
-							                        @endif
-
-							                    >
-							                        {{$option['name']}}
-							                    </option>
-
-							            	@endforeach
-
-							        	</select>
-							        	{!! Form::label('allStores', 'Or select all stores:') !!}
-							        	{!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
-					                </div>
-
-								</div> --}}
-
-						        {{--<div class="form-group">
-
-						                <label class="col-sm-2 control-label">Send Reminders</label>
-						                <div class="col-sm-10">
-						                    {!! Form::checkbox('send_reminder', 0, false ,['id'=> 'send_reminder'] ) !!}
-						                </div>
-
-						        </div>--}}
+								
 
 
 								<div class="hr-line-dashed"></div>
@@ -188,13 +140,11 @@
 
 		<script type="text/javascript" src="/js/vendor/moment.js"></script>
 		<script type="text/javascript" src="/js/vendor/bootstrap-datetimepicker.min.js"></script>
-		<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
+		<script type="text/javascript" src="/js/plugins/ckeditor-custom/ckeditor.js"></script>
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 		<script type="text/javascript" src="/js/custom/admin/tasks/addTask.js"></script>
 		<script type="text/javascript" src="/js/custom/tree.js"></script>
 		<script type="text/javascript" src="/js/custom/datetimepicker-with-default-time.js"></script>
-		<!-- <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script> -->
-		<!-- <script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script> -->
 		<script type="text/javascript" src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
 
 		<script type="text/javascript">

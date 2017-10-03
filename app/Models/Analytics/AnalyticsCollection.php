@@ -4,6 +4,7 @@ namespace App\Models\Analytics;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\Models\Task\TasklistTask;
 
 class AnalyticsCollection extends Model
 {
@@ -65,6 +66,12 @@ class AnalyticsCollection extends Model
     								$item->opened = json_encode(unserialize($item->opened));
     								$item->unopened = json_encode(unserialize($item->unopened));
     								$item->sent_to = json_encode(unserialize($item->sent_to));
+                                    if(TasklistTask::where('task_id', $item->id)->exists()){
+                                        $item->tasklist = TasklistTask::join('tasklists', 'tasklists.id', '=', 'tasklist_tasks.tasklist_id')
+                                                                    ->where('task_id', $item->id)
+                                                                    ->select('tasklists.title')
+                                                                    ->first()->title;
+                                    }
     							});
     	
     }
