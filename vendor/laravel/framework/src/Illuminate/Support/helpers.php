@@ -282,10 +282,10 @@ if (! function_exists('array_sort')) {
      * Sort the array by the given callback or attribute name.
      *
      * @param  array  $array
-     * @param  callable|string  $callback
+     * @param  callable|string|null  $callback
      * @return array
      */
-    function array_sort($array, $callback)
+    function array_sort($array, $callback = null)
     {
         return Arr::sort($array, $callback);
     }
@@ -334,8 +334,6 @@ if (! function_exists('array_wrap')) {
 if (! function_exists('blank')) {
     /**
      * Determine if the given value is "blank".
-     *
-     * @author Derek MacDonald (https://github.com/derekmd)
      *
      * @param  mixed  $value
      * @return bool
@@ -636,8 +634,6 @@ if (! function_exists('env')) {
 if (! function_exists('filled')) {
     /**
      * Determine if a value is "filled".
-     *
-     * @author Derek MacDonald (https://github.com/derekmd)
      *
      * @param  mixed  $value
      * @return bool
@@ -1111,8 +1107,6 @@ if (! function_exists('trait_uses_recursive')) {
 if (! function_exists('transform')) {
     /**
      * Transform the given value if it is present.
-     *
-     * @author Derek MacDonald (https://github.com/derekmd)
      *
      * @param  mixed  $value
      * @param  callable  $callback

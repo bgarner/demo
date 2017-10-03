@@ -30,14 +30,14 @@
 
 <div class="wrapper wrapper-content">
         <div class="row">
-            <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
+            <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
 
             @include('site.communications.commsidebar')
 
             </div>
 
 
-            <div class="col-lg-10 col-md-9 col-sm-8 col-xs-8 animated fadeInRight printable">
+            <div class="col-lg-10 col-md-9 col-sm-8 col-xs-12 animated fadeInRight printable">
 
             <div class="mail-box-header">
 
@@ -45,7 +45,10 @@
                     {{ $communication->subject }}
                      <span class="pull-right font-normal" style="font-size: 16px;">{{ $communication->prettyDate }} <small style="font-weight: normal;padding-left: 10px;">({{ $communication->since }} {{__("ago")}})</small></span>
                 </h2>
+
+                
                 @if(isset($communication->previousCommunicationId))
+                
                 <span class="pull-left">
                     <a href="/{{ Request::segment(1) }}/communication/show/{{$communication->previousCommunicationId}}"><i class="fa fa-angle-double-left"></i> {{__("Previous")}}</a>
                 </span>
@@ -54,6 +57,7 @@
                 <span class="pull-right">
                     <a href="/{{ Request::segment(1) }}/communication/show/{{$communication->nextCommunicationId}}">{{__("Next")}} <i class="fa fa-angle-double-right"></i></a>
                 </span>
+                
                 @endif
 
             </div>

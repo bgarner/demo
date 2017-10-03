@@ -8,7 +8,6 @@ use Illuminate\Support\Str;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Traits\Macroable;
 use PHPUnit\Framework\Assert as PHPUnit;
-use Symfony\Component\HttpFoundation\Cookie;
 
 /**
  * @mixin \Illuminate\Http\Response
@@ -242,12 +241,13 @@ class TestResponse
      * Assert that the response is a superset of the given JSON.
      *
      * @param  array  $data
+     * @param  bool  $strict
      * @return $this
      */
-    public function assertJson(array $data)
+    public function assertJson(array $data, $strict = false)
     {
         PHPUnit::assertArraySubset(
-            $data, $this->decodeResponseJson(), false, $this->assertJsonMessage($data)
+            $data, $this->decodeResponseJson(), $strict, $this->assertJsonMessage($data)
         );
 
         return $this;
