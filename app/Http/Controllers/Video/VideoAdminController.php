@@ -10,9 +10,9 @@ use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Auth\User\UserBanner;
 use App\Models\StoreApi\Banner;
 use App\Models\StoreApi\StoreInfo;
-use App\Models\Video\Tag;
+use App\Models\Tag\Tag;
 use App\Models\Video\Video;
-use App\Models\Video\VideoTag;
+use App\Models\Tag\ContentTag;
 use App\Models\Utility\Utility;
 
 class VideoAdminController extends Controller
@@ -150,7 +150,7 @@ class VideoAdminController extends Controller
     public function destroy($id)
     {
         Video::where('id', $id)->delete();
-        VideoTag::where('video_id', $id)->delete();
+        ContentTag::where('content_id', $id)->where('content_type', 'video')->delete();
         return;
     }
 

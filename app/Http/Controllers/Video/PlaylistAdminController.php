@@ -12,7 +12,7 @@ use App\Models\Video\Playlist;
 use App\Models\Video\PlaylistVideo;
 use App\Models\Video\Video;
 use App\Models\Utility\Utility;
-use App\Models\Video\Tag;
+use App\Models\Tag\Tag;
 
 class PlaylistAdminController extends Controller
 {
