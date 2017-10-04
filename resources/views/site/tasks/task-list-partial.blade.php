@@ -1,7 +1,7 @@
-<div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
+<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
     @include('site.tasks.tasksidebar')
 </div>
-<div class="col-lg-10 col-md-9 col-sm-8 col-xs-8 ">
+<div class="col-lg-10 col-md-9 col-sm-8 col-xs-12">
                      
     <div class="mail-box-header clearfix">
         <h2>

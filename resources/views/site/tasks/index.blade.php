@@ -20,20 +20,9 @@
         </div>
 
 
-        <div class="row wrapper border-bottom white-bg page-heading">
-            <div class="col-lg-10">
-                <h2>{{__("Tasks")}}</h2>
-
-            </div>
-            <div class="col-lg-2">
-
-            </div>
-        </div>
-
     <div class="wrapper wrapper-content">
         <div class="row" id="task-container">
             @include('site.tasks.task-list-partial')
-            
         </div>
     </div>
 
