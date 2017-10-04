@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Video;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Tag\ContentTag;
-use App\Models\Video\Tag;
+use App\Models\Tag\Tag;
 
 class VideoTagController extends Controller
 {

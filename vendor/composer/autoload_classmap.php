@@ -153,7 +153,6 @@ return array(
     'App\\Models\\Video\\PlaylistStoreGroup' => $baseDir . '/app/Models/Video/PlaylistStoreGroup.php',
     'App\\Models\\Video\\PlaylistTarget' => $baseDir . '/app/Models/Video/PlaylistTarget.php',
     'App\\Models\\Video\\PlaylistVideo' => $baseDir . '/app/Models/Video/PlaylistVideo.php',
-    'App\\Models\\Video\\Tag' => $baseDir . '/app/Models/Video/Tag.php',
     'App\\Models\\Video\\Video' => $baseDir . '/app/Models/Video/Video.php',
     'App\\Models\\Video\\VideoBanner' => $baseDir . '/app/Models/Video/VideoBanner.php',
     'App\\Models\\Video\\VideoStoreGroup' => $baseDir . '/app/Models/Video/VideoStoreGroup.php',

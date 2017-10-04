@@ -86,8 +86,9 @@ class Playlist extends Model
    		]);
 
         $tags = $request->get('tags');
+        \Log::info($tags);
         if ($tags != null) {
-            ContentTag::updateTags( 'playlist', $id, $tags);
+            ContentTag::updateTags( 'playlist', $playlist->id, $tags);
         }
 
    		PlaylistVideo::updatePlaylistVideos($playlist->id, $request);

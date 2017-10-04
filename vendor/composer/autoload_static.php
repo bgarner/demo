@@ -628,7 +628,6 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'App\\Models\\Video\\PlaylistStoreGroup' => __DIR__ . '/../..' . '/app/Models/Video/PlaylistStoreGroup.php',
         'App\\Models\\Video\\PlaylistTarget' => __DIR__ . '/../..' . '/app/Models/Video/PlaylistTarget.php',
         'App\\Models\\Video\\PlaylistVideo' => __DIR__ . '/../..' . '/app/Models/Video/PlaylistVideo.php',
-        'App\\Models\\Video\\Tag' => __DIR__ . '/../..' . '/app/Models/Video/Tag.php',
         'App\\Models\\Video\\Video' => __DIR__ . '/../..' . '/app/Models/Video/Video.php',
         'App\\Models\\Video\\VideoBanner' => __DIR__ . '/../..' . '/app/Models/Video/VideoBanner.php',
         'App\\Models\\Video\\VideoStoreGroup' => __DIR__ . '/../..' . '/app/Models/Video/VideoStoreGroup.php',
