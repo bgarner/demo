@@ -81,11 +81,13 @@ Route::resource('/admin/playlistorder', 'Video\PlaylistVideoOrderController');
 Route::resource('/admin/playlist', 'Video\PlaylistAdminController');
 Route::get('/admin/playlistvideos/{playlist_id}', 'Video\PlaylistAdminController@getPlaylistVideoPartial');
 
-//Video Tags
+//Content Tags
 Route::get('/admin/videotag/{video_id}', 'Video\VideoTagController@show');
 Route::post('/admin/videotag', 'Video\VideoTagController@store');
 Route::get('/admin/playlisttag/{playlist_id}', 'Video\PlaylistTagController@show');
 Route::post('/admin/playlisttag', 'Video\PlaylistTagController@store');
+Route::get('/admin/documenttag/{document_id}', 'Document\DocumentTagController@show');
+Route::post('/admin/documenttag', 'Document\DocumentTagController@store');
 
 //Banner selector
 Route::resource('/admin/banner' , 'AdminSelectedBannerController');

@@ -56,7 +56,7 @@ class PackageAdminController extends Controller
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
         $folderStructure = FolderStructure::getNavigationStructure($banner->id);
 
-        $tags = Tag::where('banner_id', $banner->id)->pluck('name', 'id');
+        $tags = Tag::all()->pluck('name', 'id');
             
         return view('admin.package.create')
                     ->with('banner', $banner)

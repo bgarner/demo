@@ -1,4 +1,3 @@
-var selectedTags = [];
 var initializeTagSelector = function(){
 	
 	$("#tags").select2({ 
@@ -22,13 +21,26 @@ var initializeTagSelector = function(){
 }
 
 $("body").on('select2:select', $("#tags"), function (evt) {
-
+	console.log('seelecting an option');
 	var playlist_id = $("#playlistID").val();
     if(evt.params.data.newTag){
     	$.post("/admin/tag",{ tag_name: evt.params.data.text })
-    	.done(function(tag, selectedTags){
+    	.done(function(tag){
     		// change the id of the newly added tag to be the id from db
 			$('#tags option[value="'+tag.name+'"]').val(tag.id);	
+			var selectedTags = $("#tags").val();
+
+			$('#tags').select2('destroy');
+			$("#tag-selector-container").load("/admin/playlisttag/"+playlist_id, function(){
+				initializeTagSelector();
+				$("#tags").focus();
+
+			});	
+			// $(selectedTags).each(function(index, value){
+			// 	$("#tags").val(value).trigger("change"); 
+			// });
+			$("#tags").select('val',selectedTags).trigger("change"); 
+			
     	});
     }
 

@@ -153,6 +153,12 @@ class DocumentAdminController extends Controller
         $folderPath          = Document::getFolderPathForDocument($id);
         $storeAndStoreGroups = Utility::getStoreAndStoreGroupList($banner->id);
 
+        $tags = Tag::all()->pluck('name', 'id');
+        $selected_tags = ContentTag::where('content_type', 'document')
+                                    ->where('content_id', $id)
+                                    ->get()
+                                    ->pluck('tag_id');
+
         return view('admin.document-meta.document-edit-meta-data')->with('document', $document)
                                                     ->with('banner', $banner)
                                                     ->with('target_stores', $target_stores)
@@ -160,7 +166,9 @@ class DocumentAdminController extends Controller
                                                     ->with('alert_details', $alert_details)
                                                     ->with('folderStructure', $folderStructure)
                                                     ->with('folderPath', $folderPath)
-                                                    ->with('storeAndStoreGroups', $storeAndStoreGroups);
+                                                    ->with('storeAndStoreGroups', $storeAndStoreGroups)
+                                                    ->with('tags', $tags)
+                                                    ->with('selected_tags', $selected_tags);
     }
 
     /**
