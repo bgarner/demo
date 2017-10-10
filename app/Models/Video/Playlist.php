@@ -115,10 +115,8 @@ class Playlist extends Model
     	PlaylistVideo::updatePlaylistVideos($id, $request);
         PlaylistTarget::updateTargetStores($request, $id);
         $tags = $request->get('tags');
-
-        if ($tags != null) {
-            ContentTag::updateTags( 'playlist', $id, $tags);
-        }
+        ContentTag::updateTags( 'playlist', $id, $tags);
+        
     	return $playlist;
     }
 

@@ -16,13 +16,16 @@ class ContentTag extends Model
         		->where('content_id', $id)
         		->delete();
 
-        foreach($tags as $tag) {
+        if(isset($tags)){
+            foreach($tags as $tag) {
             ContentTag::create([
-            	'content_type' => $content_type,
-            	'content_id'   => $id,
-            	'tag_id'       => $tag
+                'content_type' => $content_type,
+                'content_id'   => $id,
+                'tag_id'       => $tag
             ]);
+        }    
         }
+        
 
         return;
     }

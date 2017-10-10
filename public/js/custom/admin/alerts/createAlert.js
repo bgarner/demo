@@ -18,7 +18,7 @@ var initializeTagSelector = function(){
 		createTag: function (params) {
     		var term = $.trim(params.term);
 
-		    if (term === '') {
+		    if (term === ''  && $("#tags").find('option').attr("tagname", term).length >0) {
 		      return null;
 		    }
 
@@ -29,6 +29,7 @@ var initializeTagSelector = function(){
 		    }
 		}
 	});
+	
 }
 
 $("body").on('select2:select', $("#tags"), function (evt) {

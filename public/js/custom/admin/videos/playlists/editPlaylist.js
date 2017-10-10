@@ -1,4 +1,4 @@
-var initializeTagSelector = function(){
+var initializeTagSelector = function(selectedTags){
 	
 	$("#tags").select2({ 
 		width: '100%' , 
@@ -7,7 +7,7 @@ var initializeTagSelector = function(){
 		createTag: function (params) {
     		var term = $.trim(params.term);
 
-		    if (term === '') {
+		    if (term === ''  && $("#tags").find('option').attr("tagname", term).length >0) {
 		      return null;
 		    }
 
@@ -22,7 +22,6 @@ var initializeTagSelector = function(){
 
 $("body").on('select2:select', $("#tags"), function (evt) {
 
-	console.log('is this getting hit?');
 	var playlist_id = $("#playlistID").val();
     if(evt.params.data.newTag){
     	$.post("/admin/tag",{ tag_name: evt.params.data.text })
@@ -102,11 +101,6 @@ $(document).on('click','.playlist-update',function(){
 		playlist_videos.push($(this).find('td:first').attr('data-video-id'));
 	});
 	var tags = $("#tags").val();
-
-	console.log(title);
-	console.log(remove_videos);
-	console.log(playlist_videos);
-	console.log(tags);
 
     if(hasError == false) {
      	

@@ -130,7 +130,7 @@
                                         </div>
 
                                         <div class="form-group" id="tag-selector-container">
-                                            @include('admin.video.tag.tag-partial', ['tags'=>$tags, 'selected_tags'=>$selected_tags])
+                                            @include('admin.video.tag.tag-partial', ['tags'=>$tags, 'selectedTags'=>$selectedTags])
                                         </div>
 
                                         <div class="form-group">

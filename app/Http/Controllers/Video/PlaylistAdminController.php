@@ -13,6 +13,7 @@ use App\Models\Video\PlaylistVideo;
 use App\Models\Video\Video;
 use App\Models\Utility\Utility;
 use App\Models\Tag\Tag;
+use App\Models\Tag\ContentTag;
 
 class PlaylistAdminController extends Controller
 {
@@ -109,6 +110,7 @@ class PlaylistAdminController extends Controller
         $optGroupSelections = json_encode(Playlist::getSelectedStoresAndBannersByPlaylistId($id));
 
         $tags = Tag::all()->pluck('name', 'id');
+        $selectedTags = ContentTag::where('content_type', 'playlist')->where('content_id', $id)->get()->pluck('tag_id')->toArray();
 
         return view('admin.video.playlist-manager.edit')
                 ->with('playlist', $playlist)
@@ -116,7 +118,8 @@ class PlaylistAdminController extends Controller
                 ->with('playlist_videos', $selectedVideos)
                 ->with('optGroupOptions', $optGroupOptions)
                 ->with('optGroupSelections', $optGroupSelections)
-                ->with('tags', $tags);
+                ->with('tags', $tags)
+                ->with('selectedTags', $selectedTags);
 
     }
 
