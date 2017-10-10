@@ -17,6 +17,8 @@ class ContentTag extends Model
         		->delete();
 
         if(isset($tags)){
+            \Log::info("tags from ContentTag");
+            \Log::info($tags);
             foreach($tags as $tag) {
             ContentTag::create([
                 'content_type' => $content_type,
@@ -37,7 +39,7 @@ class ContentTag extends Model
     							->where('content_type', $content_type)
     							->where('content_id', $id)
     							->get()
-    							->pluck('tag_id');
+    							->pluck('tag_id')->toArray();
     	return $tags;
     }
 }

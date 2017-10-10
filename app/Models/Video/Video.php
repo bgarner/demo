@@ -207,11 +207,6 @@ class Video extends Model
             $id = $request->get('video_id');
         }
 
-        $tags = $request->get('tags');
-        if ($tags != null) {
-            ContentTag::updateTags( 'video', $id, $tags);
-        }
-
         $title          = $request->get('title');
         $description    = $request->get('description');
         $featured       = 0;
@@ -226,9 +221,13 @@ class Video extends Model
         $video->update($metadata);
 
         FeaturedVideo::updateFeaturedOn($id, $request);
+        
         if(isset($request->target_banners) || isset($request->target_stores)){
             VideoTarget::updateTargetStores($request, $id);    
         }
+
+        $tags = $request->get('tags');
+        ContentTag::updateTags( 'video', $id, $tags);
         
         return $video;
     }
@@ -276,8 +275,7 @@ class Video extends Model
     public static function getVideoById($id)
     {
         $video = Video::find($id);
-        $video->tags = ContentTag::getTagsByContentId( 'video', $id);
-
+        $video->tags = ContentTag::getTagsByContentId('video', $id);
         $featuredOnBanner = FeaturedVideo::getFeaturedBannerByVideoId($id);
 
         if(count($featuredOnBanner) > 0){

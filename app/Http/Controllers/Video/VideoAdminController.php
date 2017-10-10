@@ -75,7 +75,10 @@ class VideoAdminController extends Controller
 
         $banner = UserSelectedBanner::getBanner();
         
-        $videos = Video::where('upload_package_id', $package)->get();
+        $videos = Video::where('upload_package_id', $package)->get()
+                        ->each(function($vid){
+                            $vid->tags = ContentTag::getTagsByContentId('video', $vid->id);
+                        });
 
         $tags = Tag::all()->pluck('name', 'id');
 
@@ -94,7 +97,7 @@ class VideoAdminController extends Controller
     public function updateMetaData(Request $request)
     {
         Video::updateMetaData($request);
-        return redirect()->action('Video\VideoAdminController@index');;
+        return redirect()->action('Video\VideoAdminController@index');
     }       
 
     /**
@@ -139,6 +142,7 @@ class VideoAdminController extends Controller
     public function update(Request $request, $id)
     {
         Video::updateMetaData($request, $id);
+        return;
     }
 
     /**

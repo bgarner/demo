@@ -7,8 +7,8 @@ $(document).ready(function() {
         var titleVal = $("#title"+fileIdVal).val();
         var descriptionVal = $("#description"+fileIdVal).val();
 
-        var tag_selector = "#select" + fileIdVal ;
-        var tags = $(tag_selector).val();
+        var tag_selector_container = "#tag-selector-container-" + fileIdVal ;
+        var tags = $(tag_selector_container).find("#tags").val();
 
         var selector = "#metadataform"+fileIdVal;
         var check = "#checkmark"+fileIdVal;
@@ -30,5 +30,58 @@ $(document).ready(function() {
         var folder_id = $("input[name='folder_id']").val()
         window.location ='/admin/video';
     });
+    initializeTagSelector();
+});
+
+var initializeTagSelector = function(selectedTags){
+    
+    $("#tags").select2({ 
+        width: '100%' , 
+        tags: true,
+        multiple: true,
+        createTag: function (params) {
+            var term = $.trim(params.term);
+
+            if (term === ''  && $("#tags").find('option').attr("tagname", term).length >0) {
+              return null;
+            }
+
+            return {
+              id: term, //id of new option 
+              text: term, //text of new option 
+              newTag: true
+            }
+        }
+    });
+}
+
+$("body").on('select2:select', $("#tags"), function (evt) {
+
+    var tagContainer = evt.target.closest('.tag-selector-container');
+    var video_id = tagContainer.getAttribute('data-videoid');
+    console.log(video_id);
+
+    if(evt.params.data.newTag){
+        $.post("/admin/tag",{ tag_name: evt.params.data.text })
+        .done(function(tag){
+            
+            //change the id of the newly added tag to be the id from db
+            $('#tags option[value="'+tag.name+'"]').val(tag.id);
+            var selectedTags = $("#tags").val();
+            console.log(selectedTags);
+
+            //update tag playlist mapping
+            $.post("/admin/videotag",{ 'video_id' : video_id, 'tags': selectedTags })
+            .done(function(){
+                $('#tags').select2('destroy');
+                $("#tag-selector-container-"+video_id).load("/admin/videotag/"+video_id, function(){
+                    initializeTagSelector();
+                    $("#tags").focus();
+
+                }); 
+            });             
+
+        });
+    }
 
 });

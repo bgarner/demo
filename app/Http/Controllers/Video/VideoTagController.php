@@ -14,14 +14,15 @@ class VideoTagController extends Controller
     {
     	$tags = Tag::all()->pluck('name', 'id');
     	
-    	$selected_tags = ContentTag::where('content_type', 'video')
+    	$selectedTags = ContentTag::where('content_type', 'video')
                                     ->where('content_id', $resource_id)
                                     ->get()
-                                    ->pluck('tag_id');	
+                                    ->pluck('tag_id')
+                                    ->toArray();	
 
     	return view('admin.video.tag.tag-partial')
     			->with('tags', $tags)
-    			->with('selected_tags', $selected_tags);
+    			->with('selectedTags', $selectedTags);
     }
 
     public function store(Request $request)
