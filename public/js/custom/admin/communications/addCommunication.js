@@ -91,6 +91,7 @@ $(document).on('click','.communication-create',function(){
 	var communication_packages = [];
 	var communication_documents = [];
 	var allStores  = $("#allStores:checked").val();
+	var tags = $("#tags").val();
 
 	if(!communication_type_id){
 		communication_type_id = $("#default_communication_type").val(); // no category
@@ -142,7 +143,8 @@ $(document).on('click','.communication-create',function(){
 		  		all_stores : allStores,
 		  		target_stores : target_stores,
 		  		communication_documents : communication_documents,
-		  		communication_packages : communication_packages
+		  		communication_packages : communication_packages,
+		  		tags: tags
 		  		
 		    },
 		    success: function(result) {

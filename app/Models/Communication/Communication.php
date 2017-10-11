@@ -346,6 +346,7 @@ class Communication extends Model
 		CommunicationTarget::updateTargetStores($communication->id, $request);
 		CommunicationDocument::updateCommunicationDocuments($communication->id, $request);
 		CommunicationPackage::updateCommunicationPackages($communication->id, $request);
+		ContentTag::updateTags( 'communication', $communication->id, $request->tags);
 		return $communication;
 	}
 
