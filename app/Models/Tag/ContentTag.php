@@ -35,11 +35,10 @@ class ContentTag extends Model
 
     public static function getTagsByContentId($content_type, $id)
     {
-    	$tags = ContentTag::join('tags', 'tags.id', '=', 'content_tag.tag_id')
-    							->where('content_type', $content_type)
-    							->where('content_id', $id)
-    							->get()
-    							->pluck('tag_id')->toArray();
+    	$tags = ContentTag::where('content_type', $content_type)
+						->where('content_id', $id)
+						->get()
+						->pluck('tag_id')->toArray();
     	return $tags;
     }
 }

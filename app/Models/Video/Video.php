@@ -221,12 +221,13 @@ class Video extends Model
         $video->update($metadata);
 
         FeaturedVideo::updateFeaturedOn($id, $request);
-        
+
         if(isset($request->target_banners) || isset($request->target_stores)){
             VideoTarget::updateTargetStores($request, $id);    
         }
 
         $tags = $request->get('tags');
+        
         ContentTag::updateTags( 'video', $id, $tags);
         
         return $video;

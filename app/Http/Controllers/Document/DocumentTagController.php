@@ -21,7 +21,7 @@ class DocumentTagController extends Controller
     {
     	$tags = Tag::all()->pluck('name', 'id');
     	
-    	$selectedTags = ContentTag::where('content_id', $resource_id)->where('content_type', 'document')->get()->pluck('tag_id')->toArray();	
+    	$selectedTags = ContentTag::getTagsByContentId('document', $resource_id);
     	return view('admin.video.tag.tag-partial')
     			->with('tags', $tags)
     			->with('selectedTags', $selectedTags);

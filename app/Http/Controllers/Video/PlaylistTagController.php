@@ -21,7 +21,8 @@ class PlaylistTagController extends Controller
     {
     	$tags = Tag::all()->pluck('name', 'id');
     	
-    	$selectedTags = ContentTag::where('content_id', $resource_id)->where('content_type', 'playlist')->get()->pluck('tag_id')->toArray();	
+    	$selectedTags = ContentTag::getTagsByContentId('playlist', $resource_id);
+        
     	return view('admin.video.tag.tag-partial')
     			->with('tags', $tags)
     			->with('selectedTags', $selectedTags);

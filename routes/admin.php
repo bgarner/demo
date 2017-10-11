@@ -88,6 +88,8 @@ Route::get('/admin/playlisttag/{playlist_id}', 'Video\PlaylistTagController@show
 Route::post('/admin/playlisttag', 'Video\PlaylistTagController@store');
 Route::get('/admin/documenttag/{document_id}', 'Document\DocumentTagController@show');
 Route::post('/admin/documenttag', 'Document\DocumentTagController@store');
+Route::get('/admin/communicationtag/{communication_id}', 'Communication\CommunicationTagController@show');
+Route::post('/admin/communicationtag', 'Communication\CommunicationTagController@store');
 
 //Banner selector
 Route::resource('/admin/banner' , 'AdminSelectedBannerController');

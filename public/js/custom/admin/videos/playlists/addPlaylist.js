@@ -29,7 +29,6 @@ var initializeTagSelector = function(selectedTags){
 
 $("body").on('select2:select', $("#tags"), function (evt) {
 
-	console.log('seelecting an option');
 	var playlist_id = $("#playlistID").val();
     if(evt.params.data.newTag){
     	$.post("/admin/tag",{ tag_name: evt.params.data.text })

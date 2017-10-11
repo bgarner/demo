@@ -17,6 +17,55 @@ $("#allStores").change(function(){
 	}
 });
 
+var initializeTagSelector = function(selectedTags){
+	
+	$("#tags").select2({ 
+		width: '100%' , 
+		tags: true,
+		multiple: true,
+		createTag: function (params) {
+    		var term = $.trim(params.term);
+
+		    if (term === ''  && $("#tags").find('option').attr("tagname", term).length >0) {
+		      return null;
+		    }
+
+		    return {
+		      id: term, //id of new option 
+		      text: term, //text of new option 
+		      newTag: true
+		    }
+		}
+	});
+}
+
+$("body").on('select2:select', $("#tags"), function (evt) {
+
+	var communication_id = $("#communicationId").val();
+    if(evt.params.data.newTag){
+    	$.post("/admin/tag",{ tag_name: evt.params.data.text })
+    	.done(function(tag){
+    		
+    		//change the id of the newly added tag to be the id from db
+			$('#tags option[value="'+tag.name+'"]').val(tag.id);
+			
+			var selectedTags = $("#tags").val();
+			//update tag communication mapping
+			$.post("/admin/communicationtag",{ 'communication_id' : communication_id, 'tags': selectedTags })
+			.done(function(){
+				$('#tags').select2('destroy');
+				$("#tag-selector-container").load("/admin/communicationtag/"+communication_id, function(){
+					initializeTagSelector();
+					$("#tags").focus();
+
+				});	
+			});				
+
+    	});
+    }
+
+});
+
 
 $(document).on('click','.communication-update',function(){
   	
@@ -33,11 +82,8 @@ $(document).on('click','.communication-update',function(){
 	// var target_stores  = $("#storeSelect").val();
 	var target_stores = getTargetStores();
 	var allStores  = $("#allStores:checked").val();
-	console.log(allStores);
-	console.log(target_stores);
-
-	console.log(communication_type_id);
-	
+	var tags = $("#tags").val();
+	console.log(tags);
 	var importance = "1";
 	var sender = "";
 
@@ -60,8 +106,7 @@ $(document).on('click','.communication-update',function(){
 	$(".selected-packages").each(function(){
 		communication_packages.push($(this).attr('data-packageid'));
 	});
- 
-	console.log(remove_document);
+ 	
     if(subject == '' || body == '') {
 		swal("Oops!", "Communication title/body incomplete.", "error"); 
 		hasError = true;
@@ -102,7 +147,8 @@ $(document).on('click','.communication-update',function(){
 		  		communication_documents : communication_documents,
 		  		communication_packages : communication_packages,
 		  		remove_document : remove_document,
-		  		remove_package : remove_package
+		  		remove_package : remove_package,
+		  		tags : tags
 
 		    },
 		    
@@ -159,7 +205,6 @@ $(document).on('click','.communication-update',function(){
 		    }
 		}).done(function(response){
 			console.log(response);
-			// $(".existing-files-container").load("/admin/communicationdocuments/"+communicationId);
 			$("#files-staged-to-remove").empty();
 			$("#files-selected").empty();
 			$("#files-selected").load("/admin/communicationdocuments/"+communicationId);

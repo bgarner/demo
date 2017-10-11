@@ -58,12 +58,16 @@ class CommunicationAdminController extends Controller
         
         $packages            = Package::where('banner_id',$banner->id)->get();
         $storeAndStoreGroups = Utility::getStoreAndStoreGroupList($banner->id);
+        $tags = Tag::all()->pluck('name', 'id'); 
+        $selected_tags = [];
         return view('admin.communication.create')
                                                 ->with('storeAndStoreGroups', $storeAndStoreGroups)
                                                 ->with('communicationTypes', $communicationTypes)
                                                 ->with('navigation', $fileFolderStructure)
                                                 ->with('packages', $packages)
-                                                ->with('banner', $banner);
+                                                ->with('banner', $banner)
+                                                ->with('tags', $tags)
+                                                ->with('selected_tags', $selected_tags);
                                                 
 
     }
@@ -119,7 +123,10 @@ class CommunicationAdminController extends Controller
         $fileFolderStructure         = FileFolder::getFileFolderStructure($banner->id);
         $packages                    = Package::where('banner_id', $banner->id)->get();
 
-        // dd($communication_target_stores);
+        $tags                        = Tag::all()->pluck('name', 'id');
+        $selectedTags                = ContentTag::getTagsByContentId('communication', $id);
+
+        // dd($selectedTags);
 
         return view('admin.communication.edit')->with('communication', $communication)
                                             ->with('communication_packages', $communication_packages)
@@ -129,7 +136,9 @@ class CommunicationAdminController extends Controller
                                             ->with('navigation', $fileFolderStructure)
                                             ->with('packages', $packages)
                                             ->with('target_stores', $communication_target_stores)
-                                            ->with('banner', $banner);
+                                            ->with('banner', $banner)
+                                            ->with('tags', $tags)
+                                            ->with('selectedTags', $selectedTags);
     }
 
     /**

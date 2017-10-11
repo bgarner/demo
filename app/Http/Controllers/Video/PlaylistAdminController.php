@@ -110,7 +110,7 @@ class PlaylistAdminController extends Controller
         $optGroupSelections = json_encode(Playlist::getSelectedStoresAndBannersByPlaylistId($id));
 
         $tags = Tag::all()->pluck('name', 'id');
-        $selectedTags = ContentTag::where('content_type', 'playlist')->where('content_id', $id)->get()->pluck('tag_id')->toArray();
+        $selectedTags = ContentTag::getTagsByContentId('playlist', $id);
 
         return view('admin.video.playlist-manager.edit')
                 ->with('playlist', $playlist)
@@ -132,7 +132,6 @@ class PlaylistAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        \Log::info($request->all());
         return Playlist::updatePlaylist($id, $request);
     }
 

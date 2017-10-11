@@ -154,10 +154,7 @@ class DocumentAdminController extends Controller
         $storeAndStoreGroups = Utility::getStoreAndStoreGroupList($banner->id);
 
         $tags = Tag::all()->pluck('name', 'id');
-        $selected_tags = ContentTag::where('content_type', 'document')
-                                    ->where('content_id', $id)
-                                    ->get()
-                                    ->pluck('tag_id')->toArray();
+        $selected_tags = ContentTag::getTagsByContentId('document', $id);
 
         return view('admin.document-meta.document-edit-meta-data')->with('document', $document)
                                                     ->with('banner', $banner)
