@@ -117,8 +117,13 @@ class Tasklist extends Model
         
         $targetedTasklists = Tasklist::join('tasklist_target', 'tasklist_target.tasklist_id', '=', 'tasklists.id')
                                 ->whereIn('tasklist_target.store_id', $storeList)
-                                ->select('tasklists.*', 'tasklist_target.store_id')
-                                ->get();
+                                ->select(\DB::raw('tasklists.*, GROUP_CONCAT(DISTINCT tasklist_target.store_id) as stores'))
+                                ->groupBy('tasklists.id')
+                                ->get()
+                                ->each(function($event){
+                                    $event->stores = explode(',', $event->stores);
+                                });
+
 
         $targetedTasklists = Tasklist::groupTasklistStores($targetedTasklists);
 

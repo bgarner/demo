@@ -7,6 +7,7 @@ use App\Models\Video\Playlist;
 use App\Models\Video\PlaylistBanner;
 use App\Models\Video\PlaylistTarget;
 use App\Models\Video\PlaylistStoreGroup;
+use App\Models\Utility\Utility;
 
 class PlaylistTarget extends Model
 {

@@ -1,25 +1,3 @@
-$(document).ready(function(){
-	// $("#allStores").click();
-});
-// $("#allStores").change(function(){
-
-// 	if ($("#allStores").is(":checked")) {
-
-// 		$("#storeSelect option").each(function(index){
-// 			$(this).attr('selected', 'selected');
-// 		});
-// 		$("#storeSelect").chosen({width:'75%'});
-
-// 	}
-// 	else if ($("#allStores").not(":checked")) {
-// 		$("#storeSelect option").each(function(){
-// 			$(this).removeAttr('selected');
-// 		});
-// 		$("#storeSelect").chosen({width:'75%'});
-
-// 	}
-// });
-
 $(".folder-checkbox").on('click', function(){
 	if($(this).is(":checked")){
 		$(this).attr('data-folderRoot', 'true')

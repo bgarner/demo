@@ -15,6 +15,8 @@ use DB;
 use App\Models\Utility\Utility;
 use App\Models\Validation\CommunicationValidator;
 use App\Models\StoreApi\StoreInfo;
+use App\Models\Auth\User\UserBanner;
+use App\Models\Tools\CustomStoreGroup;
 
 class Communication extends Model
 {
@@ -77,13 +79,75 @@ class Communication extends Model
 
 	public static function getAllCommunication($banner_id)
 	{
-		$communicatons = Communication::where('banner_id', $banner_id)->get();
-		foreach($communicatons as $c){
+		$communications = Communication::where('banner_id', $banner_id)->get();
+
+		foreach($communications as $c){
 			$c->prettySentAtDate = Utility::prettifyDate( $c->send_at );
 			$c->label_name = Communication::getCommunicationCategoryName($c->communication_type_id);
             $c->label_colour = Communication::getCommunicationCategoryColour($c->communication_type_id);
 		}
-		return $communicatons;
+		return $communications;
+	}
+
+	public static function getCommunicationsForAdmin()
+	{
+		$banners = UserBanner::getAllBanners()->pluck('id')->toArray();
+
+        //stores in accessible banners
+        $storeList = [];
+        foreach ($banners as $banner) {
+            $storeInfo = StoreInfo::getStoresInfo($banner);
+            foreach ($storeInfo as $store) {
+                array_push($storeList, $store->store_number);
+            }
+        }
+
+        $allStoreCommunications = Communication::join('communication_banner', 'communication_banner.communication_id', '=', 'communications.id')
+                                ->where('all_stores', 1)
+                                ->whereIn('communication_banner.banner_id', $banners)
+                                ->select('communications.*', 'communication_banner.banner_id')
+                                ->get();
+
+        $allStoreCommunications = Utility::groupBannersForAllStoreContent($allStoreCommunications);
+
+        
+        $targetedCommunications = Communication::join('communications_target', 'communications_target.communication_id', '=', 'communications.id')
+                                ->whereIn('communications_target.store_id', $storeList)
+                                ->select(\DB::raw('communications.*, GROUP_CONCAT(DISTINCT communications_target.store_id) as stores'))
+                                ->groupBy('communications.id')
+                                ->get()
+                                ->each(function($comm){
+                                    $comm->stores = explode(',', $comm->stores);
+                                });
+
+        $storeGroups = CustomStoreGroup::getStoreGroupsForAdmin();
+        $communicationForStoreGroups = Communication::join('communication_store_group', 'communication_store_group.communication_id', '=', 'communications.id')
+                                            ->whereIn('communication_store_group.store_group_id', $storeGroups)
+                                            ->select('communications.*')
+                                            ->get()
+                                            ->each(function($item){
+                                                $storeGroups = CommunicationStoreGroup::where('communication_id', $item->id)->get()->pluck('store_group_id')->toArray();
+                                                $item->storeGroups = $storeGroups;
+                                                $item->stores = [];
+                                                foreach ($storeGroups as $group) {
+                                                    $stores = unserialize(CustomStoreGroup::find($group)->stores);
+                                                    $item->stores = array_merge($item->stores,$stores);
+                                                }
+                                                $item->stores = array_unique( $item->stores);
+                                            });
+
+        $targetedCommunications = Utility::mergeTargetedAndStoreGroupContent($targetedCommunications, $communicationForStoreGroups);
+                                           
+        $communications = Utility::mergeTargetedAndAllStoreContent($targetedCommunications, $allStoreCommunications);
+
+        foreach($communications as $c){
+			$c->prettySentAtDate = Utility::prettifyDate( $c->send_at );
+			$c->label_name = Communication::getCommunicationCategoryName($c->communication_type_id);
+            $c->label_colour = Communication::getCommunicationCategoryColour($c->communication_type_id);
+		}
+                        
+                        
+        return $communications;
 	}
 
 	public static function getCommunicationByStoreNumber($request, $storeNumber)
@@ -574,6 +638,26 @@ class Communication extends Model
 		}
 
 		return false;
+	}
+
+	public static function getSelectedStoresAndBannersByCommunicationId($communication_id)
+	{
+		$targetBanners = CommunicationBanner::where('communication_id', $communication_id)->get()->pluck('banner_id')->toArray();
+        $targetStores = CommunicationTarget::where('communication_id', $communication_id)->get()->pluck('store_id')->toArray();
+        $storeGroups = CommunicationStoreGroup::where('communication_id', $communication_id)->get()->pluck('store_group_id')->toArray();
+
+        $optGroupSelections = [];
+        foreach ($targetBanners as $banner) {
+            array_push($optGroupSelections, 'banner'.$banner);
+        }
+        foreach ($targetStores as $stores) {
+            array_push($optGroupSelections, 'store'.$stores);   
+        }
+        foreach ($storeGroups as $group) {
+            array_push($optGroupSelections, 'storegroup'.$group);   
+        }
+
+        return( $optGroupSelections );
 	}
 
 	

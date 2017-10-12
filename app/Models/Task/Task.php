@@ -227,10 +227,12 @@ class Task extends Model
         
         $targetedTasks = Task::join('tasks_target', 'tasks_target.task_id', '=', 'tasks.id')
                                 ->whereIn('tasks_target.store_id', $storeList)
-                                ->select('tasks.*', 'tasks_target.store_id')
-                                ->get();
-
-        $targetedTasks = Task::groupTaskStores($targetedTasks);
+                                ->select(\DB::raw('tasks.*, GROUP_CONCAT(DISTINCT tasks_target.store_id) as stores'))
+                                ->groupBy('tasks.id')
+                                ->get()
+                                ->each(function($task){
+                                    $task->stores = explode(',', $task->stores);
+                                });
 
         $storeGroups = CustomStoreGroup::getStoreGroupsForAdmin();
         $tasksForStoreGroups = Task::join('task_store_group', 'task_store_group.task_id', '=', 'tasks.id')
@@ -248,7 +250,7 @@ class Task extends Model
                                                 $item->stores = array_unique( $item->stores);
                                             });
 
-        $targetedTasks = Task::mergeTargetedAndStoreGroupTasks($targetedTasks, $tasksForStoreGroups);
+        $targetedTasks = Utility::mergeTargetedAndStoreGroupContent($targetedTasks, $tasksForStoreGroups);
                                            
         $tasks = Utility::mergeTargetedAndAllStoreContent($targetedTasks, $allStoreTasks);
 
@@ -312,27 +314,6 @@ class Task extends Model
 		}
 		return $tasks;
 		
-	}
-
-	public static function groupTaskStores($tasks)
-	{
-		$tasks = $tasks->toArray();
-		$compiledTasks = [];
-		foreach ($tasks as $task) {
-	        $index = array_search($task['id'], array_column($compiledTasks, 'id'));
-	        if(  $index !== false ){
-	           array_push($compiledTasks[$index]->stores, $task["store_id"]);
-	        }
-	        else{
-	           
-	           $task["stores"] = [];
-	           array_push( $task["stores"] , $task["store_id"]);
-	           array_push( $compiledTasks , (object) $task);
-	        }
-
-        }
-        
-		return collect($compiledTasks);
 	}
 
 	public static function getTaskCompletionStatistics($task)
@@ -645,26 +626,6 @@ class Task extends Model
         }
 
         return( $optGroupSelections );
-    }
-
-    public static function mergeTargetedAndStoreGroupTasks($targetedTasks, $storeGroupTasks)
-    {
-        $targetedTasksArray = $targetedTasks->toArray();
-        $targetedTaskIds = array_column($targetedTasksArray, 'id');
-        foreach ($storeGroupTasks as $task) {
-
-            if(in_array($task->id, $targetedTaskIds)){
-                $targetedTaskStores = $targetedTasks->where('id', $task->id)->first()->stores;
-                $mergedStores = array_merge( $targetedTaskStores, $task->stores);
-                $targetedTasks->where('id', $task->id)->first()->stores = $mergedStores;
-            }
-            else{
-
-                $targetedTasks = $targetedTasks->push((object)$task);                
-            }
-        }
-        return $targetedTasks;
-
     }
 
 }

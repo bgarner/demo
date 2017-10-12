@@ -140,10 +140,13 @@ class Playlist extends Model
         
         $targetedPlaylists = Playlist::join('playlist_target', 'playlist_target.playlist_id', '=', 'playlists.id')
                                 ->whereIn('playlist_target.store_id', $storeList)
-                                ->select('playlists.*', 'playlist_target.store_id')
-                                ->get();
-
-        $targetedPlaylists = Playlist::groupStoresForTargetedPlaylists($targetedPlaylists);
+                                
+                                ->select(\DB::raw('playlists.*, GROUP_CONCAT(DISTINCT playlist_target.store_id) as stores'))
+                                ->groupBy('playlists.id')
+                                ->get()
+                                ->each(function($playlist){
+                                    $playlist->stores = explode(',', $playlist->stores);
+                                });
 
         $storeGroups = CustomStoreGroup::getStoreGroupsForAdmin();
         $playlistsForStoreGroups = Playlist::join('playlist_store_group','playlist_store_group.playlist_id','=','playlists.id')

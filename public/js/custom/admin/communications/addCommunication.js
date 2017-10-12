@@ -1,29 +1,26 @@
-$("#allStores").change(function(){
+// $("#allStores").change(function(){
 
-	if ($("#allStores").is(":checked")) {
+// 	if ($("#allStores").is(":checked")) {
 
-		$("#storeSelect option").each(function(){
-			$(this).removeAttr('selected');
-		});
-		$("#storeSelect").chosen('chosen:updated');
+// 		$("#storeSelect option").each(function(){
+// 			$(this).removeAttr('selected');
+// 		});
+// 		$("#storeSelect").chosen('chosen:updated');
 
-		$("#storeSelect option").each(function(index){			
-			$(this).prop('selected', 'selected');
-		});
-		$("#storeSelect").chosen();
+// 		$("#storeSelect option").each(function(index){			
+// 			$(this).prop('selected', 'selected');
+// 		});
+// 		$("#storeSelect").chosen();
 		
-	}
-	else if ($("#allStores").not(":checked")) {
-		$("#storeSelect option").each(function(){
-			$(this).removeAttr('selected');
-		});
-		$("#storeSelect").chosen();
+// 	}
+// 	else if ($("#allStores").not(":checked")) {
+// 		$("#storeSelect option").each(function(){
+// 			$(this).removeAttr('selected');
+// 		});
+// 		$("#storeSelect").chosen();
 		
-	}
-});
-
-
-
+// 	}
+// });
 
 
 $(document).on('click','.communication-create',function(){
@@ -36,13 +33,15 @@ $(document).on('click','.communication-create',function(){
 	var start = $("#send_at").val();
 	var end = $("#archive_at").val();
 	var banner_id = $("input[name='banner_id']").val();
-	// var target_stores  = $("#storeSelect").val();
-	var target_stores = getTargetStores();
 	var importance = "1";
 	var sender = "";
 	var communication_packages = [];
 	var communication_documents = [];
-	var allStores  = $("#allStores:checked").val();
+
+	var target_stores = getTargetStores();
+	var target_banners = getTargetBanners();
+	var store_groups = getStoreGroups();
+	var all_stores = getAllStoreStatus();
 
 	if(!communication_type_id){
 		communication_type_id = $("#default_communication_type").val(); // no category
@@ -69,7 +68,7 @@ $(document).on('click','.communication-create',function(){
 		$(window).scrollTop(0);
 		return false;
 	}
-	if( target_stores == null && typeof allStores === 'undefined' ) {
+	if( target_stores == null || all_stores == null || store_groups == null ) {
 		swal("Oops!", "Target stores not selected.", "error"); 
 		hasError = true;
 		$(window).scrollTop(0);
@@ -91,8 +90,10 @@ $(document).on('click','.communication-create',function(){
 		  		send_at : start,
 		  		archive_at : end,
 		  		banner_id : banner_id,
-		  		all_stores : allStores,
 		  		target_stores : target_stores,
+		  		all_stores : all_stores,
+		    	target_banners : target_banners,
+		    	store_groups : store_groups,
 		  		communication_documents : communication_documents,
 		  		communication_packages : communication_packages
 		  		

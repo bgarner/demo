@@ -115,7 +115,7 @@ $(document).on('click','.event-update',function(){
 		$(window).scrollTop(0);
 		return false;
 	}
-	if( target_stores == null && typeof allStores === 'undefined' ) {
+	if( target_stores == null || all_stores == null || store_groups == null ) {
 		swal("Oops!", "Target stores not selected.", "error");
 		hasError = true;
 		$(window).scrollTop(0);

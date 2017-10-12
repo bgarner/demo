@@ -95,36 +95,7 @@
 												</div>
 										</div>
 
-
-										<div class="form-group">
-
-								                <label class="col-sm-2 control-label">Target Stores <span class="req">*</span></label>
-								                <div class="col-sm-10">
-								                	<select name="stores" id="storeSelect" multiple class="chosen">
-										            	<option value="">Select Some Options</option>
-										            	@foreach($storeAndStoreGroups as $option)
-
-										                    <option value="{{$option['id']}}"
-
-										                        @if(isset($option["isStoreGroup"]))
-																	data-isStoreGroup = "{{$option['isStoreGroup']}}"
-										                        @endif
-										                        @if(isset($option["stores"]))
-																	data-stores = "{{$option['stores']}}"
-										                        @endif
-
-										                    >
-										                        {{$option['name']}}
-										                    </option>
-
-										            	@endforeach
-
-										        	</select>
-										        	{!! Form::label('allStores', 'Or select all stores:') !!}
-										        	{!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
-								                </div>
-
-								        </div>
+										@include('admin.includes.store-banner-selector', ['optGroupOptions'=> $optGroupOptions, 'optGroupSelections' => $optGroupSelections])
 
 									</form>
 
@@ -257,7 +228,7 @@
 		<script type="text/javascript" src="/js/custom/admin/communications/documentSelector.js"></script>
 		<script type="text/javascript" src="/js/custom/tree.js"></script>
 		<script type="text/javascript" src="/js/custom/datetimepicker-with-default-time.js"></script>
-		<script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>
+		<script type="text/javascript" src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
 
 		<script type="text/javascript">
 
@@ -282,11 +253,6 @@
     		});
 
 		    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
-
-		    // $("#add-documents").click(function(){
-		    // 	$("#document-listing").modal('show');
-		    // });
-
 
 		    $("#add-packages").click(function(){
 		    	$("#package-listing").modal('show');

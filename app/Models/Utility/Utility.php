@@ -491,43 +491,6 @@ class Utility extends Model
         return collect($compiledContent);
     }
 
-    public static function groupStoresForTargetedContent($targetedContent)
-    {
-        // $targetedContent = $targetedContent->toArray();
-        $compiledContent = collect();
-        foreach ($targetedContent as $content) {
-
-        	$id = $content->id;
-
-            if($compiledContent->contains('id', $id)){
-                
-                // $contentIndex = $compiledContent->where('id', $id)->keys()->toArray()[0];
-                // array_push($compiledContent[$contentIndex]->stores, $content->store_id);
-                
-            }
-            else{
-                $content->stores = [];
-                $content->stores = $content->store_id;
-                $compiledContent->push($content);
-            }
-
-            // $index = array_search($content['id'], array_column($compiledContent, 'id'));
-            // if(  $index !== false ){
-            //    array_push($compiledContent[$index]->stores, $content["store_id"]);
-            // }
-            // else{       
-            //    $content["stores"] = [];
-            //    array_push( $content["stores"] , $content["store_id"]);
-            //    array_push( $compiledContent , (object) $content);
-            // }
-
-
-
-        }
-        
-        return collect($compiledContent);
-    }
-
     public static function mergeTargetedAndStoreGroupContent($targetedContent, $storeGroupContent)
     {
         $targetedContentArray = $targetedContent->toArray();
@@ -541,7 +504,7 @@ class Utility extends Model
             }
             else{
 
-                $targetedContent = $targetedContent->push((object)$video);                
+                $targetedContent = $targetedContent->push((object)$content);                
             }
         }
         return $targetedContent;

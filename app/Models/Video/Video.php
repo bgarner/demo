@@ -115,10 +115,12 @@ class Video extends Model
         
         $targetedVideos = Video::join('video_target', 'video_target.video_id', '=', 'videos.id')
                                 ->whereIn('video_target.store_id', $storeList)
-                                ->select('videos.*', 'video_target.store_id')
-                                ->get();
-
-        $targetedVideos = Utility::groupStoresForTargetedContent($targetedVideos);
+                                ->select(\DB::raw('videos.*, GROUP_CONCAT(DISTINCT video_target.store_id) as stores'))
+                                ->groupBy('videos.id')
+                                ->get()
+                                ->each(function($video){
+                                    $video->stores = explode(',', $video->stores);
+                                });
 
         $storeGroups = CustomStoreGroup::getStoreGroupsForAdmin();
         $videosForStoreGroups = Video::join('video_store_group', 'video_store_group.video_id', '=', 'videos.id')
