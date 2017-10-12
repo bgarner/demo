@@ -98,7 +98,7 @@
 
 										<div class="form-group">
 
-								                <label class="col-sm-2 control-label">Target Stores</label>
+								                <label class="col-sm-2 control-label">Target Stores <span class="req">*</span></label>
 								                <div class="col-sm-10">
 								                	<select name="stores" id="storeSelect" multiple class="chosen">
 										            	<option value="">Select Some Options</option>

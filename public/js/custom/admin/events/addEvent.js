@@ -1,24 +1,24 @@
 $(document).ready(function(){
-	$("#allStores").click();
+	// $("#allStores").click();
 });
-$("#allStores").change(function(){
+// $("#allStores").change(function(){
 
-	if ($("#allStores").is(":checked")) {
+// 	if ($("#allStores").is(":checked")) {
 
-		$("#storeSelect option").each(function(index){
-			$(this).attr('selected', 'selected');
-		});
-		$("#storeSelect").chosen({width:'75%'});
+// 		$("#storeSelect option").each(function(index){
+// 			$(this).attr('selected', 'selected');
+// 		});
+// 		$("#storeSelect").chosen({width:'75%'});
 
-	}
-	else if ($("#allStores").not(":checked")) {
-		$("#storeSelect option").each(function(){
-			$(this).removeAttr('selected');
-		});
-		$("#storeSelect").chosen({width:'75%'});
+// 	}
+// 	else if ($("#allStores").not(":checked")) {
+// 		$("#storeSelect option").each(function(){
+// 			$(this).removeAttr('selected');
+// 		});
+// 		$("#storeSelect").chosen({width:'75%'});
 
-	}
-});
+// 	}
+// });
 
 $(".folder-checkbox").on('click', function(){
 	if($(this).is(":checked")){
@@ -108,9 +108,10 @@ $(document).on('click','.event-create',function(){
     var eventStart = $("#start").val();
     var eventEnd = $("#end").val();
     var tags = $('#tags').val();
-    var target_stores  = $("#storeSelect").val();
-    var allStores  = $("#allStores:checked").val();
-    console.log(allStores);
+    var target_stores = getTargetStores();
+	var target_banners = getTargetBanners();
+	var store_groups = getStoreGroups();
+	var all_stores = getAllStoreStatus();
     var attachments = [];
    	$(".selected-folders").each(function(){
 		attachments.push($(this).attr('data-folderid'));
@@ -142,7 +143,7 @@ $(document).on('click','.event-create',function(){
 		$(window).scrollTop(0);
 		return false;
 	}
-	if( target_stores == null && typeof allStores === 'undefined' ) {
+	if( target_stores == null || all_stores == null || store_groups == null ) {
 		swal("Oops!", "Target stores not selected.", "error");
 		hasError = true;
 		$(window).scrollTop(0);
@@ -168,8 +169,10 @@ $(document).on('click','.event-create',function(){
 		    	end: eventEnd,
 				allDay: allDay,
 		    	target_stores : target_stores,
-		    	attachments : attachments,
-		    	allStores: allStores
+		  		all_stores : all_stores,
+		    	target_banners : target_banners,
+		    	store_groups : store_groups,
+		    	attachments : attachments
 		    },
 
 		    dataType: 'json',

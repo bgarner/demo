@@ -113,7 +113,7 @@ class Tasklist extends Model
                                 ->select('tasklists.*', 'tasklist_banner.banner_id')
                                 ->get();
 
-        $allStoreTasklists = Tasklist::groupBannersForAllStoreTasklists($allStoreTasklists);
+        $allStoreTasklists = Utility::groupBannersForAllStoreContent($allStoreTasklists);
         
         $targetedTasklists = Tasklist::join('tasklist_target', 'tasklist_target.tasklist_id', '=', 'tasklists.id')
                                 ->whereIn('tasklist_target.store_id', $storeList)
@@ -140,7 +140,7 @@ class Tasklist extends Model
 
         $targetedTasklists = Tasklist::mergeTargetedAndStoreGroupTasklists($targetedTasklists, $tasklistsForStoreGroups);
                                            
-        $tasklists = Playlist::mergeTargetedAndAllStoreAssets($targetedTasklists, $allStoreTasklists);
+        $tasklists = Utility::mergeTargetedAndAllStoreContent($targetedTasklists, $allStoreTasklists);
 
         foreach ($tasklists as $tasklist) {
 			$tasklist->prettyDueDate = Utility::prettifyDate($tasklist->due_date);
@@ -291,26 +291,6 @@ class Tasklist extends Model
     	}
     	Tasklist::find($id)->delete();
     	return;
-    }
-    public static function groupBannersForAllStoreTasklists($allStoreTasklists)
-    {
-        $allStoreTasklists = $allStoreTasklists->toArray();
-        $compiledTasks = [];
-        foreach ($allStoreTasklists as $task) {
-            $index = array_search($task['id'], array_column($compiledTasks, 'id'));
-            if(  $index !== false ){
-               array_push($compiledTasks[$index]->banners, $task["banner_id"]);
-            }
-            else{
-               
-               $task["banners"] = [];
-               array_push( $task["banners"] , $task["banner_id"]);
-               array_push( $compiledTasks , (object) $task);
-            }
-
-        }
-        
-        return collect($compiledTasks);
     }
 
     public static function groupTasklistStores($tasklists)

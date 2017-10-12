@@ -17,6 +17,7 @@ use App\Models\StoreApi\StoreInfo;
 use App\Models\Event\EventTarget;
 use App\Models\Document\FolderStructure;
 use App\Models\Event\EventAttachment;
+use App\Models\Utility\Utility;
 
 class CalendarAdminController extends Controller
 {
@@ -36,7 +37,7 @@ class CalendarAdminController extends Controller
      */
     public function index()
     {
-        $events = Event::getEventsByBannerId();
+        $events = Event::getEventsForAdmin();
         return view('admin.calendar.index')
             ->with('events', $events);            
     }
@@ -50,14 +51,15 @@ class CalendarAdminController extends Controller
     {
         
         $banner = UserSelectedBanner::getBanner();
-
         $event_types_list = EventType::getEventTypeListByBannerId($banner->id);
-        $storeList = StoreInfo::getStoreListing($banner->id);
+        $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
+        $optGroupSelections = json_encode([]);
         $folderStructure = FolderStructure::getNavigationStructure($banner->id);
 
         return view('admin.calendar.create')
             ->with('event_types_list', $event_types_list)
-            ->with('stores', $storeList)
+            ->with('optGroupSelections', $optGroupSelections)
+            ->with('optGroupOptions', $optGroupOptions)
             ->with('folderStructure', $folderStructure);     
     }
 
@@ -92,24 +94,23 @@ class CalendarAdminController extends Controller
     public function edit($id)
     {
 
-        $banner = UserSelectedBanner::getBanner();
+        $banner              = UserSelectedBanner::getBanner();
 
-        $event = Event::find($id);
+        $event               = Event::find($id);
         
-        $event_type = EventType::find($id);
-        $event_types_list = EventType::getEventTypeListByBannerId($banner->id);
-        
-        
-        $event_target_stores = EventTarget::where('event_id', $id)->get()->pluck('store_id')->toArray();
-        $storeList = StoreInfo::getStoreListing($banner->id);
-        $event_attachments = EventAttachment::getEventAttachments($id);
-        $folderStructure = FolderStructure::getNavigationStructure($banner->id);
+        $event_types_list    = EventType::getEventTypeListByBannerId($banner->id);
+
+        $event_attachments   = EventAttachment::getEventAttachments($id);
+        $folderStructure     = FolderStructure::getNavigationStructure($banner->id);
+
+        $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
+        $optGroupSelections = json_encode(Event::getSelectedStoresAndBannersByEventId($id));
+
         return view('admin.calendar.edit')
             ->with('event', $event)
-            ->with('event_type', $event_type)
             ->with('event_types_list', $event_types_list)
-            ->with('storeList', $storeList)
-            ->with('target_stores', $event_target_stores)
+            ->with('optGroupOptions', $optGroupOptions)
+            ->with('optGroupSelections', $optGroupSelections)
             ->with('event_attachments', $event_attachments)
             ->with('folderStructure', $folderStructure);     
     }
@@ -125,7 +126,6 @@ class CalendarAdminController extends Controller
     {
 
         $response = Event::updateEvent($id, $request);
-        \Log::info($response);
         return $response;
     }
 

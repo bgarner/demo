@@ -111,14 +111,14 @@ class Video extends Model
                                 ->select('videos.*', 'video_banner.banner_id')
                                 ->get();
 
-        $allStoreVideos = Video::groupBannersForAllStoreVideos($allStoreVideos);
+        $allStoreVideos = Utility::groupBannersForAllStoreContent($allStoreVideos);
         
         $targetedVideos = Video::join('video_target', 'video_target.video_id', '=', 'videos.id')
                                 ->whereIn('video_target.store_id', $storeList)
                                 ->select('videos.*', 'video_target.store_id')
                                 ->get();
 
-        $targetedVideos = Video::groupStoresForTargetedVideos($targetedVideos);
+        $targetedVideos = Utility::groupStoresForTargetedContent($targetedVideos);
 
         $storeGroups = CustomStoreGroup::getStoreGroupsForAdmin();
         $videosForStoreGroups = Video::join('video_store_group', 'video_store_group.video_id', '=', 'videos.id')
@@ -136,9 +136,9 @@ class Video extends Model
                                                 $item->stores = array_unique( $item->stores);
                                             });
 
-        $targetedVideos = Video::mergeTargetedAndStoreGroupVideos($targetedVideos, $videosForStoreGroups);
+        $targetedVideos = Utility::mergeTargetedAndStoreGroupContent($targetedVideos, $videosForStoreGroups);
                                            
-        $videos = Playlist::mergeTargetedAndAllStoreAssets($targetedVideos, $allStoreVideos);
+        $videos = Utility::mergeTargetedAndAllStoreContent($targetedVideos, $allStoreVideos);
 
         foreach ($videos as $video) {
             $video->uploaderFirstName = User::find($video->uploader)->firstname;
@@ -446,68 +446,6 @@ class Video extends Model
 
         return;
     }
-
-    public static function groupBannersForAllStoreVideos($allStoreVideos)
-    {
-        $allStoreVideos = $allStoreVideos->toArray();
-        $compiledVideos = [];
-        foreach ($allStoreVideos as $video) {
-            $index = array_search($video['id'], array_column($compiledVideos, 'id'));
-            if(  $index !== false ){
-               array_push($compiledVideos[$index]->banners, $video["banner_id"]);
-            }
-            else{
-               
-               $video["banners"] = [];
-               array_push( $video["banners"] , $video["banner_id"]);
-               array_push( $compiledVideos , (object) $video);
-            }
-
-        }
-        
-        return collect($compiledVideos);
-    }
-
-    public static function groupStoresForTargetedVideos($targetedVideos)
-    {
-        $targetedVideos = $targetedVideos->toArray();
-        $compiledVideos = [];
-        foreach ($targetedVideos as $video) {
-            $index = array_search($video['id'], array_column($compiledVideos, 'id'));
-            if(  $index !== false ){
-               array_push($compiledVideos[$index]->stores, $video["store_id"]);
-            }
-            else{       
-               $video["stores"] = [];
-               array_push( $video["stores"] , $video["store_id"]);
-               array_push( $compiledVideos , (object) $video);
-            }
-
-        }
-        
-        return collect($compiledVideos);
-    }
-
-    public static function mergeTargetedAndStoreGroupVideos($targetedVideos, $storeGroupVideos)
-    {
-        $targetedVideosArray = $targetedVideos->toArray();
-        $targetedVideoIds = array_column($targetedVideosArray, 'id');
-        foreach ($storeGroupVideos as $video) {
-
-            if(in_array($video->id, $targetedVideoIds)){
-                $targetedVideoStores = $targetedVideos->where('id', $video->id)->first()->stores;
-                $mergedStores = array_merge( $targetedVideoStores, $video->stores);
-                $targetedVideos->where('id', $video->id)->first()->stores = $mergedStores;
-            }
-            else{
-
-                $targetedVideos = $targetedVideos->push((object)$video);                
-            }
-        }
-        return $targetedVideos;
-
-    }
-
 
 
     /**
