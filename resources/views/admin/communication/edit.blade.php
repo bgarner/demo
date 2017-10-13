@@ -6,6 +6,7 @@
     @include('admin.includes.head')
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
     <link rel="stylesheet" type="text/css" href="/css/custom/tree.css">
+    <link rel="stylesheet" href="/css/plugins/select/select2.min.css">
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 </head>
 
@@ -152,6 +153,9 @@
 		                                    	@endif
 						                </div>
 						        </div>
+						        <div id="tag-selector-container">
+                                    @include('admin.video.tag.tag-partial', ['tags'=>$tags, 'selectedTags'=>$selectedTags])
+                                </div>
 
 							</form>
 
@@ -274,6 +278,7 @@
 		<script type="text/javascript" src="/js/custom/tree.js"></script>
 		<script type="text/javascript" src="/js/custom/datetimepicker.js"></script>
 		<script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>
+		<script type="text/javascript" src="/js/plugins/select/select2.min.js"></script>
 
 
 		<script type="text/javascript">
@@ -303,7 +308,11 @@
 
 		    	$("input[name='communication_type']").val(comm_typeid);
 		    	$(".selected_comm_type").append('<i class="fa fa-circle text-'+ comm_typeColour + '"> </i> '+ comm_type);
-		    })
+		    });
+		    $(document).ready(function(){
+		    	initializeTagSelector();
+		    });
+		    
 
 
 

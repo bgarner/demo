@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Video;
+namespace App\Http\Controllers\Document;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\tag\ContentTag;
+use App\Models\Tag\ContentTag;
 use App\Models\Tag\Tag;
 
-class PlaylistTagController extends Controller
+class DocumentTagController extends Controller
 {
     public function create()
     {
@@ -21,8 +21,7 @@ class PlaylistTagController extends Controller
     {
     	$tags = Tag::all()->pluck('name', 'id');
     	
-    	$selectedTags = ContentTag::getTagsByContentId('playlist', $resource_id);
-        
+    	$selectedTags = ContentTag::getTagsByContentId('document', $resource_id);
     	return view('admin.video.tag.tag-partial')
     			->with('tags', $tags)
     			->with('selectedTags', $selectedTags);
@@ -30,9 +29,9 @@ class PlaylistTagController extends Controller
 
     public function store(Request $request)
     {
-    	$playlist_id = $request->playlist_id;
+    	$document_id = $request->document_id;
     	$tags = $request->tags;
-    	ContentTag::updateTags( 'playlist', $playlist_id, $tags);
+    	ContentTag::updateTags( 'document', $document_id, $tags);
     	return;
     }
 }
