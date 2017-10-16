@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ContentTag extends Model
 {
     protected $table = 'content_tag';
-    protected $fillable = ['content_type', 'tag_id', 'content_id']; 
+    protected $fillable = ['content_type', 'tag_id', 'content_id'];
 
 
     public static function updateTags($content_type, $id, $tags)
@@ -25,9 +25,9 @@ class ContentTag extends Model
                 'content_id'   => $id,
                 'tag_id'       => $tag
             ]);
-        }    
         }
-        
+        }
+
 
         return;
     }
@@ -40,5 +40,11 @@ class ContentTag extends Model
 						->get()
 						->pluck('tag_id')->toArray();
     	return $tags;
+    }
+
+    public static function getContentByTagId($id)
+    {
+        $content = ContentTag::where('tag_id', $id)->get();
+        return $content;
     }
 }
