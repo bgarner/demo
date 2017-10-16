@@ -33,6 +33,7 @@ class Tag extends Model
 
     public static function getTagIdByTagName($tag)
     {
+        $tag = str_replace("-"," ",$tag);
         $tagId = Tag::where("name", "=", $tag)->first();
 
         if( $tagId ){
