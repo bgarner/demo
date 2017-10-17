@@ -8268,10 +8268,19 @@ body.md-skin {
 }
 
 .archived{
-  background-color: #f1f6fa;
+  background-color: #337ab7;
+  color: #fff;
 }
+
+tr.archived.archived-blue td a,
+tr.archived td.mail-subject a
+{
+    color: #fff !important;
+}
+
+
 .archived-blue i{
-  color: #337ab7;
+  color: #fff;
 }
 
 .onoffswitch-switch,

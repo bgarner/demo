@@ -2356,6 +2356,15 @@ table th[class*="col-"] {
 .table-hover > tbody > tr.active:hover > th {
   background-color: #e8e8e8;
 }
+
+.table-hover > tbody > tr > td.archived:hover,
+.table-hover > tbody > tr > th.archived:hover,
+.table-hover > tbody > tr.archived:hover > td,
+.table-hover > tbody > tr:hover > .archived,
+.table-hover > tbody > tr.archived:hover > th {
+  background-color: lime;
+}
+
 .table > thead > tr > td.success,
 .table > tbody > tr > td.success,
 .table > tfoot > tr > td.success,
