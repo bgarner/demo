@@ -3,6 +3,12 @@
 namespace App\Models\Tag;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+
+use App\Models\Video\Video;
+use App\Models\Video\Playlist;
+use App\Models\Document\Document;
+use App\Models\Communication\Communication;
 
 class ContentTag extends Model
 {
@@ -45,6 +51,59 @@ class ContentTag extends Model
     public static function getContentByTagId($id)
     {
         $content = ContentTag::where('tag_id', $id)->get();
-        return $content;
+        $contentCollection = collect();
+
+        foreach($content as $c){
+            if(ContentTag::checkContentExpiry($c)){
+                continue;
+            } else {
+                $contentCollection->push($c);
+            }
+        }
+
+        return $contentCollection;
+    }
+
+    public static function getContentByTagIdWithArchive($id)
+    {
+        return ContentTag::where('tag_id', $id)->get();
+    }
+
+    public static function checkContentExpiry($content)
+    {
+        $today = Date('Y')."-".Date('m')."-".Date('d');
+
+        switch($content->content_type){
+
+            case "video": //never expires
+                $exp ="";
+                break;
+
+            case "playlist": //never expires
+                $exp ="";
+                break;
+
+            case "document":
+                $exp = Document::where('id', $content->id)
+                        ->where('end', '>=', $today)
+                        ->orWhere('end', '=', '0000-00-00 00:00:00')
+                        ->pluck('id');
+
+                break;
+
+            case "communication":
+                $exp = Communication::where('id', $content->id)
+                        ->where('archive_at', '>=', $today)
+                        ->orWhere('archive_at', '=', '0000-00-00 00:00:00')
+                        ->pluck('id');
+
+                break;
+
+        }
+
+        if($exp !=""){
+            return true;
+        }
+        return false;
     }
 }
