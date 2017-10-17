@@ -22,16 +22,6 @@
     .modal-content{ height: 100% !important;}
     .modal-body{ padding: 0; margin: 0; height: 100% !important; }
 
-
-    /* styles for '...' */
-    .video-list-box h4{
-
-
-    }
-
-
-
-
     .giveMeEllipsis {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -41,19 +31,7 @@
         -webkit-box-orient: vertical;
     }
 
-    /* hide ... if we have text, which is less than or equal to max lines */
 
-
-    /*.video-list-box h4{
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-
-    }
-    .video-list-box h4 a{
-
-    }*/
 
     #file-table tr td:last-child {
         white-space: nowrap;

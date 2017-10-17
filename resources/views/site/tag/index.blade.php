@@ -70,20 +70,22 @@
 
             <div class="wrapper wrapper-content">
 
+                @if( count($docs) > 0)
                 <div class="row">
 
 
                     <div class="col-lg-12 animated fadeInRight">
-                        <div class="search-box-header">
-                            <h2>{{__("Documents")}} <small>{{ count($docs) }} results</small></h2>
+                        <div class="ibox-title">
+                            <h2>{{__("Documents")}} <small>{{ count($docs) }} {{__("results")}}</small></h2>
                         </div>
 
-                        @if( count($docs) > 0)
+
                         <div class="mail-box">
 
                             <table class="table tablesorter table-hover table-mail tablesorter-default" id="file-table" role="grid">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th>{{__("Title")}}</th>
                                         <th>{{__("Folder")}}</th>
                                         <th>{{__("Last Updated")}}</th>
@@ -97,6 +99,7 @@
                                     @else
                                         <tr>
                                     @endif
+                                        <td class="check-mail">{!! $doc->icon !!}</td>
                                         <td class="mail-subject">{!! $doc->modalLink !!}</td>
                                         <td><a href="/{{ Request::segment(1) }}/document#!/{{ $doc->folder->global_folder_id}}">{{ $doc->folder->name }}</a></td>
                                         <td>{{ $doc->since }} {{__("ago")}}</td>
@@ -108,25 +111,26 @@
                             </table>
 
                         </div>
-                        @endif
+
                     </div>
 
                 </div>
+                @endif
 
 
 
 
 
 
-
-
+                @if( count($communications) > 0)
                 <div class="row">
 
                     <div class="col-lg-12 animated fadeInRight">
-                        <div class="search-box-header">
+
+                        <div class="ibox-title">
                             <h2>{{__("Communications")}} <small>{{ count($communications) }} {{__("results")}}</small></h2>
                         </div>
-                        @if( count($communications) > 0)
+
                         <div class="mail-box">
 
 
@@ -160,98 +164,65 @@
                             </table>
 
                         </div>
-                        @endif
+
                     </div>
 
                 </div>
+                @endif
 
+                @if( count($playlists) > 0)
                 <div class="row">
-
-                    <div class="col-lg-12 animated fadeInRight">
-                        <div class="search-box-header">
-                            <h2>{{__("Playlists")}} <small>{{ count($videos) }} {{__("results")}}</small></h2>
-                        </div>
-                        @if( count($videos) > 0)
-                        <div class="mail-box">
-
-
-                            <table class="table table-hover table-mail">
-
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th> {{__("Title")}} </th>
-                                        <th> {{__("Thumbnail")}} </th>
-                                        <th> {{__("Description")}} </th>
-                                        <th> {{__("Last Updated")}} </th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-
-                                    @foreach($playlists as $p)
-                                    <tr>
-                                        <td class="check-mail"><i class="fa fa-film"></i></td>
-
-                                        <td>{{ $p->title }}</td>
-                                        <td><a href="/{{ Request::segment(1) }}/video/playlist/{{$p->id}}"> <img src="/video/thumbs/{!! $p->thumbnail !!}"  height="75" width="125"></a></td>
-                                        <td>{!! $p->description !!} </td>
-                                        <td>{{ $p->since }}</td>
-                                    </tr>
+                        <div class="col-lg-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h2>{{__("Playlists")}} <small>{{ count($playlists) }} {{__("results")}}</small></h2>
+                                </div>
+                                <div class="ibox-content clearfix">
+                                    @foreach($playlists as $pl)
+                                        <div class="col-xs-6 col-sm-4 col-lg-3 video-list-box">
+                                            <div class="embed-responsive embed-responsive-16by9">
+                                            <a href="/{{ Request::segment(1) }}/video/playlist/{{$pl->id}}" class="trackclick" data-playlist-id="{{$pl->id}}"><img src="/video/thumbs/{{$pl->thumbnail}}" class="embed-responsive-item img-responsive" /></a>
+                                            </div>
+                                            <a href="/{{ Request::segment(1) }}/video/playlist/{{$pl->id}}" class="trackclick" data-playlist-id="{{$pl->id}}"><h4>{{$pl->title}}</h4></a>
+                                            <p>{{$pl->count}} videos &middot; {{$pl->sinceCreated}} {{__("ago")}}</p>
+                                        </div>
                                     @endforeach
+                                </div>
 
-                                </tbody>
-                            </table>
-
+                            </div>
                         </div>
-                        @endif
-                    </div>
-
                 </div>
+                @endif
 
+
+                @if( count($videos) > 0)
                 <div class="row">
+                        <div class="col-lg-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h2>{{__("Videos")}} <small>{{ count($videos) }} {{__("results")}}</small></h2>
+                                </div>
+                                <div class="ibox-content clearfix">
+                                @foreach($videos as $v)
+                                    <div class="col-xs-6 col-sm-4 col-lg-3 video-list-box">
+                                        <div class="embed-responsive embed-responsive-16by9">
+                                        <a href="/{{ Request::segment(1) }}/video/watch/{{$v->id}}" class="trackclick" data-video-id="{{$v->id}}"><img src="/video/thumbs/{{$v->thumbnail}}" class="embed-responsive-item img-responsive" /></a>
+                                        </div>
 
-                    <div class="col-lg-12 animated fadeInRight">
-                        <div class="search-box-header">
-                            <h2>{{__("Videos")}} <small>{{ count($videos) }} {{__("results")}}</small></h2>
+                                        <h4>
+                                            <a href="/{{ Request::segment(1) }}/video/watch/{{$v->id}}" class="trackclick" data-video-id="{{$v->id}}">{{$v->title}}</a>
+                                        </h4>
+
+                                        <p>{{$v->views}} {{__("views")}} &middot; {{$v->sinceCreated}} {{__("ago")}}</p>
+                                    </div>
+                                @endforeach
+
+                                </div>
+                            </div>
                         </div>
-                        @if( count($videos) > 0)
-                        <div class="mail-box">
-
-
-                            <table class="table table-hover table-mail">
-
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th> {{__("Title")}} </th>
-                                        <th> {{__("Thumbnail")}} </th>
-                                        <th> {{__("Description")}} </th>
-                                        <th> {{__("Last Updated")}} </th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-
-                                    @foreach($videos as $v)
-                                    <tr>
-                                        <td class="check-mail"><i class="fa fa-film"></i></td>
-
-                                        <td>{{ $v->title }}</td>
-                                        <td><a href="/{{ Request::segment(1) }}/video/watch/{{$v->id}}"> <img src="/video/thumbs/{!! $v->thumbnail !!}"  height="75" width="125"></a></td>
-                                        <td>{{ $v->description }} </td>
-                                        <td>{{ $v->since }}</td>
-                                    </tr>
-                                    @endforeach
-
-                                </tbody>
-                            </table>
-
-                        </div>
-                        @endif
-                    </div>
-
                 </div>
+                @endif
+
 
 
 

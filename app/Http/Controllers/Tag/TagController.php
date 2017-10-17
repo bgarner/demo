@@ -63,9 +63,10 @@ class TagController extends Controller
 
                 case "document":
                     $document_item = Document::find($c->content_id);
-                    $document_item->modalLink = Utility::getModalLink($document_item->filename, $document_item->title, $document_item->original_extension, $document_item->id, 1);
+                    $document_item->modalLink = Utility::getModalLink($document_item->filename, $document_item->title, $document_item->original_extension, $document_item->id, 0);
                     $document_item->since = Utility::getTimePastSinceDate($document_item->updated_at);
                     $document_item->folder = Document::getFolderInfoByDocumentId($document_item->id);
+                    $document_item->icon = Utility::getIcon($document_item->original_extension);
                     $docs->push($document_item);
                     break;
 
