@@ -472,7 +472,7 @@ class Communication extends Model
 			'is_draft'              => $is_draft,
 			'send_at'               => $request["send_at"],
 			'archive_at'            => $request["archive_at"],
-			'banner_id'             => $request["banner_id"]
+			// 'banner_id'             => $request["banner_id"]
 		]);
 
 		CommunicationTarget::updateTargetStores($communication->id, $request);

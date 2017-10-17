@@ -53,6 +53,8 @@
 								                    </div>
 								                </div>
 								        </div>
+								        
+										@include('admin.includes.store-banner-selector', ['optGroupOptions'=> $optGroupOptions, 'optGroupSelections' => $optGroupSelections])
 
 										<div class="form-group" >
 											<label class="col-sm-2 control-label">Type</label>
@@ -66,7 +68,7 @@
 														<ul name="communication_type" id="" class="dropdown-menu" role="menu">
 															@foreach($communicationTypes as $ct)
 
-																@if( ( $banner->id==1 && $ct->id == 1 ) || ($banner->id==2 && $ct->id == 2) )
+																@if( $ct->id == 1 || $ct->id == 2)
 																	<li data-comm-typeid="{{$ct->id}}"
 																		data-comm-type="{{$ct->communication_type}}"
 																		data-comm-typecolour="{{$ct->colour}}"
@@ -95,7 +97,6 @@
 												</div>
 										</div>
 
-										@include('admin.includes.store-banner-selector', ['optGroupOptions'=> $optGroupOptions, 'optGroupSelections' => $optGroupSelections])
 
 									</form>
 

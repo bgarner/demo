@@ -54,7 +54,7 @@ class CommunicationAdminController extends Controller
     {
         $banner              = UserSelectedBanner::getBanner();
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
-        $communicationTypes  = CommunicationType::where('banner_id', $banner->id)->get();
+        $communicationTypes  = CommunicationType::getCommunicationTypesForAdmin();
         
         $packages            = Package::where('banner_id',$banner->id)->get();
         $optGroupOptions     = Utility::getStoreAndBannerSelectDropdownOptions();

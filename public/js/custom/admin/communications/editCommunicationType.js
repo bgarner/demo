@@ -4,16 +4,16 @@ $(document).ready(function(){
 	});
 
 });
-
-$(document).on('click','.communicationtype-create',function(){
+$(document).on('click','.communicationtype-edit',function(){
   	
   	var hasError = false;
 
     var communicationTypeName = $("#communication_type").val();
+    var commTypeId = $("#communicationTypeId").val();
     var banners = $("#banners").val();
     var colour = $("input:radio[name='colour']:checked").val();
 
-    // console.log(communicationTypeName +", "+ bannerId +", "+ colour);
+    console.log(communicationTypeName +", "+ banners +", "+ colour + ", "+ commTypeId);
 
     if(communicationTypeName == '') {
 		swal("Oops!", "This we need a name for this communication type.", "error"); 
@@ -31,13 +31,14 @@ $(document).on('click','.communicationtype-create',function(){
 	}		
 
 	if(hasError == false) {
+		
 		$.ajax({
-		    url: '/admin/communicationtypes',
-		    type: 'POST',
+		    url: '/admin/communicationtypes/' + commTypeId,
+		    type: 'PATCH',
 		    data: { communication_type: communicationTypeName, colour: colour, banners: banners },
 		    success: function(result) {
 		        // $("#communication_type").val(""); // empty the form
-				swal("Nice!", "'" + communicationTypeName +"' has been created", "success");        
+				swal("Nice!", "'" + communicationTypeName +"' has been updated", "success");        
 		    }
 		});
 	}

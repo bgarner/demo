@@ -23,54 +23,50 @@
 		                <div class="col-lg-12">
 		                    <div class="ibox">
 		                        <div class="ibox-title">
-		                            <h5>New Communication Type</h5>
+		                            <h5>Edit Communication Type</h5>
 		                            <div class="ibox-tools">
-		                               {{--  <a href="/admin/communication/create" class="btn btn-primary" role="button"><i class="fa fa-plus"></i> New Commuincation</a> --}}
 
 		                            </div>
 		                        </div>
 		                        <div class="ibox-content">
 
                                     <form method="get" class="form-horizontal">
-                                        <div class="form-group"><label class="col-sm-2 control-label">Name</label>
-                                            <div class="col-sm-10"><input type="text" class="form-control" name="communication_type" id="communication_type" value=""></div>
+                                    	<input type="text" hidden value="{{$communicationType->id}}" id="communicationTypeId">
+                                        <div class="form-group">
+                                        	<label class="col-sm-2 control-label">Name</label>
+                                            <div class="col-sm-10"><input type="text" class="form-control" name="communication_type" id="communication_type" value="{{$communicationType->communication_type}}"></div>
                                         </div>
+
                                         <div class="form-group">
                                         	<label class="col-sm-2 control-label">Banners</label>
                                             <div class="col-sm-10">
-                                            	{!! Form::select('banners', $banners, null, ['class'=>'chosen', 'multiple'=>'multiple', 'id'=>'banners'])
+                                            	{!! Form::select('banners', $banners, $communicationType->banners, ['class'=>'chosen', 'multiple'=>'multiple', 'id'=>'banners'])
                                             	!!}
                                             </div>
                                         </div>
 
+
                                         <div class="form-group"><label class="col-sm-2 control-label">Label Colour</label>
                                             <div class="col-sm-10">
-                                            	            <div class="btn-group" data-toggle="buttons">
-											                <label class="btn btn-outline btn-default">
-											                    <input type="radio" id="" name="colour" value="inverse" /> <i class="fa fa-circle text-inverse"></i>
-											                </label>
-											                <label class="btn btn-outline btn-default">
-											                    <input type="radio" id="" name="colour" value="danger" /> <i class="fa fa-circle text-danger"></i>
-											                </label>
-											                <label class="btn btn-outline btn-default">
-											                    <input type="radio" id="" name="colour" value="primary" /> <i class="fa fa-circle text-primary"></i>
-											                </label>
-											                <label class="btn btn-outline btn-default">
-											                    <input type="radio" id="" name="colour" value="info" /> <i class="fa fa-circle text-info"></i>
-											                </label>
-											                <label class="btn btn-outline btn-default">
-											                    <input type="radio" id="" name="colour" value="warning" /> <i class="fa fa-circle text-warning"></i>
-											                </label>
-	<!-- 										                <label class="btn btn-outline btn-default">
-											                    <input type="radio" id="" name="colour" value="text-primary" /> <i class="fa fa-circle text-primary"></i>
-											                </label> -->
-											            </div>
+                                	            <div class="btn-group" data-toggle="buttons">
+								                <label title="inverse" class="btn btn-outline btn-default commTypeColour">
+								                    <input type="radio"  id="" name="colour" value="inverse" /> <i class="fa fa-circle text-inverse"></i>
+								                </label>
+								                <label title="danger" class="btn btn-outline btn-default commTypeColour">
+								                    <input type="radio"  id="" name="colour" value="danger" /> <i class="fa fa-circle text-danger"></i>
+								                </label>
+								                <label title="primary" class="btn btn-outline btn-default commTypeColour">
+								                    <input type="radio"  id="" name="colour" value="primary" /> <i class="fa fa-circle text-primary"></i>
+								                </label>
+								                <label title="info" class="btn btn-outline btn-default commTypeColour">
+								                    <input type="radio"  id="" name="colour" value="info" /> <i class="fa fa-circle text-info"></i>
+								                </label>
+								                <label title="warning" class="btn btn-outline btn-default commTypeColour">
+								                    <input type="radio"  id="" name="colour" value="warning" /> <i class="fa fa-circle text-warning"></i>
+								                </label>
 
+								            </div>
 
-
-
-
-                                            	{{-- <input type="text" class="form-control" name="communication_type" id="communication_type" value=""> --}}
                                             </div>
                                         </div>
 
@@ -80,7 +76,7 @@
                                         <div class="form-group">
                                             <div class="col-sm-4 col-sm-offset-2">
                                                 <a class="btn btn-white" href="/admin/communicationtypes"><i class="fa fa-close"></i> Cancel</a>
-                                                <button class="communicationtype-create btn btn-primary" type="submit"><i class="fa fa-check"></i> Create New Communication Type</button>
+                                                <button class="communicationtype-edit btn btn-primary" type="submit"><i class="fa fa-check"></i> Edit Communication Type</button>
 
                                             </div>
                                         </div>
@@ -109,10 +105,14 @@
 				            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				        }
 					});
+					var communicationType = {!! json_encode($communicationType) !!};
+					var colour = communicationType.colour;
+					$(".commTypeColour").find('input[value='+ colour +']').attr('checked', 'checked');
+
 				</script>
 
-				<script src="/js/custom/admin/communications/addCommunicationType.js"></script>
 				<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
+				<script src="/js/custom/admin/communications/editCommunicationType.js"></script>
 
 
 				@include('site.includes.bugreport')
