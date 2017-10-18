@@ -8605,3 +8605,8 @@ ul.banner-selector-menu{
     padding-left: 10px;
     padding-right: 10px;
 }
+
+a:hover span.badge{
+    color: #666;
+    border-bottom: 2px solid #666;
+}

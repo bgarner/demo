@@ -31,6 +31,11 @@ class Tag extends Model
         return;
     }
 
+    public static function getTagName($id)
+    {
+        return Tag::find($id)->pluck("name")[0];
+    }
+
     public static function getTagIdByTagName($tag)
     {
         $tag = str_replace("-"," ",$tag);

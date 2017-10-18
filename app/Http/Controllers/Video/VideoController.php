@@ -10,19 +10,19 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Models\Video\Video;
-use App\Models\Video\Tag;
-use App\Models\Video\VideoTag;
 use App\Models\Video\Playlist;
 use App\Models\Video\FeaturedVideo;
 use App\Models\StoreApi\StoreInfo;
+use App\Models\Tag\ContentTag;
+use App\Models\Tag\Tag;
 
 
 class VideoController extends Controller
 {
-    
+
     public function __construct()
     {
-        
+
     }
 
     /**
@@ -32,7 +32,7 @@ class VideoController extends Controller
      */
     public function index(Request $request)
     {
-        
+
         $storeNumber = RequestFacade::segment(1);
 
         $storeInfo = StoreInfo::getStoreInfoByStoreId($storeNumber);
@@ -57,9 +57,11 @@ class VideoController extends Controller
     {
         $video = Video::getSingleVideo($request->id);
         $playlists = Video::getPlaylistsThatContainSpecificVideo($request->id);
+        $tags = ContentTag::getTagsForContent("video", $request->id);
 
         return view('site.video.singlevideo')
             ->with('video', $video)
+            ->with('tags', $tags)
             ->with('playlists', $playlists);
     }
 

@@ -9,6 +9,7 @@ use App\Models\Video\Video;
 use App\Models\Video\Playlist;
 use App\Models\Document\Document;
 use App\Models\Communication\Communication;
+use App\Models\Tag\Tag;
 
 class ContentTag extends Model
 {
@@ -26,18 +27,29 @@ class ContentTag extends Model
             \Log::info("tags from ContentTag");
             \Log::info($tags);
             foreach($tags as $tag) {
-            ContentTag::create([
-                'content_type' => $content_type,
-                'content_id'   => $id,
-                'tag_id'       => $tag
-            ]);
+                ContentTag::create([
+                    'content_type' => $content_type,
+                    'content_id'   => $id,
+                    'tag_id'       => $tag
+                ]);
+            }
         }
-        }
-
-
         return;
     }
 
+    public static function getTagsForContent($content_type, $id)
+    {
+        $tags = ContentTag::where('content_type', $content_type)
+                        ->where('content_id', $id)
+                        ->get();
+
+        foreach($tags as $t){
+            $t->name = Tag::getTagName($t);
+            $t->linkname = str_replace(" ","-",$t->name);
+        }
+
+        return $tags;
+    }
 
     public static function getTagsByContentId($content_type, $id)
     {

@@ -34,7 +34,7 @@
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="row">
                 <div class="col-lg-8">
-                <h2>{{__("Items tagged")}}: <span class="search-query badge">{{ $tagname }}</span></h2>
+                <h2>{{__("Items tagged")}}: <a href="#"><span class="search-query badge">{{ $tagname }}</span></a></h2>
                 </div>
                <div class="col-lg-2 col-lg-offset-2" >
                     <form class="form-inline" >

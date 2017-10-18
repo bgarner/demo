@@ -65,6 +65,11 @@
                                 </div>
                                 <div class="ibox-content clearfix">
                                     <p id="video-description"></p>
+                                    <div class="tag-list">
+                                        @foreach($tags as $t)
+                                            <a href="../../tag/{{ $t->linkname }}"><span class="badge">{{ $t->name }}</span></a>
+                                        @endforeach
+                                    </div>
                                     <input type="text" value="" class="hidden" id="video_id">
                                     <a id="clicktrack_link" class="trackclick hidden" data-video-id>Click to track</a>
 
