@@ -70,22 +70,27 @@
 
             <div class="wrapper wrapper-content">
 
+
+
+
+                @if( count($docs) > 0)
                 <div class="row">
 
 
                     <div class="col-lg-12 animated fadeInRight">
-                        <div class="search-box-header">
-                            <h2>{{__("Documents")}} <small>{{ count($docs) }} results</small></h2>
+                        <div class="ibox-title">
+                            <h2>{{__("Documents")}} <small>{{ count($docs) }} {{__("results")}}</small></h2>
                         </div>
 
-                        @if( count($docs) > 0)
+
                         <div class="mail-box">
 
                             <table class="table tablesorter table-hover table-mail tablesorter-default" id="file-table" role="grid">
+
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th>{{__("Title")}}</th>
-                                        <!-- <th> Description </th>  -->
                                         <th>{{__("Folder")}}</th>
                                         <th>{{__("Last Updated")}}</th>
                                     </tr>
@@ -98,11 +103,11 @@
                                     @else
                                         <tr>
                                     @endif
+                                        <td class="check-mail">{!! $doc->icon !!}</td>
                                         <td class="mail-subject">{!! $doc->modalLink !!}</td>
-                                        <!-- <td>{{ $doc->description }}</td>  -->
                                         <td><a href="/{{ Request::segment(1) }}/document#!/{{ $doc->global_folder_id}}">{{ $doc->folder_name }}</a></td>
                                         <td>{{ $doc->since }} {{__("ago")}}</td>
-                                        <td></td>
+
                                     </tr>
                                 @endforeach
 
@@ -110,26 +115,29 @@
                             </table>
 
                         </div>
-                        @endif
+
                     </div>
 
                 </div>
+                @endif
 
 
+                @if( count($alerts) > 0)
                 <div class="row">
 
                     <div class="col-lg-12 animated fadeInRight">
-                        <div class="search-box-header">
+                        <div class="ibox-title">
                             <h2>{{__("Alerts")}} <small>{{ count($alerts) }} {{__("results")}}</small></h2>
                         </div>
 
 
-                        @if( count($alerts) > 0)
                         <div class="mail-box">
 
                             <table class="table tablesorter table-hover table-mail tablesorter-default" id="file-table" role="grid">
+
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th> {{__("Title")}} </th>
 <!--                                         <th> Description </th>  -->
                                         <th> {{__("Active Since")}} </th>
@@ -143,33 +151,37 @@
                                     @else
                                         <tr>
                                     @endif
+                                        <td class="check-mail"><i class="fa fa-bell-o" aria-hidden="true"></i></td>
                                         <td class="mail-subject">{!! $alert->modalLink !!}</td>
 <!--                                         <td>{{ $alert->description }}</td>  -->
                                         <td>{{ $alert->since }} {{__("ago")}}</td>
                                         <td></td>
                                     </tr>
                                 @endforeach
-
                                 </tbody>
+
                             </table>
 
                         </div>
-                        @endif
+
                     </div>
 
                 </div>
+                @endif
 
 
+                @if( count($folders) > 0)
                 <div class="row">
 
                     <div class="col-lg-12 animated fadeInRight">
-                        <div class="search-box-header">
+                        <div class="ibox-title">
                             <h2>{{__("Folders")}} <small>{{ count($folders) }} {{__("results")}}</small></h2>
                         </div>
-                        @if( count($folders) > 0)
+
+
                         <div class="mail-box">
 
-                            <table class="table table-hover table-mail">
+                            <table class="table tablesorter table-hover table-mail tablesorter-default" id="file-table" role="grid">
 
                                 <thead>
                                     <tr>
@@ -181,37 +193,38 @@
                                 </thead>
 
                                 <tbody>
-                                @foreach($folders as $folder)
-                                    <tr>
-                                        <td class="check-mail"><i class="fa fa-folder-open"></i></td>
-                                        <td class="mail-subject"><a href="/{{ Request::segment(1) }}/document#!/{{ $folder->globalId }}">{{ $folder->name }}</a></td>
-                                        <td>{!! $folder->path !!}</td>
-                                        <td class="mail-date">{{ $folder->lastActivity }} {{__("ago")}}</td>
-                                    </tr>
-                                @endforeach
-
+                                    @foreach($folders as $folder)
+                                        <tr>
+                                            <td class="check-mail"><i class="fa fa-folder-open"></i></td>
+                                            <td class="mail-subject"><a href="/{{ Request::segment(1) }}/document#!/{{ $folder->globalId }}">{{ $folder->name }}</a></td>
+                                            <td>{!! $folder->path !!}</td>
+                                            <td class="mail-date">{{ $folder->lastActivity }} {{__("ago")}}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
+
                             </table>
 
-
                         </div>
-                        @endif
+
                     </div>
 
                 </div>
+                @endif
 
 
+                @if( count($communications) > 0)
                 <div class="row">
 
                     <div class="col-lg-12 animated fadeInRight">
-                        <div class="search-box-header">
+                        <div class="ibox-title">
                             <h2>{{__("Communications")}} <small>{{ count($communications) }} {{__("results")}}</small></h2>
                         </div>
-                        @if( count($communications) > 0)
+
+
                         <div class="mail-box">
 
-
-                            <table class="table table-hover table-mail">
+                            <table class="table tablesorter table-hover table-mail tablesorter-default" id="file-table" role="grid">
 
                                 <thead>
                                     <tr>
@@ -223,7 +236,6 @@
                                 </thead>
 
                                 <tbody>
-
                                     @foreach($communications as $comm)
                                     @if($comm->archived)
                                         <tr class="archived">
@@ -236,40 +248,40 @@
                                         <td>{{ $comm->since }} {{__("ago")}}</td>
                                     </tr>
                                     @endforeach
-
                                 </tbody>
+
                             </table>
 
                         </div>
-                        @endif
+
                     </div>
 
                 </div>
+                @endif
 
+                @if( count($events) > 0)
                 <div class="row">
 
                     <div class="col-lg-12 animated fadeInRight">
-                        <div class="search-box-header">
+                        <div class="ibox-title">
                             <h2>{{__("Events")}} <small>{{ count($events) }} {{__("results")}}</small></h2>
                         </div>
-                        @if( count($events) > 0)
+
+
                         <div class="mail-box">
 
-
-                            <table class="table table-hover table-mail datatable">
+                            <table class="table tablesorter table-hover table-mail tablesorter-default" id="file-table" role="grid">
 
                                 <thead>
                                     <tr>
                                         <th></th>
                                         <th> {{__("Title")}} </th>
-
                                         <th> {{__("Start")}} </th>
                                         <th> {{__("End")}} </th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-
                                     @foreach($events as $e)
                                     @if($e->archived)
                                         <tr class="archived">
@@ -283,63 +295,44 @@
                                         <td>{{ $e->prettyDateEnd }} </td>
                                     </tr>
                                     @endforeach
-
                                 </tbody>
+
                             </table>
 
                         </div>
-                        @endif
+
                     </div>
 
                 </div>
+                @endif
 
+                @if( count($videos) > 0)
                 <div class="row">
+                        <div class="col-lg-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h2>{{__("Videos")}} <small>{{ count($videos) }} {{__("results")}}</small></h2>
+                                </div>
+                                <div class="ibox-content clearfix">
+                                @foreach($videos as $v)
+                                    <div class="col-xs-6 col-sm-4 col-lg-3 video-list-box">
+                                        <div class="embed-responsive embed-responsive-16by9">
+                                        <a href="/{{ Request::segment(1) }}/video/watch/{{$v->id}}" class="trackclick" data-video-id="{{$v->id}}"><img src="/video/thumbs/{{$v->thumbnail}}" class="embed-responsive-item img-responsive" /></a>
+                                        </div>
 
-                    <div class="col-lg-12 animated fadeInRight">
-                        <div class="search-box-header">
-                            <h2>{{__("Videos")}} <small>{{ count($videos) }} {{__("results")}}</small></h2>
+                                        <h4>
+                                            <a href="/{{ Request::segment(1) }}/video/watch/{{$v->id}}" class="trackclick" data-video-id="{{$v->id}}">{{$v->title}}</a>
+                                        </h4>
+
+                                        <p>{{$v->views}} {{__("views")}} &middot; {{$v->sinceCreated}} {{__("ago")}}</p>
+                                    </div>
+                                @endforeach
+
+                                </div>
+                            </div>
                         </div>
-                        @if( count($videos) > 0)
-                        <div class="mail-box">
-
-
-                            <table class="table table-hover table-mail">
-
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th> {{__("Title")}} </th>
-                                        <th> {{__("Thumbnail")}} </th>
-                                        <th> {{__("Description")}} </th>
-                                        <th> {{__("Last Updated")}} </th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-
-                                    @foreach($videos as $v)
-                                    <tr>
-                                        <td class="check-mail"><i class="fa fa-film"></i></td>
-
-                                        <td>{{ $v->title }}</td>
-                                        <td><a href="/{{ Request::segment(1) }}/video/watch/{{$v->id}}"> <img src="/video/thumbs/{!! $v->thumbnail !!}"  height="75" width="125"></a></td>
-                                        <td>{{ $v->description }} </td>
-                                        <td>{{ $v->since }}</td>
-                                    </tr>
-                                    @endforeach
-
-                                </tbody>
-                            </table>
-
-                        </div>
-                        @endif
-                    </div>
-
                 </div>
-
-
-
-
+                @endif
 
                 <br class="clearfix" />
             </div>
@@ -360,10 +353,10 @@
             "order": [],
             "info":     false,
             "searching": false,
-            "columns": [    
+            "columns": [
                {"orderable": false,},null, null,null
              ],
-        });    
+        });
     </script>
 
 
