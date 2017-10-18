@@ -50,23 +50,8 @@
                                             <div class="col-sm-10"><textarea id="description" name="description" class="form-control" value=""></textarea></div>
                                         </div>
 
-                                        <!-- <div class="hr-line-dashed"></div>
-                                         <div class="form-group"><label class="col-sm-2 control-label">Attachment Type</label>
-                                            <div class="col-md-10">
-                                               {{-- @foreach($attachment_types as $atype)
-                                                <?php $id = "attachment-" . $atype->name ?>
-                                                     <div>{!! Form::input('radio', 'attachment_type', $atype->id , ['id'=> $id ]) !!} {{$atype->name}}</div>
-                                                 @endforeach --}}
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group hidden"><label class="col-sm-2 control-label">Attachment Selected</label>
-                                            <div class="col-md-10" id="attachment-selected">
-
-                                            </div>
-                                        </div> -->
-
                                         <div class="hr-line-dashed"></div>
+
                                         <div class="form-group">
 
                                                 <label class="col-sm-2 control-label">Start &amp; End</label>
@@ -82,16 +67,7 @@
 
                                         <div class="hr-line-dashed"></div>
 
-                                        <div class="form-group">
-
-                                            <label class="col-sm-2 control-label">Target Stores</label>
-                                            <div class="col-sm-10">
-                                                {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
-                                                {!! Form::label('allStores', 'Or select all stores:') !!}
-                                                {!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
-                                            </div>
-
-                                        </div>
+                                        @include('admin.includes.store-banner-selector', ['optGroupOptions'=> $optGroupOptions, 'optGroupSelections' => $optGroupSelections])
 
                                     </form>
 
@@ -242,7 +218,7 @@
 <script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
 <script type="text/javascript" src="/js/custom/tree.js"></script>
 <script type="text/javascript" src="/js/custom/datetimepicker-with-default-time.js"></script>
-<script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
+<script type="text/javascript" src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
 <script type="text/javascript">
     $.ajaxSetup({
         headers: {

@@ -19,6 +19,7 @@ use App\Models\Document\Document;
 use App\Models\Document\Folder;
 use App\Models\UrgentNotice\UrgentNoticeDocument;
 use App\Models\UrgentNotice\UrgentNoticeFolder;
+use App\Models\Utility\Utility;
 
 class UrgentNoticeAdminController extends Controller
 {
@@ -41,7 +42,7 @@ class UrgentNoticeAdminController extends Controller
        
         $banner = UserSelectedBanner::getBanner();
 
-        $urgent_notices = UrgentNotice::where('banner_id', $banner->id)->get();
+        $urgent_notices = UrgentNotice::getUrgentNoticeForAdmin();
         return view('admin.urgent-notice.index')->with('urgent_notices',$urgent_notices);
     }
 
@@ -60,14 +61,16 @@ class UrgentNoticeAdminController extends Controller
 
         $attachment_types = UrgentNoticeAttachmentType::all();
 
-        $storeList = StoreInfo::getStoreListing($banner->id);
+        $optGroupOptions    = Utility::getStoreAndBannerSelectDropdownOptions();
+        $optGroupSelections = json_encode([]);
         
         return view('admin.urgent-notice.create')
                     ->with('banner', $banner)
                     ->with('navigation', $fileFolderStructure)
                     ->with('folderStructure', $folderStructure)
                     ->with('attachment_types', $attachment_types)
-                    ->with('storeList', $storeList);
+                    ->with('optGroupSelections', $optGroupSelections)
+                    ->with('optGroupOptions', $optGroupOptions);
         
     }
 

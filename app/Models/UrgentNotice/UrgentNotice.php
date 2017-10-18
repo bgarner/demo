@@ -12,7 +12,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Validation\UrgentNoticeValidator;
 use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\StoreApi\StoreInfo;
-
+use App\Models\Auth\User\UserBanner;
+use App\Models\Tools\CustomStoreGroup;
 
 class UrgentNotice extends Model
 {
@@ -81,7 +82,7 @@ class UrgentNotice extends Model
 
         UrgentNoticeFolder::addFolders($request['urgentnotice_folders'], $urgentNotice->id);
         UrgentNoticeDocument::addDocuments($request['urgentnotice_documents'], $urgentNotice->id);
-        UrgentNotice::updateTargetStores($request, $urgentNotice->id);
+        UrgentNoticeTarget::updateTargetStores($request, $urgentNotice->id);
     	
     	return $urgentNotice;
     	
@@ -118,7 +119,7 @@ class UrgentNotice extends Model
     	
     	UrgentNoticeDocument::updateDocuments($request, $id);
         UrgentNoticeFolder::updateFolders($request, $id);
-        Self::updateTargetStores($request, $id);
+        UrgentNoticeTarget::updateTargetStores($request, $id);
     	
         return $urgentNotice;
 
@@ -233,36 +234,67 @@ class UrgentNotice extends Model
         return (object)($compiledUrgentNotices);
     }   
 
-    public static function updateTargetStores($request, $id)
+
+    public static function getUrgentNoticeForAdmin()
     {
-        $target_stores = $request['target_stores'];
-        $all_stores = $request['all_stores'];
-        $urgentNotice = UrgentNotice::find($id);
-
-        if( $all_stores == 'on' ){
-            UrgentNoticeTarget::where('urgent_notice_id', $id)->delete();
-            $urgentNotice->all_stores = 1;
-            $urgentNotice->save();
+        $banners = UserBanner::getAllBanners()->pluck('id')->toArray();
+        
+        //stores in accessible banners
+        $storeList = [];
+        foreach ($banners as $banner) {
+            $storeInfo = StoreInfo::getStoresInfo($banner);
+            foreach ($storeInfo as $store) {
+                array_push($storeList, $store->store_number);
+            }
         }
-        else{
-            if (isset($request['target_stores']) && $request['target_stores'] != '' ) {
-                UrgentNoticeTarget::where('urgent_notice_id', $id)->delete();
-                $urgentNotice->all_stores = 0;
-                $urgentNotice->save();
-                foreach ($target_stores as $store) {
-                    UrgentNoticeTarget::create([
-                        'urgent_notice_id'  => $urgentNotice->id,
-                        'store_id'          => $store
-                    ]);
 
-                }
-                if(!in_array('0940', $target_stores)){
-                    Utility::addHeadOffice($id, 'urgent_notice_target', 'urgent_notice_id');
-                }
-            }  
+        $allStoreUrgentNotices = UrgentNotice::join('urgent_notice_banner', 'urgent_notice_banner.urgent_notice_id', '=', 'urgent_notices.id')
+                                ->where('all_stores', 1)
+                                ->whereIn('urgent_notice_banner.banner_id', $banners)
+                                ->select('urgent_notices.*', 'urgent_notice_banner.banner_id')
+                                ->get();
+
+
+        $allStoreUrgentNotices = Utility::groupBannersForAllStoreContent($allStoreUrgentNotices);
+        
+        $targetedUrgentNotices = UrgentNotice::join('urgent_notice_target', 'urgent_notice_target.urgent_notice_id', '=', 'urgent_notices.id')
+                                ->whereIn('urgent_notice_target.store_id', $storeList)
+                                
+                                ->select(\DB::raw('urgent_notices.*, GROUP_CONCAT(DISTINCT urgent_notice_target.store_id) as stores'))
+                                ->groupBy('urgent_notices.id')
+                                ->get()
+                                ->each(function($urgentNotice){
+                                    $urgentNotice->stores = explode(',', $urgentNotice->stores);
+                                });
+
+        $storeGroups = CustomStoreGroup::getStoreGroupsForAdmin();
+        $urgentNoticeForStoreGroups = UrgentNotice::join('urgent_notice_store_group','urgent_notice_store_group.urgent_notice_id','=','urgent_notices.id')
+                                            ->whereIn('urgent_notice_store_group.store_group_id', $storeGroups)
+                                            ->select('urgent_notices.*')
+                                            ->get()
+                                            ->each(function($item){
+                                                $storeGroups = UrgentNoticeStoreGroup::where('urgent_notice_id', $item->id)->get()->pluck('store_group_id')->toArray();
+                                                $item->storeGroups = $storeGroups;
+                                                $item->stores = [];
+                                                foreach ($storeGroups as $group) {
+                                                    $stores = unserialize(CustomStoreGroup::find($group)->stores);
+                                                    $item->stores = array_merge($item->stores,$stores);
+                                                }
+                                                $item->stores = array_unique( $item->stores);
+                                            });
+        $targetedUrgentNotices = Utility::mergeTargetedAndStoreGroupContent($targetedUrgentNotices, $urgentNoticeForStoreGroups);
+
+        $urgentNotices = Utility::mergeTargetedAndAllStoreContent($targetedUrgentNotices, $allStoreUrgentNotices);
+
+
+        foreach ($urgentNotices as $urgentNotice) {
+            
+            $urgentNotice->prettyDateCreated = Utility::prettifyDate($urgentNotice->created_at);
+            $urgentNotice->prettyDateUpdated = Utility::prettifyDate($urgentNotice->updated_at);
         }
-        return;         
-    } 
-
+                        
+                        
+        return $urgentNotices;
+    }
 
 }

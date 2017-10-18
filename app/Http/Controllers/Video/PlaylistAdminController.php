@@ -47,11 +47,11 @@ class PlaylistAdminController extends Controller
     public function create()
     {
         
-        $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
+        $optGroupOptions    = Utility::getStoreAndBannerSelectDropdownOptions();
         $optGroupSelections = json_encode([]);
-        $videos = Video::getAllVideosForAdmin();
-        $tags = Tag::all()->pluck('name', 'id'); 
-        $selected_tags = [];
+        $videos             = Video::getAllVideosForAdmin();
+        $tags               = Tag::all()->pluck('name', 'id');
+        $selected_tags      = [];
         return view('admin.video.playlist-manager.create')
                 ->with('videos', $videos)
                 ->with('optGroupSelections', $optGroupSelections)
@@ -93,22 +93,22 @@ class PlaylistAdminController extends Controller
     public function edit($id)
     {
         
-        $playlist = Playlist::getPlaylistById($id);
-        $videos = Video::getAllVideosForAdmin();
+        $playlist           = Playlist::getPlaylistById($id);
+        $videos             = Video::getAllVideosForAdmin();
 
 
-        $selectedVideos = PlaylistVideo::where('playlist_id', $id)->orderBy('order')->get();
+        $selectedVideos     = PlaylistVideo::where('playlist_id', $id)->orderBy('order')->get();
 
         foreach($selectedVideos as $sv){
-            $video_info = Video::find($sv->video_id);
-            $sv->title = $video_info->title;
-            $sv->thumbnail =  $video_info->thumbnail;
+        $video_info         = Video::find($sv->video_id);
+        $sv->title          = $video_info->title;
+        $sv->thumbnail      = $video_info->thumbnail;
         }
 
-        $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
+        $optGroupOptions    = Utility::getStoreAndBannerSelectDropdownOptions();
         $optGroupSelections = json_encode(Playlist::getSelectedStoresAndBannersByPlaylistId($id));
 
-        $tags = Tag::all()->pluck('name', 'id');
+        $tags               = Tag::all()->pluck('name', 'id');
 
         return view('admin.video.playlist-manager.edit')
                 ->with('playlist', $playlist)

@@ -702,6 +702,8 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'CreateTasklistsTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_22_201223_create_tasklists_table.php',
         'CreateTasksTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_10_084356_create_tasks_table.php',
         'CreateTasksTargetTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_10_084434_create_tasks_target_table.php',
+        'CreateUrgentNoticeBannerStoreGroup' => __DIR__ . '/../..' . '/database/migrations/2017_10_18_162554_create_urgent_notice_banner_store_group.php',
+        'CreateUrgentNoticeBannerTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_18_162531_create_urgent_notice_banner_table.php',
         'CreateUrgentNoticeDocumentsTable' => __DIR__ . '/../..' . '/database/migrations/2016_07_04_102925_create__urgent_notice_documents_table.php',
         'CreateUrgentNoticeFoldersTable' => __DIR__ . '/../..' . '/database/migrations/2016_07_04_102940_create__urgent_notice_folders_table.php',
         'CreateUserResourcePivot' => __DIR__ . '/../..' . '/database/migrations/2017_02_15_132617_create_user_resource_pivot.php',
@@ -1357,6 +1359,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'UpdateTasksTableAddBannerId' => __DIR__ . '/../..' . '/database/migrations/2017_05_26_161401_update_tasks_table_add_banner_id.php',
         'UpdateUrgentNoticeTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_16_164022_update_urgent_notice_table.php',
         'UpdateVideosTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_16_195257_update_videos_table.php',
+        'UrgentNoticeBannerTableSeeder' => __DIR__ . '/../..' . '/database/seeds/UrgentNoticeBannerTableSeeder.php',
         'VideoTableSeeder' => __DIR__ . '/../..' . '/database/seeds/VideoTableSeeder.php',
     );
 
