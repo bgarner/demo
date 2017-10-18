@@ -195,8 +195,10 @@ class CommunicationType extends Model
 
         $communicationTypes = CommunicationType::join('communication_type_banner', 'communication_type_banner.communication_type_id', '=', 'communication_types.id')
                                                 ->whereIn('communication_type_banner.banner_id', $banners)
+
                                                 ->where('deleted_at', null)
                                                 ->select('communication_types.*')
+                                                ->groupBy('communication_type_banner.communication_type_id')
                                                 ->get();
         return $communicationTypes;
     }

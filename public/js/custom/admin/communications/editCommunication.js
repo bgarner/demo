@@ -1,3 +1,32 @@
+$('body').on('blur','#targets_chosen', function(){
+	
+	var target_stores = getTargetStores();
+	var target_banners = getTargetBanners();
+	var store_groups = getStoreGroups();
+	var communication_id = $("#communicationId").val();
+	
+	$("#communication-type-selector").empty()
+									.load('/admin/target/communicationtypes', { 
+										target_stores : target_stores, 
+										target_banners : target_banners,
+										store_groups : store_groups,
+										communication_id : communication_id
+									 });
+
+});
+
+$('body').on( 'click', ".comm_type_dropdown_item", function(){
+
+	$(".selected_comm_type").empty();
+	var comm_typeid = $(this).attr('data-comm-typeid');
+	var comm_typeColour = $(this).attr('data-comm-typecolour');
+	var comm_type = $(this).attr('data-comm-type');
+
+	$("input[name='communication_type']").val(comm_typeid);
+	$(".selected_comm_type").append('<i class="fa fa-circle text-'+ comm_typeColour + '"> </i> '+ comm_type);
+});
+
+
 $(document).on('click','.communication-update',function(){
   	
  
@@ -10,7 +39,6 @@ $(document).on('click','.communication-update',function(){
 	var start = $("#send_at").val();
 	var end = $("#archive_at").val();
 	var banner_id = $("input[name='banner_id']").val();
-	// var target_stores  = $("#storeSelect").val();
 	var target_stores = getTargetStores();
 	var target_banners = getTargetBanners();
 	var store_groups = getStoreGroups();
@@ -40,8 +68,7 @@ $(document).on('click','.communication-update',function(){
 	$(".selected-packages").each(function(){
 		communication_packages.push($(this).attr('data-packageid'));
 	});
- 
-	console.log(remove_document);
+
     if(subject == '' || body == '') {
 		swal("Oops!", "Communication title/body incomplete.", "error"); 
 		hasError = true;
@@ -76,7 +103,6 @@ $(document).on('click','.communication-update',function(){
 				importance              : importance,
 				send_at                 : start,
 				archive_at              : end,
-				banner_id               : banner_id,
 				target_stores           : target_stores,
 				all_stores              : all_stores,
 				target_banners          : target_banners,
@@ -141,7 +167,6 @@ $(document).on('click','.communication-update',function(){
 		    }
 		}).done(function(response){
 			console.log(response);
-			// $(".existing-files-container").load("/admin/communicationdocuments/"+communicationId);
 			$("#files-staged-to-remove").empty();
 			$("#files-selected").empty();
 			$("#files-selected").load("/admin/communicationdocuments/"+communicationId);

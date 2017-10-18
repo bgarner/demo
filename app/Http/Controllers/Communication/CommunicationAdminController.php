@@ -113,7 +113,7 @@ class CommunicationAdminController extends Controller
         $communication               = Communication::find($id);
         $communication_documents     = CommunicationDocument::getDocumentsByCommunicationId($id);
         $communication_packages      = CommunicationPackage::getPackagesByCommunicationId($id);
-        $communicationTypes          = CommunicationType::where('banner_id', $banner->id)->get();
+        $communicationTypes          = CommunicationType::getCommunicationTypesForAdmin();
 
         $optGroupOptions             = Utility::getStoreAndBannerSelectDropdownOptions();
         $optGroupSelections          = json_encode(Communication::getSelectedStoresAndBannersByCommunicationId($id));

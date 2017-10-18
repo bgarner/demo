@@ -48,7 +48,7 @@ class CommunicationTypeBannerTableSeeder extends Seeder
         	
         }
 
-    //     //replace Atmo communication_type_id with corresponding SC communication_type_id
+        //replace Atmo communication_type_id with corresponding SC communication_type_id
 
         $communications = Communication::where('banner_id', 2)->get();
 
@@ -68,8 +68,7 @@ class CommunicationTypeBannerTableSeeder extends Seeder
             
         }
 
-
-    //     //separate out banner info from communications table into communication_banner table
+        //separate out banner info from communications table into communication_banner table
 
         $communications = Communication::get();
 

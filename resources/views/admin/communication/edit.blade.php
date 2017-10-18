@@ -28,8 +28,6 @@
                             <h5>Edit Communication: {{ $communication->subject }}</h5>
 
                             <div class="ibox-tools">
-
-                                <!-- <a href="/admin/communication/create" class="btn btn-primary btn"><i class="fa fa-plus"></i> Create New Communication</a> -->
                             </div>
                         </div>
                         <div class="ibox-content">
@@ -59,6 +57,7 @@
 						                    </div>
 						                </div>
 						        </div>
+						        @include('admin.includes.the-ultimate-store-selector')
 								<div class="form-group">
 
 									<label class="col-sm-2 control-label">Type</label>
@@ -112,7 +111,7 @@
 										</div>
 								</div>
 
-								@include('admin.includes.the-ultimate-store-selector')
+								
 
 							</form>
 
@@ -126,12 +125,8 @@
                     <div class="ibox">
                         <div class="ibox-title">
                             <h5>Documents</h5>
-
                             <div class="ibox-tools">
-
                         	</div>
-
-
                         </div>
 
                         <div class="ibox-content">
@@ -198,28 +193,6 @@
 		</div>
 
 
-
-		<div id="package-listing" class="modal fade">
-		    <div class="modal-dialog">
-		        <div class="modal-content">
-		            <div class="modal-header">
-		                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		                <h4 class="modal-title">Select Packages</h4>
-		            </div>
-		            <div class="modal-body">
-		            	<ul class="tree">
-		                @include('admin.package.package-structure-partial', ['packages'=>$packages])
-		                </ul>
-		            </div>
-		            <div class="modal-footer">
-		                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		                <button type="button" class="btn btn-primary" id = "attach-selected-packages">Select Packages</button>
-		            </div>
-		        </div>
-		    </div>
-		</div>
-
-
 		@include('admin.includes.footer')
 
 	    @include('admin.includes.scripts')
@@ -254,18 +227,6 @@
     		});
 
 		    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
-
-		    $(".comm_type_dropdown_item").click(function(){
-
-		    	$(".selected_comm_type").empty();
-		    	var comm_typeid = $(this).attr('data-comm-typeid');
-		    	var comm_typeColour = $(this).attr('data-comm-typecolour');
-		    	var comm_type = $(this).attr('data-comm-type');
-
-		    	$("input[name='communication_type']").val(comm_typeid);
-		    	$(".selected_comm_type").append('<i class="fa fa-circle text-'+ comm_typeColour + '"> </i> '+ comm_type);
-		    })
-
 
 
 		</script>

@@ -3,24 +3,7 @@ $('body').on('blur','#targets_chosen', function(){
 	var target_stores = getTargetStores();
 	var target_banners = getTargetBanners();
 	var store_groups = getStoreGroups();
-	console.log(target_banners);
-	console.log(target_stores);
-	console.log(store_groups);
-	// $.ajax({
-	// 	    url: '/admin/target/communicationtypes',
-	// 	    type: 'GET',
-	// 	    dataType: 'json',
-	// 	    data: {
-	// 	  		target_stores : target_stores,
-	// 	    	target_banners : target_banners,
-	// 	    	store_groups : store_groups
-	// 	    }
-	// 	}).done(function(response){
-	// 		var communicationTypes = response;
-	// 		console.log(communicationTypes);
-	// 		$("#communication-type-selector").empty();
-	// 	});
-
+	
 	$("#communication-type-selector").empty().load('/admin/target/communicationtypes', { 
 		target_stores : target_stores, target_banners : target_banners,store_groups : store_groups });
 

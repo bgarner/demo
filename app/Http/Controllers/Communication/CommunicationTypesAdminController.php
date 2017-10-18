@@ -113,7 +113,11 @@ class CommunicationTypesAdminController extends Controller
 
     public function getCommunicationTypesByTarget(Request $request)
     {
+        if(isset($request->communication_id)){
+            $communication = Communication::find($request->communication_id);
+        }
         $communicationTypes = CommunicationType::getCommunicationTypesByTarget($request);
-        return view('admin.communication.communication-type-selector')->with('communicationTypes', $communicationTypes);
+        return view('admin.communication.communication-type-selector')->with('communicationTypes', $communicationTypes)
+                                                                    ->with('communication', $communication);
     }
 }
