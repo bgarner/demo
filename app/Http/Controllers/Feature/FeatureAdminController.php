@@ -39,7 +39,7 @@ class FeatureAdminController extends Controller
     public function index()
     {
         $banner = UserSelectedBanner::getBanner();
-        $features = Feature::where('banner_id', $banner->id)->get();
+        $features = Feature::getFeaturesForAdmin();
         
         return view('admin.feature.index')
                 ->with('features', $features)
@@ -121,7 +121,7 @@ class FeatureAdminController extends Controller
         $selected_communications      = FeatureCommunication::getCommunicationId($id);
 
         $optGroupOptions              = Utility::getStoreAndBannerSelectDropdownOptions();
-        $optGroupSelections           = json_encode(Feature::getSelectedStoresAndBannersByPlaylistId($id));
+        $optGroupSelections           = json_encode(Feature::getSelectedStoresAndBannersByFeatureId($id));
 
         $flyers                       = Flyer::getFlyersByBannerId($banner->id);
         $selected_flyers              = FeatureFlyer::getFlyersByFeatureId($id);
