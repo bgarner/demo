@@ -24,10 +24,32 @@ class Tag extends Model
     }
 
     public static function updateTag($id, $request)
-    {   
+    {
         $tag = Tag::find($id);
         $tag->name = $request["tag_name"];
         $tag->save();
         return;
+    }
+
+    public static function getTagName($id)
+    {
+        return Tag::find($id)->pluck("name")[0];
+    }
+
+    public static function getTagIdByTagName($tag)
+    {
+        $tag = str_replace("-"," ",$tag);
+        $tagId = Tag::where("name", "=", $tag)->first();
+
+        if( $tagId ){
+            return $tagId->id;
+        } else {
+            return "No tag '". $tag ."' found";
+        }
+    }
+
+    public static function findTagResourcesByTagName($tag)
+    {
+
     }
 }

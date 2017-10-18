@@ -12,7 +12,8 @@ use App\Models\Communication\Communication;
 use App\Models\Communication\CommunicationDocument;
 use App\Models\Communication\CommunicationPackage;
 use App\Models\Communication\CommunicationType;
-
+use App\Models\Tag\ContentTag;
+use App\Models\Tag\Tag;
 
 class CommunicationController extends Controller
 {
@@ -32,7 +33,7 @@ class CommunicationController extends Controller
         $title              = Communication::getCommunicationCategoryName($request['type']);
 
         $communications     = Communication::getCommunicationByStoreNumber($request, $storeNumber);
-        
+
         return view('site.communications.index')
             ->with('communicationTypes', $communicationTypes)
             ->with('communications', $communications)
@@ -84,16 +85,18 @@ class CommunicationController extends Controller
 
         $request->request->add(['archives' => false]);
         $communications         = Communication::getCommunicationByStoreNumber($request, $storeNumber);
-        
+
         $communication->nextCommunicationId = Communication::getNextCommunication($communications, $communication);
         $communication->previousCommunicationId = Communication::getPreviousCommunication($communications, $communication);
-        
+        $tags = ContentTag::getTagsForContent("communication", $request->id);
+
         return view('site.communications.message')
             ->with('communicationTypes', $communicationTypes)
             ->with('communicationCount', $communicationCount)
             ->with('communication', $communication)
             ->with('communication_documents', $communicationDocuments)
-            ->with('communication_packages', $communicationPackages);
+            ->with('communication_packages', $communicationPackages)
+            ->with('tags', $tags);
     }
 
     /**

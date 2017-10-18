@@ -8268,10 +8268,20 @@ body.md-skin {
 }
 
 .archived{
-  background-color: #f1f6fa;
+  background-color: #337ab7;
+  color: #fff;
 }
+
+tr.archived td a,
+tr.archived.archived-blue td a,
+tr.archived td.mail-subject a
+{
+    color: #fff !important;
+}
+
+
 .archived-blue i{
-  color: #337ab7;
+  color: #fff;
 }
 
 .onoffswitch-switch,
@@ -8584,4 +8594,19 @@ ul.banner-selector-menu{
     .footer {
         display: none;
     }
+}
+
+.badge{
+    color: #afafaf;
+    background-color: #e0e1e2;
+    border-bottom: 2px solid #c1c1c1;
+    font-weight: normal;
+    font-style: normal;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+a:hover span.badge{
+    color: #666;
+    border-bottom: 2px solid #666;
 }
