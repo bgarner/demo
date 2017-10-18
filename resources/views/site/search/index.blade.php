@@ -3,7 +3,7 @@
 
 <head>
     @section('title', 'Search: '. $query)
-    <link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
+    {{-- <link href="/css/plugins/iCheck/custom.css" rel="stylesheet"> --}}
     @include('site.includes.head')
 
     <style>
@@ -32,38 +32,36 @@
 
 
         <div class="row wrapper border-bottom white-bg page-heading">
-            <div class="row">
-                <div class="col-lg-8">
+
+            <div class="col-lg-8 col-md-8 col-sm-6 col-xs-6">
                 <h2>{{__("Search results for")}}: <span class="search-query">{{ $query }}</span></h2>
-                </div>
-               <div class="col-lg-2 col-lg-offset-2" >
-                    <form class="form-inline" >
-                        <div tyle="float:right">
-                            <label>{{__("Archives")}}</label>
-
-                                <div class="switch">
-                                    <div class="onoffswitch">
-
-                                        @if(isset($archives))
-                                        <input type="checkbox" checked="" class="onoffswitch-checkbox" id="archives" name="archives">
-                                        @else
-                                        <input type="checkbox" class="onoffswitch-checkbox" id="archives" name="archives">
-                                        @endif
-                                        <label class="archive-onoffswitch onoffswitch-label" for="archives">
-                                            <span class="onoffswitch-inner"></span>
-                                            <span class="onoffswitch-switch"></span>
-                                        </label>
-                                    </div>
-                                </div>
-
-                        </div>
-                    </form>
-                </div>
-<!--                 <ol class="breadcrumb">
-                    <li>jdaf ja fl aslk salk adslkd aslkdsa lksad</li>
-                </ol> -->
             </div>
 
+            <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 col-lg-offset-2 document-archive" id="archive-switch">
+                <form class="form-inline" >
+                    <div class="pull-right" style="position: relative; bottom: 25px;">
+
+                        <small style="font-weight: bold; padding-right: 5px;">{{__("Show Archive")}}</small>
+
+                            <div class="switch pull-right">
+                                <div class="archive-onoffswitch onoffswitch">
+
+                                    @if(isset($archives))
+                                        <input type="checkbox" checked="" class="onoffswitch-checkbox" id="archives" name="archives">
+                                    @else
+                                        <input type="checkbox" class="onoffswitch-checkbox" id="archives" name="archives">
+                                    @endif
+                                    
+                                    <label class="onoffswitch-label" for="archives">
+                                        <span class="onoffswitch-inner"></span>
+                                        <span class="onoffswitch-switch"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                    </div>
+                </form>
+            </div>
         </div>
 
 
