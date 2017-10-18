@@ -21,7 +21,7 @@ use App\Models\Tools\CustomStoreGroup;
 class Communication extends Model
 {
 	protected $table = 'communications';
-	protected $fillable = ['subject', 'body', 'sender', 'importance', 'communication_type_id', 'send_at', 'archive_at', 'is_draft', 'banner_id', 'all_stores'];
+	protected $fillable = ['subject', 'body', 'sender', 'importance', 'communication_type_id', 'send_at', 'archive_at', 'is_draft', 'all_stores'];
 
 
 	public static function validateCreateCommunication($request)

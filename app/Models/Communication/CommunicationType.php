@@ -34,7 +34,10 @@ class CommunicationType extends Model
     }
     public static function getCommunicationTypeCount($storeNumber, $storeBanner)
     {
-    	$communicationTypes = CommunicationType::where('banner_id', $storeBanner)->get();
+    	$communicationTypes = CommunicationType::join('communication_type_banner', 'communication_type_banner.communication_type_id', '=', 'communication_types.id')
+                                    ->where('communication_type_banner.banner_id', $storeBanner)
+                                    ->get();
+
     	foreach($communicationTypes as $key=>$ct){
 
             $count = Communication::getActiveCommunicationCountByCategory($storeNumber, $ct->id);
@@ -50,7 +53,9 @@ class CommunicationType extends Model
 
     public static function getCommunicationTypeCountAllMessages($storeNumber, $storeBanner)
     {
-        $communicationTypes = CommunicationType::where('banner_id', $storeBanner)->get();
+        $communicationTypes = CommunicationType::join( 'communication_type_banner', 'communication_type_banner.communication_type_id', '=', 'communication_types.id')
+                                    ->where('communication_type_banner.banner_id', $storeBanner)
+                                    ->get();
          foreach($communicationTypes as $key=>$ct){
             $count = Communication::getAllCommunicationCountByCategory($storeNumber, $ct->id);
             if($count > 0) {
@@ -139,8 +144,7 @@ class CommunicationType extends Model
     {
         $communicationTypeDetails = array(
             'communication_type' => $request['communication_type'],
-            'colour' => $request['colour'],
-            'banner_id' => 1
+            'colour' => $request['colour']
         );
 
         $communicationType = CommunicationType::create($communicationTypeDetails);
