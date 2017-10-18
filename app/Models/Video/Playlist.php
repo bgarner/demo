@@ -14,6 +14,7 @@ use App\Models\Video\PlaylistVideo;
 use App\Models\Video\PlaylistBanner;
 use App\Models\Video\PlaylistTarget;
 use App\Models\Tools\CustomStoreGroup;
+use App\Models\Tag\ContentTag;
 
 class Playlist extends Model
 {
@@ -84,6 +85,12 @@ class Playlist extends Model
             'description' => $request["description"]
    		]);
 
+        $tags = $request->get('tags');
+        \Log::info($tags);
+        if ($tags != null) {
+            ContentTag::updateTags( 'playlist', $playlist->id, $tags);
+        }
+
    		PlaylistVideo::updatePlaylistVideos($playlist->id, $request);
         PlaylistTarget::updateTargetStores($request, $playlist->id);
    		return $playlist;
@@ -108,9 +115,8 @@ class Playlist extends Model
     	PlaylistVideo::updatePlaylistVideos($id, $request);
         PlaylistTarget::updateTargetStores($request, $id);
         $tags = $request->get('tags');
-        if ($tags != null) {
-            PlaylistTag::updateTags($id, $tags);
-        }
+        ContentTag::updateTags( 'playlist', $id, $tags);
+        
     	return $playlist;
     }
 
@@ -328,7 +334,7 @@ class Playlist extends Model
     public static function getPlaylistById($playlistId)
     {
         $playlist = Playlist::find($playlistId);
-        $playlist->tags = PlaylistTag::getTagsByPlaylistId($playlistId);
+        $playlist->tags = ContentTag::getTagsByContentId('playlist', $playlistId);
 
         return $playlist;
     }

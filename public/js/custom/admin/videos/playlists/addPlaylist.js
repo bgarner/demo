@@ -1,9 +1,53 @@
-var initializeTagSelector = function(){
+var initializeTagSelector = function(selectedTags){
 	
 	$("#tags").select2({ 
-		width: '100%'
+		width: '100%' , 
+		tags: true,
+		multiple: true,
+		createTag: function (params) {
+    		var term = $.trim(params.term);
+
+		    if (term === '' && $("#tags").find('option').attr("tagname", term).length >0) {
+		      return null;
+		    }
+
+		    return {
+		      id: term, //id of new option 
+		      text: term, //text of new option 
+		      newTag: true
+		    }
+		}
 	});
+	if(typeof(selectedTags) !== 'undefined'){
+		$(selectedTags).each(function(index, tag){
+			$('#tags').val(selectedTags);
+			$('#tags').trigger('change');
+		});
+	}
+
 }
+
+$("body").on('select2:select', $("#tags"), function (evt) {
+
+	var playlist_id = $("#playlistID").val();
+    if(evt.params.data.newTag){
+    	$.post("/admin/tag",{ tag_name: evt.params.data.text })
+    	.done(function(tag){
+    		// change the id of the newly added tag to be the id from db
+			$('#tags option[value="'+tag.name+'"]').val(tag.id);	
+			var selectedTags = $("#tags").val();
+
+			$('#tags').select2('destroy');
+			$("#tag-selector-container").load("/admin/playlisttag/"+playlist_id, function(){
+				initializeTagSelector(selectedTags);
+				$("#tags").focus();
+
+			});
+			
+    	});
+    }
+
+});
 
 $("#add-videos").click(function(){
 	$("#video-listing").modal('show');
@@ -34,6 +78,7 @@ $(document).on('click','.playlist-create',function(){
 	$(".selected-videos").each(function(){
 		playlist_videos.push($(this).attr('data-videoid'));
 	});
+	var tags = $("#tags").val();
 
 	console.log('title: ' + title);
 	console.log(description);
@@ -69,10 +114,11 @@ $(document).on('click','.playlist-create',function(){
 		  		all_stores : getAllStoreStatus(),
 		  		target_stores : getTargetStores(),
 		  		target_banners : getTargetBanners(),
-		  		store_groups : getStoreGroups() 
+		  		store_groups : getStoreGroups(),
+		  		tags : tags
 		  		
 		    },
-		    success: function(result) {
+		    success: function(result) { 
 		        console.log(result);
 
 		        if(result.validation_result == 'false') {

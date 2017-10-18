@@ -6,6 +6,7 @@
     @include('admin.includes.head')
     <meta name="csrf-token" content="{!! csrf_token() !!}"/>
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
+    <link rel="stylesheet" href="/css/plugins/select/select2.min.css">
 </head>
 
 <body class="fixed-navigation adminview">
@@ -49,21 +50,18 @@
                                 <div class="row">
                                   <label class="col-md-2"> Title </label>
                                   <div class="col-md-10">
-                                  <input type="text" class="form-control" name="title{{ $vid->id }}" id="title{{ $vid->id }}" value="{{$vid->title}}">
+                                  <input type="text" class="form-control" name="title{{ $vid->id }}" id="title{{ $vid->id }}" value="{{$vid->title}}" data-videoID = "{{ $vid->id }}" >
                                   </div>
                                 </div>
-                    		        <div class="row">
-                                  <label class="col-md-2">Description</label>
-                                  <div class="col-md-10">
-                                  <input type="text" class="form-control" name="description{{ $vid->id }}" id="description{{ $vid->id }}" value="{{$vid->description}}">
-                                  </div>
+                    		    <div class="row">
+                                    <label class="col-md-2">Description</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" name="description{{ $vid->id }}" id="description{{ $vid->id }}" value="{{$vid->description}}">
+                                    </div>
                                 </div>
 
-                                <div class="row">
-                                    <label class="col-md-2"> Tags</label>
-                                    <div class="col-md-10">
-                                        {!! Form::select('tags[]', $tags, null, ['class'=>'chosen' , 'multiple'=>'true', 'id'=>"select$vid->id"]) !!}
-                                    </div>
+                                <div class="row tag-selector-container" id="tag-selector-container-{{$vid->id}}" data-videoid= "{{$vid->id}}">
+                                    @include('admin.video.tag.tag-partial', ['tags'=>$tags, 'selectedTags'=>$vid->tags])
                                 </div>
                                 <button type="submit" class="meta-data-add btn btn-success hidden" data-id="{{ $vid->id }}">Update</button>
 
@@ -108,7 +106,9 @@
             <script type="text/javascript" src="/js/custom/admin/documents/breadcrumb.js"></script>
             <script type="text/javascript" src="/js/custom/tree.js"></script>
             <script type="text/javascript" src="/js/custom/admin/videos/submitmetadata.js"></script>
+            <script type="text/javascript" src="/js/plugins/select/select2.min.js"></script>
             <script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
+            <script src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
 
                 <script type="text/javascript">
 

@@ -9,7 +9,7 @@ use App\Models\Validation\VideoValidator;
 use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Auth\User\UserBanner;
 use Illuminate\Http\Request;
-use App\Models\Video\VideoTag;
+use App\Models\Tag\ContentTag;
 use App\Models\Utility\Utility;
 use App\User;
 use FFMpeg\FFMpeg;
@@ -148,7 +148,7 @@ class Video extends Model
             $video->icon              = Utility::getIcon($video->original_extension);
             $video->prettyDateCreated = Utility::prettifyDate($video->created_at);
             $video->prettyDateUpdated = Utility::prettifyDate($video->updated_at);
-            $video->tags              = VideoTag::getTagsByVideoId($video->id);
+            $video->tags              = ContentTag::getTagsByContentId( 'video', $video->id);
         }
                         
                         
@@ -207,11 +207,6 @@ class Video extends Model
             $id = $request->get('video_id');
         }
 
-        $tags = $request->get('tags');
-        if ($tags != null) {
-            VideoTag::updateTags($id, $tags);
-        }
-
         $title          = $request->get('title');
         $description    = $request->get('description');
         $featured       = 0;
@@ -226,9 +221,14 @@ class Video extends Model
         $video->update($metadata);
 
         FeaturedVideo::updateFeaturedOn($id, $request);
+
         if(isset($request->target_banners) || isset($request->target_stores)){
             VideoTarget::updateTargetStores($request, $id);    
         }
+
+        $tags = $request->get('tags');
+        
+        ContentTag::updateTags( 'video', $id, $tags);
         
         return $video;
     }
@@ -276,8 +276,7 @@ class Video extends Model
     public static function getVideoById($id)
     {
         $video = Video::find($id);
-        $video->tags = VideoTag::getTagsByVideoId($id);
-
+        $video->tags = ContentTag::getTagsByContentId('video', $id);
         $featuredOnBanner = FeaturedVideo::getFeaturedBannerByVideoId($id);
 
         if(count($featuredOnBanner) > 0){
@@ -387,9 +386,10 @@ class Video extends Model
 
     public static function getVideosByTag($tagId)
     {
-        $videos = Video::join('video_tags', 'video_tags.video_id', '=', 'videos.id')
-                        ->where('video_tags.tag_id', $tagId)
-                        ->where('video_tags.deleted_at', '=', null)
+        $videos = Video::join('content_tag', 'content_tag.content_id', '=', 'videos.id')
+                        ->where('content_type', 'video')
+                        ->where('content_tag.tag_id', $tagId)
+                        ->where('content_tag.deleted_at', '=', null)
                         ->select('videos.*')
                         ->get();
         return $videos;
