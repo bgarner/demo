@@ -8272,6 +8272,7 @@ body.md-skin {
   color: #fff;
 }
 
+tr.archived td a,
 tr.archived.archived-blue td a,
 tr.archived td.mail-subject a
 {
