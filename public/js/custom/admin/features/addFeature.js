@@ -124,20 +124,15 @@ $(document).on('click','.feature-create',function(){
 	var update_frequency   = $('input:radio[name ="latest_updates_option"]:checked').next(".update_frequency").val();
 	var communication_type = $("#communicationTypes").val();
 	var communications     = $("#communications").val();
-	var target_stores 	   = getTargetStores();
-	var allStores  		   = $("#allStores:checked").val();
-
-	console.log(thumbnail);
-	console.log(background);
-	console.log(update_type);
-	console.log(update_frequency);
-	console.log(communication_type);
-	console.log(communications);
-	console.log(target_stores);
+	var all_stores         = getAllStoreStatus();
+	var target_stores      = getTargetStores();
+	var target_banners     = getTargetBanners();
+	var store_groups       = getStoreGroups();
 
 	var feature_files = [];
 	var feature_packages = [];
 	var feature_flyers = [];
+
 	$(".feature-documents").each(function(){
 		feature_files.push($(this).find('td:first').attr('data-fileid'));
 	});
@@ -149,10 +144,6 @@ $(document).on('click','.feature-create',function(){
 		feature_flyers.push($(this).find('td:first').attr('data-flyerid'));
 	});
  	
- 	console.log(feature_files);
- 	console.log(feature_packages);
- 	console.log(feature_flyers);
-
     if(featureTitle == '') {
 		swal("Oops!", "This feature needs a name.", "error"); 
 		hasError = true;
@@ -171,7 +162,7 @@ $(document).on('click','.feature-create',function(){
 		return false;
 	};
 
-	if( target_stores == null && typeof allStores === 'undefined' ) {
+	if(  target_stores == null || all_stores == null || store_groups == null  ) {
 		swal("Oops!", "Target stores not selected.", "error"); 
 		hasError = true;
 		$(window).scrollTop(0);
@@ -193,11 +184,10 @@ $(document).on('click','.feature-create',function(){
      	data.append('communications', JSON.stringify(communications));
     	data.append('update_type', update_type);
     	data.append('update_frequency', update_frequency);
-    	data.append('target_stores', JSON.stringify(target_stores));
-    	if(typeof(allStores) !== 'undefined'){
-    		data.append('all_stores', allStores);	
-    	}
-    	
+		data.append('all_stores', getAllStoreStatus());
+  		data.append('target_stores', getTargetStores());
+  		data.append('target_banners', getTargetBanners());
+  		data.append('store_groups', getStoreGroups());
 
 		$.ajax({
 		    url: '/admin/feature',

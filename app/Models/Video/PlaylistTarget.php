@@ -63,9 +63,6 @@ class PlaylistTarget extends Model
                     'store_id' => $store
                     ]);    
             }
-            // if(!in_array('0940', $target_stores)){
-            Utility::addHeadOffice($id, 'playlist_target', 'playlist_id');
-            // }
         }  
         if (isset($request['store_groups']) && $request['store_groups'] != '' ) {
                 
@@ -81,7 +78,7 @@ class PlaylistTarget extends Model
             }
             
         }  
-        
+        Utility::addHeadOffice($id, 'playlist_target', 'playlist_id');
         return;         
     }
 }

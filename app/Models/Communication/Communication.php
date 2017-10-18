@@ -96,7 +96,9 @@ class Communication extends Model
 
 	public static function getAllCommunication($banner_id)
 	{
-		$communications = Communication::where('banner_id', $banner_id)->get();
+		$communications = Communication::join('communication_banner', 'communication_banner.communication_id', '=', 'communications.id')
+								->where('communication_banner.banner_id', $banner_id)
+								->get();
 
 		foreach($communications as $c){
 			$c->prettySentAtDate = Utility::prettifyDate( $c->send_at );

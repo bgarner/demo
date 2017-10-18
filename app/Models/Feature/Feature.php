@@ -20,6 +20,7 @@ use App\Models\Feature\FeatureCommunicationTypes;
 use App\Models\Feature\FeatureTarget;
 use App\Models\Communication\Communication;
 use App\Models\StoreApi\StoreInfo;
+use App\Models\Tools\CustomStoreGroup;
 
 class Feature extends Model
 {
@@ -376,8 +377,9 @@ class Feature extends Model
         $now = Carbon::now()->toDatetimeString();
         $banner_id = StoreInfo::getStoreInfoByStoreId($storeNumber)->banner_id;
 
-        $allStoreFeatures = Feature::where('all_stores', 1)
-                                    ->where('banner_id', $banner_id)
+        $allStoreFeatures = Feature::join('feature_banner', 'feature_banner.feature_id', '=', 'features.id')
+                                    ->where('all_stores', 1)
+                                    ->where('feature_banner.banner_id', $banner_id)
                                     ->where('start', '<=', $now)
                                     ->where(function($query) use ($now) {
                                         $query->where('features.end', '>=', $now)
@@ -394,7 +396,18 @@ class Feature extends Model
                                     })
                                     ->select('features.*')
                                     ->get();
-        $features = $allStoreFeatures->merge($targetedFeatures)->sortBy('order');  
+
+        $storeGroups = CustomStoreGroup::getStoreGroupsForStore($storeNumber);
+
+        $targetedFeaturesForStoreGroups = Feature::join('feature_store_group', 'feature_store_group.feature_id', '=', 'features.id')
+                                            ->whereIn('feature_store_group.store_group_id', $storeGroups)
+                                            ->select('features.*')
+                                            ->get();
+
+
+        $features = $allStoreFeatures->merge($targetedFeatures)
+                                    ->merge($targetedFeaturesForStoreGroups)
+                                    ->sortBy('order');  
         return $features;                               
 
     }
@@ -422,4 +435,28 @@ class Feature extends Model
 
         
     }
+
+    public static function getSelectedStoresAndBannersByPlaylistId($feature_id)
+    {
+        $targetBanners = FeatureBanner::where('feature_id', $feature_id)->get()->pluck('banner_id')->toArray();
+        $targetStores = FeatureTarget::where('feature_id', $feature_id)->get()->pluck('store_id')->toArray();
+
+        $storeGroups = FeatureStoreGroup::where('feature_id', $feature_id)->get()->pluck('store_group_id')->toArray();
+
+        $optGroupSelections = [];
+        foreach ($targetBanners as $banner) {
+            array_push($optGroupSelections, 'banner'.$banner);
+        }
+        foreach ($targetStores as $stores) {
+            array_push($optGroupSelections, 'store'.$stores);   
+        }
+        foreach ($storeGroups as $group) {
+            array_push($optGroupSelections, 'storegroup'.$group);   
+        }
+
+
+        return( $optGroupSelections );
+    }
+
+
 }

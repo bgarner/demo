@@ -238,12 +238,10 @@ $(document).on('click','.feature-update',function(){
 	var update_frequency =  $('input:radio[name ="latest_updates_option"]:checked').next('input[name="update_frequency"]').val();
 	var communication_type = $("#communicationType").val();
 	var communications = $("#communications").val();
+	var all_stores = getAllStoreStatus();
 	var target_stores = getTargetStores();
-	var allStores  = $("#allStores:checked").val();
-
-	console.log('latest updates : ' + update_type);
-	console.log('latest update freq : ' + update_frequency);
-
+	var target_banners = getTargetBanners();
+	var store_groups = getStoreGroups();
 
 	$(".remove_document").each(function(){
 		remove_document.push($(this).attr('data-document-id'));
@@ -311,6 +309,8 @@ $(document).on('click','.feature-update',function(){
      	$.extend(dataObj, {update_frequency : update_frequency});
      	$.extend(dataObj, {target_stores : target_stores});
      	$.extend(dataObj, {all_stores : allStores});
+     	$.extend(dataObj, {target_banners : target_banners});
+     	$.extend(dataObj, {store_groups : store_groups});
      	
 
      	var data = JSON.stringify(dataObj);
