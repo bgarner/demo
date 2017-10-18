@@ -88,7 +88,6 @@ class ContentTag extends Model
                         ->where('end', '>=', $today)
                         ->orWhere('end', '=', '0000-00-00 00:00:00')
                         ->pluck('id');
-
                 break;
 
             case "communication":
@@ -96,9 +95,7 @@ class ContentTag extends Model
                         ->where('archive_at', '>=', $today)
                         ->orWhere('archive_at', '=', '0000-00-00 00:00:00')
                         ->pluck('id');
-
                 break;
-
         }
 
         if($exp !=""){

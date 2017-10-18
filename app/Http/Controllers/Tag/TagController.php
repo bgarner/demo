@@ -31,8 +31,7 @@ class TagController extends Controller
         $tagId = Tag::getTagIdByTagName($tagname);
 
 
-        if( isset($request['archives']) && $request['archives'])
-        {
+        if( isset($request['archives']) && $request['archives']){
             $content = ContentTag::getContentByTagIdWithArchive($tagId);
         } else {
             $content = ContentTag::getContentByTagId($tagId);
@@ -45,19 +44,19 @@ class TagController extends Controller
 
         foreach($content as $c){
 
-
-
             switch($c->content_type){
 
                 case "video":
                     $video_item = Video::find($c->content_id);
                     $video_item->since = Utility::getTimePastSinceDate($video_item->updated_at);
+                    $video_item->content_type = "video";
                     $videos->push($video_item);
                     break;
 
                 case "playlist":
                     $playlist_item = Playlist::find($c->content_id);
                     $playlist_item->since = Utility::getTimePastSinceDate($playlist_item->updated_at);
+                    $playlist_item->content_type = "playlist";
                     $playlists->push($playlist_item);
                     break;
 
@@ -67,6 +66,10 @@ class TagController extends Controller
                     $document_item->since = Utility::getTimePastSinceDate($document_item->updated_at);
                     $document_item->folder = Document::getFolderInfoByDocumentId($document_item->id);
                     $document_item->icon = Utility::getIcon($document_item->original_extension);
+                    $document_item->content_type = "document";
+                    if(ContentTag::checkContentExpiry($document_item)){
+                        $document_item->archived = "true";
+                    }
                     $docs->push($document_item);
                     break;
 
@@ -74,6 +77,10 @@ class TagController extends Controller
                     $communication_item = Communication::find($c->content_id);
                     $communication_item->since = Utility::getTimePastSinceDate($communication_item->updated_at);
                     $communication_item->trunc = Utility::truncateHtml($communication_item->body);
+                    $communication_item->content_type = "communication";
+                    if(ContentTag::checkContentExpiry($communication_item)){
+                        $communication_item->archived = "true";
+                    }
                     $communications->push($communication_item);
                     break;
 

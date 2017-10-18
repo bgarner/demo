@@ -83,6 +83,7 @@
                         <div class="mail-box">
 
                             <table class="table tablesorter table-hover table-mail tablesorter-default" id="file-table" role="grid">
+
                                 <thead>
                                     <tr>
                                         <th></th>
