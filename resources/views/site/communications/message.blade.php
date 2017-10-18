@@ -46,9 +46,9 @@
                      <span class="pull-right font-normal" style="font-size: 16px;">{{ $communication->prettyDate }} <small style="font-weight: normal;padding-left: 10px;">({{ $communication->since }} {{__("ago")}})</small></span>
                 </h2>
 
-                
+
                 @if(isset($communication->previousCommunicationId))
-                
+
                 <span class="pull-left">
                     <a href="/{{ Request::segment(1) }}/communication/show/{{$communication->previousCommunicationId}}"><i class="fa fa-angle-double-left"></i> {{__("Previous")}}</a>
                 </span>
@@ -57,7 +57,7 @@
                 <span class="pull-right">
                     <a href="/{{ Request::segment(1) }}/communication/show/{{$communication->nextCommunicationId}}">{{__("Next")}} <i class="fa fa-angle-double-right"></i></a>
                 </span>
-                
+
                 @endif
 
             </div>
@@ -89,10 +89,19 @@
                                     <td> {!! $doc->link_with_icon !!} </td>
                                     <td> {!! $doc->prettyDate !!} </td>
                                 </tr>
-
                             @endforeach
+                            
                             </tbody>
                         </table>
+                    @endif
+
+                    @if(count($tags) > 0)
+                    <hr />
+                    <div class="tag-list">
+                        @foreach($tags as $t)
+                            <a href="../../tag/{{ $t->linkname }}"><span class="badge">{{ $t->name }}</span></a>
+                        @endforeach
+                    </div>
                     @endif
 
                             {{--<div class="file-box">
