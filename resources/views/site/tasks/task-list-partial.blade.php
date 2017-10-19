@@ -1,19 +1,19 @@
-<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+<div class="col-lg-2 col-md-3 col-sm-4 col-xs-0">
     @include('site.tasks.tasksidebar')
 </div>
 <div class="col-lg-10 col-md-9 col-sm-8 col-xs-12">
-                     
+
     <div class="mail-box-header clearfix">
         <h2>
         @if(!isset($title))
-            {{__("All Tasks")}} <small>({{ count($allIncompleteTasks) }} incomplete)</small> 
+            {{__("All Tasks")}} <small>({{ count($allIncompleteTasks) }} incomplete)</small>
         @else
             {{ $title }}  <small>({{ count($incompleteTasksInList) }} incomplete) </small>
         @endif
         </h2>
     </div>
     <div class="mail-box clearfix">
-                            
+
 
             <h4>{{__("Tasks Due Today")}}</h4>
             <ul class="todo-list m-t">
@@ -25,11 +25,11 @@
                         <div class="task_description">{!! $task->description !!}</div>
                         @if(isset($task->documents))
                         <div class="task_documents">
-                        
+
                             @foreach($task->documents as $doc)
                                 {!! $doc->link_with_icon !!}
                             @endforeach
-                        
+
                         </div>
                         @endif
                     </li>
@@ -47,11 +47,11 @@
                         <div class="task_description">{!! $task->description !!}</div>
                         @if(isset($task->documents))
                         <div class="task_documents">
-                        
+
                             @foreach($task->documents as $doc)
                                 {!! $doc->link_with_icon !!}
                             @endforeach
-                        
+
                         </div>
                         @endif
                     </li>
@@ -69,11 +69,11 @@
                         <div class="task_description">{!! $task->description !!}</div>
                         @if(isset($task->documents))
                         <div class="task_documents">
-                        
+
                             @foreach($task->documents as $doc)
                                 {!! $doc->link_with_icon !!}
                             @endforeach
-                        
+
                         </div>
                         @endif
                     </li>
