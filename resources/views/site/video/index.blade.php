@@ -55,20 +55,7 @@
                 @include('site.includes.topbar')
             </div>
 
-            <div class="row wrapper border-bottom white-bg page-heading">
 
-                {{-- <h1 style="color: #333; font-size: 65px; text-transform: uppercase; font-family: GalaxiePolarisCondensed-Bold;padding-bottom: 0px; line-height: 50px;">Video Library</h1> --}}
-                {{-- <div class="col-lg-10">
-                    <h2>Video</h2>
-                </div> --}}
-
-                {{-- <div class="col-lg-2">
-
-                </div> --}}
-
-                <h2>{{__("Video Library")}}</h2>
-
-            </div>
 
             <br />
 
