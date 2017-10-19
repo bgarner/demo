@@ -6,7 +6,7 @@
                             {{-- <h5>Folders</h5> --}}
                             <ul class="folder-list m-b-md" style="padding: 0">
                                 <li>
-                                    <a class="alert_category_link" href="/{{ Request::segment(1) }}/alerts?"> <i class="fa fa-bell "></i>{{ trans('lang.label.all_alerts') }}
+                                    <a class="alert_category_link" href="/{{ Request::segment(1) }}/alerts?"> <i class="fa fa-bell "></i>{{ __('All Alerts') }}
                                     @if($alertCount > 0)
                                     <span class="label label-inverse pull-right">{{ $alertCount }}</span>
                                     @endif
