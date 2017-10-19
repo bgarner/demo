@@ -23,25 +23,19 @@
 			@include('site.includes.topbar')
         </div>
 
-		<div class="row wrapper border-bottom white-bg page-heading">
-            <div class="col-lg-12">
-
-                <h2>{{ __("Product Launches") }}</h2>
-                <small class="pull-right"> {{ __("Last Updated")}} : {{$lastUpdated}} </small>
-
-            </div>
-        </div>
-
-
 		<div class="wrapper wrapper-content  animated fadeInRight">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="ibox">
-                    
-                         <p class="pull-right"><a href="#" data-toggle="modal" data-target="#productLaunchModal"><i class="fa fa-question-circle" aria-hidden="true"></i> Footwear Release vs. Footwear Launch</a></p>
 
-                        <div class="ibox-content">       	
-			                    
+
+
+                        <div class="ibox-content">
+                            <p class="pull-right"><a href="#" data-toggle="modal" data-target="#productLaunchModal"><i class="fa fa-question-circle" aria-hidden="true"></i> Footwear Release vs. Footwear Launch</a>
+                                <br /><small>{{ __("Last Updated")}} : {{$lastUpdated}}</small>
+                            </p>
+                            <h2>{{ __("Product Launches") }}</h2>
+                            <hr />
 	                    	<table class="table dataTable" id="productLaunchDataTable">
 
 	                    		<thead>
@@ -113,7 +107,7 @@
 	                    <h4 id="modalTitle" class="modal-title">What's New?</h4>
 	                </div> -->
 	                <div id="modalBody" class="modal-body event-modal-body" style="padding: 20px;">
-	                    
+
 <h4>What is the difference between Footwear Release and Footwear Launch?</h4>
 
 <p><em>Footwear Launch</em> – A true launch product has a hard date for availability to the public and cannot be sold, displayed or even socialized (pictures) prior to that date. The vendor typically creates some hype around launch products with marketing and social media leading up to the date. It is the expectation that launch product is to be in all applicable stores for the launch date, even if the vendor has to expedite the product to stores at their own cost to hit the launch. <strong>We will send a communication to stores if this product is late or is not expected to arrive.</strong></p>
