@@ -28,13 +28,23 @@ class UrgentNotice extends Model
                         'title'              => $request['title'],
                         'start'              => $request['start'],
                         'end'                => $request['end'],
-                        'target_stores'      => $request['target_stores'],
                         'attachment_type_id' => $request['attachment_type'][0],
 
         ];
+        if ($request['target_stores'] != NULL) {
+            $validateThis['target_stores'] = $request['target_stores'];
+        }
+        if ($request['target_banners'] != NULL) {
+            $validateThis['target_banners'] = $request['target_banners'];
+        }
+        if ($request['store_groups'] != NULL) {
+            $validateThis['store_groups'] = $request['store_groups'];
+        }
+
         if ($request['all_stores'] != NULL) {
             $validateThis['allStores'] = $request['all_stores'];
         }
+
         if(isset($request['urgentnotice_documents']) && $request['urgentnotice_documents']){
             $validateThis['documents'] = $request['urgentnotice_documents'];
         }
@@ -187,8 +197,16 @@ class UrgentNotice extends Model
                                 ->select('urgent_notices.*')
                                 ->get();
 
-        $notices = $allStoreUrgentNotice->merge($targetedUrgentNotices);              
-                        
+        $storeGroups = CustomStoreGroup::getStoreGroupsForStore($storeNumber);
+
+        $storeGroupUrgentNotices = UrgentNotice::join('urgent_notice_store_group', 'urgent_notice_store_group.urgent_notice_id', '=', 'urgent_notices.id')
+                                                ->whereIn('urgent_notice_store_group.store_group_id', $storeGroups)
+                                                ->where('urgent_notices.start', '<=', $now )
+                                                ->where('urgent_notices.end', '>=', $now )
+                                                ->select('urgent_notices.*')
+                                                ->get();
+
+        $notices = $allStoreUrgentNotice->merge($targetedUrgentNotices)->merge($storeGroupUrgentNotices);              
         foreach($notices as $n){
             
             $n->since =  Utility::getTimePastSinceDate($n->start);
@@ -295,6 +313,28 @@ class UrgentNotice extends Model
                         
                         
         return $urgentNotices;
+    }
+
+    public static function getSelectedStoresAndBannersByUrgentNoticeId($urgent_notice_id)
+    {
+        $targetBanners = UrgentNoticeBanner::where('urgent_notice_id', $urgent_notice_id)->get()->pluck('banner_id')->toArray();
+        $targetStores = UrgentNoticeTarget::where('urgent_notice_id', $urgent_notice_id)->get()->pluck('store_id')->toArray();
+
+        $storeGroups = UrgentNoticeStoreGroup::where('urgent_notice_id', $urgent_notice_id)->get()->pluck('store_group_id')->toArray();
+
+        $optGroupSelections = [];
+        foreach ($targetBanners as $banner) {
+            array_push($optGroupSelections, 'banner'.$banner);
+        }
+        foreach ($targetStores as $stores) {
+            array_push($optGroupSelections, 'store'.$stores);   
+        }
+        foreach ($storeGroups as $group) {
+            array_push($optGroupSelections, 'storegroup'.$group);   
+        }
+
+
+        return( $optGroupSelections );
     }
 
 }

@@ -61,22 +61,8 @@
 
                                         <div class="hr-line-dashed"></div>
 
-                                        <div class="form-group">
+                                        @include('admin.includes.store-banner-selector', ['optGroupOptions'=> $optGroupOptions, 'optGroupSelections' => $optGroupSelections])
 
-                                            <label class="col-sm-2 control-label">Target Stores</label>
-                                            <div class="col-sm-10">
-                                            	@if($urgent_notice->all_stores)
-	                                                {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
-	                                                {!! Form::label('allStores', 'Or select all stores:') !!}
-	                                                {!! Form::checkbox('allStores', null, true ,['id'=> 'allStores'] ) !!}
-                                                @else
-	                                                {!! Form::select('stores', $storeList, $target_stores, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
-	                                                {!! Form::label('allStores', 'Or select all stores:') !!}
-	                                                {!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
-                                                @endif
-                                            </div>
-
-                                        </div>
                                     </form>
 
 
@@ -245,7 +231,7 @@
 	<script type="text/javascript" src="/js/custom/admin/urgent-notices/editUrgentNotice.js"></script>
 	<script type="text/javascript" src="/js/custom/tree.js"></script>
 	<script src="/js/custom/datetimepicker.js"></script>
-	<script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
+	<script src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
 	<script type="text/javascript">
 		$(".chosen").chosen({
 	        width:'75%'

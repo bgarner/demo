@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\StoreApi\Banner;
 use App\Models\UrgentNotice\UrgentNoticeBanner;
+use App\Models\Utility\Utility;
+
 class UrgentNoticeTarget extends Model
 {
 	use SoftDeletes;

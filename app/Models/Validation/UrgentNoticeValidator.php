@@ -9,13 +9,15 @@ class UrgentNoticeValidator extends PortalValidator
 {
      protected $rules = [
     	
-        'title' 		=> 'required',
-    	'start'			=> 'required|date',
-    	'end'			=> 'required|date',
-    	'target_stores'	=> "required_without:allStores|array",
-    	'allStores'     => 'in:on',
-        'folder'        => 'exists:folder_ids,id',
-        'document'      => 'exists:documents,id'
+        'title'          => 'required',
+        'start'          => 'required|date',
+        'end'            => 'required|date',
+        'target_stores'  => "sometimes|exists:stores,store_number",
+        'allStores'      => 'sometimes|in:on,off',
+        'target_banners' => 'sometimes|exists:banners,id',
+        'store_groups'   => 'sometimes|exists:custom_store_group,id',
+        'folder'         => 'exists:folder_ids,id',
+        'document'       => 'exists:documents,id'
             
     ];
 
