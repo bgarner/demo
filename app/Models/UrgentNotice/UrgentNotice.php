@@ -151,8 +151,9 @@ class UrgentNotice extends Model
 
         $banner_id = StoreInfo::getStoreInfoByStoreId($storeNumber)->banner_id;
 
-        $allStoreUrgentNoticeCount = UrgentNotice::where('all_stores', 1)
-                                                ->where('banner_id', $banner_id)
+        $allStoreUrgentNoticeCount = UrgentNotice::join('urgent_notice_banner', 'urgent_notice_banner.urgent_notice_id', '=', 'urgent_notices.id')
+                                                ->where('all_stores', 1)
+                                                ->where('urgent_notice_banner.banner_id', $banner_id)
                                                 ->where('urgent_notices.start' , '<=', $now)
                                                 ->where('urgent_notices.end', '>=', $now)
                                                 ->count();
@@ -163,7 +164,15 @@ class UrgentNotice extends Model
                                 ->where('urgent_notices.start' , '<=', $now)
                                 ->where('urgent_notices.end', '>=', $now)
                                 ->count();
-        $urgentNoticeCount = $allStoreUrgentNoticeCount + $targetedUrgentNoticeCount;
+
+        $storeGroups = CustomStoreGroup::getStoreGroupsForStore($storeNumber);
+
+        $storeGroupUrgentNotices = UrgentNotice::join('urgent_notice_store_group', 'urgent_notice_store_group.urgent_notice_id', '=', 'urgent_notices.id')
+                                                ->whereIn('urgent_notice_store_group.store_group_id', $storeGroups)
+                                                ->where('urgent_notices.start', '<=', $now )
+                                                ->where('urgent_notices.end', '>=', $now )
+                                                ->count();
+        $urgentNoticeCount = $allStoreUrgentNoticeCount + $targetedUrgentNoticeCount + $storeGroupUrgentNotices;
 
         return $urgentNoticeCount;
     }
@@ -184,8 +193,9 @@ class UrgentNotice extends Model
 
         $banner_id = StoreInfo::getStoreInfoByStoreId($storeNumber)->banner_id;
 
-        $allStoreUrgentNotice  = UrgentNotice::where('all_stores', 1)
-                                            ->where('banner_id', $banner_id )
+        $allStoreUrgentNotice  = UrgentNotice::join('urgent_notice_banner', 'urgent_notice_banner.urgent_notice_id', '=', 'urgent_notices.id')
+                                            ->where('all_stores', 1)
+                                            ->where('urgent_notice_banner.banner_id', $banner_id )
                                             ->where('urgent_notices.start' , '<=', $now)
                                             ->where('urgent_notices.end', '>=', $now)
                                             ->get();
