@@ -1848,14 +1848,26 @@ a.DTTT_button:hover:not(.DTTT_disabled) {
   margin: 0 5px;
 }
 .todo-list > li .label {
-  font-size: 9px;
+  /*font-size: 9px;
+  margin-left: 10px;*/
+  font-size: 11px;
   margin-left: 10px;
+  margin-top: 0px;
+  font-weight: normal;
 }
 .check-link {
   font-size: 24px;
   position: relative;
-  top: 5px;
+  /*top: 0px;*/
+  bottom: 7px;
+  padding-right: 3px;
+  /*width: 20px;*/
 }
+
+.todo-list li.due-today-list-item{
+    border-color: #f8ac59;
+}
+
 .todo-completed {
   text-decoration: line-through;
 }
@@ -8502,6 +8514,11 @@ tr.archived td.mail-subject a
 #task-container .mail-box{
   padding: 10px;
 }
+
+.task-title{
+    width: 70%;
+}
+
 .task-done{
   float:right;
   padding-right: 20px;
@@ -8511,7 +8528,8 @@ tr.archived td.mail-subject a
   padding-left: 20px;
 }
 .task_description{
-  padding-left: 25px;
+    clear: both;
+    padding-left: 25px;
 }
 .task_documents{
   padding-left: 25px;
