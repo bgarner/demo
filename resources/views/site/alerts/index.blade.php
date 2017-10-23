@@ -106,11 +106,11 @@
                                 @else
                                 <tr class="unread">
                                 @endif
-                                    <td class="check-mail col-lg-1 col-md-1 col-sm-2 col-xs-1 ">
-                                        <i class="fa fa-bell-o"></i><span class="label">{{ $alert->alertTypeName }}</span>
+                                    <td class="check-mail col-lg-2 col-md-2 col-sm-2 col-xs-2 ">
+                                        {{-- <i class="fa fa-bell-o"></i> --}}<span class="label">{{ $alert->alertTypeName }}</span>
                                     </td>
 
-                                    <td class="mail-subject col-lg-8 col-md-7 col-sm-3 col-xs-5 ">{!! $alert->link_with_icon !!}</td>
+                                    <td class="mail-subject col-lg-7 col-md-6 col-sm-6 col-xs-6 ">{!! $alert->link_with_icon !!}</td>
                                     <!-- <td class="mail-preview">{{ $alert->description }}</td> -->
 
                                     <td class="mail-date col-lg-3 col-md-4 col-sm-4 col-xs-2">{{ $alert->prettyDate }}<!--  <small style="font-weight: normal;padding-left: 10px;">({{ $alert->since }} ago)</small> --></td>
