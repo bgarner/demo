@@ -78,26 +78,29 @@
 
                         @foreach($communications as $communication)
                         <?php $tr_class="" ?>
-                        @if( $communication->is_read == 1)
-                            <?php $tr_class = "unread";?>
-                        @else
-                            <?php $tr_class = "unread"; ?>
-                        @endif
 
-                        <?php $icon_class="fa fa-envelope-o" ?>
                         @if($communication->archived)
                             <?php $tr_class .= " archived"; ?>
                         @endif
 
 
                         <tr class= "{{ $tr_class }}" >
-                            <td class="check-mail">
-
-                                <i class="{{$icon_class}}"></i>
+                            <td class="check-mail hidden-sm hidden-xs">
+                                <i class="fa fa-envelope-o"></i>
                             </td>
 
-                            @if( $communication->communication_type_id == "1" ||  $communication->communication_type_id == "2" )
-                                <td class="mail-subject communication-name">
+                            <td class="mail-subject communication-name col-lg-4 col-md-4 col-sm-4 col-xs-5">
+
+                                @if($communication->has_attachments == true)
+                                    <i class="fa fa-paperclip"></i>
+                                @endif
+                                <a class="comm_category_link trackclick" data-comm-id="{{ $communication->id }}" href="communication/show/{{ $communication->id }}?">{{ $communication->subject }}</a>
+                                <br />
+                                <span class="label label-sm label-message-cat label-{!! $communication->label_colour !!}">{!! $communication->label_name !!}</span>
+                            </td>
+
+                            {{-- @if( $communication->communication_type_id == "1" ||  $communication->communication_type_id == "2" )
+                                <td class="mail-subject communication-name col-lg-4 col-md-4 col-sm-4 col-xs-5">
                                     @if($communication->has_attachments == true)
                                         <i class="fa fa-paperclip"></i>
                                     @endif
@@ -108,12 +111,13 @@
                                     @if($communication->has_attachments == true)
                                         <i class="fa fa-paperclip"></i>
                                     @endif
-                                    <a class="comm_category_link trackclick" data-comm-id="{{ $communication->id }}" href="communication/show/{{ $communication->id }}?">{{ $communication->subject }}</a> <span class="label label-sm label-{!! $communication->label_colour !!}">{!! $communication->label_name !!}</span></td>
-                            @endif
+                                    <a class="comm_category_link trackclick" data-comm-id="{{ $communication->id }}" href="communication/show/{{ $communication->id }}?">{{ $communication->subject }}</a>
+                                </td>
+                            @endif --}}
 
-                            <td class="mail-preview col-lg-5 col-md-4 hidden-sm hidden-xs"><a href="communication/show/{{ $communication->id }}">{!! $communication->trunc !!}</a></td>
-                            <td class=""><!-- <i class="fa fa-paperclip"></i> --></td>
-                            <td class="text-right mail-date col-lg-3 col-md-2 col-sm-4 col-xs-2">{{ $communication->prettyDate }}<!--  <small style="font-weight: normal;padding-left: 10px;">({{ $communication->since }} ago)</small> --></td>
+                            <td class="mail-preview col-lg-6 col-md-4 hidden-sm hidden-xs"><a href="communication/show/{{ $communication->id }}">{!! $communication->trunc !!}</a></td>
+
+                            <td class="text-right mail-date col-lg-2 col-md-2 col-sm-4 col-xs-2">{{ $communication->prettyDate }}<!--  <small style="font-weight: normal;padding-left: 10px;">({{ $communication->since }} ago)</small> --></td>
                         </tr>
 
                         @endforeach
