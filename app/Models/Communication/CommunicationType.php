@@ -152,7 +152,7 @@ class CommunicationType extends Model
         if(isset($request->banners)){
             foreach($request->banners as $banner){
                 CommunicationTypeBanner::create([
-                    'communication_type_id' => $communicationType->id,
+                    'communication_type_id' => $communicationType->id
                     'banner_id' => $banner
                 ]);
             }

@@ -1,3 +1,9 @@
+$(document).ready(function(){
+	$(".chosen").chosen({
+		'width':'100%'
+	});
+
+});
 $(document).on('click','.eventtype-create',function(){
 
   	var hasError = false;
@@ -5,9 +11,9 @@ $(document).on('click','.eventtype-create',function(){
     var eventTypeName = $("#event_type").val();
     var bg = $("#background_colour").val();
     var fg = $("#foreground_colour").val();
-    var bannerId = localStorage.getItem('admin-banner-id');
+    var banners = $("#banners").val();
 
-    console.log(eventTypeName +", "+ bannerId);
+    console.log(banners );
 
     if(eventTypeName == '') {
 		swal("Oops!", "This we need a name for this event type.", "error");
@@ -19,7 +25,10 @@ $(document).on('click','.eventtype-create',function(){
 		$.ajax({
 		    url: '/admin/eventtypes',
 		    type: 'POST',
-		    data: { event_type: eventTypeName, background_colour: bg, foreground_colour: fg, banner_id: bannerId },
+		    data: { event_type: eventTypeName, 
+		    		background_colour: bg, 
+		    		foreground_colour: fg, 
+		    		banners: banners  },
 		    dataType : 'json',
 		    success: function(data) {
 		    	console.log(data);

@@ -51,7 +51,10 @@ class CalendarAdminController extends Controller
     {
         
         $banner = UserSelectedBanner::getBanner();
-        $event_types_list = EventType::getEventTypeListByBannerId($banner->id);
+        $event_types_list = EventType::getEventTypesForAdmin()
+                                    ->pluck('event_type', 'id')
+                                    ->prepend('Select one', '')
+                                    ->toArray();
         $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
         $optGroupSelections = json_encode([]);
         $folderStructure = FolderStructure::getNavigationStructure($banner->id);
@@ -98,7 +101,9 @@ class CalendarAdminController extends Controller
 
         $event               = Event::find($id);
         
-        $event_types_list    = EventType::getEventTypeListByBannerId($banner->id);
+        $event_types_list    = EventType::getEventTypesForAdmin()
+                                    ->pluck('event_type', 'id')
+                                    ->toArray();
 
         $event_attachments   = EventAttachment::getEventAttachments($id);
         $folderStructure     = FolderStructure::getNavigationStructure($banner->id);
