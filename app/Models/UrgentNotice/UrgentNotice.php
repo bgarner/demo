@@ -72,7 +72,6 @@ class UrgentNotice extends Model
           return json_encode($validate);
         }
 
-        $banner = UserSelectedBanner::getBanner();
     	$title = $request->title;
     	$description = $request->description;
     	$start = $request->start;
@@ -82,7 +81,6 @@ class UrgentNotice extends Model
     	
     	
     	$urgentNotice = UrgentNotice::create([
-    		'banner_id' => $banner->id,
     		'title'		=> $title,
     		'description' => $description,
     		'start'		=> $start,
@@ -110,7 +108,6 @@ class UrgentNotice extends Model
 
         $urgentNotice = UrgentNotice::find($id);
 
-        $banner_id = $request->banner_id;
     	$title = $request->title;
     	$description = $request->description;
     	$start = $request->start;
@@ -118,7 +115,6 @@ class UrgentNotice extends Model
     	$target_stores = $request->target_stores;
         
     	$urgentNotice->update([
-    		'banner_id' => $banner_id,
     		'title'		=> $title,
     		'description' => $description,
     		'start'		=> $start,
