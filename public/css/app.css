@@ -8286,7 +8286,8 @@ body.md-skin {
 
 tr.archived td a,
 tr.archived.archived-blue td a,
-tr.archived td.mail-subject a
+tr.archived td.mail-subject a,
+tr.archived i
 {
     color: #fff !important;
 }
@@ -8627,4 +8628,8 @@ ul.banner-selector-menu{
 a:hover span.badge{
     color: #666;
     border-bottom: 2px solid #666;
+}
+
+.label-message-cat{
+    margin-left: 0px !important;
 }
