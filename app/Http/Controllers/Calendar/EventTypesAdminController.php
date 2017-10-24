@@ -107,4 +107,16 @@ class EventTypesAdminController extends Controller
     {
         EventType::find($id)->delete();
     }
+
+    public function getEventTypesByTarget(Request $request)
+    {
+        $event = [];
+        if(isset($request->event_id)){
+            $event = Event::find($request->event_id);
+        }
+        $event_types_list = EventType::geteventTypesByTarget($request);
+        return view('admin.calendar.event-type-selector')->with('event_types_list', $event_types_list)
+                                                    ->with('event', $event);
+    }
+    
 }

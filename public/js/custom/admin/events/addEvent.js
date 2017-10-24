@@ -1,3 +1,17 @@
+$('body').on('blur','#targets_chosen', function(){
+	
+	var target_stores = getTargetStores();
+	var target_banners = getTargetBanners();
+	var store_groups = getStoreGroups();
+	
+	$("#event-type-selector").empty()
+		.load('/admin/target/eventtypes', { 
+							target_stores : target_stores, 
+							target_banners : target_banners,
+							store_groups : store_groups });
+
+});
+
 $(".folder-checkbox").on('click', function(){
 	if($(this).is(":checked")){
 		$(this).attr('data-folderRoot', 'true')

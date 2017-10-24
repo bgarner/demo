@@ -1,3 +1,19 @@
+$('body').on('blur','#targets_chosen', function(){
+	
+	var target_stores = getTargetStores();
+	var target_banners = getTargetBanners();
+	var store_groups = getStoreGroups();
+	var event_id = $("#eventID").val();
+	
+	$("#event-type-selector").empty()
+									.load('/admin/target/eventtypes', { 
+										target_stores : target_stores, 
+										target_banners : target_banners,
+										store_groups : store_groups,
+										event_id : event_id
+									 });
+
+});
 $("#add-more-attachments").click(function(){
 	console.log('add folders');
 	$("#folder-listing").modal('show');

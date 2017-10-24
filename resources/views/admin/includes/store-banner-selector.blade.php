@@ -1,7 +1,8 @@
 <input type="hidden" name="optGroupSelections" id="optGroupSelections" value="{{$optGroupSelections}}">
 
 <div class="form-group">
-    {!! Form::label('targets', 'Select Stores', ['class'=>'col-sm-2 control-label']) !!}
+    
+    <label class="col-sm-2 control-label">Select Stores <span class="req">*</span></label>
     <div class="col-sm-10">
         <select name="targets[]" id="targets" multiple class="chosen">
             <option value="">Select Some Options</option>

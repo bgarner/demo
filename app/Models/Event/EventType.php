@@ -8,6 +8,7 @@ use App\Models\Validation\EventTypeValidator;
 use App\Models\Auth\User\UserBanner;
 use App\Models\StoreApi\Banner;
 use App\Models\Event\EventTypeBanner;
+use App\Models\StoreApi\Store;
 
 class EventType extends Model
 {
@@ -161,8 +162,52 @@ class EventType extends Model
         $eventType->banners = Banner::whereIn('id', $banner_ids)->get()->pluck('id')->toArray();
 
         return $eventType;
-
                 
+    }
+    public static function getEventTypesByTarget($request)
+    {
+        $targetStores = collect();
+        $banners = collect();
+
+        if(isset($request->store_groups)){
+            $storeGroups = $request->store_groups;
+                
+            foreach ($storeGroups as $group) {
+                $groupDetails = CustomStoreGroup::find($group);
+                $stores = unserialize($groupDetails->stores);
+                $targetStores = $targetStores->merge($stores);
+            }
+        }
+        if(isset($request->target_stores)){
+
+            $targetStores = $targetStores->merge($request->target_stores);
+        }
+
+        if(count($targetStores)>0){
+            $allStores = Store::getAllStores()->pluck('banner_id','store_number')->toArray();
+            foreach ($targetStores as $store) {
+                if(array_key_exists($store, $allStores)){
+                    $banners->push($allStores[$store]);
+                }
+            }    
+        }
+        
+
+        if(isset($request->target_banners)){
+
+            $banners = $banners->merge($request->target_banners);
+            $banners = $banners->unique();
+        }
+
+
+        $eventTypes = EventType::join('event_type_banner', 'event_type_banner.event_type_id', '=', 'event_types.id')
+                                                ->whereIn('event_type_banner.banner_id', $banners)
+                                                ->where('deleted_at', null)
+                                                ->select('event_types.*')
+                                                ->groupBy('event_type_banner.event_type_id')
+                                                ->get();
+        $event_types_list = $eventTypes->pluck('event_type', 'id')->toArray();
+        return $event_types_list;
     }
 
 

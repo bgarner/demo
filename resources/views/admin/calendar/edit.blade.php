@@ -51,10 +51,10 @@
                                             <div class="col-sm-10"><input type="text" id="title" name="title" class="form-control" value="{{ $event->title }}"></div>
                                         </div>
 
-                                        <div class="form-group"><label class="col-sm-2 control-label">Event Type <span class="req">*</span></label>
-                                            <div class="col-sm-10">
-                                                {{-- <input type="text" class="form-control" value="{{ $event_type->event_type }}"> --}}
+                                        @include('admin.includes.the-ultimate-store-selector')
 
+                                        <div class="form-group"><label class="col-sm-2 control-label">Event Type <span class="req">*</span></label>
+                                            <div class="col-sm-10" id="event-type-selector">
                                                 <select class="form-control" id="event_type" name="event_type">
                                                     @foreach($event_types_list as $key=>$event_type)
                                                         @if( $key == $event->event_type )
@@ -66,8 +66,6 @@
                                                 </select>
                                             </div>
                                         </div>
-
-                                        {{-- <div class="summernote"></div> --}}
 
                                         <div class="form-group">
 
@@ -93,9 +91,6 @@
 
                                             </div>
                                         </div>
-
-
-                                        @include('admin.includes.the-ultimate-store-selector')
 
                                     </form>
 

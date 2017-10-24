@@ -53,6 +53,7 @@ Route::resource('/admin/calendar', 'Calendar\CalendarAdminController');
 
 //Event Types
 Route::resource('/admin/eventtypes', 'Calendar\EventTypesAdminController');
+Route::post('/admin/target/eventtypes', 'Calendar\EventTypesAdminController@getEventTypesByTarget');
 
 //Tags
 // Route::resource('/admin/tag', 'Tag\TagAdminController');
