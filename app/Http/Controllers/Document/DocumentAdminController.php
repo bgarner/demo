@@ -55,14 +55,17 @@ class DocumentAdminController extends Controller
     {
 
         $banner      = UserSelectedBanner::getBanner();
-        $storeAndStoreGroups = Utility::getStoreAndStoreGroupList($banner->id);
+        $storeList   = StoreInfo::getStoreListing($banner->id);
+        // $storeAndStoreGroups = Utility::getStoreAndStoreGroupList($banner->id);
+
         $packageHash = sha1(time() . time());
         $folders     = Folder::all();
         return view('admin.documentmanager.document-upload')
             ->with('folders', $folders)
             ->with('packageHash', $packageHash)
             ->with('banner', $banner)
-            ->with('storeAndStoreGroups', $storeAndStoreGroups);
+            ->with('storeList', $storeList);
+            // ->with('storeAndStoreGroups', $storeAndStoreGroups);
     }
 
     /**
@@ -151,7 +154,9 @@ class DocumentAdminController extends Controller
 
         $folderStructure     = FolderStructure::getNavigationStructure($banner->id);
         $folderPath          = Document::getFolderPathForDocument($id);
-        $storeAndStoreGroups = Utility::getStoreAndStoreGroupList($banner->id);
+
+        $storeList           = StoreInfo::getStoreListing($banner->id);
+        // $storeAndStoreGroups = Utility::getStoreAndStoreGroupList($banner->id);
 
         return view('admin.document-meta.document-edit-meta-data')->with('document', $document)
                                                     ->with('banner', $banner)
@@ -160,7 +165,8 @@ class DocumentAdminController extends Controller
                                                     ->with('alert_details', $alert_details)
                                                     ->with('folderStructure', $folderStructure)
                                                     ->with('folderPath', $folderPath)
-                                                    ->with('storeAndStoreGroups', $storeAndStoreGroups);
+                                                    ->with('storeList', $storeList);
+                                                    // ->with('storeAndStoreGroups', $storeAndStoreGroups);
     }
 
     /**

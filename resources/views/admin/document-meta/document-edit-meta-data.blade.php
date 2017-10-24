@@ -72,19 +72,19 @@
                                     <label class="col-sm-2 control-label">Target Stores <span class="req">*</span></label>
                                     <div class="col-sm-10">
 
-                                    {{--@if($document->all_stores)
+                                    @if($document->all_stores)
                                         {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
                                         {!! Form::label('allStores', 'Or select all stores:') !!}
                                         {!! Form::checkbox('allStores', null, true ,['id'=> 'allStores'] ) !!}
-                                      @else
+                                    @else
                                         {!! Form::select('stores', $storeList, $target_stores, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
                                         {!! Form::label('allStores', 'Or select all stores:') !!}
                                         {!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
-                                      @endif--}}
+                                    @endif
 
 
 
-
+                                    {{--
                                        <select name="stores" id="storeSelect" multiple class="chosen">
                                             <option value="">Select Some Options</option>
                                             @foreach($storeAndStoreGroups as $option)
@@ -119,6 +119,8 @@
                                             {!! Form::label('allStores', 'Or select all stores:') !!}
                                             {!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
                                         @endif
+
+                                    --}}
                                     </div>
 
                                 </div>

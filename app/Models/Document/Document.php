@@ -295,16 +295,6 @@ class Document extends Model
             $document['end'] = $request->get('document_end');
         }
 
-        // $title          = $request->get('title');
-        // $description    = $request->get('description');
-        // $doc_start      = $request->get('document_start');
-        // $doc_end        = $request->get('document_end');
-
-        // $document['title']  = $title;
-        // $document['description'] = $description;
-        // $document['start']  = $doc_start;
-        // $document['end']  = $doc_end;
-
         $document->save();
 
         Document::updateDocumentTarget($request, $document);

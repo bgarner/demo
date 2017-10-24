@@ -44,12 +44,9 @@ $(document).on('click','.alert-create',function(){
 	var alert_type_id = $("#alert_type").val();
 	var banner_id = $("input[name='banner_id']").val();
 	
-	var target_stores = getTargetStores();
+	// var target_stores = getTargetStores();
+	var target_stores = $("#storeSelect").val();
 	var allStores = $("#allStores:checked").val();
-
-	// var start = $("#start").val();
-	// var end = $("#end").val();
-	// var target_stores  = $("#storeSelect").val();
 	 
 	console.log('title : ' + title);
 	console.log('description : ' + description);
