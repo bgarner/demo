@@ -34,6 +34,7 @@ $("body").on('paste', '.search-field input', function(e) {
 	    processStorePaste();
 	  }, 5);
 
+
 });
 
 var processStorePaste = function(){

@@ -8,6 +8,7 @@ use App\Models\Auth\User\UserBanner;
 use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\StoreApi\StoreInfo;
 use App\Models\Tools\CustomStoreGroup;
+use App\Models\StoreApi\Store;
 
 class Utility extends Model
 {
@@ -532,6 +533,50 @@ class Utility extends Model
         $mergedContent = $allStoreContent->merge($targetedContent)->unique('id')->sortByDesc('created_at');
 
         return $mergedContent;
+    }
+
+    public static function getUniqueBannersForTarget($request)
+    {
+    	$targetStores = collect();
+        $banners = collect();
+        
+        //merge stores for store groups
+        if(isset($request->store_groups)){
+            $storeGroups = $request->store_groups;
+                
+            foreach ($storeGroups as $group) {
+                $groupDetails = CustomStoreGroup::find($group);
+                $stores = unserialize($groupDetails->stores);
+                $targetStores = $targetStores->merge($stores);
+            }
+        }
+
+        if(isset($request->target_stores)){
+            $targetStores = $targetStores->merge($request->target_stores);
+        }
+
+        //find unique banners for stores
+        if(count($targetStores)>0){
+            $allStores = Store::getAllStores()->pluck('banner_id','store_number')->toArray();
+            foreach ($targetStores as $store) {
+                if(array_key_exists($store, $allStores)){
+                    $banners->push($allStores[$store]);
+                }
+            }    
+        }
+        
+        $banners = $banners->unique();
+
+
+        //merge unique banners from previous step with target_banners
+        if(isset($request->target_banners)){
+
+            $banners = $banners->merge($request->target_banners)->sort();
+            
+        }
+        $banners = array_values($banners->unique()->toArray());
+
+        return $banners;
     }
 
 

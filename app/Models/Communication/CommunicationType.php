@@ -8,8 +8,7 @@ use App\Models\StoreApi\StoreInfo;
 use App\Models\Auth\User\UserBanner;
 use App\Models\StoreApi\Banner;
 use App\Models\Communication\CommunicationTypeBanner;
-use App\Models\Tools\CustomStoreGroup;
-use App\Models\StoreApi\Store;
+use App\Models\Utility\Utility;
 
 class CommunicationType extends Model
 {
@@ -163,47 +162,36 @@ class CommunicationType extends Model
 
     public static function getCommunicationTypesByTarget($request)
     {
-        $targetStores = collect();
-        $banners = collect();
+        $banners = Utility::getUniqueBannersForTarget($request);
+        $communicationTypes = collect();
 
-        if(isset($request->store_groups)){
-            $storeGroups = $request->store_groups;
-                
-            foreach ($storeGroups as $group) {
-                $groupDetails = CustomStoreGroup::find($group);
-                $stores = unserialize($groupDetails->stores);
-                $targetStores = $targetStores->merge($stores);
-            }
-        }
-        if(isset($request->target_stores)){
-
-            $targetStores = $targetStores->merge($request->target_stores);
-        }
-
-        if(count($targetStores)>0){
-            $allStores = Store::getAllStores()->pluck('banner_id','store_number')->toArray();
-            foreach ($targetStores as $store) {
-                if(array_key_exists($store, $allStores)){
-                    $banners->push($allStores[$store]);
+        if(count($banners)>1){
+            $communicationTypes = CommunicationType::join('communication_type_banner', 'communication_type_banner.communication_type_id', '=', 'communication_types.id')
+                                    ->where('deleted_at', null)
+                                    ->select(\DB::raw('communication_types.*, GROUP_CONCAT(DISTINCT communication_type_banner.banner_id Order By communication_type_banner.banner_id ) as banners'))
+                                    ->groupBy('communication_type_banner.communication_type_id')
+                                    ->get();
+                                    
+            foreach ($communicationTypes as $key => $type) {  
+                $typeBanners = explode(',', $type->banners);
+                if($typeBanners != $banners){ //for arrays to be equal, they must have same key/value pairs.
+                                                // if $type->banners is not in the same order as $banners, it
+                                                //returns false
+            
+                    $communicationTypes->forget($key);
                 }
-            }    
-        }
-        
-
-        if(isset($request->target_banners)){
-
-            $banners = $banners->merge($request->target_banners);
-            $banners = $banners->unique();
+            }
+           
         }
 
-
-        $communicationTypes = CommunicationType::join('communication_type_banner', 'communication_type_banner.communication_type_id', '=', 'communication_types.id')
-                                                ->whereIn('communication_type_banner.banner_id', $banners)
-
-                                                ->where('deleted_at', null)
-                                                ->select('communication_types.*')
-                                                ->groupBy('communication_type_banner.communication_type_id')
-                                                ->get();
+        if(count($banners) == 1){
+            $communicationTypes = CommunicationType::join('communication_type_banner', 'communication_type_banner.communication_type_id', '=', 'communication_types.id')
+                                    ->where('deleted_at', null)
+                                    ->whereIn('communication_type_banner.banner_id', $banners)
+                                    ->select('communication_types.*')
+                                    ->groupBy('communication_type_banner.communication_type_id')
+                                    ->get();
+        }
         return $communicationTypes;
     }
 }

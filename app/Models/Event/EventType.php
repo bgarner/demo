@@ -9,6 +9,7 @@ use App\Models\Auth\User\UserBanner;
 use App\Models\StoreApi\Banner;
 use App\Models\Event\EventTypeBanner;
 use App\Models\StoreApi\Store;
+use App\Models\Utility\Utility;
 
 class EventType extends Model
 {
@@ -166,48 +167,38 @@ class EventType extends Model
     }
     public static function getEventTypesByTarget($request)
     {
-        $targetStores = collect();
-        $banners = collect();
 
-        if(isset($request->store_groups)){
-            $storeGroups = $request->store_groups;
-                
-            foreach ($storeGroups as $group) {
-                $groupDetails = CustomStoreGroup::find($group);
-                $stores = unserialize($groupDetails->stores);
-                $targetStores = $targetStores->merge($stores);
-            }
-        }
-        if(isset($request->target_stores)){
+        $banners = Utility::getUniqueBannersForTarget($request);
+        $eventTypes = collect();
 
-            $targetStores = $targetStores->merge($request->target_stores);
-        }
-
-        if(count($targetStores)>0){
-            $allStores = Store::getAllStores()->pluck('banner_id','store_number')->toArray();
-            foreach ($targetStores as $store) {
-                if(array_key_exists($store, $allStores)){
-                    $banners->push($allStores[$store]);
+        if(count($banners)>1){
+            $eventTypes = EventType::join('event_type_banner', 'event_type_banner.event_type_id', '=', 'event_types.id')
+                                    ->where('deleted_at', null)
+                                    ->select(\DB::raw('event_types.*, GROUP_CONCAT(DISTINCT event_type_banner.banner_id Order By event_type_banner.banner_id ) as banners'))
+                                    ->groupBy('event_type_banner.event_type_id')
+                                    ->get();
+                                    
+            foreach ($eventTypes as $key => $type) {  
+                $typeBanners = explode(',', $type->banners);
+                if($typeBanners != $banners){ //for arrays to be equal, they must have same key/value pairs.
+                                                // if $type->banners is not in the same order as $banners, it
+                                                //returns false
+            
+                    $eventTypes->forget($key);
                 }
-            }    
-        }
-        
-
-        if(isset($request->target_banners)){
-
-            $banners = $banners->merge($request->target_banners);
-            $banners = $banners->unique();
+            }
+           
         }
 
-
-        $eventTypes = EventType::join('event_type_banner', 'event_type_banner.event_type_id', '=', 'event_types.id')
-                                                ->whereIn('event_type_banner.banner_id', $banners)
-                                                ->where('deleted_at', null)
-                                                ->select('event_types.*')
-                                                ->groupBy('event_type_banner.event_type_id')
-                                                ->get();
-        $event_types_list = $eventTypes->pluck('event_type', 'id')->toArray();
-        return $event_types_list;
+        if(count($banners) == 1){
+            $eventTypes = EventType::join('event_type_banner', 'event_type_banner.event_type_id', '=', 'event_types.id')
+                                    ->where('deleted_at', null)
+                                    ->whereIn('event_type_banner.banner_id', $banners)
+                                    ->select('event_types.*')
+                                    ->groupBy('event_type_banner.event_type_id')
+                                    ->get();
+        }
+        return $eventTypes->pluck('event_type', 'id')->toArray();
     }
 
 

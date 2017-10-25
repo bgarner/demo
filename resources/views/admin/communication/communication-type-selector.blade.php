@@ -1,6 +1,6 @@
 <div class="btn-group">
 	<a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#">
-		@if(isset($communication))
+		@if(isset($communication) && !empty($communication))
 	
 			@foreach($communicationTypes as $ct)
 				@if($ct->id == $communication->communication_type_id)
@@ -17,7 +17,7 @@
 
 	<input type="text" hidden  
 			name="communication_type" 
-			@if(isset($communication))
+			@if(isset($communication) && !empty($communication))
 			value="{{$communication->communication_type_id}}"
 			@endif>
 	<ul name="communication_type" id="" class="dropdown-menu" role="menu">
