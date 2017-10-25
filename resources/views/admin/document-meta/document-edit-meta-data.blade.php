@@ -176,21 +176,6 @@
 
                 <div class="ibox-content">
 
-                   <!--  <div class="form-group">
-
-
-                        <input type="file" name="document" class="file hidden">
-                        <div class="input-group col-xs-12">
-
-                            <input type="text" class="form-control" disabled placeholder="Upload Document">
-                            <span class="input-group-btn">
-                                <button class="browse btn btn-primary" type="button"><i class="fa fa-search"></i> Browse</button>
-                            </span>
-                        </div>
-                    </div> -->
-
-
-
                     <div class="row">
                          <label class="control-label col-sm-2"> New Document </label>
                         <div class="col-sm-10">
@@ -270,8 +255,8 @@
 
         </script>
         <script type="text/javascript" src="/js/custom/admin/alerts/createAlert.js"></script>
-        <!-- <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script> -->
-        <script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>
+        <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
+        <!-- <script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script> -->
         <script type="text/javascript" src="/js/custom/admin/documents/changeFolder.js"></script>
         <script type="text/javascript" src="/js/custom/admin/documents/replaceDocument.js"></script>
         @include('site.includes.bugreport')

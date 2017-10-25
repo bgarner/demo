@@ -40,7 +40,7 @@
                                         <div class="form-group">
                                         	<label class="col-sm-2 control-label">Stores</label>
                                         	<div class="col-sm-10">
-                                        		{!! Form::select('stores[]', $storeList, null, [ 'class'=>'chosen', 'id'=> 'stores', 'multiple'=>'true']) !!}
+                                        		{!! Form::select('stores[]', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
                                         		
                                         	</div>
 
@@ -83,6 +83,7 @@
 				</script>
 				<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 				<script src="/js/custom/admin/storegroup/addStoreGroup.js"></script>
+				<script src="/js/custom/admin/global/storeSelector.js"></script>
 				
 				
 

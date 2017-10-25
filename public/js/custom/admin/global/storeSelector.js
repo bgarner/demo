@@ -33,7 +33,6 @@ $("body").on('paste', '.search-field input', function(e) {
 	setTimeout(function(e) {
 	    processStorePaste();
 	  }, 5);
-        
 
 });
 
