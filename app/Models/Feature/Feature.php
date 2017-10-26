@@ -427,7 +427,8 @@ class Feature extends Model
     public static function getActiveFeaturesByBanner($banner_id)
     {
         $now = Carbon::now();
-        $activeFeatures = Feature::where('banner_id', $banner_id)
+        $activeFeatures = Feature::join('feature_banner', 'feature_banner.feature_id', '=', 'features.id')
+                                ->where('banner_id', $banner_id)
                                 ->where('features.start', '<=', $now )
                                 ->where('features.end', '>=', $now )
                                 ->orderBy('order')
