@@ -48,8 +48,10 @@ class EventType extends Model
 
 	public static function getEventTypeIdByName($name, $banner)
 	{
-		$event_type = EventType::where("event_type", $name)
+		$event_type = EventType::join('event_type_banner', 'event_type_banner.event_type_id', '=', 'event_types.id')
+                                ->where("event_type", $name)
 								->where("banner_id", $banner)
+                                ->select('event_types.*')
 								->first();
 		return $event_type->id;
 	}

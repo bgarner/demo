@@ -194,6 +194,7 @@ class UrgentNotice extends Model
                                             ->where('urgent_notice_banner.banner_id', $banner_id )
                                             ->where('urgent_notices.start' , '<=', $now)
                                             ->where('urgent_notices.end', '>=', $now)
+                                            ->select('urgent_notices.*')
                                             ->get();
 
         $targetedUrgentNotices = UrgentNoticeTarget::join('urgent_notices', 'urgent_notices.id' , '=', 'urgent_notice_target.urgent_notice_id')

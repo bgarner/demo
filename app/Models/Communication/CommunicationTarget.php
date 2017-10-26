@@ -87,8 +87,14 @@ class CommunicationTarget extends Model
         $communication = Communication::find($id);
 
         if(isset($communication->all_stores) && $communication->all_stores){
-            $banner = $communication->banner_id;
-            $stores = Banner::getStoreDetailsByBannerid($banner)->pluck('store_number')->toArray();
+            
+            $banners = CommunicationBanner::where('communication_id', $communication->id)->get()->pluck('banner_id')->toArray();
+            $stores = [];
+            foreach ($banners as $banner) {
+                $bannerStores = Banner::getStoreDetailsByBannerid($banner)->pluck('store_number')->toArray();   
+                $stores = array_merge($stores, $bannerStores);
+
+            }
         }
         else{
             $stores = CommunicationTarget::where('communication_id', $id)

@@ -21,8 +21,14 @@ class UrgentNoticeTarget extends Model
         $urgentnotice = UrgentNotice::find($id);
 
         if(isset($urgentnotice->all_stores) && $urgentnotice->all_stores){
-            $banner = $urgentnotice->banner_id;
-            $stores = Banner::getStoreDetailsByBannerid($banner)->pluck('store_number')->toArray();
+            
+            $banners = UrgentNoticeBanner::where('urgent_notice_id', $urgentnotice->id)->get()->pluck('banner_id')->toArray();
+            $stores = [];
+            foreach ($banners as $banner) {
+                $bannerStores = Banner::getStoreDetailsByBannerid($banner)->pluck('store_number')->toArray();   
+                $stores = array_merge($stores, $bannerStores);
+
+            }
         }
         else{
             $stores = UrgentNoticeTarget::where('urgent_notice_id', $id)
