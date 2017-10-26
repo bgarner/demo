@@ -40,7 +40,7 @@ class CommunicationAdminController extends Controller
     {
         
         $banner = UserSelectedBanner::getBanner();
-        $communications = Communication::getAllCommunication($banner->id);
+        $communications = Communication::getCommunicationsForAdmin($banner->id);
         return view('admin.communication.index')->with('communications', $communications);
                                                 
     }
@@ -54,14 +54,19 @@ class CommunicationAdminController extends Controller
     {
         $banner              = UserSelectedBanner::getBanner();
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
-        $communicationTypes  = CommunicationType::where('banner_id', $banner->id)->get();
+        $communicationTypes  = CommunicationType::getCommunicationTypesForAdmin();
         
         $packages            = Package::where('banner_id',$banner->id)->get();
-        $storeAndStoreGroups = Utility::getStoreAndStoreGroupList($banner->id);
+
+        $optGroupOptions     = Utility::getStoreAndBannerSelectDropdownOptions();
+        $optGroupSelections  = json_encode([]);
+
         $tags = Tag::all()->pluck('name', 'id'); 
         $selected_tags = [];
+
         return view('admin.communication.create')
-                                                ->with('storeAndStoreGroups', $storeAndStoreGroups)
+                                                ->with('optGroupSelections', $optGroupSelections)
+                                                ->with('optGroupOptions', $optGroupOptions)
                                                 ->with('communicationTypes', $communicationTypes)
                                                 ->with('navigation', $fileFolderStructure)
                                                 ->with('packages', $packages)
@@ -115,10 +120,10 @@ class CommunicationAdminController extends Controller
         $communication               = Communication::find($id);
         $communication_documents     = CommunicationDocument::getDocumentsByCommunicationId($id);
         $communication_packages      = CommunicationPackage::getPackagesByCommunicationId($id);
-        $communicationTypes          = CommunicationType::where('banner_id', $banner->id)->get();
-        
-        $communication_target_stores = CommunicationTarget::where('communication_id', $id)->get()->pluck('store_id')->toArray();
-        $storeAndStoreGroups         = Utility::getStoreAndStoreGroupList($banner->id);
+        $communicationTypes          = CommunicationType::getCommunicationTypesForAdmin();
+
+        $optGroupOptions             = Utility::getStoreAndBannerSelectDropdownOptions();
+        $optGroupSelections          = json_encode(Communication::getSelectedStoresAndBannersByCommunicationId($id));
 
         $fileFolderStructure         = FileFolder::getFileFolderStructure($banner->id);
         $packages                    = Package::where('banner_id', $banner->id)->get();
@@ -126,16 +131,14 @@ class CommunicationAdminController extends Controller
         $tags                        = Tag::all()->pluck('name', 'id');
         $selectedTags                = ContentTag::getTagsByContentId('communication', $id);
 
-        // dd($selectedTags);
-
         return view('admin.communication.edit')->with('communication', $communication)
                                             ->with('communication_packages', $communication_packages)
                                             ->with('communication_documents', $communication_documents)
                                             ->with('communicationTypes', $communicationTypes)
-                                            ->with('storeAndStoreGroups', $storeAndStoreGroups)
                                             ->with('navigation', $fileFolderStructure)
                                             ->with('packages', $packages)
-                                            ->with('target_stores', $communication_target_stores)
+                                            ->with('optGroupOptions', $optGroupOptions)
+                                            ->with('optGroupSelections', $optGroupSelections)
                                             ->with('banner', $banner)
                                             ->with('tags', $tags)
                                             ->with('selectedTags', $selectedTags);

@@ -1,20 +1,29 @@
-$("#allStores").change(function(){
+$('body').on('blur','#targets_chosen', function(){
+	
+	var target_stores = getTargetStores();
+	var target_banners = getTargetBanners();
+	var store_groups = getStoreGroups();
+	var communication_id = $("#communicationId").val();
+	
+	$("#communication-type-selector").empty()
+									.load('/admin/target/communicationtypes', { 
+										target_stores : target_stores, 
+										target_banners : target_banners,
+										store_groups : store_groups,
+										communication_id : communication_id
+									 });
 
-	if ($("#allStores").is(":checked")) {
+});
 
-		$("#storeSelect option").each(function(index){			
-			$(this).prop('selected', 'selected');
-		});
-		$("#storeSelect").chosen();
-		
-	}
-	else if ($("#allStores").not(":checked")) {
-		$("#storeSelect option").each(function(){
-			$(this).removeAttr('selected');
-		});
-		$("#storeSelect").chosen();
-		
-	}
+$('body').on( 'click', ".comm_type_dropdown_item", function(){
+
+	$(".selected_comm_type").empty();
+	var comm_typeid = $(this).attr('data-comm-typeid');
+	var comm_typeColour = $(this).attr('data-comm-typecolour');
+	var comm_type = $(this).attr('data-comm-type');
+
+	$("input[name='communication_type']").val(comm_typeid);
+	$(".selected_comm_type").append('<i class="fa fa-circle text-'+ comm_typeColour + '"> </i> '+ comm_type);
 });
 
 var initializeTagSelector = function(selectedTags){
@@ -79,11 +88,12 @@ $(document).on('click','.communication-update',function(){
 	var start = $("#send_at").val();
 	var end = $("#archive_at").val();
 	var banner_id = $("input[name='banner_id']").val();
-	// var target_stores  = $("#storeSelect").val();
 	var target_stores = getTargetStores();
-	var allStores  = $("#allStores:checked").val();
+	var target_banners = getTargetBanners();
+	var store_groups = getStoreGroups();
+	var all_stores = getAllStoreStatus();
 	var tags = $("#tags").val();
-	console.log(tags);
+
 	var importance = "1";
 	var sender = "";
 
@@ -106,7 +116,7 @@ $(document).on('click','.communication-update',function(){
 	$(".selected-packages").each(function(){
 		communication_packages.push($(this).attr('data-packageid'));
 	});
- 	
+
     if(subject == '' || body == '') {
 		swal("Oops!", "Communication title/body incomplete.", "error"); 
 		hasError = true;
@@ -119,7 +129,7 @@ $(document).on('click','.communication-update',function(){
 		$(window).scrollTop(0);
 		return false;
 	}
-	if( target_stores == null && typeof allStores === 'undefined' ) {
+	if( target_stores == null || all_stores == null || store_groups == null ) {
 		swal("Oops!", "Target stores not selected.", "error"); 
 		hasError = true;
 		$(window).scrollTop(0);
@@ -134,21 +144,23 @@ $(document).on('click','.communication-update',function(){
 		    dataType : 'json',
 		    data: {
 
-		    	subject : subject,
-		  		communication_type_id: communication_type_id,
-		  		body : body,
-		  		sender: sender,
-		  		importance: importance,
-		  		send_at : start,
-		  		archive_at : end,
-		  		banner_id : banner_id,
-		  		target_stores : target_stores,
-		  		all_stores : allStores,
-		  		communication_documents : communication_documents,
-		  		communication_packages : communication_packages,
-		  		remove_document : remove_document,
-		  		remove_package : remove_package,
-		  		tags : tags
+
+				subject                 : subject,
+				communication_type_id   : communication_type_id,
+				body                    : body,
+				sender                  : sender,
+				importance              : importance,
+				send_at                 : start,
+				archive_at              : end,
+				target_stores           : target_stores,
+				all_stores              : all_stores,
+				target_banners          : target_banners,
+				store_groups            : store_groups,
+				communication_documents : communication_documents,
+				communication_packages  : communication_packages,
+				remove_document         : remove_document,
+				remove_package          : remove_package,
+		  	tags                    : tags
 
 		    },
 		    

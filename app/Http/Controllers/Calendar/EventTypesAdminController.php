@@ -32,7 +32,7 @@ class EventTypesAdminController extends Controller
     public function index()
     {
         $banner = UserSelectedBanner::getBanner();
-        $eventtypes = EventType::where('banner_id', $banner->id)->get();
+        $eventtypes = EventType::getEventTypesForAdmin();
 
         return view('admin.eventtypes.index')
             ->with('eventtypes', $eventtypes);
@@ -45,7 +45,8 @@ class EventTypesAdminController extends Controller
      */
     public function create()
     {
-        return view('admin.eventtypes.create');
+        $banners = UserBanner::getAllBanners()->pluck('name', 'id')->toArray();
+        return view('admin.eventtypes.create')->with('banners', $banners);
     }
 
     /**
@@ -78,9 +79,10 @@ class EventTypesAdminController extends Controller
      */
     public function edit($id)
     {
-        
-        $eventType = EventType::find($id);
-        return view('admin.eventtypes.edit')->with('eventType', $eventType);
+        $banners = UserBanner::getAllBanners()->pluck('name', 'id')->toArray();
+        $eventType = EventType::getEventTypeById($id);
+        return view('admin.eventtypes.edit')->with('eventType', $eventType)
+                                            ->with('banners', $banners);
     }
 
     /**
@@ -105,4 +107,16 @@ class EventTypesAdminController extends Controller
     {
         EventType::find($id)->delete();
     }
+
+    public function getEventTypesByTarget(Request $request)
+    {
+        $event = [];
+        if(isset($request->event_id)){
+            $event = Event::find($request->event_id);
+        }
+        $event_types_list = EventType::geteventTypesByTarget($request);
+        return view('admin.calendar.event-type-selector')->with('event_types_list', $event_types_list)
+                                                    ->with('event', $event);
+    }
+    
 }

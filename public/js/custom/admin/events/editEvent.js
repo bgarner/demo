@@ -1,22 +1,19 @@
-$("#allStores").change(function(){
+$('body').on('blur','#targets_chosen', function(){
+	
+	var target_stores = getTargetStores();
+	var target_banners = getTargetBanners();
+	var store_groups = getStoreGroups();
+	var event_id = $("#eventID").val();
+	
+	$("#event-type-selector").empty()
+									.load('/admin/target/eventtypes', { 
+										target_stores : target_stores, 
+										target_banners : target_banners,
+										store_groups : store_groups,
+										event_id : event_id
+									 });
 
-	if ($("#allStores").is(":checked")) {
-
-		$("#storeSelect option").each(function(index){
-			$(this).attr('selected', 'selected');
-		});
-		$("#storeSelect").chosen();
-
-	}
-	else if ($("#allStores").not(":checked")) {
-		$("#storeSelect option").each(function(){
-			$(this).removeAttr('selected');
-		});
-		$("#storeSelect").chosen();
-
-	}
 });
-
 $("#add-more-attachments").click(function(){
 	console.log('add folders');
 	$("#folder-listing").modal('show');
@@ -45,8 +42,8 @@ $('#attach-selected-folders').on('click', function(){
 
 		});
 	});
-$("body").on('click', ".remove-staged-attachment", function(){
 
+$("body").on('click', ".remove-staged-attachment", function(){
 
 	var folder_id = $(this).attr('data-attachment-id');
 	$(this).closest('.selected-attachments').fadeOut(200, function(){
@@ -92,8 +89,10 @@ $(document).on('click','.event-update',function(){
     var eventDescription = CKEDITOR.instances['description'].getData();
     var eventStart = $("#start").val();
     var eventEnd = $("#end").val();
-    var target_stores  = $("#storeSelect").val();
-	var allStores  = $("#allStores:checked").val();
+    var target_stores = getTargetStores();
+	var target_banners = getTargetBanners();
+	var store_groups = getStoreGroups();
+	var all_stores = getAllStoreStatus();
 	var attachments = [];
 	var remove_attachments = [];
 
@@ -132,7 +131,7 @@ $(document).on('click','.event-update',function(){
 		$(window).scrollTop(0);
 		return false;
 	}
-	if( target_stores == null && typeof allStores === 'undefined' ) {
+	if( target_stores == null || all_stores == null || store_groups == null ) {
 		swal("Oops!", "Target stores not selected.", "error");
 		hasError = true;
 		$(window).scrollTop(0);
@@ -145,17 +144,19 @@ $(document).on('click','.event-update',function(){
 		    type: 'PATCH',
 		    dataType: 'json',
 		    data: {
-		    	id: eventID,
-		  		title: eventTitle,
-		  		description: eventDescription,
-		    	event_type: eventType,
-		    	start: eventStart,
-		    	end: eventEnd,
-				allDay: allDay,				
-		    	target_stores : target_stores,
-		  		allStores : allStores,
-		  		attachments : attachments,
-		  		remove_attachments : remove_attachments
+				id                 : eventID,
+				title              : eventTitle,
+				description        : eventDescription,
+				event_type         : eventType,
+				start              : eventStart,
+				end                : eventEnd,
+				allDay             : allDay,				
+				target_stores      : target_stores,
+				all_stores         : all_stores,
+				target_banners     : target_banners,
+				store_groups       : store_groups,
+				attachments        : attachments,
+				remove_attachments : remove_attachments
 		    },
 
 		    success: function(data) {

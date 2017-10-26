@@ -34,5 +34,9 @@ class DatabaseSeeder extends Seeder
         // $this->call(DistrictRegionPivotSeeder::class);
         // $this->call(BannerStorePivotSeeder::class);
 
+        // $this->call(CommunicationTypeBannerTableSeeder::class);
+        // $this->call(FeatureBannerTableSeeder::class);
+        // $this->call(UrgentNoticeBannerTableSeeder::class);
+
     }
 }

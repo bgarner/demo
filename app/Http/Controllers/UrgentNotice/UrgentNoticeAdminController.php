@@ -19,6 +19,7 @@ use App\Models\Document\Document;
 use App\Models\Document\Folder;
 use App\Models\UrgentNotice\UrgentNoticeDocument;
 use App\Models\UrgentNotice\UrgentNoticeFolder;
+use App\Models\Utility\Utility;
 
 class UrgentNoticeAdminController extends Controller
 {
@@ -41,7 +42,7 @@ class UrgentNoticeAdminController extends Controller
        
         $banner = UserSelectedBanner::getBanner();
 
-        $urgent_notices = UrgentNotice::where('banner_id', $banner->id)->get();
+        $urgent_notices = UrgentNotice::getUrgentNoticeForAdmin();
         return view('admin.urgent-notice.index')->with('urgent_notices',$urgent_notices);
     }
 
@@ -60,14 +61,16 @@ class UrgentNoticeAdminController extends Controller
 
         $attachment_types = UrgentNoticeAttachmentType::all();
 
-        $storeList = StoreInfo::getStoreListing($banner->id);
+        $optGroupOptions    = Utility::getStoreAndBannerSelectDropdownOptions();
+        $optGroupSelections = json_encode([]);
         
         return view('admin.urgent-notice.create')
                     ->with('banner', $banner)
                     ->with('navigation', $fileFolderStructure)
                     ->with('folderStructure', $folderStructure)
                     ->with('attachment_types', $attachment_types)
-                    ->with('storeList', $storeList);
+                    ->with('optGroupSelections', $optGroupSelections)
+                    ->with('optGroupOptions', $optGroupOptions);
         
     }
 
@@ -112,8 +115,8 @@ class UrgentNoticeAdminController extends Controller
         $attached_documents = UrgentNoticeDocument::getDocuments($id);
         $attached_folders = UrgentNoticeFolder::getFolders($id);
 
-        $storeList = StoreInfo::getStoreListing($banner->id);
-        $target_stores = UrgentNoticeTarget::where('urgent_notice_id', $id)->get()->pluck('store_id')->toArray();
+        $optGroupOptions    = Utility::getStoreAndBannerSelectDropdownOptions();
+        $optGroupSelections = json_encode(UrgentNotice::getSelectedStoresAndBannersByUrgentNoticeId($id));
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
         $folderStructure = FolderStructure::getNavigationStructure($banner->id);
         
@@ -123,8 +126,8 @@ class UrgentNoticeAdminController extends Controller
                                             ->with('urgent_notice', $urgent_notice)
                                             ->with('attached_folders', $attached_folders)
                                             ->with('attached_documents', $attached_documents)
-                                            ->with('target_stores', $target_stores)
-                                            ->with('storeList', $storeList)
+                                            ->with('optGroupOptions', $optGroupOptions)
+                                            ->with('optGroupSelections', $optGroupSelections)
                                             ->with('navigation', $fileFolderStructure)
                                             ->with('folderStructure', $folderStructure);
     }

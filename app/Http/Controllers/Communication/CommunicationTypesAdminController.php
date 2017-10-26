@@ -29,8 +29,8 @@ class CommunicationTypesAdminController extends Controller
     {
         
         $banner = UserSelectedBanner::getBanner();
-
-        $communicationtypes = CommunicationType::where('banner_id', $banner->id)->get();
+        
+        $communicationtypes = CommunicationType::getCommunicationTypesForAdmin();
 
         return view('admin.communicationtypes.index')
             ->with('communicationtypes', $communicationtypes)
@@ -44,7 +44,8 @@ class CommunicationTypesAdminController extends Controller
      */
     public function create()
     {
-        return view('admin.communicationtypes.create');
+        $banners = UserBanner::getAllBanners()->pluck('name', 'id')->toArray();
+        return view('admin.communicationtypes.create')->with('banners', $banners);
     }
 
     /**
@@ -55,14 +56,7 @@ class CommunicationTypesAdminController extends Controller
      */
     public function store(Request $request)
     {
-        $communicationTypeDetails = array(
-            'communication_type' => $request['communication_type'],
-            'colour' => $request['colour'],
-            'banner_id' => $request['banner_id']
-        );
-
-        $communicationType = CommunicationType::create($communicationTypeDetails);
-        $communicationType->save();
+        return CommunicationType::storeCommunicationType($request);
     }
 
     /**
@@ -73,7 +67,7 @@ class CommunicationTypesAdminController extends Controller
      */
     public function show($id)
     {
-        //
+        return $id;
     }
 
     /**
@@ -85,9 +79,11 @@ class CommunicationTypesAdminController extends Controller
     public function edit($id)
     {
         
-        $communicationType = CommunicationType::find($id);
+        $banners = UserBanner::getAllBanners()->pluck('name', 'id')->toArray();
+        $communicationType = CommunicationType::getCommunicationTypeById($id);
         return view('admin.communicationtypes.edit')
-            ->with('communicationType', $communicationType);
+            ->with('communicationType', $communicationType)
+            ->with('banners', $banners);
             
     }
 
@@ -100,12 +96,7 @@ class CommunicationTypesAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $communicationType = CommunicationType::find($id);
-
-        $communicationType->communication_type = $request['communication_type'];
-    
-        $communicationType->save();
+        return CommunicationType::updateCommunicationType($id, $request);
     }
 
     /**
@@ -118,5 +109,16 @@ class CommunicationTypesAdminController extends Controller
     {
         $communicationtype = CommunicationType::find($id);
         $communicationtype->delete();
+    }
+
+    public function getCommunicationTypesByTarget(Request $request)
+    {
+        $communication = [];
+        if(isset($request->communication_id)){
+            $communication = Communication::find($request->communication_id);
+        }
+        $communicationTypes = CommunicationType::getCommunicationTypesByTarget($request);
+        return view('admin.communication.communication-type-selector')->with('communicationTypes', $communicationTypes)
+                                                                    ->with('communication', $communication);
     }
 }

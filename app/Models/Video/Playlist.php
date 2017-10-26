@@ -142,14 +142,17 @@ class Playlist extends Model
                                 ->get();
 
 
-        $allStorePlaylists = Playlist::groupBannersForAllStorePlaylists($allStorePlaylists);
+        $allStorePlaylists = Utility::groupBannersForAllStoreContent($allStorePlaylists);
         
         $targetedPlaylists = Playlist::join('playlist_target', 'playlist_target.playlist_id', '=', 'playlists.id')
                                 ->whereIn('playlist_target.store_id', $storeList)
-                                ->select('playlists.*', 'playlist_target.store_id')
-                                ->get();
-
-        $targetedPlaylists = Playlist::groupStoresForTargetedPlaylists($targetedPlaylists);
+                                
+                                ->select(\DB::raw('playlists.*, GROUP_CONCAT(DISTINCT playlist_target.store_id) as stores'))
+                                ->groupBy('playlists.id')
+                                ->get()
+                                ->each(function($playlist){
+                                    $playlist->stores = explode(',', $playlist->stores);
+                                });
 
         $storeGroups = CustomStoreGroup::getStoreGroupsForAdmin();
         $playlistsForStoreGroups = Playlist::join('playlist_store_group','playlist_store_group.playlist_id','=','playlists.id')
@@ -166,9 +169,9 @@ class Playlist extends Model
                                                 }
                                                 $item->stores = array_unique( $item->stores);
                                             });
-        $targetedVideos = Video::mergeTargetedAndStoreGroupVideos($targetedPlaylists, $playlistsForStoreGroups);
+        $targetedPlaylists = Utility::mergeTargetedAndStoreGroupContent($targetedPlaylists, $playlistsForStoreGroups);
 
-        $playlists = Playlist::mergeTargetedAndAllStoreAssets($targetedPlaylists, $allStorePlaylists);
+        $playlists = Utility::mergeTargetedAndAllStoreContent($targetedPlaylists, $allStorePlaylists);
 
 
         foreach ($playlists as $playlist) {
@@ -266,27 +269,6 @@ class Playlist extends Model
         return( $optGroupSelections );
     }
 
-    public static function groupBannersForAllStorePlaylists($allStorePlaylists)
-    {
-        $allStorePlaylists = $allStorePlaylists->toArray();
-        $compiledPlaylists = [];
-        foreach ($allStorePlaylists as $playlist) {
-            $index = array_search($playlist['id'], array_column($compiledPlaylists, 'id'));
-            if(  $index !== false ){
-               array_push($compiledPlaylists[$index]->banners, $playlist["banner_id"]);
-            }
-            else{
-               
-               $playlist["banners"] = [];
-               array_push( $playlist["banners"] , $playlist["banner_id"]);
-               array_push( $compiledPlaylists , (object) $playlist);
-            }
-
-        }
-        
-        return collect($compiledPlaylists);
-    }
-
     public static function groupStoresForTargetedPlaylists($targetedPlaylists)
     {
         $targetedPlaylists = $targetedPlaylists->toArray();
@@ -306,29 +288,6 @@ class Playlist extends Model
         }
         
         return collect($compiledPlaylists);
-    }
-
-    public static function mergeTargetedAndAllStoreAssets($targetedPlaylists, $allStorePlaylists)
-    {
-
-        foreach($targetedPlaylists as $targetedPlaylist)
-        {
-            $id = $targetedPlaylist->id;
-
-            if($allStorePlaylists->contains('id', $id)){
-                
-                $playlistIndex = $allStorePlaylists->where('id', $id)->keys()->toArray()[0];
-                $allStorePlaylists[$playlistIndex]->stores = $targetedPlaylist->stores;
-                
-            }
-            else{
-                $allStorePlaylists->merge($targetedPlaylist);
-            }
-        }
-
-        $playlists = $allStorePlaylists->merge($targetedPlaylists)->unique('id')->sortByDesc('created_at');
-
-        return $playlists;
     }
 
     public static function getPlaylistById($playlistId)

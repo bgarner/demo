@@ -29,8 +29,6 @@
                             <h5>Edit Communication: {{ $communication->subject }}</h5>
 
                             <div class="ibox-tools">
-
-                                <!-- <a href="/admin/communication/create" class="btn btn-primary btn"><i class="fa fa-plus"></i> Create New Communication</a> -->
                             </div>
                         </div>
                         <div class="ibox-content">
@@ -41,6 +39,7 @@
 
 								<input type="hidden" name="banner_id" value={{$banner->id}} >
 								<input type="hidden" id="communicationId" name="communicationId" value={{$communication->id}}>
+								<input type="hidden" name="optGroupSelections" id="optGroupSelections" value="{{$optGroupSelections}}">
 
 								<div class="form-group">
 									<label class="col-sm-2 control-label">Title</label>
@@ -49,16 +48,17 @@
 
 								<div class="form-group">
 
-						                <label class="col-sm-2 control-label">Start &amp; End</label>
+                        <label class="col-sm-2 control-label">Start &amp; End</label>
 
-						                <div class="col-sm-10">
-						                    <div class="input-daterange input-group" id="datepicker">
-						                        <input type="text" class="input-sm form-control datetimepicker-start" name="send_at" id="send_at" value="{{$communication->send_at}}" />
-						                        <span class="input-group-addon">to</span>
-						                        <input type="text" class="input-sm form-control datetimepicker-end" name="archive_at" id="archive_at" value="{{$communication->archive_at}}" />
-						                    </div>
-						                </div>
-						        </div>
+                        <div class="col-sm-10">
+                            <div class="input-daterange input-group" id="datepicker">
+                                <input type="text" class="input-sm form-control datetimepicker-start" name="send_at" id="send_at" value="{{$communication->send_at}}" />
+                                <span class="input-group-addon">to</span>
+                                <input type="text" class="input-sm form-control datetimepicker-end" name="archive_at" id="archive_at" value="{{$communication->archive_at}}" />
+                            </div>
+                        </div>
+                </div>
+                @include('admin.includes.the-ultimate-store-selector')
 								<div class="form-group">
 
 									<label class="col-sm-2 control-label">Type</label>
@@ -110,52 +110,11 @@
 											</textarea>
 
 										</div>
-								</div>
+								</div>	
+                <div id="tag-selector-container">
+                    @include('admin.video.tag.tag-partial', ['tags'=>$tags, 'selectedTags'=>$selectedTags])
+                </div>
 
-								<div class="form-group">
-
-						                <label class="col-sm-2 control-label">Target Stores</label>
-						                <div class="col-sm-10">
-
-		                                        <select name="stores" id="storeSelect" multiple class="chosen">
-									            	<option value="">Select Some Options</option>
-									            	@foreach($storeAndStoreGroups as $option)
-
-									                    <option value="{{$option['id']}}"
-
-									                        @if(isset($option["isStoreGroup"]))
-																data-isStoreGroup = "{{$option['isStoreGroup']}}"
-									                        @endif
-									                        @if(isset($option["stores"]))
-																data-stores = "{{$option['stores']}}"
-									                        @endif
-
-									                        @if(in_array($option['id'], $target_stores))
-																selected
-									                        @endif
-
-									                    >
-									                        {{$option['name']}}
-									                    </option>
-
-									            	@endforeach
-
-										        </select>
-
-										        @if($communication->all_stores)
-
-		                                        	{!! Form::label('allStores', 'Or select all stores:') !!}
-		                                        	{!! Form::checkbox('allStores', null, true ,['id'=> 'allStores'] ) !!}
-		                                    	@else
-
-		                                        	{!! Form::label('allStores', 'Or select all stores:') !!}
-		                                        	{!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
-		                                    	@endif
-						                </div>
-						        </div>
-						        <div id="tag-selector-container">
-                                    @include('admin.video.tag.tag-partial', ['tags'=>$tags, 'selectedTags'=>$selectedTags])
-                                </div>
 
 							</form>
 
@@ -169,12 +128,8 @@
                     <div class="ibox">
                         <div class="ibox-title">
                             <h5>Documents</h5>
-
                             <div class="ibox-tools">
-
                         	</div>
-
-
                         </div>
 
                         <div class="ibox-content">
@@ -241,28 +196,6 @@
 		</div>
 
 
-
-		<div id="package-listing" class="modal fade">
-		    <div class="modal-dialog">
-		        <div class="modal-content">
-		            <div class="modal-header">
-		                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		                <h4 class="modal-title">Select Packages</h4>
-		            </div>
-		            <div class="modal-body">
-		            	<ul class="tree">
-		                @include('admin.package.package-structure-partial', ['packages'=>$packages])
-		                </ul>
-		            </div>
-		            <div class="modal-footer">
-		                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		                <button type="button" class="btn btn-primary" id = "attach-selected-packages">Select Packages</button>
-		            </div>
-		        </div>
-		    </div>
-		</div>
-
-
 		@include('admin.includes.footer')
 
 	    @include('admin.includes.scripts')
@@ -277,8 +210,9 @@
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 		<script type="text/javascript" src="/js/custom/tree.js"></script>
 		<script type="text/javascript" src="/js/custom/datetimepicker.js"></script>
-		<script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>
+		<script type="text/javascript" src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
 		<script type="text/javascript" src="/js/plugins/select/select2.min.js"></script>
+
 
 
 		<script type="text/javascript">
@@ -299,22 +233,9 @@
 
 		    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
 
-		    $(".comm_type_dropdown_item").click(function(){
-
-		    	$(".selected_comm_type").empty();
-		    	var comm_typeid = $(this).attr('data-comm-typeid');
-		    	var comm_typeColour = $(this).attr('data-comm-typecolour');
-		    	var comm_type = $(this).attr('data-comm-type');
-
-		    	$("input[name='communication_type']").val(comm_typeid);
-		    	$(".selected_comm_type").append('<i class="fa fa-circle text-'+ comm_typeColour + '"> </i> '+ comm_type);
-		    });
 		    $(document).ready(function(){
 		    	initializeTagSelector();
 		    });
-		    
-
-
 
 		</script>
 

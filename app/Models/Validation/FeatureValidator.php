@@ -22,8 +22,10 @@ class FeatureValidator extends PortalValidator
         'background'         => 'sometimes|mimes:gif,jpeg,jpg,png',
         'communication_type' => 'sometimes|exists:communication_types,id',
         'communications'     => 'sometimes|exists:communications,id',
-        'target_stores'      => "required_without:allStores",
-        'allStores'          => 'in:on'
+        'target_stores'      => "sometimes|exists:stores,store_number",
+        'allStores'          => 'sometimes|in:on,off',
+        'target_banners'     => 'sometimes|exists:banners,id',
+        'store_groups'       => 'sometimes|exists:custom_store_groups,id'
             
     ];
 
@@ -35,8 +37,6 @@ class FeatureValidator extends PortalValidator
         'remove_packages.exists'         => 'Invalid value in packages',
         'update_type_id.exists'          => 'Invalid value in Latest Updates',
         'communication_type.exists'      => 'Invalid communication types attached',
-        'communications.exists'          => 'Invalid communications attached',
-        'target_stores.required_without' => 'Target Store missing',
-        'allStores.in'                   => 'Invalid value in Target Stores'
+        'communications.exists'          => 'Invalid communications attached'
     ];
 }

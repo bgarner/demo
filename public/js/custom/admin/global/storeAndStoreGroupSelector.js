@@ -1,3 +1,7 @@
+/* Do Not Include */
+/* deprecated */
+
+
 var allStores;
 $(document).ready(function(){
 	$(".chosen").chosen({
