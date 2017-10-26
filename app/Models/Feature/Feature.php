@@ -45,8 +45,22 @@ class Feature extends Model
                         'end'              => $request['end'],
                         'update_type_id'   => $request['update_type'],
                         'update_frequency' => $request['update_frequency'],
-                        'target_stores'    => json_decode($request['target_stores'])
+                        // 'target_stores'    => json_decode($request['target_stores'])
                       ];
+
+        if (NULL  != json_decode($request['target_stores'])) {
+            $validateThis['target_stores'] = $request['target_stores'];
+        }
+        if (NULL != json_decode($request['target_banners'])) {
+            $validateThis['target_banners'] = $request['target_banners'];
+        }
+        if (NULL != json_decode($request['store_groups'])) {
+            $validateThis['store_groups'] = $request['store_groups'];
+        }
+
+        if (NULL != $request['all_stores']) {
+            $validateThis['allStores'] = $request['all_stores'];
+        }
 
         if(null !== json_decode($request['communication_type'])){
             $validateThis['communication_type'] = json_decode($request['communication_type']);
@@ -56,10 +70,6 @@ class Feature extends Model
         if(null !== json_decode($request['communications'])){
             $validateThis['communications'] = json_decode($request['communications']);
                         
-        }
-
-        if ($request['all_stores'] != NULL) {
-            $validateThis['allStores'] = $request['all_stores'];
         }
 
         $v = new FeatureValidator();
@@ -77,23 +87,28 @@ class Feature extends Model
                         'start'            => $request['start'],
                         'end'              => $request['end'],
                         'update_type_id'   => $request['update_type'],
-                        'update_frequency' => $request['update_frequency'],
-                        'remove_documents' => $request['remove_document'],
-                        'remove_packages'  => $request['remove_package'],
-                        'target_stores'    => $request['target_stores']
+                        'update_frequency' => $request['update_frequency']
                       ];
 
         if(null !== $request['communication_type']){
             $validateThis['communication_type'] = $request['communication_type'];
-                        
         }
 
         if(null !== $request['communications']){
             $validateThis['communications'] = $request['communications'];
-                        
         }
 
-        if ($request['all_stores'] != NULL) {
+        if (NULL  != $request['target_stores']) {
+            $validateThis['target_stores'] = $request['target_stores'];
+        }
+        if (NULL != $request['target_banners']) {
+            $validateThis['target_banners'] = $request['target_banners'];
+        }
+        if (NULL != $request['store_groups']) {
+            $validateThis['store_groups'] = $request['store_groups'];
+        }
+
+        if (NULL != $request['all_stores']) {
             $validateThis['allStores'] = $request['all_stores'];
         }
 
@@ -103,6 +118,12 @@ class Feature extends Model
         }
         if(isset($request['background']) && $request['background']){
             $validateThis['background']    = $request['background'];
+        }
+        if(isset($request['remove_documents']) && $request['remove_documents']){
+            $validateThis['remove_documents']    = $request['remove_documents'];
+        }
+        if(isset($request['remove_package']) && $request['remove_package']){
+            $validateThis['remove_package']    = $request['remove_package'];
         }
 
         $v = new FeatureValidator();
@@ -158,7 +179,6 @@ class Feature extends Model
         $banner           = UserSelectedBanner::getBanner();
 
         $feature          = Feature::create([
-                'banner_id'        => $banner->id,
                 'title'            => $title,
                 'tile_label'       => $tile_label,
                 'start'            => $start,
@@ -179,8 +199,9 @@ class Feature extends Model
       
   		Feature::addFiles(json_decode($request["feature_files"]), $feature->id);
   		Feature::addPackages(json_decode($request['feature_packages']), $feature->id);
-        Feature::updateCommunicationTypes(json_decode($request['communication_type']), $feature->id);
+        FeatureCommunicationTypes::updateCommunicationTypes(json_decode($request['communication_type']), $feature->id);
         FeatureCommunication::updateFeatureCommunications(json_decode($request['communications']), $feature->id);
+        FeatureFlyer::updateFeatureFlyer(json_decode($request['feature_flyers']), $feature->id);
         FeatureTarget::updateFeatureTarget($feature->id, $request);
 
   		return $feature;
@@ -213,8 +234,9 @@ class Feature extends Model
         Feature::removeFiles($request->remove_document, $id);
         Feature::addPackages($request->feature_packages, $id);
         Feature::removePackages($request->remove_package, $id);
-        Feature::updateCommunicationTypes($request['communication_type'], $feature->id);
+        FeatureCommunicationTypes::updateCommunicationTypes($request['communication_type'], $feature->id);
         FeatureCommunication::updateFeatureCommunications($request['communications'], $feature->id);
+        FeatureFlyer::updateFeatureFlyer($request['feature_flyers'], $id);
         FeatureTarget::updateFeatureTarget($feature->id, $request);
         return $feature;
 
@@ -266,22 +288,6 @@ class Feature extends Model
           }
         }
         return; 
-    }
-
-    public static function updateCommunicationTypes($communication_types, $feature_id)
-    {
-        if(FeatureCommunicationTypes::where('feature_id', $feature_id)->first()){
-            $feature = FeatureCommunicationTypes::where('feature_id', $feature_id)->delete();
-        }
-        if (isset($communication_types)) {   
-            
-            foreach ($communication_types as $type) {
-                FeatureCommunicationTypes::create([
-                    'feature_id' => $feature_id,
-                    'communication_type_id' => intval($type)
-                    ]);
-            }
-        }
     }
 
     public static function updateFeatureBackground($file, $feature_id)

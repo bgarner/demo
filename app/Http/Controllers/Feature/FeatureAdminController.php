@@ -23,6 +23,8 @@ use App\Models\Feature\FeatureFlyer;
 use App\Models\Flyer\Flyer;
 use App\Models\Feature\FeatureTarget;
 use App\Models\Utility\Utility;
+use App\Models\Event\Event;
+use App\Models\Event\EventType;
 
 class FeatureAdminController extends Controller
 {
@@ -58,10 +60,17 @@ class FeatureAdminController extends Controller
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
         $communicationTypes  = CommunicationType::getCommunicationTypesForAdmin();
         $communicationTypes  = $communicationTypes->pluck('communication_type', 'id');
-        $communications      = Communication::getAllCommunication($banner->id)->pluck('subject', 'id');
+        $communications      = Communication::getCommunicationsForAdmin()->pluck('subject', 'id');
         $optGroupOptions     = Utility::getStoreAndBannerSelectDropdownOptions();
         $optGroupSelections  = json_encode([]);
         $flyers              = Flyer::getFlyersByBannerId($banner->id);
+
+        $eventTypes          = EventType::getEventTypesForAdmin();
+        $eventTypes          = $eventTypes->pluck('event_type', 'id')->toArray();
+
+        $events              = Event::getEventsForAdmin()->pluck('title', 'id')->toArray();
+
+        // dd($events);
 
         return view('admin.feature.create')
                 ->with('banner', $banner)
@@ -117,7 +126,7 @@ class FeatureAdminController extends Controller
         $communicationTypes           = $communicationTypes->pluck('communication_type', 'id');
         $selected_communication_types = FeatureCommunicationTypes::getCommunicationTypeId($id);
         
-        $communications               = Communication::getAllCommunication($banner->id)->pluck('subject', 'id');
+        $communications               = Communication::getCommunicationsForAdmin()->pluck('subject', 'id');
         $selected_communications      = FeatureCommunication::getCommunicationId($id);
 
         $optGroupOptions              = Utility::getStoreAndBannerSelectDropdownOptions();
@@ -125,6 +134,10 @@ class FeatureAdminController extends Controller
 
         $flyers                       = Flyer::getFlyersByBannerId($banner->id);
         $selected_flyers              = FeatureFlyer::getFlyersByFeatureId($id);
+
+        //events
+
+        //eventtypes
 
         return view('admin.feature.edit')->with('feature', $feature)
                                     
@@ -183,7 +196,7 @@ class FeatureAdminController extends Controller
 
     public function getFeatureFlyerPartial($feature_id)
     {
-        $flyers = Feature::getFlyerDetailsByFeatureId($feature_id);
+        $flyers = FeatureFlyer::getFlyersByFeatureId($feature_id);
 
         return view('admin.feature.feature-flyers-partial')->with('flyers', $flyers);
     }

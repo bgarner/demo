@@ -182,6 +182,7 @@ $(document).on('click','.feature-create',function(){
      	data.append('feature_packages',  JSON.stringify(feature_packages));
      	data.append('communication_type',  JSON.stringify(communication_type));
      	data.append('communications', JSON.stringify(communications));
+     	data.append('feature_flyers',  JSON.stringify(feature_flyers));
     	data.append('update_type', update_type);
     	data.append('update_frequency', update_frequency);
 		data.append('all_stores', getAllStoreStatus());
