@@ -41,14 +41,6 @@
             @include('site.includes.topbar')
         </div>
 
-
-       <div class="row wrapper border-bottom white-bg page-heading">
-            <div class="col-lg-12">
-                <h2>{{__("Community Fund")}}</h2>
-            </div>
-        </div>
-
-
         <div class="wrapper wrapper-content">
             <div class="row">
 
@@ -140,7 +132,7 @@
 
     <script>
 
-        
+
 
         $.ajaxSetup({
             headers: {
@@ -148,8 +140,8 @@
             }
         });
 
-        
-        
+
+
     </script>
 
 </body>

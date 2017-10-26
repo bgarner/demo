@@ -22,16 +22,6 @@
     .modal-content{ height: 100% !important;}
     .modal-body{ padding: 0; margin: 0; height: 100% !important; }
 
-
-    /* styles for '...' */
-    .video-list-box h4{
-
-
-    }
-
-
-
-
     .giveMeEllipsis {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -41,19 +31,7 @@
         -webkit-box-orient: vertical;
     }
 
-    /* hide ... if we have text, which is less than or equal to max lines */
 
-
-    /*.video-list-box h4{
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-
-    }
-    .video-list-box h4 a{
-
-    }*/
 
     #file-table tr td:last-child {
         white-space: nowrap;
@@ -77,20 +55,7 @@
                 @include('site.includes.topbar')
             </div>
 
-            <div class="row wrapper border-bottom white-bg page-heading">
 
-                {{-- <h1 style="color: #333; font-size: 65px; text-transform: uppercase; font-family: GalaxiePolarisCondensed-Bold;padding-bottom: 0px; line-height: 50px;">Video Library</h1> --}}
-                {{-- <div class="col-lg-10">
-                    <h2>Video</h2>
-                </div> --}}
-
-                {{-- <div class="col-lg-2">
-
-                </div> --}}
-
-                <h2>{{__("Video Library")}}</h2>
-
-            </div>
 
             <br />
 

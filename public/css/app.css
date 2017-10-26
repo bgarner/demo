@@ -1848,14 +1848,26 @@ a.DTTT_button:hover:not(.DTTT_disabled) {
   margin: 0 5px;
 }
 .todo-list > li .label {
-  font-size: 9px;
+  /*font-size: 9px;
+  margin-left: 10px;*/
+  font-size: 11px;
   margin-left: 10px;
+  margin-top: 0px;
+  font-weight: normal;
 }
 .check-link {
   font-size: 24px;
   position: relative;
-  top: 5px;
+  /*top: 0px;*/
+  bottom: 7px;
+  padding-right: 3px;
+  /*width: 20px;*/
 }
+
+.todo-list li.due-today-list-item{
+    border-color: #f8ac59;
+}
+
 .todo-completed {
   text-decoration: line-through;
 }
@@ -8268,10 +8280,21 @@ body.md-skin {
 }
 
 .archived{
-  background-color: #f1f6fa;
+  background-color: #337ab7;
+  color: #fff;
 }
+
+tr.archived td a,
+tr.archived.archived-blue td a,
+tr.archived td.mail-subject a,
+tr.archived i
+{
+    color: #fff !important;
+}
+
+
 .archived-blue i{
-  color: #337ab7;
+  color: #fff;
 }
 
 .onoffswitch-switch,
@@ -8492,6 +8515,11 @@ body.md-skin {
 #task-container .mail-box{
   padding: 10px;
 }
+
+.task-title{
+    width: 70%;
+}
+
 .task-done{
   float:right;
   padding-right: 20px;
@@ -8501,7 +8529,8 @@ body.md-skin {
   padding-left: 20px;
 }
 .task_description{
-  padding-left: 25px;
+    clear: both;
+    padding-left: 25px;
 }
 .task_documents{
   padding-left: 25px;
@@ -8584,4 +8613,23 @@ ul.banner-selector-menu{
     .footer {
         display: none;
     }
+}
+
+.badge{
+    color: #afafaf;
+    background-color: #e0e1e2;
+    border-bottom: 2px solid #c1c1c1;
+    font-weight: normal;
+    font-style: normal;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+a:hover span.badge{
+    color: #666;
+    border-bottom: 2px solid #666;
+}
+
+.label-message-cat{
+    margin-left: 0px !important;
 }

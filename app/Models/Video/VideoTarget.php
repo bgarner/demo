@@ -8,6 +8,7 @@ use App\Models\Video\Video;
 use App\Models\Video\VideoBanner;
 use App\Models\Video\VideoTarget;
 use App\Models\Video\VideoStoreGroup;
+use App\Models\Utility\Utility;
 
 class VideoTarget extends Model
 {

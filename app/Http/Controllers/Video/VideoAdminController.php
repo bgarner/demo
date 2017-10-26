@@ -10,9 +10,9 @@ use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Auth\User\UserBanner;
 use App\Models\StoreApi\Banner;
 use App\Models\StoreApi\StoreInfo;
-use App\Models\Video\Tag;
+use App\Models\Tag\Tag;
 use App\Models\Video\Video;
-use App\Models\Video\VideoTag;
+use App\Models\Tag\ContentTag;
 use App\Models\Utility\Utility;
 
 class VideoAdminController extends Controller
@@ -75,7 +75,10 @@ class VideoAdminController extends Controller
 
         $banner = UserSelectedBanner::getBanner();
         
-        $videos = Video::where('upload_package_id', $package)->get();
+        $videos = Video::where('upload_package_id', $package)->get()
+                        ->each(function($vid){
+                            $vid->tags = ContentTag::getTagsByContentId('video', $vid->id);
+                        });
 
         $tags = Tag::all()->pluck('name', 'id');
 
@@ -94,7 +97,7 @@ class VideoAdminController extends Controller
     public function updateMetaData(Request $request)
     {
         Video::updateMetaData($request);
-        return redirect()->action('Video\VideoAdminController@index');;
+        return redirect()->action('Video\VideoAdminController@index');
     }       
 
     /**
@@ -139,6 +142,7 @@ class VideoAdminController extends Controller
     public function update(Request $request, $id)
     {
         Video::updateMetaData($request, $id);
+        return;
     }
 
     /**
@@ -150,7 +154,7 @@ class VideoAdminController extends Controller
     public function destroy($id)
     {
         Video::where('id', $id)->delete();
-        VideoTag::where('video_id', $id)->delete();
+        ContentTag::where('content_id', $id)->where('content_type', 'video')->delete();
         return;
     }
 

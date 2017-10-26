@@ -6,6 +6,7 @@
     @include('admin.includes.head')
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
     <link rel="stylesheet" type="text/css" href="/css/custom/tree.css">
+    <link rel="stylesheet" href="/css/plugins/select/select2.min.css">
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 </head>
 
@@ -47,17 +48,17 @@
 
 								<div class="form-group">
 
-						                <label class="col-sm-2 control-label">Start &amp; End</label>
+                        <label class="col-sm-2 control-label">Start &amp; End</label>
 
-						                <div class="col-sm-10">
-						                    <div class="input-daterange input-group" id="datepicker">
-						                        <input type="text" class="input-sm form-control datetimepicker-start" name="send_at" id="send_at" value="{{$communication->send_at}}" />
-						                        <span class="input-group-addon">to</span>
-						                        <input type="text" class="input-sm form-control datetimepicker-end" name="archive_at" id="archive_at" value="{{$communication->archive_at}}" />
-						                    </div>
-						                </div>
-						        </div>
-						        @include('admin.includes.the-ultimate-store-selector')
+                        <div class="col-sm-10">
+                            <div class="input-daterange input-group" id="datepicker">
+                                <input type="text" class="input-sm form-control datetimepicker-start" name="send_at" id="send_at" value="{{$communication->send_at}}" />
+                                <span class="input-group-addon">to</span>
+                                <input type="text" class="input-sm form-control datetimepicker-end" name="archive_at" id="archive_at" value="{{$communication->archive_at}}" />
+                            </div>
+                        </div>
+                </div>
+                @include('admin.includes.the-ultimate-store-selector')
 								<div class="form-group">
 
 									<label class="col-sm-2 control-label">Type</label>
@@ -109,9 +110,11 @@
 											</textarea>
 
 										</div>
-								</div>
+								</div>	
+                <div id="tag-selector-container">
+                    @include('admin.video.tag.tag-partial', ['tags'=>$tags, 'selectedTags'=>$selectedTags])
+                </div>
 
-								
 
 							</form>
 
@@ -208,6 +211,8 @@
 		<script type="text/javascript" src="/js/custom/tree.js"></script>
 		<script type="text/javascript" src="/js/custom/datetimepicker.js"></script>
 		<script type="text/javascript" src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
+		<script type="text/javascript" src="/js/plugins/select/select2.min.js"></script>
+
 
 
 		<script type="text/javascript">
@@ -228,6 +233,9 @@
 
 		    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
 
+		    $(document).ready(function(){
+		    	initializeTagSelector();
+		    });
 
 		</script>
 

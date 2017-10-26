@@ -5,6 +5,58 @@ $(document).ready(function(){
 		});
 		$("#storeSelect").chosen();
 	}
+	initializeTagSelector();
+
+
+});
+var initializeTagSelector = function(){
+	
+	$("#tags").select2({ 
+		width: '100%' , 
+		tags: true,
+		multiple: true,
+		createTag: function (params) {
+    		var term = $.trim(params.term);
+
+		    if (term === ''  && $("#tags").find('option').attr("tagname", term).length >0) {
+		      return null;
+		    }
+
+		    return {
+		      id: term, //id of new option 
+		      text: term, //text of new option 
+		      newTag: true
+		    }
+		}
+	});
+	
+}
+
+$("body").on('select2:select', $("#tags"), function (evt) {
+
+	var document_id = $("#documentID").val();
+    if(evt.params.data.newTag){
+    	$.post("/admin/tag",{ tag_name: evt.params.data.text })
+    	.done(function(tag){
+    		
+    		//change the id of the newly added tag to be the id from db
+			$('#tags option[value="'+tag.name+'"]').val(tag.id);
+			
+			var selectedTags = $("#tags").val();
+			//update tag document mapping
+			$.post("/admin/documenttag",{ 'document_id' : document_id, 'tags': selectedTags })
+			.done(function(){
+				$('#tags').select2('destroy');
+				$("#tag-selector-container").load("/admin/documenttag/"+document_id, function(){
+					initializeTagSelector();
+					$("#tags").focus();
+
+				});	
+			});				
+
+    	});
+    }
+
 });
 
 $("#allStores").change(function(){
@@ -47,14 +99,7 @@ $(document).on('click','.alert-create',function(){
 	// var target_stores = getTargetStores();
 	var target_stores = $("#storeSelect").val();
 	var allStores = $("#allStores:checked").val();
-	 
-	console.log('title : ' + title);
-	console.log('description : ' + description);
-	console.log('is_alert : ' + is_alert); 
-	console.log('alert_type : '+ alert_type_id);
-	console.log('target_stores : ' + target_stores);
-	console.log('banner_id : ' + banner_id);
-	console.log('all stores : ' + allStores);
+	var tags = $("#tags").val();
 
     if(title == '') {
 		swal("Oops!", "Title required for this document.", "error"); 
@@ -82,16 +127,8 @@ $(document).on('click','.alert-create',function(){
 			return false;
 		}
 		
-		// if(start == '' || end == '' ) {
-		// 	swal("Oops!", "Start and End dates required for alert", "error"); 
-		// 	hasError = true;
-		// 	$(window).scrollTop(0);
-		// 	return false;
-		// }
-		
 	} 
 
-	console.log(target_stores);
     if(hasError == false) {
 
     	$('.alert-create i').removeClass("fa-check");
@@ -106,13 +143,12 @@ $(document).on('click','.alert-create',function(){
 		  		description: description,
 		  		is_alert : is_alert,
 		  		alert_type_id : alert_type_id,
-		  		// start : start,
-		  		// end: end,
 		  		banner_id : banner_id,
 		  		stores : target_stores,
 		  		document_start : document_start,
 		  		document_end : document_end,
-		  		all_stores : allStores
+		  		all_stores : allStores,
+		  		tags : tags,
 
 		  		
 		    },

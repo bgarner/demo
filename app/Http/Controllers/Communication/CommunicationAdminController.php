@@ -57,15 +57,22 @@ class CommunicationAdminController extends Controller
         $communicationTypes  = CommunicationType::getCommunicationTypesForAdmin();
         
         $packages            = Package::where('banner_id',$banner->id)->get();
+
         $optGroupOptions     = Utility::getStoreAndBannerSelectDropdownOptions();
         $optGroupSelections  = json_encode([]);
+
+        $tags = Tag::all()->pluck('name', 'id'); 
+        $selected_tags = [];
+
         return view('admin.communication.create')
                                                 ->with('optGroupSelections', $optGroupSelections)
                                                 ->with('optGroupOptions', $optGroupOptions)
                                                 ->with('communicationTypes', $communicationTypes)
                                                 ->with('navigation', $fileFolderStructure)
                                                 ->with('packages', $packages)
-                                                ->with('banner', $banner);
+                                                ->with('banner', $banner)
+                                                ->with('tags', $tags)
+                                                ->with('selected_tags', $selected_tags);
                                                 
 
     }
@@ -121,6 +128,9 @@ class CommunicationAdminController extends Controller
         $fileFolderStructure         = FileFolder::getFileFolderStructure($banner->id);
         $packages                    = Package::where('banner_id', $banner->id)->get();
 
+        $tags                        = Tag::all()->pluck('name', 'id');
+        $selectedTags                = ContentTag::getTagsByContentId('communication', $id);
+
         return view('admin.communication.edit')->with('communication', $communication)
                                             ->with('communication_packages', $communication_packages)
                                             ->with('communication_documents', $communication_documents)
@@ -129,7 +139,9 @@ class CommunicationAdminController extends Controller
                                             ->with('packages', $packages)
                                             ->with('optGroupOptions', $optGroupOptions)
                                             ->with('optGroupSelections', $optGroupSelections)
-                                            ->with('banner', $banner);
+                                            ->with('banner', $banner)
+                                            ->with('tags', $tags)
+                                            ->with('selectedTags', $selectedTags);
     }
 
     /**

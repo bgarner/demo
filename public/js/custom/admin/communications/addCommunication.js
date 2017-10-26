@@ -9,6 +9,59 @@ $('body').on('blur','#targets_chosen', function(){
 
 });
 
+
+var initializeTagSelector = function(selectedTags){
+	
+	$("#tags").select2({ 
+		width: '100%' , 
+		tags: true,
+		multiple: true,
+		createTag: function (params) {
+    		var term = $.trim(params.term);
+
+		    if (term === '' && $("#tags").find('option').attr("tagname", term).length >0) {
+		      return null;
+		    }
+
+		    return {
+		      id: term, //id of new option 
+		      text: term, //text of new option 
+		      newTag: true
+		    }
+		}
+	});
+	if(typeof(selectedTags) !== 'undefined'){
+		$(selectedTags).each(function(index, tag){
+			$('#tags').val(selectedTags);
+			$('#tags').trigger('change');
+		});
+	}
+
+}
+
+$("body").on('select2:select', $("#tags"), function (evt) {
+
+	var communication_id = $("#communicationId").val();
+    if(evt.params.data.newTag){
+    	$.post("/admin/tag",{ tag_name: evt.params.data.text })
+    	.done(function(tag){
+    		// change the id of the newly added tag to be the id from db
+			$('#tags option[value="'+tag.name+'"]').val(tag.id);	
+			var selectedTags = $("#tags").val();
+
+			$('#tags').select2('destroy');
+			$("#tag-selector-container").load("/admin/communicationtag/"+communication_id, function(){
+				initializeTagSelector(selectedTags);
+				$("#tags").focus();
+
+			});
+			
+    	});
+    }
+
+});
+
+
 $(document).on('click','.communication-create',function(){
   	
   	var hasError = false;
@@ -28,6 +81,9 @@ $(document).on('click','.communication-create',function(){
 	var target_banners = getTargetBanners();
 	var store_groups = getStoreGroups();
 	var all_stores = getAllStoreStatus();
+
+	var tags = $("#tags").val();
+
 
 	if(!communication_type_id){
 		communication_type_id = $("#default_communication_type").val(); // no category
@@ -81,7 +137,8 @@ $(document).on('click','.communication-create',function(){
 		    	target_banners : target_banners,
 		    	store_groups : store_groups,
 		  		communication_documents : communication_documents,
-		  		communication_packages : communication_packages
+		  		communication_packages : communication_packages,
+		  		tags: tags
 		  		
 		    },
 		    success: function(result) {

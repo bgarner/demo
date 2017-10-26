@@ -56,7 +56,7 @@ Route::resource('/admin/eventtypes', 'Calendar\EventTypesAdminController');
 Route::post('/admin/target/eventtypes', 'Calendar\EventTypesAdminController@getEventTypesByTarget');
 
 //Tags
-// Route::resource('/admin/tag', 'Tag\TagAdminController');
+Route::resource('/admin/tag', 'Tag\TagAdminController');
 
 //Quicklinks
 Route::resource('/admin/quicklink', 'Dashboard\QuicklinksAdminController');
@@ -83,12 +83,15 @@ Route::resource('/admin/playlistorder', 'Video\PlaylistVideoOrderController');
 Route::resource('/admin/playlist', 'Video\PlaylistAdminController');
 Route::get('/admin/playlistvideos/{playlist_id}', 'Video\PlaylistAdminController@getPlaylistVideoPartial');
 
-//Video Tags
-Route::resource('/admin/tag', 'Video\TagAdminController');
+//Content Tags
 Route::get('/admin/videotag/{video_id}', 'Video\VideoTagController@show');
 Route::post('/admin/videotag', 'Video\VideoTagController@store');
 Route::get('/admin/playlisttag/{playlist_id}', 'Video\PlaylistTagController@show');
 Route::post('/admin/playlisttag', 'Video\PlaylistTagController@store');
+Route::get('/admin/documenttag/{document_id}', 'Document\DocumentTagController@show');
+Route::post('/admin/documenttag', 'Document\DocumentTagController@store');
+Route::get('/admin/communicationtag/{communication_id}', 'Communication\CommunicationTagController@show');
+Route::post('/admin/communicationtag', 'Communication\CommunicationTagController@store');
 
 //Banner selector
 Route::resource('/admin/banner' , 'AdminSelectedBannerController');

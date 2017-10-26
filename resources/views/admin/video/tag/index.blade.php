@@ -22,7 +22,7 @@
                 <div class="col-lg-12">
                     <div class="ibox">
                         <div class="ibox-title">
-                            <h5>Video Tags</h5>
+                            <h5>Tags</h5>
 
                             <div class="ibox-tools">
 
@@ -65,7 +65,7 @@
         <div id="add-tag-modal" class="modal inmodal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                	{!! Form::open(['action' => 'Video\TagAdminController@store']) !!}
+                	{!! Form::open(['action' => 'Tag\TagAdminController@store']) !!}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">Create New Tag</h4>
@@ -101,7 +101,7 @@
 
 		</script>
 
-		<script type="text/javascript" src="/js/custom/admin/videos/tags/tag.js"></script>
+		<script type="text/javascript" src="/js/custom/admin/tags/tag.js"></script>
 		<script type="text/javascript" src="/js/custom/site/launchModal.js" ></script>
 
 		@include('site.includes.bugreport')

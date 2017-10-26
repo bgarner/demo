@@ -158,6 +158,9 @@ class DocumentAdminController extends Controller
         $storeList           = StoreInfo::getStoreListing($banner->id);
         // $storeAndStoreGroups = Utility::getStoreAndStoreGroupList($banner->id);
 
+        $tags = Tag::all()->pluck('name', 'id');
+        $selected_tags = ContentTag::getTagsByContentId('document', $id);
+
         return view('admin.document-meta.document-edit-meta-data')->with('document', $document)
                                                     ->with('banner', $banner)
                                                     ->with('target_stores', $target_stores)
@@ -165,8 +168,9 @@ class DocumentAdminController extends Controller
                                                     ->with('alert_details', $alert_details)
                                                     ->with('folderStructure', $folderStructure)
                                                     ->with('folderPath', $folderPath)
-                                                    ->with('storeList', $storeList);
-                                                    // ->with('storeAndStoreGroups', $storeAndStoreGroups);
+                                                    ->with('storeList', $storeList)
+                                                    ->with('tags', $tags)
+                                                    ->with('selectedTags', $selected_tags);
     }
 
     /**

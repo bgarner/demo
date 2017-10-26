@@ -60,6 +60,9 @@ Route::get('/{storeno}/folder/{id}', ['uses' => 'Document\FolderController@show'
 //Route::post('/{storeno}/search', array('uses' => 'Search\SearchController@index'));
 Route::get('/{storeno}/search', array('uses' => 'Search\SearchController@index'));
 
+//TAGS
+Route::get('/{storeno}/tag/{tag}', 'Tag\TagController@index');
+
 //TASKS
 Route::get('/{storeno}/task', 'Task\TaskController@index');
 Route::get('/{storeno}/tasklist/{id}', 'Task\TasklistController@index');
@@ -106,5 +109,3 @@ Route::post('/setLanguage', 'Locale\LocaleController@setLanguage');
 // Route::get('/admin', function(){
 // //	return view('admin.index');
 // });
-
-

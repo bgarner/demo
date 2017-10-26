@@ -303,6 +303,10 @@ class Document extends Model
             Alert::deleteAlert($document->id);
         }
 
+        if(isset($request->tags) && $request->tags != null) {
+            ContentTag::updateTags( 'document', $id, $request->tags);
+        }
+
         $document->prettyDateStart = Utility::prettifyDate($document->start);
         $document->prettyDateEnd = Utility::prettifyDate($document->end);
 

@@ -480,13 +480,12 @@ class Communication extends Model
 		CommunicationTarget::updateTargetStores($communication->id, $request);
 		CommunicationDocument::updateCommunicationDocuments($communication->id, $request);
 		CommunicationPackage::updateCommunicationPackages($communication->id, $request);
+		ContentTag::updateTags( 'communication', $communication->id, $request->tags);
 		return $communication;
 	}
 
 	public static function updateCommunication($id, $request)
 	{
-
-
 		\Log::info($request->all());
 		$validate = Communication::validateEditCommunication($request);
 
@@ -520,6 +519,7 @@ class Communication extends Model
 		CommunicationTarget::updateTargetStores($communication->id, $request);
 		CommunicationDocument::updateCommunicationDocuments($communication->id, $request);
 		CommunicationPackage::updateCommunicationPackages($communication->id, $request);
+		ContentTag::updateTags( 'communication', $id, $request->tags);
 
 		return $communication;
 

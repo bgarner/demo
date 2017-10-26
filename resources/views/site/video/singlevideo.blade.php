@@ -49,9 +49,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <br />
-                    <video 
+                    <video
                         class="video-js vjs-default-skin vjs-big-play-centered"
-                        poster="/video/thumbs/{{$video[0]->thumbnail}}" 
+                        poster="/video/thumbs/{{$video[0]->thumbnail}}"
                         id="video_{{$video[0]->id}}"
                         data-setup='{"controls": true, "autoplay": true, "preload": "auto", "fluid": true}'
                         >
@@ -82,6 +82,11 @@
                         </div>
                         <div class="ibox-content clearfix">
                             <p>{{$video[0]->description}}</p>
+                            <div class="tag-list">
+                                @foreach($tags as $t)
+                                    <a href="../../tag/{{ $t->linkname }}"><span class="badge">{{ $t->name }}</span></a>
+                                @endforeach
+                            </div>
 
                             @if( count($playlists) > 0)
                                 <hr />
@@ -134,7 +139,7 @@
     <script type="text/javascript" src="/js/vendor/lightbox.min.js"></script>
     <script type="text/javascript" src="/js/custom/site/video/incrementViewCount.js?<?php echo time();?>"></script>
     <script type="text/javascript" src="/js/custom/site/video/likedislike.js?<?php echo time();?>"></script>
-    
+
     @include('site.includes.modal')
 
 </body>

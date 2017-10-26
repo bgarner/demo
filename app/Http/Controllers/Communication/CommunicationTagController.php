@@ -1,21 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Video;
+namespace App\Http\Controllers\Communication;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Tag\ContentTag;
 use App\Models\Tag\Tag;
+use App\Models\Tag\ContentTag;
 
-class VideoTagController extends Controller
+class CommunicationTagController extends Controller
 {
-    
     public function show($resource_id)
     {
     	$tags = Tag::all()->pluck('name', 'id');
     	
-    	$selectedTags = ContentTag::getTagsByContentId('video', $resource_id);
-
+    	$selectedTags = ContentTag::getTagsByContentId('communication', $resource_id);
+                                
     	return view('admin.video.tag.tag-partial')
     			->with('tags', $tags)
     			->with('selectedTags', $selectedTags);
@@ -23,9 +22,9 @@ class VideoTagController extends Controller
 
     public function store(Request $request)
     {
-    	$video_id = $request->video_id;
+    	$communication_id = $request->communication_id;
     	$tags = $request->tags;
-    	ContentTag::updateTags( 'video', $video_id, $tags);
+    	ContentTag::updateTags( 'communication', $communication_id, $tags);
     	return;
     }
 }
