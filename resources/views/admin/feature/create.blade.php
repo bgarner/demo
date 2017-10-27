@@ -187,6 +187,41 @@
                         </div>
                     </div>
 
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <h5>Events</h5>
+
+                            <div class="ibox-tools">
+
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Event Types</label>
+                                    <div class="col-md-10">
+
+                                        {!! Form::select('eventTypes[]', $eventTypes, null, ['class'=>'chosen', 'multiple'=>'multiple', 'id'=>'eventTypes']) !!}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Events</label>
+                                    <div class="col-md-10">
+
+                                        {!! Form::select('events[]', $events, null, ['class'=>'chosen', 'multiple'=>'multiple', 'id'=>'events']) !!}
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <br>
+                        </div>
+                    </div>
+
 
                     <div class="ibox">
                         <div class="ibox-title">
@@ -211,9 +246,9 @@
 
 									</div>
 
-							</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
                     <div class="form-group">
                         <div class="col-sm-10 col-sm-offset-2">

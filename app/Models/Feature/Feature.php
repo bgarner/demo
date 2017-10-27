@@ -23,6 +23,7 @@ use App\Models\StoreApi\StoreInfo;
 use App\Models\Tools\CustomStoreGroup;
 use App\Models\Auth\User\UserBanner;
 use App\Models\Utility\Utility;
+use App\Models\Feature\FeatureEventType;
 
 class Feature extends Model
 {
@@ -71,6 +72,13 @@ class Feature extends Model
             $validateThis['communications'] = json_decode($request['communications']);
                         
         }
+        if(null !== json_decode($request['event_type'])){
+            $validateThis['event_type'] = json_decode($request['event_type']);
+        }
+
+        if(null !== json_decode($request['events'])){
+            $validateThis['events'] = json_decode($request['events']);
+        }
 
         $v = new FeatureValidator();
 
@@ -96,6 +104,13 @@ class Feature extends Model
 
         if(null !== $request['communications']){
             $validateThis['communications'] = $request['communications'];
+        }
+        if(null !== $request['event_types']){
+            $validateThis['event_types'] = $request['event_types'];
+        }
+
+        if(null !== $request['events']){
+            $validateThis['events'] = $request['events'];
         }
 
         if (NULL  != $request['target_stores']) {
@@ -133,7 +148,7 @@ class Feature extends Model
   	
     public static function validateThumbnailEdit($request)
     {
-         $validateThis = [ 
+        $validateThis = [ 
                         
                         'thumbnail' => $request['thumbnail'],
                         'featureID' => $request['featureID']
@@ -146,7 +161,7 @@ class Feature extends Model
 
     public static function validateBackgroundEdit($request)
     {
-         $validateThis = [ 
+        $validateThis = [ 
                         
                         'background'=> $request['background'],
                         'featureID' => $request['featureID']
@@ -199,9 +214,14 @@ class Feature extends Model
       
   		Feature::addFiles(json_decode($request["feature_files"]), $feature->id);
   		Feature::addPackages(json_decode($request['feature_packages']), $feature->id);
+        FeatureFlyer::addFlyers(json_decode($request['feature_flyers']), $feature->id);
+        
         FeatureCommunicationTypes::updateCommunicationTypes(json_decode($request['communication_type']), $feature->id);
         FeatureCommunication::updateFeatureCommunications(json_decode($request['communications']), $feature->id);
-        FeatureFlyer::updateFeatureFlyer(json_decode($request['feature_flyers']), $feature->id);
+        
+        FeatureEventType::updateEventTypes(json_decode($request['event_types']), $feature->id);
+        FeatureEvent::updateFeatureEvents(json_decode($request['events']), $feature->id);
+        
         FeatureTarget::updateFeatureTarget($feature->id, $request);
 
   		return $feature;
@@ -234,9 +254,14 @@ class Feature extends Model
         Feature::removeFiles($request->remove_document, $id);
         Feature::addPackages($request->feature_packages, $id);
         Feature::removePackages($request->remove_package, $id);
+        FeatureFlyer::addFlyers($request->feature_flyers, $id);
+        FeatureFlyer::removeFlyers($request->remove_flyer, $id);
+
         FeatureCommunicationTypes::updateCommunicationTypes($request['communication_type'], $feature->id);
         FeatureCommunication::updateFeatureCommunications($request['communications'], $feature->id);
-        FeatureFlyer::updateFeatureFlyer($request['feature_flyers'], $id);
+        FeatureEventType::updateEventTypes($request['event_types'], $feature->id);
+        FeatureEvent::updateFeatureEvents($request['events'], $feature->id);
+        
         FeatureTarget::updateFeatureTarget($feature->id, $request);
         return $feature;
 
@@ -426,6 +451,13 @@ class Feature extends Model
         FeaturePackage::where('feature_id', $id)->delete();
         FeatureDocument::where('feature_id', $id)->delete();
         FeatureFlyer::where('feature_id', $id)->delete();
+        FeatureCommunication::where('feature_id', $id)->delete();
+        FeatureCommunicationTypes::where('feature_id', $id)->delete();
+        FeatureEvent::where('feature_id', $id)->delete();
+        FeatureEventType::where('feature_id', $id)->delete();
+        FeatureBanner::where('feature_id', $id)->delete();    
+        FeatureTarget::where('feature_id', $id)->delete();
+        FeatureStoreGroup::where('feature_id', $id)->delete(); 
         return;
     }
 

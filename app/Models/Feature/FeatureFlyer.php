@@ -31,6 +31,32 @@ class FeatureFlyer extends Model
             
         }  
     }
+
+    public static function addFlyers($feature_flyers, $feature_id)
+    {
+        
+            if (isset($feature_flyers)) {
+                foreach ($feature_flyers as $flyer) {
+                    FeatureFlyer::create([
+                        'feature_id' => $feature_id,
+                        'flyer_id' => intval($flyer)
+                        ]);
+                }
+            }
+        return;
+    }
+
+    public static function removeFlyers($feature_flyers, $feature_id)
+    {
+        if (isset($feature_flyers)) {
+          foreach ($feature_flyers as $flyer) {
+            FeatureFlyer::where('feature_id', $feature_id)->where('flyer_id', intval($flyer))->delete();  
+          }
+        }
+        return; 
+    }
+
+
     public static function getFlyersByFeatureId($feature_id)
     {
         return Self::join('flyers', 'feature_flyer.flyer_id', '=', 'flyers.id')

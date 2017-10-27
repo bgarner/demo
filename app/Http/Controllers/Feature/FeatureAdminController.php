@@ -19,12 +19,15 @@ use App\Models\Communication\CommunicationType;
 use App\Models\Communication\Communication;
 use App\Models\Feature\FeatureCommunicationTypes;
 use App\Models\Feature\FeatureCommunication;
+use App\Models\Feature\FeatureEventType;
+use App\Models\Feature\FeatureEvent;
 use App\Models\Feature\FeatureFlyer;
 use App\Models\Flyer\Flyer;
 use App\Models\Feature\FeatureTarget;
 use App\Models\Utility\Utility;
 use App\Models\Event\Event;
 use App\Models\Event\EventType;
+
 
 class FeatureAdminController extends Controller
 {
@@ -70,8 +73,6 @@ class FeatureAdminController extends Controller
 
         $events              = Event::getEventsForAdmin()->pluck('title', 'id')->toArray();
 
-        // dd($events);
-
         return view('admin.feature.create')
                 ->with('banner', $banner)
                 ->with('navigation', $fileFolderStructure)
@@ -80,7 +81,9 @@ class FeatureAdminController extends Controller
                 ->with('communications', $communications)
                 ->with('optGroupOptions', $optGroupOptions)
                 ->with('optGroupSelections', $optGroupSelections)
-                ->with('flyers', $flyers);
+                ->with('flyers', $flyers)
+                ->with('events', $events)
+                ->with('eventTypes', $eventTypes);
     }
 
     /**
@@ -135,9 +138,12 @@ class FeatureAdminController extends Controller
         $flyers                       = Flyer::getFlyersByBannerId($banner->id);
         $selected_flyers              = FeatureFlyer::getFlyersByFeatureId($id);
 
-        //events
+        $eventTypes                   = EventType::getEventTypesForAdmin();
+        $eventTypes                   = $eventTypes->pluck('event_type', 'id')->toArray();
+        $selected_event_types         = FeatureEventType::getEventTypeId($id);
 
-        //eventtypes
+        $events                       = Event::getEventsForAdmin()->pluck('title', 'id')->toArray();
+        $selected_events              = FeatureEvent::getEventId($id);
 
         return view('admin.feature.edit')->with('feature', $feature)
                                     
@@ -153,7 +159,11 @@ class FeatureAdminController extends Controller
                                         ->with('optGroupOptions', $optGroupOptions)
                                         ->with('optGroupSelections', $optGroupSelections)
                                         ->with('flyers', $flyers)
-                                        ->with('feature_flyers', $selected_flyers);
+                                        ->with('feature_flyers', $selected_flyers)
+                                        ->with('eventTypes', $eventTypes)
+                                        ->with('selected_event_types', $selected_event_types)
+                                        ->with('events', $events)
+                                        ->with('selected_events', $selected_events);
                                         
     }
 

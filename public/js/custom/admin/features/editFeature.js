@@ -236,10 +236,14 @@ $(document).on('click','.feature-update',function(){
 	var update_frequency =  $('input:radio[name ="latest_updates_option"]:checked').next('input[name="update_frequency"]').val();
 	var communication_type = $("#communicationType").val();
 	var communications = $("#communications").val();
+	var event_types = $("#eventTypes").val();
+	var events = $("#events").val();
 	var all_stores = getAllStoreStatus();
 	var target_stores = getTargetStores();
 	var target_banners = getTargetBanners();
 	var store_groups = getStoreGroups();
+
+
 
 	$(".remove_document").each(function(){
 		remove_document.push($(this).attr('data-document-id'));
@@ -288,8 +292,9 @@ $(document).on('click','.feature-update',function(){
 		$(window).scrollTop(0);
 		return false;
 	}
+	console.log(remove_flyer);
 
-     if(hasError == false) {
+    if(hasError == false) {
      	var dataObj = {};
      	// console.log(typeof(dataObj));
      	$.extend(dataObj, {title: featureTitle});
@@ -301,8 +306,11 @@ $(document).on('click','.feature-update',function(){
      	$.extend(dataObj, {feature_flyers:  feature_flyers});
      	$.extend(dataObj, {remove_document: remove_document});
      	$.extend(dataObj, {remove_package: remove_package});
+     	$.extend(dataObj, {remove_flyer: remove_flyer});
      	$.extend(dataObj, {communication_type : communication_type});
      	$.extend(dataObj, {communications : communications});
+     	$.extend(dataObj, {event_types : event_types});
+     	$.extend(dataObj, {events : events});
      	$.extend(dataObj, {update_type : update_type});
      	$.extend(dataObj, {update_frequency : update_frequency});
      	$.extend(dataObj, {target_stores : target_stores});
