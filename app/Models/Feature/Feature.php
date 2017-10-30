@@ -461,16 +461,18 @@ class Feature extends Model
         return;
     }
 
-
+    //get all the features that expire in future both starting in future and started already
     public static function getActiveFeaturesByBanner($banner_id)
     {
         $now = Carbon::now();
-        $activeFeatures = Feature::join('feature_banner', 'feature_banner.feature_id', '=', 'features.id')
-                                ->where('banner_id', $banner_id)
-                                ->where('features.start', '<=', $now )
-                                ->where('features.end', '>=', $now )
-                                ->orderBy('order')
-                                ->get();
+
+        $activeFeatures = Feature::getFeaturesForAdmin([$banner_id]);
+
+        foreach ($activeFeatures as $key => $value) {
+            if($value->end<$now){
+                $activeFeatures->forget($key);
+            }
+        }
 
         return $activeFeatures;
 
@@ -499,9 +501,11 @@ class Feature extends Model
         return( $optGroupSelections );
     }
 
-    public static function getFeaturesForAdmin()
+    public static function getFeaturesForAdmin($banners = null)
     {
-        $banners = UserBanner::getAllBanners()->pluck('id')->toArray();
+        if(!isset($banners)){
+            $banners = UserBanner::getAllBanners()->pluck('id')->toArray();    
+        }
         
         //stores in accessible banners
         $storeList = [];
