@@ -35,8 +35,17 @@ class FeatureEvent extends Model
         }
     }
 
-    public static function getFeatureEvents($feature_id)
+    public static function getEventsByFeatureId($feature_id)
     {
-    	
+    	$feature = Feature::find($feature_id);
+        
+        $featureEvents =  FeatureEventType::join('events', 'events.event_type', '=', 'feature_event_type.event_type_id' )
+                                        ->where('feature_id', $feature_id)
+                                        ->where('events.start', '<', $feature->end)
+                                        ->where('events.end', '>', $feature->start)
+                                        ->select('events.*')
+                                        ->get();
+        
+        return $featureEvents;
     }
 }
