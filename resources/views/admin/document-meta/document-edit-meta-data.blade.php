@@ -67,7 +67,16 @@
 
                                             <label class="col-sm-2 control-label">Target Stores <span class="req">*</span></label>
                                             <div class="col-sm-10">
-
+                                                @if($document->all_stores)
+                                                    {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
+                                                    {!! Form::label('allStores', 'Or select all stores:') !!}
+                                                    {!! Form::checkbox('allStores', null, true ,['id'=> 'allStores'] ) !!}
+                                                @else
+                                                    {!! Form::select('stores', $storeList, $target_stores, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
+                                                    {!! Form::label('allStores', 'Or select all stores:') !!}
+                                                    {!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
+                                                @endif
+                                               {{--
                                                <select name="stores" id="storeSelect" multiple class="chosen">
                                                     <option value="">Select Some Options</option>
                                                     @foreach($storeAndStoreGroups as $option)
@@ -93,6 +102,7 @@
 
                                                 </select>
 
+
                                                 @if($document->all_stores)
 
                                                     {!! Form::label('allStores', 'Or select all stores:') !!}
@@ -102,7 +112,9 @@
                                                     {!! Form::label('allStores', 'Or select all stores:') !!}
                                                     {!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
                                                 @endif
+                                                --}}
                                             </div>
+
 
                                         </div>
 
@@ -188,7 +200,6 @@
 
                                         @endif
 
-
                                     @endforeach
                                     </ul>
                                 </div>
@@ -200,11 +211,7 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
-        </div>
-    </div>
 
     @include('admin.includes.footer')
 
@@ -234,10 +241,12 @@
     </script>
     <script type="text/javascript" src="/js/custom/admin/alerts/createAlert.js"></script>
     <script type="text/javascript" src="/js/plugins/select/select2.min.js"></script>
-    <script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>
+    <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
+    <!--<script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>-->
     <script type="text/javascript" src="/js/custom/admin/documents/changeFolder.js"></script>
     <script type="text/javascript" src="/js/custom/admin/documents/replaceDocument.js"></script>
     @include('site.includes.bugreport')
 
 </body>
 </html>
+

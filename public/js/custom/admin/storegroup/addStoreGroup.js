@@ -10,8 +10,7 @@ $(document).on('click','.group-create',function(){
 
     var group_name = $("#group_name").val();
     var stores = [];
-    stores =  $("#stores").val();
-    console.log(stores);
+    stores =  $("#storeSelect").val();
     var bannerId = localStorage.getItem('admin-banner-id');
 
     if(group_name == '') {
@@ -39,7 +38,7 @@ $(document).on('click','.group-create',function(){
 		        	}
 		        	if(errors.hasOwnProperty("stores")) {
 		        		$.each(errors.stores, function(index){
-		        			$("#stores").parent().append('<div class="req">' + errors.stores[index]  + '</div>');	
+		        			$("#storeSelect").parent().append('<div class="req">' + errors.stores[index]  + '</div>');	
 		        		}); 	
 		        	}
 		        }

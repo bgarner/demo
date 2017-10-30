@@ -7,6 +7,7 @@ use App\Models\Video\Playlist;
 use App\Models\Video\PlaylistBanner;
 use App\Models\Video\PlaylistTarget;
 use App\Models\Video\PlaylistStoreGroup;
+use App\Models\Utility\Utility;
 
 class PlaylistTarget extends Model
 {
@@ -62,9 +63,6 @@ class PlaylistTarget extends Model
                     'store_id' => $store
                     ]);    
             }
-            // if(!in_array('0940', $target_stores)){
-            // Utility::addHeadOffice($id, 'playlist_target', 'playlist_id');
-            // }
         }  
         if (isset($request['store_groups']) && $request['store_groups'] != '' ) {
                 
@@ -80,7 +78,7 @@ class PlaylistTarget extends Model
             }
             
         }  
-        
+        Utility::addHeadOffice($id, 'playlist_target', 'playlist_id');
         return;         
     }
 }

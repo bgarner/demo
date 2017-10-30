@@ -8,6 +8,7 @@ use App\Models\Auth\User\UserBanner;
 use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\StoreApi\StoreInfo;
 use App\Models\Tools\CustomStoreGroup;
+use App\Models\StoreApi\Store;
 
 class Utility extends Model
 {
@@ -468,6 +469,114 @@ class Utility extends Model
 	        'store_id'   => $headOffice
 	    ]);
 
+    }
+
+    public static function groupBannersForAllStoreContent($allStoreContent)
+    {
+        $allStoreContent = $allStoreContent->toArray();
+        $compiledContent = [];
+        foreach ($allStoreContent as $content) {
+            $index = array_search($content['id'], array_column($compiledContent, 'id'));
+            if(  $index !== false ){
+               array_push($compiledContent[$index]->banners, $content["banner_id"]);
+            }
+            else{
+               
+               $content["banners"] = [];
+               array_push( $content["banners"] , $content["banner_id"]);
+               array_push( $compiledContent , (object) $content);
+            }
+
+        }
+        
+        return collect($compiledContent);
+    }
+
+    public static function mergeTargetedAndStoreGroupContent($targetedContent, $storeGroupContent)
+    {
+        $targetedContentArray = $targetedContent->toArray();
+        $targetedContentIds = array_column($targetedContentArray, 'id');
+        foreach ($storeGroupContent as $content) {
+
+            if(in_array($content->id, $targetedContentIds)){
+                $targetedContentStores = $targetedContent->where('id', $content->id)->first()->stores;
+                $mergedStores = array_merge( $targetedContentStores, $content->stores);
+                $targetedContent->where('id', $content->id)->first()->stores = $mergedStores;
+            }
+            else{
+
+                $targetedContent = $targetedContent->push((object)$content);                
+            }
+        }
+        return $targetedContent;
+
+    }
+
+    public static function mergeTargetedAndAllStoreContent($targetedContent, $allStoreContent)
+    {
+
+        foreach($targetedContent as $content)
+        {
+            $id = $content->id;
+
+            if($allStoreContent->contains('id', $id)){
+                
+                $contentIndex = $allStoreContent->where('id', $id)->keys()->toArray()[0];
+                $allStoreContent[$contentIndex]->stores = $content->stores;
+                
+            }
+            else{
+                $allStoreContent->merge($content);
+            }
+        }
+
+        $mergedContent = $allStoreContent->merge($targetedContent)->unique('id')->sortByDesc('created_at');
+
+        return $mergedContent;
+    }
+
+    public static function getUniqueBannersForTarget($request)
+    {
+    	$targetStores = collect();
+        $banners = collect();
+        
+        //merge stores for store groups
+        if(isset($request->store_groups)){
+            $storeGroups = $request->store_groups;
+                
+            foreach ($storeGroups as $group) {
+                $groupDetails = CustomStoreGroup::find($group);
+                $stores = unserialize($groupDetails->stores);
+                $targetStores = $targetStores->merge($stores);
+            }
+        }
+
+        if(isset($request->target_stores)){
+            $targetStores = $targetStores->merge($request->target_stores);
+        }
+
+        //find unique banners for stores
+        if(count($targetStores)>0){
+            $allStores = Store::getAllStores()->pluck('banner_id','store_number')->toArray();
+            foreach ($targetStores as $store) {
+                if(array_key_exists($store, $allStores)){
+                    $banners->push($allStores[$store]);
+                }
+            }    
+        }
+        
+        $banners = $banners->unique();
+
+
+        //merge unique banners from previous step with target_banners
+        if(isset($request->target_banners)){
+
+            $banners = $banners->merge($request->target_banners)->sort();
+            
+        }
+        $banners = array_values($banners->unique()->toArray());
+
+        return $banners;
     }
 
 

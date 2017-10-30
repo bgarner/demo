@@ -47,10 +47,10 @@
                                             <div class="col-sm-10"><input type="text" id="title" name="title" class="form-control" value=""></div>
                                         </div>
 
-                                        <div class="form-group"><label class="col-sm-2 control-label">Event Type <span class="req">*</span></label>
-                                            <div class="col-sm-10">
-                                                {{-- <input type="text" class="form-control" value="{{ $event_type->event_type }}"> --}}
+                                        @include('admin.includes.store-banner-selector', ['optGroupOptions'=> $optGroupOptions, 'optGroupSelections' => $optGroupSelections])
 
+                                        <div class="form-group"><label class="col-sm-2 control-label">Event Type <span class="req">*</span></label>
+                                            <div class="col-sm-10" id="event-type-selector">
                                                 <select class="form-control" id="event_type" name="event_type">
                                                     @foreach($event_types_list as $key=>$event_type)
 
@@ -87,19 +87,7 @@
                                             </div>
                                         </div>
 
-
-
-                                        <div class="form-group">
-                                                <label class="col-sm-2 control-label">Stores <span class="req">*</span></label>
-                                                <div class="col-md-10">
-
-                                                    {!! Form::select('stores', $stores, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
-                                                    {!! Form::label('allStores', 'Or select all stores:') !!}
-                                                    {!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
-
-                                                </div>
-                                                <div class="col-md-10 col-md-offset-2" id="selectedStoresCount"></div>
-                                        </div>
+                                        
 
                                         <div class="form-group">
                                             <div class="col-sm-10 col-sm-offset-2">
@@ -173,7 +161,7 @@
                 <script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
                 <script type="text/javascript" src="/js/custom/tree.js"></script>
                 <script type="text/javascript" src="/js/custom/datetimepicker-with-default-time.js"></script>
-                <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
+                <script type="text/javascript" src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
 
 
                 <script type="text/javascript">

@@ -59,47 +59,7 @@
                                                 </div>
                                         </div>
 
-                                        <div class="form-group">
-
-						                <label class="col-sm-2 control-label">Target Stores <span class="req">*</span></label>
-						                <div class="col-sm-10">
-
-		                                        <select name="stores" id="storeSelect" multiple class="chosen">
-									            	<option value="">Select Some Options</option>
-									            	@foreach($storeAndStoreGroups as $option)
-
-									                    <option value="{{$option['id']}}"
-
-									                        @if(isset($option["isStoreGroup"]))
-																data-isStoreGroup = "{{$option['isStoreGroup']}}"
-									                        @endif
-									                        @if(isset($option["stores"]))
-																data-stores = "{{$option['stores']}}"
-									                        @endif
-
-									                        @if(in_array($option['id'], $target_stores))
-																selected
-									                        @endif
-
-									                    >
-									                        {{$option['name']}}
-									                    </option>
-
-									            	@endforeach
-
-										        </select>
-
-										        @if($feature->all_stores)
-
-		                                        	{!! Form::label('allStores', 'Or select all stores:') !!}
-		                                        	{!! Form::checkbox('allStores', null, true ,['id'=> 'allStores'] ) !!}
-		                                    	@else
-
-		                                        	{!! Form::label('allStores', 'Or select all stores:') !!}
-		                                        	{!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
-		                                    	@endif
-						                </div>
-						        </div>
+                                        @include('admin.includes.store-banner-selector', ['optGroupOptions'=> $optGroupOptions, 'optGroupSelections' => $optGroupSelections])
 
 
                                         <div class="form-group">
@@ -406,7 +366,7 @@
 	<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 	<script src="/js/custom/datetimepicker.js"></script>
 	<script type="text/javascript" src="/js/custom/site/launchModal.js" ></script>
-	<script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>
+	<script src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
 
 	<script type="text/javascript">
 		$.ajaxSetup({
