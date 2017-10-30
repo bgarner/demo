@@ -242,7 +242,7 @@ $(document).on('click','.feature-update',function(){
 	var target_stores = getTargetStores();
 	var target_banners = getTargetBanners();
 	var store_groups = getStoreGroups();
-
+	var tasklists = $("#tasklists").val();
 
 
 	$(".remove_document").each(function(){
@@ -317,6 +317,7 @@ $(document).on('click','.feature-update',function(){
      	$.extend(dataObj, {all_stores : allStores});
      	$.extend(dataObj, {target_banners : target_banners});
      	$.extend(dataObj, {store_groups : store_groups});
+     	$.extend(dataObj, {tasklists : tasklists});
      	
 
      	var data = JSON.stringify(dataObj);
@@ -394,6 +395,21 @@ $(document).on('click','.feature-update',function(){
 			        if(errors.hasOwnProperty("communications")) {
 			        	$.each(errors.communications, function(index){
 			        		$("#communications").parent().append('<div class="req">' + errors.communications[index]  + '</div>');	
+			        	});
+			        }
+			        if(errors.hasOwnProperty("events")) {
+			        	$.each(errors.events, function(index){
+			        		$("#events").parent().append('<div class="req">' + errors.events[index]  + '</div>');	
+			        	});
+			        }
+			        if(errors.hasOwnProperty("event_types")) {
+			        	$.each(errors.event_types, function(index){
+			        		$("#event_types").parent().append('<div class="req">' + errors.event_types[index]  + '</div>');	
+			        	});
+			        }
+			        if(errors.hasOwnProperty("tasklists")) {
+			        	$.each(errors.tasklists, function(index){
+			        		$("#tasklists").parent().append('<div class="req">' + errors.tasklists[index]  + '</div>');	
 			        	});
 			        }
 			        if(errors.hasOwnProperty("target_stores")) {

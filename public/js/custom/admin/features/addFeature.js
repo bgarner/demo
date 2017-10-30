@@ -130,6 +130,7 @@ $(document).on('click','.feature-create',function(){
 	var target_stores      = getTargetStores();
 	var target_banners     = getTargetBanners();
 	var store_groups       = getStoreGroups();
+	var tasklists 		   = $("#tasklists").val();
 
 	var feature_files = [];
 	var feature_packages = [];
@@ -193,6 +194,7 @@ $(document).on('click','.feature-create',function(){
   		data.append('target_stores', getTargetStores());
   		data.append('target_banners', getTargetBanners());
   		data.append('store_groups', getStoreGroups());
+  		data.append('tasklists', JSON.stringify(tasklists));
 
 		$.ajax({
 		    url: '/admin/feature',
@@ -279,6 +281,12 @@ $(document).on('click','.feature-create',function(){
 			        if(errors.hasOwnProperty("events")) {
 			        	$.each(errors.events, function(index){
 			        		$("#events").parent().append('<div class="req">' + errors.events[index]  + '</div>');	
+			        	});
+			        }
+
+			        if(errors.hasOwnProperty("tasklists")) {
+			        	$.each(errors.tasklists, function(index){
+			        		$("#tasklists").parent().append('<div class="req">' + errors.tasklists[index]  + '</div>');	
 			        	});
 			        }
 

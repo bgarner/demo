@@ -244,6 +244,30 @@
 		                    </div>
 
 
+		                    <div class="ibox">
+		                        <div class="ibox-title">
+		                            <h5>Event Types</h5>
+
+		                            <div class="ibox-tools">
+
+		                            </div>
+		                        </div>
+		                        <div class="ibox-content">
+		                        	<div class="row">
+			                        	<div class="form-group">
+	                                    	<label class="col-sm-2 control-label">Tasklists</label>
+	                                    	<div class="col-md-10">
+
+	                                    		{!! Form::select('tasklists[]', $tasklists, $selected_tasklists, ['class'=>'chosen', 'multiple'=>'multiple', 'id'=>'tasklists']) !!}
+	                                    	</div>
+	                                    </div>
+                                    </div>
+
+                                    <br>
+		                        </div>
+		                    </div>
+
+
 
 							<div class="ibox">
                             	<div class="ibox-title">

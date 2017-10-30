@@ -27,7 +27,8 @@ class FeatureValidator extends PortalValidator
         'target_stores'      => "sometimes|exists:stores,store_number",
         'allStores'          => 'sometimes|in:on,off',
         'target_banners'     => 'sometimes|exists:banners,id',
-        'store_groups'       => 'sometimes|exists:custom_store_group,id'
+        'store_groups'       => 'sometimes|exists:custom_store_group,id',
+        'tasklists'          => 'sometimes|exists:tasklists,id'
             
     ];
 
@@ -41,6 +42,7 @@ class FeatureValidator extends PortalValidator
         'communication_type.exists' => 'Invalid communication types attached',
         'communications.exists'     => 'Invalid communications attached',
         'event_types.exists'        => 'Invalid event types attached',
-        'events.exists'             => 'Invalid events attached'
+        'events.exists'             => 'Invalid events attached',
+        'tasklists.exists'          => 'Invalid tasklists attached'
     ];
 }

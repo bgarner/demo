@@ -291,24 +291,55 @@
 
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="ibox-title">
-                                    <h2>Events</h2>
-                                </div>
-                                <div class="ibox-content">
-                                    <div class="feed-activity-list">
-                                        @if(count($events)>0)
-                                            @foreach($events as $event)
-                                                <div class="feed-element">
-                                                    <div class="media-body">
-                                                        {{$event->title}}
+                                <div class="ibox">
+                                    <div class="ibox-title">
+                                        <h2>Events</h2>
+                                    </div>
+                                    <div class="ibox-content">
+                                        <div class="feed-activity-list">
+                                            @if(count($events)>0)
+                                                @foreach($events as $event)
+                                                    <div class="feed-element">
+                                                        <div class="media-body">
+                                                            {{$event->title}}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            @endforeach
-                                        @endif
+                                                @endforeach
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="ibox">
+                                    <div class="ibox-title">
+                                        <h2>Tasks</h2>
+                                    </div>
+                                    <div class="ibox-content">
+                                        <div class="feed-activity-list">
+                                            @if(count($tasklists)>0)
+                                                @foreach($tasklists as $tasklist)
+                                                    <div class="feed-element">
+                                                        <div class="media-body">
+                                                            {{$tasklist->title}}
+                                                            <ul>
+                                                            @foreach($tasklist->tasks as $task)
+                                                                <li>{{$task->title}}</li>
+                                                            @endforeach
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 

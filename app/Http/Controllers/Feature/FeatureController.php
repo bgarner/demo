@@ -16,6 +16,7 @@ use App\Models\Feature\FeatureEvent;
 use App\Models\Feature\FeatureCommunication;
 use App\Models\Communication\Communication;
 use App\Models\Document\Package;
+use App\Models\Feature\FeatureTasklist;
 
 class FeatureController extends Controller
 {
@@ -76,6 +77,8 @@ class FeatureController extends Controller
 
         $events = FeatureEvent::getEventsByFeatureId($feature->id);    
 
+        $tasklists = FeatureTasklist::getTasklistsByFeatureId($feature->id);    
+
         return view('site.feature.index')
 			->with('notifications', $notifications)
             ->with('feature', $feature)
@@ -83,7 +86,8 @@ class FeatureController extends Controller
             ->with('feature_packages', $selected_packages)
             ->with('feature_communications', $feature_communications)
             ->with('flyers', $flyers)
-            ->with('events', $events);
+            ->with('events', $events)
+            ->with('tasklists', $tasklists);
     }
 
     /**

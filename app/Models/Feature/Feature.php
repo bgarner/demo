@@ -24,6 +24,7 @@ use App\Models\Tools\CustomStoreGroup;
 use App\Models\Auth\User\UserBanner;
 use App\Models\Utility\Utility;
 use App\Models\Feature\FeatureEventType;
+use App\Models\Feature\FeatureTasklist;
 
 class Feature extends Model
 {
@@ -45,8 +46,7 @@ class Feature extends Model
                         'start'            => $request['start'],
                         'end'              => $request['end'],
                         'update_type_id'   => $request['update_type'],
-                        'update_frequency' => $request['update_frequency'],
-                        // 'target_stores'    => json_decode($request['target_stores'])
+                        'update_frequency' => $request['update_frequency']
                       ];
 
         if (NULL  != json_decode($request['target_stores'])) {
@@ -78,6 +78,9 @@ class Feature extends Model
 
         if(null !== json_decode($request['events'])){
             $validateThis['events'] = json_decode($request['events']);
+        }
+        if(null !== json_decode($request['tasklists'])){
+            $validateThis['tasklists'] = json_decode($request['tasklists']);
         }
 
         $v = new FeatureValidator();
@@ -125,6 +128,10 @@ class Feature extends Model
 
         if (NULL != $request['all_stores']) {
             $validateThis['allStores'] = $request['all_stores'];
+        }
+
+        if(null !== $request['tasklists']){
+            $validateThis['tasklists'] = $request['tasklists'];
         }
 
         if(isset($request['thumbnail']) && $request['thumbnail']){
@@ -224,6 +231,8 @@ class Feature extends Model
         
         FeatureTarget::updateFeatureTarget($feature->id, $request);
 
+        FeatureTasklist::updateFeatureTasklists(json_decode($request['tasklists']), $feature->id);
+
   		return $feature;
 
   	}  
@@ -263,6 +272,8 @@ class Feature extends Model
         FeatureEvent::updateFeatureEvents($request['events'], $feature->id);
         
         FeatureTarget::updateFeatureTarget($feature->id, $request);
+
+        FeatureTasklist::updateFeatureTasklists($request['tasklists'], $feature->id);
         return $feature;
 
     }
@@ -475,7 +486,6 @@ class Feature extends Model
         }
 
         return $activeFeatures;
-
         
     }
 

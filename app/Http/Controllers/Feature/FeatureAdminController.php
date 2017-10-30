@@ -27,7 +27,8 @@ use App\Models\Feature\FeatureTarget;
 use App\Models\Utility\Utility;
 use App\Models\Event\Event;
 use App\Models\Event\EventType;
-
+use App\Models\Task\Tasklist;
+use App\Models\Feature\FeatureTasklist;
 
 class FeatureAdminController extends Controller
 {
@@ -72,6 +73,7 @@ class FeatureAdminController extends Controller
         $eventTypes          = $eventTypes->pluck('event_type', 'id')->toArray();
 
         $events              = Event::getEventsForAdmin()->pluck('title', 'id')->toArray();
+        $tasklists           = Tasklist::getTasklistsForAdmin()->pluck('title', 'id')->toArray();
 
         return view('admin.feature.create')
                 ->with('banner', $banner)
@@ -83,7 +85,8 @@ class FeatureAdminController extends Controller
                 ->with('optGroupSelections', $optGroupSelections)
                 ->with('flyers', $flyers)
                 ->with('events', $events)
-                ->with('eventTypes', $eventTypes);
+                ->with('eventTypes', $eventTypes)
+                ->with('tasklists', $tasklists);
     }
 
     /**
@@ -145,6 +148,9 @@ class FeatureAdminController extends Controller
         $events                       = Event::getEventsForAdmin()->pluck('title', 'id')->toArray();
         $selected_events              = FeatureEvent::getEventId($id);
 
+        $tasklists                    = Tasklist::getTasklistsForAdmin()->pluck('title', 'id')->toArray();
+        $selected_tasklists           = FeatureTasklist::getTasklistsByFeatureId($id);
+
         return view('admin.feature.edit')->with('feature', $feature)
                                     
                                         ->with('banner', $banner)
@@ -163,7 +169,9 @@ class FeatureAdminController extends Controller
                                         ->with('eventTypes', $eventTypes)
                                         ->with('selected_event_types', $selected_event_types)
                                         ->with('events', $events)
-                                        ->with('selected_events', $selected_events);
+                                        ->with('selected_events', $selected_events)
+                                        ->with('tasklists', $tasklists)
+                                        ->with('selected_tasklists', $selected_tasklists);
                                         
     }
 
