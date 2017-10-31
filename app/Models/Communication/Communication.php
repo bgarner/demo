@@ -17,6 +17,7 @@ use App\Models\Validation\CommunicationValidator;
 use App\Models\StoreApi\StoreInfo;
 use App\Models\Auth\User\UserBanner;
 use App\Models\Tools\CustomStoreGroup;
+use App\Models\StoreApi\Banner;
 
 class Communication extends Model
 {
@@ -92,20 +93,6 @@ class Communication extends Model
 		\Log::info($validateThis);
 		$v = new CommunicationValidator();
 		return $v->validate($validateThis);
-	}
-
-	public static function getAllCommunication($banner_id)
-	{
-		$communications = Communication::join('communication_banner', 'communication_banner.communication_id', '=', 'communications.id')
-								->where('communication_banner.banner_id', $banner_id)
-								->get();
-
-		foreach($communications as $c){
-			$c->prettySentAtDate = Utility::prettifyDate( $c->send_at );
-			$c->label_name = Communication::getCommunicationCategoryName($c->communication_type_id);
-            $c->label_colour = Communication::getCommunicationCategoryColour($c->communication_type_id);
-		}
-		return $communications;
 	}
 
 	public static function getCommunicationsForAdmin()
