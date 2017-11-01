@@ -12,6 +12,51 @@ class FeatureFlyer extends Model
     protected $table = 'feature_flyer';
     protected $fillable = ['feature_id', 'flyer_id'];
 
+    public static function updateFeatureFlyer($flyers, $feature_id)
+    {
+        if( FeatureFlyer::where('feature_id', $feature_id)->exists()){
+            FeatureFlyer::where('feature_id', $feature_id)->delete(); 
+        }
+        if (isset($flyers) && $flyers != '' ) {
+                
+            if(! is_array($flyers) ) {
+                $flyers = explode(',',  $flyers );    
+            }
+            foreach ($flyers as $flyer) {
+                FeatureFlyer::insert([
+                    'feature_id' => $feature_id,
+                    'flyer_id'   => $flyer
+                    ]);    
+            }
+            
+        }  
+    }
+
+    public static function addFlyers($feature_flyers, $feature_id)
+    {
+        
+            if (isset($feature_flyers)) {
+                foreach ($feature_flyers as $flyer) {
+                    FeatureFlyer::create([
+                        'feature_id' => $feature_id,
+                        'flyer_id' => intval($flyer)
+                        ]);
+                }
+            }
+        return;
+    }
+
+    public static function removeFlyers($feature_flyers, $feature_id)
+    {
+        if (isset($feature_flyers)) {
+          foreach ($feature_flyers as $flyer) {
+            FeatureFlyer::where('feature_id', $feature_id)->where('flyer_id', intval($flyer))->delete();  
+          }
+        }
+        return; 
+    }
+
+
     public static function getFlyersByFeatureId($feature_id)
     {
         return Self::join('flyers', 'feature_flyer.flyer_id', '=', 'flyers.id')

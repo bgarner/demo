@@ -12,9 +12,11 @@ use App\Models\Notification\Notification;
 use App\Models\Feature\FeatureDocument;
 use App\Models\Feature\FeaturePackage;
 use App\Models\Feature\FeatureFlyer;
+use App\Models\Feature\FeatureEvent;
 use App\Models\Feature\FeatureCommunication;
 use App\Models\Communication\Communication;
 use App\Models\Document\Package;
+use App\Models\Feature\FeatureTasklist;
 
 class FeatureController extends Controller
 {
@@ -73,13 +75,19 @@ class FeatureController extends Controller
 
         $flyers = FeatureFlyer::getFlyersByFeatureId($feature->id);
 
+        $events = FeatureEvent::getEventsByFeatureId($feature->id);    
+
+        $tasklists = FeatureTasklist::getTasklistsByFeatureId($feature->id);    
+
         return view('site.feature.index')
 			->with('notifications', $notifications)
             ->with('feature', $feature)
             ->with('feature_documents', $selected_documents)
             ->with('feature_packages', $selected_packages)
             ->with('feature_communications', $feature_communications)
-            ->with('flyers', $flyers);
+            ->with('flyers', $flyers)
+            ->with('events', $events)
+            ->with('tasklists', $tasklists);
     }
 
     /**

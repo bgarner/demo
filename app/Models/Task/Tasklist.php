@@ -125,7 +125,7 @@ class Tasklist extends Model
                                 });
 
 
-        $targetedTasklists = Tasklist::groupTasklistStores($targetedTasklists);
+        // $targetedTasklists = Tasklist::groupTasklistStores($targetedTasklists);
 
         $storeGroups = CustomStoreGroup::getStoreGroupsForAdmin();
         $tasklistsForStoreGroups = Tasklist::join('tasklist_store_group', 'tasklist_store_group.tasklist_id', '=', 'tasklists.id')
@@ -298,26 +298,6 @@ class Tasklist extends Model
     	return;
     }
 
-    public static function groupTasklistStores($tasklists)
-	{
-		$tasklists = $tasklists->toArray();
-		$compiledTasklists = [];
-		foreach ($tasklists as $tasklist) {
-	        $index = array_search($tasklist['id'], array_column($compiledTasklists, 'id'));
-	        if(  $index !== false ){
-	           array_push($compiledTasklists[$index]->stores, $tasklist["store_id"]);
-	        }
-	        else{
-	           
-	           $tasklist["stores"] = [];
-	           array_push( $tasklist["stores"] , $tasklist["store_id"]);
-	           array_push( $compiledTasklists , (object) $tasklist);
-	        }
-
-        }
-        
-		return collect($compiledTasklists);
-	}
 
 	public static function mergeTargetedAndStoreGroupTasklists($targetedTasklists, $storeGroupTasklists)
     {
