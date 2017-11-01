@@ -1,5 +1,21 @@
 $(document).ready(function(){
 
+    var videoTable = $('#video_analytics').DataTable({
+    "info"   :false,
+    "bPaginate": false,
+    "paging":   false,
+    "columns": [
+       {"visible": false},
+       {'width': '40%'},
+       {'width': '40%'},
+       null,
+       {"visible": false},
+       {"visible": false},
+       {"visible": false}
+     ],
+     "searching": false
+    });
+
 	$("#generateVideoReport").click(function(){
 		var start_date = $("#start_date").val();
 		var end_date = $("#end_date").val();
@@ -35,6 +51,66 @@ $(document).ready(function(){
 
         JSONToCSVConvertor(data, "Video Report", true);
     });
+
+    $("#next").on('click', function(e){
+        
+        var pageId = $(this).attr('data-pageId');
+        console.log('next page requested :', pageId);
+        $.ajax({
+            url: '/admin/paginatedvideos' ,
+            type: 'GET',
+            data: { page: pageId},
+            success: function(result) {
+            }
+        }).done(function(response){
+            
+            var paginatedVideos = response.videoStats;
+
+            var container = $("#video_analytics").find("tbody");
+
+            var tables = $.fn.dataTable.tables();
+            $(tables[3]).DataTable().rows()
+                                    .remove()
+                                    .destroy();
+            
+            
+            $(paginatedVideos).each(function(key, value){
+                var string = "<tr>"
+                string += '<td></td>';
+                string += '<td>'+value.title+'</td>';
+                string += '<td><img src="/video/thumbs/'+value.thumbnail+'" style="width: 35%" /></td>';
+                string += '<td data-order="'+value.readPerc+'" data-read-perc ='+ value.readPerc+'>';
+                string += '<canvas id="videoChart_'+value.id+'" width="45" height="45" style="width: 45px; height: 45px;"></canvas></td>';
+                string += '<td >'+value.opened+'</td>';
+                string += '<td >'+value.unopened+'</td>';
+                string += '<td >'+value.sent_to+'</td>';
+                string += "</tr>";
+                $( container ).append( string );
+            });
+                
+                $("#previous").attr('data-pageId', response.previousPage);
+                $("#next").attr('data-pageId', response.nextPage);
+
+                var videoTable = $('#video_analytics').DataTable({
+                    "info"   :false,
+                    "bPaginate": false,
+                    "paging":   false,
+                    "columns": [
+                       {"visible": false},
+                       {'width': '40%'},
+                       {'width': '40%'},
+                       null,
+                       {"visible": false},
+                       {"visible": false},
+                       {"visible": false}
+                     ],
+                     "searching": false
+                });
+                // renderVideoChart();
+
+        });
+
+    })
 });
 
 
@@ -85,7 +161,7 @@ function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
     }   
 
     //Generate a file name
-    var fileName = "MyReport_";
+    var fileName = "VideoAnalytics_";
     //this will remove the blank-spaces from the title and replace it with an underscore
     fileName += ReportTitle.replace(/ /g,"_");   
 
