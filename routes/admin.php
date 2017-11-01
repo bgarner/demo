@@ -32,6 +32,7 @@ Route::resource('/admin/feature/background', 'Feature\FeatureBackgroundAdminCont
 Route::resource('/admin/featureOrder', 'Feature\FeatureOrderAdminController');
 Route::get('/admin/featuredocuments/{feature_id}', 'Feature\FeatureAdminController@getFeatureDocumentPartial');
 Route::get('/admin/featurepackages/{feature_id}', 'Feature\FeatureAdminController@getFeaturePackagePartial');
+Route::get('/admin/featureflyers/{feature_id}', 'Feature\FeatureAdminController@getFeatureFlyerPartial');
 
 //FLYER
 Route::resource('/admin/flyer', 'Flyer\FlyerAdminController');
@@ -44,6 +45,7 @@ Route::resource('/admin/dashboardbackground', 'Dashboard\DashboardBackgroundAdmi
 //Communications
 Route::resource('/admin/communication', 'Communication\CommunicationAdminController');
 Route::resource('/admin/communicationtypes', 'Communication\CommunicationTypesAdminController');
+Route::post('/admin/target/communicationtypes', 'Communication\CommunicationTypesAdminController@getCommunicationTypesByTarget');
 Route::resource('/admin/communicationimages', 'Communication\CommunicationImageController');
 Route::get('/admin/communicationdocuments/{communication_id}', 'Communication\CommunicationPartialController@getCommunicationDocumentPartial');
 
@@ -52,6 +54,7 @@ Route::resource('/admin/calendar', 'Calendar\CalendarAdminController');
 
 //Event Types
 Route::resource('/admin/eventtypes', 'Calendar\EventTypesAdminController');
+Route::post('/admin/target/eventtypes', 'Calendar\EventTypesAdminController@getEventTypesByTarget');
 
 //Tags
 Route::resource('/admin/tag', 'Tag\TagAdminController');

@@ -5,6 +5,11 @@ namespace App\Models\Event;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Validation\EventTypeValidator;
+use App\Models\Auth\User\UserBanner;
+use App\Models\StoreApi\Banner;
+use App\Models\Event\EventTypeBanner;
+use App\Models\StoreApi\Store;
+use App\Models\Utility\Utility;
 
 class EventType extends Model
 {
@@ -43,8 +48,10 @@ class EventType extends Model
 
 	public static function getEventTypeIdByName($name, $banner)
 	{
-		$event_type = EventType::where("event_type", $name)
+		$event_type = EventType::join('event_type_banner', 'event_type_banner.event_type_id', '=', 'event_types.id')
+                                ->where("event_type", $name)
 								->where("banner_id", $banner)
+                                ->select('event_types.*')
 								->first();
 		return $event_type->id;
 	}
@@ -69,11 +76,21 @@ class EventType extends Model
         $eventTypeDetails = array(
             'event_type' => $request['event_type'],
 			'background_colour' => $request['background_colour'],
-			'foreground_colour' => $request['foreground_colour'],
-            'banner_id' => $request['banner_id']
+			'foreground_colour' => $request['foreground_colour']
         );
 
         $eventType = EventType::create($eventTypeDetails);
+
+        if(isset($request->banners)){
+            foreach($request->banners as $banner){
+                EventTypeBanner::create([
+                    'event_type_id' => $eventType->id,
+                    'banner_id' => $banner
+                ]);
+            }
+        }
+
+
         return $eventType;
     }
 
@@ -94,6 +111,97 @@ class EventType extends Model
 
         $eventType->save();
 
+        if(isset($request->banners)){
+            EventTypeBanner::where('event_type_id', $id)->delete();
+            foreach($request->banners as $banner){
+                EventTypeBanner::create([
+                    'event_type_id' => $id,
+                    'banner_id' => $banner
+                ]);
+            }    
+        }
+
         return $eventType;
     }
+
+    public static function getEventTypesForAdmin()
+    {
+        $banners = UserBanner::getAllBanners()->pluck('id')->toArray();
+        
+        $eventTypes = EventType::join('event_type_banner', 'event_type_banner.event_type_id', '=', 'event_types.id')
+                ->whereIn('event_type_banner.banner_id', $banners)
+                ->select(\DB::raw('
+                    event_types.id as id,
+                    event_types.event_type,
+                    event_types.background_colour,
+                    event_types.foreground_colour, 
+                    GROUP_CONCAT(DISTINCT event_type_banner.banner_id) as banners'))
+                ->groupBy('event_type_banner.event_type_id')
+                ->get()
+                ->each(function($item){
+                    $banner_ids = explode(',', $item->banners);
+                    $item->banners = Banner::whereIn('id', $banner_ids)->get();
+
+                });
+        return $eventTypes;
+        
+
+    }
+
+    public static function getEventTypeById($id)
+    {
+        $eventType = EventType::join('event_type_banner', 'event_type_banner.event_type_id', '=', 'event_types.id')
+                ->where('event_types.id', $id)
+                ->select(\DB::raw('
+                    event_types.id as id,
+                    event_types.event_type,
+                    event_types.background_colour,
+                    event_types.foreground_colour,
+                    GROUP_CONCAT(DISTINCT event_type_banner.banner_id) as banners'))
+                ->groupBy('event_type_banner.event_type_id')
+                ->first();
+
+        $banner_ids = explode(',', $eventType->banners);
+        $eventType->banners = Banner::whereIn('id', $banner_ids)->get()->pluck('id')->toArray();
+
+        return $eventType;
+                
+    }
+    public static function getEventTypesByTarget($request)
+    {
+
+        $banners = Utility::getUniqueBannersForTarget($request);
+        $eventTypes = collect();
+
+        if(count($banners)>1){
+            $eventTypes = EventType::join('event_type_banner', 'event_type_banner.event_type_id', '=', 'event_types.id')
+                                    ->where('deleted_at', null)
+                                    ->select(\DB::raw('event_types.*, GROUP_CONCAT(DISTINCT event_type_banner.banner_id Order By event_type_banner.banner_id ) as banners'))
+                                    ->groupBy('event_type_banner.event_type_id')
+                                    ->get();
+                                    
+            foreach ($eventTypes as $key => $type) {  
+                $typeBanners = explode(',', $type->banners);
+                if($typeBanners != $banners){ //for arrays to be equal, they must have same key/value pairs.
+                                                // if $type->banners is not in the same order as $banners, it
+                                                //returns false
+            
+                    $eventTypes->forget($key);
+                }
+            }
+           
+        }
+
+        if(count($banners) == 1){
+            $eventTypes = EventType::join('event_type_banner', 'event_type_banner.event_type_id', '=', 'event_types.id')
+                                    ->where('deleted_at', null)
+                                    ->whereIn('event_type_banner.banner_id', $banners)
+                                    ->select('event_types.*')
+                                    ->groupBy('event_type_banner.event_type_id')
+                                    ->get();
+        }
+        return $eventTypes->pluck('event_type', 'id')->toArray();
+    }
+
+
 }

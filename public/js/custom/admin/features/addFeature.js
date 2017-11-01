@@ -124,20 +124,18 @@ $(document).on('click','.feature-create',function(){
 	var update_frequency   = $('input:radio[name ="latest_updates_option"]:checked').next(".update_frequency").val();
 	var communication_type = $("#communicationTypes").val();
 	var communications     = $("#communications").val();
-	var target_stores 	   = getTargetStores();
-	var allStores  		   = $("#allStores:checked").val();
-
-	console.log(thumbnail);
-	console.log(background);
-	console.log(update_type);
-	console.log(update_frequency);
-	console.log(communication_type);
-	console.log(communications);
-	console.log(target_stores);
+	var event_types 	   = $("#eventTypes").val();
+	var events             = $("#events").val();
+	var all_stores         = getAllStoreStatus();
+	var target_stores      = getTargetStores();
+	var target_banners     = getTargetBanners();
+	var store_groups       = getStoreGroups();
+	var tasklists 		   = $("#tasklists").val();
 
 	var feature_files = [];
 	var feature_packages = [];
 	var feature_flyers = [];
+
 	$(".feature-documents").each(function(){
 		feature_files.push($(this).find('td:first').attr('data-fileid'));
 	});
@@ -149,10 +147,6 @@ $(document).on('click','.feature-create',function(){
 		feature_flyers.push($(this).find('td:first').attr('data-flyerid'));
 	});
  	
- 	console.log(feature_files);
- 	console.log(feature_packages);
- 	console.log(feature_flyers);
-
     if(featureTitle == '') {
 		swal("Oops!", "This feature needs a name.", "error"); 
 		hasError = true;
@@ -171,7 +165,7 @@ $(document).on('click','.feature-create',function(){
 		return false;
 	};
 
-	if( target_stores == null && typeof allStores === 'undefined' ) {
+	if(  target_stores == null || all_stores == null || store_groups == null  ) {
 		swal("Oops!", "Target stores not selected.", "error"); 
 		hasError = true;
 		$(window).scrollTop(0);
@@ -191,13 +185,16 @@ $(document).on('click','.feature-create',function(){
      	data.append('feature_packages',  JSON.stringify(feature_packages));
      	data.append('communication_type',  JSON.stringify(communication_type));
      	data.append('communications', JSON.stringify(communications));
+     	data.append('event_types',  JSON.stringify(event_types));
+     	data.append('events', JSON.stringify(events));
+     	data.append('feature_flyers',  JSON.stringify(feature_flyers));
     	data.append('update_type', update_type);
     	data.append('update_frequency', update_frequency);
-    	data.append('target_stores', JSON.stringify(target_stores));
-    	if(typeof(allStores) !== 'undefined'){
-    		data.append('all_stores', allStores);	
-    	}
-    	
+		data.append('all_stores', getAllStoreStatus());
+  		data.append('target_stores', getTargetStores());
+  		data.append('target_banners', getTargetBanners());
+  		data.append('store_groups', getStoreGroups());
+  		data.append('tasklists', JSON.stringify(tasklists));
 
 		$.ajax({
 		    url: '/admin/feature',
@@ -274,6 +271,25 @@ $(document).on('click','.feature-create',function(){
 			        		$("#communications").parent().append('<div class="req">' + errors.communications[index]  + '</div>');	
 			        	});
 			        }
+
+			        if(errors.hasOwnProperty("event_types")) {
+			        	$.each(errors.event_types, function(index){
+			        		$("#eventTypes").parent().append('<div class="req">' + errors.event_types[index]  + '</div>');	
+			        	});
+			        }
+
+			        if(errors.hasOwnProperty("events")) {
+			        	$.each(errors.events, function(index){
+			        		$("#events").parent().append('<div class="req">' + errors.events[index]  + '</div>');	
+			        	});
+			        }
+
+			        if(errors.hasOwnProperty("tasklists")) {
+			        	$.each(errors.tasklists, function(index){
+			        		$("#tasklists").parent().append('<div class="req">' + errors.tasklists[index]  + '</div>');	
+			        	});
+			        }
+
 			        if(errors.hasOwnProperty("target_stores")) {
 			        	console.log(1);
 			        	$.each(errors.target_stores, function(index){

@@ -4,7 +4,7 @@
 <head>
     @section('title', 'Calendar')
     @include('admin.includes.head')
-
+	<link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 </head>
 
@@ -45,6 +45,13 @@
                                             <label class="col-sm-2 control-label">Text Colour</label>
                                             <div class="col-sm-2"><input class="jscolor form-control" name="foreground_colour" id="foreground_colour" value="{{$eventType->foreground_colour}}"></div>
                                         </div>
+                                        <div class="form-group">
+                                        	<label class="col-sm-2 control-label">Banners</label>
+                                            <div class="col-sm-10">
+                                            	{!! Form::select('banners', $banners, $eventType->banners, ['class'=>'chosen', 'multiple'=>'multiple', 'id'=>'banners'])
+                                            	!!}
+                                            </div>
+                                        </div>
 
 
                                         <div class="hr-line-dashed"></div>
@@ -82,7 +89,7 @@
 				        }
 					});
 				</script>
-
+				<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 				<script src="/js/custom/admin/events/editEventType.js"></script>
                 <script src="/js/vendor/jscolor-2.0.4/jscolor.min.js"></script>
 

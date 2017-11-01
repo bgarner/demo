@@ -35,11 +35,9 @@ class Banner extends Model
             'update_window_size' => $request->update_frequency,
         ];
         
-        \Log::info('&&&&');
         \Log::info($validateThis);
         $v = new DashboardBrandingValidator();
         $validationResult = $v->validate($validateThis);
-        \Log::info('******');
         \Log::info($validationResult);
         return $validationResult;
     }
@@ -62,7 +60,6 @@ class Banner extends Model
         
         if($validate['validation_result'] == 'false') {
             \Log::info($validate);
-            \Log::info('8');
             return json_encode($validate);
         } 
 

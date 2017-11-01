@@ -20,6 +20,11 @@ use App\Models\Feature\FeatureCommunicationTypes;
 use App\Models\Feature\FeatureTarget;
 use App\Models\Communication\Communication;
 use App\Models\StoreApi\StoreInfo;
+use App\Models\Tools\CustomStoreGroup;
+use App\Models\Auth\User\UserBanner;
+use App\Models\Utility\Utility;
+use App\Models\Feature\FeatureEventType;
+use App\Models\Feature\FeatureTasklist;
 
 class Feature extends Model
 {
@@ -41,9 +46,22 @@ class Feature extends Model
                         'start'            => $request['start'],
                         'end'              => $request['end'],
                         'update_type_id'   => $request['update_type'],
-                        'update_frequency' => $request['update_frequency'],
-                        'target_stores'    => json_decode($request['target_stores'])
+                        'update_frequency' => $request['update_frequency']
                       ];
+
+        if (NULL  != json_decode($request['target_stores'])) {
+            $validateThis['target_stores'] = $request['target_stores'];
+        }
+        if (NULL != json_decode($request['target_banners'])) {
+            $validateThis['target_banners'] = $request['target_banners'];
+        }
+        if (NULL != json_decode($request['store_groups'])) {
+            $validateThis['store_groups'] = $request['store_groups'];
+        }
+
+        if (NULL != $request['all_stores']) {
+            $validateThis['allStores'] = $request['all_stores'];
+        }
 
         if(null !== json_decode($request['communication_type'])){
             $validateThis['communication_type'] = json_decode($request['communication_type']);
@@ -54,9 +72,15 @@ class Feature extends Model
             $validateThis['communications'] = json_decode($request['communications']);
                         
         }
+        if(null !== json_decode($request['event_type'])){
+            $validateThis['event_type'] = json_decode($request['event_type']);
+        }
 
-        if ($request['all_stores'] != NULL) {
-            $validateThis['allStores'] = $request['all_stores'];
+        if(null !== json_decode($request['events'])){
+            $validateThis['events'] = json_decode($request['events']);
+        }
+        if(null !== json_decode($request['tasklists'])){
+            $validateThis['tasklists'] = json_decode($request['tasklists']);
         }
 
         $v = new FeatureValidator();
@@ -74,24 +98,40 @@ class Feature extends Model
                         'start'            => $request['start'],
                         'end'              => $request['end'],
                         'update_type_id'   => $request['update_type'],
-                        'update_frequency' => $request['update_frequency'],
-                        'remove_documents' => $request['remove_document'],
-                        'remove_packages'  => $request['remove_package'],
-                        'target_stores'    => $request['target_stores']
+                        'update_frequency' => $request['update_frequency']
                       ];
 
         if(null !== $request['communication_type']){
             $validateThis['communication_type'] = $request['communication_type'];
-                        
         }
 
         if(null !== $request['communications']){
             $validateThis['communications'] = $request['communications'];
-                        
+        }
+        if(null !== $request['event_types']){
+            $validateThis['event_types'] = $request['event_types'];
         }
 
-        if ($request['all_stores'] != NULL) {
+        if(null !== $request['events']){
+            $validateThis['events'] = $request['events'];
+        }
+
+        if (NULL  != $request['target_stores']) {
+            $validateThis['target_stores'] = $request['target_stores'];
+        }
+        if (NULL != $request['target_banners']) {
+            $validateThis['target_banners'] = $request['target_banners'];
+        }
+        if (NULL != $request['store_groups']) {
+            $validateThis['store_groups'] = $request['store_groups'];
+        }
+
+        if (NULL != $request['all_stores']) {
             $validateThis['allStores'] = $request['all_stores'];
+        }
+
+        if(null !== $request['tasklists']){
+            $validateThis['tasklists'] = $request['tasklists'];
         }
 
         if(isset($request['thumbnail']) && $request['thumbnail']){
@@ -101,6 +141,12 @@ class Feature extends Model
         if(isset($request['background']) && $request['background']){
             $validateThis['background']    = $request['background'];
         }
+        if(isset($request['remove_documents']) && $request['remove_documents']){
+            $validateThis['remove_documents']    = $request['remove_documents'];
+        }
+        if(isset($request['remove_package']) && $request['remove_package']){
+            $validateThis['remove_package']    = $request['remove_package'];
+        }
 
         $v = new FeatureValidator();
           
@@ -109,7 +155,7 @@ class Feature extends Model
   	
     public static function validateThumbnailEdit($request)
     {
-         $validateThis = [ 
+        $validateThis = [ 
                         
                         'thumbnail' => $request['thumbnail'],
                         'featureID' => $request['featureID']
@@ -122,7 +168,7 @@ class Feature extends Model
 
     public static function validateBackgroundEdit($request)
     {
-         $validateThis = [ 
+        $validateThis = [ 
                         
                         'background'=> $request['background'],
                         'featureID' => $request['featureID']
@@ -155,7 +201,6 @@ class Feature extends Model
         $banner           = UserSelectedBanner::getBanner();
 
         $feature          = Feature::create([
-                'banner_id'        => $banner->id,
                 'title'            => $title,
                 'tile_label'       => $tile_label,
                 'start'            => $start,
@@ -176,9 +221,17 @@ class Feature extends Model
       
   		Feature::addFiles(json_decode($request["feature_files"]), $feature->id);
   		Feature::addPackages(json_decode($request['feature_packages']), $feature->id);
-        Feature::updateCommunicationTypes(json_decode($request['communication_type']), $feature->id);
+        FeatureFlyer::addFlyers(json_decode($request['feature_flyers']), $feature->id);
+        
+        FeatureCommunicationTypes::updateCommunicationTypes(json_decode($request['communication_type']), $feature->id);
         FeatureCommunication::updateFeatureCommunications(json_decode($request['communications']), $feature->id);
+        
+        FeatureEventType::updateEventTypes(json_decode($request['event_types']), $feature->id);
+        FeatureEvent::updateFeatureEvents(json_decode($request['events']), $feature->id);
+        
         FeatureTarget::updateFeatureTarget($feature->id, $request);
+
+        FeatureTasklist::updateFeatureTasklists(json_decode($request['tasklists']), $feature->id);
 
   		return $feature;
 
@@ -210,9 +263,17 @@ class Feature extends Model
         Feature::removeFiles($request->remove_document, $id);
         Feature::addPackages($request->feature_packages, $id);
         Feature::removePackages($request->remove_package, $id);
-        Feature::updateCommunicationTypes($request['communication_type'], $feature->id);
+        FeatureFlyer::addFlyers($request->feature_flyers, $id);
+        FeatureFlyer::removeFlyers($request->remove_flyer, $id);
+
+        FeatureCommunicationTypes::updateCommunicationTypes($request['communication_type'], $feature->id);
         FeatureCommunication::updateFeatureCommunications($request['communications'], $feature->id);
+        FeatureEventType::updateEventTypes($request['event_types'], $feature->id);
+        FeatureEvent::updateFeatureEvents($request['events'], $feature->id);
+        
         FeatureTarget::updateFeatureTarget($feature->id, $request);
+
+        FeatureTasklist::updateFeatureTasklists($request['tasklists'], $feature->id);
         return $feature;
 
     }
@@ -263,22 +324,6 @@ class Feature extends Model
           }
         }
         return; 
-    }
-
-    public static function updateCommunicationTypes($communication_types, $feature_id)
-    {
-        if(FeatureCommunicationTypes::where('feature_id', $feature_id)->first()){
-            $feature = FeatureCommunicationTypes::where('feature_id', $feature_id)->delete();
-        }
-        if (isset($communication_types)) {   
-            
-            foreach ($communication_types as $type) {
-                FeatureCommunicationTypes::create([
-                    'feature_id' => $feature_id,
-                    'communication_type_id' => intval($type)
-                    ]);
-            }
-        }
     }
 
     public static function updateFeatureBackground($file, $feature_id)
@@ -376,8 +421,9 @@ class Feature extends Model
         $now = Carbon::now()->toDatetimeString();
         $banner_id = StoreInfo::getStoreInfoByStoreId($storeNumber)->banner_id;
 
-        $allStoreFeatures = Feature::where('all_stores', 1)
-                                    ->where('banner_id', $banner_id)
+        $allStoreFeatures = Feature::join('feature_banner', 'feature_banner.feature_id', '=', 'features.id')
+                                    ->where('all_stores', 1)
+                                    ->where('feature_banner.banner_id', $banner_id)
                                     ->where('start', '<=', $now)
                                     ->where(function($query) use ($now) {
                                         $query->where('features.end', '>=', $now)
@@ -394,7 +440,18 @@ class Feature extends Model
                                     })
                                     ->select('features.*')
                                     ->get();
-        $features = $allStoreFeatures->merge($targetedFeatures)->sortBy('order');  
+
+        $storeGroups = CustomStoreGroup::getStoreGroupsForStore($storeNumber);
+
+        $targetedFeaturesForStoreGroups = Feature::join('feature_store_group', 'feature_store_group.feature_id', '=', 'features.id')
+                                            ->whereIn('feature_store_group.store_group_id', $storeGroups)
+                                            ->select('features.*')
+                                            ->get();
+
+
+        $features = $allStoreFeatures->merge($targetedFeatures)
+                                    ->merge($targetedFeaturesForStoreGroups)
+                                    ->sortBy('order');  
         return $features;                               
 
     }
@@ -405,21 +462,118 @@ class Feature extends Model
         FeaturePackage::where('feature_id', $id)->delete();
         FeatureDocument::where('feature_id', $id)->delete();
         FeatureFlyer::where('feature_id', $id)->delete();
+        FeatureCommunication::where('feature_id', $id)->delete();
+        FeatureCommunicationTypes::where('feature_id', $id)->delete();
+        FeatureEvent::where('feature_id', $id)->delete();
+        FeatureEventType::where('feature_id', $id)->delete();
+        FeatureBanner::where('feature_id', $id)->delete();    
+        FeatureTarget::where('feature_id', $id)->delete();
+        FeatureStoreGroup::where('feature_id', $id)->delete(); 
         return;
     }
 
-
+    //get all the features that expire in future both starting in future and started already
     public static function getActiveFeaturesByBanner($banner_id)
     {
         $now = Carbon::now();
-        $activeFeatures = Feature::where('banner_id', $banner_id)
-                                ->where('features.start', '<=', $now )
-                                ->where('features.end', '>=', $now )
-                                ->orderBy('order')
-                                ->get();
+
+        $activeFeatures = Feature::getFeaturesForAdmin([$banner_id]);
+
+        foreach ($activeFeatures as $key => $value) {
+            if($value->end<$now){
+                $activeFeatures->forget($key);
+            }
+        }
 
         return $activeFeatures;
-
         
     }
+
+    public static function getSelectedStoresAndBannersByFeatureId($feature_id)
+    {
+        $targetBanners = FeatureBanner::where('feature_id', $feature_id)->get()->pluck('banner_id')->toArray();
+        $targetStores = FeatureTarget::where('feature_id', $feature_id)->get()->pluck('store_id')->toArray();
+
+        $storeGroups = FeatureStoreGroup::where('feature_id', $feature_id)->get()->pluck('store_group_id')->toArray();
+
+        $optGroupSelections = [];
+        foreach ($targetBanners as $banner) {
+            array_push($optGroupSelections, 'banner'.$banner);
+        }
+        foreach ($targetStores as $stores) {
+            array_push($optGroupSelections, 'store'.$stores);   
+        }
+        foreach ($storeGroups as $group) {
+            array_push($optGroupSelections, 'storegroup'.$group);   
+        }
+
+
+        return( $optGroupSelections );
+    }
+
+    public static function getFeaturesForAdmin($banners = null)
+    {
+        if(!isset($banners)){
+            $banners = UserBanner::getAllBanners()->pluck('id')->toArray();    
+        }
+        
+        //stores in accessible banners
+        $storeList = [];
+        foreach ($banners as $banner) {
+            $storeInfo = StoreInfo::getStoresInfo($banner);
+            foreach ($storeInfo as $store) {
+                array_push($storeList, $store->store_number);
+            }
+        }
+
+        $allStoreFeatures = Feature::join('feature_banner', 'feature_banner.feature_id', '=', 'features.id')
+                                ->where('all_stores', 1)
+                                ->whereIn('feature_banner.banner_id', $banners)
+                                ->select('features.*', 'feature_banner.banner_id')
+                                ->get();
+
+
+        $allStoreFeatures = Utility::groupBannersForAllStoreContent($allStoreFeatures);
+        
+        $targetedFeatures = Feature::join('feature_target', 'feature_target.feature_id', '=', 'features.id')
+                                ->whereIn('feature_target.store_id', $storeList)
+                                
+                                ->select(\DB::raw('features.*, GROUP_CONCAT(DISTINCT feature_target.store_id) as stores'))
+                                ->groupBy('features.id')
+                                ->get()
+                                ->each(function($feature){
+                                    $feature->stores = explode(',', $feature->stores);
+                                });
+
+        $storeGroups = CustomStoreGroup::getStoreGroupsForAdmin();
+        $featuresForStoreGroups = Feature::join('feature_store_group','feature_store_group.feature_id','=','features.id')
+                                            ->whereIn('feature_store_group.store_group_id', $storeGroups)
+                                            ->select('features.*')
+                                            ->get()
+                                            ->each(function($item){
+                                                $storeGroups = FeatureStoreGroup::where('feature_id', $item->id)->get()->pluck('store_group_id')->toArray();
+                                                $item->storeGroups = $storeGroups;
+                                                $item->stores = [];
+                                                foreach ($storeGroups as $group) {
+                                                    $stores = unserialize(CustomStoreGroup::find($group)->stores);
+                                                    $item->stores = array_merge($item->stores,$stores);
+                                                }
+                                                $item->stores = array_unique( $item->stores);
+                                            });
+        $targetedFeatures = Utility::mergeTargetedAndStoreGroupContent($targetedFeatures, $featuresForStoreGroups);
+
+        $features = Utility::mergeTargetedAndAllStoreContent($targetedFeatures, $allStoreFeatures);
+
+
+        foreach ($features as $feature) {
+            
+            $feature->prettyDateCreated = Utility::prettifyDate($feature->created_at);
+            $feature->prettyDateUpdated = Utility::prettifyDate($feature->updated_at);
+        }
+                        
+                        
+        return $features;
+    }
+
+
 }

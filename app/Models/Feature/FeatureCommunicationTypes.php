@@ -19,4 +19,20 @@ class FeatureCommunicationTypes extends Model
         return $communicationTypes;
     	
     }
+
+    public static function updateCommunicationTypes($communication_types, $feature_id)
+    {
+        if(FeatureCommunicationTypes::where('feature_id', $feature_id)->first()){
+            $feature = FeatureCommunicationTypes::where('feature_id', $feature_id)->delete();
+        }
+        if (isset($communication_types)) {   
+            
+            foreach ($communication_types as $type) {
+                FeatureCommunicationTypes::create([
+                    'feature_id' => $feature_id,
+                    'communication_type_id' => intval($type)
+                    ]);
+            }
+        }
+    }
 }

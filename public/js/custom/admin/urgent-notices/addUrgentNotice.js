@@ -75,25 +75,6 @@ $('#attach-selected-files').on('click', function(){
 });
 
 
-$("#allStores").change(function(){
-
-	if ($("#allStores").is(":checked")) {
-
-		$("#storeSelect option").each(function(index){			
-			$(this).attr('selected', 'selected');
-		});
-		$("#storeSelect").chosen();
-		
-	}
-	else if ($("#allStores").not(":checked")) {
-		$("#storeSelect option").each(function(){
-			$(this).removeAttr('selected');
-		});
-		$("#storeSelect").chosen();
-		
-	}
-});
-
 $("body").on('click', ".remove-staged-file", function(){
 	
 	var document_id = $(this).attr('data-file-id');
@@ -121,8 +102,13 @@ $(document).on('click','.urgentnotice-create',function(){
 	var start = $("#start").val();
 	var end = $("#end").val();
 	var banner_id = $("input[name='banner_id']").val();
-	var target_stores  = $("#storeSelect").val();
-	var all_stores  = $("#allStores:checked").val();
+
+	var all_stores = getAllStoreStatus();
+	var target_stores = getTargetStores();
+	var target_banners = getTargetBanners();
+	var store_groups = getStoreGroups();
+
+
 	var urgentnotice_documents = [];
 	var urgentnotice_folders = [];
 	$(".urgentnotice-documents").each(function(){
@@ -150,7 +136,7 @@ $(document).on('click','.urgentnotice-create',function(){
 		$(window).scrollTop(0);
 		return false;
 	}
-	if( target_stores == null && typeof all_stores === 'undefined' ) {
+	if( target_stores == null || all_stores == null || store_groups == null ) {
 		swal("Oops!", "Target stores not selected.", "error"); 
 		hasError = true;
 		$(window).scrollTop(0);
@@ -168,10 +154,12 @@ $(document).on('click','.urgentnotice-create',function(){
 		  		start : start,
 		  		end : end,
 		  		banner_id : banner_id,
-		  		target_stores : target_stores,
-		  		all_stores : all_stores,
 		  		urgentnotice_folders : urgentnotice_folders,
 		  		urgentnotice_documents : urgentnotice_documents,
+		  		all_stores : all_stores,
+				target_stores : target_stores,
+				target_banners : target_banners,
+				store_groups : store_groups,
 		  		attachment_type_id : 1 //adding dummy value to keep the database as was before; attachment_type would not hold any meaning though
 		    },
 		    dataType : 'json',

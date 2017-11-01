@@ -85,6 +85,7 @@
 				</script>
 				<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 				<script src="/js/custom/admin/storegroup/editStoreGroup.js"></script>
+				<script src="/js/custom/admin/global/storeSelector.js"></script>
 				
 				
 

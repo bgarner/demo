@@ -33,14 +33,6 @@
 		                        <div class="ibox-content">
 
 		                            <div class="m-b-lg">
-		                   <!--          <div class="alert alert-warning" role="alert"><p><strong>IMPORTANT</strong> - Don't delete an event type if there are existing events of that type.</p></div> -->
-
-{{-- 		                                <div class="input-group">
-		                                    <input type="text" placeholder="Search event by title..." class=" form-control">
-		                                    <span class="input-group-btn">
-		                                        <button type="button" class="btn btn-white"> Search</button>
-		                                    </span>
-		                                </div> --}}
 
 		                            </div>
 
@@ -51,20 +43,25 @@
 											<tr>
 											<td>id</td>
 											<td>Communication Type</td>
+											<td>Banners</td>
 											<td></td>
 										</tr>
 										</thead>
 										<tbody>
 										@foreach($communicationtypes as $ct)
-											@if ( ($banner->id == 1 && $ct->id !="1")  || ($banner->id == 2 && $ct->id !="2") )
+											@if ( $ct->id !="1")
 										<tr>
 
 
 											<td>{{ $ct->id }}</td>
-											<td><i class="fa fa-circle text-{{ $ct->colour }}"></i> &nbsp;{{ $ct->communication_type }}</td>
-
-
+											<td><i class="fa fa-circle text-{{ $ct->colour }}"></i> &nbsp; <a href="/admin/communicationtypes/{{ $ct->id }}/edit" >{{ $ct->communication_type }}</a></td>
 											<td>
+												@foreach($ct->banners as $banner)
+													<span class="label">{{$banner->name}}</span>
+												@endforeach
+											</td>
+
+											<td>	
 
 												<a data-communicationtype="{{ $ct->id }}" id="communicationtype{{$ct->id}}" class="communicationtype-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 
@@ -74,8 +71,6 @@
 										@endforeach
 										</tbody>
 										</table>
-
-{{-- 										{!! $events->render() !!} --}}
 
 		                            </div>
 		                        </div>
@@ -103,7 +98,9 @@
 							"columns": [
 							    { "visible": false },
 							    null,
+							    null,
 							    { "width" : "10%" , "sortable" : false}
+
 							  ],
 							pageLength: 50,
 							responsive: true,

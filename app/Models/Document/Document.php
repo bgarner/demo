@@ -141,14 +141,10 @@ class Document extends Model
                 'end'               => $request->end
             );
 
-            \Log::info('documentdetails before going into db');
-            \Log::info($documentdetails);
 
             $document = Document::create($documentdetails);
             $document->save();
             $lastInsertedId= $document->id;
-
-            \Log::info($document);
 
             //update file-folder table
             $isWeekFolder = $request->get('isWeekFolder');

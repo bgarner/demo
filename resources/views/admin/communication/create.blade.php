@@ -48,41 +48,17 @@
 					                        <input type="text" class="input-sm form-control datetimepicker-end" name="archive_at" id="archive_at" value="" />
 					                    </div>
 					                </div>
-					        </div>
+					        </div>										
+										
+										@include('admin.includes.store-banner-selector', ['optGroupOptions'=> $optGroupOptions, 'optGroupSelections' => $optGroupSelections])
 
-							<div class="form-group" >
-								<label class="col-sm-2 control-label">Type</label>
-									<div class="col-sm-10" id="communication-type-selector">
-										<div class="btn-group">
-											<a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#">
-												<span class="selected_comm_type">Select</span>
-												<i class="fa fa-angle-down"></i>
-											</a>
-											<input type="text" hidden  name="communication_type" value="">
-											<ul name="communication_type" id="" class="dropdown-menu" role="menu">
-												@foreach($communicationTypes as $ct)
+										<div class="form-group" >
+											<label class="col-sm-2 control-label">Type</label>
+                      <div class="col-sm-10" id="communication-type-selector">
+                        @include('admin.communication.communication-type-selector')
+                      </div>
+                     </div>
 
-													@if( ( $banner->id==1 && $ct->id == 1 ) || ($banner->id==2 && $ct->id == 2) )
-														<li data-comm-typeid="{{$ct->id}}"
-															data-comm-type="{{$ct->communication_type}}"
-															data-comm-typecolour="{{$ct->colour}}"
-															class="comm_type_dropdown_item" >
-															<a href="#"> {{$ct->communication_type}} </a>
-														</li>
-													@else
-														<li data-comm-typeid="{{$ct->id}}"
-															data-comm-type="{{$ct->communication_type}}"
-															data-comm-typecolour="{{$ct->colour}}"
-															class="comm_type_dropdown_item" >
-															<a href="#" ><i class="fa fa-circle text-{{$ct->colour}}"></i> {{$ct->communication_type}}</a>
-														</li>
-													@endif
-
-												@endforeach
-											</ul>
-										</div>
-									</div>
-							</div>
 
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Body</label>
@@ -91,40 +67,7 @@
 									</div>
 							</div>
 
-
-							<div class="form-group">
-
-					                <label class="col-sm-2 control-label">Target Stores</label>
-					                <div class="col-sm-10">
-					                	<select name="stores" id="storeSelect" multiple class="chosen">
-							            	<option value="">Select Some Options</option>
-							            	@foreach($storeAndStoreGroups as $option)
-
-							                    <option value="{{$option['id']}}"
-
-							                        @if(isset($option["isStoreGroup"]))
-														data-isStoreGroup = "{{$option['isStoreGroup']}}"
-							                        @endif
-							                        @if(isset($option["stores"]))
-														data-stores = "{{$option['stores']}}"
-							                        @endif
-
-							                    >
-							                        {{$option['name']}}
-							                    </option>
-
-							            	@endforeach
-
-							        	</select>
-							        	{!! Form::label('allStores', 'Or select all stores:') !!}
-							        	{!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
-
-
-							        	
-					                </div>
-
-					        </div>
-					        <div id="tag-selector-container">
+              <div id="tag-selector-container">
 								@include('admin.video.tag.tag-partial')
 							</div>
 
@@ -259,9 +202,8 @@
 		<script type="text/javascript" src="/js/custom/admin/communications/documentSelector.js"></script>
 		<script type="text/javascript" src="/js/custom/tree.js"></script>
 		<script type="text/javascript" src="/js/custom/datetimepicker-with-default-time.js"></script>
-		<script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>
+		<script type="text/javascript" src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
 		<script type="text/javascript" src="/js/plugins/select/select2.min.js"></script>
-
 
 		<script type="text/javascript">
 
@@ -286,11 +228,6 @@
     		});
 
 		    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
-
-		    // $("#add-documents").click(function(){
-		    // 	$("#document-listing").modal('show');
-		    // });
-
 
 		    $("#add-packages").click(function(){
 		    	$("#package-listing").modal('show');

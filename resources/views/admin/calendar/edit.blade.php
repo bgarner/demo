@@ -46,14 +46,15 @@
                                     <form method="get" class="form-horizontal">
                                         <input type="hidden" name="eventID" id="eventID" value="{{ $event->id }}">
                                         <input type="hidden" name="banner" id="banner" value="1">
+                                        <input type="hidden" name="optGroupSelections" id="optGroupSelections" value="{{$optGroupSelections}}">
                                         <div class="form-group"><label class="col-sm-2 control-label">Title <span class="req">*</span></label>
                                             <div class="col-sm-10"><input type="text" id="title" name="title" class="form-control" value="{{ $event->title }}"></div>
                                         </div>
 
-                                        <div class="form-group"><label class="col-sm-2 control-label">Event Type <span class="req">*</span></label>
-                                            <div class="col-sm-10">
-                                                {{-- <input type="text" class="form-control" value="{{ $event_type->event_type }}"> --}}
+                                        @include('admin.includes.the-ultimate-store-selector')
 
+                                        <div class="form-group"><label class="col-sm-2 control-label">Event Type <span class="req">*</span></label>
+                                            <div class="col-sm-10" id="event-type-selector">
                                                 <select class="form-control" id="event_type" name="event_type">
                                                     @foreach($event_types_list as $key=>$event_type)
                                                         @if( $key == $event->event_type )
@@ -65,8 +66,6 @@
                                                 </select>
                                             </div>
                                         </div>
-
-                                        {{-- <div class="summernote"></div> --}}
 
                                         <div class="form-group">
 
@@ -91,24 +90,6 @@
                                                 <textarea class="form-control" rows="5" id="description" name="description">{{ $event->description }}</textarea>
 
                                             </div>
-                                        </div>
-
-
-                                        <div class="form-group">
-
-                                            <label class="col-sm-2 control-label">Stores <span class="req">*</span></label>
-                                            <div class="col-sm-10">
-                                                @if($event->all_stores)
-                                                    {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
-                                                    {!! Form::label('allStores', 'Or select all stores:') !!}
-                                                    {!! Form::checkbox('allStores', null, true ,['id'=> 'allStores'] ) !!}
-                                                @else
-                                                    {!! Form::select('stores', $storeList, $target_stores, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
-                                                    {!! Form::label('allStores', 'Or select all stores:') !!}
-                                                    {!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
-                                                @endif
-                                            </div>
-
                                         </div>
 
                                     </form>
@@ -217,7 +198,7 @@
                 <script type="text/javascript" src="/js/custom/tree.js"></script>
                 <script type="text/javascript" src="/js/custom/admin/events/editEvent.js"></script>
                 <script type="text/javascript" src="/js/custom/datetimepicker.js"></script>
-                <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
+                <script type="text/javascript" src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
                 <script type="text/javascript">
 					$.ajaxSetup({
 				        headers: {

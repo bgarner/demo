@@ -145,8 +145,10 @@ $(document).on('click','.urgentnotice-update',function(){
 	var start = $("#start").val();
 	var end = $("#end").val();
 	var banner_id = $("input[name='banner_id']").val();
-	var target_stores  = $("#storeSelect").val();
-	var all_stores  = $("#allStores:checked").val();
+	var all_stores = getAllStoreStatus();
+	var target_stores = getTargetStores();
+	var target_banners = getTargetBanners();
+	var store_groups = getStoreGroups();	
 	var remove_document = [];
 	var remove_folder = [];
 	var urgentnotice_files = [];
@@ -196,8 +198,10 @@ $(document).on('click','.urgentnotice-update',function(){
 		  		start : start,
 		  		end : end,
 		  		banner_id : banner_id,
-		  		target_stores : target_stores,
 		  		all_stores : all_stores,
+				target_stores : target_stores,
+				target_banners : target_banners,
+				store_groups : store_groups,
 		  		remove_document : remove_document,
 				remove_folder : remove_folder,
 				urgentnotice_files : urgentnotice_files,

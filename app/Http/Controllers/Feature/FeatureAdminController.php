@@ -19,10 +19,16 @@ use App\Models\Communication\CommunicationType;
 use App\Models\Communication\Communication;
 use App\Models\Feature\FeatureCommunicationTypes;
 use App\Models\Feature\FeatureCommunication;
+use App\Models\Feature\FeatureEventType;
+use App\Models\Feature\FeatureEvent;
 use App\Models\Feature\FeatureFlyer;
 use App\Models\Flyer\Flyer;
 use App\Models\Feature\FeatureTarget;
 use App\Models\Utility\Utility;
+use App\Models\Event\Event;
+use App\Models\Event\EventType;
+use App\Models\Task\Tasklist;
+use App\Models\Feature\FeatureTasklist;
 
 class FeatureAdminController extends Controller
 {
@@ -39,7 +45,7 @@ class FeatureAdminController extends Controller
     public function index()
     {
         $banner = UserSelectedBanner::getBanner();
-        $features = Feature::where('banner_id', $banner->id)->get();
+        $features = Feature::getFeaturesForAdmin();
         
         return view('admin.feature.index')
                 ->with('features', $features)
@@ -56,10 +62,18 @@ class FeatureAdminController extends Controller
         $banner              = UserSelectedBanner::getBanner();
         $packages            = Package::where('banner_id', $banner->id)->get();
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
-        $communicationTypes  = CommunicationType::where('banner_id', $banner->id)->get()->pluck('communication_type', 'id');
-        $communications      = Communication::getAllCommunication($banner->id)->pluck('subject', 'id');
-        $storeAndStoreGroups = Utility::getStoreAndStoreGroupList($banner->id);
+        $communicationTypes  = CommunicationType::getCommunicationTypesForAdmin();
+        $communicationTypes  = $communicationTypes->pluck('communication_type', 'id');
+        $communications      = Communication::getCommunicationsForAdmin()->pluck('subject', 'id');
+        $optGroupOptions     = Utility::getStoreAndBannerSelectDropdownOptions();
+        $optGroupSelections  = json_encode([]);
         $flyers              = Flyer::getFlyersByBannerId($banner->id);
+
+        $eventTypes          = EventType::getEventTypesForAdmin();
+        $eventTypes          = $eventTypes->pluck('event_type', 'id')->toArray();
+
+        $events              = Event::getEventsForAdmin()->pluck('title', 'id')->toArray();
+        $tasklists           = Tasklist::getTasklistsForAdmin()->pluck('title', 'id')->toArray();
 
         return view('admin.feature.create')
                 ->with('banner', $banner)
@@ -67,8 +81,12 @@ class FeatureAdminController extends Controller
                 ->with('packages', $packages)
                 ->with('communicationTypes', $communicationTypes)
                 ->with('communications', $communications)
-                ->with('storeAndStoreGroups', $storeAndStoreGroups)
-                ->with('flyers', $flyers);
+                ->with('optGroupOptions', $optGroupOptions)
+                ->with('optGroupSelections', $optGroupSelections)
+                ->with('flyers', $flyers)
+                ->with('events', $events)
+                ->with('eventTypes', $eventTypes)
+                ->with('tasklists', $tasklists);
     }
 
     /**
@@ -101,26 +119,37 @@ class FeatureAdminController extends Controller
      */
     public function edit($id)
     {
-        $banner              = UserSelectedBanner::getBanner();
-        $feature             = Feature::find($id);
+        $banner                       = UserSelectedBanner::getBanner();
+        $feature                      = Feature::find($id);
 
-        $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
-        $selected_documents   = FeatureDocument::getDocumentByFeatureId($id);
+        $fileFolderStructure          = FileFolder::getFileFolderStructure($banner->id);
+        $selected_documents           = FeatureDocument::getDocumentByFeatureId($id);
 
-        $packages          = Package::where('banner_id', $banner->id)->get();
-        $selected_packages = FeaturePackage::getPackageByFeatureId($id);
+        $packages                     = Package::where('banner_id', $banner->id)->get();
+        $selected_packages            = FeaturePackage::getPackageByFeatureId($id);
         
-        $communicationTypes           = CommunicationType::where('banner_id', $banner->id)->get()->pluck('communication_type', 'id');
+        $communicationTypes           = CommunicationType::getCommunicationTypesForAdmin();
+        $communicationTypes           = $communicationTypes->pluck('communication_type', 'id');
         $selected_communication_types = FeatureCommunicationTypes::getCommunicationTypeId($id);
         
-        $communications               = Communication::getAllCommunication($banner->id)->pluck('subject', 'id');
+        $communications               = Communication::getCommunicationsForAdmin()->pluck('subject', 'id');
         $selected_communications      = FeatureCommunication::getCommunicationId($id);
 
-        $storeAndStoreGroups         = Utility::getStoreAndStoreGroupList($banner->id);
-        $feature_target_stores       = FeatureTarget::where('feature_id', $id)->get()->pluck('store_id')->toArray();
+        $optGroupOptions              = Utility::getStoreAndBannerSelectDropdownOptions();
+        $optGroupSelections           = json_encode(Feature::getSelectedStoresAndBannersByFeatureId($id));
 
-        $flyers = Flyer::getFlyersByBannerId($banner->id);
-        $selected_flyers = FeatureFlyer::getFlyersByFeatureId($id);
+        $flyers                       = Flyer::getFlyersByBannerId($banner->id);
+        $selected_flyers              = FeatureFlyer::getFlyersByFeatureId($id);
+
+        $eventTypes                   = EventType::getEventTypesForAdmin();
+        $eventTypes                   = $eventTypes->pluck('event_type', 'id')->toArray();
+        $selected_event_types         = FeatureEventType::getEventTypeId($id);
+
+        $events                       = Event::getEventsForAdmin()->pluck('title', 'id')->toArray();
+        $selected_events              = FeatureEvent::getEventId($id);
+
+        $tasklists                    = Tasklist::getTasklistsForAdmin()->pluck('title', 'id')->toArray();
+        $selected_tasklists           = FeatureTasklist::getTasklistsByFeatureId($id);
 
         return view('admin.feature.edit')->with('feature', $feature)
                                     
@@ -133,10 +162,16 @@ class FeatureAdminController extends Controller
                                         ->with('selected_communication_types', $selected_communication_types)
                                         ->with('communications', $communications)
                                         ->with('selected_communications', $selected_communications)
-                                        ->with('storeAndStoreGroups', $storeAndStoreGroups)
-                                        ->with('target_stores', $feature_target_stores)
+                                        ->with('optGroupOptions', $optGroupOptions)
+                                        ->with('optGroupSelections', $optGroupSelections)
                                         ->with('flyers', $flyers)
-                                        ->with('feature_flyers', $selected_flyers);
+                                        ->with('feature_flyers', $selected_flyers)
+                                        ->with('eventTypes', $eventTypes)
+                                        ->with('selected_event_types', $selected_event_types)
+                                        ->with('events', $events)
+                                        ->with('selected_events', $selected_events)
+                                        ->with('tasklists', $tasklists)
+                                        ->with('selected_tasklists', $selected_tasklists);
                                         
     }
 
@@ -179,7 +214,7 @@ class FeatureAdminController extends Controller
 
     public function getFeatureFlyerPartial($feature_id)
     {
-        $flyers = Feature::getFlyerDetailsByFeatureId($feature_id);
+        $flyers = FeatureFlyer::getFlyersByFeatureId($feature_id);
 
         return view('admin.feature.feature-flyers-partial')->with('flyers', $flyers);
     }

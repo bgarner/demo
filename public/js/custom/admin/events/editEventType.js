@@ -1,3 +1,10 @@
+$(document).ready(function(){
+	$(".chosen").chosen({
+		'width':'100%'
+	});
+
+});
+
 $(document).on('click','.eventtype-edit',function(){
 
   	var hasError = false;
@@ -6,6 +13,7 @@ $(document).on('click','.eventtype-edit',function(){
 	var eventType = $("#event_type").val();
     var bg = $("#background_colour").val();
     var fg = $("#foreground_colour").val();
+    var banners = $("#banners").val();
 
     if(eventType == '') {
 		swal("Oops!", "This event type needs a name.", "error");
@@ -23,7 +31,8 @@ $(document).on('click','.eventtype-edit',function(){
 		    data: {
 		  		event_type: eventType,
                 background_colour: bg,
-                foreground_colour: fg
+                foreground_colour: fg,
+                banners: banners
 		    },
 		    dataType : 'json',
 		    success: function(data) {
