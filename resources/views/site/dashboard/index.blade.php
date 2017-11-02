@@ -223,7 +223,7 @@
     @include('site.includes.modal')
 
     <script>
-        console.frog("Ribbit");
+        
         $(document).ready(function(){
             var height = $("#ql-container").height();
             $("#notification-container").height(height).css("overflow", "auto");
