@@ -50,6 +50,11 @@
                             <option value="files/productlaunch">Product Launch Data</option>
                             <option value="video">Videos</option>
                             <option value="video/thumbs">Video Thumnails</option>
+                            <option value="images/featured-backgrounds">Feature Backgrounds</option>
+                            <option value="images/featured-covers">Feature Covers</option>
+                            <option value="images/dashboard-banners">Dashboard Backgrounds</option>
+                            <option value="images/communication-images">Communication Images</option>
+                            <option value="images/ckeditor-images">CK Editor Images</option>
                         </select>
 
 
