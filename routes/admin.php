@@ -3,6 +3,7 @@
 //Route::get('/admin',  ['middleware' => 'admin.auth', 'uses' =>'AdminController@index' ] );
 Route::get('/admin', 'AdminController@index');
 Route::get('/admin/videoanalytics', 'Analytics\AnalyticsAdminController@index');
+Route::get('/admin/paginatedvideos', 'Analytics\AnalyticsAdminController@getVideoAnalyticsByPage');
 
 //admin home
 //Route::get('/admin/home',  ['middleware' => 'admin.auth', 'uses' =>'AdminController@index' ] );

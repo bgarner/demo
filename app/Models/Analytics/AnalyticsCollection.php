@@ -94,5 +94,40 @@ class AnalyticsCollection extends Model
     	
     }
 
+    public static function getPaginatedVideoStats($request)
+    {
+        $allVideoStats = AnalyticsCollection::getVideoStats();        
+        
+        $videoStatsSlices = array_chunk( $allVideoStats->toArray(), 15);
+        
+        $videoStats = $videoStatsSlices[0];
+        $videoNextPageIndex = 2;
+        $videoPreviousPageIndex = '';
+        
+        if(isset($request->page) && ($request->page!='') && is_numeric($request->page)){
+
+            $page = intval($request->page);
+            if($page > count($videoStatsSlices)){
+                $videoStats = $videoStatsSlices[count($videoStatsSlices) -1];
+            }
+            elseif($page < 1){
+                $videoStats = $videoStatsSlices[0];   
+            }
+            else{
+                $videoStats = $videoStatsSlices[$page -1];    
+            }
+            $videoNextPageIndex = $page+1;
+            $videoPreviousPageIndex = $page-1;
+            
+        }
+
+        $paginatedVideos = [];
+        $paginatedVideos['videoStats'] = $videoStats;
+        $paginatedVideos['nextPage'] = $videoNextPageIndex;
+        $paginatedVideos['previousPage'] = $videoPreviousPageIndex;
+        
+        return $paginatedVideos;
+    }
+
 
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Pagination\Paginator;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\StoreApi\Banner;
@@ -33,7 +34,12 @@ class AdminController extends Controller
         $commStats = AnalyticsCollection::getActiveCommunicationStats();
         $urgentNoticeStats = AnalyticsCollection::getActiveUrgentNoticeStats();
         $taskStats = AnalyticsCollection::getTaskStats();
-        $videoStats = AnalyticsCollection::getVideoStats();
+
+        $paginatedVideos = AnalyticsCollection::getPaginatedVideoStats($request);        
+        $videoStats = $paginatedVideos['videoStats'];
+        $videoNextPageIndex = $paginatedVideos['nextPage'];
+        $videoPreviousPageIndex = $paginatedVideos['previousPage'];
+        
         $today = Carbon::now();
         $lastCompiledTimestamp = AnalyticsCollection::orderBy('created_at', 'desc')->first()->created_at;
         $prettyLastCompiledTimestamp = Utility::prettifyDateWithTime($lastCompiledTimestamp);
@@ -44,7 +50,9 @@ class AdminController extends Controller
                     ->with('taskStats', $taskStats)
                     ->with('videoStats', $videoStats)
                     ->with('today', $today)
-                    ->with('prettyLastCompiledTimestamp', $prettyLastCompiledTimestamp);
+                    ->with('prettyLastCompiledTimestamp', $prettyLastCompiledTimestamp)
+                    ->with('videoNextPageIndex', $videoNextPageIndex)
+                    ->with('videoPreviousPageIndex', $videoPreviousPageIndex);
     }
 
     /**
