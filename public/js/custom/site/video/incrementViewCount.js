@@ -11,9 +11,9 @@ function videoMeta()
     var duration = player.duration();
     firetime = duration/2;
 
-    console.log("duration: " + player.duration());
-    console.log("current time: " + player.currentTime());
-    console.log("firetime: " + firetime );
+    // console.log("duration: " + player.duration());
+    // console.log("current time: " + player.currentTime());
+    // console.log("firetime: " + firetime );
 }
 
 function timer()
