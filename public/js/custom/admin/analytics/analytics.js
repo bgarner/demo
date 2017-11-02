@@ -93,26 +93,13 @@ $('#task_analytics tbody').on('click', 'tr.task-details-control', function () {
         row.child( format(row.data()) ).show();
         tr.addClass('shown');
     }
-} );
-
-$('body #video_analytics tbody').on('click', 'tr.video-details-control', function () {
-    var tr = $(this);
-    var row = videoTable.row( tr );
-
-    if ( row.child.isShown() ) {
-        // This row is already open - close it
-        row.child.hide();
-        tr.removeClass('shown');
-    }
-    else {
-        // Open this row
-        row.child( format(row.data()) ).show();
-        tr.addClass('shown');
-    }
-} );
+});
 
 
-function format ( d ) {
+});
+
+
+var format = function( d ) {
 
     // `d` is the original data object for the row
 
@@ -125,8 +112,7 @@ function format ( d ) {
             '</tr>';
 }
 
-
-function getStoresString(sent_to, opened){
+var getStoresString = function(sent_to, opened){
     var returnString = '<td>';
     $.each( sent_to, function( key, value ) {
         if($.inArray(value, opened) >= 0){
@@ -142,6 +128,3 @@ function getStoresString(sent_to, opened){
 
     return returnString;
 }
-
-
-});

@@ -34,6 +34,16 @@
         .overdue_task i{
             color: #ee0101;
         }
+        tr{
+            cursor: pointer;
+        }
+        .pagination_link{
+            cursor: pointer;
+        }
+        .pagination{
+            display: table;
+            margin: 0 auto;
+        }
     </style>
 </head>
 

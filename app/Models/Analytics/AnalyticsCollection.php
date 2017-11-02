@@ -98,10 +98,10 @@ class AnalyticsCollection extends Model
     {
         $allVideoStats = AnalyticsCollection::getVideoStats();        
         
-        $videoStatsSlices = array_chunk( $allVideoStats->toArray(), 20);
+        $videoStatsSlices = array_chunk( $allVideoStats->toArray(), 15);
         
         $videoStats = $videoStatsSlices[0];
-        $videoNextPageIndex = 1;
+        $videoNextPageIndex = 2;
         $videoPreviousPageIndex = '';
         
         if(isset($request->page) && ($request->page!='') && is_numeric($request->page)){
@@ -125,6 +125,7 @@ class AnalyticsCollection extends Model
         $paginatedVideos['videoStats'] = $videoStats;
         $paginatedVideos['nextPage'] = $videoNextPageIndex;
         $paginatedVideos['previousPage'] = $videoPreviousPageIndex;
+        
         return $paginatedVideos;
     }
 

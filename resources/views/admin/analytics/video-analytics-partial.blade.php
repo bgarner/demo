@@ -54,8 +54,16 @@
                                 </table>
 
                             </div>
-                            <a id="previous" data-pageId="{{$videoPreviousPageIndex}}">Previous</a>
-                            <a id="next" data-pageId="{{$videoNextPageIndex}}">Next</a>
+                            
+                        </div>
+                        
+                        <div class="row">
+                            <ul class="pagination">
+                                <li class="pagination_link" id="previous" data-pageId="{{$videoPreviousPageIndex}}">
+                                    <span>« Previous</span>
+                                </li>
+                                <li class="pagination_link" id="next" data-pageId="{{$videoNextPageIndex}}"><span>Next »</span></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
