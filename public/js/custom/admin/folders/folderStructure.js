@@ -2,8 +2,8 @@
 $("body").on("click", ".folder", function(e){
 	
 	e.stopPropagation();
-	console.log( "Mouse event : " +e.hasOwnProperty('originalEvent'));
-	console.log(this.id);
+	// console.log( "Mouse event : " +e.hasOwnProperty('originalEvent'));
+	// console.log(this.id);
 
 	if (e.hasOwnProperty('originalEvent')) {
 	
@@ -32,7 +32,7 @@ var getFolderDocuments = function(id){
 		}
 	)
 	.done(function(data){
-		console.log(data);
+		// console.log(data);
 		fillTable(data);
 		setDeepLink(data);
 		fillBreadCrumbs(data);
@@ -54,8 +54,8 @@ var checkDeepLink = function(){
 }
 var setDeepLink = function(data){
 	var id = window.location.hash;
-	console.log(id);
-	console.log(window.location.pathname);
+	// console.log(id);
+	// console.log(window.location.pathname);
 	location.href = window.location.pathname + "#!/" + data.folder.global_folder_id;
 }
 	
