@@ -51,12 +51,19 @@
                     <br />
                     <video
                         class="video-js vjs-default-skin vjs-big-play-centered"
+                        id="video_{{$video[0]->id}}"
+                        data-setup='{"controls": true, "autoplay": true, "preload": "auto", "fluid": true}'
+                        >
+                        <source src="/video/{{$video[0]->filename}}" type="video/webm" />
+                    </video>                    
+{{--                     <video
+                        class="video-js vjs-default-skin vjs-big-play-centered"
                         poster="/video/thumbs/{{$video[0]->thumbnail}}"
                         id="video_{{$video[0]->id}}"
                         data-setup='{"controls": true, "autoplay": true, "preload": "auto", "fluid": true}'
                         >
                         <source src="/video/{{$video[0]->filename}}" type="video/webm" />
-                    </video>
+                    </video> --}}
 
                     <div class="ibox float-e-margins">
                         <div class="ibox-title clearfix">
