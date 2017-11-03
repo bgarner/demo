@@ -43,6 +43,8 @@ class AdminController extends Controller
         $today = Carbon::now();
         $lastCompiledTimestamp = AnalyticsCollection::orderBy('created_at', 'desc')->first()->created_at;
         $prettyLastCompiledTimestamp = Utility::prettifyDateWithTime($lastCompiledTimestamp);
+
+        $banners = UserBanner::getAllBanners();
         
         return view('admin.index')
                     ->with('commStats', $commStats)
@@ -52,7 +54,8 @@ class AdminController extends Controller
                     ->with('today', $today)
                     ->with('prettyLastCompiledTimestamp', $prettyLastCompiledTimestamp)
                     ->with('videoNextPageIndex', $videoNextPageIndex)
-                    ->with('videoPreviousPageIndex', $videoPreviousPageIndex);
+                    ->with('videoPreviousPageIndex', $videoPreviousPageIndex)
+                    ->with('banners', $banners);
     }
 
     /**

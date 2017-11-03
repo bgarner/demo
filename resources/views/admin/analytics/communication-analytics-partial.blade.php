@@ -29,11 +29,11 @@
                     @foreach($commStats as $comm)
                     <tr class="details-control">
                         <td>
-                            @if($comm->banner_id == 1)
-                                <small class="label label-sm label-inverse">SC</small>&nbsp;&nbsp;
-                            @else
-                                <small class="label label-sm label-warning">Atmo</small>&nbsp;&nbsp;
-                            @endif
+                            @foreach($comm->banners as $banner_id)
+                                
+                                <small class="label label-sm logolabel {{$banners->where('id', $banner_id)->first()->banner_class}}">{{$banner_id}}</small>
+                                    
+                            @endforeach
                         </td>
                         <td>{{ $comm->subject }}
                         <span class="label label-sm label-{{ $comm->colour }}">{{ $comm->communication_type }}</span></td>
