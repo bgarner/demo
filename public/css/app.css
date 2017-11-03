@@ -8633,3 +8633,21 @@ a:hover span.badge{
 .label-message-cat{
     margin-left: 0px !important;
 }
+
+
+.logolabel{
+  height: 19px;
+  width: 45px;
+  display: inline-block;
+  border-radius: 3px;
+}
+
+.logolabel.sc{
+  
+  background: url('/images/labels/sc.png') top left no-repeat;
+}
+
+.logolabel.atmo{
+  background: transparent url('/images/labels/atmo.png') top left no-repeat;
+}
+
