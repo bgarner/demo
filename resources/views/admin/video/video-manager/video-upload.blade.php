@@ -189,7 +189,7 @@
             <script type="text/javascript" src="/js/vendor/lightbox.min.js"></script>
             <script type="text/javascript" src="/js/custom/admin/documents/breadcrumb.js"></script>
             <script type="text/javascript" src="/js/custom/admin/videos/uploadVideo.js"></script>
-            <script type="text/javascript" src="/js/custom/admin/global/storeandBannerSelector.js"></script>
+            <script type="text/javascript" src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
             
 
 
