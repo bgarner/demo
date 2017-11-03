@@ -38,5 +38,8 @@ class DatabaseSeeder extends Seeder
         // $this->call(FeatureBannerTableSeeder::class);
         // $this->call(UrgentNoticeBannerTableSeeder::class);
 
+
+        $this->call(BannerTableBannerClassSeeder::class);
+        
     }
 }

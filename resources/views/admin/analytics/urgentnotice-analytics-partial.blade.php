@@ -29,11 +29,11 @@
                     @foreach($urgentNoticeStats as $urgentNotice)
                     <tr class="un-details-control">
                         <td>
-                            @if($urgentNotice->banner_id == 1)
-                                <small class="label label-sm label-inverse">SC</small>&nbsp;&nbsp;
-                            @else
-                                <small class="label label-sm label-warning">Atmo</small>&nbsp;&nbsp;
-                            @endif
+                            @foreach($urgentNotice->banners as $banner_id)
+                                
+                                <small class="label label-sm logolabel {{$banners->where('id', $banner_id)->first()->banner_class}}">{{$banner_id}}</small>
+                                    
+                            @endforeach
                         </td>
                         <td>{{ $urgentNotice->title }}</td>
                         <td>{{ $urgentNotice->start }}</td>
