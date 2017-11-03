@@ -349,9 +349,9 @@ var PlaylistMenu = function (_Component2) {
 
     // Keep track of whether an ad is playing so that the menu
     // appearance can be adapted appropriately
-    player.on('adstart', function () {
-      _this2.addClass('vjs-ad-playing');
-    });
+    // player.on('adstart', function () {
+    //   _this2.addClass('vjs-ad-playing');
+    // });
     player.on('adend', function () {
       if (player.ended()) {
         // player.ended() is true because the content is done, but the ended event doesn't
@@ -428,9 +428,9 @@ var PlaylistMenu = function (_Component2) {
 
       var thumbnail = this.items[selectedIndex].$('.vjs-playlist-thumbnail');
 
-      if (thumbnail) {
-        dom.addClass(thumbnail, 'vjs-playlist-now-playing');
-      }
+      // if (thumbnail) {
+      //   dom.addClass(thumbnail, 'vjs-playlist-now-playing');
+      // }
     }
   };
 
@@ -462,9 +462,9 @@ var PlaylistMenu = function (_Component2) {
 
       if (_i2 === currentItem) {
         addSelectedClass(item);
-        if (document_1.activeElement !== item.el()) {
-          dom.addClass(item.thumbnail, 'vjs-playlist-now-playing');
-        }
+        // if (document_1.activeElement !== item.el()) {
+        //   dom.addClass(item.thumbnail, 'vjs-playlist-now-playing');
+        // }
         notUpNext(item);
       } else if (_i2 === currentItem + 1) {
         removeSelectedClass(item);
