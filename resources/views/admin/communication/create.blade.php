@@ -233,12 +233,14 @@
 		    	$("#package-listing").modal('show');
 		    });
 
-		    $(".comm_type_dropdown_item").click(function(){
+		    $('body').on( 'click', ".comm_type_dropdown_item", function(){
 		    	$(".selected_comm_type").empty();
 		    	var comm_typeid = $(this).attr('data-comm-typeid');
 		    	var comm_typeColour = $(this).attr('data-comm-typecolour');
 		    	var comm_type = $(this).attr('data-comm-type');
 		    	$("input[name='communication_type']").val(comm_typeid);
+
+		    	console.log($("input[name='communication_type']").val());
 		    	$(".selected_comm_type").append('<i class="fa fa-circle text-'+ comm_typeColour + '"> </i> '+ comm_type);
 		    })
 

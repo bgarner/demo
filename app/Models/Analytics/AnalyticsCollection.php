@@ -37,8 +37,7 @@ class AnalyticsCollection extends Model
     								$item->unopened = json_encode(unserialize($item->unopened));
     								$item->sent_to = json_encode(unserialize($item->sent_to));
                                     if($item->all_stores == 1){
-                                        $banners = CommunicationBanner::where('communication_id', $item->id)->get()->pluck('banner_id');
-                                        $item->banners = explode(',', $banners);
+                                        $item->banners = CommunicationBanner::where('communication_id', $item->id)->get()->pluck('banner_id');
                                     }
                                     
     							});
@@ -65,8 +64,7 @@ class AnalyticsCollection extends Model
     								$item->unopened = json_encode(unserialize($item->unopened));
     								$item->sent_to = json_encode(unserialize($item->sent_to));
                                     if($item->all_stores == 1){
-                                        $banners = UrgentNoticeBanner::where('urgent_notice_id', $item->id)->get()->pluck('banner_id');
-                                        $item->banners = explode(',', $banners);
+                                        $item->banners = UrgentNoticeBanner::where('urgent_notice_id', $item->id)->get()->pluck('banner_id');
                                     }
     							});
 
@@ -77,7 +75,6 @@ class AnalyticsCollection extends Model
     {
     	
     	return AnalyticsCollection::join('tasks', 'tasks.id', '=', 'analytics_collection.resource_id' )
-                                // ->join('task_banner', 'task_banner.task_id', '=', 'tasks.id')
     							->where('asset_type_id', 4)
     							->select('tasks.*',
                                     'analytics_collection.opened_total',
@@ -101,8 +98,7 @@ class AnalyticsCollection extends Model
                                         
                                     }
                                     if($item->all_stores == 1){
-                                        $banners = TaskBanner::where('task_id', $item->id)->get()->pluck('banner_id');
-                                        $item->banners = explode(',', $banners);
+                                        $item->banners = TaskBanner::where('task_id', $item->id)->get()->pluck('banner_id');
                                     }
     							});
     	
