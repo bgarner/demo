@@ -10,6 +10,7 @@ use App\Models\Utility\Utility;
 use App\Models\StoreApi\StoreInfo;
 use App\Models\Communication\Communication;
 use App\Models\StoreApi\Banner;
+use App\Models\Communication\CommunicationStoreGroup;
 
 class CommunicationTarget extends Model
 {
@@ -36,7 +37,6 @@ class CommunicationTarget extends Model
         if( $all_stores == 'on' ){
 
             $target_banners = $request['target_banners'];
-            \Log::info($target_banners);
             if(! is_array($target_banners) ) {
                 $target_banners = explode(',',  $request['target_banners'] );    
             }
@@ -100,7 +100,15 @@ class CommunicationTarget extends Model
             $stores = CommunicationTarget::where('communication_id', $id)
                                             ->get()
                                             ->pluck('store_id')
-                                            ->toArray();    
+                                            ->toArray();
+            $storeGroups = CommunicationStoreGroup::join('custom_store_group', 'custom_store_group.id', '=', 'communication_store_group.store_group_id')
+                                ->where('communication_id', $id)
+                                ->get();
+
+            foreach ($storeGroups as $group) {
+                $groupStores = unserialize($group->stores);
+                $stores = array_merge($stores, $groupStores);
+            }    
         }
 
         return $stores;

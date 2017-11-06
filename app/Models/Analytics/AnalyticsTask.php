@@ -182,12 +182,16 @@ class AnalyticsTask extends Model
                 $notOpenedByStore = [];
 
                 $model = new $target_table();
+                \Log::info($ca->resource_id);
                 $sent_to = $model->getTargetStores($ca->resource_id);
+
+                // \Log::info($sent_to);
                 foreach ($sent_to as $store) {
                     if(!in_array($store, $openedByStore)){
                         array_push($notOpenedByStore, $store);
                     }
                 }
+
                 $ca->sent_to = $sent_to;
                 $ca->sent_to_total = count($sent_to);
                 $ca->not_opened_by = $notOpenedByStore;
