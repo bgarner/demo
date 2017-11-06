@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\StoreApi\Banner;
 use App\Models\UrgentNotice\UrgentNoticeBanner;
 use App\Models\Utility\Utility;
+use App\Models\UrgentNotice\UrgentNoticeStoreGroup;
 
 class UrgentNoticeTarget extends Model
 {
@@ -34,7 +35,16 @@ class UrgentNoticeTarget extends Model
             $stores = UrgentNoticeTarget::where('urgent_notice_id', $id)
                                             ->get()
                                             ->pluck('store_id')
-                                            ->toArray();    
+                                            ->toArray();  
+
+            $storeGroups = UrgentNoticeStoreGroup::join('custom_store_group', 'custom_store_group.id', '=', 'urgent_notice_store_group.store_group_id')
+                                ->where('urgent_notice_id', $id)
+                                ->get();
+
+            foreach ($storeGroups as $group) {
+                $groupStores = unserialize($group->stores);
+                $stores = array_merge($stores, $groupStores);
+            }    
         }
 
         return $stores;

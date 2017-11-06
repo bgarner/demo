@@ -32,7 +32,16 @@ class VideoTarget extends Model
             $stores = VideoTarget::where('video_id', $video_id)
                                             ->get()
                                             ->pluck('store_id')
-                                            ->toArray();    
+                                            ->toArray();
+            $storeGroups = VideoStoreGroup::join('custom_store_group', 'custom_store_group.id', '=', 'video_store_group.store_group_id')
+                                ->where('video_id', $video_id)
+                                ->get();
+
+            foreach ($storeGroups as $group) {
+                $groupStores = unserialize($group->stores);
+                $stores = array_merge($stores, $groupStores);
+            }                                  
+
         }
     	return $stores;
     }
