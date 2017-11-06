@@ -85,31 +85,36 @@ class CommunicationTarget extends Model
     public function getTargetStores($id)
     {
         $communication = Communication::find($id);
+        
+        $stores = [];
 
         if(isset($communication->all_stores) && $communication->all_stores){
             
             $banners = CommunicationBanner::where('communication_id', $communication->id)->get()->pluck('banner_id')->toArray();
-            $stores = [];
+            
             foreach ($banners as $banner) {
                 $bannerStores = Banner::getStoreDetailsByBannerid($banner)->pluck('store_number')->toArray();   
                 $stores = array_merge($stores, $bannerStores);
 
             }
         }
-        else{
-            $stores = CommunicationTarget::where('communication_id', $id)
-                                            ->get()
-                                            ->pluck('store_id')
-                                            ->toArray();
-            $storeGroups = CommunicationStoreGroup::join('custom_store_group', 'custom_store_group.id', '=', 'communication_store_group.store_group_id')
-                                ->where('communication_id', $id)
-                                ->get();
+        
+        $targetStores = CommunicationTarget::where('communication_id', $id)
+                                        ->get()
+                                        ->pluck('store_id')
+                                        ->toArray();
+        
+        $stores = array_merge($stores, $targetStores);
+                          
+        $storeGroups = CommunicationStoreGroup::join('custom_store_group', 'custom_store_group.id', '=', 'communication_store_group.store_group_id')
+                            ->where('communication_id', $id)
+                            ->get();
 
-            foreach ($storeGroups as $group) {
-                $groupStores = unserialize($group->stores);
-                $stores = array_merge($stores, $groupStores);
-            }    
-        }
+        foreach ($storeGroups as $group) {
+            $groupStores = unserialize($group->stores);
+            $stores = array_merge($stores, $groupStores);
+        }    
+        
 
         return $stores;
         

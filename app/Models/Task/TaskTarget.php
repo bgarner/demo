@@ -92,32 +92,35 @@ class TaskTarget extends Model
 	{
 
         $task = Task::find($task_id);
+
+        $stores = [];
         
         if(isset($task->all_stores) && $task->all_stores){
             $banners = TaskBanner::where('task_id', $task->id)->get()->pluck('banner_id')->toArray();
-            $stores = [];
+            
             foreach ($banners as $banner) {
                 $bannerStores = Banner::getStoreDetailsByBannerid($banner)->pluck('store_number')->toArray();   
                 $stores = array_merge($stores, $bannerStores);
 
             }
         }
-        else{
-            $stores = TaskTarget::where('task_id', $task_id)
-                                ->get()
-                                ->pluck('store_id')
-                                ->toArray();    
-            $storeGroups = TaskStoreGroup::join('custom_store_group', 'custom_store_group.id', '=', 'task_store_group.store_group_id')
-                                ->where('task_id', $task_id)
-                                ->get();
+        
+        $targetStores = TaskTarget::where('task_id', $task_id)
+                            ->get()
+                            ->pluck('store_id')
+                            ->toArray();    
 
-            foreach ($storeGroups as $group) {
-                $groupStores = unserialize($group->stores);
-                $stores = array_merge($stores, $groupStores);
-            }
-                                
-            
+        $stores = array_merge($stores, $targetStores);
+        
+        $storeGroups = TaskStoreGroup::join('custom_store_group', 'custom_store_group.id', '=', 'task_store_group.store_group_id')
+                            ->where('task_id', $task_id)
+                            ->get();
+
+        foreach ($storeGroups as $group) {
+            $groupStores = unserialize($group->stores);
+            $stores = array_merge($stores, $groupStores);
         }
+                                
 
         return $stores;
 	}

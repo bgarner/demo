@@ -20,32 +20,34 @@ class UrgentNoticeTarget extends Model
     public function getTargetStores($id)
     {
         $urgentnotice = UrgentNotice::find($id);
+        $stores = [];
 
         if(isset($urgentnotice->all_stores) && $urgentnotice->all_stores){
             
             $banners = UrgentNoticeBanner::where('urgent_notice_id', $urgentnotice->id)->get()->pluck('banner_id')->toArray();
-            $stores = [];
+            
             foreach ($banners as $banner) {
                 $bannerStores = Banner::getStoreDetailsByBannerid($banner)->pluck('store_number')->toArray();   
                 $stores = array_merge($stores, $bannerStores);
 
             }
         }
-        else{
-            $stores = UrgentNoticeTarget::where('urgent_notice_id', $id)
-                                            ->get()
-                                            ->pluck('store_id')
-                                            ->toArray();  
+        
+        $targetStores = UrgentNoticeTarget::where('urgent_notice_id', $id)
+                                        ->get()
+                                        ->pluck('store_id')
+                                        ->toArray();  
+        $stores = array_merge($stores, $targetStores);
 
-            $storeGroups = UrgentNoticeStoreGroup::join('custom_store_group', 'custom_store_group.id', '=', 'urgent_notice_store_group.store_group_id')
-                                ->where('urgent_notice_id', $id)
-                                ->get();
+        $storeGroups = UrgentNoticeStoreGroup::join('custom_store_group', 'custom_store_group.id', '=', 'urgent_notice_store_group.store_group_id')
+                            ->where('urgent_notice_id', $id)
+                            ->get();
 
-            foreach ($storeGroups as $group) {
-                $groupStores = unserialize($group->stores);
-                $stores = array_merge($stores, $groupStores);
-            }    
-        }
+        foreach ($storeGroups as $group) {
+            $groupStores = unserialize($group->stores);
+            $stores = array_merge($stores, $groupStores);
+        }    
+        
 
         return $stores;
         

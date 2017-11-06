@@ -19,30 +19,35 @@ class VideoTarget extends Model
     {
     	$video = Video::find($video_id);
     	
+        $stores = [];
+
         if(isset($video->all_stores) && $video->all_stores){
             $banners = VideoBanner::where('video_id', $video->id)->get()->pluck('banner_id')->toArray();
-            $stores = [];
+            
             foreach ($banners as $banner) {
             	$bannerStores = Banner::getStoreDetailsByBannerid($banner)->pluck('store_number')->toArray();	
             	$stores = array_merge($stores, $bannerStores);
 
             }
         }
-        else{
-            $stores = VideoTarget::where('video_id', $video_id)
-                                            ->get()
-                                            ->pluck('store_id')
-                                            ->toArray();
-            $storeGroups = VideoStoreGroup::join('custom_store_group', 'custom_store_group.id', '=', 'video_store_group.store_group_id')
-                                ->where('video_id', $video_id)
-                                ->get();
+        
+        $targetStores = VideoTarget::where('video_id', $video_id)
+                                        ->get()
+                                        ->pluck('store_id')
+                                        ->toArray();
 
-            foreach ($storeGroups as $group) {
-                $groupStores = unserialize($group->stores);
-                $stores = array_merge($stores, $groupStores);
-            }                                  
+        $stores = array_merge($stores, $targetStores);
 
-        }
+        $storeGroups = VideoStoreGroup::join('custom_store_group', 'custom_store_group.id', '=', 'video_store_group.store_group_id')
+                            ->where('video_id', $video_id)
+                            ->get();
+
+        foreach ($storeGroups as $group) {
+            $groupStores = unserialize($group->stores);
+            $stores = array_merge($stores, $groupStores);
+        }                                  
+
+        
     	return $stores;
     }
 
