@@ -2,7 +2,7 @@
     {!! Form::label('tags', 'Tags' , ['class'=>'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
 
-       <select name="tags[]" id="tags" multiple>
+       <select name="tags[]" id="tags_{{$videoId}}" class="tags" multiple>
             @foreach($tags as $key=>$tag)
                 
                     <option value="{{$key}}" id="{{$key}}" data-tagname = "{{$tag}}"
