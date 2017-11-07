@@ -44,8 +44,7 @@ class AdminController extends Controller
         $lastCompiledTimestamp = AnalyticsCollection::orderBy('created_at', 'desc')->first()->created_at;
         $prettyLastCompiledTimestamp = Utility::prettifyDateWithTime($lastCompiledTimestamp);
 
-        $banners = UserBanner::getAllBanners();
-        
+        $banners = Banner::getAllBanners();
         return view('admin.index')
                     ->with('commStats', $commStats)
                     ->with('urgentNoticeStats', $urgentNoticeStats)
