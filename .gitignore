@@ -13,6 +13,7 @@
 Homestead.yaml
 Homestead.json
 .node_modules
+.vscode
 .env
 .env.dusk.local
 .catapult
