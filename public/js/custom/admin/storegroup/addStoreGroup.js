@@ -19,6 +19,13 @@ $(document).on('click','.group-create',function(){
 		$(window).scrollTop(0);
 		return false;
 
+	}
+
+	if(stores == null) {
+		swal("Oops!", "We need some stores for the group.", "error"); 
+		hasError = true;
+		$(window).scrollTop(0);
+		return false;
 	}		
 
 	if(hasError == false) {
