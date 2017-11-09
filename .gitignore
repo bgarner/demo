@@ -18,3 +18,4 @@ Homestead.json
 .env.dusk.local
 .catapult
 .idea
+.vscode

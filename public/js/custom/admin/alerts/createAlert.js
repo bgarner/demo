@@ -1,3 +1,4 @@
+var document_id = $("#documentID").val();
 $(document).ready(function(){
 	if($("#allStores").prop('checked')) {
 		$("#storeSelect option").each(function(index){			
@@ -11,14 +12,14 @@ $(document).ready(function(){
 });
 var initializeTagSelector = function(){
 	
-	$("#tags").select2({ 
+	$("#tags_" + document_id ).select2({ 
 		width: '100%' , 
 		tags: true,
 		multiple: true,
 		createTag: function (params) {
     		var term = $.trim(params.term);
 
-		    if (term === ''  && $("#tags").find('option').attr("tagname", term).length >0) {
+		    if (term === ''  && $("#tags_" + document_id ).find('option').attr("tagname", term).length >0) {
 		      return null;
 		    }
 
@@ -32,7 +33,7 @@ var initializeTagSelector = function(){
 	
 }
 
-$("body").on('select2:select', $("#tags"), function (evt) {
+$("body").on('select2:select', $("#tags_" + document_id ), function (evt) {
 
 	var document_id = $("#documentID").val();
     if(evt.params.data.newTag){
@@ -40,16 +41,16 @@ $("body").on('select2:select', $("#tags"), function (evt) {
     	.done(function(tag){
     		
     		//change the id of the newly added tag to be the id from db
-			$('#tags option[value="'+tag.name+'"]').val(tag.id);
+			$('#tags_'  + document_id + ' option[value="'+tag.name+'"]').val(tag.id);
 			
-			var selectedTags = $("#tags").val();
+			var selectedTags = $("#tags_" + document_id ).val();
 			//update tag document mapping
 			$.post("/admin/documenttag",{ 'document_id' : document_id, 'tags': selectedTags })
 			.done(function(){
-				$('#tags').select2('destroy');
+				$('#tags_' + document_id ).select2('destroy');
 				$("#tag-selector-container").load("/admin/documenttag/"+document_id, function(){
 					initializeTagSelector();
-					$("#tags").focus();
+					$("#tags_" + document_id ).focus();
 
 				});	
 			});				
@@ -99,7 +100,7 @@ $(document).on('click','.alert-create',function(){
 	// var target_stores = getTargetStores();
 	var target_stores = $("#storeSelect").val();
 	var allStores = $("#allStores:checked").val();
-	var tags = $("#tags").val();
+	var tags = $("#tags_" + document_id ).val();
 
     if(title == '') {
 		swal("Oops!", "Title required for this document.", "error"); 

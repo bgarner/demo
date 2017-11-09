@@ -112,7 +112,7 @@
 										</div>
 								</div>	
                 <div id="tag-selector-container">
-                    @include('admin.video.tag.tag-partial', ['tags'=>$tags, 'selectedTags'=>$selectedTags])
+                    @include('admin.tag.tag-partial', ['tags'=>$tags, 'selectedTags'=>$selectedTags])
                 </div>
 
 

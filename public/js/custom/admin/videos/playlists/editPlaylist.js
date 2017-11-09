@@ -1,13 +1,14 @@
+var playlistId = $("#playlistID").val();
 var initializeTagSelector = function(selectedTags){
 	
-	$("#tags").select2({ 
+	$("#tags_" + playlistId ).select2({ 
 		width: '100%' , 
 		tags: true,
 		multiple: true,
 		createTag: function (params) {
     		var term = $.trim(params.term);
 
-		    if (term === ''  && $("#tags").find('option').attr("tagname", term).length >0) {
+		    if (term === ''  && $("#tags_" + playlistId).find('option').attr("tagname", term).length >0) {
 		      return null;
 		    }
 
@@ -20,7 +21,8 @@ var initializeTagSelector = function(selectedTags){
 	});
 }
 
-$("body").on('select2:select', $("#tags"), function (evt) {
+
+$("body").on('select2:select', $("#tags_" + playlistId), function (evt) {	
 
 	var playlist_id = $("#playlistID").val();
     if(evt.params.data.newTag){
@@ -28,16 +30,16 @@ $("body").on('select2:select', $("#tags"), function (evt) {
     	.done(function(tag){
     		
     		//change the id of the newly added tag to be the id from db
-			$('#tags option[value="'+tag.name+'"]').val(tag.id);
+			$('#tags_'+ playlist_id +' option[value="'+tag.name+'"]').val(tag.id);
 			
-			var selectedTags = $("#tags").val();
+			var selectedTags = $("#tags_" + playlist_id).val();
 			//update tag playlist mapping
 			$.post("/admin/playlisttag",{ 'playlist_id' : playlist_id, 'tags': selectedTags })
 			.done(function(){
-				$('#tags').select2('destroy');
+				$("#tags_" + playlist_id).select2('destroy');
 				$("#tag-selector-container").load("/admin/playlisttag/"+playlist_id, function(){
 					initializeTagSelector();
-					$("#tags").focus();
+					$("#tags_" + playlist_id).focus();
 
 				});	
 			});				
@@ -100,7 +102,7 @@ $(document).on('click','.playlist-update',function(){
 	$(".selected-videos").each(function(){
 		playlist_videos.push($(this).find('td:first').attr('data-video-id'));
 	});
-	var tags = $("#tags").val();
+	var tags = $("#tags_" + playlistID).val();
 
     if(hasError == false) {
      	

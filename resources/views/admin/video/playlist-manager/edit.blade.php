@@ -64,7 +64,7 @@
 
 
                                         <div id="tag-selector-container">
-                                            @include('admin.video.tag.tag-partial', ['tags'=>$tags, 'selected_tags'=>$playlist->tags])
+                                            @include('admin.tag.tag-partial', ['tags'=>$tags, 'selected_tags'=>$playlist->tags])
                                         </div>
 
                                     </form>
@@ -86,7 +86,7 @@
 
 									<!-- <div class="form-group"><label class="col-sm-2 control-label">videos Attached</label> -->
 										<div class="existing-videos-container">
-											@include('admin.video.playlist-manager.playlist-videos-partial', ['videos'=>$playlist_videos])
+											@include('admin.video.playlist-manager.playlist-videos-partial', ['videos'=>$playlist_videos, 'resourceId'=>$playlist->id])
 
 										</div>
 									<!-- </div> -->

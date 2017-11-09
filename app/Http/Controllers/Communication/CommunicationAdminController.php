@@ -141,7 +141,8 @@ class CommunicationAdminController extends Controller
                                             ->with('optGroupSelections', $optGroupSelections)
                                             ->with('banner', $banner)
                                             ->with('tags', $tags)
-                                            ->with('selectedTags', $selectedTags);
+                                            ->with('selectedTags', $selectedTags)
+                                            ->with('resourceId', $id);
     }
 
     /**
