@@ -13,7 +13,7 @@ class DocumentTagController extends Controller
     {
     	$tags = Tag::all()->pluck('name', 'id');	
     	$selectedTags = [];
-    	return view('admin.video.tag.tag-partial')
+    	return view('admin.tag.tag-partial')
     			->with('tags', $tags)
     			->with('selectedTags', $selectedTags);
     }
@@ -22,9 +22,10 @@ class DocumentTagController extends Controller
     	$tags = Tag::all()->pluck('name', 'id');
     	
     	$selectedTags = ContentTag::getTagsByContentId('document', $resource_id);
-    	return view('admin.video.tag.tag-partial')
+    	return view('admin.tag.tag-partial')
     			->with('tags', $tags)
-    			->with('selectedTags', $selectedTags);
+    			->with('selectedTags', $selectedTags)
+                ->with('resourceId', $resource_id);
     }
 
     public function store(Request $request)

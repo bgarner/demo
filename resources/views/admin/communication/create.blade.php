@@ -68,7 +68,7 @@
 							</div>
 
               <div id="tag-selector-container">
-								@include('admin.video.tag.tag-partial')
+								@include('admin.tag.tag-partial')
 							</div>
 
 						</form>

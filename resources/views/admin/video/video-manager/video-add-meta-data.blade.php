@@ -61,7 +61,7 @@
                                 </div>
 
                                 <div class="row tag-selector-container" id="tag-selector-container-{{$vid->id}}" data-videoid= "{{$vid->id}}">
-                                    @include('admin.video.tag.tag-partial', ['tags'=>$tags, 'selectedTags'=>$vid->tags, 'videoId' => $vid->id])
+                                    @include('admin.tag.tag-partial', ['tags'=>$tags, 'selectedTags'=>$vid->tags, 'resourceId' => $vid->id])
                                 </div>
                                 <button type="submit" class="meta-data-add btn btn-success hidden" data-id="{{ $vid->id }}">Update</button>
 

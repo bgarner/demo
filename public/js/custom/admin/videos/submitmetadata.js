@@ -63,13 +63,19 @@ $("body").on('select2:select', $(".tags"), function (evt) {
         $.post("/admin/tag",{ tag_name: evt.params.data.text })
         .done(function(tag){
             
+            console.log(tag);
+            console.log(video_id);
             //change the id of the newly added tag to be the id from db
             $('#tags_' + video_id +' option[value="'+tag.name+'"]').val(tag.id);
             var selectedTags = $("#tags_"+ video_id).val();
 
+            console.log(selectedTags);
+
             //update tag video mapping
             $.post("/admin/videotag",{ 'video_id' : video_id, 'tags': selectedTags })
             .done(function(){
+
+                console.log()
                 $('.tags').select2('destroy');
                 $(".tag-selector-container").each(function(index, element){
                     

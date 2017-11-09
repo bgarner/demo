@@ -71,7 +71,7 @@
                         <h4 class="modal-title">Create New Tag</h4>
                     </div>
                     <div class="modal-body">
-
+                        <input type="hidden" name="modal" value="true">
                     	<div class="form-group">
                         	<label class="control-label">Tag <span class="req">*</span></label>
                             <div ><input type="text" class="form-control" name="tag_name" id="tag" value=""></div>

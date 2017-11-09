@@ -78,7 +78,7 @@
                         </div>
 
                         <div id="tag-selector-container">
-                        @include('admin.video.tag.tag-partial', ['tags'=>$tags, 'selectedTags'=>$video->tags])
+                        @include('admin.tag.tag-partial', ['tags'=>$tags, 'selectedTags'=>$video->tags])
                         </div>
 
                         <div class="form-group">

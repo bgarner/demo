@@ -130,7 +130,7 @@ class VideoAdminController extends Controller
                                                     ->with('banners', $banners)
                                                     ->with('optGroupSelections', $optGroupSelections)
                                                     ->with('tags', $tags)
-                                                    ->with('videoId', $id);
+                                                    ->with('resourceId', $id);
     }
 
     /**
