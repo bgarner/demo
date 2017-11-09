@@ -122,7 +122,8 @@ class PlaylistAdminController extends Controller
                 ->with('optGroupOptions', $optGroupOptions)
                 ->with('optGroupSelections', $optGroupSelections)
                 ->with('tags', $tags)
-                ->with('selectedTags', $selectedTags);
+                ->with('selectedTags', $selectedTags)
+                ->with('resourceId', $id);
 
     }
 

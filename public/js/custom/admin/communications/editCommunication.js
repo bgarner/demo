@@ -1,3 +1,4 @@
+var communication_id = $("#communicationId").val();
 $('body').on('blur','#targets_chosen', function(){
 	
 	var target_stores = getTargetStores();
@@ -28,14 +29,14 @@ $('body').on( 'click', ".comm_type_dropdown_item", function(){
 
 var initializeTagSelector = function(selectedTags){
 	
-	$("#tags").select2({ 
+	$("#tags_" + communication_id).select2({ 
 		width: '100%' , 
 		tags: true,
 		multiple: true,
 		createTag: function (params) {
     		var term = $.trim(params.term);
 
-		    if (term === ''  && $("#tags").find('option').attr("tagname", term).length >0) {
+		    if (term === ''  && $("#tags_" + communication_id).find('option').attr("tagname", term).length >0) {
 		      return null;
 		    }
 
@@ -48,7 +49,7 @@ var initializeTagSelector = function(selectedTags){
 	});
 }
 
-$("body").on('select2:select', $("#tags"), function (evt) {
+$("body").on('select2:select', $("#tags_" + communication_id), function (evt) {
 
 	var communication_id = $("#communicationId").val();
     if(evt.params.data.newTag){
@@ -56,16 +57,16 @@ $("body").on('select2:select', $("#tags"), function (evt) {
     	.done(function(tag){
     		
     		//change the id of the newly added tag to be the id from db
-			$('#tags option[value="'+tag.name+'"]').val(tag.id);
+			$('#tags_'+ communication_id +' option[value="'+tag.name+'"]').val(tag.id);
 			
-			var selectedTags = $("#tags").val();
+			var selectedTags = $("#tags_" + communication_id).val();
 			//update tag communication mapping
 			$.post("/admin/communicationtag",{ 'communication_id' : communication_id, 'tags': selectedTags })
 			.done(function(){
 				$('#tags').select2('destroy');
 				$("#tag-selector-container").load("/admin/communicationtag/"+communication_id, function(){
 					initializeTagSelector();
-					$("#tags").focus();
+					$("#tags_" + communication_id).focus();
 
 				});	
 			});				
@@ -92,7 +93,7 @@ $(document).on('click','.communication-update',function(){
 	var target_banners = getTargetBanners();
 	var store_groups = getStoreGroups();
 	var all_stores = getAllStoreStatus();
-	var tags = $("#tags").val();
+	var tags = $("#tags_" + communication_id).val();
 
 	var importance = "1";
 	var sender = "";

@@ -16,9 +16,11 @@ class VideoTagController extends Controller
     	
     	$selectedTags = ContentTag::getTagsByContentId('video', $resource_id);
 
-    	return view('admin.video.tag.tag-partial')
+
+    	return view('admin.tag.tag-partial')
     			->with('tags', $tags)
-    			->with('selectedTags', $selectedTags);
+    			->with('selectedTags', $selectedTags)
+                ->with('resourceId', $resource_id);
     }
 
     public function store(Request $request)

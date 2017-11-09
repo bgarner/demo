@@ -1,18 +1,21 @@
 var allStores;
+var videoId = $("#videoId").val();
+
 $(document).ready(function(){
 	initializeTagSelector();		
 });
 
 var initializeTagSelector = function(){
 	
-	$("#tags").select2({ 
+	
+	$("#tags_" + videoId).select2({ 
 		width: '100%' , 
 		tags: true,
 		multiple: true,
 		createTag: function (params) {
     		var term = $.trim(params.term);
 
-		    if (term === ''  && $("#tags").find('option').attr("tagname", term).length >0) {
+		    if (term === ''  && $("#tags_" + videoId).find('option').attr("tagname", term).length >0) {
 		      return null;
 		    }
 
@@ -25,24 +28,27 @@ var initializeTagSelector = function(){
 	});
 }
 
-$("body").on('select2:select', $("#tags"), function (evt) {
+$("body").on('select2:select', $("#tags_" + videoId), function (evt) {
 
-		var video_id = $("#videoId").val();
 	    if(evt.params.data.newTag){
 	    	$.post("/admin/tag",{ tag_name: evt.params.data.text })
 	    	.done(function(tag){
 	    		
+	    		console.log(tag);
 	    		//change the id of the newly added tag to be the id from db
-				$('#tags option[value="'+tag.name+'"]').val(tag.id);
+	    		var video_id = $("#videoId").val();
+				$('#tags_' + video_id+' option[value="'+tag.name+'"]').val(tag.id);
+				var selectedTags = $("#tags_" + video_id).val();
 				
-				var selectedTags = $("#tags").val();
 				//update tag video mapping
 				$.post("/admin/videotag",{ 'video_id' : video_id, 'tags': selectedTags })
 				.done(function(){
-					$('#tags').select2('destroy');
+
+					var video_id = $("#videoId").val();
+					$('#tags_' + video_id).select2('destroy');
 					$("#tag-selector-container").load("/admin/videotag/"+video_id, function(){
 						initializeTagSelector();
-						$("#tags").focus();
+						$("#tags_" + video_id).focus();
 
 					});	
 				});				
@@ -67,7 +73,7 @@ $(document).on('click','.video-update',function(){
 
 	var featuredOn = $("#featuredOn").val();
 
-	var tags = $("#tags").val();
+	var tags = $("#tags_" + videoId).val();
 	
      if(hasError == false) {
 

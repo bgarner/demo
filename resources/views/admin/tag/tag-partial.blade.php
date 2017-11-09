@@ -2,7 +2,11 @@
     {!! Form::label('tags', 'Tags' , ['class'=>'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
 
-       <select name="tags[]" id="tags_{{$resourceId}}" class="tags" multiple>
+        @if(isset($resourceId))
+        <select name="tags[]" id="tags_{{$resourceId}}" class="tags" multiple>
+        @else
+        <select name="tags[]" id="tags_new" class="tags" multiple>
+        @endif
             @foreach($tags as $key=>$tag)
                 
                     <option value="{{$key}}" id="{{$key}}" data-tagname = "{{$tag}}"

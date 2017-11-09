@@ -156,7 +156,6 @@ class DocumentAdminController extends Controller
         $folderPath          = Document::getFolderPathForDocument($id);
 
         $storeList           = StoreInfo::getStoreListing($banner->id);
-        // $storeAndStoreGroups = Utility::getStoreAndStoreGroupList($banner->id);
 
         $tags = Tag::all()->pluck('name', 'id');
         $selected_tags = ContentTag::getTagsByContentId('document', $id);
@@ -170,7 +169,8 @@ class DocumentAdminController extends Controller
                                                     ->with('folderPath', $folderPath)
                                                     ->with('storeList', $storeList)
                                                     ->with('tags', $tags)
-                                                    ->with('selectedTags', $selected_tags);
+                                                    ->with('selectedTags', $selected_tags)
+                                                    ->with('resourceId', $id);
     }
 
     /**

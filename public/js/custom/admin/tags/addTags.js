@@ -19,7 +19,7 @@ $(document).on('click','.tag-create',function(){
 		$.ajax({
 		    url: '/admin/tag',
 		    type: 'POST',
-		    data: { tag_name: tagName,  banner_id: bannerId },
+		    data: { tag_name: tagName,  banner_id: bannerId , modal: true},
 		    success: function(result) {
 		        $("#tag_name").val(""); // empty the form
 				swal("Nice!", "'" + tagName +"' has been created", "success");        
