@@ -46,7 +46,7 @@ Route::get('/{storeno}/flyer', array('uses' => 'Flyer\FlyerController@index'));
 Route::get('/{storeno}/flyer/{flyer_id}', array('uses' => 'Flyer\FlyerController@show'));
 
 //TOOLS
-Route::get('/{storeno}/tools/boxingday', array('uses' => 'Tools\BlackFridayController@index'));
+Route::get('/{storeno}/tools/doorcrasher', array('uses' => 'Tools\BlackFridayController@index'));
 Route::get('/{storeno}/tools/bikecount', array('uses' => 'Tools\BikeCountController@index'));
 Route::get('/{storeno}/tools/flashsale', array('uses' => 'Tools\FlashSaleController@index'));
 Route::get('/{storeno}/tools/fwinitials', array('uses' => 'Tools\FootwearInitialsController@index'));
