@@ -21,7 +21,8 @@ class EventType extends Model
     public static function validateEventType($request)
     {
     	$validateThis = [
-    						'event_type' => $request['event_type']
+    						'event_type' => $request['event_type'],
+                            'banners'    => $request['banners']
     					];
 
     	$v = new EventTypeValidator();

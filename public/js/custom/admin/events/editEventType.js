@@ -15,6 +15,12 @@ $(document).on('click','.eventtype-edit',function(){
     var fg = $("#foreground_colour").val();
     var banners = $("#banners").val();
 
+    if(banners == null){
+		swal("Oops!", "This we need a banner for this event type.", "error");
+		hasError = true;
+		$(window).scrollTop(0);
+	}
+
     if(eventType == '') {
 		swal("Oops!", "This event type needs a name.", "error");
 		hasError = true;
@@ -43,6 +49,11 @@ $(document).on('click','.eventtype-edit',function(){
 		        	if(errors.hasOwnProperty("event_type")) {
 		        		$.each(errors.event_type, function(index){
 		        			$("#event_type").parent().append('<div class="req">' + errors.event_type[index]  + '</div>');
+		        		});
+		        	}
+		        	if(errors.hasOwnProperty("banners")) {
+		        		$.each(errors.banners, function(index){
+		        			$("#banners").parent().append('<div class="req">' + errors.banners[index]  + '</div>');
 		        		});
 		        	}
 		        }
