@@ -18,7 +18,9 @@ class BlackFriday extends Model
     	$pages = BlackFriday::distinct()->select('flyer_page')->where('store_number', '=', $store_number)
     			->orderBy('flyer_page', 'asc')
     			->get();
+
     	return $pages;
+
     }
 
     public static function getDataByStoreNumber($store_number)
@@ -28,12 +30,21 @@ class BlackFriday extends Model
 	    $store_number = ltrim($store_number, 'A');
 		$store_number = ltrim($store_number, '0');
 		$data = BlackFriday::where('store_number', $store_number)
+                ->where('flyer_page', '!=', '- DIGITAL')
 				->where('flyer_page', '!=', '')
 				->whereNotNull('flyer_page')
 				->orderBy('flyer_page', 'ASC')
-				->orderBy('ad_box', 'ASC')
+				// ->orderBy('ad_box', 'ASC')
 				// ->groupBy('flyer_page')
 				->get();
+
+        $digital_flyer_data = BlackFriday::where('store_number', $store_number)
+                ->where('flyer_page', '=', '- DIGITAL')
+                ->where('flyer_page', '!=', '')
+                ->whereNotNull('flyer_page')
+                ->get();
+
+        $data = $data->merge($digital_flyer_data);
     	
     	$page_and_box = "";
     	$box_total = 0;
@@ -87,7 +98,7 @@ class BlackFriday extends Model
     	$boxes = BlackFriday::distinct()->select('ad_box')
     			->where('store_number', '=', $store_number)
     			->where('flyer_page', '=', $page)
-    			->orderBy('ad_box', 'asc')
+    			//->orderBy('ad_box', 'asc')
     			->get();
     	return $boxes;
     }
