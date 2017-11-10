@@ -50,14 +50,14 @@
 					                </div>
 					        </div>										
 										
-										@include('admin.includes.store-banner-selector', ['optGroupOptions'=> $optGroupOptions, 'optGroupSelections' => $optGroupSelections])
+							@include('admin.includes.store-banner-selector', ['optGroupOptions'=> $optGroupOptions, 'optGroupSelections' => $optGroupSelections])
 
-										<div class="form-group" >
-											<label class="col-sm-2 control-label">Type</label>
-                      <div class="col-sm-10" id="communication-type-selector">
-                        @include('admin.communication.communication-type-selector')
-                      </div>
-                     </div>
+							<div class="form-group" >
+								<label class="col-sm-2 control-label">Type</label>
+								<div class="col-sm-10" id="communication-type-selector">
+									@include('admin.communication.communication-type-selector')
+								</div>
+		                    </div>
 
 
 							<div class="form-group">
