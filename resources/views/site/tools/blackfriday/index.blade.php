@@ -70,7 +70,7 @@
 {{--                     <table class="table table-striped table-bordered table-hover dataTable addSelector" id="" style="display: none;" aria-describedby="DataTables_Table_0_info" role="grid">
                     </table> --}}
 
-                        <p>Last Updated: Friday, November 10, 2017 @ 11:19 AM</p>
+                        <p>Last Updated: Tuesday, November 14, 2017 @ 3:32 PM</p>
 
                     <table class="table table-bordered table-hover" id="">
                         <thead>
