@@ -246,7 +246,7 @@
 
 		                    <div class="ibox">
 		                        <div class="ibox-title">
-		                            <h5>Event Types</h5>
+		                            <h5>Tasklists</h5>
 
 		                            <div class="ibox-tools">
 
