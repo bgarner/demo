@@ -12,6 +12,7 @@ use App\Models\StoreApi\Banner;
 use App\Models\StoreApi\StoreInfo;
 use App\Models\Tag\Tag;
 use App\Models\Video\Video;
+use App\Models\Video\PlaylistVideo;
 use App\Models\Tag\ContentTag;
 use App\Models\Utility\Utility;
 
@@ -155,6 +156,7 @@ class VideoAdminController extends Controller
     public function destroy($id)
     {
         Video::where('id', $id)->delete();
+        PlaylistVideo::where('video_id', $id)->delete();
         ContentTag::where('content_id', $id)->where('content_type', 'video')->delete();
         return;
     }
