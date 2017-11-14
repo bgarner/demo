@@ -62,6 +62,7 @@ $('body').on('click', '#attach-selected-videos', function(){
 			$("#videos-selected").append('<div class="selected-videos col-sm-10 col-sm-offset-2" data-videoid='+ $(this).val() +'>'+$(this).attr("data-videoname")+'</div>')
 		}
 	});
+	$('#video-listing').modal('hide');
 });
 
 

@@ -63,7 +63,7 @@
 	  position: absolute;
 	  top: 95px;
 	  width: 100%;
-	  height: 95% !important;
+	  height: 93% !important;
 	  padding:10px;
 	}
 

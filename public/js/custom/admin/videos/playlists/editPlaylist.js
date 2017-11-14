@@ -67,12 +67,13 @@ $('body').on('click', '#attach-selected-videos', function(){
 
 	});
 
+	$('#video-listing').modal('hide');
 	setTimeout(function() {
     	$(".playlist-update").trigger('click');
 	}, 1000);
 	
-});
 
+});
 
 
 $('body').on('click', ".remove-video", function(){
