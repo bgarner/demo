@@ -60,6 +60,10 @@ $(".document-checkbox").on('click', function(){
     });
  });
 
+$("#attach-selected-files").on('click', function(){
+    $("#document-listing").modal('hide');
+});
+
 $(".alert-create").click(function(){
     var hasError = false;
 
