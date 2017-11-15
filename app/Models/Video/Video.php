@@ -189,7 +189,7 @@ class Video extends Model
                 'likes'				=> 0,
                 'dislikes'			=> 0,
                 'featured'			=> 0,
-                'thumbnail'         => "video-placeholder_360.jpg",
+                'thumbnail'         => "video-placeholder.jpg",
                 'start'             => $request['start']
             );
 

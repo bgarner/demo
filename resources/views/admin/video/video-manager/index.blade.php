@@ -53,7 +53,13 @@
 		                            			<td></td>
 		                            		@endif
 		                            		<td>{!! $video->link !!}</a></td>
-		                            		<td><img src="/video/thumbs/{{$video->thumbnail}}" height="75" width="125"></td>
+		                            		<td>
+		                            			@if($video->thumbnail == 'video-placeholder.jpg')
+												<img src="/images/{{$video->thumbnail}}" height="75" width="125">
+		                            			@else
+		                            			<img src="/video/thumbs/{{$video->thumbnail}}" height="75" width="125">
+		                            			@endif
+		                            		</td>
 		                            		<td> {{$video->description}} </td>
 		                            		{{--<td> {{$video->uploaderFirstName}} {{$video->uploaderLastName}} </td>--}}
 		                            		<td>
