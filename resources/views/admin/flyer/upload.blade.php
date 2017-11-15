@@ -54,7 +54,11 @@
 
                             <div id="file-uploader" class="visible">
 
-                            <div id="watermark"><h1>Drag and drop files here</h1></div>
+                            <div style="position: relative; color: #ccc; text-align: center;">
+                                <h1>Drag and drop CSV file here</h1>
+                                <p>Must be in format:<br />
+                                 <i>Category, Brand Name, Product Name, PMM, Disclaimer, Original Price, Sale Price, Notes</i></p>
+                            </div>
 
                             <div class="container" id="container">
 
@@ -124,7 +128,7 @@
                                     <!-- The fileinput-button span is used to style the file input field as button -->
                                     <span class="btn btn-success fileinput-button dz-clickable">
                                         <i class="glyphicon glyphicon-plus"></i>
-                                        <span>Add documents...</span>
+                                        <span>Select CSV...</span>
                                     </span>
                                     <button type="submit" class="btn btn-primary start disabled">
                                         <i class="glyphicon glyphicon-upload"></i>
