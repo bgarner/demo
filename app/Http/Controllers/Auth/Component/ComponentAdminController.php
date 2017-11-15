@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth\Component;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -40,8 +41,10 @@ class ComponentAdminController extends Controller
     public function create()
     {
         
+        $newComponents = Component::getComponentsToBeCreated();
         $roles = Role::getRoleList();
-        return view('admin.components.create') ->with('roles', $roles);
+        return view('admin.components.create')->with('roles', $roles)
+                                            ->with('components', $newComponents);
                                            
     }
 
