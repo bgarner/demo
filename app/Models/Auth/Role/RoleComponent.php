@@ -83,6 +83,17 @@ class RoleComponent extends Model
     {
         RoleComponent::where('role_id', $id)->delete();
         if(isset($request->components)){
+            $nonDeletableComponents = Component::where('deletable', 0)->get()->pluck('id');
+        
+            foreach ($nonDeletableComponents as $nonDeletableComponent) {
+                if(!in_array($nonDeletableComponent, $request['components'])){
+                    RoleComponent::create([
+                        'role_id' => $id,
+                        'component_id' => $nonDeletableComponent
+                    ]); 
+                }
+            }
+
             foreach ($request['components'] as $component_id) {
                 RoleComponent::create([
                         'role_id' => $id,

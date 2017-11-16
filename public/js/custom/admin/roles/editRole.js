@@ -8,7 +8,7 @@ $(document).ready(function(){
 });
 
 
-$("#groups").change(function(){
+$("#group").change(function(){
 	showDropdowns();
 });
 
@@ -94,15 +94,17 @@ $(document).on('click','.role-edit',function(){
 });
 
 var showDropdowns = function(){
-	var groupId = $("#groups").val();
+	var groupId = $("#group").val();
 	if(groupId == 1)
 	{
 		$("#components").closest('.form-group').show();
 		$("#resource_type").closest('.form-group').hide();
+
 	}
 	if(groupId == 2)
 	{
 		$("#resource_type").closest('.form-group').show();
 		$("#components").closest('.form-group').hide();
+		$("#components").val('').trigger("chosen:updated");
 	}
 }
