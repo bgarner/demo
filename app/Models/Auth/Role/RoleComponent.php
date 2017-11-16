@@ -3,6 +3,7 @@
 namespace App\Models\Auth\Role;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Auth\Component\Component;
 
 class RoleComponent extends Model
 {
@@ -43,6 +44,16 @@ class RoleComponent extends Model
 
     public static function createRoleComponentPivotWithRoleId($role, $request)
     {
+        $nonDeletableComponents = Component::where('deletable', 0)->get()->pluck('id');
+        
+        foreach ($nonDeletableComponents as $nonDeletableComponent) {
+            if(!in_array($nonDeletableComponent, $request['components'])){
+                RoleComponent::create([
+                    'role_id' => $role->id,
+                    'component_id' => $nonDeletableComponent
+                ]); 
+            }
+        }
         foreach ($request['components'] as $component_id) {
             RoleComponent::create([
                 'role_id' => $role->id,
@@ -50,6 +61,7 @@ class RoleComponent extends Model
 
             ]); 
         }
+
         
     }
 
