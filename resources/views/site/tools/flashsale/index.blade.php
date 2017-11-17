@@ -24,7 +24,7 @@
        <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-12">
                 <h2>DOM Flash Sale Tracker</h2>
-                <p>Sale Date: October 31, 2017</p>
+                <p>Sale Date: November 27, 2017</p>
                 <small class="pull-right"> Last Updated : {{ $last_updated }} </small>
             </div>
         </div>
