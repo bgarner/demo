@@ -48,56 +48,22 @@
 
 								<div class="form-group">
 
-                        <label class="col-sm-2 control-label">Start &amp; End</label>
+			                        <label class="col-sm-2 control-label">Start &amp; End</label>
 
-                        <div class="col-sm-10">
-                            <div class="input-daterange input-group" id="datepicker">
-                                <input type="text" class="input-sm form-control datetimepicker-start" name="send_at" id="send_at" value="{{$communication->send_at}}" />
-                                <span class="input-group-addon">to</span>
-                                <input type="text" class="input-sm form-control datetimepicker-end" name="archive_at" id="archive_at" value="{{$communication->archive_at}}" />
-                            </div>
-                        </div>
-                </div>
-                @include('admin.includes.the-ultimate-store-selector')
+			                        <div class="col-sm-10">
+			                            <div class="input-daterange input-group" id="datepicker">
+			                                <input type="text" class="input-sm form-control datetimepicker-start" name="send_at" id="send_at" value="{{$communication->send_at}}" />
+			                                <span class="input-group-addon">to</span>
+			                                <input type="text" class="input-sm form-control datetimepicker-end" name="archive_at" id="archive_at" value="{{$communication->archive_at}}" />
+			                            </div>
+			                        </div>
+				                </div>
+	                			@include('admin.includes.the-ultimate-store-selector')
 								<div class="form-group">
 
 									<label class="col-sm-2 control-label">Type</label>
 										<div class="col-sm-10" id="communication-type-selector">
-
-											<div class="btn-group">
-												<a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#">
-													@foreach($communicationTypes as $ct)
-														@if($ct->id == $communication->communication_type_id)
-															<span class="selected_comm_type">
-																<i class="fa fa-circle text-{{$ct->colour}}"></i> {{$ct->communication_type}}
-															</span>
-														@endif
-													@endforeach
-													<i class="fa fa-angle-down"></i>
-												</a>
-												<input type="text" hidden name="communication_type" value="{{$communication->communication_type_id}}">
-												<ul name="communication_type" id="" class="dropdown-menu" role="menu">
-													@foreach($communicationTypes as $ct)
-
-														@if( ( $banner->id==1 && $ct->id == 1 ) || ($banner->id==2 && $ct->id == 2) )
-															<li
-																data-comm-typeid="{{$ct->id}}"
-																data-comm-type= "{{$ct->communication_type}}"
-																class="comm_type_dropdown_item" >
-																<a href=""> {{$ct->communication_type}} </a>
-															</li>
-														@else
-															<li data-comm-typeid="{{$ct->id}}"
-																data-comm-typecolour= "{{$ct->colour}}"
-																data-comm-type= "{{$ct->communication_type}}"
-																class="comm_type_dropdown_item" >
-																<a href="#" ><i class="fa fa-circle text-{{$ct->colour}}"></i> {{$ct->communication_type}}</a>
-															</li>
-														@endif
-
-													@endforeach
-												</ul>
-											</div>
+											@include('admin.communication.communication-type-selector')
 										</div>
 								</div>
 

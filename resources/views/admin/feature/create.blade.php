@@ -87,7 +87,7 @@
                             			<tr>
                             				<td>Title</td>
                             				<td></td>
-                            				<td>Action</td>
+                            				<td class="align-right">Action</td>
                             			</tr>
                             		</thead>
                             		<tbody>
@@ -113,7 +113,7 @@
                             			<tr>
                             				<td>Package Name</td>
                             				<td></td>
-                            				<td>Action</td>
+                            				<td class="align-right">Action</td>
                             			</tr>
                             		</thead>
                             		<tbody>
@@ -140,7 +140,7 @@
                             			<tr>
                             				<th>Flyer Name</th>
 											<th></th>
-											<th>Action</th>
+											<th class="align-right">Action</th>
                             			</tr>
                             		</thead>
                             		<tbody>

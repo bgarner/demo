@@ -20,7 +20,7 @@
 			@if(isset($communication) && !empty($communication))
 			value="{{$communication->communication_type_id}}"
 			@endif>
-	<ul name="communication_type" id="" class="dropdown-menu" role="menu">
+	<ul name="communication_type" id="communication-type-dropdown" class="dropdown-menu" role="menu">
 		@foreach($communicationTypes as $ct)
 
 			@if( $ct->id == 1 || $ct->id == 2)

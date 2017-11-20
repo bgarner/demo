@@ -27,6 +27,9 @@
 
                             <div class="ibox-title">
                                 <h5>Document Details</h5>
+                                <div class="ibox-tools">
+                                    {!! $document->modalLink !!}
+                                </div>
                             </div>
                             <div class="ibox-content">
                                     <form method="get" class="form-horizontal" >
@@ -245,7 +248,9 @@
     <!--<script type="text/javascript" src="/js/custom/admin/global/storeAndStoreGroupSelector.js"></script>-->
     <script type="text/javascript" src="/js/custom/admin/documents/changeFolder.js"></script>
     <script type="text/javascript" src="/js/custom/admin/documents/replaceDocument.js"></script>
+    <script type="text/javascript" src="/js/custom/site/launchModal.js"></script>
     @include('site.includes.bugreport')
+    @include('site.includes.modal')
 
 </body>
 </html>

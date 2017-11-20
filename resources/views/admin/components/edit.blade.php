@@ -35,7 +35,7 @@
                                         <div class="form-group">
                                         	<label class="col-sm-2 control-label">Component Name</label>
                                         	<div class="col-sm-10">
-                                        		<input type="text" class="form-control" name="component_name" id="component_name" value="{{ $component->component_name }}" />
+                                        		<input type="text" class="form-control" name="component_name" id="component_name" value="{{ $component->component_name }}"  disabled />
                                         	</div>
                                         </div>
                                         <div class="form-group">

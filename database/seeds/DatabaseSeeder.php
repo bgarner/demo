@@ -40,5 +40,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(EventTypeBannerTableSeeder::class);
 
         // $this->call(BannerTableBannerClassSeeder::class);
+
+        $this->call(ComponentDeletablePropertySeeder::class);
     }
 }

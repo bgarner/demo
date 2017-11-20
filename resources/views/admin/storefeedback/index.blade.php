@@ -84,7 +84,7 @@
 
 									<td>
 										<a href="/admin/feedback/{{ $feedback->id }}/edit" class="btn btn-primary btn-sm btn-outline"><i class="fa fa-pencil"></i></a>
-										<a data-feedback="{{ $feedback->id }}" id="feedback{{ $feedback->id }}" class="delete-feedback btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+										{{-- <a data-feedback="{{ $feedback->id }}" id="feedback{{ $feedback->id }}" class="delete-feedback btn btn-danger btn-sm"><i class="fa fa-trash"></i></a> --}}
 
 									</td>
 

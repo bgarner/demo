@@ -5,6 +5,7 @@ namespace App\Models\Feature;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Communication\Communication;
+use Illuminate\Database\Eloquent\Collection as Collection;
 
 class FeatureCommunication extends Model
 {
@@ -41,17 +42,18 @@ class FeatureCommunication extends Model
     {
         $featureCommunicationTypes = FeatureCommunicationTypes::getCommunicationTypeId($feature_id);
 
-        $mergedCommunications = [];
+        $mergedCommunications = new Collection();
 
         foreach ($featureCommunicationTypes as $type) {
             $communications  = Communication::getActiveCommunicationsByCategory($storeNumber, $type);
+
             $mergedCommunications = $communications->merge($mergedCommunications);
         }
 
         $featureCommunications = FeatureCommunication::getCommunicationId($feature_id);
         foreach ($featureCommunications as $comm) {
             $communications = Communication::getCommunicationById($comm);
-            array_push($mergedCommunications, $communications);
+            $mergedCommunications->push($communications);
         }
 
         return $mergedCommunications;

@@ -35,7 +35,12 @@
 
                                     <form method="get" class="form-horizontal">
                                         <div class="form-group"><label class="col-sm-2 control-label">Component Name</label>
-                                            <div class="col-sm-10"><input type="text" class="form-control" name="component_name" id="component_name" value=""></div>
+                                            <div class="col-sm-10">
+                                            	<!-- <input type="text" class="form-control" name="component_name" id="component_name" value=""> -->
+
+                                            	{!! Form::select('component_name', $components, null , ['class'=>'form-control', "id"=>"component_name"]) !!}
+                                            </div>
+                                            
                                         </div>
 
                                         <div class="form-group">

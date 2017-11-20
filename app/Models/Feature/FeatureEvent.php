@@ -4,6 +4,7 @@ namespace App\Models\Feature;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Feature\FeatureEventType;
 
 
 class FeatureEvent extends Model
@@ -39,13 +40,20 @@ class FeatureEvent extends Model
     {
     	$feature = Feature::find($feature_id);
         
-        $featureEvents =  FeatureEventType::join('events', 'events.event_type', '=', 'feature_event_type.event_type_id' )
+        $featureEventsByType =  FeatureEventType::join('events', 'events.event_type', '=', 'feature_event_type.event_type_id' )
                                         ->where('feature_id', $feature_id)
                                         ->where('events.start', '<', $feature->end)
                                         ->where('events.end', '>', $feature->start)
                                         ->select('events.*')
                                         ->get();
-        
+
+        $featureEvents = FeatureEvent::join('events', 'events.id' , '=', 'feature_event.event_id')
+                                    ->where('feature_id', $feature_id)
+                                    ->where('events.start', '<', $feature->end)
+                                    ->where('events.end', '>', $feature->start)
+                                    ->select('events.*')
+                                    ->get();
+        $featureEvents = $featureEventsByType->merge($featureEvents);
         return $featureEvents;
     }
 }

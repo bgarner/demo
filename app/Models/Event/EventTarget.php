@@ -4,7 +4,9 @@ namespace App\Models\Event;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Utility\Utility;
-use App\Models\EventStoreGroup;
+use App\Models\Event\EventStoreGroup;
+use App\Models\Event\EventBanner;
+
 
 class EventTarget extends Model
 {

@@ -97,18 +97,10 @@ class PlaylistAdminController extends Controller
         $playlist           = Playlist::getPlaylistById($id);
         $videos             = Video::getAllVideosForAdmin();
 
-
-        $selectedVideos     = PlaylistVideo::where('playlist_id', $id)->orderBy('order')->get();
-
-        foreach($selectedVideos as $sv){
-        $video_info         = Video::find($sv->video_id);
-        $sv->title          = $video_info->title;
-        $sv->thumbnail      = $video_info->thumbnail;
-        }
+        $selectedVideos     = PlaylistVideo::getPlaylistVideos($id);
 
         $optGroupOptions    = Utility::getStoreAndBannerSelectDropdownOptions();
         $optGroupSelections = json_encode(Playlist::getSelectedStoresAndBannersByPlaylistId($id));
-
 
         $tags               = Tag::all()->pluck('name', 'id');
 

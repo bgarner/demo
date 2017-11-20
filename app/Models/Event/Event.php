@@ -23,7 +23,7 @@ class Event extends Model
     use SoftDeletes;
     protected $table = 'events';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['banner_id', 'title', 'description', 'event_type', 'start', 'end', 'all_day', 'all_stores'];
+    protected $fillable = ['title', 'description', 'event_type', 'start', 'end', 'all_day', 'all_stores'];
 
     public static function validateEvent($request)
     {

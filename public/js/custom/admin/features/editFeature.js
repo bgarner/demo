@@ -20,7 +20,7 @@ $('body').on('click', '#attach-selected-files', function(){
 			$(".feature-documents-table tbody").append('<tr class="selected-files"> '+
 													'<td data-document-id='+ $(this).val() +'><i class="fa fa-file-o"></i> '+ $(this).attr("data-filename") +'</td>'+
 													'<td></td>'+
-													'<td> <a data-document-id="'+ $(this).val()+'" id="file'+ $(this).val()+'" class="remove-staged-file btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>'+
+													'<td class="align-right"> <a data-document-id="'+ $(this).val()+'" id="file'+ $(this).val()+'" class="remove-staged-file btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>'+
 												 '</tr>');
 		}
 
@@ -38,7 +38,7 @@ $('body').on('click', '#attach-selected-packages', function(){
 			$(".feature-packages-table tbody").append( '<tr class="selected-packages"> '+
 													'<td data-package-id='+ $(this).val() +'><i class="fa fa-folder-o"></i> '+ $(this).attr("data-packagename") +'</td>'+
 													'<td></td>'+
-													'<td> <a data-package-id="'+ $(this).val()+'" id="package'+ $(this).val()+'" class="remove-staged-package btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>'+
+													'<td class="align-right"> <a data-package-id="'+ $(this).val()+'" id="package'+ $(this).val()+'" class="remove-staged-package btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>'+
 												 '</tr>');		
 		}
 		if($(".feature-packages-table").hasClass('hidden') )	{
@@ -55,7 +55,7 @@ $('body').on('click', '#attach-selected-flyers', function(){
 			$(".feature-flyers-table tbody").append( '<tr class="selected-flyers"> '+
 													'<td data-flyer-id='+ $(this).val() +'><i class="fa fa-folder-o"></i> '+ $(this).attr("data-flyername") +'</td>'+
 													'<td></td>'+
-													'<td> <a data-flyer-id="'+ $(this).val()+'" id="flyer'+ $(this).val()+'" class="remove-staged-flyer btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>'+
+													'<td class="align-right"> <a data-flyer-id="'+ $(this).val()+'" id="flyer'+ $(this).val()+'" class="remove-staged-flyer btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>'+
 												 '</tr>');		
 		}
 		if($(".feature-flyers-table").hasClass('hidden') )	{

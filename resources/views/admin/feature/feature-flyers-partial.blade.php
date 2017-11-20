@@ -4,7 +4,7 @@
 		<tr>
 			<th>Flyer Name</th>
 			<th></th>
-			<th>Action</th>
+			<th class="align-right">Action</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -15,7 +15,7 @@
 	   <tr class="feature-flyers">
             <td data-flyer-id='{{$flyer->id}}'> {{$flyer->flyer_name}} </td>
             <td></td>
-            <td> <a data-flyer-id='{{$flyer->id}}' id="flyer{{$flyer->id}}" class="remove-flyer btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>
+            <td class="align-right"> <a data-flyer-id='{{$flyer->id}}' id="flyer{{$flyer->id}}" class="remove-flyer btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>
         </tr>
         @endforeach
     </tbody>
@@ -29,7 +29,7 @@
 		<tr>
 			<th>flyer Name</th>
 			<th></th>
-			<th>Action</th>
+			<th class="align-right">Action</th>
 		</tr>
 	</thead>
 	<tbody>
