@@ -141,6 +141,10 @@ class DocumentAdminController extends Controller
     public function edit($id, Request $request)
     {
         $document            = Document::find($id);
+        $document->modalLink = Utility::getModalLink($document->filename, 
+                                                    '<button type="button" class="btn btn-primary btn-outline">
+                                                    View Document</button>',
+                                                     $document->original_extension, $id);
         $banner              = UserSelectedBanner::getBanner();
         $target_stores       = DocumentTarget::getTargetStoresForDocument($id);
         
