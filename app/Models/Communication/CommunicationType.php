@@ -35,6 +35,7 @@ class CommunicationType extends Model
     {
     	$communicationTypes = CommunicationType::join('communication_type_banner', 'communication_type_banner.communication_type_id', '=', 'communication_types.id')
                                     ->where('communication_type_banner.banner_id', $storeBanner)
+                                    ->select('communication_types.*')
                                     ->get();
 
     	foreach($communicationTypes as $key=>$ct){
@@ -54,8 +55,10 @@ class CommunicationType extends Model
     {
         $communicationTypes = CommunicationType::join( 'communication_type_banner', 'communication_type_banner.communication_type_id', '=', 'communication_types.id')
                                     ->where('communication_type_banner.banner_id', $storeBanner)
+                                    ->select('communication_types.*')
                                     ->get();
-         foreach($communicationTypes as $key=>$ct){
+
+        foreach($communicationTypes as $key=>$ct){
             $count = Communication::getAllCommunicationCountByCategory($storeNumber, $ct->id);
             if($count > 0) {
                 $ct->count = $count;
