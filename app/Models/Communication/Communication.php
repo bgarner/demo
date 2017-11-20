@@ -148,6 +148,7 @@ class Communication extends Model
 
         foreach($communications as $c){
 			$c->prettySentAtDate = Utility::prettifyDate( $c->send_at );
+			$c->prettyArchiveAtDate = Utility::prettifyDate( $c->archive_at );
 			$c->label_name = Communication::getCommunicationCategoryName($c->communication_type_id);
             $c->label_colour = Communication::getCommunicationCategoryColour($c->communication_type_id);
 		}
@@ -577,10 +578,9 @@ class Communication extends Model
         										->whereIn('communication_store_group.store_group_id', $storeGroups)
 												->where('communications.send_at', '<=', $now )
 												->where('communications.archive_at', '>=', $now )
-												->count();
+												->count();		
 
 		$communicationCount = $allStoreCommunicationCount + $targetedCommunicationCount + $storeGroupCommunicationCount;
-
 		return $communicationCount;
 	}
 
