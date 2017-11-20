@@ -13,13 +13,19 @@ $(document).on('click','.eventtype-create',function(){
     var fg = $("#foreground_colour").val();
     var banners = $("#banners").val();
 
-    console.log(banners );
+    if(banners == null){
+		swal("Oops!", "This we need a banner for this event type.", "error");
+		hasError = true;
+		$(window).scrollTop(0);
+	}
 
     if(eventTypeName == '') {
 		swal("Oops!", "This we need a name for this event type.", "error");
 		hasError = true;
 		$(window).scrollTop(0);
 	}
+
+	
 
 	if(hasError == false) {
 		$.ajax({
@@ -28,7 +34,7 @@ $(document).on('click','.eventtype-create',function(){
 		    data: { event_type: eventTypeName, 
 		    		background_colour: bg, 
 		    		foreground_colour: fg, 
-		    		banners: banners  },
+		    		banners: banners },
 		    dataType : 'json',
 		    success: function(data) {
 		    	console.log(data);
@@ -38,6 +44,11 @@ $(document).on('click','.eventtype-create',function(){
 		        	if(errors.hasOwnProperty("event_type")) {
 		        		$.each(errors.event_type, function(index){
 		        			$("#event_type").parent().append('<div class="req">' + errors.event_type[index]  + '</div>');
+		        		});
+		        	}
+		        	if(errors.hasOwnProperty("banners")) {
+		        		$.each(errors.banners, function(index){
+		        			$("#banners").parent().append('<div class="req">' + errors.banners[index]  + '</div>');
 		        		});
 		        	}
 		        }

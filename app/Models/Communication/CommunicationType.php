@@ -194,4 +194,16 @@ class CommunicationType extends Model
         }
         return $communicationTypes;
     }
+
+    public static function deleteCommunicationType($id)
+    {
+        $communicationsWithType = Communication::where('communication_type_id', $id)->get();
+        foreach ($communicationsWithType as $comm) {
+            $comm->communication_type_id = 1; //no category
+            $comm->save();
+        }
+
+        $communicationtype = CommunicationType::find($id);
+        $communicationtype->delete();
+    }
 }

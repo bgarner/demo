@@ -41,7 +41,7 @@ class PlaylistVideo extends Model
         $remove_videos = $request["remove_videos"];
          if (isset($remove_videos)) {
             foreach ($remove_videos as $video) {
-               PlaylistVideo::where('playlist_id', $id)->where('video_id', intval($video))->delete();
+                PlaylistVideo::where('playlist_id', $id)->where('video_id', intval($video))->delete();
             }
          }
 

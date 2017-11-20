@@ -10,7 +10,7 @@ use App\Models\StoreFeedback\FeedbackNotes;
 class BugReport extends Model
 {
     protected $table = 'bug_reports';
-    protected $fillable = ['banner', 'user', 'user_email', 'follow_up', 'store_number', 'current_url', 'description'];
+    protected $fillable = ['banner', 'user_email', 'follow_up', 'store_number', 'current_url', 'description'];
 
     public static function storeBugReport($request)
     {

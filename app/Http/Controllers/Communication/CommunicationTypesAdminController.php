@@ -107,8 +107,7 @@ class CommunicationTypesAdminController extends Controller
      */
     public function destroy($id)
     {
-        $communicationtype = CommunicationType::find($id);
-        $communicationtype->delete();
+        return CommunicationType::deleteCommunicationType($id);
     }
 
     public function getCommunicationTypesByTarget(Request $request)

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Document\Document;
 use App\Models\Utility\Utility;
+use App\Models\StoreApi\StoreInfo;
 use Carbon\Carbon;
 
 class FeatureDocument extends Model
@@ -19,20 +20,38 @@ class FeatureDocument extends Model
     {
 
     	$now = Carbon::now()->toDatetimeString();
-    	$featuredDocuments = FeatureDocument::join('documents', 'feature_document.document_id', '=', 'documents.id')
+        $banner_id = StoreInfo::getStoreInfoByStoreId($store_number)->banner_id;
+
+        $targetedFeatureDocuments = FeatureDocument::join('documents', 'documents.id', '=',     'feature_document.document_id')
                                 ->join('document_target', 'document_target.document_id', '=', 'documents.id')
-    							->where('feature_id', $feature_id)
-    							->where('documents.start', '<=', $now )
-	                            ->where(function($query) use ($now) {
-	                                $query->where('documents.end', '>=', $now)
-	                                    ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                ->where('feature_id', $feature_id)
+                                ->where('documents.start', '<=', $now )
+                                ->where(function($query) use ($now) {
+                                    $query->where('documents.end', '>=', $now)
+                                        ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
                                         ->orWhere('documents.end', '=', NULL );
-	                            })
+                                })
                                 ->where('document_target.store_id', $store_number)
                                 // ->where('document_target.deleted_at', null)
-    							->select('documents.*')
-    							->get()
-    							->each(function($doc){
+                                ->select('documents.*')
+                                ->get();
+
+        $allStoreFeatureDocuments = FeatureDocument::join('documents', 'documents.id', '=',     'feature_document.document_id')
+                                    ->where('documents.all_stores', 1)
+                                    ->where('documents.banner_id', $banner_id)
+                                    ->where('feature_id', $feature_id)
+                                    ->where('documents.start', '<=', $now )
+                                    ->where(function($query) use ($now) {
+                                        $query->where('documents.end', '>=', $now)
+                                            ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                            ->orWhere('documents.end', '=', NULL );
+                                    })
+                                    // ->where('document_target.store_id', $store_number)
+                                    ->select('documents.*')
+                                    ->get();
+
+        $featuredDocuments = $targetedFeatureDocuments->merge($allStoreFeatureDocuments)
+                                ->each(function($doc){
 
     								$doc->folder_path   = Document::getFolderPathForDocument($doc->id);
             						$doc->link          = Utility::getModalLink($doc->filename, $doc->title, $doc->original_extension, $doc->id, 0);

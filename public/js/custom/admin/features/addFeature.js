@@ -33,7 +33,7 @@ $('body').on('click', '#attach-selected-files', function(){
 			$(".feature-documents-table").find("tbody").append('<tr class="feature-documents"> '+
 													'<td data-fileid='+ $(this).val() +'>'+$(this).attr("data-filename")+'</td>'+
 													'<td></td>'+
-													'<td> <a data-file-id="'+ $(this).val()+'" id="file'+ $(this).val()+'" class="remove-staged-file btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>'+
+													'<td class="align-right"> <a data-file-id="'+ $(this).val()+'" id="file'+ $(this).val()+'" class="remove-staged-file btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>'+
 												'</tr>');
 		}
 	});
@@ -52,7 +52,7 @@ $('body').on('click', '#attach-selected-packages', function(){
 			$(".feature-packages-table").find("tbody").append('<tr class="feature-packages"> '+
 													'<td data-packageid='+ $(this).attr('data-packageid') +'>'+ $(this).attr("data-packagename")+'</td>'+
 													'<td></td>'+
-													'<td> <a data-package-id="'+ $(this).val()+'" id="package'+ $(this).val()+'" class="remove-staged-package btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>'+
+													'<td class="align-right"> <a data-package-id="'+ $(this).val()+'" id="package'+ $(this).val()+'" class="remove-staged-package btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>'+
 												'</tr>');
 		}
 		
@@ -72,7 +72,7 @@ $('body').on('click', '#attach-selected-flyers', function(){
 			$(".feature-flyers-table").find("tbody").append('<tr class="feature-flyers"> '+
 													'<td data-flyerid='+ $(this).attr('data-flyerid') +'>'+ $(this).attr("data-flyername")+'</td>'+
 													'<td></td>'+
-													'<td> <a data-flyer-id="'+ $(this).val()+'" id="flyer'+ $(this).val()+'" class="remove-staged-flyer btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>'+
+													'<td class="align-right"> <a data-flyer-id="'+ $(this).val()+'" id="flyer'+ $(this).val()+'" class="remove-staged-flyer btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>'+
 												'</tr>');
 		}
 		

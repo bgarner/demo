@@ -252,6 +252,7 @@ return [
         'App\Http\Controllers\Dashboard\DashboardAdminController'               => 'Dashboard',
         'App\Http\Controllers\Dashboard\DashboardBackgroundAdminController'     => 'Dashboard',
         'App\Http\Controllers\Dashboard\QuicklinksAdminController'              => 'Dashboard',
+        'App\Http\Controllers\Feature\FeatureOrderAdminController'              => 'Dashboard',
         'App\Http\Controllers\Document\PackageAdminController'                  => 'Featured Content',
         'App\Http\Controllers\Feature\FeatureAdminController'                   => 'Featured Content',
         'App\Http\Controllers\Feature\FeatureThumbnailAdminController'          => 'Featured Content',
@@ -286,6 +287,7 @@ return [
         'App\Http\Controllers\Auth\Resource\ResourceTypeAdminController'        => 'User and Group Management',
         'App\Http\Controllers\Auth\Component\ComponentAdminController'          => 'User and Group Management',
         'App\Http\Controllers\StoreFeedback\FeedbackAdminController'            => 'Store Feedback Management',
+        'App\Http\Controllers\StoreFeedback\NotesAdminController'               => 'Store Feedback Management',
         'App\Http\Controllers\Task\TaskAdminController'                         => 'Task Management',
         'App\Http\Controllers\Task\TasklistAdminController'                     => 'Task Management',
         'App\Http\Controllers\Task\TaskDocumentController'                      => 'Task Management',
@@ -294,8 +296,6 @@ return [
         'App\Http\Controllers\Flyer\FlyerAdminController'                       => 'Flyer',
         'App\Http\Controllers\Flyer\FlyerItemAdminController'                   => 'Flyer',
         'App\Http\Controllers\Utilities\BatchFileUploadController'              => 'Batch File Upload'
-
-
 
     ],
 

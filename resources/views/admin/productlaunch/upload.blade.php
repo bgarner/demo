@@ -47,7 +47,11 @@
 
                                         <div id="file-uploader" class="visible">
 
-                                        <div id="watermark"><h1>Drag and drop files here</h1></div>
+                            <div style="position: relative; color: #ccc; text-align: center;">
+                                <h1>Drag and drop CSV file here</h1>
+                                <p>Must be in format:<br />
+                                 <i>Launch Date(YYYY-MM-DD), Style Number, Vender Code, Style Name, Retail Price, Tracking, Event Type</i></p>
+                            </div>
 
                                         <div class="container" id="container">
 
