@@ -9,42 +9,34 @@
 
 <body class="fixed-navigation">
     <div id="wrapper">
-    <nav class="navbar-default navbar-static-side" role="navigation">
-        <div class="sidebar-collapse">
-          @include('site.includes.sidenav')
-        </div>
-    </nav>
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+              @include('site.includes.sidenav')
+            </div>
+        </nav>
 
-    <div id="page-wrapper" class="gray-bg">
-        <div class="row border-bottom">
-            @include('site.includes.topbar')
-        </div>
+        <div id="page-wrapper" class="gray-bg">
+            <div class="row border-bottom">
+                @include('site.includes.topbar')
+            </div>
+            <div class="tabs-container wrapper wrapper-content animated fadeInRight">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">{{ __("Calendar View") }}</a></li>
+                    <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">{{ __("List View") }}</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane active">
+                        <div class="panel-body">
 
-
-
-
-                    <div class="tabs-container wrapper wrapper-content animated fadeInRight">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">{{ __("Calendar View") }}</a></li>
-                            <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">{{ __("List View") }}</a></li>
-                        </ul>
-                        <div class="tab-content">
-                            <div id="tab-1" class="tab-pane active">
-                                <div class="panel-body">
-
-                                    <div class="ibox-content">
-                                        <div id="calendar"></div>
-                                    </div>
-
-                                </div>
+                            <div class="ibox-content">
+                                <div id="calendar"></div>
                             </div>
-                            <div id="tab-2" class="tab-pane">
-                                <div class="panel-body">
 
-
-
-
-                                  <div class="ibox-content inspinia-timeline printable" style="display: block;">
+                        </div>
+                    </div>
+                    <div id="tab-2" class="tab-pane">
+                        <div class="panel-body">
+                            <div class="ibox-content inspinia-timeline printable" style="display: block;">
 
                                 <div class="fc-toolbar">
                                     <div class="fc-left">
@@ -69,57 +61,14 @@
                                     @include('site.calendar.event-list-partial', ['eventList'=> $eventsList])
                                 </div>
 
-                                        {{--@foreach($eventsList as $e)
-                                        <div class="timeline-item">
-
-                                            <div class="row">
-                                                <div class="col-xs-4 date">
-                                                    <i class="fa fa-calendar"></i>
-                                                    {!! $e->prettyDateStart !!}
-                                                    <br>
-                                                    <small class="text-navy">
-                                                    @if( strtotime($e->start) < strtotime(date("y-m-d H:i:s")) )
-                                                        {!! $e->since !!} ago
-                                                    @else
-                                                        in {!! $e->since !!}
-                                                    @endif
-
-                                                    </small>
-                                                </div>
-                                                <div class="col-xs-8 content">
-                                                    <span class="label label-primary">{!! $e->event_type_name !!}</span>
-                                                    <p class="m-b-xs"><strong>{!! $e->title !!}</strong></p>
-                                                    <p>{!! $e->description !!}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @endforeach --}}
-
-                                    </div>
-
-                                </div>
                             </div>
+
                         </div>
-
-
-                    </div>
-
-
-{{--
-         <div class="wrapper wrapper-content animated fadeInRight">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="ibox float-e-margins">
-
-                            <div class="ibox-content">
-                                <div id="calendar"></div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
-         </div>
---}}
+            </div>
+        </div>
+    </div>
 
 
     @include('site.includes.footer')

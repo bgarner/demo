@@ -230,10 +230,29 @@ class Event extends Model
                             $item->since = Utility::getTimePastSinceDate($item->start);
                         });
                         
-        $events = $targetedEvents->merge($allStoreEvents)->groupBy(function($event) {
-                            return Carbon::parse($event->start)->format('Y-m-d');
-                    });
-        
+        $events = $targetedEvents->merge($allStoreEvents);
+
+        foreach($events as $event){
+            $start = Carbon::createFromFormat('Y-m-d H:i:s', $event->start);
+            $end = Carbon::createFromFormat('Y-m-d H:i:s', $event->end);
+            $differenceInHours = $start->diffInHours($end);
+            
+            while($differenceInHours > 24){
+                
+                $start = $start->addDay();
+                $newEvent = $event->replicate();
+                $newEvent->id = Carbon::now()->timestamp ;
+                $newEvent->start = $start->toDateTimeString();
+                $events->push($newEvent);
+                $differenceInHours = $start->diffInHours($end);
+
+            }
+        }
+
+        $events = $events->groupBy(function($event) {
+                return Carbon::parse($event->start)->format('Y-m-d');
+        });
+
         return $events;
     }
 
