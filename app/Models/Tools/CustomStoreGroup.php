@@ -13,7 +13,7 @@ class CustomStoreGroup extends Model
 {
  	protected $table = 'custom_store_group';
 
- 	protected $fillable = ['group_name', 'stores', 'banner'];
+ 	protected $fillable = ['group_name', 'stores', 'banner_id'];
 
  	public static function validateCustomStoreGroup($request)
 	{
