@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Tools\CustomStoreGroup;
 use App\Models\StoreApi\StoreInfo;
 use App\Models\Utility\Utility;
+use App\Models\Auth\User\UserSelectedBanner;
 
 class CustomStoreGroupAdminController extends Controller
 {
@@ -25,7 +26,8 @@ class CustomStoreGroupAdminController extends Controller
      */
     public function index(Request $request)
     {
-        $storegroups = CustomStoreGroup::getAllGroups();
+        $banner = UserSelectedBanner::getBanner();
+        $storegroups = CustomStoreGroup::getGroupsByBanner($banner->id);
         return view('admin.storegroup.index')->with('storegroups', $storegroups);                                   
     }
 

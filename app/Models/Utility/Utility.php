@@ -352,45 +352,44 @@ class Utility extends Model
 
 	public static function getStoreListForAdmin()
     {
-        $banners = UserBanner::getAllBanners();
+        $banner = UserSelectedBanner::getBanner();
         $storeList = [];
 
-        foreach ($banners as $banner) {
+        // foreach ($banners as $banner) {
 
-            $storeInfo = StoreInfo::getStoresInfo($banner->id);
-            foreach ($storeInfo as $store) {
-                $storeList[$store->store_number] = $store->store_id . " " . $store->name . " (" . $banner->name .")" ;
-            }
-
+        $storeInfo = StoreInfo::getStoresInfo($banner->id);
+        foreach ($storeInfo as $store) {
+            $storeList[$store->store_number] = $store->store_id . " " . $store->name . " (" . $banner->name .")" ;
         }
+
+        // }
 
         return $storeList;
     }
 
     public static function getBannerListByAdminId()
     {
-    	$banners = UserBanner::getAllBanners()->pluck('name', 'id')->toArray();
+    	$banner = UserSelectedBanner::getBanner();
+    	
     	$bannerList = [];
-		foreach ($banners as $key => $value) {
-			$bannerName = $value;
-			$value = [];
-			$value['option-label'] = $bannerName;
-			$value['data-attributes'] = [
-										'allStores'   => 1 ,
-										'optionType'  => 'banner',
-										'resourceId'  => $key
-									];
-			$bannerList['banner'.$key] = $value;
-		}
-
+		
+		$value = [];
+		$value['option-label'] = $banner->name;
+		$value['data-attributes'] = [
+									'allStores'   => 1 ,
+									'optionType'  => 'banner',
+									'resourceId'  => $banner->id
+								];
+		$bannerList['banner'.$banner->id] = $value;
+		
 		return $bannerList;
     }
     public static function getStoreListByAdminId()
     {
-        $banners = UserBanner::getAllBanners();
+        $banner = UserSelectedBanner::getBanner();
         $storeList = [];
 
-        foreach ($banners as $banner) {
+        // foreach ($banners as $banner) {
 
             $storeInfo = StoreInfo::getStoresInfo($banner->id);
             foreach ($storeInfo as $store) {
@@ -404,14 +403,16 @@ class Utility extends Model
                 	];
             }
 
-        }
+        // }
 
         return $storeList;
     }
 
     public static function getStoreGroups()
     {
-    	$storeGroups = CustomStoreGroup::getAllGroups();
+    	
+    	$banner = UserSelectedBanner::getBanner();
+    	$storeGroups = CustomStoreGroup::getGroupsByBanner($banner->id);
     	$groupList = [];
     	foreach ($storeGroups as $group) {
     		

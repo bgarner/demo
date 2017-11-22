@@ -1356,6 +1356,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'UpdateCommunicationsTypeTableRemoveBanner' => __DIR__ . '/../..' . '/database/migrations/remove_banner/2017_10_17_091925_update_communications_type_table_remove_banner.php',
         'UpdateCommunityDonationsTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_20_170632_update_community_donations_table.php',
         'UpdateComponentsTableAddDeletableColumn' => __DIR__ . '/../..' . '/database/migrations/2017_11_16_114326_update_components_table_add_deletable_column.php',
+        'UpdateCustomStoreGroupTable' => __DIR__ . '/../..' . '/database/migrations/2017_11_22_093530_update_custom_store_group_table.php',
         'UpdateDocumentTargetTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_15_215303_update_document_target_table.php',
         'UpdateDocumentsTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_12_152143_update_documents_table.php',
         'UpdateDocumentsTableRemoveEnddateConstraint' => __DIR__ . '/../..' . '/database/migrations/2017_09_15_195859_update_documents_table_remove_enddate_constraint.php',
