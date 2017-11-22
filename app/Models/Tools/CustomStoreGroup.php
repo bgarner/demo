@@ -106,14 +106,7 @@ class CustomStoreGroup extends Model
  	public static function getStoreGroupsForStore($store_number)
     {
     	$banner = StoreInfo::getStoreInfoByStoreId($store_number)->banner_id;
-    	$storeGroups = CustomStoreGroup::getGroupsByBanner($banner);
-    	// $selectedStoreGroups = [];
-    	// foreach ($storeGroups as $group) {
-    	// 	if(in_array($store_number, $group->stores)){
-    	// 		array_push($selectedStoreGroups, $group->id);
-    	// 	}
-    	// }
-
+    	$storeGroups = CustomStoreGroup::getGroupsByBanner($banner);	
     	return $storeGroups;
 
     }
@@ -122,20 +115,6 @@ class CustomStoreGroup extends Model
     {
     	$adminBanner = UserSelectedBanner::getBanner();
     	$storeGroups = CustomStoreGroup::getGroupsByBanner($adminBanner->id);
-
-    	// $adminStoreGroups = [];
-    	// foreach ($storeGroups as $group) {
-    		
-    	// 	$stores = $group->stores;
-    	// 	foreach ($stores as $store) {
-    	// 		$banner = Store::getStoreDetailsByStoreNumber($store)->banner_id; 
-    	// 		if(in_array($banner, $adminBanners) && ! in_array($group->id, $adminStoreGroups)){
-    	// 			array_push($adminStoreGroups, $group->toArray());
-    	// 		}
-
-    	// 	}
-    	// }
-
     	return $storeGroups;
         
     }

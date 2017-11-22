@@ -16,6 +16,7 @@ use App\Models\Utility\Utility;
 use App\Models\Validation\CommunicationValidator;
 use App\Models\StoreApi\StoreInfo;
 use App\Models\Auth\User\UserBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Tools\CustomStoreGroup;
 use App\Models\StoreApi\Banner;
 
@@ -97,20 +98,20 @@ class Communication extends Model
 
 	public static function getCommunicationsForAdmin()
 	{
-		$banners = UserBanner::getAllBanners()->pluck('id')->toArray();
+		$banner = UserSelectedBanner::getBanner();
 
         //stores in accessible banners
         $storeList = [];
-        foreach ($banners as $banner) {
-            $storeInfo = StoreInfo::getStoresInfo($banner);
+        // foreach ($banners as $banner) {
+            $storeInfo = StoreInfo::getStoresInfo($banner->id);
             foreach ($storeInfo as $store) {
                 array_push($storeList, $store->store_number);
             }
-        }
+        // }
 
         $allStoreCommunications = Communication::join('communication_banner', 'communication_banner.communication_id', '=', 'communications.id')
                                 ->where('all_stores', 1)
-                                ->whereIn('communication_banner.banner_id', $banners)
+                                ->where('communication_banner.banner_id', $banner)
                                 ->select('communications.*', 'communication_banner.banner_id')
                                 ->get();
 
