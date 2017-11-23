@@ -118,7 +118,7 @@
                             <li><a href="/{{ Request::segment(1) }}/tools/doorcrasher">Doorcrasher Tracker</a></li>
                             {{-- <li><a href="/{{ Request::segment(1) }}/tools/bikecount">Bike Count Tracker</a></li> --}}
                             <li><a href="/{{ Request::segment(1) }}/tools/flashsale">DOM Flash Sale Tracker</a></li>
-                            {{-- <li><a href="/{{ Request::segment(1) }}/tools/fwinitials">Footwear Initials Tracker</a></li> --}}
+                            <li><a href="/{{ Request::segment(1) }}/tools/fwinitials">Footwear Initials Tracker</a></li>
                         </ul>
 
                 </li>
