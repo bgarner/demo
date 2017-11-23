@@ -98,16 +98,14 @@ class Communication extends Model
 
 	public static function getCommunicationsForAdmin()
 	{
-		$banner = UserSelectedBanner::getBanner();
+		$banner = UserSelectedBanner::getBanner()->id;
 
-        //stores in accessible banners
         $storeList = [];
-        // foreach ($banners as $banner) {
-            $storeInfo = StoreInfo::getStoresInfo($banner->id);
-            foreach ($storeInfo as $store) {
-                array_push($storeList, $store->store_number);
-            }
-        // }
+        
+        $storeInfo = StoreInfo::getStoresInfo($banner);
+        foreach ($storeInfo as $store) {
+            array_push($storeList, $store->store_number);
+        }
 
         $allStoreCommunications = Communication::join('communication_banner', 'communication_banner.communication_id', '=', 'communications.id')
                                 ->where('all_stores', 1)

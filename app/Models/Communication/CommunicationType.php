@@ -9,6 +9,7 @@ use App\Models\Auth\User\UserBanner;
 use App\Models\StoreApi\Banner;
 use App\Models\Communication\CommunicationTypeBanner;
 use App\Models\Utility\Utility;
+use App\Models\Auth\User\UserSelectedBanner;
 
 class CommunicationType extends Model
 {
@@ -82,10 +83,10 @@ class CommunicationType extends Model
 
     public static function getCommunicationTypesForAdmin()
     {
-        $banners = UserBanner::getAllBanners()->pluck('id')->toArray();
+        $banner = UserSelectedBanner::getBanner()->id;
         
         $communicationTypes = CommunicationType::join('communication_type_banner', 'communication_type_banner.communication_type_id', '=', 'communication_types.id')
-                ->whereIn('communication_type_banner.banner_id', $banners)
+                ->where('communication_type_banner.banner_id', $banner)
                 ->select(\DB::raw('
                     communication_types.id as id,
                     communication_types.communication_type,

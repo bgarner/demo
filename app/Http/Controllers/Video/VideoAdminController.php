@@ -46,7 +46,7 @@ class VideoAdminController extends Controller
     public function create()
     {
         $packageHash = sha1(time() . time());
-        $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
+        $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions($forAdmin = true);
         
         return view('admin.video.video-manager.video-upload')
             ->with('packageHash', $packageHash)
@@ -121,7 +121,7 @@ class VideoAdminController extends Controller
     public function edit($id)
     { 
         $video = Video::getVideoById($id);
-        $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
+        $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions($forAdmin = true);
         $optGroupSelections = json_encode(Video::getSelectedStoresAndBannersByVideoId($id));
         $banners = UserBanner::getAllBanners()->pluck('name', 'id')->toArray();
         $tags = Tag::all()->pluck('name', 'id');

@@ -65,6 +65,15 @@ class CustomStoreGroup extends Model
                         });
  	}
 
+ 	public static function getGroupsForMultipleBanners($banners)
+ 	{
+ 		return CustomStoreGroup::whereIn('banner_id', $banners)
+                                        ->get()
+                                        ->each(function($group){
+                            $group->stores = unserialize($group->stores);
+                        });
+ 	}
+
  	public static function saveStoreGroup($request)
  	{
 

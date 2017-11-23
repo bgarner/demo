@@ -39,7 +39,7 @@ class CustomStoreGroupAdminController extends Controller
     public function create(Request $request)
     {
         
-        $storeList = Utility::getStoreListForAdmin();
+        $storeList = Utility::getStoreListByBannerId();
         return view('admin.storegroup.create')->with('storeList', $storeList);
     }
 
@@ -74,7 +74,7 @@ class CustomStoreGroupAdminController extends Controller
      */
     public function edit($id, Request $request)
     {
-        $storeList = Utility::getStoreListForAdmin();
+        $storeList = Utility::getStoreListByBannerId();
         $storeGroup = CustomStoreGroup::find($id);
         $storeGroup->stores = unserialize($storeGroup->stores);
         return view('admin.storegroup.edit')->with('storeGroup', $storeGroup)

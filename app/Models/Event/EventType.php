@@ -10,6 +10,7 @@ use App\Models\StoreApi\Banner;
 use App\Models\Event\EventTypeBanner;
 use App\Models\StoreApi\Store;
 use App\Models\Utility\Utility;
+use App\Models\Auth\User\UserSelectedBanner;
 
 class EventType extends Model
 {
@@ -127,10 +128,10 @@ class EventType extends Model
 
     public static function getEventTypesForAdmin()
     {
-        $banners = UserBanner::getAllBanners()->pluck('id')->toArray();
+        $banner = UserSelectedBanner::getBanner()->id;
         
         $eventTypes = EventType::join('event_type_banner', 'event_type_banner.event_type_id', '=', 'event_types.id')
-                ->whereIn('event_type_banner.banner_id', $banners)
+                ->where('event_type_banner.banner_id', $banner)
                 ->select(\DB::raw('
                     event_types.id as id,
                     event_types.event_type,

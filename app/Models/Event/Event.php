@@ -258,20 +258,19 @@ class Event extends Model
 
     public static function getEventsForAdmin()
     {
-        $banners = UserBanner::getAllBanners()->pluck('id')->toArray();
-
+        $banner = UserSelectedBanner::getBanner()->id;
         //stores in accessible banners
         $storeList = [];
-        foreach ($banners as $banner) {
+        // foreach ($banners as $banner) {
             $storeInfo = StoreInfo::getStoresInfo($banner);
             foreach ($storeInfo as $store) {
                 array_push($storeList, $store->store_number);
             }
-        }
+        // }
 
         $allStoreEvents = Event::join('event_banner', 'event_banner.event_id', '=', 'events.id')
                                 ->where('all_stores', 1)
-                                ->whereIn('event_banner.banner_id', $banners)
+                                ->where('event_banner.banner_id', $banner)
                                 ->select('events.*', 'event_banner.banner_id')
                                 ->get();
 
