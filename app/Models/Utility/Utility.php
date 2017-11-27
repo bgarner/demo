@@ -321,13 +321,24 @@ class Utility extends Model
 	}
 
 
-	public static function getStoreAndBannerSelectDropdownOptions()
+	public static function getStoreAndBannerSelectDropdownOptions($allAccessibleBanners = null)
 	{
-		$banners = Self::getBannerListByAdminId();
+		
+		if(isset($allAccessibleBanners)){
+			$banners = Self::getBannerListByAdminId();
 
-        $storeList = Self::getStoreListByAdminId();
+        	$storeList = Self::getStoreListByAdminId();
 
-        $storeGroups = Self::getStoreGroups();
+        	$storeGroups = Self::getStoreGroupsByAdminId();
+		}
+		else{
+			$banners = Self::getBannerInListForm();
+
+        	$storeList = Self::getStoreListByBannerIdForStoreSelector();
+
+        	$storeGroups = Self::getStoreGroupsByBannerId();	
+		}
+		
 
         $optGroupOptions = [];
         $optGroupBannerOptions = [];
@@ -350,41 +361,80 @@ class Utility extends Model
         return $optGroupOptions;
 	}
 
-	public static function getStoreListForAdmin()
+	public static function getStoreListByBannerId()
     {
-        $banners = UserBanner::getAllBanners();
+        $banner = UserSelectedBanner::getBanner();
         $storeList = [];
 
-        foreach ($banners as $banner) {
+        // foreach ($banners as $banner) {
 
-            $storeInfo = StoreInfo::getStoresInfo($banner->id);
-            foreach ($storeInfo as $store) {
-                $storeList[$store->store_number] = $store->store_id . " " . $store->name . " (" . $banner->name .")" ;
-            }
+        $storeInfo = StoreInfo::getStoresInfo($banner->id);
+        foreach ($storeInfo as $store) {
+            $storeList[$store->store_number] = $store->store_id . " " . $store->name . " (" . $banner->name .")" ;
+        }
 
+        // }
+
+        return $storeList;
+    }
+
+    public static function getBannerInListForm()
+    {
+    	$banner = UserSelectedBanner::getBanner();
+    	
+    	$bannerList = [];
+		
+		$value = [];
+		$value['option-label'] = $banner->name;
+		$value['data-attributes'] = [
+									'allStores'   => 1 ,
+									'optionType'  => 'banner',
+									'resourceId'  => $banner->id
+								];
+		$bannerList['banner'.$banner->id] = $value;
+		
+		return $bannerList;
+    }
+    
+    public static function getBannerListByAdminId()
+    {
+    	$banners = UserBanner::getAllBanners();
+    	
+    	$bannerList = [];
+		foreach ($banners as $banner) {
+			$value = [];
+			$value['option-label'] = $banner->name;
+			$value['data-attributes'] = [
+										'allStores'   => 1 ,
+										'optionType'  => 'banner',
+										'resourceId'  => $banner->id
+									];
+			$bannerList['banner'.$banner->id] = $value;
+		}
+		
+		return $bannerList;
+    }
+
+    public static function getStoreListByBannerIdForStoreSelector()
+    {
+        $banner = UserSelectedBanner::getBanner();
+        $storeList = [];
+
+        $storeInfo = StoreInfo::getStoresInfo($banner->id);
+        foreach ($storeInfo as $store) {
+            $storeList['store'.$store->store_number] = [
+            		'option-label' => $store->store_id . " " . $store->name . " (" . $banner->name .")" ,
+            		'data-attributes' => [
+            				'parentBanner' => $store->banner_id,
+            				'optionType'   => 'store',
+            				'resourceId'   => $store->store_number
+            			]
+            	];
         }
 
         return $storeList;
     }
 
-    public static function getBannerListByAdminId()
-    {
-    	$banners = UserBanner::getAllBanners()->pluck('name', 'id')->toArray();
-    	$bannerList = [];
-		foreach ($banners as $key => $value) {
-			$bannerName = $value;
-			$value = [];
-			$value['option-label'] = $bannerName;
-			$value['data-attributes'] = [
-										'allStores'   => 1 ,
-										'optionType'  => 'banner',
-										'resourceId'  => $key
-									];
-			$bannerList['banner'.$key] = $value;
-		}
-
-		return $bannerList;
-    }
     public static function getStoreListByAdminId()
     {
         $banners = UserBanner::getAllBanners();
@@ -409,9 +459,31 @@ class Utility extends Model
         return $storeList;
     }
 
-    public static function getStoreGroups()
+    public static function getStoreGroupsByBannerId()
     {
-    	$storeGroups = CustomStoreGroup::getAllGroups();
+    	
+    	$banner = UserSelectedBanner::getBanner();
+    	$storeGroups = CustomStoreGroup::getGroupsByBanner($banner->id);
+    	$groupList = [];
+    	foreach ($storeGroups as $group) {
+    		
+            $groupList['storegroup'.$group->id] = [
+        		'option-label' => $group->group_name. " (" . implode(', ', $group->stores) . ")",
+        		'data-attributes' => [
+        				'optionType'  => 'storegroup',
+        				'resourceId'  => $group->id
+
+        			]
+            	];
+        }
+        return $groupList;
+    }
+
+    public static function getStoreGroupsByAdminId()
+    {
+    	
+    	$banners = UserBanner::getAllBanners()->pluck('id')->toArray();
+    	$storeGroups = CustomStoreGroup::getGroupsForMultipleBanners($banners);
     	$groupList = [];
     	foreach ($storeGroups as $group) {
     		

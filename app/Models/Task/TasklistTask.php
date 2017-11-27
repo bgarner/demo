@@ -38,6 +38,13 @@ class TasklistTask extends Model
 		}
 
 		$task_ids = TasklistTask::where('tasklist_id', $tasklist_id)->get()->pluck('task_id');
+
+		$tasks = Task::whereIn('id', $task_ids)
+					->update([
+						'description' => $request->description, 
+						'due_date' => $request->due_date
+					]);
+
 		foreach ($task_ids as $task_id) {
 			TaskTarget::updateTargetStores($task_id, $request);
 		}

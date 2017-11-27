@@ -42,7 +42,7 @@
 										<tr>
 											<td>id</td>
 											<td>Event Type</td>
-											<td>Banners</td>
+											<!-- <td>Banners</td> -->
 											<td></td>
 										</tr>
 										</thead>
@@ -53,11 +53,11 @@
 
 											<td>{{ $et->id }}</td>
 											<td><a href="/admin/eventtypes/{{ $et->id }}/edit">{{ $et->event_type }}</a></td>
-											<td>
+											{{-- <td>
 												@foreach($et->banners as $banner)
 													<span class="label">{{$banner->name}}</span>
 												@endforeach
-											</td>
+											</td> --}}
 
 
 											<td>
@@ -95,7 +95,6 @@
 
 							"columns": [
 							    { "visible": false },
-							    null,
 							    null,
 							    { "width" : "10%" , "sortable" : false}
 							  ],

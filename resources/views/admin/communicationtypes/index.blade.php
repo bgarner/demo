@@ -43,7 +43,7 @@
 											<tr>
 											<td>id</td>
 											<td>Communication Type</td>
-											<td>Banners</td>
+											<!-- <td>Banners</td> -->
 											<td></td>
 										</tr>
 										</thead>
@@ -55,11 +55,11 @@
 
 											<td>{{ $ct->id }}</td>
 											<td><i class="fa fa-circle text-{{ $ct->colour }}"></i> &nbsp; <a href="/admin/communicationtypes/{{ $ct->id }}/edit" >{{ $ct->communication_type }}</a></td>
-											<td>
+											{{-- <td>
 												@foreach($ct->banners as $banner)
 													<span class="label">{{$banner->name}}</span>
 												@endforeach
-											</td>
+											</td> --}}
 
 											<td>	
 
@@ -97,7 +97,6 @@
 
 							"columns": [
 							    { "visible": false },
-							    null,
 							    null,
 							    { "width" : "10%" , "sortable" : false}
 

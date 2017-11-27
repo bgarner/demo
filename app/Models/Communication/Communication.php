@@ -16,6 +16,7 @@ use App\Models\Utility\Utility;
 use App\Models\Validation\CommunicationValidator;
 use App\Models\StoreApi\StoreInfo;
 use App\Models\Auth\User\UserBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Tools\CustomStoreGroup;
 use App\Models\StoreApi\Banner;
 
@@ -97,20 +98,18 @@ class Communication extends Model
 
 	public static function getCommunicationsForAdmin()
 	{
-		$banners = UserBanner::getAllBanners()->pluck('id')->toArray();
+		$banner = UserSelectedBanner::getBanner()->id;
 
-        //stores in accessible banners
         $storeList = [];
-        foreach ($banners as $banner) {
-            $storeInfo = StoreInfo::getStoresInfo($banner);
-            foreach ($storeInfo as $store) {
-                array_push($storeList, $store->store_number);
-            }
+        
+        $storeInfo = StoreInfo::getStoresInfo($banner);
+        foreach ($storeInfo as $store) {
+            array_push($storeList, $store->store_number);
         }
 
         $allStoreCommunications = Communication::join('communication_banner', 'communication_banner.communication_id', '=', 'communications.id')
                                 ->where('all_stores', 1)
-                                ->whereIn('communication_banner.banner_id', $banners)
+                                ->where('communication_banner.banner_id', $banner)
                                 ->select('communications.*', 'communication_banner.banner_id')
                                 ->get();
 
@@ -148,6 +147,7 @@ class Communication extends Model
 
         foreach($communications as $c){
 			$c->prettySentAtDate = Utility::prettifyDate( $c->send_at );
+			$c->prettyArchiveAtDate = Utility::prettifyDate( $c->archive_at );
 			$c->label_name = Communication::getCommunicationCategoryName($c->communication_type_id);
             $c->label_colour = Communication::getCommunicationCategoryColour($c->communication_type_id);
 		}
@@ -577,10 +577,9 @@ class Communication extends Model
         										->whereIn('communication_store_group.store_group_id', $storeGroups)
 												->where('communications.send_at', '<=', $now )
 												->where('communications.archive_at', '>=', $now )
-												->count();
+												->count();		
 
 		$communicationCount = $allStoreCommunicationCount + $targetedCommunicationCount + $storeGroupCommunicationCount;
-
 		return $communicationCount;
 	}
 

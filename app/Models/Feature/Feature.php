@@ -434,6 +434,7 @@ class Feature extends Model
 
         $targetedFeatures = Feature::join('feature_target', 'features.id', '=', 'feature_target.feature_id')
                                     ->where('store_id', $storeNumber)
+                                    ->where('start', '<=', $now)
                                     ->where(function($query) use ($now) {
                                         $query->where('features.end', '>=', $now)
                                             ->orWhere('features.end', '=', '0000-00-00 00:00:00' ); 
@@ -445,6 +446,11 @@ class Feature extends Model
 
         $targetedFeaturesForStoreGroups = Feature::join('feature_store_group', 'feature_store_group.feature_id', '=', 'features.id')
                                             ->whereIn('feature_store_group.store_group_id', $storeGroups)
+                                            ->where('start', '<=', $now)
+                                            ->where(function($query) use ($now) {
+                                                $query->where('features.end', '>=', $now)
+                                                    ->orWhere('features.end', '=', '0000-00-00 00:00:00' ); 
+                                            })
                                             ->select('features.*')
                                             ->get();
 

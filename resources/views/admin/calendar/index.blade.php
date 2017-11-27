@@ -36,7 +36,7 @@
 										<table class="table datatable">
                                             <thead>
         										<tr>
-        											<td>id</td>
+        											
         											<td>Title</td>
         											<td>Description</td>
                                                     <td>Event Type</td>
@@ -54,7 +54,7 @@
 
     											<td>{{ $event->id }}</td>
     											<td><a href="/admin/calendar/{{ $event->id }}/edit">{{ $event->title }}</a></td>
-    											<td>{{ mb_strimwidth($event->description, 0, 50, "...") }}</td>
+    											<td>{!! mb_strimwidth($event->description, 0, 50, "...") !!}</td>
                                                 <td><span class="label label-sm" style="background-color: #{{$event->background_colour}}; color: #{{$event->foreground_colour}}; ">
                                                         {{ $event->event_type }}</span> </td>
     											<td data-order="{{$event->start}}">{{ $event->prettyStartDate }}</td>
