@@ -45,8 +45,7 @@ class FeatureAdminController extends Controller
     public function index()
     {
         $banner = UserSelectedBanner::getBanner();
-        $features = Feature::getFeaturesForAdmin();
-        
+        $features = Feature::getFeaturesForAdmin([$banner->id]);
         return view('admin.feature.index')
                 ->with('features', $features)
                 ->with('banner', $banner);
