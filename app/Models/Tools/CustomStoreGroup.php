@@ -116,7 +116,13 @@ class CustomStoreGroup extends Model
     {
     	$banner = StoreInfo::getStoreInfoByStoreId($store_number)->banner_id;
     	$storeGroups = CustomStoreGroup::getGroupsByBanner($banner);	
-    	return $storeGroups;
+    	$selectedStoreGroups = [];
+    	foreach ($storeGroups as $group) {
+    		if(in_array($store_number, $group->stores)){
+    			array_push($selectedStoreGroups, $group->id);
+    		}
+    	}
+    	return $selectedStoreGroups;
 
     }
 
