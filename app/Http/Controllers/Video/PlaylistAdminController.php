@@ -48,7 +48,7 @@ class PlaylistAdminController extends Controller
     public function create()
     {
         
-        $optGroupOptions    = Utility::getStoreAndBannerSelectDropdownOptions();
+        $optGroupOptions    = Utility::getStoreAndBannerSelectDropdownOptions($allAccessibleBanners = true);
         $optGroupSelections = json_encode([]);
         $videos             = Video::getAllVideosForAdmin();
         $tags               = Tag::all()->pluck('name', 'id');
@@ -99,7 +99,7 @@ class PlaylistAdminController extends Controller
 
         $selectedVideos     = PlaylistVideo::getPlaylistVideos($id);
 
-        $optGroupOptions    = Utility::getStoreAndBannerSelectDropdownOptions();
+        $optGroupOptions    = Utility::getStoreAndBannerSelectDropdownOptions($allAccessibleBanners = true);
         $optGroupSelections = json_encode(Playlist::getSelectedStoresAndBannersByPlaylistId($id));
 
         $tags               = Tag::all()->pluck('name', 'id');

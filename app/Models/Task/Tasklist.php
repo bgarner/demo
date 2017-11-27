@@ -11,6 +11,7 @@ use App\Models\Auth\User\UserBanner;
 use App\Models\StoreApi\StoreInfo;
 use App\Models\Tools\CustomStoreGroup;
 use App\Models\Video\Playlist;
+use App\Models\Auth\User\UserSelectedBanner;
 
 class Tasklist extends Model
 {
@@ -96,20 +97,20 @@ class Tasklist extends Model
 
     public static function getTasklistsForAdmin()
     {
-    	$banners = UserBanner::getAllBanners()->pluck('id')->toArray();
+    	$banner = UserSelectedBanner::getBanner()->id;
 
 		//stores in accessible banners
         $storeList = [];
-        foreach ($banners as $banner) {
+        // foreach ($banners as $banner) {
             $storeInfo = StoreInfo::getStoresInfo($banner);
             foreach ($storeInfo as $store) {
                 array_push($storeList, $store->store_number);
             }
-        }
+        // }
 
         $allStoreTasklists = Tasklist::join('tasklist_banner', 'tasklist_banner.tasklist_id', '=', 'tasklists.id')
                                 ->where('all_stores', 1)
-                                ->whereIn('tasklist_banner.banner_id', $banners)
+                                ->where('tasklist_banner.banner_id', $banner)
                                 ->select('tasklists.*', 'tasklist_banner.banner_id')
                                 ->get();
 

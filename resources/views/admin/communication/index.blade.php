@@ -41,6 +41,7 @@
 											<td>Subject</td>
 											<td>Type</td>
 											<td>Start</td>
+											<td>End</td>
 											<td>Action</td>
 										</tr>
 									</thead>
@@ -51,6 +52,7 @@
 										<td><a href="/admin/communication/{{ $communication->id }}/edit" >{{ $communication->subject }}</a></td>
 										<td><span class="label label-sm label-{{$communication->label_colour}}">{{$communication->label_name}}</span></td>
 										<td data-order="{{$communication->send_at}}">{{ $communication->prettySentAtDate }}</td>
+										<td data-order="{{$communication->archive_at}}">{{ $communication->prettyArchiveAtDate }}</td>
 
 										<td>
 											{{-- <a href="/admin/communication/{{ $communication->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a> --}}
@@ -97,6 +99,7 @@
 				"columns": [
 				    { "visible": false },
 				    { "width": "45%" },
+				    null,
 				    null,
 				    null,
 				    { "width" : "10%" , "sortable" : false}

@@ -5,13 +5,15 @@ namespace App\Models\Tools;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Validation\CustomStoreGroupValidator;
 use App\Models\Auth\User\UserBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\StoreApi\Store;
+use App\Models\StoreApi\StoreInfo;
 
 class CustomStoreGroup extends Model
 {
  	protected $table = 'custom_store_group';
 
- 	protected $fillable = ['group_name', 'stores'];
+ 	protected $fillable = ['group_name', 'stores', 'banner_id'];
 
  	public static function validateCustomStoreGroup($request)
 	{
@@ -54,11 +56,29 @@ class CustomStoreGroup extends Model
  		});
  	}
 
+ 	public static function getGroupsByBanner($banner_id)
+ 	{	
+ 		return CustomStoreGroup::where('banner_id', $banner_id)
+                                        ->get()
+                                        ->each(function($group){
+                            $group->stores = unserialize($group->stores);
+                        });
+ 	}
+
+ 	public static function getGroupsForMultipleBanners($banners)
+ 	{
+ 		return CustomStoreGroup::whereIn('banner_id', $banners)
+                                        ->get()
+                                        ->each(function($group){
+                            $group->stores = unserialize($group->stores);
+                        });
+ 	}
+
  	public static function saveStoreGroup($request)
  	{
 
-		\Log::info($request->all());
 		$validate = Self::validateCustomStoreGroup($request);
+		$banner_id = UserSelectedBanner::getBanner()->id;
 		\Log::info($validate);
 		if($validate['validation_result'] == 'false') {
 			\Log::info($validate);
@@ -66,8 +86,9 @@ class CustomStoreGroup extends Model
 		}
 		
 		$storeGroup = Self::create([
-			'group_name'   => $request["group_name"],
-			'stores' => serialize($request["stores"])
+			'group_name' => $request["group_name"],
+			'stores'     => serialize($request["stores"]),
+			'banner_id'  => $banner_id
 		]);
 
 		return $storeGroup;
@@ -93,37 +114,23 @@ class CustomStoreGroup extends Model
 
  	public static function getStoreGroupsForStore($store_number)
     {
-    	$storeGroups = CustomStoreGroup::getAllGroups();
+    	$banner = StoreInfo::getStoreInfoByStoreId($store_number)->banner_id;
+    	$storeGroups = CustomStoreGroup::getGroupsByBanner($banner);	
     	$selectedStoreGroups = [];
     	foreach ($storeGroups as $group) {
     		if(in_array($store_number, $group->stores)){
     			array_push($selectedStoreGroups, $group->id);
     		}
     	}
-
     	return $selectedStoreGroups;
 
     }
 
     public static function getStoreGroupsForAdmin()
     {
-    	$adminBanners = UserBanner::getAllBanners()->pluck('id')->toArray();
-    	$storeGroups = CustomStoreGroup::getAllGroups();
-
-    	$adminStoreGroups = [];
-    	foreach ($storeGroups as $group) {
-    		
-    		$stores = $group->stores;
-    		foreach ($stores as $store) {
-    			$banner = Store::getStoreDetailsByStoreNumber($store)->banner_id; 
-    			if(in_array($banner, $adminBanners) && ! in_array($group->id, $adminStoreGroups)){
-    				array_push($adminStoreGroups, $group->toArray());
-    			}
-
-    		}
-    	}
-
-    	return $adminStoreGroups;
+    	$adminBanner = UserSelectedBanner::getBanner();
+    	$storeGroups = CustomStoreGroup::getGroupsByBanner($adminBanner->id);
+    	return $storeGroups;
         
     }
 
