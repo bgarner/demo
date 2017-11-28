@@ -163,15 +163,18 @@ class Communication extends Model
 		if ($isValidCommunicationType) {
 			
 		    $targetedCommunications = Communication::getActiveCommunicationsByCategory($storeNumber, $request['type']);
+		    $targetedCommunications = Communication::processActiveCommunications($targetedCommunications);
 		}
 		else {
 		    $targetedCommunications = Communication::getActiveCommunicationsByStoreNumber($storeNumber);
+		    $targetedCommunications = Communication::processActiveCommunications($targetedCommunications);
 		}
 
 		if (isset($request['archives']) && !empty($request['archives'])) {
 
 		    if($isValidCommunicationType){
 		        $archivedCommunication = Communication::getArchivedCommunicationsByCategory($request['type'], $storeNumber);
+		        $archivedCommunication = Communication::processArchivedCommunications($archivedCommunication);
 		        foreach ($archivedCommunication as $ac) {
 		            $targetedCommunications->add($ac);
 		        }
@@ -180,6 +183,7 @@ class Communication extends Model
 		    else{
 
 		        $archivedCommunication = Communication::getArchivedCommunicationsByStoreNumber($storeNumber);
+		        $archivedCommunication = Communication::processArchivedCommunications($archivedCommunication);
 		        foreach ($archivedCommunication as $ac) {
 		            $targetedCommunications->add($ac);
 		        }
@@ -220,19 +224,11 @@ class Communication extends Model
 												->select('communications.*')
 						                        ->get();
 
-		$comm = $allStoreComm->merge($targetedComm)->merge($storeGroupCommunications)->each(function($c){
-
-				$c->since = Utility::getTimePastSinceDate($c->send_at);
-				$c->prettyDate = Utility::prettifyDate($c->send_at);
-				$preview_string = strip_tags($c->body);
-				$c->trunc = Utility::truncateHtml($preview_string);
-				$c->label_name = Communication::getCommunicationCategoryName($c->communication_type_id);
-            	$c->label_colour = Communication::getCommunicationCategoryColour($c->communication_type_id);
-            	$c->has_attachments = Communication::hasAttachments($c->id);
-
-			})->sortByDesc('send_at')
-				->take($maxToFetch)
-				->values();
+		$comm = $allStoreComm->merge($targetedComm)
+							->merge($storeGroupCommunications)
+							->sortByDesc('send_at')
+							->take($maxToFetch)
+							->values();
 		
 		return $comm;
 
@@ -267,124 +263,35 @@ class Communication extends Model
 
 		$comm = $allStoreComm->merge($targetedComm)
 							->merge($storeGroupCommunications)
-							->sortByDesc('send_at')->each(function($c){
-			
-							$c->archived = true;
-							$c->since = Utility::getTimePastSinceDate($c->send_at);
-							$c->prettyDate = Utility::prettifyDate($c->send_at);
-							$preview_string = strip_tags($c->body);
-							$c->trunc = Utility::truncateHtml($preview_string);
-							$c->label_name = Communication::getCommunicationCategoryName($c->communication_type_id);
-							$c->label_colour = Communication::getCommunicationCategoryColour($c->communication_type_id);
-							$c->has_attachments = Communication::hasAttachments($c->id);
-
-						});
+							->sortByDesc('send_at');
 
 		return $comm;
 	}
 
 	public static function getActiveCommunicationsByCategory($storeNumber, $type_id)
     {
-        $now = Carbon::now();
-
-        $banner_id = StoreInfo::getStoreInfoByStoreId($storeNumber)->banner_id;
-
-        $allStoreCommunications = Communication::join('communication_banner', 'communication_banner.communication_id', '=', 'communications.id')
-        									->where('all_stores', '=', 1)
-                                            ->where('communication_banner.banner_id', $banner_id)
-                                            ->where('communications.send_at' , '<=', $now)
-                                            ->where('communications.archive_at', '>=', $now)
-                                            ->where('communication_type_id', '=', $type_id)
-                                            ->orderBy('send_at', 'desc')
-                                            ->select('communications.*')
-                                            ->get();
-
-
-        $targetedCommunications = CommunicationTarget::join('communications', 'communications_target.communication_id', '=', 'communications.id')
-        				->where('communications_target.store_id', '=', $storeNumber)
-                        ->where('communications.send_at' , '<=', $now)
-                        ->where('communications.archive_at', '>=', $now)
-                        ->where('communications.communication_type_id', '=', $type_id)
-                        ->orderBy('communications.send_at', 'desc')
-                        ->select('communications.*')
-                        ->get();
-
-        $storeGroups = CustomStoreGroup::getStoreGroupsForStore($storeNumber);
-
-        $storeGroupCommunications = Communication::join('communication_store_group', 'communication_store_group.communication_id', '=', 'communications.id')
-        										->whereIn('communication_store_group.store_group_id', $storeGroups)
-												->where('communications.send_at' , '<=', $now)
-                        						->where('communications.archive_at', '>=', $now)
-						                        ->where('communications.communication_type_id', '=', $type_id)
-						                        ->orderBy('communications.send_at', 'desc')
-						                        ->select('communications.*')
-						                        ->get();
-
-        $communications = $allStoreCommunications->merge($targetedCommunications)
-        										->merge($storeGroupCommunications)
-        										->each(function($c){
-           
-									            $c->prettyDate = Utility::prettifyDate($c->send_at);
-									            $c->since = Utility::getTimePastSinceDate($c->send_at);
-									            $c->trunc = Utility::truncateHtml(strip_tags($c->body));
-									            $c->label_name = Communication::getCommunicationCategoryName($c->communication_type_id);
-									            $c->label_colour = Communication::getCommunicationCategoryColour($c->communication_type_id);
-									            $c->has_attachments = Communication::hasAttachments($c->id);
-
-									        })->sortByDesc('send_at')->values();
-
+        
+       	$communications = Communication::getActiveCommunicationsByStoreNumber($storeNumber);
+        $communications = $communications->filter(function ($item) use($type_id) {
+							    
+							    if($item["communication_type_id"] == $type_id){
+							    	return $item;
+							    }
+							})->values();
         return $communications;
     }
 
 	public static function getArchivedCommunicationsByCategory($category, $storeNumber)
 	{
-	 	$now = Carbon::now()->toDatetimeString();
 
-	 	$banner_id = StoreInfo::getStoreInfoByStoreId($storeNumber)->banner_id;
-
-        $allStoreComm = Communication::join('communication_banner', 'communication_banner.communication_id', '=', 'communications.id')
-							->where('all_stores', '=', 1)
-                            ->where('communication_banner.banner_id', $banner_id)
-        					->where('communication_type_id' , $category)
-                            ->where('archive_at', '<=', $now)
-                            ->select('communications.*')
-                            ->orderBy('communications.send_at', 'desc')
-                            ->get();
-
-	 	$targetedComm = Communication::join('communications_target', 'communications.id' , '=', 'communications_target.communication_id')
-						  ->where('store_id', $storeNumber)
-						  ->where('communication_type_id' , $category)
-						  ->where('archive_at', '<=', $now)
-						  ->select('communications.*')
-						  ->orderBy('communications.send_at', 'desc')
-						  ->get();
-
-		$storeGroups = CustomStoreGroup::getStoreGroupsForStore($storeNumber);
-
-        $storeGroupCommunications = Communication::join('communication_store_group', 'communication_store_group.communication_id', '=', 'communications.id')
-        										->whereIn('communication_store_group.store_group_id', $storeGroups)
-												->where('archive_at', '<=', $now)
-						                        ->where('communications.communication_type_id', '=', $category)
-						                        ->orderBy('communications.send_at', 'desc')
-						                        ->select('communications.*')
-						                        ->get();
-
-		$comm = $allStoreComm->merge($targetedComm)
-					->merge($storeGroupCommunications)
-					->sortByDesc('send_at')->each(function($c){
-
-					$c->archived        = true;
-					$c->since           = Utility::getTimePastSinceDate($c->send_at);
-					$c->prettyDate      = Utility::prettifyDate($c->send_at);
-					$preview_string     = strip_tags($c->body);
-					$c->trunc           = Utility::truncateHtml($preview_string);
-					$c->label_name      = Communication::getCommunicationCategoryName($c->communication_type_id);
-					$c->label_colour    = Communication::getCommunicationCategoryColour($c->communication_type_id);
-					$c->has_attachments = Communication::hasAttachments($c->id);
-
-				});
-
-		return $comm;
+		$communications = Communication::getArchivedCommunicationsByStoreNumber($storeNumber);
+		$communications = $communications->filter(function ($item) use($category) {
+							    
+							    if($item["communication_type_id"] == $category){
+							    	return $item;
+							    }
+							})->values();
+        return $communications;
 	}
 
 	public static function getCommunicationById($id)
@@ -542,45 +449,18 @@ class Communication extends Model
 	{
 		if(isset($request['archives']) && $request['archives'] !== ""){
 			return Communication::getAllCommunicationCount($storeNumber);
-
 		}
 
 		else{
 			return Communication::getActiveCommunicationCount($storeNumber);
 		}
 
-
 	}
 
 	public static function getActiveCommunicationCount($storeNumber)
-	{
-		$now = Carbon::now()->toDatetimeString();
-
-		$banner_id = StoreInfo::getStoreInfoByStoreId($storeNumber)->banner_id;
-        
-        $allStoreCommunicationCount  = Communication::join('communication_banner', 'communication_banner.communication_id', '=', 'communications.id')
-													->where('all_stores', '=', 1)
-                                    				->where('communication_banner.banner_id', $banner_id)
-                                                    ->where('communications.send_at' , '<=', $now)
-                                                    ->where('communications.archive_at', '>=', $now)
-                                                    ->count();
-
-		$targetedCommunicationCount = Communication::join('communications_target', 'communications_target.communication_id', '=', 'communications.id')
-						->where('store_id', $storeNumber)
-						->where('communications.send_at' , '<=', $now)
-						->where('communications.archive_at', '>=', $now)
-						->count();
-
-		$storeGroups = CustomStoreGroup::getStoreGroupsForStore($storeNumber);
-
-        $storeGroupCommunicationCount = Communication::join('communication_store_group', 'communication_store_group.communication_id', '=', 'communications.id')
-        										->whereIn('communication_store_group.store_group_id', $storeGroups)
-												->where('communications.send_at', '<=', $now )
-												->where('communications.archive_at', '>=', $now )
-												->count();		
-
-		$communicationCount = $allStoreCommunicationCount + $targetedCommunicationCount + $storeGroupCommunicationCount;
-		return $communicationCount;
+	{	
+		$comm = Self::getActiveCommunicationsByStoreNumber($storeNumber);
+		return count($comm);
 	}
 
 	public static function getAllCommunicationCount($storeNumber)
@@ -609,37 +489,9 @@ class Communication extends Model
 
 	public static function getActiveCommunicationCountByCategory($storeNumber, $categoryId)
 	{
-		$now = Carbon::now()->toDatetimeString();
-
-		$banner_id = StoreInfo::getStoreInfoByStoreId($storeNumber)->banner_id;
-        
-        $allStoreCommunicationCount  = Communication::join('communication_banner', 'communication_banner.communication_id', '=', 'communications.id')
-													->where('all_stores', '=', 1)
-                                    				->where('communication_banner.banner_id', $banner_id)
-													->where('communications.communication_type_id', $categoryId)
-                                                    ->where('communications.send_at' , '<=', $now)
-                                                    ->where('communications.archive_at', '>=', $now)
-                                                    ->count();
-
-		$targetedCommunicationCount = DB::table('communications_target')
-					->where('store_id', $storeNumber)
-					->join('communications', 'communications.id', '=', 'communications_target.communication_id')
-					->where('communications.communication_type_id', $categoryId)
-					->where('communications.send_at' , '<=', $now)
-					->where('communications.archive_at', '>=', $now)
-					->count();
-
-		$storeGroups = CustomStoreGroup::getStoreGroupsForStore($storeNumber);
-
-        $storeGroupCommunicationCount = Communication::join('communication_store_group', 'communication_store_group.communication_id', '=', 'communications.id')
-        										->whereIn('communication_store_group.store_group_id', $storeGroups)
-												->where('communications.send_at', '<=', $now )
-												->where('communications.archive_at', '>=', $now )
-												->where('communications.communication_type_id', $categoryId)
-												->count();
-
-		$count = $allStoreCommunicationCount + $targetedCommunicationCount + $storeGroupCommunicationCount;
-		return $count;
+		
+		$comm = Self::getActiveCommunicationsByCategory($storeNumber, $categoryId);
+		return count($comm);
 	}
 
 	public static function getAllCommunicationCountByCategory($storeNumber, $categoryId)
@@ -745,6 +597,36 @@ class Communication extends Model
         }
 
         return( $optGroupSelections );
+	}
+
+	public static function processActiveCommunications($communications)
+	{
+		return $communications->each(function($c){
+           
+            $c->prettyDate = Utility::prettifyDate($c->send_at);
+            $c->since = Utility::getTimePastSinceDate($c->send_at);
+            $c->trunc = Utility::truncateHtml(strip_tags($c->body));
+            $c->label_name = Communication::getCommunicationCategoryName($c->communication_type_id);
+            $c->label_colour = Communication::getCommunicationCategoryColour($c->communication_type_id);
+            $c->has_attachments = Communication::hasAttachments($c->id);
+
+        });
+	}
+
+	public static function processArchivedCommunications($communications)
+	{
+		return $communications->each(function($c){
+
+					$c->archived        = true;
+					$c->since           = Utility::getTimePastSinceDate($c->send_at);
+					$c->prettyDate      = Utility::prettifyDate($c->send_at);
+					$preview_string     = strip_tags($c->body);
+					$c->trunc           = Utility::truncateHtml($preview_string);
+					$c->label_name      = Communication::getCommunicationCategoryName($c->communication_type_id);
+					$c->label_colour    = Communication::getCommunicationCategoryColour($c->communication_type_id);
+					$c->has_attachments = Communication::hasAttachments($c->id);
+
+				});
 	}
 
 	
