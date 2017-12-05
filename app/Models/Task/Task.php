@@ -488,13 +488,26 @@ class Task extends Model
 		$banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
 		$endOfDayToday = Carbon::today()->endOfDay()->format('Y-m-d H:i:s');
 
+		$now = Carbon::now()->format('Y-m-d H:i:s');
+		$dayAgo =  Carbon::now()->subDay()->format('Y-m-d H:i:s');
+
 		$allStoreTasks = $tasks = Task::join('task_banner', 'task_banner.task_id', '=', 'tasks.id')
 									->join('task_store_status' , 'task_store_status.task_id' , '=', 'tasks.id' )
 									->where('all_stores', 1)
 									->where('task_banner.banner_id', $banner_id)
 									->where('task_store_status.store_id', $store_id)
 									->where('task_store_status.status_type_id', '2')
-									->where('due_date' , ">=", $endOfDayToday)
+									->where(function($q) use ($endOfDayToday, $now, $dayAgo, $store_id) {
+						                $q->where(function($query) use ($endOfDayToday){
+						                        $query->where('due_date' , ">=", $endOfDayToday);
+					                    })
+					                  	->orWhere(function($query) use ($now, $dayAgo, $store_id){
+					                        $query->where('task_store_status.status_type_id', '2')
+					                        ->where('task_store_status.store_id', $store_id)
+					                        ->whereBetween('task_store_status.created_at', [$dayAgo, $now]);
+					                        
+					                    });
+						            })
 									->select('tasks.*', 'task_store_status.created_at as completed_on')
 									->get()
 									->each(function($task, $store_id){
@@ -503,13 +516,21 @@ class Task extends Model
 										$task->pretty_completed_date = "Completed on " . Utility::prettifyDate($task->completed_on);
 									});
 
-
 		$tasks = Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
 					->join('task_store_status' , 'task_store_status.task_id' , '=', 'tasks.id' )
 					->where('tasks_target.store_id', $store_id)
 					->where('task_store_status.store_id', $store_id)
 					->where('task_store_status.status_type_id', '2')
-					->where('due_date' , ">=", $endOfDayToday)
+					->where(function($q) use ($endOfDayToday, $now, $dayAgo, $store_id) {
+		                $q->where(function($query) use ($endOfDayToday){
+		                        $query->where('due_date' , ">=", $endOfDayToday);
+	                    })
+	                  	->orWhere(function($query) use ($now, $dayAgo, $store_id){
+	                        $query->where('task_store_status.status_type_id', '2')
+	                        ->where('task_store_status.store_id', $store_id)
+	                        ->whereBetween('task_store_status.created_at', [$dayAgo, $now]);
+	                    });
+		            })
 					->select('tasks.*', 'tasks_target.store_id', 'task_store_status.created_at as completed_on')
 					->get()
 					->each(function($task){
@@ -523,7 +544,16 @@ class Task extends Model
                                             ->join('task_store_status' , 'task_store_status.task_id' , '=', 'tasks.id' )
                                             ->whereIn('task_store_group.store_group_id', $storeGroups)
                                             ->where('task_store_status.status_type_id', '2')
-                                            ->where('due_date' , ">=", $endOfDayToday)
+                                            ->where(function($q) use ($endOfDayToday, $now, $dayAgo, $store_id) {
+								                $q->where(function($query) use ($endOfDayToday){
+								                        $query->where('due_date' , ">=", $endOfDayToday);
+							                    })
+							                  	->orWhere(function($query) use ($now, $dayAgo, $store_id){
+							                        $query->where('task_store_status.status_type_id', '2')
+							                        ->where('task_store_status.store_id', $store_id)
+							                        ->whereBetween('task_store_status.created_at', [$dayAgo, $now]);
+							                    });
+								            })
 											->select('tasks.*', 'task_store_status.created_at as completed_on')
 											->get()
                                             ->each(function($task, $store_id){
@@ -531,6 +561,7 @@ class Task extends Model
 												$task->store_id = $store_id;
 												$task->pretty_completed_date = "Completed on " . Utility::prettifyDate($task->completed_on);
 											});
+		
 
 		$tasks = $tasks->merge($allStoreTasks);
 		$tasks = $tasks->merge($targetedTasksForStoreGroups);
