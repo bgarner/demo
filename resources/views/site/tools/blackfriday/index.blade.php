@@ -113,7 +113,7 @@
                             <tr>
                                 <td colspan="11" style="background: #f9ef2c; color: #000;">
                                 <span class="pull-right">
-                                    <strong>Flyer Page:</strong> {{ $d->flyer_page }} &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <strong>Group:</strong> {{ $d->flyer_page }} &nbsp;&nbsp;&nbsp;&nbsp;
                                     {{-- <strong>Ad Box:</strong> {{$d->ad_box}} &nbsp;&nbsp;&nbsp;&nbsp; --}}
                                     <strong>MIN:</strong> {{$d->ad_min}}
                                 </span>
