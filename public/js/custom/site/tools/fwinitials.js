@@ -12,8 +12,8 @@ function formatCategoryTable ( row , rowId) {
                             '<th>TY '+ months.month2 +'</th>'+
                             '<th>LY '+ months.month3 +'</th>'+
                             '<th>TY '+ months.month3 +'</th>'+
-                            '<th>LY Season 2 Total</th>'+
-                            '<th>TY Season 2 Total</th>'+
+                            '<th>LY Season Total</th>'+
+                            '<th>TY Season Total</th>'+
                             '<th>data</th>'+
                         '</thead>'+
                         '<tbody>';
@@ -55,9 +55,9 @@ function formatBrandTable ( row , rowId) {
                             '<th>TY '+ months.month2 +'</th>'+
                             '<th>LY '+ months.month3 +'</th>'+
                             '<th>TY '+ months.month3 +'</th>'+
-                            '<th>LY Season 2 Total</th>'+
-                            '<th>TY Season 2 Total</th>'+
-                            '<th>data</th>'
+                            '<th>LY Season Total</th>'+
+                            '<th>TY Season Total</th>'+
+                            '<th>data</th>'+
                         '</thead>'+
                         '<tbody>';
     // returnString = '';
@@ -65,7 +65,7 @@ function formatBrandTable ( row , rowId) {
     $(nestedData).each(function(index, value){
 
         returnString += '<tr>'+
-                            '<td class="expand_brand" id="'+rowId+'_brand_'+index+'" data-table-id="brandTable_'+rowId+'">'+
+                            '<td class="expand_brand" data-category-id="'+ rowId +'" id="'+rowId+'_brand_'+index+'" data-table-id="brandTable_'+rowId+'">'+
                                 '<i class="fa fa-plus-circle"></i> '+value.brand+'</td>'+
                             '<td>'+ value.ly_month1+'</td>'+
                             '<td>'+ value.cy_month1+'</td>'+
@@ -78,7 +78,6 @@ function formatBrandTable ( row , rowId) {
                             '<td>'+ value.style_totals+'</td>'+
 
                         '</tr>';
-                        
     });
     returnString += '</tbody></table>';
     return returnString;
@@ -87,7 +86,6 @@ function formatBrandTable ( row , rowId) {
 
 function formatStylesTable ( row , rowId) {
     d = row.data();
-    console.log(d);
     var nestedData = JSON.parse(d[9]);
     var months  = ($("#rolling-months").data('months'));
     var returnString = '<table class="table styleTable" id="styleTable_'+rowId+'">'+
@@ -107,7 +105,7 @@ function formatStylesTable ( row , rowId) {
 
     $(nestedData).each(function(index, value){
         returnString += '<tr>'+
-                            '<td id="'+rowId+'_style_'+index+'" data-table-id="styleTable_'+rowId+'" >'+value.brand+'</td>'+
+                            '<td id="'+rowId+'_style_'+index+'" data-table-id="styleTable_'+rowId+'" >'+value.style_number+'</td>'+
                             '<td>'+ value.ly_month1+'</td>'+
                             '<td>'+ value.cy_month1+'</td>'+
                             '<td>'+ value.ly_month2+'</td>'+
@@ -178,9 +176,8 @@ $(document).ready(function(){
         var tr = $(this).parent();
         var parentTableId = $(this).attr('data-table-id');
         var rowId  = $(this).attr('id');
-        console.log(parentTableId);
+        
         var row = $( "body" ).data(parentTableId).row( tr );
-        console.log(row.data);
  
         if ( row.child.isShown() ) {
             // This row is already open - close it
@@ -213,7 +210,7 @@ $(document).ready(function(){
         var parentTableId = $(this).attr('data-table-id');
         var rowId  = $(this).attr('id');
         var row = $( "body" ).data(parentTableId).row( tr );
-        console.log(row.child.isShown());
+        
  
         if ( row.child.isShown() ) {
             // This row is already open - close it
@@ -233,7 +230,7 @@ $(document).ready(function(){
                 "info":     false,
                 "searching": false
             });
-            $("body").data( rowId , styleTable);
+            $("body").data( "styleTable_"+rowId , styleTable);
             tr.find("i.fa").toggleClass("fa-plus-circle").toggleClass('fa-minus-circle');
             tr.addClass('shown');
         }
