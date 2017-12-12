@@ -27,4 +27,14 @@ class FlashSale extends Model
         }
         return "";
     }
+
+    public static function getSaleDate()
+    {
+        $date = FlashSale::first()->sale_date;
+        if(!$date){
+            return;
+        }
+        return Utility::prettifyDate($date);
+    }
+
 }

@@ -57,8 +57,14 @@ class BlackFridayController extends Controller
     {
         $pages = BlackFriday::getAdPages($this->storeNumber);
         $data = BlackFriday::getDataByStoreNumber($this->storeNumber);
+
+        $last_updated = BlackFriday::getLastUpdatedDate();
+        if(!$last_updated){
+            $last_update = "";
+        }
         //dd($boxes);
         return view('site.tools.blackfriday.index')
+            ->with('last_updated', $last_updated)
             ->with('pages', $pages)
             ->with('data', $data)
             ->with('skin', $this->skin)

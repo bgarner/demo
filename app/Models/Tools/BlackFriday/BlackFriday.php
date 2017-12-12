@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models\Tools\BlackFriday;
+use App\Models\Utility\Utility;
 
 use DB;
 use Illuminate\Database\Eloquent\Model;
@@ -119,6 +120,16 @@ class BlackFriday extends Model
     	return $data;
 
     }
+
+    public static function getLastUpdatedDate()
+    {
+        $record = BlackFriday::orderBy('created_at', 'desc')->first();
+        if(count($record) > 0){
+            $date = Utility::prettifyDateWithTime($record->created_at);
+            return $date;
+        }
+        return "";
+    }    
 
 
 }

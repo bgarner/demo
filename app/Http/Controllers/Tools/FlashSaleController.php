@@ -54,6 +54,7 @@ class FlashSaleController extends Controller
     {
         //$pages = BlackFriday::getAdPages($this->storeNumber);
         $data = FlashSale::getDataByStoreNumber($this->storeNumber);
+        $sale_date = FlashSale::getSaleDate();
         $last_updated = FlashSale::getLastUpdatedDate();
         if(!$last_updated){
             $last_update = "";
@@ -61,6 +62,7 @@ class FlashSaleController extends Controller
         //dd($boxes);
         return view('site.tools.flashsale.index')
             ->with('last_updated', $last_updated)
+            ->with('sale_date', $sale_date)
             ->with('data', $data)
             ->with('skin', $this->skin)
             ->with('communicationCount', $this->communicationCount)
