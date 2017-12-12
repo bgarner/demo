@@ -27,7 +27,10 @@ class FootwearInitialsController extends Controller
     public function index()
     {
         $fwInitials = FootwearInitials::getTotalForGenderByStore($this->storeNumber);
-        return view('site.tools.fwinitials.index')->with('fwinitials', $fwInitials);
+        $fwInitialsMonths = \DB::table('footwear_initials_rolling_months')->first(['month1', 'month2', 'month3']);
+        
+        return view('site.tools.fwinitials.index')->with('fwinitials', $fwInitials)
+                                                ->with('fwInitialsMonths', $fwInitialsMonths);;
     }
 
     /**

@@ -21,15 +21,11 @@ class FootwearInitials extends Model
 		$storeNumber = ltrim($storeNumber, '0');
 
 		$fwTotals = FootwearInitials::where('store_number', $storeNumber)
-									->select(\DB::raw('sum(ly_season2_total) as last_year_total, 
-												  	sum(cy_season2_total) as current_year_total,
-												  	sum(ly_june) as ly_june, sum(cy_june) as cy_june,
-												  	sum(ly_july) as ly_july, sum(cy_july) as cy_july,
-												  	sum(ly_aug)  as ly_aug,  sum(cy_aug)  as cy_aug,
-												  	sum(ly_sept) as ly_sept, sum(cy_sept) as cy_sept,
-												  	sum(ly_oct)  as ly_oct,  sum(cy_oct)  as cy_oct,
-												  	sum(ly_nov)  as ly_nov,  sum(cy_nov)  as cy_nov,
-												  	sum(ly_dec)  as ly_dec,  sum(cy_dec)  as cy_dec,
+									->select(\DB::raw('sum(ly_season_total) as last_year_total, 
+												  	sum(cy_season_total) as current_year_total,
+												  	sum(ly_month1) as ly_month1, sum(cy_month1) as cy_month1,
+												  	sum(ly_month2) as ly_month2, sum(cy_month2) as cy_month2,
+												  	sum(ly_month3)  as ly_month3,  sum(cy_month3)  as cy_month3,
 													subdepartment as gender, 
 													store_number '))
 									->groupBy('subdepartment')
@@ -44,15 +40,12 @@ class FootwearInitials extends Model
     {
 		$fwTotals = FootwearInitials::where('store_number', $storeNumber)
 									->where('subdepartment', $gender)
-									->select(\DB::raw('sum(ly_season2_total) as last_year_total, 
-													sum(cy_season2_total) as current_year_total, 
-													sum(ly_june) as ly_june, sum(cy_june) as cy_june,
-													sum(ly_july) as ly_july, sum(cy_july) as cy_july,
-													sum(ly_aug)  as ly_aug,  sum(cy_aug)  as cy_aug,
-													sum(ly_sept) as ly_sept, sum(cy_sept) as cy_sept,
-													sum(ly_oct)  as ly_oct,  sum(cy_oct)  as cy_oct,
-													sum(ly_nov)  as ly_nov,  sum(cy_nov)  as cy_nov,
-													sum(ly_dec)  as ly_dec,  sum(cy_dec)  as cy_dec,category, 
+									->select(\DB::raw('sum(ly_season_total) as last_year_total, 
+													sum(cy_season_total) as current_year_total, 
+													sum(ly_month1) as ly_month1, sum(cy_month1) as cy_month1,
+													sum(ly_month2) as ly_month2, sum(cy_month2) as cy_month2,
+													sum(ly_month3)  as ly_month3,  sum(cy_month3)  as cy_month3,
+													category, 
 													subdepartment as gender, 
 													store_number'))
 									->groupBy('category')
@@ -62,7 +55,6 @@ class FootwearInitials extends Model
 
 									});
 									
-		\Log::info($fwTotals);
 		return($fwTotals);	
     }
 
@@ -72,18 +64,40 @@ class FootwearInitials extends Model
 		$fwTotals = FootwearInitials::where('store_number', $storeNumber)
 									->where('subdepartment', $gender)
 									->where('category', $category)
-									->select(\DB::raw('sum(ly_season2_total) as last_year_total, 
-													sum(cy_season2_total) as current_year_total, 
-													sum(ly_june) as ly_june, sum(cy_june) as cy_june,
-													sum(ly_july) as ly_july, sum(cy_july) as cy_july,
-													sum(ly_aug)  as ly_aug,  sum(cy_aug)  as cy_aug,
-													sum(ly_sept) as ly_sept, sum(cy_sept) as cy_sept,
-													sum(ly_oct)  as ly_oct,  sum(cy_oct)  as cy_oct,
-													sum(ly_nov)  as ly_nov,  sum(cy_nov)  as cy_nov,
-													sum(ly_dec)  as ly_dec,  sum(cy_dec)  as cy_dec,
-													brand'))
+									->select(\DB::raw('sum(ly_season_total) as last_year_total, 
+													sum(cy_season_total) as current_year_total, 
+													sum(ly_month1) as ly_month1, sum(cy_month1) as cy_month1,
+													sum(ly_month2) as ly_month2, sum(cy_month2) as cy_month2,
+													sum(ly_month3)  as ly_month3,  sum(cy_month3)  as cy_month3,
+													brand,
+													category, 
+													subdepartment as gender, 
+													store_number'))
 									->groupBy('brand')
-									->get();
+									->get()
+									->each(function($row){
+										$row->style_totals = json_encode(Self::getTotalForStyleByBrandandCategoryAndGenderAndStoreNumber($row->store_number, $row->gender, $row->category, $row->brand));										
+									});
 		return($fwTotals);	
+    }
+
+    public static function getTotalForStyleByBrandandCategoryAndGenderAndStoreNumber($storeNumber, $gender, $category, $brand)
+    {
+    	
+    	$fwTotals = FootwearInitials::where('store_number', $storeNumber)
+									->where('subdepartment', $gender)
+									->where('category', $category)
+									->where('brand', $brand)
+									->select('ly_season_total as last_year_total', 
+											'cy_season_total as current_year_total', 
+											'ly_month1' , 
+											'cy_month1',
+											'ly_month2', 
+											'cy_month2',
+											'ly_month3',  
+											'cy_month3' ,
+											'style_number')
+									->get();
+		return($fwTotals);
     }
 }

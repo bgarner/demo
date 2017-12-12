@@ -1,17 +1,17 @@
 function formatCategoryTable ( row , rowId) {
     d = row.data();
-    var nestedData = JSON.parse(d[11]);
+    var nestedData = JSON.parse(d[9]);
+
+    var months  = ($("#rolling-months").data('months'));
     var returnString = '<table class="table categoryTable" id="categoryTable_'+rowId+'">'+
                         '<thead>'+
                             '<th>Category</th>'+
-                            '<th>LY July</th>'+
-                            '<th>TY July</th>'+
-                            '<th>LY Aug</th>'+
-                            '<th>TY Aug</th>'+
-                            '<th>LY Sept</th>'+
-                            '<th>TY Sept</th>'+
-                            '<th>LY Oct</th>'+
-                            '<th>TY Oct</th>'+
+                            '<th>LY '+ months.month1 +'</th>'+
+                            '<th>TY '+ months.month1 +'</th>'+
+                            '<th>LY '+ months.month2 +'</th>'+
+                            '<th>TY '+ months.month2 +'</th>'+
+                            '<th>LY '+ months.month3 +'</th>'+
+                            '<th>TY '+ months.month3 +'</th>'+
                             '<th>LY Season 2 Total</th>'+
                             '<th>TY Season 2 Total</th>'+
                             '<th>data</th>'+
@@ -23,14 +23,12 @@ function formatCategoryTable ( row , rowId) {
         returnString += '<tr>'+
                             '<td class="expand_category" id="'+rowId+'_category_'+index+'" data-table-id="categoryTable_'+rowId+'">'+
                                 '<i class="fa fa-plus-circle"></i> '+value.category+'</td>'+
-                            '<td>'+ value.ly_july+'</td>'+
-                            '<td>'+ value.cy_july+'</td>'+
-                            '<td>'+ value.ly_aug+'</td>'+
-                            '<td>'+ value.cy_aug+'</td>'+
-                            '<td>'+ value.ly_sept+'</td>'+
-                            '<td>'+ value.cy_sept+'</td>'+
-                            '<td>'+ value.ly_oct+'</td>'+
-                            '<td>'+ value.cy_oct+'</td>'+
+                            '<td>'+ value.ly_month1+'</td>'+
+                            '<td>'+ value.cy_month1+'</td>'+
+                            '<td>'+ value.ly_month2+'</td>'+
+                            '<td>'+ value.cy_month2+'</td>'+
+                            '<td>'+ value.ly_month3+'</td>'+
+                            '<td>'+ value.cy_month3+'</td>'+
                             '<td>'+ value.last_year_total+'</td>'+
                             '<td>'+ value.current_year_total+'</td>'+
                             '<td>'+ value.brand_totals+'</td>'+
@@ -46,18 +44,61 @@ function formatCategoryTable ( row , rowId) {
 
 function formatBrandTable ( row , rowId) {
     d = row.data();
-    var nestedData = JSON.parse(d[11]);
+    var nestedData = JSON.parse(d[9]);
+    var months  = ($("#rolling-months").data('months'));
     var returnString = '<table class="table brandTable" id="brandTable_'+rowId+'">'+
                         '<thead>'+
                             '<th>Brand</th>'+
-                            '<th>LY July</th>'+
-                            '<th>TY July</th>'+
-                            '<th>LY Aug</th>'+
-                            '<th>TY Aug</th>'+
-                            '<th>LY Sept</th>'+
-                            '<th>TY Sept</th>'+
-                            '<th>LY Oct</th>'+
-                            '<th>TY Oct</th>'+
+                            '<th>LY '+ months.month1 +'</th>'+
+                            '<th>TY '+ months.month1 +'</th>'+
+                            '<th>LY '+ months.month2 +'</th>'+
+                            '<th>TY '+ months.month2 +'</th>'+
+                            '<th>LY '+ months.month3 +'</th>'+
+                            '<th>TY '+ months.month3 +'</th>'+
+                            '<th>LY Season 2 Total</th>'+
+                            '<th>TY Season 2 Total</th>'+
+                            '<th>data</th>'
+                        '</thead>'+
+                        '<tbody>';
+    // returnString = '';
+
+    $(nestedData).each(function(index, value){
+
+        returnString += '<tr>'+
+                            '<td class="expand_brand" id="'+rowId+'_brand_'+index+'" data-table-id="brandTable_'+rowId+'">'+
+                                '<i class="fa fa-plus-circle"></i> '+value.brand+'</td>'+
+                            '<td>'+ value.ly_month1+'</td>'+
+                            '<td>'+ value.cy_month1+'</td>'+
+                            '<td>'+ value.ly_month2+'</td>'+
+                            '<td>'+ value.cy_month2+'</td>'+
+                            '<td>'+ value.ly_month3+'</td>'+
+                            '<td>'+ value.cy_month3+'</td>'+
+                            '<td>'+ value.last_year_total+'</td>'+
+                            '<td>'+ value.current_year_total+'</td>'+
+                            '<td>'+ value.style_totals+'</td>'+
+
+                        '</tr>';
+                        
+    });
+    returnString += '</tbody></table>';
+    return returnString;
+    
+}
+
+function formatStylesTable ( row , rowId) {
+    d = row.data();
+    console.log(d);
+    var nestedData = JSON.parse(d[9]);
+    var months  = ($("#rolling-months").data('months'));
+    var returnString = '<table class="table styleTable" id="styleTable_'+rowId+'">'+
+                        '<thead>'+
+                            '<th>Style Number</th>'+
+                            '<th>LY '+ months.month1 +'</th>'+
+                            '<th>TY '+ months.month1 +'</th>'+
+                            '<th>LY '+ months.month2 +'</th>'+
+                            '<th>TY '+ months.month2 +'</th>'+
+                            '<th>LY '+ months.month3 +'</th>'+
+                            '<th>TY '+ months.month3 +'</th>'+
                             '<th>LY Season 2 Total</th>'+
                             '<th>TY Season 2 Total</th>'+
                         '</thead>'+
@@ -66,15 +107,13 @@ function formatBrandTable ( row , rowId) {
 
     $(nestedData).each(function(index, value){
         returnString += '<tr>'+
-                            '<td id="'+rowId+'_brand_'+index+'" data-category-id="'+ rowId +'">'+value.brand+'</td>'+
-                            '<td>'+ value.ly_july+'</td>'+
-                            '<td>'+ value.cy_july+'</td>'+
-                            '<td>'+ value.ly_aug+'</td>'+
-                            '<td>'+ value.cy_aug+'</td>'+
-                            '<td>'+ value.ly_sept+'</td>'+
-                            '<td>'+ value.cy_sept+'</td>'+
-                            '<td>'+ value.ly_oct+'</td>'+
-                            '<td>'+ value.cy_oct+'</td>'+                                    
+                            '<td id="'+rowId+'_style_'+index+'" data-table-id="styleTable_'+rowId+'" >'+value.brand+'</td>'+
+                            '<td>'+ value.ly_month1+'</td>'+
+                            '<td>'+ value.cy_month1+'</td>'+
+                            '<td>'+ value.ly_month2+'</td>'+
+                            '<td>'+ value.cy_month2+'</td>'+
+                            '<td>'+ value.ly_month3+'</td>'+
+                            '<td>'+ value.cy_month3+'</td>'+
                             '<td>'+ value.last_year_total+'</td>'+
                             '<td>'+ value.current_year_total+'</td>'+
 
@@ -89,6 +128,7 @@ function formatBrandTable ( row , rowId) {
 
 
 $(document).ready(function(){
+
     var table = $('.fwinitialsTable').DataTable({
         
         "info"   :false,
@@ -96,11 +136,11 @@ $(document).ready(function(){
         "paging":   false,
         "columns": [    
            { "className":'details-control'},
-           null,null,null,null,null,null,null,null,null,null,null
+           null,null,null,null,null,null,null,null,null
          ],
          "searching": false
     });
-    table.column( 11 ).visible( false );
+    table.column(9).visible( false );
 
     $('tbody').on('click', 'td.details-control', function () {
 
@@ -128,7 +168,7 @@ $(document).ready(function(){
             });
             // push the datatable instance to be used later to view the brands
             $("body").data( "categoryTable_"+rowId , categoryTable);
-            categoryTable.column( 11 ).visible( false );
+            categoryTable.column( 9 ).visible( false );
             tr.addClass('shown');
             tr.find("i.fa").toggleClass("fa-plus-circle").toggleClass('fa-minus-circle');
         }
@@ -138,7 +178,9 @@ $(document).ready(function(){
         var tr = $(this).parent();
         var parentTableId = $(this).attr('data-table-id');
         var rowId  = $(this).attr('id');
+        console.log(parentTableId);
         var row = $( "body" ).data(parentTableId).row( tr );
+        console.log(row.data);
  
         if ( row.child.isShown() ) {
             // This row is already open - close it
@@ -151,17 +193,49 @@ $(document).ready(function(){
             // Open this row
             row.child(formatBrandTable(row, rowId)).show();
             
-            var categoryTable = $("#brandTable_"+rowId).DataTable({
+            var brandTable = $("#brandTable_"+rowId).DataTable({
                 "bPaginate": false,
                 "paging":   false,
                 "ordering": false,
                 "info":     false,
                 "searching": false
             });
-            $("body").data( rowId , categoryTable);
+            $("body").data( "brandTable_"+rowId , brandTable);
+            brandTable.column( 9 ).visible( false );
             tr.find("i.fa").toggleClass("fa-plus-circle").toggleClass('fa-minus-circle');
             tr.addClass('shown');
         }
     });
 
+
+     $("body").on('click', ".expand_brand" , function(){
+        var tr = $(this).parent();
+        var parentTableId = $(this).attr('data-table-id');
+        var rowId  = $(this).attr('id');
+        var row = $( "body" ).data(parentTableId).row( tr );
+        console.log(row.child.isShown());
+ 
+        if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.find("i.fa").toggleClass("fa-plus-circle").toggleClass('fa-minus-circle');
+            tr.removeClass('shown');
+            
+        }
+        else {
+            // Open this row
+            row.child(formatStylesTable(row, rowId)).show();
+            
+            var styleTable = $("#styleTable_"+rowId).DataTable({
+                "bPaginate": false,
+                "paging":   false,
+                "ordering": false,
+                "info":     false,
+                "searching": false
+            });
+            $("body").data( rowId , styleTable);
+            tr.find("i.fa").toggleClass("fa-plus-circle").toggleClass('fa-minus-circle');
+            tr.addClass('shown');
+        }
+    });
 });
