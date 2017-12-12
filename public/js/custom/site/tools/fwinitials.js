@@ -91,6 +91,7 @@ function formatStylesTable ( row , rowId) {
     var returnString = '<table class="table styleTable" id="styleTable_'+rowId+'">'+
                         '<thead>'+
                             '<th>Style Number</th>'+
+                            '<th>Style Name</th>'+
                             '<th>LY '+ months.month1 +'</th>'+
                             '<th>TY '+ months.month1 +'</th>'+
                             '<th>LY '+ months.month2 +'</th>'+
@@ -106,6 +107,7 @@ function formatStylesTable ( row , rowId) {
     $(nestedData).each(function(index, value){
         returnString += '<tr>'+
                             '<td id="'+rowId+'_style_'+index+'" data-table-id="styleTable_'+rowId+'" >'+value.style_number+'</td>'+
+                            '<td>'+ value.style_name+'</td>'+
                             '<td>'+ value.ly_month1+'</td>'+
                             '<td>'+ value.cy_month1+'</td>'+
                             '<td>'+ value.ly_month2+'</td>'+

@@ -96,7 +96,7 @@ class FootwearInitials extends Model
 											'cy_month2',
 											'ly_month3',  
 											'cy_month3' ,
-											'style_number')
+											'style_number', 'style_name')
 									->get();
 		return($fwTotals);
     }
