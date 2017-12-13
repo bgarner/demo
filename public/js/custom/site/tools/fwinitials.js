@@ -98,15 +98,16 @@ function formatStylesTable ( row , rowId) {
                             '<th>TY '+ months.month2 +'</th>'+
                             '<th>LY '+ months.month3 +'</th>'+
                             '<th>TY '+ months.month3 +'</th>'+
-                            '<th>LY Season 2 Total</th>'+
-                            '<th>TY Season 2 Total</th>'+
+                            '<th>LY Season Total</th>'+
+                            '<th>TY Season Total</th>'+
+                            '<th>img</th>'+
                         '</thead>'+
                         '<tbody>';
     // returnString = '';
 
     $(nestedData).each(function(index, value){
         returnString += '<tr>'+
-                            '<td id="'+rowId+'_style_'+index+'" data-table-id="styleTable_'+rowId+'" >'+value.style_number+'</td>'+
+                            '<td class="viewStyle" id="'+rowId+'_style_'+index+'" data-table-id="styleTable_'+rowId+'" >'+value.style_number+'</td>'+
                             '<td>'+ value.style_name+'</td>'+
                             '<td>'+ value.ly_month1+'</td>'+
                             '<td>'+ value.cy_month1+'</td>'+
@@ -116,6 +117,7 @@ function formatStylesTable ( row , rowId) {
                             '<td>'+ value.cy_month3+'</td>'+
                             '<td>'+ value.last_year_total+'</td>'+
                             '<td>'+ value.current_year_total+'</td>'+
+                            '<td><img src="https://fgl.scene7.com/is/image/FGLSportsLtd/'+value.style_number+'_99_a?hei=520"/></td>'+
 
                         '</tr>';
                         
@@ -230,11 +232,41 @@ $(document).ready(function(){
                 "paging":   false,
                 "ordering": false,
                 "info":     false,
-                "searching": false
+                "searching": false    
             });
             $("body").data( "styleTable_"+rowId , styleTable);
+            styleTable.column( 10 ).visible( false );
             tr.find("i.fa").toggleClass("fa-plus-circle").toggleClass('fa-minus-circle');
             tr.addClass('shown');
         }
     });
+
+    $("body").on('click', ".viewStyle", function(e){
+        e.preventDefault();
+        var tr = $(this).parent();
+        var parentTableId = $(this).attr('data-table-id');
+        var rowId  = $(this).attr('id');
+        var row = $( "body" ).data(parentTableId).row( tr );
+
+        openStyleInModal(row.data());
+
+
+    });
+
+
+    var openStyleInModal = function(data){
+        
+        var modal = $('#view-style-modal');
+        var modalHeader = $('#view-style-modal .modal-title');
+        var modalBody = $('#view-style-modal .modal-body');
+
+        var styleNumber = data[0];
+        var styleName = data[1];
+        var styleSrc = data[10];
+        modalHeader.empty().html(styleNumber +" - "+ styleName);
+        modalBody.empty().html(styleSrc);
+        
+        modal.modal({show:true})
+            
+    }
 });

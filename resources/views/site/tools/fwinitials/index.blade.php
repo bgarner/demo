@@ -13,6 +13,9 @@
         .fa-minus-circle {
             color:#ed5565;
         }
+        .viewStyle, .expand_brand, .expand_category, .expand_gender{
+            cursor: pointer;
+        }
 
     </style>
 </head>
@@ -89,6 +92,27 @@
                             </div>
                         </div>
 
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div id="view-style-modal" class="modal inmodal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <img class="styleImage" src="" alt="">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
 
                 </div>
