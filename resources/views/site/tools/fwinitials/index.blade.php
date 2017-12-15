@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    @section('title', 'Footwear Initials Tracker')
+    @section('title', $trackerTitle )
     @include('site.includes.head')
 
     <link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
@@ -36,7 +36,7 @@
 
        <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-12">
-                <h2>Footwear Initials Tracker</h2>
+                <h2>{{$trackerTitle}}</h2>
                 <small class="pull-right"> Last Updated :  </small>
             </div>
             <div id="rolling-months" class="hidden"  data-months="{{json_encode($fwInitialsMonths)}}"></div>
