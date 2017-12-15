@@ -13,7 +13,7 @@ class Initials extends Model
     	$storeNumber = ltrim($storeNumber, 'A');
 		$storeNumber = ltrim($storeNumber, '0');
 
-		$fwTotals = FootwearInitials::where('store_number', $storeNumber)
+		$fwTotals = Initials::where('store_number', $storeNumber)
 									->where('division', $division)
 									->select(\DB::raw('sum(ly_season_total) as last_year_total, 
 												  	sum(cy_season_total) as current_year_total,
@@ -32,7 +32,7 @@ class Initials extends Model
 
     public static function getTotalForCategoryByGenderAndStoreNumber($storeNumber, $gender, $division)
     {
-		$fwTotals = FootwearInitials::where('store_number', $storeNumber)
+		$fwTotals = Initials::where('store_number', $storeNumber)
 									->where('division', $division)
 									->where('subdepartment', $gender)
 									->select(\DB::raw('sum(ly_season_total) as last_year_total, 
@@ -56,7 +56,7 @@ class Initials extends Model
     public static function getTotalForBrandByCategoryAndGenderAndStoreNumber($storeNumber, $gender, $category, $division)
     {	
     
-		$fwTotals = FootwearInitials::where('store_number', $storeNumber)
+		$fwTotals = Initials::where('store_number', $storeNumber)
 									->where('subdepartment', $gender)
 									->where('division', $division)
 									->where('category', $category)
@@ -80,7 +80,7 @@ class Initials extends Model
     public static function getTotalForStyleByBrandandCategoryAndGenderAndStoreNumber($storeNumber, $gender, $category, $brand, $division)
     {
     	
-    	$fwTotals = FootwearInitials::where('store_number', $storeNumber)
+    	$fwTotals = Initials::where('store_number', $storeNumber)
 									->where('division', $division)
 									->where('subdepartment', $gender)
 									->where('category', $category)
