@@ -53,7 +53,7 @@
                                     <table class="table table-bordered table-hover fwinitialsTable">
                                         <thead>
                                         <tr>
-                                            <th>Subdepartment</th>
+                                            <th>Department</th>
                                             <th>LY {{$fwInitialsMonths->month1}}</th>
                                             <th>TY {{$fwInitialsMonths->month1}}</th>
                                             <th>LY {{$fwInitialsMonths->month2}}</th>
@@ -70,7 +70,7 @@
                                         @foreach($fwinitials as $key=>$fw)
                                           
                                             <tr>                            
-                                                <td class="expand_subdept" data-toplevel="true" id="subdept_{{$key}}"><i class="fa fa-plus-circle"></i> {{$fw->subdept}}</td>
+                                                <td class="expand_dept" id="dept_{{$key}}"><i class="fa fa-plus-circle"></i> {{$fw->department}}</td>
                                                 <td>{{$fw->ly_month1}}</td>
                                                 <td>{{$fw->cy_month1}}</td>
                                                 <td>{{$fw->ly_month2}}</td>
@@ -79,7 +79,7 @@
                                                 <td>{{$fw->cy_month3}}</td>
                                                 <td>{{$fw->last_year_total}}</td>
                                                 <td>{{$fw->current_year_total}}</td>
-                                                <td>{{$fw->category_totals}}</td>
+                                                <td>{{$fw->subdept_totals}}</td>
 
                                             </tr>                    
                                                 
@@ -137,13 +137,12 @@
             "bPaginate": false,
             "paging":   false,
             "columns": [    
-               { "className":'expand-subdept'},
+               { "className":'expand-dept'},
                null,null,null,null,null,null,null,null,null
              ],
              "searching": false
         });
         table.column(9).visible( false );
-    
         
     </script>
 

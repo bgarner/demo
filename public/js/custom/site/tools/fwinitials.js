@@ -1,3 +1,47 @@
+function formatSubdeptTable ( row , rowId) {
+    d = row.data();
+    var nestedData = JSON.parse(d[9]);
+
+    var months  = ($("#rolling-months").data('months'));
+    var returnString = '<table class="table subdeptTable" id="subdeptTable_'+rowId+'">'+
+                        '<thead>'+
+                            '<th>Subdepartment</th>'+
+                            '<th>LY '+ months.month1 +'</th>'+
+                            '<th>TY '+ months.month1 +'</th>'+
+                            '<th>LY '+ months.month2 +'</th>'+
+                            '<th>TY '+ months.month2 +'</th>'+
+                            '<th>LY '+ months.month3 +'</th>'+
+                            '<th>TY '+ months.month3 +'</th>'+
+                            '<th>LY Season Total</th>'+
+                            '<th>TY Season Total</th>'+
+                            '<th>data</th>'+
+                        '</thead>'+
+                        '<tbody>';
+    // returnString = '';
+
+    $(nestedData).each(function(index, value){
+        console.log(rowId);
+        returnString += '<tr>'+
+                            '<td class="expand_subdept" id="'+rowId+'_subdept_'+index+'" data-table-id="subdeptTable_'+rowId+'">'+
+                                '<i class="fa fa-plus-circle"></i> '+value.subdept+'</td>'+
+                            '<td>'+ value.ly_month1+'</td>'+
+                            '<td>'+ value.cy_month1+'</td>'+
+                            '<td>'+ value.ly_month2+'</td>'+
+                            '<td>'+ value.cy_month2+'</td>'+
+                            '<td>'+ value.ly_month3+'</td>'+
+                            '<td>'+ value.cy_month3+'</td>'+
+                            '<td>'+ value.last_year_total+'</td>'+
+                            '<td>'+ value.current_year_total+'</td>'+
+                            '<td>'+ value.category_totals+'</td>'+
+
+                        '</tr>';
+                        
+    });
+    returnString += '</tbody></table>';
+    return returnString;
+    
+}
+
 function formatCategoryTable ( row , rowId) {
     d = row.data();
     var nestedData = JSON.parse(d[9]);
@@ -131,25 +175,56 @@ function formatStylesTable ( row , rowId) {
 
 $(document).ready(function(){
 
-    var table = $('.fwinitialsTable').DataTable({
-        
-        "info"   :false,
-        "bPaginate": false,
-        "paging":   false,
-        "columns": [    
-           { "className":'details-control'},
-           null,null,null,null,null,null,null,null,null
-         ],
-         "searching": false
-    });
-    table.column(9).visible( false );
 
-    $('tbody').on('click', 'td.details-control', function () {
+
+    $('tbody').on('click', '.expand_dept', function () {
 
         var tr = $(this).closest('tr');
-        var rowId = $(tr).find(".expand_gender").attr('id');
+        var rowId = $(tr).find(".expand_dept").attr('id');
         var row = table.row( tr );
  
+        if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+            tr.find("i.fa").toggleClass("fa-minus-circle").toggleClass('fa-plus-circle');
+            
+        }
+        else {
+            // Open this row
+            row.child(formatSubdeptTable(row, rowId)).show();
+            
+            var subdeptTable = $("#subdeptTable_"+rowId).DataTable({
+                "bPaginate": false,
+                "paging":   false,
+                "ordering": false,
+                "info":     false,
+                "searching": false
+            });
+            // push the datatable instance to be used later to view the brands
+            $("body").data( "subdeptTable_"+rowId , subdeptTable);
+            subdeptTable.column( 9 ).visible( false );
+            tr.addClass('shown');
+            tr.find("i.fa").toggleClass("fa-plus-circle").toggleClass('fa-minus-circle');
+        }
+    } );
+
+    $('tbody').on('click', '.expand_subdept', function () {
+
+
+        if($(this).attr('data-toplevel')){
+            var tr = $(this).closest('tr');
+            var rowId = $(tr).find(".expand_subdept").attr('id');
+            var row = table.row( tr );
+        }
+        else{
+            var tr = $(this).parent();
+            var parentTableId = $(this).attr('data-table-id');
+            var rowId  = $(this).attr('id');
+            var row = $( "body" ).data(parentTableId).row( tr );    
+        }
+
+         
         if ( row.child.isShown() ) {
             // This row is already open - close it
             row.child.hide();

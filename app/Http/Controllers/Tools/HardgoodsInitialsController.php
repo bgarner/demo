@@ -24,10 +24,10 @@ class HardgoodsInitialsController extends Controller
      */
     public function index()
     {
-        $initials = HardgoodsInitials::getTotalForGenderByStore($this->storeNumber, 'DIV 01 HARDGOODS');
+        $initials = HardgoodsInitials::getTotalForDeptByStore($this->storeNumber, 'DIV 01 HARDGOODS');
         $initialsMonths = \DB::table('footwear_initials_rolling_months')->first(['month1', 'month2', 'month3']);
         
-        return view('site.tools.fwinitials.index')->with('fwinitials', $initials)
+        return view('site.tools.hginitials.index')->with('fwinitials', $initials)
                                                 ->with('fwInitialsMonths', $initialsMonths)
                                                 ->with('trackerTitle', 'Hardgoods Initials Tracker');
     }

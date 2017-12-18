@@ -24,7 +24,7 @@ class SoftgoodsInitialsController extends Controller
      */
     public function index()
     {
-        $fwInitials = SoftgoodsInitials::getTotalForGenderByStore($this->storeNumber, 'DIV 03 SOFTGOODS');
+        $fwInitials = SoftgoodsInitials::getTotalForSubdeptByStore($this->storeNumber, 'DIV 03 SOFTGOODS');
         $fwInitialsMonths = \DB::table('footwear_initials_rolling_months')->first(['month1', 'month2', 'month3']);
         
         return view('site.tools.fwinitials.index')->with('fwinitials', $fwInitials)
