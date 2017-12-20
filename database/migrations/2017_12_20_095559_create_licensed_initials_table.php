@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSginitialsTable extends Migration
+class CreateLicensedInitialsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateSginitialsTable extends Migration
      */
     public function up()
     {
-        Schema::create('softgoods_initials', function (Blueprint $table) {
+        Schema::create('licensed_initials', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('store_number', 255);
             $table->string('division', 255)->nullable();
@@ -43,6 +43,6 @@ class CreateSginitialsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('softgoods_initials');
+        Schema::dropIfExists('licensed_initials');
     }
 }

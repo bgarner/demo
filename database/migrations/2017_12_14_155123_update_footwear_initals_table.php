@@ -15,7 +15,7 @@ class UpdateFootwearInitalsTable extends Migration
     {
         Schema::table('footwear_initials', function (Blueprint $table) {
             $table->string('division', 255)->nullable()->after('store_number');
-            $table->integer('codi_number')->nullable()->after('style_name');
+            $table->string('codi_number', 11)->nullable()->after('style_name');
         });
     }
 

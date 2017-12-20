@@ -4,17 +4,16 @@ namespace App\Models\Tools\Initials;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Initials extends Model
+class LicensedInitials extends Model
 {
-    protected $table = 'footwear_initials';
+    protected $table = 'licensed_initials';
 
-    public static function getTotalForDeptByStore($storeNumber, $division)
+    public static function getTotalForDeptByStore($storeNumber)
     {
         $storeNumber = ltrim($storeNumber, 'A');
         $storeNumber = ltrim($storeNumber, '0');
 
-        $fwTotals = Self::where('store_number', $storeNumber)
-                                    ->where('division', $division)
+        $hgTotals = LicensedInitials::where('store_number', $storeNumber)
                                     ->select(\DB::raw('sum(ly_season_total) as last_year_total, 
                                                     sum(cy_season_total) as current_year_total,
                                                     sum(ly_month1) as ly_month1, sum(cy_month1) as cy_month1,
@@ -24,43 +23,38 @@ class Initials extends Model
                                                     store_number,department'))
                                     ->groupBy('department')
                                     ->get()
-                                    ->each(function($row) use ($division){
+                                    ->each(function($row){
                                         
-                                        $row->subdept_totals =  json_encode(Initials::getTotalForSubdeptByStore($row->store_number, $division, $row->department));
+                                        $row->subdept_totals =  json_encode(LicensedInitials::getTotalForSubdeptByStore($row->store_number, $row->department));
                                     }); 
-        return($fwTotals);
+        return($hgTotals);
     }
 
-    public static function getTotalForSubdeptByStore($storeNumber, $division, $department = null)
+    public static function getTotalForSubdeptByStore($storeNumber, $department)
     {
-    	$storeNumber = ltrim($storeNumber, 'A');
-		$storeNumber = ltrim($storeNumber, '0');
 
-		$query  = Initials::where('store_number', $storeNumber)
-									->where('division', $division);
-		if(isset($department)){
-			$query->where('department', $department);
-		}
-
-		$fwTotals = $query->select(\DB::raw('sum(ly_season_total) as last_year_total, 
-						  	sum(cy_season_total) as current_year_total,
-						  	sum(ly_month1) as ly_month1, sum(cy_month1) as cy_month1,
-						  	sum(ly_month2) as ly_month2, sum(cy_month2) as cy_month2,
-						  	sum(ly_month3)  as ly_month3,  sum(cy_month3)  as cy_month3,
-							subdepartment as subdept, 
-							store_number,department '))
-						->groupBy('subdept')
-						->get()
-						->each(function($row) use ($division){
-							$row->category_totals =  json_encode(Self::getTotalForCategoryBySubdeptAndStoreNumber($row->store_number, $row->subdept, $division));
-						});	
-		return($fwTotals);
+		$hgTotals  = LicensedInitials::where('store_number', $storeNumber)
+									->where('department', $department)
+									->select(\DB::raw('sum(ly_season_total) as last_year_total, 
+									  	sum(cy_season_total) as current_year_total,
+									  	sum(ly_month1) as ly_month1, sum(cy_month1) as cy_month1,
+									  	sum(ly_month2) as ly_month2, sum(cy_month2) as cy_month2,
+									  	sum(ly_month3)  as ly_month3,  sum(cy_month3)  as cy_month3,
+										subdepartment as subdept, 
+										store_number,department '))
+									->groupBy('subdept')
+									->get()
+									->each(function($row){
+										$row->category_totals =  json_encode(LicensedInitials::getTotalForCategoryBySubdeptAndStoreNumber($row->store_number, $row->subdept, $row->department));
+									});	
+		return($hgTotals);
     }
 
-    public static function getTotalForCategoryBySubdeptAndStoreNumber($storeNumber, $subdept, $division)
+
+    public static function getTotalForCategoryBySubdeptAndStoreNumber($storeNumber, $subdept, $department)
     {
-		$fwTotals = Initials::where('store_number', $storeNumber)
-									->where('division', $division)
+		$fwTotals = LicensedInitials::where('store_number', $storeNumber)
+									->where('department', $department)
 									->where('subdepartment', $subdept)
 									->select(\DB::raw('sum(ly_season_total) as last_year_total, 
 													sum(cy_season_total) as current_year_total, 
@@ -69,23 +63,24 @@ class Initials extends Model
 													sum(ly_month3)  as ly_month3,  sum(cy_month3)  as cy_month3,
 													category, 
 													subdepartment as subdept, 
+													department,
 													store_number'))
 									->groupBy('category')
 									->get()
-									->each(function($row) use ($division){
-										$row->brand_totals = json_encode(Self::getTotalForBrandByCategoryAndSubdeptAndStoreNumber($row->store_number, $row->subdept, $row->category, $division));
+									->each(function($row){
+										$row->brand_totals = json_encode(Self::getTotalForBrandByCategoryAndSubdeptAndStoreNumber($row->store_number, $row->subdept, $row->category, $row->department));
 
 									});
 									
 		return($fwTotals);	
     }
 
-    public static function getTotalForBrandByCategoryAndSubdeptAndStoreNumber($storeNumber, $subdept, $category, $division)
+    public static function getTotalForBrandByCategoryAndSubdeptAndStoreNumber($storeNumber, $subdept, $category, $department)
     {	
     
-		$fwTotals = Initials::where('store_number', $storeNumber)
+		$fwTotals = LicensedInitials::where('store_number', $storeNumber)
+									->where('department', $department)
 									->where('subdepartment', $subdept)
-									->where('division', $division)
 									->where('category', $category)
 									->select(\DB::raw('sum(ly_season_total) as last_year_total, 
 													sum(cy_season_total) as current_year_total, 
@@ -95,20 +90,21 @@ class Initials extends Model
 													brand,
 													category, 
 													subdepartment as subdept, 
+													department,
 													store_number'))
 									->groupBy('brand')
 									->get()
-									->each(function($row) use ($division){
-										$row->style_totals = json_encode(Self::getTotalForStyleByBrandandCategoryAndSubdeptAndStoreNumber($row->store_number, $row->subdept, $row->category, $row->brand, $division));										
+									->each(function($row){
+										$row->style_totals = json_encode(Self::getTotalForStyleByBrandandCategoryAndSubdeptAndStoreNumber($row->store_number, $row->subdept, $row->category, $row->brand, $row->department));										
 									});
 		return($fwTotals);	
     }
 
-    public static function getTotalForStyleByBrandandCategoryAndSubdeptAndStoreNumber($storeNumber, $subdept, $category, $brand, $division)
+    public static function getTotalForStyleByBrandandCategoryAndSubdeptAndStoreNumber($storeNumber, $subdept, $category, $brand, $department)
     {
     	
-    	$fwTotals = Initials::where('store_number', $storeNumber)
-									->where('division', $division)
+    	$fwTotals = LicensedInitials::where('store_number', $storeNumber)
+									->where('department', $department)
 									->where('subdepartment', $subdept)
 									->where('category', $category)
 									->where('brand', $brand)

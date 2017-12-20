@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Request as RequestFacade;
-use App\Models\Tools\Initials\Initials;
+use App\Models\Tools\Initials\FootwearInitials;
 
 class FootwearInitialsController extends Controller
 {
@@ -26,7 +26,7 @@ class FootwearInitialsController extends Controller
      */
     public function index()
     {
-        $fwInitials = Initials::getTotalForSubdeptByStore($this->storeNumber, 'DIV 05 FOOTWEAR');
+        $fwInitials = FootwearInitials::getTotalForSubdeptByStore($this->storeNumber);
         $fwInitialsMonths = \DB::table('footwear_initials_rolling_months')->first(['month1', 'month2', 'month3']);
         
         return view('site.tools.fwinitials.index')->with('fwinitials', $fwInitials)

@@ -11,6 +11,7 @@
             <li><a href="/{{ Request::segment(1) }}/tools/fwinitials" class="trackclick" data-tool-type="fwinitialsTracker">Footwear Initials Tracker</a></li>
             <li><a href="/{{ Request::segment(1) }}/tools/sginitials" class="trackclick" data-tool-type="sginitialsTracker">Softgoods Initials Tracker</a></li>
             <li><a href="/{{ Request::segment(1) }}/tools/hginitials" class="trackclick" data-tool-type="hginitialsTracker">Hardgoods Initials Tracker</a></li>
+            <li><a href="/{{ Request::segment(1) }}/tools/lcinitials" class="trackclick" data-tool-type="lcinitialsTracker">Licensed Initials Tracker</a></li>
         </ul>
 
 </li>

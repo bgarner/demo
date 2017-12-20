@@ -107,7 +107,7 @@ function formatBrandTable ( row , rowId) {
     // returnString = '';
 
     $(nestedData).each(function(index, value){
-
+        console.log(value);
         returnString += '<tr>'+
                             '<td class="expand_brand" data-category-id="'+ rowId +'" id="'+rowId+'_brand_'+index+'" data-table-id="brandTable_'+rowId+'">'+
                                 '<i class="fa fa-plus-circle"></i> '+value.brand+'</td>'+
@@ -161,7 +161,7 @@ function formatStylesTable ( row , rowId) {
                             '<td>'+ value.cy_month3+'</td>'+
                             '<td>'+ value.last_year_total+'</td>'+
                             '<td>'+ value.current_year_total+'</td>'+
-                            '<td><img src="https://fgl.scene7.com/is/image/FGLSportsLtd/'+value.style_number+'_99_a?hei=520"/></td>'+
+                            '<td><img src="https://fgl.scene7.com/is/image/FGLSportsLtd/'+value.style_number+'_'+ value.codi_number +'_a?hei=520"/></td>'+
 
                         '</tr>';
                         

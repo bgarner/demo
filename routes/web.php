@@ -80,6 +80,7 @@ Route::get('/{storeno}/tools/flashsale', array('uses' => 'Tools\FlashSaleControl
 Route::get('/{storeno}/tools/fwinitials', array('uses' => 'Tools\FootwearInitialsController@index'));
 Route::get('/{storeno}/tools/sginitials', array('uses' => 'Tools\SoftgoodsInitialsController@index'));
 Route::get('/{storeno}/tools/hginitials', array('uses' => 'Tools\HardgoodsInitialsController@index'));
+Route::get('/{storeno}/tools/lcinitials', array('uses' => 'Tools\LicensedInitialsController@index'));
 Route::post('/getFlyerBoxes', 'Tools\FlyerPageSelectionController@show');
 Route::post('/getFlyerBoxData', 'Tools\FlyerBoxSelectionController@show');
 
