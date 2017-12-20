@@ -14,7 +14,7 @@ class SoftgoodsInitials extends Model
         $storeNumber = ltrim($storeNumber, 'A');
         $storeNumber = ltrim($storeNumber, '0');
 
-        $fwTotals = SoftgoodsInitials::where('store_number', $storeNumber)
+        $sgTotals = SoftgoodsInitials::where('store_number', $storeNumber)
                                     
                                     ->select(\DB::raw('sum(ly_season_total) as last_year_total, 
                                                     sum(cy_season_total) as current_year_total,
@@ -29,13 +29,13 @@ class SoftgoodsInitials extends Model
                                         
                                         $row->subdept_totals =  json_encode(SoftgoodsInitials::getTotalForSubdeptByStore($row->store_number, $row->department));
                                     }); 
-        return($fwTotals);
+        return($sgTotals);
     }
 
     public static function getTotalForSubdeptByStore($storeNumber, $department)
     {
         
-        $fwTotals  = SoftgoodsInitials::where('store_number', $storeNumber)
+        $sgTotals  = SoftgoodsInitials::where('store_number', $storeNumber)
         							->where('department', $department)
 			        				->select(\DB::raw('sum(ly_season_total) as last_year_total, 
 			                            sum(cy_season_total) as current_year_total,
@@ -52,13 +52,13 @@ class SoftgoodsInitials extends Model
 			                            
 			                            
 			                        }); 
-        return($fwTotals);
+        return($sgTotals);
     }
 
     public static function getTotalForBrandBySubdeptAndStoreNumber($storeNumber, $subdept, $department)
     {   
     
-        $fwTotals = SoftgoodsInitials::where('store_number', $storeNumber)
+        $sgTotals = SoftgoodsInitials::where('store_number', $storeNumber)
                                     ->where('department', $department)
                                     ->where('subdepartment', $subdept)
                                     ->select(\DB::raw('sum(ly_season_total) as last_year_total, 
@@ -75,13 +75,13 @@ class SoftgoodsInitials extends Model
                                     ->each(function($row){
                                         $row->category_totals = json_encode(SoftgoodsInitials::getTotalForCategoryByBrandAndSubdeptAndStoreNumber($row->store_number, $row->subdept, $row->brand, $row->department));                                       
                                     });
-        return($fwTotals);  
+        return($sgTotals);  
     }
 
 
     public static function getTotalForCategoryByBrandAndSubdeptAndStoreNumber($storeNumber, $subdept, $brand, $department)
     {
-        $fwTotals = SoftgoodsInitials::where('store_number', $storeNumber)
+        $sgTotals = SoftgoodsInitials::where('store_number', $storeNumber)
         							->where('department', $department)
                                     ->where('subdepartment', $subdept)
                                     ->where('brand', $brand)
@@ -102,14 +102,14 @@ class SoftgoodsInitials extends Model
 
                                     });
                                     
-        return($fwTotals);  
+        return($sgTotals);  
     }
     
 
     public static function getTotalForStyleByBrandandCategoryAndSubdeptAndStoreNumber($storeNumber, $subdept, $category, $brand, $department)
     {
         
-        $fwTotals = SoftgoodsInitials::where('store_number', $storeNumber)
+        $sgTotals = SoftgoodsInitials::where('store_number', $storeNumber)
         							->where('department', $department)
                                     ->where('subdepartment', $subdept)
                                     ->where('brand', $brand)
@@ -124,6 +124,6 @@ class SoftgoodsInitials extends Model
                                             'cy_month3' ,
                                             'style_number', 'style_name', 'codi_number')
                                     ->get();
-        return($fwTotals);
+        return($sgTotals);
     }
 }
