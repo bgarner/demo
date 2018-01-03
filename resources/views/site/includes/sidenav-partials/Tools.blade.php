@@ -8,10 +8,16 @@
             <li><a href="/{{ Request::segment(1) }}/tools/boxingday" class="trackclick" data-tool-type="doorcrasherTracker">Doorcrasher Tracker</a></li>
             {{-- <li><a href="/{{ Request::segment(1) }}/tools/bikecount" class="trackclick" data-tool-type="bikecountTracker">Bike Count Tracker</a></li> --}}
             <li><a href="/{{ Request::segment(1) }}/tools/flashsale" class="trackclick" data-tool-type="flashsaleTracker">DOM Flash Sale Tracker</a></li>
-            <li><a href="/{{ Request::segment(1) }}/tools/fwinitials" class="trackclick" data-tool-type="fwinitialsTracker">Footwear Initials Tracker</a></li>
-            <li><a href="/{{ Request::segment(1) }}/tools/sginitials" class="trackclick" data-tool-type="sginitialsTracker">Softgoods Initials Tracker</a></li>
-            <li><a href="/{{ Request::segment(1) }}/tools/hginitials" class="trackclick" data-tool-type="hginitialsTracker">Hardgoods Initials Tracker</a></li>
-            <li><a href="/{{ Request::segment(1) }}/tools/lcinitials" class="trackclick" data-tool-type="lcinitialsTracker">Licensed Initials Tracker</a></li>
+
+            <li><a href="#"> Product Deliveries <span class="fa arrow"></span></a>
+                <ul class="nav nav-third-level collapse ">
+                    <li><a href="/{{ Request::segment(1) }}/tools/fwinitials" class="trackclick" data-tool-type="fwinitialsTracker">Footwear</a></li>
+                    <li><a href="/{{ Request::segment(1) }}/tools/sginitials" class="trackclick" data-tool-type="sginitialsTracker">Softgoods</a></li>
+                    <li><a href="/{{ Request::segment(1) }}/tools/hginitials" class="trackclick" data-tool-type="hginitialsTracker">Hardgoods</a></li>
+                    <li><a href="/{{ Request::segment(1) }}/tools/lcinitials" class="trackclick" data-tool-type="lcinitialsTracker">Licensed</a></li>
+                </ul>
+            </li>
+            
         </ul>
 
 </li>
