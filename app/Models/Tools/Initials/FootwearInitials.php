@@ -22,7 +22,7 @@ class FootwearInitials extends Model
 									  	sum(ly_month3)  as ly_month3,  sum(cy_month3)  as cy_month3,
 										subdepartment as subdept, 
 										department,
-										store_number'))
+										store_number, updated_at'))
 									->groupBy('subdept')
 									->get()
 									->each(function($row){

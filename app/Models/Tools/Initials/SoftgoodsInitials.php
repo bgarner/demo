@@ -22,7 +22,7 @@ class SoftgoodsInitials extends Model
                                                     sum(ly_month2) as ly_month2, sum(cy_month2) as cy_month2,
                                                     sum(ly_month3)  as ly_month3,  sum(cy_month3)  as cy_month3,
                                                     subdepartment as subdept, 
-                                                    store_number,department'))
+                                                    store_number,department, updated_at'))
                                     ->groupBy('department')
                                     ->get()
                                     ->each(function($row){
