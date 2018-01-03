@@ -37,7 +37,9 @@
        <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-12">
                 <h2>{{$trackerTitle}}</h2>
+                @if(isset ($fwInitials))
                 <small class="pull-right"> Last Updated : {{ $fwinitials[0]->updated_at }}  </small>
+                @endif
             </div>
             <div id="rolling-months" class="hidden"  data-months="{{json_encode($fwInitialsMonths)}}"></div>
         </div>
