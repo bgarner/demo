@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\Tools;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Request as RequestFacade;
-use App\Models\Tools\Initials\FootwearInitials;
+use App\Models\Tools\Initials\SoftgoodsInitials;
 
-class FootwearInitialsController extends Controller
+class SoftgoodsInitialsController extends Controller
 {
     public $storeNumber;
 
@@ -26,12 +24,12 @@ class FootwearInitialsController extends Controller
      */
     public function index()
     {
-        $fwInitials = FootwearInitials::getTotalForSubdeptByStore($this->storeNumber);
+        $fwInitials = SoftgoodsInitials::getTotalForDeptByStore($this->storeNumber);
         $fwInitialsMonths = \DB::table('footwear_initials_rolling_months')->first(['month1', 'month2', 'month3']);
         
-        return view('site.tools.fwinitials.index')->with('fwinitials', $fwInitials)
+        return view('site.tools.sginitials.index')->with('fwinitials', $fwInitials)
                                                 ->with('fwInitialsMonths', $fwInitialsMonths)
-                                                ->with('trackerTitle', 'Footwear Initials Tracker');
+                                                ->with('trackerTitle', 'Softgoods Initials Tracker');
     }
  
 }
