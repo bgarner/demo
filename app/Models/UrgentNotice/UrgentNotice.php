@@ -143,34 +143,8 @@ class UrgentNotice extends Model
 
     public static function getUrgentNoticeCount($storeNumber)
     {
-        $now = Carbon::now()->toDatetimeString();
-
-        $banner_id = StoreInfo::getStoreInfoByStoreId($storeNumber)->banner_id;
-
-        $allStoreUrgentNoticeCount = UrgentNotice::join('urgent_notice_banner', 'urgent_notice_banner.urgent_notice_id', '=', 'urgent_notices.id')
-                                                ->where('all_stores', 1)
-                                                ->where('urgent_notice_banner.banner_id', $banner_id)
-                                                ->where('urgent_notices.start' , '<=', $now)
-                                                ->where('urgent_notices.end', '>=', $now)
-                                                ->count();
-
-        $targetedUrgentNoticeCount = UrgentNoticeTarget::join('urgent_notices','urgent_notices.id','=','urgent_notice_target.urgent_notice_id')
-                                ->where('urgent_notice_target.store_id', $storeNumber)
-                                ->where('urgent_notice_target.is_read', 0)
-                                ->where('urgent_notices.start' , '<=', $now)
-                                ->where('urgent_notices.end', '>=', $now)
-                                ->count();
-
-        $storeGroups = CustomStoreGroup::getStoreGroupsForStore($storeNumber);
-
-        $storeGroupUrgentNotices = UrgentNotice::join('urgent_notice_store_group', 'urgent_notice_store_group.urgent_notice_id', '=', 'urgent_notices.id')
-                                                ->whereIn('urgent_notice_store_group.store_group_id', $storeGroups)
-                                                ->where('urgent_notices.start', '<=', $now )
-                                                ->where('urgent_notices.end', '>=', $now )
-                                                ->count();
-        $urgentNoticeCount = $allStoreUrgentNoticeCount + $targetedUrgentNoticeCount + $storeGroupUrgentNotices;
-
-        return $urgentNoticeCount;
+        $urgentNotices = Self::getActiveUrgentNoticesByStore($storeNumber);
+        return (count($urgentNotices));
     }
 
     public static function getUrgentNotice($id)

@@ -11,6 +11,8 @@ $("body").on("click", ".trackclick", function(e){
 	urgentnoticeId = $(this).attr("data-urgentnotice-id");
 	externalUrlId = $(this).attr("data-ext-url");
 	playListId = $(this).attr("data-playlist-id");
+	toolType = $(this).attr("data-tool-type");
+
 
 	loc = pathArray[2];
 	loc_id = pathArray[4];
@@ -71,6 +73,10 @@ $("body").on("click", ".trackclick", function(e){
 
 	if(typeof flyerId != "undefined"){
 		trackEvent( device, "flyer", flyerId, localStorage.getItem('userStoreNumber'), loc, loc_id );
+		return;
+	}
+	if(typeof toolType != "undefined"){
+		trackEvent( device, toolType, 0, localStorage.getItem('userStoreNumber'), loc, loc_id );
 		return;
 	}
 
