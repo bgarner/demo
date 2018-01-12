@@ -73,6 +73,10 @@ class Builder
         $this->model = $model;
         $this->query = $query;
         $this->callback = $callback;
+
+        if (config('scout.soft_delete', false)) {
+            $this->wheres['__soft_deleted'] = 0;
+        }
     }
 
     /**
@@ -100,6 +104,34 @@ class Builder
         $this->wheres[$field] = $value;
 
         return $this;
+    }
+
+    /**
+     * Include soft deleted records in the results.
+     *
+     * @param  string  $field
+     * @param  mixed  $value
+     * @return $this
+     */
+    public function withTrashed()
+    {
+        unset($this->wheres['__soft_deleted']);
+
+        return $this;
+    }
+
+    /**
+     * Include only soft deleted records in the results.
+     *
+     * @param  string  $field
+     * @param  mixed  $value
+     * @return $this
+     */
+    public function onlyTrashed()
+    {
+        return tap($this->withTrashed(), function () {
+            $this->wheres['__soft_deleted'] = 1;
+        });
     }
 
     /**

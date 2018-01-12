@@ -2,6 +2,8 @@
 
 namespace Laravel\Scout;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class ModelObserver
 {
     /**
@@ -84,7 +86,11 @@ class ModelObserver
             return;
         }
 
-        $model->unsearchable();
+        if ($this->usesSoftDelete($model) && config('scout.soft_delete', false)) {
+            $this->updated($model);
+        } else {
+            $model->unsearchable();
+        }
     }
 
     /**
@@ -96,5 +102,16 @@ class ModelObserver
     public function restored($model)
     {
         $this->created($model);
+    }
+
+    /**
+     * Determine if the given model uses soft deletes.
+     *
+     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @return bool
+     */
+    protected function usesSoftDelete($model)
+    {
+        return in_array(SoftDeletes::class, class_uses_recursive($model));
     }
 }
