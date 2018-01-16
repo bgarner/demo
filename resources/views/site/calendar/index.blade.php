@@ -140,7 +140,7 @@
             weekNumbers: true,
 
             weekNumberCalculation: function(moment){
-                moment.subtract(4, 'weeks');
+               // moment.subtract(4, 'weeks');
                 return moment.week();
             },
             //weekNumbersWithinDays:true,
