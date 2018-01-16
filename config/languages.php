@@ -3,7 +3,7 @@
 return [
     'en' => 'English',
     'fr' => 'Français',
-    'pa' => 'ਪੰਜਾਬੀ',
+    // 'pa' => 'ਪੰਜਾਬੀ',
     // 'cn' => '中文',
     // 'es' => 'Spanish'
 ];
