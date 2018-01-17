@@ -18,29 +18,6 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Create an Urgent Notice</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li>
-                            <a href="/admin/urgentnotice">Urgent Notice</a>
-                        </li>
-                        <li class="active">
-                            <strong>Create an Urgent Notice</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
@@ -74,22 +51,7 @@
                                         </div>
 
                                         <div class="hr-line-dashed"></div>
-                                         <div class="form-group"><label class="col-sm-2 control-label">Attachment Type</label>
-                                            <div class="col-md-10">
-                                               @foreach($attachment_types as $atype)
-                                               <?php $id = "attachment-" . $atype->name ?>
-                                               	<div>{!! Form::input('radio', 'attachment_type', $atype->id , ['id'=> $id ]) !!} {{$atype->name}}</div>
-                                               @endforeach
-                                            </div>
-                                        </div>
 
-                                        <div class="form-group hidden"><label class="col-sm-2 control-label">Attachment Selected</label>
-                                            <div class="col-md-10" id="attachment-selected">
-
-                                            </div>
-                                        </div>
-
-                                        <div class="hr-line-dashed"></div>
                                         <div class="form-group">
 
                                                 <label class="col-sm-2 control-label">Start &amp; End</label>
@@ -105,32 +67,78 @@
 
                                         <div class="hr-line-dashed"></div>
 
-                                        <div class="form-group">
-
-                                            <label class="col-sm-2 control-label">Target Stores</label>
-                                            <div class="col-sm-10">
-                                                {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
-                                                {!! Form::label('allStores', 'Or select all stores:') !!}
-                                                {!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
-                                            </div>
-
-                                        </div>
-
-
-
-                                        <div class="form-group">
-                                            <div class="col-sm-10 col-sm-offset-2">
-                                                <a class="btn btn-white" href="/admin/urgentnotice"><i class="fa fa-close"></i> Cancel</a>
-                                                <button class="urgentnotice-create btn btn-primary" type="submit"><i class="fa fa-check"></i> Create New Urgent Notice</button>
-
-                                            </div>
-                                        </div>
+                                        @include('admin.includes.store-banner-selector', ['optGroupOptions'=> $optGroupOptions, 'optGroupSelections' => $optGroupSelections])
 
                                     </form>
 
 
                                 </div>
+
+                                <div class="ibox">
+                                <div class="ibox-title">
+                                    <h5>Documents</h5>
+
+                                    <div class="ibox-tools">
+                                        <div class="btn btn-primary btn-outline" type="button" role="button" id="add-documents" > <i class="fa fa-plus"></i> Add Documents </div>
+
+                                    </div>
+                                </div>
+                                <div class="ibox-content">
+
+                                    <div id="files-selected">
+                                        <table class="table table-hover urgentnotice-documents-table hidden ">
+                                            <thead>
+                                                <tr>
+                                                    <td>Title</td>
+                                                    <td></td>
+                                                    <td>Action</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                             <div class="ibox">
+                                <div class="ibox-title">
+                                    <h5>Folders</h5>
+
+                                    <div class="ibox-tools">
+                                        <div class="btn btn-primary btn-outline" type="button" id="add-folders" role="button"><i class="fa fa-plus"></i> Add Folders </div>
+                                    </div>
+                                </div>
+                                <div class="ibox-content">
+
+                                    <div id="folders-selected">
+                                        <table class="table table-hover urgentnotice-folders-table hidden">
+                                            <thead>
+                                                <tr>
+                                                    <td>Folders</td>
+                                                    <td></td>
+                                                    <td>Action</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
 		                    </div>
+
+                             <div class="form-group">
+                                <div class="col-sm-10 col-sm-offset-2">
+                                    <a class="btn btn-white" href="/admin/urgentnotice"><i class="fa fa-close"></i> Cancel</a>
+                                    <button class="urgentnotice-create btn btn-primary" type="submit"><i class="fa fa-check"></i> Create New Urgent Notice</button>
+
+                                </div>
+                            </div>
 		                    <div id="document-listing" class="modal fade">
 							    <div class="modal-dialog">
 							        <div class="modal-content">
@@ -196,7 +204,7 @@
 
 </div>
 
-@include('site.includes.footer')
+@include('admin.includes.footer')
 
 @include('admin.includes.scripts')
 
@@ -209,8 +217,8 @@
 <script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 <script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
 <script type="text/javascript" src="/js/custom/tree.js"></script>
-<script type="text/javascript" src="/js/custom/datetimepicker.js"></script>
-<script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
+<script type="text/javascript" src="/js/custom/datetimepicker-with-default-time.js"></script>
+<script type="text/javascript" src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
 <script type="text/javascript">
     $.ajaxSetup({
         headers: {

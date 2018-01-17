@@ -1,3 +1,53 @@
+var playlistId = $("#playlistID").val();
+var initializeTagSelector = function(selectedTags){
+	
+	$("#tags_" + playlistId ).select2({ 
+		width: '100%' , 
+		tags: true,
+		multiple: true,
+		createTag: function (params) {
+    		var term = $.trim(params.term);
+
+		    if (term === ''  && $("#tags_" + playlistId).find('option').attr("tagname", term).length >0) {
+		      return null;
+		    }
+
+		    return {
+		      id: term, //id of new option 
+		      text: term, //text of new option 
+		      newTag: true
+		    }
+		}
+	});
+}
+
+
+$("body").on('select2:select', $("#tags_" + playlistId), function (evt) {	
+
+	var playlist_id = $("#playlistID").val();
+    if(evt.params.data.newTag){
+    	$.post("/admin/tag",{ tag_name: evt.params.data.text })
+    	.done(function(tag){
+    		
+    		//change the id of the newly added tag to be the id from db
+			$('#tags_'+ playlist_id +' option[value="'+tag.name+'"]').val(tag.id);
+			
+			var selectedTags = $("#tags_" + playlist_id).val();
+			//update tag playlist mapping
+			$.post("/admin/playlisttag",{ 'playlist_id' : playlist_id, 'tags': selectedTags })
+			.done(function(){
+				$("#tags_" + playlist_id).select2('destroy');
+				$("#tag-selector-container").load("/admin/playlisttag/"+playlist_id, function(){
+					initializeTagSelector();
+					$("#tags_" + playlist_id).focus();
+
+				});	
+			});				
+
+    	});
+    }
+
+});
 $("#add-more-videos").click(function(){
 	$("#video-listing").modal('show');
 });
@@ -5,46 +55,32 @@ $("#add-more-videos").click(function(){
 
 $('body').on('click', '#attach-selected-videos', function(){
 	
-	$(".selected-videos").remove();
 	$('input[name^="playlist_videos"]').each(function(){
+
 		if($(this).is(":checked")){
-			$(".playlist-videos-table tbody").append('<tr class="selected-videos"> '+
+			$("#videos-selected").append('<tr class="selected-videos"> '+
 													'<td data-video-id='+ $(this).val() +'><i class="fa fa-file-o"></i> '+ $(this).attr("data-videoname") +'</td>'+
 													'<td></td>'+
 													'<td> <a data-video-id="'+ $(this).val()+'" id="file'+ $(this).val()+'" class="remove-staged-file btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>'+
 												 '</tr>');
 		}
 
-		if($(".playlist-videos-table").hasClass('hidden') )	{
-			console.log($(".playlist-videos-table tbody .playlist-videos").length);
-			$(".playlist-videos-table").removeClass('hidden');
-		}
 	});
-});
 
+	$('#video-listing').modal('hide');
+	setTimeout(function() {
+    	$(".playlist-update").trigger('click');
+	}, 1000);
+	
+
+});
 
 
 $('body').on('click', ".remove-video", function(){
-	console.log('remove video');
 	var video_id = $(this).attr('data-video-id');
-	console.log(video_id);
-	$(this).closest('.playlist-videos').fadeOut(200);
+	$(this).closest('.dd-item').fadeOut(200);
 	$("#videos-staged-to-remove").append('<div class="remove_video"  data-video-id='+ video_id +'>')
 });
-
-
-
-$("body").on('click', ".remove-staged-video", function(){
-	
-	
-	var video_id = $(this).attr('data-video-id');
-	console.log('remove staged file' + video_id);
-	$(this).closest('.selected-video').remove();
-	console.log($(this).closest('.selected-video'));
-	$(this).closest('.selected-video').fadeOut(200);
-
-});
-
 
 
 $(document).on('click','.playlist-update',function(){
@@ -67,12 +103,9 @@ $(document).on('click','.playlist-update',function(){
 	$(".selected-videos").each(function(){
 		playlist_videos.push($(this).find('td:first').attr('data-video-id'));
 	});
+	var tags = $("#tags_" + playlistID).val();
 
-	console.log(title);
-	console.log(remove_videos);
-	console.log(playlist_videos);
-
-     if(hasError == false) {
+    if(hasError == false) {
      	
 		$.ajax({
 		    url: '/admin/playlist/' + playlistID ,
@@ -82,7 +115,12 @@ $(document).on('click','.playlist-update',function(){
 		    	title : title,
 		    	description : description,
 		    	playlist_videos:  playlist_videos,
-		    	remove_videos: remove_videos
+		    	remove_videos: remove_videos,
+		    	tags : tags,
+		    	all_stores : getAllStoreStatus(),
+		    	target_stores : getTargetStores(),
+		    	target_banners : getTargetBanners(),
+		    	store_groups : getStoreGroups()
 
 		    },
 		    
@@ -94,11 +132,11 @@ $(document).on('click','.playlist-update',function(){
 		        			$("#title").parent().append('<div class="req">' + errors.title[index]  + '</div>');	
 		        		}); 	
 		        	}
-			        if(errors.hasOwnProperty("playlist_videos")) {
-			        	$.each(errors.videos, function(index){
-			        		$(".existing-videos").append('<div class="req">' + errors.playlist_videos[index]  + '</div>');
-			        	});
-			        }
+			        // if(errors.hasOwnProperty("videos")) {
+			        // 	$.each(errors.videos, function(index){
+			        // 		$(".existing-videos").append('<div class="req">' + errors.videos[index]  + '</div>');
+			        // 	});
+			        // }
 			        if(errors.hasOwnProperty("videos")) {
 			        		swal("Error!", "'" + errors.videos +"'", "error");
 			        		// $(".existing-videos").append('<div class="req">' + errors.videos  + '</div>');
@@ -113,7 +151,6 @@ $(document).on('click','.playlist-update',function(){
 		    }
 		}).done(function(response){
 			console.log(response);
-			console.log("********");
 			$(".existing-videos-container").load("/admin/playlistvideos/"+playlistID);
 			$("#videos-staged-to-remove").empty();
 			$("#videos-selected").empty();

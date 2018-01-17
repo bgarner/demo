@@ -23,34 +23,30 @@
 			@include('site.includes.topbar')
         </div>
 
-		<div class="row wrapper border-bottom white-bg page-heading">
-            <div class="col-lg-12">
-                <h2>Product Launches</h2>
-
-                <small class="pull-right"> Last Updated : {{$lastUpdated}} </small>
-            </div>
-        </div>
-
-
 		<div class="wrapper wrapper-content  animated fadeInRight">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="ibox">
 
-                         <p class="pull-right"><a href="#" data-toggle="modal" data-target="#productLaunchModal"><i class="fa fa-question-circle" aria-hidden="true"></i> Launch Product Explained</a></p>
+
 
                         <div class="ibox-content">
-
+                            <p class="pull-right"><a href="#" data-toggle="modal" data-target="#productLaunchModal"><i class="fa fa-question-circle" aria-hidden="true"></i> Footwear Release vs. Footwear Launch</a>
+                                <br /><small>{{ __("Last Updated")}} : {{$lastUpdated}}</small>
+                            </p>
+                            <h2>{{ __("Product Launches") }}</h2>
+                            <hr />
 	                    	<table class="table dataTable" id="productLaunchDataTable">
+
 	                    		<thead>
 	                    			<tr role="row">
-	                    				<th>Launch Date</th>
-	                    				<th>Event Type</th>
-	                    				<th>Style Number</th>
-	                    				<th>Vendor Code</th>
-	                    				<th>Style</th>
-	                    				<th>Retail Price</th>
-	                    				<th>Tracking</th>
+	                    				<th>{{__("Launch Date")}}</th>
+	                    				<th>{{__("Event Type")}}</th>
+	                    				<th>{{__("Style Number")}}</th>
+	                    				<th>{{__("Vendor Code")}}</th>
+	                    				<th>{{__("Style")}}</th>
+	                    				<th>{{__("Retail Price")}}</th>
+	                    				<th>{{__("Tracking")}}</th>
 
 	                    			</tr>
 	                    		</thead>
@@ -112,16 +108,14 @@
 	                </div> -->
 	                <div id="modalBody" class="modal-body event-modal-body" style="padding: 20px;">
 
-<h4>Launch Product Explained</h4>
+<h4>What is the difference between Footwear Release and Footwear Launch?</h4>
 
-<p><em>Footwear, Softgoods or Hardgoods Launch</em> – A true launch product has a hard date for availability to the public and cannot be sold, displayed or even socialized (pictures) prior to that date. The vendor typically creates some hype around launch products with marketing and social media leading up to the date. It is the expectation that launch product is to be in all applicable stores for the launch date, even if the vendor has to expedite the product to stores at their own cost to hit the launch. <strong>We will send a communication to stores if this product is late or is not expected to arrive.</strong></p>
+<p><em>Footwear Launch</em> – A true launch product has a hard date for availability to the public and cannot be sold, displayed or even socialized (pictures) prior to that date. The vendor typically creates some hype around launch products with marketing and social media leading up to the date. It is the expectation that launch product is to be in all applicable stores for the launch date, even if the vendor has to expedite the product to stores at their own cost to hit the launch. <strong>We will send a communication to stores if this product is late or is not expected to arrive.</strong></p>
+
 
 <p><em>Footwear Release</em> – Styles with a release date cannot be sold before that specific date. There is not typically the same type of hype created by the vendor around the release and <strong>stores are not guaranteed to have product in time for the release.</strong> If a store receives the product in advance, they cannot sell before release date. <strong>We will not send communications to stores if this product is late or is not expected to arrive.</strong></p>
 
-<ul>
-    <li><strong>Please ensure all launch product is separated, boxed, labelled and off the sales floor until the launch date.</strong></li>
-    <li><strong><em>Please note that if a new item or style is delivered to store and it does NOT appear on the Product Launch tracker, then you are to proceed with receiving, merchandising and selling of the product.</em></strong></li>
-</ul>
+
 
 	                </div>
 	                <div class="modal-footer">

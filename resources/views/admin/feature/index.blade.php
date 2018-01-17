@@ -17,26 +17,11 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Features</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li class="active">
-                            <strong>Features</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
+        {{-- <div class="row wrapper border-bottom white-bg">
+            <div class="col-lg-12">
+                <h2>Features</h2>
+            </div>
+        </div> --}}
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
@@ -55,18 +40,21 @@
 
 
 		                            <div class="table-responsive">
-		                            	<table class="table table-hover issue-tracker">
+		                            	<table class="table table-hover issue-tracker datatable">
+			                            	<thead>
 			                            	<tr>
-												
+												<td>Id</td>
 												<td>Title</td>
 												<td>Label</td>
 												<td>Thumb</td>
 												<td>Cover</td>
 												<td>Actions</td>
 											</tr>
+											</thead>
+											<tbody>
 			                            	@foreach($features as $feature)
 			                            	<tr>
-			                            		
+			                            		<td>{{$feature->id}}</td>
 			                            		<td><a href="/admin/feature/{{$feature->id}}/edit">{{ $feature->title }}</a></td>
 			                            		<td> {{$feature->tile_label}} </td>
 			                            		<td><img src="/images/featured-covers/{{ $feature->thumbnail }}" height="75" width="75" /></td>
@@ -77,6 +65,7 @@
 			                            		</td>
 			                            	</tr>
 			                            	@endforeach
+			                            	</tbody>
 		                            	</table>
 		                            </div>
 		                        </div>
@@ -88,7 +77,7 @@
 
 		        </div>
 
-				@include('site.includes.footer')
+				@include('admin.includes.footer')
 
 			    @include('admin.includes.scripts')
 
@@ -97,6 +86,21 @@
 				        headers: {
 				            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				        }
+					});
+					$(".datatable").dataTable(
+		        	{
+		        		"order": [[ 0, 'desc' ]],
+						"columns": [
+						    { "visible": false },
+						    null,
+						    null,
+						    null,
+						    null,
+						    { "width" : "10%" , "sortable" : false}
+						  ],
+						pageLength: 50,
+						responsive: true,
+						fixedHeader: true
 					});
 
 				</script>

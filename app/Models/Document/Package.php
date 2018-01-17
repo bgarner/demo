@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Document\Document;
 use App\Models\Tag\Tag;
 use App\Models\Tag\ContentTag;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Utility\Utility;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Validation\PackageValidator;
@@ -145,7 +145,8 @@ class Package extends Model
             $query->where('documents.start', '<=', $now )
                 ->where(function($query) use ($now) {
                     $query->where('documents.end', '>=', $now)
-                        ->orWhere('documents.end', '=', '0000-00-00 00:00:00' ); 
+                        ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                        ->orWhere('documents.end', '=', NULL ); 
                 });
         }
 

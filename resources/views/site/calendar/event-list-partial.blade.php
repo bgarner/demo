@@ -2,27 +2,25 @@
 <div class="timeline-item">
 
     <div class="row">
-        <div class="col-md-4 col-sm-4 col-xs-4 date">
-            <i class="fa fa-calendar"></i>
-
-            {{$events[0]->prettyDateStart}}
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 date">
+            <i class="fa fa-calendar"></i> {{$events[0]->prettyDateStart}}
             <br>
             <small class="text-navy">
-            @if( strtotime($events[0]->start) < strtotime(date("y-m-d H:i:s")) )
-                {!! $events[0]->since !!} ago
-            @else
-                in {!! $events[0]->since !!}
-            @endif
-
+                @if( strtotime($events[0]->start) < strtotime(date("y-m-d H:i:s")) )
+                    {!! $events[0]->since !!} {{ __("ago") }}
+                @else
+                    in {!! $events[0]->since !!}
+                @endif
             </small>
+
         </div>
-        <div class="col-md-8 col-sm-8 col-xs-8 content">
+        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12 content">
             @foreach($events as $e)
             <div class="event row">
-                <div class="event-type col-md-3">
-                    <span class="label label-primary">{!! $e->event_type_name !!}</span>
+                <div class="event-type col-md-3 col-xs-12">
+                    <span class="label" style="background-color: #{{$e->background_colour}}; color: #{{$e->foreground_colour}};">{!! $e->event_type_name !!}</span>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-9 col-xs-12">
                     <div class="event-title">
 
                         <span class="m-b-xs"><strong>{!! $e->title !!}</strong></span>

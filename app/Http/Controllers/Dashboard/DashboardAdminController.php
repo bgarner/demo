@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Banner;
-use App\Models\UserBanner;
-use App\Models\UserSelectedBanner;
+use App\Models\StoreApi\Banner;
+use App\Models\Auth\User\UserBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Dashboard\Quicklinks;
 use App\Models\Feature\Feature;
 
@@ -16,11 +16,6 @@ use App\Models\Feature\Feature;
 class DashboardAdminController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('admin.auth');
-        $this->middleware('banner');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -28,25 +23,20 @@ class DashboardAdminController extends Controller
      */
     public function index()
     {
-        $user_id = \Auth::user()->id;
-        $banner_ids = UserBanner::where('user_id', $user_id)->get()->pluck('banner_id');
-        $banners = Banner::whereIn('id', $banner_ids)->get();        
-        $banner_id = UserSelectedBanner::where('user_id', \Auth::user()->id)->first()->selected_banner_id;
-        $banner  = Banner::find($banner_id);
+        
+        $banner = UserSelectedBanner::getBanner();
 
-        //get the quicklinks
-        $quicklinks = Quicklinks::where('banner_id', $banner_id)->orderBy('order')->get();
+        $quicklinks = Quicklinks::where('banner_id', $banner->id)->orderBy('order')->get();
 
-        $features = Feature::where('banner_id', $banner_id)->orderBy('order')->get();
-
+        $features = Feature::getActiveFeaturesByBanner($banner->id);
+        
         //$oldBackgrounds = Banner::getOldBannerBackgrounds($banner_id);
 
         return view('admin.dashboard.index')
                 ->with('banner', $banner)
                 // ->with('oldBackgrounds', $oldBackgrounds)
-                ->with('banners', $banners)
                 ->with('features', $features)
-                ->with('quicklinks', $quicklinks);  
+                ->with('quicklinks', $quicklinks);
     }
 
     /**

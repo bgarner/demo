@@ -1,60 +1,66 @@
-$("#allStores").change(function(){
+$('body').on('blur','#targets_chosen', function(){
+	
+	var target_stores = getTargetStores();
+	var target_banners = getTargetBanners();
+	var store_groups = getStoreGroups();
+	
+	$("#communication-type-selector").empty().load('/admin/target/communicationtypes', { 
+		target_stores : target_stores, target_banners : target_banners,store_groups : store_groups });
 
-	if ($("#allStores").is(":checked")) {
-
-		$("#storeSelect option").each(function(){
-			$(this).removeAttr('selected');
-		});
-		$("#storeSelect").chosen('chosen:updated');
-
-		$("#storeSelect option").each(function(index){			
-			$(this).prop('selected', 'selected');
-		});
-		$("#storeSelect").chosen();
-		
-	}
-	else if ($("#allStores").not(":checked")) {
-		$("#storeSelect option").each(function(){
-			$(this).removeAttr('selected');
-		});
-		$("#storeSelect").chosen();
-		
-	}
 });
 
 
+var initializeTagSelector = function(selectedTags){
+	
+	$("#tags_new").select2({ 
+		width: '100%' , 
+		tags: true,
+		multiple: true,
+		createTag: function (params) {
+    		var term = $.trim(params.term);
 
-$("#add-documents").click(function(){
-	$("#document-listing").modal('show');
-});
-$("#add-packages").click(function(){
-	$("#package-listing").modal('show');	
-});
+		    if (term === '' && $("#tags_new").find('option').attr("tagname", term).length >0) {
+		      return null;
+		    }
 
-
-$('body').on('click', '#attach-selected-files', function(){
-	$("#files-selected").empty();
-	$("#files-selected").append('<label class= "control-label col-sm-2 "> Documents attached</label>');
-	$('input[name^="package_files"]').each(function(){
-		if($(this).is(":checked")){
-			$("#files-selected").append('<div class="selected-files col-sm-10 col-sm-offset-2" data-fileid='+ $(this).val() +'>'+$(this).attr("data-filename")+'</div>')
+		    return {
+		      id: term, //id of new option 
+		      text: term, //text of new option 
+		      newTag: true
+		    }
 		}
 	});
+	if(typeof(selectedTags) !== 'undefined'){
+		$(selectedTags).each(function(index, tag){
+			$('#tags_new').val(selectedTags);
+			$('#tags_new').trigger('change');
+		});
+	}
+
+}
+
+$("body").on('select2:select', $("#tags_new"), function (evt) {
+
+	var communication_id = 'new';
+    if(evt.params.data.newTag){
+    	$.post("/admin/tag",{ tag_name: evt.params.data.text })
+    	.done(function(tag){
+    		// change the id of the newly added tag to be the id from db
+			$('#tags_new option[value="'+tag.name+'"]').val(tag.id);	
+			var selectedTags = $("#tags_new").val();
+
+			$('#tags_new').select2('destroy');
+			$("#tag-selector-container").load("/admin/communicationtag/"+communication_id, function(response){
+				console.log(response);
+				initializeTagSelector(selectedTags);
+				$("#tags_new").focus();
+
+			});
+			
+    	});
+    }
+
 });
-
-$('body').on('click', '#attach-selected-packages', function(){
-
-	console.log('attach selected-packages');
-	$("#packages-selected").empty();
-	$("#packages-selected").append('<label class= "control-label col-sm-2 ">Packages Attached</label>');
-	$('input[name^="packages"]:checked').each(function(){
-		
-			$("#packages-selected").append('<div class="selected-packages col-sm-10 col-sm-offset-2" data-packageid='+ $(this).val() +'>'+ $(this).attr("data-package-name")+'</div>')		
-		
-		
-	});
-});
-
 
 
 $(document).on('click','.communication-create',function(){
@@ -67,20 +73,25 @@ $(document).on('click','.communication-create',function(){
 	var start = $("#send_at").val();
 	var end = $("#archive_at").val();
 	var banner_id = $("input[name='banner_id']").val();
-	var target_stores  = $("#storeSelect").val();
 	var importance = "1";
 	var sender = "";
 	var communication_packages = [];
 	var communication_documents = [];
-	var allStores  = $("allStores:checked").val();
 
-	console.log(communication_type_id);
+	var target_stores = getTargetStores();
+	var target_banners = getTargetBanners();
+	var store_groups = getStoreGroups();
+	var all_stores = getAllStoreStatus();
+
+	var tags = $("#tags_new").val();
+
+
 	if(!communication_type_id){
 		communication_type_id = $("#default_communication_type").val(); // no category
 
 	}
 
-	$(".selected-files").each(function(){
+	$(".communication-documents").each(function(){
 		communication_documents.push($(this).attr('data-fileid'));
 	});
 	
@@ -100,7 +111,7 @@ $(document).on('click','.communication-create',function(){
 		$(window).scrollTop(0);
 		return false;
 	}
-	if( target_stores == null && typeof allStores === 'undefined' ) {
+	if( target_stores == null || all_stores == null || store_groups == null ) {
 		swal("Oops!", "Target stores not selected.", "error"); 
 		hasError = true;
 		$(window).scrollTop(0);
@@ -123,8 +134,12 @@ $(document).on('click','.communication-create',function(){
 		  		archive_at : end,
 		  		banner_id : banner_id,
 		  		target_stores : target_stores,
+		  		all_stores : all_stores,
+		    	target_banners : target_banners,
+		    	store_groups : store_groups,
 		  		communication_documents : communication_documents,
-		  		communication_packages : communication_packages
+		  		communication_packages : communication_packages,
+		  		tags: tags
 		  		
 		    },
 		    success: function(result) {

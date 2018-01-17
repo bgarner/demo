@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\StoreApi\Banner;
+use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Tag\Tag;
-use App\Models\Banner;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserBanner;
 
 class TagAdminController extends Controller
 {
@@ -17,8 +18,7 @@ class TagAdminController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin.auth');
-        $this->middleware('banner');
+        //
     }
 
     /**
@@ -26,15 +26,10 @@ class TagAdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
-        $tags = Tag::where('banner_id', $banner->id)->get();
-        return view('admin.tag.index')->with('banner', $banner)
-                                    ->with('banners', $banners)
-                                    ->with('tags', $tags);
+        $tags = Tag::all();
+        return view('admin.video.tag.index')->with('tags', $tags);
     }
 
     /**
@@ -42,8 +37,10 @@ class TagAdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
+   
+        return view('admin.video.tag.create');
 
     }
 
@@ -55,8 +52,12 @@ class TagAdminController extends Controller
      */
     public function store(Request $request)
     {
-        Tag::storeTag($request);
-        return ($request->all());
+        $tag = Tag::storeTag($request); 
+        if( isset($request->modal) && $request->modal){
+            return redirect()->action('Tag\TagAdminController@index');
+        }
+        return $tag;
+        
     }
 
     /**
@@ -79,7 +80,11 @@ class TagAdminController extends Controller
     public function edit($id)
     {
         $tag = Tag::find($id);
-        return view('admin.tag.edit')->with('tag', $tag);
+        $banner = UserSelectedBanner::getBanner();
+        $banners = Banner::all();
+        return view('admin.video.tag.edit')->with('tag', $tag)
+                                    ->with('banner', $banner)
+                                    ->with('banners', $banners);
     }
 
     /**
@@ -92,7 +97,7 @@ class TagAdminController extends Controller
     public function update(Request $request, $id)
     {
         Tag::updateTag($id, $request);
-        return redirect()->action('Tag\TagAdminController@index');
+        return redirect()->action('Video\TagAdminController@index');
     }
 
     /**
@@ -104,6 +109,6 @@ class TagAdminController extends Controller
     public function destroy($id)
     {
         Tag::find($id)->delete();
-        return 'deleted';
+        return ;
     }
 }

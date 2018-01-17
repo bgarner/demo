@@ -36,3 +36,4 @@
 
 <!-- editor -->
 {{-- <script src="/js/plugins/summernote/summernote.min.js"></script> --}}
+<script type="text/javascript" src="/js/plugins/dataTables/datatables.min.js"></script>

@@ -4,7 +4,7 @@
 <head>
     @section('title', 'Urgent Notice')
     @include('admin.includes.head')
-    
+
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
 	<link rel="stylesheet" type="text/css" href="/css/custom/tree.css">
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
@@ -19,29 +19,6 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Edit an Urgent Notice</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li>
-                            <a href="/admin/urgentnotice">Urgent Notice</a>
-                        </li>
-                        <li class="active">
-                            <strong>Edit an Urgent Notice</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
@@ -50,8 +27,7 @@
 		                        <div class="ibox-title">
 		                            <h5>Edit Urgent Notice: {{ $urgent_notice->title }}</h5>
 		                            <div class="ibox-tools">
-		                                <a href="/admin/urgentnotice/create" class="btn btn-primary" role="button"><i class="fa fa-plus"></i> Add New urgent Notice</a>
-                                        
+
 		                            </div>
 		                        </div>
 		                        <div class="ibox-content">
@@ -69,7 +45,7 @@
                                         </div>
 
                                         <div class="hr-line-dashed"></div>
-                                         
+
                                         <div class="form-group">
 
                                                 <label class="col-sm-2 control-label">Start &amp; End</label>
@@ -85,98 +61,70 @@
 
                                         <div class="hr-line-dashed"></div>
 
-                                        <div class="form-group">
-                                            
-                                            <label class="col-sm-2 control-label">Target Stores</label>
-                                            <div class="col-sm-10">
-                                            	@if($all_stores)
-	                                                {!! Form::select('stores', $storeList, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
-	                                                {!! Form::label('allStores', 'Or select all stores:') !!}
-	                                                {!! Form::checkbox('allStores', null, true ,['id'=> 'allStores'] ) !!}
-                                                @else
-	                                                {!! Form::select('stores', $storeList, $target_stores, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
-	                                                {!! Form::label('allStores', 'Or select all stores:') !!}
-	                                                {!! Form::checkbox('allStores', null, false ,['id'=> 'allStores'] ) !!}
-                                                @endif
-                                            </div>
+                                        @include('admin.includes.store-banner-selector', ['optGroupOptions'=> $optGroupOptions, 'optGroupSelections' => $optGroupSelections])
 
-                                        </div>
                                     </form>
 
 
                         		</div><!-- ibox content closes -->
                     		</div><!-- ibox closes -->
+
                     		<div class="ibox">
                             	<div class="ibox-title">
-                            		<h5> Attachments </h5>
-                            		
+                            		<h5> Documents </h5>
+                            		<div class="ibox-tools">
+
+                            			<div id="add-more-documents" class="btn btn-primary btn-outline col-md-offset-8" role="button" ><i class="fa fa-plus"></i> Add More Documents</div>
+                            		</div>
+
                             	</div>
                             	<div class="ibox-content">
-	                                <div class="attachment row" >
+                                <div class="existing-files row" >
 
-	                                	<div class="form-group"><label class="col-sm-2 control-label">Attachment Type</label>
-                                            <div class="col-md-10">
-                                            	<input hidden id="attachment_type_selected" value={{$urgent_notice->attachment_type_id}}>
-                                            	<input hidden id="attachment_type_selected_latest" value={{$urgent_notice->attachment_type_id}}>
-                                               @foreach($attachment_types as $atype)
-                                               <?php $id = "attachment-" . $atype->name ?>
-                                               	<div>{!! Form::radio('attachment_type', $atype->id , false, ['id'=> $id ,'class'=>'i-checks']) !!} {{$atype->name}}</div>
-                                               @endforeach
+									<!-- <div class="form-group"><label class="col-sm-2 control-label">Files Attached</label> -->
+										<div class="existing-files-container">
+											@include('admin.urgent-notice.document-partial', ['documents'=>$attached_documents])
+
+										</div>
+									<!-- </div> -->
+									<div id="files-staged-to-remove"></div>
+
+								</div>
+								<div id="files-selected" class="row"></div>
+								</div>
+
+                            </div>
+
+                            <div class="ibox">
+                            	<div class="ibox-title">
+                            		<h5> Folders </h5>
+                            		<div class="ibox-tools">
+
+                            			<div id="add-more-folders" class="btn btn-primary btn-outline col-md-offset-8" role="button" ><i class="fa fa-plus"></i> Add More Folders</div>
+                            		</div>
+                            	</div>
+                            	<div class="ibox-content">
+
+                                     <div class="existing-folders row" >
+
+										<div class="existing-folders-container " >
+
+											@include('admin.urgent-notice.folder-partial', ['folders'=>$attached_folders])
+
+										</div> <!-- existing-folders-container closes -->
 
 
-                                            </div>
-                                        </div>
+									</div><!-- existing-folders closes -->
+									<div id="folders-selected" class="row">
 
-										<div class="form-group">
-											<label class="col-sm-2 control-label">Attachments</label>
-											
-											<div class="existing-attachment-container col-md-10">
-											@if($urgent_notice->attachment_type_id == 1)
-                                           		@foreach($attached_folders as $folder)
-													<div class='attachments row' data-attachment-type=1 data-attachmentid="{{ $folder->id }}" id="folder{{$folder->id}}">
-														<div class="col-md-8">
-															<i class="indicator fa fa-folder"></i>{{$folder->name}}
-														</div>
-													
-														<a data-attachment-type=1 data-attachmentid="{{ $folder->id }}" id="folder{{$folder->id}}" class="remove-folder btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
-													</div>
-                                           		@endforeach
-                                           		<div id="attachments-staged-to-remove"></div>
-												<div id="attachment-selected" class="row"></div>
-                                            </div><!-- existing-attachment-container closes -->
-                                        </div><!-- form group closes-->
-                                        <div class="row">
-                                       		<div id="add-more-folders" class="btn btn-primary btn-outline col-md-offset-2" role="button" >
-                                       			<i class="fa fa-plus"></i> Add More Folders
-                                       		</div>
-                                       	</div>
-                                           @elseif($urgent_notice->attachment_type_id == 2)
-                                           		@foreach($attached_documents as $document)
-                                           			<div class="attachments row" data-attachment-type=2 data-attachmentid="{{ $document->id }}" id="document{{$document->id}}">
-                                           				<div class="col-md-8">
-                                           				<i class="indicator fa fa-file"></i>{{$document->original_filename}}
-                                           				</div>
-                                           			
-                                           				<a data-attachment-type=2 data-attachmentid="{{ $document->id }}" id="document{{$document->id}}" class="remove-file btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
-                                           			</div>
-                                           		@endforeach
-                                           		<div id="attachments-staged-to-remove"></div>
-												<div id="attachment-selected" class="row"></div>
-                                           	</div><!-- existing-attachment-container closes -->
-                                           </div> <!-- form group closes -->
-                                           	<div class="row">
-	                                           	<div id="add-more-documents" class="btn btn-primary btn-outline col-md-offset-2" role="button" >
-	                                       			<i class="fa fa-plus"></i> Add More Documents
-	                                       		</div>
-                                       		</div>
-                                           @endif
-										
-									</div><!--attachment row closes -->
-									
-								</div>	<!-- ibox content -->	
+									</div>
+									<div id="folders-staged-to-remove">
 
-                            </div><!-- ibox closes -->
-                                        
+									</div>
+
+								</div> <!-- ibox content closes -->
+							</div>
+
 
 
 
@@ -187,7 +135,7 @@
 
                         </div>
                     </div>
-                                
+
 
 
                 </div>
@@ -195,14 +143,14 @@
 
         </div>
 
-			@include('site.includes.footer')
+			@include('admin.includes.footer')
 
 		    @include('admin.includes.scripts')
    	</div>
-	
 
 
-		     
+
+
 
 
     <script type="text/javascript">
@@ -212,14 +160,14 @@
 	        }
 		});
 
-        
-        
+
+
 
 	</script>
 
 	@include('site.includes.bugreport')
 
-				
+
 	<div id="document-listing" class="modal fade">
 	    <div class="modal-dialog">
 	        <div class="modal-content">
@@ -229,12 +177,12 @@
 	            </div>
 	            <div class="modal-body">
 	            	<ul class="tree">
-	            	@foreach ($navigation as $nav) 
-					
+	            	@foreach ($navigation as $nav)
+
 						@if (isset($nav["is_child"]) && ($nav["is_child"] == 0) )
-							
+
 							@include('admin.package.file-folder-structure-partial', ['navigation' =>$navigation, 'currentnode' => $nav])
-							
+
 						@endif
 
 					@endforeach
@@ -258,11 +206,11 @@
 	            <div class="modal-body">
 	            	<ul class="tree">
 	            	@foreach ($folderStructure as $folder)
-					
+
 						@if (isset($folder["is_child"]) && ($folder["is_child"] == 0) )
-							
+
 							@include('admin.package.folder-structure-partial', ['folderStructure' =>$folderStructure, 'currentnode' => $folder])
-							
+
 						@endif
 
 
@@ -278,25 +226,24 @@
 	</div>
 
 
-	<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>	
-	<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>	
+	<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
+	<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
 	<script type="text/javascript" src="/js/custom/admin/urgent-notices/editUrgentNotice.js"></script>
 	<script type="text/javascript" src="/js/custom/tree.js"></script>
 	<script src="/js/custom/datetimepicker.js"></script>
-	<script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script>
+	<script src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
 	<script type="text/javascript">
 		$(".chosen").chosen({
 	        width:'75%'
-	    });          
+	    });
 
 	    CKEDITOR.replace('description', {
             filebrowserUploadUrl: "{{route('utilities.ckeditorimages.store',['_token' => csrf_token() ])}}"
         });
-	    
+
 	    CKEDITOR.instances['description'].setData($("textarea").attr('value'));
-	    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});            
+	    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
 
 	</script>
 </body>
 </html>
-

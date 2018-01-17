@@ -1,3 +1,54 @@
+var initializeTagSelector = function(selectedTags){
+	
+	$("#tags_new").select2({ 
+		width: '100%' , 
+		tags: true,
+		multiple: true,
+		createTag: function (params) {
+    		var term = $.trim(params.term);
+
+		    if (term === '' && $("#tags_new").find('option').attr("tagname", term).length >0) {
+		      return null;
+		    }
+
+		    return {
+		      id: term, //id of new option 
+		      text: term, //text of new option 
+		      newTag: true
+		    }
+		}
+	});
+	if(typeof(selectedTags) !== 'undefined'){
+		$(selectedTags).each(function(index, tag){
+			$('#tags_new').val(selectedTags);
+			$('#tags_new').trigger('change');
+		});
+	}
+
+}
+
+$("body").on('select2:select', $("#tags_new"), function (evt) {
+
+	var playlist_id = 'new';
+    if(evt.params.data.newTag){
+    	$.post("/admin/tag",{ tag_name: evt.params.data.text })
+    	.done(function(tag){
+    		// change the id of the newly added tag to be the id from db
+			$('#tags_new option[value="'+tag.name+'"]').val(tag.id);	
+			var selectedTags = $("#tags_new").val();
+
+			$('#tags_new').select2('destroy');
+			$("#tag-selector-container").load("/admin/playlisttag/"+playlist_id, function(){
+				initializeTagSelector(selectedTags);
+				$("#tags_new").focus();
+
+			});
+			
+    	});
+    }
+
+});
+
 $("#add-videos").click(function(){
 	$("#video-listing").modal('show');
 });
@@ -11,11 +62,13 @@ $('body').on('click', '#attach-selected-videos', function(){
 			$("#videos-selected").append('<div class="selected-videos col-sm-10 col-sm-offset-2" data-videoid='+ $(this).val() +'>'+$(this).attr("data-videoname")+'</div>')
 		}
 	});
+	$('#video-listing').modal('hide');
 });
 
 
 $(document).on('click','.playlist-create',function(){
   	
+  	console.log(getAllStoreStatus());
   	var hasError = false;
  
 	var title = $("#title").val();
@@ -26,6 +79,7 @@ $(document).on('click','.playlist-create',function(){
 	$(".selected-videos").each(function(){
 		playlist_videos.push($(this).attr('data-videoid'));
 	});
+	var tags = $("#tags_new").val();
 
 	console.log('title: ' + title);
 	console.log(description);
@@ -57,10 +111,15 @@ $(document).on('click','.playlist-create',function(){
 		  		banner_id : banner_id,
 		  		title : title,
 		  		description : description,
-		  		playlist_videos : playlist_videos
+		  		playlist_videos : playlist_videos,
+		  		all_stores : getAllStoreStatus(),
+		  		target_stores : getTargetStores(),
+		  		target_banners : getTargetBanners(),
+		  		store_groups : getStoreGroups(),
+		  		tags : tags
 		  		
 		    },
-		    success: function(result) {
+		    success: function(result) { 
 		        console.log(result);
 
 		        if(result.validation_result == 'false') {

@@ -8,7 +8,8 @@ use League\Csv\Reader;
 use App\Models\Utility\Utility;
 use Carbon\Carbon;
 use App\Models\ProductLaunch\ProductLaunchTarget;
-use App\Models\StoreInfo;
+use App\Models\StoreApi\StoreInfo;
+use App\Models\Event\EventType;
 
 class ProductLaunch extends Model
 {
@@ -20,7 +21,7 @@ class ProductLaunch extends Model
     {
 
 		$now = Carbon::now()->toDatetimeString();
-		
+
     	$products =  ProductLaunch::join('productlaunch_target', 'productlaunch_target.productlaunch_id' , '=', 'productlaunch.id')
     							->where('store_id', $storeNumber)
 				                // ->where('productlaunch.launch_date', '>=', $now)
@@ -28,7 +29,7 @@ class ProductLaunch extends Model
     							->get()
     							->each(function ($item) {
 			                        $item->prettyLaunchDate = Utility::prettifyDate($item->launch_date);
-			                        $item->launch_date = ProductLaunch::formatLaunchDate($item->launch_date);                   
+			                        $item->launch_date = ProductLaunch::formatLaunchDate($item->launch_date);
 			                    });
     	return ($products);
     }
@@ -37,7 +38,7 @@ class ProductLaunch extends Model
     {
 
 		$now = Carbon::now()->toDatetimeString();
-		
+
     	$products =  ProductLaunch::join('productlaunch_target', 'productlaunch_target.productlaunch_id' , '=', 'productlaunch.id')
     							->where('store_id', $storeNumber)
 				                // ->where('productlaunch.launch_date', '>=', $now)
@@ -45,21 +46,23 @@ class ProductLaunch extends Model
     							->get()
     							->each(function ($item) {
 			                        $item->end = Carbon::createFromFormat('Y-m-d H:i:s', $item->start)->addDay()->toDateTimeString();
-			                        $title = $item->event_type_name . " - " . $item->style_number . " - " . $item->style_name . " - Reg. " . $item->retail_price; 
+			                        $title = $item->event_type_name . " - " . $item->style_number . " - " . $item->style_name . " - Reg. " . $item->retail_price;
 			                        $item->title = addslashes($title);
-			                        
+			                        $item->event_type = EventType::getEventTypeIdByName($item->event_type_name, 1);
 			                    });
     	return ($products);
     }
 
     public static function getActiveProductLaunchByStoreandMonth($storeNumber, $yearMonth)
     {
-    	
+
         $products = ProductLaunch::join('productlaunch_target', 'productlaunch.id', '=', 'productlaunch_target.productlaunch_id')
+        			->join('event_types', 'productlaunch.event_type', '=', 'event_types.event_type')
                     ->where('productlaunch_target.store_id', $storeNumber)
                     ->where('productlaunch.launch_date', 'LIKE', $yearMonth.'%')
                     ->orderBy('productlaunch.launch_date')
-                    ->select('productlaunch.id', 'productlaunch.launch_date as start', 'productlaunch_target.store_id', 'productlaunch.event_type as event_type_name','productlaunch.style_number', 'productlaunch.style_name', 'productlaunch.retail_price')
+                    ->select('productlaunch.id', 'productlaunch.launch_date as start', 'productlaunch_target.store_id', 'productlaunch.event_type as event_type_name','productlaunch.style_number', 'productlaunch.style_name', 'productlaunch.retail_price', 'event_types.background_colour', 
+                    	'event_types.foreground_colour')
                     ->get()
                     ->each(function ($item) {
                     	$item->end = Carbon::createFromFormat('Y-m-d H:i:s', $item->start)->addDay()->toDateTimeString();
@@ -73,21 +76,50 @@ class ProductLaunch extends Model
                     ->groupBy(function($event) {
                             return Carbon::parse($event->start)->format('Y-m-d');
                     });
+        
         return $products;
-    
+
     }
 
-    public static function getAllProductLaunches($banner_id)
+    public static function getAllProductLaunches()
     {
-    	
+
 
     	return ProductLaunch::all()
     						->sortBy('launch_date')
     						->each(function ($item) {
 			                        $item->prettyLaunchDate = Utility::prettifyDate($item->launch_date);
-			                        $item->launch_date = ProductLaunch::formatLaunchDate($item->launch_date);                   
+			                        $item->launch_date = ProductLaunch::formatLaunchDate($item->launch_date);
 			                    });
     }
+
+    public static function getActiveProductLaunchesForStoreList($storeNumbersArray)
+      {
+         $today = Carbon::today()->toDatetimeString();
+
+         $productlaunches = ProductLaunch::join('productlaunch_target', 'productlaunch_target.productlaunch_id' ,  '=', 'productlaunch.id')
+                        ->whereIn('productlaunch_target.store_id', $storeNumbersArray)
+                        ->where('productlaunch.launch_date', '>=', $today )
+                        ->select('productlaunch.*', 'productlaunch_target.store_id')
+                       ->get()
+                       ->toArray();
+
+         $compiledproductLaunches = [];
+
+         foreach ($productlaunches as $productlaunch) {
+            $index = array_search($productlaunch['id'], array_column($compiledproductLaunches, 'id'));
+            if(  $index !== false ){
+               array_push($compiledproductLaunches[$index]->stores, $productlaunch["store_id"]);
+            }
+            else{
+
+               $productlaunch["stores"] = [];
+               array_push( $productlaunch["stores"] , $productlaunch["store_id"]);
+               array_push( $compiledproductLaunches , (object) $productlaunch);
+            }
+         }
+         return (object)($compiledproductLaunches);
+      }
 
     public static function addProductLaunchData($request)
     {
@@ -108,11 +140,11 @@ class ProductLaunch extends Model
             switch($request->uploadOption){
 
 	    		case "clear":
-	    			
+
 	    			ProductLaunch::rollbackProductLaunch();
-	    			ProductLaunch::insertRecords($request, $csvFile);	
+	    			ProductLaunch::insertRecords($request, $csvFile);
 	    			break;
-	    		
+
 	    		case "patch":
 	    			ProductLaunch::updateRecords($request, $csvFile);
 	    			break;
@@ -121,10 +153,10 @@ class ProductLaunch extends Model
 	    			ProductLaunch::insertRecords($request, $csvFile);
 	    			break;
 	    	}
-            
-            
 
-    	}	
+
+
+    	}
 	}
 
 	public static function insertRecords($request, $csvFile)
@@ -153,7 +185,7 @@ class ProductLaunch extends Model
 	            ProductLaunch::createProductLaunchTarget($productLaunch, $target, $storeList);
 	        	}
          	}
-         } 
+         }
 	}
 
 	public static function updateRecords($request, $csvFile)
@@ -180,10 +212,10 @@ class ProductLaunch extends Model
                 $record->save();
                 ProductLaunch::deleteProductLaunchTarget($record);
 				$target = $row[10];
-				ProductLaunch::deleteProductLaunchTarget($record, $row[10], $storeList );
+				ProductLaunch::createProductLaunchTarget($record, $target, $storeList );
 			}
 
-			
+
 
 		}
 	}
@@ -200,32 +232,30 @@ class ProductLaunch extends Model
 	public static function createProductLaunchTarget($productLaunch, $targetStores, $storeList)
 	{
 		$targetStores = preg_replace('/\s+/', '', $targetStores);
-		$targetStores = ltrim($targetStores, ",");  
-		$targetStores = rtrim($targetStores, ","); 
+		$targetStores = ltrim($targetStores, ",");
+		$targetStores = rtrim($targetStores, ",");
 		$stores = explode(',', $targetStores);
 
-		
-		
+
+
 		foreach ($stores as $key => $value) {
 			$store_number = array_search( $value, $storeList);
 			if(isset($store_number) && $store_number != '0'){
 				ProductLaunchTarget::create([
 					'store_id' => $store_number,
-					'productlaunch_id' => $productLaunch->id	
+					'productlaunch_id' => $productLaunch->id
 
-				]);	
+				]);
 			}
-			
-		}
-		ProductLaunchTarget::create([
-			'store_id' => '0940',
-			'productlaunch_id' => $productLaunch->id	
 
-		]);	
+		}
+		if(!in_array('0940', $stores)){
+			Utility::addHeadOffice($productLaunch->id, 'productlaunch_target', 'productlaunch_id');
+		}
 	}
 
 	public static function deleteProductLaunchTarget($productLaunch)
-	{	
+	{
 		ProductLaunchTarget::where('productlaunch_id' , $productLaunch->id	)->delete();
 		return;
 	}

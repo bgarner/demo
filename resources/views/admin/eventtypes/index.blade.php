@@ -17,29 +17,7 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
 
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Calendar Event Types</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li>
-                            <a>Calendar</a>
-                        </li>
-                        <li class="active">
-                            <strong>Manage Event Types</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
@@ -59,19 +37,27 @@
 
 		                            <div class="table-responsive">
 
-										<table class="table table-hover issue-tracker">
-
+										<table class="table table-hover issue-tracker datatable">
+										<thead>
 										<tr>
 											<td>id</td>
 											<td>Event Type</td>
+											<!-- <td>Banners</td> -->
 											<td></td>
 										</tr>
+										</thead>
+										<tbody>
 										@foreach($eventtypes as $et)
 										<tr>
 
 
 											<td>{{ $et->id }}</td>
 											<td><a href="/admin/eventtypes/{{ $et->id }}/edit">{{ $et->event_type }}</a></td>
+											{{-- <td>
+												@foreach($et->banners as $banner)
+													<span class="label">{{$banner->name}}</span>
+												@endforeach
+											</td> --}}
 
 
 											<td>
@@ -81,10 +67,8 @@
 											</td>
 										</tr>
 										@endforeach
-
+										</tbody>
 										</table>
-
-{{-- 										{!! $events->render() !!} --}}
 
 		                            </div>
 		                        </div>
@@ -96,7 +80,7 @@
 
 		        </div>
 
-				@include('site.includes.footer')
+				@include('admin.includes.footer')
 
 			    @include('admin.includes.scripts')
 
@@ -105,6 +89,19 @@
 				        headers: {
 				            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				        }
+					});
+
+					$(".datatable").dataTable({
+
+							"columns": [
+							    { "visible": false },
+							    null,
+							    { "width" : "10%" , "sortable" : false}
+							  ],
+							pageLength: 50,
+							responsive: true,
+							fixedHeader: true
+
 					});
 
 				</script>

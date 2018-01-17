@@ -9,27 +9,40 @@ class FeatureValidator extends PortalValidator
 {
     protected $rules = [
     	
-        'name' 				=> 'required',
-    	'documents'			=> 'sometimes|exists:documents,id',
-    	'packages'			=> 'sometimes|exists:packages,id',
-    	'remove_documents'	=> 'sometimes|exists:documents,id',
-    	'remove_packages'	=> 'sometimes|exists:packages,id',
-        'remove_flyers'     => 'sometimes|exists:flyers,id',
-    	'update_type_id'	=> 'required|exists:feature_latest_update_types,id',
-    	'update_frequency'	=> 'required|integer|min:1',
-    	'start'				=> 'required|date',
-    	'end'				=> 'sometimes|date',
-    	'thumbnail'			=> 'sometimes|mimes:gif,jpeg,jpg,png',
-    	'background'		=> 'sometimes|mimes:gif,jpeg,jpg,png'
+        'name'               => 'required',
+        'documents'          => 'sometimes|exists:documents,id',
+        'packages'           => 'sometimes|exists:packages,id',
+        'remove_documents'   => 'sometimes|exists:documents,id',
+        'remove_packages'    => 'sometimes|exists:packages,id',
+        'update_type_id'     => 'required|exists:feature_latest_update_types,id',
+        'update_frequency'   => 'required|integer|min:1',
+        'start'              => 'required|date',
+        'end'                => 'sometimes|date',
+        'thumbnail'          => 'sometimes|mimes:gif,jpeg,jpg,png',
+        'background'         => 'sometimes|mimes:gif,jpeg,jpg,png',
+        'communication_type' => 'sometimes|exists:communication_types,id',
+        'communications'     => 'sometimes|exists:communications,id',
+        'event_types'        => 'sometimes|exists:event_types,id',
+        'events'             => 'sometimes|exists:events,id',
+        'target_stores'      => "sometimes|exists:stores,store_number",
+        'allStores'          => 'sometimes|in:on,off',
+        'target_banners'     => 'sometimes|exists:banners,id',
+        'store_groups'       => 'sometimes|exists:custom_store_group,id',
+        'tasklists'          => 'sometimes|exists:tasklists,id'
             
     ];
 
     protected $messages = [
-    	'name' 						=> 'Feature name required',
-    	'documents.exists'	  		=> 'Invalid documents attached',
-    	'packages.exists'			=> 'Invalid packages attached',
-    	'remove_documents.exists'	=> 'Invalid value in documents',
-    	'remove_packages.exists'	=> 'Invalid value in packages',
-        'update_type_id.exists'        => 'Invalid value in Latest Updates'
+        'name'                      => 'Feature name required',
+        'documents.exists'          => 'Invalid documents attached',
+        'packages.exists'           => 'Invalid packages attached',
+        'remove_documents.exists'   => 'Invalid value in documents',
+        'remove_packages.exists'    => 'Invalid value in packages',
+        'update_type_id.exists'     => 'Invalid value in Latest Updates',
+        'communication_type.exists' => 'Invalid communication types attached',
+        'communications.exists'     => 'Invalid communications attached',
+        'event_types.exists'        => 'Invalid event types attached',
+        'events.exists'             => 'Invalid events attached',
+        'tasklists.exists'          => 'Invalid tasklists attached'
     ];
 }

@@ -4,14 +4,10 @@
 	<link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
 <body class="container-fluid adminview">
-	<!-- navbar begins -->
-	<nav class="navbar navbar-default">
-		@include('admin.banner' , ['banner' =>$banner->id])    
-	</nav>
-	<!-- navbar ends-->
+
 	<div class="col-md-10 col-md-offset-1">
-		
-		
+
+
 		<input type="hidden" name="banner_id" value="{{$banner->id}}">
 		<div class="row">
 			<div class="col-md-10">
@@ -21,7 +17,7 @@
 				<div id="create-tag" class="btn btn-success"> Add New Tag </div>
 			</div>
 		</div>
-		
+
 		<table class="table">
 			<thead>
 				<th>Tag</th>
@@ -41,8 +37,8 @@
 				@endforeach
 			</tbody>
 		</table>
-		
-	          
+
+
 	</div>
 
 	<div id="create-tag-modal" class="modal fade">
@@ -72,7 +68,7 @@
 <script type="text/javascript" src="/js/vendor/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript" src="/js/custom/admin/global/bannerSelector.js"></script>
 @include('admin.includes.scripts')
-	
+
 
 </body>
 </html>

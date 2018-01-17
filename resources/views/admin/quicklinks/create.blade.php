@@ -17,14 +17,15 @@
 
 	body .modal-ql-file .modal-content{
 		width: 900px !important;
-		margin-left:-150px; 
-		padding-left: 10px;
+		margin-left:-150px;
 		padding-right: 10px;
+		height: 700px !important;
 		/*margin: 0 auto;*/
 	}
 
 	body .modal-ql-file .modal-body{
-
+		padding-left: 20px !important;
+		padding-right: 20px !important;
 	}
 
 	.modal-ql-file .ibox-title{
@@ -56,29 +57,6 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Create a Quicklink</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li>
-                            <a href="/admin/dashboard">Quicklinks</a>
-                        </li>
-                        <li class="active">
-                            <strong>Create a Quicklink</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
@@ -88,7 +66,7 @@
 		                            <h5>New Quicklink</h5>
 		                            <div class="ibox-tools">
 		                               {{--  <a href="/admin/quicklink/create" class="btn btn-primary" role="button"><i class="fa fa-plus"></i> Add New Package</a> --}}
-                                        
+
 		                            </div>
 		                        </div>
 		                        <div class="ibox-content">
@@ -101,29 +79,29 @@
                                             </ul>
                                         </div>
                                     @endif
-                                    
+
                                     <form method="get" class="form-horizontal" id="createNewQuicklinkForm">
-                                        
+
                                         <input type="hidden" name="banner_id" value="{{$banner->id}}">
                                         <div class="form-group"><label class="col-sm-2 control-label">Name <span class="req">*</span></label>
                                             <div class="col-sm-10"><input type="text" id="name" name="name" class="form-control" value=""></div>
                                         </div>
 
-                          
+
 
                                         <div class="form-group"><label class="col-sm-2 control-label">Quicklink type <span class="req">*</span></label>
                                             <div class="col-md-10">
-                                        		<div class="btn-group" role="group" data-toggle="buttons">										
+                                        		<div class="btn-group" role="group" data-toggle="buttons">
 													@foreach($quicklink_types as $qtype)
 		                                            	<label class="btn btn-outline btn-default" id="quicklink-{{$qtype->name}}">
 		                                               		<input type="radio" name="link-type" value="{{ $qtype->id }}">{{$qtype->name}}
-		                                               	</label>	
+		                                               	</label>
 													@endforeach
                                             	</div>
                                             </div>
                                         </div>
 
-                          
+
 
                                         <div class="form-group"><label class="col-sm-2 control-label">Quicklink URL</label>
                                             <div class="col-md-10" id="quicklink-url"></div>
@@ -138,7 +116,7 @@
 
                                             </div>
                                         </div>
-                                        
+
                                     </form>
 
 
@@ -155,7 +133,7 @@
 							            <div class="modal-body">
 								           <div class="row">
 
-									           <div class="col-md-3" style="direction:rtl;max-height:500px;overflow:auto;">
+									           <div class="col-md-4" style="direction:rtl;max-height:500px;overflow:auto;">
 
 						                            <div class="file-manager" style="direction:ltr;">
 
@@ -165,41 +143,26 @@
 						                                    <ol class="breadcrumbs"></ol>
 						                                    <input type="hidden" name="default_folder" value="">
 						                                    <input type="hidden" name="banner_id" value={{$banner->id}}>
-						                            {{--         @include('admin.documentmanager.document-table') --}}
 						                                    </div>
 						                                    <div id="package-viewer" class="hidden">
 						                                    @include('admin.package.view')
 						                                    </div>
-						                                    
+
 
 						                                <div class="clearfix"></div>
 						                            </div>
-										            {{--
-										            	<ul class="tree">
-										            	@foreach ($navigation as $nav) 
-														
-															@if (isset($nav["is_child"]) && ($nav["is_child"] == 0) )
-																
-																@include('admin.package.file-folder-structure-partial', ['navigation' =>$navigation, 'currentnode' => $nav])
-																
-															@endif
-
-														@endforeach
-														</ul>
-
-														--}}
 												</div>
 
-												<div class="col-md-9" style="max-height:500px;overflow:auto;">
+												<div class="col-md-8" style="max-height:500px;overflow:auto;">
 													<div class="">
                                         				<h6 id="folder-title"></h6>
                                        			 		<div class="ibox-tools"></div>
-                                    				</div> 
-												    <div class="ibox-content">    
+                                    				</div>
+												    <div class="ibox-content">
 				                                        <table class="table tablesorter ql-filetable" id="file-table"></table>
 				                                    </div>
 												</div>
-											</div> <!-- end row -->										
+											</div> <!-- end row -->
 							            </div>
 							            <div class="modal-footer">
 							             	<input type="hidden" id="selected_file_id" name="selected_file_id" value="">
@@ -221,11 +184,11 @@
 							            <div class="modal-body">
 							            	<ul class="tree">
 							            	@foreach ($folderStructure as $folder)
-											
+
 												@if (isset($folder["is_child"]) && ($folder["is_child"] == 0) )
-													
+
 													@include('admin.package.folder-structure-partial', ['folderStructure' =>$folderStructure, 'currentnode' => $folder])
-													
+
 												@endif
 
 
@@ -273,7 +236,7 @@
 
 </div>
 
-@include('site.includes.footer')
+@include('admin.includes.footer')
 
 @include('admin.includes.scripts')
 
@@ -282,7 +245,7 @@
 <script type="text/javascript" src="/js/vendor/underscore-1.8.3.js"></script>
 <script type="text/javascript" src="/js/custom/admin/folders/folderStructureQL.js" ></script>
 <script type="text/javascript" src="/js/custom/admin/documents/fileTableQL.js"></script>
-<script type="text/javascript" src="/js/custom/admin/quicklinks/addQuicklink.js"></script>			
+<script type="text/javascript" src="/js/custom/admin/quicklinks/addQuicklink.js"></script>
 <script type="text/javascript" src="/js/custom/tree.js"></script>
 
 <script type="text/javascript">
@@ -297,9 +260,9 @@
         keyboardNavigation: false,
         forceParse: false,
         autoclose: true
-    });                
+    });
 
-    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});            
+    $(".tree").treed({openedClass : 'fa fa-folder-open', closedClass : 'fa fa-folder'});
 
  	$("#external-url").on("change keyup", function() {
  		var urlString = $(this).val();
@@ -328,10 +291,10 @@
 	// });
 
 
- function learnRegExp(s) {    
+ function learnRegExp(s) {
  		console.log(s);
       var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
-      return regexp.test(s);    
+      return regexp.test(s);
  }
 
 </script>
@@ -339,9 +302,3 @@
 
 </body>
 </html>
-
-			
-	
-
-
-

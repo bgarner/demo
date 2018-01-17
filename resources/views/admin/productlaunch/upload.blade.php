@@ -19,29 +19,6 @@
         </nav>
 
     <div id="page-wrapper" class="gray-bg" >
-        <div class="row border-bottom">
-            @include('admin.includes.topbar')
-        </div>
-
-        <div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Product Launch</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li class="active">
-                            <a href="/admin/communication">Product Launch</a>
-                        </li>
-                        <li class="active">
-                            <strong>Upload Document</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-        </div>
 
         <div class="wrapper wrapper-content  animated fadeInRight">
                     <div class="row">
@@ -65,12 +42,16 @@
                                 </div>
                                 <div class="ibox-content">
 
-                                    
+
                                     <div class="ibox-content form-group form-horizontal">
 
                                         <div id="file-uploader" class="visible">
 
-                                        <div id="watermark"><h1>Drag and drop files here</h1></div>
+                            <div style="position: relative; color: #ccc; text-align: center;">
+                                <h1>Drag and drop CSV file here</h1>
+                                <p>Must be in format:<br />
+                                 <i>Launch Date(YYYY-MM-DD), Style Number, Vender Code, Style Name, Retail Price, Tracking, Event Type</i></p>
+                            </div>
 
                                         <div class="container" id="container">
 
@@ -85,12 +66,12 @@
 
                                                     <div>
                                                         <p style="display: inline;"class="name" data-dz-name></p> ( <p style="display: inline;" class="size" data-dz-size></p> )
-                                                        
+
                                                         <strong class="error text-danger" data-dz-errormessage></strong>
                                                     </div>
 
                                                     <div>
-                                                          
+
                                                         <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" style="width: 200px;">
                                                           <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
                                                         </div>
@@ -121,8 +102,8 @@
 
                                            <div id="actions" class="row">
                                             {!! csrf_field() !!}
-                                            
-                                            <input type="hidden" id="banner_id" name="banner_id" value="{{$banner->id}}" />
+
+                                            {{--<input type="hidden" id="banner_id" name="banner_id" value="{{$banner->id}}" />--}}
 
 
                                               <div class="col-lg-6">
@@ -150,11 +131,11 @@
                                                     <i class="glyphicon glyphicon-ban-circle"></i>
                                                     <span>Cancel upload</span>
                                                 </button>
-                                              </div>                          
+                                              </div>
 
                                             </div>
 
-                              
+
                                     </div> <!-- end ibox content -->
                                 </div> <!-- ibox-content closes -->
 
@@ -167,15 +148,15 @@
 
 
 
-        @include('site.includes.footer')
+        @include('admin.includes.footer')
 
         @include('admin.includes.scripts')
 
         @include('site.includes.bugreport')
-        
+
         <script type="text/javascript" src="/js/vendor/dropzone.js"></script>
         <script type="text/javascript" src="/js/custom/admin/productlaunch/uploadDocument.js"></script>
-        
+
         <script type="text/javascript">
 
             $.ajaxSetup({

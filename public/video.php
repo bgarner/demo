@@ -30,13 +30,13 @@
      /*   html{ background: transparent url('/images/FFFFFF-0.0.png') top left repeat !important; padding: 0; margin: 0; height: auto;}*/
 
         /*html{ background-color: lime; }*/
-        
+
             video
             {
                 width: 100%;
                 height: auto;
                 max-height: 100%;
-                background: transparent url('/images/FFFFFF-0.0.png') top left repeat !important; 
+                background: transparent url('/images/FFFFFF-0.0.png') top left repeat !important;
             }
         </style>
 
@@ -49,7 +49,7 @@
             ?>
 
             <video autoplay="true" controls="true" id="current_video" width="auto" height="auto" class="video-js vjs-default-skin" data-setup="{}">
-                <source src="/files/<?=$video?>?<?=$token?>" type="video/mp4">
+                <source src="/video/<?=$video?>?<?=$token?>" type="video/mp4">
                 Your browser does not support the video tag or the file format of this video.
             </video>
 

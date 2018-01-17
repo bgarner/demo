@@ -1,7 +1,12 @@
-    .form-container{ display: block; }
-    .upload-form{ display: none;  }
+    .form-container{ 
+        display: block; 
+        padding-top:20px;
+    }
+    .upload-form{ 
+        /*display: none;*/
+    }
     .select-stores-form {
-        margin : 30px 0px;
+        /*margin : 30px 0px;*/
     }
     .datepicker-div{
         padding: 30px 0px;

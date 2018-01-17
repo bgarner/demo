@@ -6,28 +6,10 @@
 
     @include('site.includes.head')
 
-    <style>
-    #page-wrapper{
-    {{-- background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 65%, rgba(0, 0, 0, 1) 100%), url('/images/featured-backgrounds/{{ $feature->background_image }}') no-repeat 0px 50px; --}}
-        background-size: cover;
-        overflow: hidden;
-    }
+    <link href="/js/plugins/videojs-playlist-ui/dist/videojs-playlist-ui.css" rel="stylesheet">
+    <link href="/js/plugins/videojs-playlist-ui/dist/videojs-playlist-ui.vertical.css" rel="stylesheet">
+    <link href="/css/custom/site/video/playlist.css" rel="stylesheet">
 
-    #footer{
-        position: fixed;
-        bottom: 0px;
-    }
-
-    .modal-lg{ height: 95%; width: 80% !important; padding: 0; }
-    .modal-content{ height: 100% !important;}
-    .modal-body{ padding: 0; margin: 0; height: 100% !important; }
-
-    #file-table tr td:last-child {
-        white-space: nowrap;
-        width: 1%
-    }
-
-    </style>
 </head>
 
 
@@ -46,15 +28,6 @@
 
             <div class="row wrapper border-bottom white-bg page-heading">
 
-                {{-- <h1 style="color: #333; font-size: 65px; text-transform: uppercase; font-family: GalaxiePolarisCondensed-Bold;padding-bottom: 0px; line-height: 50px;">Video Library</h1> --}}
-                {{-- <div class="col-lg-10">
-                    <h2>Video</h2>
-                </div> --}}
-
-                {{-- <div class="col-lg-2">
-
-                </div> --}}
-
                 <h1>{{$playlistMeta->title}}</h1>
                 {!! $playlistMeta->description !!}
             </div>
@@ -63,44 +36,52 @@
 
             <div class="row">
                     <div class="col-lg-12">
-                        <div class="ibox float-e-margins clearfix">
+                        <!-- <div class="ibox float-e-margins clearfix"> -->
 
-                            @foreach($videoList as $vl)
+                            <input type="text" id="videoList" hidden value="{{$videoList}}">
 
-                            <div class="ibox-content clearfix col-xs-12 col-sm-12 col-lg-12 video-playlist-box">
 
-                                <div class="video-container">
+                            <section class="main-preview-player">
+                                <video id="preview-player" class="video-js vjs-fluid vjs-big-play-centered " controls preload="auto"
+                                data-setup='{"controls": true, "autoplay": true, "preload": "auto", "fluid":true}'
+                                >
 
-                                    {{-- <a href="../watch/{{$vl->id}}"><img src="/video/thumbs/{{$vl->thumbnail}}" class="img-responsive" /></a> --}}
-                                    <video class="video-overlay" controls="controls" poster="/video/thumbs/{{$vl->thumbnail}}" class="videoInPlaylist" id="video{{$vl->id}}">
-
-                                        <source src="/video/{{$vl->filename}}" type="video/webm" />
-                                    </video>
+                                </video>
+                                <div class="playlist-container  preview-player-dimensions vjs-fluid">
+                                <ol class="vjs-playlist"></ol>
                                 </div>
+                            </section>
 
-                                <div class="playlist-meta">
-                                    <h4><a href="../watch/{{$vl->id}}" class="trackclick" data-video-id="{{$vl->id}}">{{$vl->title}}</a></h4>
-                                    <p>{{$vl->description}}</p>
-                                    <p>{{$vl->views}} views &middot; {{$vl->sinceCreated}} ago</p>
-                                    <!-- <button class="btn btn-primary btn-outline videolikeplaylist" data-video-id="{{$vl->id}}" type="button" data-toggle="tooltip" data-placement="bottom" title="Like this"><i class="fa fa-thumbs-up"></i> {{$vl->likes}}</button>
-                                    <button class="btn btn-danger btn-outline videodislikeplaylist" data-video-id="{{$vl->id}}" type="button" data-toggle="tooltip" data-placement="bottom" title="Dislike this"><i class="fa fa-thumbs-down"></i> {{$vl->dislikes}}</button> -->
+                            <div class="ibox float-e-margins video-details">
+                                <div class="ibox-title clearfix">
+                                    <div class="pull-left">
+                                        <h3 id="video-title"></h3>
+                                        <p>
+                                            <span id="video-views" class="viewcount"></span> {{__("views")}} &middot;
+                                            <span id="video-since"></span> {{__("ago")}}
+                                        </p>
+                                    </div>
 
                                 </div>
+                                <div class="ibox-content clearfix">
+                                    <p id="video-description"></p>
+                                    <div class="tag-list">
+                                        @foreach($tags as $t)
+                                            <a href="../../tag/{{ $t->linkname }}"><span class="badge">{{ $t->name }}</span></a>
+                                        @endforeach
+                                    </div>
+                                    <input type="text" value="" class="hidden" id="video_id">
+                                    <a id="clicktrack_link" class="trackclick hidden" data-video-id>Click to track</a>
 
+                                    <hr />
+                                    <h4><a href="../../video"><i class="fa fa-reply" aria-hidden="true"></i> Back to Video Library</a></h4>
+                                </div>
                             </div>
-                            @endforeach
 
-                                <br class="clearfix" />
-
-
-                            </div>
+                            <!-- </div> -->
                         </div>
                     </div>
                 </div>
-
-
-
-
 
                 <br class="clearfix" />
             </div>
@@ -111,12 +92,12 @@
     @include('site.includes.footer')
     @include('site.includes.scripts')
 
+    <script type="text/javascript" src="/js/plugins/videojs-playlist/dist/videojs-playlist.js"></script>
+    <script type="text/javascript" src="/js/plugins/videojs-playlist-ui/dist/videojs-playlist-ui.js"></script>
     <script type="text/javascript" src="/js/vendor/underscore-1.8.3.js"></script>
     <script type="text/javascript" src="/js/vendor/lightbox.min.js"></script>
-    <script type="text/javascript" src="/js/custom/site/video/incViewCountFromPlaylist.js?<?php echo time();?>"></script>
-    <script type="text/javascript" src="/js/custom/site/video/likedislike.js?<?php echo time();?>"></script>
-    <script type="text/javascript" src="/js/custom/site/video/playPause.js?<?php echo time();?>"></script>
-
+    <script type="text/javascript" src="/js/custom/site/video/incrementViewCountPlaylist.js?<?php echo time();?>"></script>
+    <script type="text/javascript" src="/js/custom/site/video/loadPlaylist.js?<?php echo time();?>"></script>
     @include('site.includes.modal')
 
 </body>

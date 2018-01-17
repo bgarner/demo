@@ -4,7 +4,7 @@
 		<tr>
 			<th>Package Name</th>
 			<th></th>
-			<th>Action</th>
+			<th class="align-right">Action</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -13,9 +13,9 @@
         @foreach ($packages as $package)
         
 	   <tr class="feature-packages">
-            <td data-package-id='{{$package->package_id}}'> {{$package->package_name}} </td>
+            <td data-package-id='{{$package->id}}'> {{$package->package_name}} </td>
             <td></td>
-            <td> <a data-package-id='{{$package->package_id}}' id="package{{$package->package_id}}" class="remove-package btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>
+            <td class="align-right"> <a data-package-id='{{$package->id}}' id="package{{$package->id}}" class="remove-package btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>
         </tr>
         @endforeach
     </tbody>
@@ -29,7 +29,7 @@
 		<tr>
 			<th>Package Name</th>
 			<th></th>
-			<th>Action</th>
+			<th class="align-right">Action</th>
 		</tr>
 	</thead>
 	<tbody>

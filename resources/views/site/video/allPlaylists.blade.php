@@ -45,7 +45,7 @@
             </div>
 
             <div class="row wrapper border-bottom white-bg page-heading">
-                <h1>Playlists</h1>
+                <h1>{{__("Playlists")}}</h1>
             </div>
 
 
@@ -57,10 +57,10 @@
                                 @foreach($playlists as $pl)
                                     <div class="col-xs-6 col-sm-4 col-lg-3 video-list-box">
                                         <div class="embed-responsive embed-responsive-16by9">
-                                        <a href="playlist/{{$pl->id}}" class="trackclick" data-video-id="{{$pl->id}}"><img src="/video/thumbs/{{$pl->thumbnail}}" class="embed-responsive-item img-responsive" /></a>
+                                        <a href="playlist/{{$pl->id}}" class="trackclick" data-playlist-id="{{$pl->id}}"><img src="/video/thumbs/{{$pl->thumbnail}}" class="embed-responsive-item img-responsive" /></a>
                                         </div>
-                                        <a href="playlist/{{$pl->id}}" class="trackclick" data-video-id="{{$pl->id}}"><h4>{{$pl->title}}</h4></a>
-                                        <p>{{$pl->count}} videos &middot; {{$pl->sinceCreated}} ago</p>
+                                        <a href="playlist/{{$pl->id}}" class="trackclick" data-playlist-id="{{$pl->id}}"><h4>{{$pl->title}}</h4></a>
+                                        <p>{{$pl->count}} videos &middot; {{$pl->sinceCreated}} {{__("ago")}}</p>
                                     </div>
                                 @endforeach
                             </div>

@@ -13,7 +13,7 @@
   <link rel="stylesheet" type="text/css" href="/css/vendor/dropzone.css">
   <link rel="stylesheet" type="text/css" href="/css/custom/document-upload.css">
   <link rel="stylesheet" type="text/css" href="/css/vendor/lightbox.css">
-  <link rel="stylesheet" type="text/css" href="/css/custom/package.css">    
+  <link rel="stylesheet" type="text/css" href="/css/custom/package.css">
 
   <meta name="csrf-token" content="{!! csrf_token() !!}"/>
 </head>
@@ -28,10 +28,7 @@
       </nav>
 
   <div id="page-wrapper" class="gray-bg" >
-    <div class="row border-bottom">
-      @include('admin.includes.topbar')
-        </div>
-
+      
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
                     <h2>Upload New Documents</h2>
@@ -58,7 +55,7 @@
       <div id="folder-title" data-folderId= "" data-isWeekFolder = "">
         <h2></h2>
       </div>
-      <table class="table tablesorter" id="file-table"> 
+      <table class="table tablesorter" id="file-table">
       </table>
 
     </div>
@@ -126,67 +123,63 @@
 
 </div>
 
-        @include('site.includes.footer')
-        @include('admin.includes.scripts')
+@include('admin.includes.footer')
+@include('admin.includes.scripts')
 
-      <script type="text/javascript" src="/js/vendor/underscore-1.8.3.js"></script>
-      <script type="text/javascript" src="/js/custom/tree.js"></script>
-      <script type="text/javascript" src="/js/custom/admin/folders/folderStructure.js" ></script>
-      <script type="text/javascript" src="/js/custom/admin/documents/fileTable.js"></script>
-      <script type="text/javascript" src="/js/custom/admin/documents/deleteFile.js"></script>
-      <script type="text/javascript" src="/js/custom/admin/documents/getPackages.js"></script>
-      <script type="text/javascript" src="/js/custom/admin/documents/deletePackage.js"></script>
-      <script type="text/javascript" src="/js/custom/admin/documents/showPackage.js"></script>
-      <script type="text/javascript" src="/js/custom/admin/documents/breadcrumb.js"></script>
+<script type="text/javascript" src="/js/vendor/underscore-1.8.3.js"></script>
+<script type="text/javascript" src="/js/custom/tree.js"></script>
+<script type="text/javascript" src="/js/custom/admin/folders/folderStructure.js" ></script>
+<script type="text/javascript" src="/js/custom/admin/documents/fileTable.js"></script>
+<script type="text/javascript" src="/js/custom/admin/documents/deleteFile.js"></script>
+<script type="text/javascript" src="/js/custom/admin/documents/getPackages.js"></script>
+<script type="text/javascript" src="/js/custom/admin/documents/deletePackage.js"></script>
+<script type="text/javascript" src="/js/custom/admin/documents/showPackage.js"></script>
+<script type="text/javascript" src="/js/custom/admin/documents/breadcrumb.js"></script>
 <!--       <script type="text/javascript" src="/js/vendor/dropzone.js"></script> -->
-      <script type="text/javascript" src="/js/custom/admin/documents/uploadDocument.js"></script>
-      <script type="text/javascript" src="/js/vendor/tablesorter.min.js"></script>
-      <script type="text/javascript" src="/js/vendor/lightbox.min.js"></script>        
-      
-        <script type="text/javascript">
-          $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-          });
+<script type="text/javascript" src="/js/custom/admin/documents/uploadDocument.js"></script>
+<script type="text/javascript" src="/js/vendor/tablesorter.min.js"></script>
+<script type="text/javascript" src="/js/vendor/lightbox.min.js"></script>
 
-        $(document).ready(function() {
+<script type="text/javascript">
+  $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+  });
 
-            $(".dropdown-toggle").dropdown();
-            $(".tree").treed({openedClass : 'glyphicon glyphicon-folder-open', closedClass : 'glyphicon glyphicon-folder-close'});
-            
-            var defaultFolderId = $("input[name='default_folder']").val();
-            if (defaultFolderId) {
-              var folder = $("#"+defaultFolderId);
-              $("#"+defaultFolderId).parent().click();
-              $.ajax(
-              {
-                url : '/admin/document',
-                data : {
-                      folder : defaultFolderId,
-                      isWeekFolder : folder.attr("data-isweek")
-                     }
-              }
-              )
-              .done(function(data){
-                console.log(data);
-                fillTable(data);
-              });
+$(document).ready(function() {
 
-            }
+    $(".dropdown-toggle").dropdown();
+    $(".tree").treed({openedClass : 'glyphicon glyphicon-folder-open', closedClass : 'glyphicon glyphicon-folder-close'});
 
-            
-//            $( ".navigation-container" ).resizable();
+    var defaultFolderId = $("input[name='default_folder']").val();
+    if (defaultFolderId) {
+      var folder = $("#"+defaultFolderId);
+      $("#"+defaultFolderId).parent().click();
+      $.ajax(
+      {
+        url : '/admin/document',
+        data : {
+              folder : defaultFolderId,
+              isWeekFolder : folder.attr("data-isweek")
+             }
+      }
+      )
+      .done(function(data){
+        console.log(data);
+        fillTable(data);
+      });
 
-                 
-        });            
-
-        </script>
-
-        
-        @include('site.includes.bugreport')
+    }
 
 
-      </body>
-      </html>
+});
 
+</script>
+
+
+@include('site.includes.bugreport')
+
+
+</body>
+</html>

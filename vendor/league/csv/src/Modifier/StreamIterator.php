@@ -4,7 +4,7 @@
 *
 * @license http://opensource.org/licenses/MIT
 * @link https://github.com/thephpleague/csv/
-* @version 8.2.0
+* @version 8.2.2
 * @package League.csv
 *
 * For the full copyright and license information, please view the LICENSE
@@ -160,14 +160,14 @@ class StreamIterator implements Iterator
      *
      * @return int
      */
-    public function fputcsv(array $fields, $delimiter = null, $enclosure = null, $escape = null)
+    public function fputcsv(array $fields, $delimiter = ',', $enclosure = '"', $escape = '\\')
     {
         return fputcsv(
             $this->stream,
             $fields,
-            null !== $delimiter ? $this->filterControl($delimiter, 'delimiter') : $this->delimiter,
-            null !== $enclosure ? $this->filterControl($enclosure, 'enclosure') : $this->enclosure,
-            null !== $escape ? $this->filterControl($escape, 'escape') : $this->escape
+            $this->filterControl($delimiter, 'delimiter'),
+            $this->filterControl($enclosure, 'enclosure'),
+            $this->filterControl($escape, 'escape')
         );
     }
 

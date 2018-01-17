@@ -54,7 +54,7 @@
                     @if(count($feature_documents) > 0)
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
-                                <h2>Featured Documents</h2>
+                                <h2>{{__("Featured Documents")}}</h2>
                             </div>
 
                             <div class="ibox-content clearfix">
@@ -62,8 +62,8 @@
                                 <table class="table tablesorter table-hover" id="file-table">
                                     <thead>
                                         <tr>
-                                            <th> Title </th>
-                                            <th> Added </th>
+                                            <th> {{__("Title")}} </th>
+                                            <th> {{__("Added")}} </th>
                                         </tr>
                                     </thead>
 
@@ -117,7 +117,7 @@
                             <div class="col-lg-12">
                                 <div class="ibox float-e-margins">
                                     <div class="ibox-title">
-                                        <h2>Additional Documents</h2>
+                                        <h2>{{__("Additional Documents")}}</h2>
                                     </div>
 
                                     <div class="ibox-content clearfix">
@@ -145,8 +145,8 @@
                                                             @if(count($package_document_listing)>0)
                                                                 <thead>
                                                                     <tr>
-                                                                        <th>Title</th>
-                                                                        <th>Added</th>
+                                                                        <th>{{__("Title")}}</th>
+                                                                        <th>{{__("Added")}}</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -186,18 +186,18 @@
                             </div>
                         </div>
 
-                        @if( count($feature_communcations) > 0 )
+                        @if( count($feature_communications) > 0 )
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="ibox float-e-margins">
                                     <div class="ibox-title">
-                                        <h2>{{ $feature->title }} Communications </h2>
+                                        <h2>{{ $feature->title }} {{__("Communications")}} </h2>
                                     </div>
 
                                     <div class="mail-box">
                                         <table class="table table-hover table-mail">
                                         <tbody>
-                                            @foreach($feature_communcations as $communication)
+                                            @foreach($feature_communications as $communication)
 
                                             <?php $tr_class="" ?>
                                             @if( $communication->is_read == 1)
@@ -256,7 +256,7 @@
                             <div class="col-lg-12">
                                 <div class="ibox float-e-margins">
                                     <div class="ibox-title">
-                                        <h2>Recent Uploads</h2>
+                                        <h2>{{__("Recent Uploads")}}</h2>
                                     </div>
                                     <div class="ibox-content" style="max-height: 550px; overflow: auto;">
 
@@ -268,24 +268,15 @@
                                                     @foreach($notifications as $n)
 
                                                         <div class="feed-element">
-                                                            {{-- <div class="media-body">
-                                                                    <span class="pull-left" style="padding: 0px 10px 0px 0px;">
-                                                                        <h2 style="padding: 0; margin: 0;">{!! $n->linkedIcon !!}</h2>
-                                                                    </span>
-                                                                    <small class="pull-right" style="padding-left: 10px;">{{ $n->since }} ago</small>
-                                                                    <strong>{!! $n->link !!}</strong>
-                                                                </div>
-                                                            --}}
-
 
                                                             <div class="media-body">
                                                                 <span class="pull-left" style="padding: 0px 10px 0px 0px;">
                                                                     <h2 style="padding: 0; margin: 0;">{!! $n->linkedIcon !!}</h2>
                                                                 </span>
-                                                                <small class="pull-right" style="padding-left: 10px;">{{ $n->since }} ago</small>
+                                                                <small class="pull-right" style="padding-left: 10px;">{{ $n->since }} {{__("ago")}}</small>
                                                                      <strong>{!! $n->link !!}</strong>
                                                                     @if($n->count > 1)
-                                                                    with <strong>{!! $n->count -1 !!}</strong> other documents
+                                                                    {{__("with")}} <strong>{!! $n->count -1 !!}</strong> {{__("other documents")}}
                                                                     @endif
                                                             </div>
                                                         </div>
@@ -297,6 +288,58 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="ibox">
+                                    <div class="ibox-title">
+                                        <h2>Events</h2>
+                                    </div>
+                                    <div class="ibox-content">
+                                        <div class="feed-activity-list">
+                                            @if(count($events)>0)
+                                                @foreach($events as $event)
+                                                    <div class="feed-element">
+                                                        <div class="media-body">
+                                                            {{$event->title}}
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="ibox">
+                                    <div class="ibox-title">
+                                        <h2>Tasks</h2>
+                                    </div>
+                                    <div class="ibox-content">
+                                        <div class="feed-activity-list">
+                                            @if(count($tasklists)>0)
+                                                @foreach($tasklists as $tasklist)
+                                                    <div class="feed-element">
+                                                        <div class="media-body">
+                                                            {{$tasklist->title}}
+                                                            <ul>
+                                                            @foreach($tasklist->tasks as $task)
+                                                                <li>{{$task->title}}</li>
+                                                            @endforeach
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 

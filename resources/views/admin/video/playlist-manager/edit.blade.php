@@ -6,8 +6,14 @@
     @include('admin.includes.head')
 
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
-
+    <link rel="stylesheet" href="/css/plugins/select/select2.min.css">
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
+    <style>
+        .modal-body{
+            top: 120px;
+            height: 90% !important;
+        }
+    </style>
 </head>
 
 <body class="fixed-navigation adminview">
@@ -19,29 +25,6 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Edit a Playlist</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li>
-                            <a href="/admin/playlist">Playlist</a>
-                        </li>
-                        <li class="active">
-                            <strong>Edit a Playlist</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
@@ -50,7 +33,6 @@
 		                        <div class="ibox-title">
 		                            <h5>Edit Playlist: {{ $playlist->title }}</h5>
 		                            <div class="ibox-tools">
-		                                <a href="/admin/playlist/create" class="btn btn-primary" role="button"><i class="fa fa-plus"></i> Add New Playlist</a>
 
 		                            </div>
 		                        </div>
@@ -58,7 +40,10 @@
 
                                     <form  method="" class="form-horizontal"  enctype="multipart/form-data" >
                                         <input type="hidden" name="playlistID" id="playlistID" value="{{ $playlist->id }}">
-                                        <input type="hidden" name="banner_id" value="{{$banner->id}}">
+
+                                        <input type="hidden" name="optGroupSelections" id="optGroupSelections" value="{{$optGroupSelections}}">
+
+                                        {{-- <input type="hidden" name="banner_id" value="{{$banner->id}}"> --}}
 
                                         <div class="form-group"><label class="col-sm-2 control-label"> Title</label>
                                             <div class="col-sm-10"><input type="text" id="playlist_title" name="playlist_title" class="form-control" value="{{ $playlist->title }}"></div>
@@ -74,6 +59,13 @@
 
 												</div>
 										</div>
+                                        
+										@include('admin.includes.store-banner-selector', ['optGroupOptions'=> $optGroupOptions, 'optGroupSelections' => $optGroupSelections])
+
+
+                                        <div id="tag-selector-container">
+                                            @include('admin.tag.tag-partial', ['tags'=>$tags, 'selected_tags'=>$playlist->tags])
+                                        </div>
 
                                     </form>
 
@@ -94,14 +86,14 @@
 
 									<!-- <div class="form-group"><label class="col-sm-2 control-label">videos Attached</label> -->
 										<div class="existing-videos-container">
-											@include('admin.video.playlist-manager.playlist-videos-partial', ['videos'=>$playlist_videos])
+											@include('admin.video.playlist-manager.playlist-videos-partial', ['videos'=>$playlist_videos, 'resourceId'=>$playlist->id])
 
 										</div>
 									<!-- </div> -->
 									<div id="videos-staged-to-remove"></div>
 
 								</div>
-								<div id="videos-selected" class="row"></div>
+								<div id="videos-selected" class="row hidden"></div>
 								</div>
 
                             </div>
@@ -120,7 +112,7 @@
                 </div>
             </div>
 
-				@include('site.includes.footer')
+				@include('admin.includes.footer')
 
 			    @include('admin.includes.scripts')
             </div>
@@ -134,7 +126,7 @@
 	@include('site.includes.bugreport')
 
 
-	<div id="video-listing" class="modal fade">
+	<div id="video-listing" class="modal inmodal fade">
 	    <div class="modal-dialog">
 	        <div class="modal-content">
 	            <div class="modal-header">
@@ -154,10 +146,14 @@
 	    </div>
 	</div>
 
-	<script type="text/javascript" src="/js/custom/admin/videos/playlists/editPlaylist.js"></script>
 	<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
     <script src="/js/plugins/nestable/jquery.nestable.js"></script>
+    <script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
+    <script type="text/javascript" src="/js/plugins/select/select2.min.js"></script>
+    <script type="text/javascript" src="/js/custom/admin/videos/playlists/editPlaylist.js"></script>
     <script src="/js/custom/admin/videos/playlists/changeVideoOrder.js"></script>
+    <script src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
+
 
 	<script type="text/javascript">
 		$.ajaxSetup({
@@ -184,6 +180,8 @@
     		 $('#videoplaylist').nestable({
     			 group: 1
     		 }).on('change', serializeVideoData);
+
+             initializeTagSelector();
 
     	 });
     </script>

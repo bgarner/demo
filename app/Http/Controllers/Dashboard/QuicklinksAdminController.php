@@ -7,13 +7,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Dashboard\Quicklinks;
-use App\Models\UserSelectedBanner;
-use App\Models\Banner;
+use App\Models\Auth\User\UserSelectedBanner;
+use App\Models\StoreApi\Banner;
 use App\Models\Document\Folder;
 use App\Models\Document\FileFolder;
 use App\Models\Document\FolderStructure;
 use App\Models\Document\FolderPackage;
-use App\Models\UserBanner;
+use App\Models\Auth\User\UserBanner;
 use App\Models\Dashboard\QuicklinkTypes;
 
 class QuicklinksAdminController extends Controller
@@ -36,7 +36,6 @@ class QuicklinksAdminController extends Controller
     public function create()
     {
         $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
 
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
         $folderStructure = FolderStructure::getNavigationStructure($banner->id);
@@ -45,7 +44,6 @@ class QuicklinksAdminController extends Controller
         
         return view('admin.quicklinks.create')
                     ->with('banner', $banner)
-                    ->with('banners',$banners)
                     ->with('navigation', $fileFolderStructure)
                     ->with('folderStructure', $folderStructure)
                     ->with('quicklink_types', $quicklink_types);

@@ -20,12 +20,11 @@ $('body').on('click', '#attach-selected-files', function(){
 			$(".feature-documents-table tbody").append('<tr class="selected-files"> '+
 													'<td data-document-id='+ $(this).val() +'><i class="fa fa-file-o"></i> '+ $(this).attr("data-filename") +'</td>'+
 													'<td></td>'+
-													'<td> <a data-document-id="'+ $(this).val()+'" id="file'+ $(this).val()+'" class="remove-staged-file btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>'+
+													'<td class="align-right"> <a data-document-id="'+ $(this).val()+'" id="file'+ $(this).val()+'" class="remove-staged-file btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>'+
 												 '</tr>');
 		}
 
 		if($(".feature-documents-table").hasClass('hidden') )	{
-			// console.log($(".feature-documents-table tbody .feature-documents").length);
 			$(".feature-documents-table").removeClass('hidden');
 		}
 	});
@@ -39,11 +38,10 @@ $('body').on('click', '#attach-selected-packages', function(){
 			$(".feature-packages-table tbody").append( '<tr class="selected-packages"> '+
 													'<td data-package-id='+ $(this).val() +'><i class="fa fa-folder-o"></i> '+ $(this).attr("data-packagename") +'</td>'+
 													'<td></td>'+
-													'<td> <a data-package-id="'+ $(this).val()+'" id="package'+ $(this).val()+'" class="remove-staged-package btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>'+
+													'<td class="align-right"> <a data-package-id="'+ $(this).val()+'" id="package'+ $(this).val()+'" class="remove-staged-package btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>'+
 												 '</tr>');		
 		}
 		if($(".feature-packages-table").hasClass('hidden') )	{
-			// console.log($(".feature-packages-table tbody .feature-packages").length);
 			$(".feature-packages-table").removeClass('hidden');
 		}
 	});
@@ -57,7 +55,7 @@ $('body').on('click', '#attach-selected-flyers', function(){
 			$(".feature-flyers-table tbody").append( '<tr class="selected-flyers"> '+
 													'<td data-flyer-id='+ $(this).val() +'><i class="fa fa-folder-o"></i> '+ $(this).attr("data-flyername") +'</td>'+
 													'<td></td>'+
-													'<td> <a data-flyer-id="'+ $(this).val()+'" id="flyer'+ $(this).val()+'" class="remove-staged-flyer btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>'+
+													'<td class="align-right"> <a data-flyer-id="'+ $(this).val()+'" id="flyer'+ $(this).val()+'" class="remove-staged-flyer btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>'+
 												 '</tr>');		
 		}
 		if($(".feature-flyers-table").hasClass('hidden') )	{
@@ -83,7 +81,7 @@ $('body').on('click', ".remove-package", function(){
 	var package_id = $(this).attr('data-package-id');
 	$(this).closest('.feature-packages').fadeOut(200);
 	
-	$("#packages-staged-to-remove").append('<div class="remove_package" data-package-id='+ package_id +'>')
+	$("#packages-staged-to-remove").append('<div class="remove_package" data-package-id='+ package_id +'>');
 });
 
 
@@ -236,8 +234,15 @@ $(document).on('click','.feature-update',function(){
 	var feature_flyers = [];
 	var update_type = $('input:radio[name =  "latest_updates_option"]:checked').val();
 	var update_frequency =  $('input:radio[name ="latest_updates_option"]:checked').next('input[name="update_frequency"]').val();
-	// console.log('latest updates : ' + update_type);
-	// console.log('latest update freq : ' + update_frequency);
+	var communication_type = $("#communicationType").val();
+	var communications = $("#communications").val();
+	var event_types = $("#eventTypes").val();
+	var events = $("#events").val();
+	var all_stores = getAllStoreStatus();
+	var target_stores = getTargetStores();
+	var target_banners = getTargetBanners();
+	var store_groups = getStoreGroups();
+	var tasklists = $("#tasklists").val();
 
 
 	$(".remove_document").each(function(){
@@ -281,8 +286,15 @@ $(document).on('click','.feature-update',function(){
 		$(window).scrollTop(0);
 		return false;	
 	}
+	if(target_stores == null || all_stores == null || store_groups == null ) {
+		swal("Oops!", "Target stores not selected.", "error"); 
+		hasError = true;
+		$(window).scrollTop(0);
+		return false;
+	}
+	console.log(remove_flyer);
 
-     if(hasError == false) {
+    if(hasError == false) {
      	var dataObj = {};
      	// console.log(typeof(dataObj));
      	$.extend(dataObj, {title: featureTitle});
@@ -295,8 +307,17 @@ $(document).on('click','.feature-update',function(){
      	$.extend(dataObj, {remove_document: remove_document});
      	$.extend(dataObj, {remove_package: remove_package});
      	$.extend(dataObj, {remove_flyer: remove_flyer});
+     	$.extend(dataObj, {communication_type : communication_type});
+     	$.extend(dataObj, {communications : communications});
+     	$.extend(dataObj, {event_types : event_types});
+     	$.extend(dataObj, {events : events});
      	$.extend(dataObj, {update_type : update_type});
      	$.extend(dataObj, {update_frequency : update_frequency});
+     	$.extend(dataObj, {target_stores : target_stores});
+     	$.extend(dataObj, {all_stores : allStores});
+     	$.extend(dataObj, {target_banners : target_banners});
+     	$.extend(dataObj, {store_groups : store_groups});
+     	$.extend(dataObj, {tasklists : tasklists});
      	
 
      	var data = JSON.stringify(dataObj);
@@ -363,6 +384,42 @@ $(document).on('click','.feature-update',function(){
 			        if(errors.hasOwnProperty("background")) {
 			        	$.each(errors.background, function(index){
 			        		$("#background").append('<div class="req">' + errors.background[index]  + '</div>');	
+			        	});
+			        }
+			        if(errors.hasOwnProperty("communication_type")) {
+			        	$.each(errors.communication_type, function(index){
+			        		$("#communicationType").parent().append('<div class="req">' + errors.communication_type[index]  + '</div>');	
+			        	});
+			        }
+
+			        if(errors.hasOwnProperty("communications")) {
+			        	$.each(errors.communications, function(index){
+			        		$("#communications").parent().append('<div class="req">' + errors.communications[index]  + '</div>');	
+			        	});
+			        }
+			        if(errors.hasOwnProperty("events")) {
+			        	$.each(errors.events, function(index){
+			        		$("#events").parent().append('<div class="req">' + errors.events[index]  + '</div>');	
+			        	});
+			        }
+			        if(errors.hasOwnProperty("event_types")) {
+			        	$.each(errors.event_types, function(index){
+			        		$("#event_types").parent().append('<div class="req">' + errors.event_types[index]  + '</div>');	
+			        	});
+			        }
+			        if(errors.hasOwnProperty("tasklists")) {
+			        	$.each(errors.tasklists, function(index){
+			        		$("#tasklists").parent().append('<div class="req">' + errors.tasklists[index]  + '</div>');	
+			        	});
+			        }
+			        if(errors.hasOwnProperty("target_stores")) {
+			        	$.each(errors.target_stores, function(index){
+			        		$("#storeSelect").parent().append('<div class="req">' + errors.target_stores[index]  + '</div>');	
+			        	});
+			        }
+			        if(errors.hasOwnProperty("allStores")) {
+			        	$.each(errors.allStores, function(index){
+			        		$("#storeSelect").parent().append('<div class="req">' + errors.allStores[index]  + '</div>');	
 			        	});
 			        }
 			    }

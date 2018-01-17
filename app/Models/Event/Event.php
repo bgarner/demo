@@ -5,45 +5,57 @@ namespace App\Models\Event;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Tag\ContentTag;
-use App\Models\Banner;
-use App\Models\UserBanner;
-use App\Models\UserSelectedBanner;
+use App\Models\StoreApi\Banner;
+use App\Models\Auth\User\UserBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Event\EventType;
+use App\Models\Event\EventTarget;
 use Carbon\Carbon;
 use App\Models\Validation\EventValidator;
+use App\Models\Event\EventAttachment;
+use App\Models\ProductLaunch\ProductLaunch;
 use App\Models\Utility\Utility;
-
+use App\Models\StoreApi\StoreInfo;
+use App\Models\Tools\CustomStoreGroup;
 
 class Event extends Model
 {
-	use SoftDeletes;
+    use SoftDeletes;
     protected $table = 'events';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['banner_id', 'title', 'description', 'event_type', 'start', 'end'];
+    protected $fillable = ['title', 'description', 'event_type', 'start', 'end', 'all_day', 'all_stores'];
 
     public static function validateEvent($request)
     {
-      $validateThis = [
+        $validateThis = [
                         'title'         => $request['title'],
                         'event_type'    => $request['event_type'],
                         'start'         => $request['start'],
                         'end'           => $request['end'],
-                        'target_stores' => $request['target_stores'],
-
                       ];
-      if ($request['allStores'] != NULL) {
-        $validateThis['allStores'] = $request['allStores'];
-      }
+        if ($request['target_stores'] != NULL) {
+            $validateThis['target_stores'] = $request['target_stores'];
+        }
+        if ($request['target_banners'] != NULL) {
+            $validateThis['target_banners'] = $request['target_banners'];
+        }
+        if ($request['store_groups'] != NULL) {
+            $validateThis['store_groups'] = $request['store_groups'];
+        }
 
-      $v = new EventValidator();
+        if ($request['all_stores'] != NULL) {
+            $validateThis['allStores'] = $request['all_stores'];
+        }
 
-      return $v->validate($validateThis);
+        $v = new EventValidator();
+
+        return $v->validate($validateThis);
 
     }
 
     public static function storeEvent($request)
     {
-
+        \Log::info($request);
         $validate = Event::validateEvent($request);
 
         if($validate['validation_result'] == 'false') {
@@ -60,10 +72,14 @@ class Event extends Model
             'event_type' => $request['event_type'],
             'description' => $desc,
             'start' => $request['start'],
-            'end' => $request['end']
+            'end' => $request['end'],
+            'all_day' => $request['allDay']
+
+
     	   ]);
 
-        $event = Event::updateTargetStores($event->id, $request);
+        EventTarget::updateTargetStores($event->id, $request);
+        EventAttachment::updateAttachments($event->id, $request);
         return json_encode($event);
 
     }
@@ -82,34 +98,17 @@ class Event extends Model
         $event->description = preg_replace('/\n+/', '', $request['description']);
         $event->start = $request['start'];
         $event->end = $request['end'];
+        $event->all_day = $request['allDay'];
 
         $event->save();
 
-        Event::updateTargetStores($id, $request);
+        EventTarget::updateTargetStores($id, $request);
+        EventAttachment::updateAttachments($id, $request);
         return json_encode($event);
 
     }
 
-    public static function updateTargetStores($id, $request)
-      {
-         $target_stores = $request['target_stores'];
-         $allStores = $request['allStores'];
-
-         if (!( $target_stores == '' && $allStores == 'on' )) {
-             EventTarget::where('event_id', $id)->delete();
-             if (count($target_stores) > 0) {
-                 foreach ($target_stores as $store) {
-                     EventTarget::create([
-                        'event_id'   => $id,
-                        'store_id'   => $store
-                     ]);
-
-                  }
-             }
-         }
-
-         return;
-      }
+    
 
     public static function updateTags($id, $tags)
     {
@@ -124,36 +123,241 @@ class Event extends Model
         return;
     }
 
+    public static function getActiveEventsAndProductLaunchForCalendarViewByStore($storeNumber)
+    {
+        $events = Event::getActiveEventsByStore($storeNumber);
+        $productLaunches = ProductLaunch::getActiveProductLaunchByStoreForCalendar($storeNumber);
+
+        $events = $events->merge($productLaunches);
+        foreach ($events as $event) {
+            $event->prettyDateStart = Utility::prettifyDate($event->start);
+            $event->prettyDateEnd = Utility::prettifyDate($event->end);
+            $event->since = Utility::getTimePastSinceDate($event->start);
+            $event->event_type_name = EventType::getName($event->event_type);
+            $event->background_colour = EventType::getBackground($event->event_type);
+            $event->foreground_colour = EventType::getForeground($event->event_type);
+        }
+        return $events;
+
+    }
+
     public static function getActiveEventsByStore($store_id)
     {
-      $events = Event::join('events_target', 'events.id', '=', 'events_target.event_id')
+        $banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
+
+        $allStoreEvents = Event::join('event_banner', 'event_banner.event_id', '=', 'events.id' )
+                            ->where('all_stores', '1')
+                            ->where('event_banner.banner_id', $banner_id)
+                            ->select('events.*')
+                            ->orderBy('start')
+                            ->get();
+
+        $targetedEvents = Event::join('events_target', 'events.id', '=', 'events_target.event_id')
                         ->where('store_id', $store_id)
+                        ->select('events.*')
                         ->orderBy('start')
                         ->get();
-      return $events;
+
+        $storeGroups = CustomStoreGroup::getStoreGroupsForStore($store_id);
+        $storeGroupEvents = Event::join('event_store_groups', 'event_store_groups.event_id', '=', 'events.id')
+                                    ->whereIn('event_store_groups.store_group_id', $storeGroups)
+                                    ->select('events.*')
+                                    ->get();
+
+        $allEvents = $allStoreEvents->merge($targetedEvents)->merge($storeGroupEvents)
+                    ->each(function($event){
+                        $attachments = EventAttachment::getEventAttachments($event->id);
+                        $attachment_link_string = "";
+                        foreach ($attachments as $a) {
+                            $attachment_link_string .= "<a href='/".$store_id."/document#!/".$a->id."'>". $a->name ."</a><br>";
+                        }
+                        $event->attachment = $attachment_link_string;
+                    });
+
+        return $allEvents;
     }
+
+     public static function getListofEventsByStoreAndMonth($storeNumber, $yearMonth)
+    {
+        $eventsList = Event::getActiveEventsByStoreAndMonth($storeNumber, $yearMonth);
+        $productLaunchList = ProductLaunch::getActiveProductLaunchByStoreandMonth($storeNumber, $yearMonth);
+
+        $eventsList = $eventsList->toArray();
+        $productLaunchList = $productLaunchList->toArray();
+        foreach ($productLaunchList as $date => $launch) {
+            if(array_key_exists($date, $eventsList)){
+                foreach($launch as $key => $launchObj){
+                    array_push($eventsList[$date], $launchObj);
+                }
+            }
+            else{
+                $eventsList[$date] = $launch;
+            }
+        }
+        ksort($eventsList);
+        $eventsList = json_decode(json_encode($eventsList));
+        
+        return $eventsList;
+    }
+
+
 
     public static function getActiveEventsByStoreAndMonth($store_id, $yearMonth)
     {
-        $events = Event::join('events_target', 'events.id', '=', 'events_target.event_id')
+        $banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
+        $targetedEvents = Event::join('events_target', 'events.id', '=', 'events_target.event_id')
+                    ->join('event_types', 'events.event_type', '=', 'event_types.id')
                     ->where('store_id', $store_id)
                     ->where('start', 'LIKE', $yearMonth.'%')
-
+                    ->select('events.*', 'event_types.event_type as event_type_name', 'event_types.foreground_colour', 'event_types.background_colour' )
                     ->orderBy('start')
                     ->get()
                     ->each(function ($item) {
                         $item->prettyDateStart = Utility::prettifyDate($item->start);
                         $item->prettyDateEnd = Utility::prettifyDate($item->end);
                         $item->since = Utility::getTimePastSinceDate($item->start);
-                        $item->event_type_name = EventType::getName($item->event_type);
-                    })
-                    ->groupBy(function($event) {
-                            return Carbon::parse($event->start)->format('Y-m-d');
                     });
+                    
+
+        $allStoreEvents = Event::join('event_banner', 'event_banner.event_id', '=', 'events.id' )    
+                        ->join('event_types', 'events.event_type', '=', 'event_types.id')
+                        ->where('all_stores', 1)
+                        ->where('event_banner.banner_id', $banner_id)
+                        ->where('start', 'LIKE', $yearMonth.'%')
+                        ->select('events.*', 'event_types.event_type as event_type_name', 'event_types.foreground_colour', 'event_types.background_colour' )
+                        ->orderBy('start')
+                        ->get()
+                        ->each(function ($item) {
+                            $item->prettyDateStart = Utility::prettifyDate($item->start);
+                            $item->prettyDateEnd = Utility::prettifyDate($item->end);
+                            $item->since = Utility::getTimePastSinceDate($item->start);
+                        });
+
+        $storeGroups = CustomStoreGroup::getStoreGroupsForStore($store_id);
+        $storeGroupEvents = Event::join('event_store_groups', 'event_store_groups.event_id', '=', 'events.id')
+                        ->join('event_types', 'events.event_type', '=', 'event_types.id')
+                        ->whereIn('event_store_groups.store_group_id', $storeGroups)
+                        ->where('start', 'LIKE', $yearMonth.'%')
+                        ->select('events.*', 'event_types.event_type as event_type_name', 'event_types.foreground_colour', 'event_types.background_colour' )
+                        ->orderBy('start')
+                        ->get()
+                        ->each(function ($item) {
+                            $item->prettyDateStart = Utility::prettifyDate($item->start);
+                            $item->prettyDateEnd = Utility::prettifyDate($item->end);
+                            $item->since = Utility::getTimePastSinceDate($item->start);
+                        });
+                        
+        $events = $targetedEvents->merge($allStoreEvents);
+        $events = $events->merge($storeGroupEvents);
+
+        foreach($events as $event){
+            $start = Carbon::createFromFormat('Y-m-d H:i:s', $event->start);
+            $end = Carbon::createFromFormat('Y-m-d H:i:s', $event->end);
+            $differenceInHours = $start->diffInHours($end);
+            
+            while($differenceInHours > 24){
+                
+                $start = $start->addDay();
+                $newEvent = $event->replicate();
+                $newEvent->id = Carbon::now()->timestamp ;
+                $newEvent->start = $start->toDateTimeString();
+                $newEvent->prettyDateStart = Utility::prettifyDate($newEvent->start);
+                $newEvent->prettyDateEnd = Utility::prettifyDate($newEvent->end);
+                $newEvent->since = Utility::getTimePastSinceDate($newEvent->start);
+                $events->push($newEvent);
+                $differenceInHours = $start->diffInHours($end);
+                
+            }
+        }
+
+        $events = $events->groupBy(function($event) {
+                return Carbon::parse($event->start)->format('Y-m-d');
+        });
 
         return $events;
     }
 
+    public static function getEventsForAdmin()
+    {
+        $banner = UserSelectedBanner::getBanner()->id;
+        //stores in accessible banners
+        $storeList = [];
+        // foreach ($banners as $banner) {
+            $storeInfo = StoreInfo::getStoresInfo($banner);
+            foreach ($storeInfo as $store) {
+                array_push($storeList, $store->store_number);
+            }
+        // }
 
+        $allStoreEvents = Event::join('event_banner', 'event_banner.event_id', '=', 'events.id')
+                                ->where('all_stores', 1)
+                                ->where('event_banner.banner_id', $banner)
+                                ->select('events.*', 'event_banner.banner_id')
+                                ->get();
+
+        $allStoreEvents = Utility::groupBannersForAllStoreContent($allStoreEvents);
+
+        
+        $targetedEvents = Event::join('events_target', 'events_target.event_id', '=', 'events.id')
+                                ->whereIn('events_target.store_id', $storeList)
+                                ->select(\DB::raw('events.*, GROUP_CONCAT(DISTINCT events_target.store_id) as stores'))
+                                ->groupBy('events.id')
+                                ->get()
+                                ->each(function($event){
+                                    $event->stores = explode(',', $event->stores);
+                                });
+
+        $storeGroups = CustomStoreGroup::getStoreGroupsForAdmin();
+        $eventsForStoreGroups = Event::join('event_store_groups', 'event_store_groups.event_id', '=', 'events.id')
+                                            ->whereIn('event_store_groups.store_group_id', $storeGroups)
+                                            ->select('events.*')
+                                            ->get()
+                                            ->each(function($item){
+                                                $storeGroups = EventStoreGroup::where('event_id', $item->id)->get()->pluck('store_group_id')->toArray();
+                                                $item->storeGroups = $storeGroups;
+                                                $item->stores = [];
+                                                foreach ($storeGroups as $group) {
+                                                    $stores = unserialize(CustomStoreGroup::find($group)->stores);
+                                                    $item->stores = array_merge($item->stores,$stores);
+                                                }
+                                                $item->stores = array_unique( $item->stores);
+                                            });
+
+        $targetedEvents = Utility::mergeTargetedAndStoreGroupContent($targetedEvents, $eventsForStoreGroups);
+                                           
+        $events = Utility::mergeTargetedAndAllStoreContent($targetedEvents, $allStoreEvents);
+
+        foreach ($events as $event) {
+            
+            $event->background_colour = EventType::getBackground($event->event_type);
+            $event->foreground_colour = EventType::getForeground($event->event_type);
+            $event->event_type = EventType::getName($event->event_type);
+            $event->prettyStartDate = Utility::prettifyDate($event->start);
+            $event->prettyEndDate = Utility::prettifyDate($event->end);
+        }
+                        
+                        
+        return $events;
+    }
+
+    public static function getSelectedStoresAndBannersByEventId($event_id)
+    {
+        $targetBanners = EventBanner::where('event_id', $event_id)->get()->pluck('banner_id')->toArray();
+        $targetStores = EventTarget::where('event_id', $event_id)->get()->pluck('store_id')->toArray();
+        $storeGroups = EventStoreGroup::where('event_id', $event_id)->get()->pluck('store_group_id')->toArray();
+
+        $optGroupSelections = [];
+        foreach ($targetBanners as $banner) {
+            array_push($optGroupSelections, 'banner'.$banner);
+        }
+        foreach ($targetStores as $stores) {
+            array_push($optGroupSelections, 'store'.$stores);   
+        }
+        foreach ($storeGroups as $group) {
+            array_push($optGroupSelections, 'storegroup'.$group);   
+        }
+
+        return( $optGroupSelections );
+    }
 
 }

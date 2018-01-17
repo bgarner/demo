@@ -1,62 +1,78 @@
-$("#allStores").change(function(){
+var communication_id = $("#communicationId").val();
+$('body').on('blur','#targets_chosen', function(){
+	
+	var target_stores = getTargetStores();
+	var target_banners = getTargetBanners();
+	var store_groups = getStoreGroups();
+	var communication_id = $("#communicationId").val();
+	
+	$("#communication-type-selector").empty()
+									.load('/admin/target/communicationtypes', { 
+										target_stores : target_stores, 
+										target_banners : target_banners,
+										store_groups : store_groups,
+										communication_id : communication_id
+									 });
 
-	if ($("#allStores").is(":checked")) {
-
-		$("#storeSelect option").each(function(){
-			$(this).removeAttr('selected');
-		});
-		$("#storeSelect").chosen('chosen:updated');
-
-		$("#storeSelect option").each(function(index){			
-			$(this).prop('selected', 'selected');
-		});
-		$("#storeSelect").chosen();
-		
-	}
-	else if ($("#allStores").not(":checked")) {
-		$("#storeSelect option").each(function(){
-			$(this).removeAttr('selected');
-		});
-		$("#storeSelect").chosen();
-		
-	}
 });
 
+$('body').on( 'click', ".comm_type_dropdown_item", function(){
 
-$("#add-documents").click(function(){
-	$("#document-listing").modal('show');
+	$(".selected_comm_type").empty();
+	var comm_typeid = $(this).attr('data-comm-typeid');
+	var comm_typeColour = $(this).attr('data-comm-typecolour');
+	var comm_type = $(this).attr('data-comm-type');
+
+	$("input[name='communication_type']").val(comm_typeid);
+	$(".selected_comm_type").append('<i class="fa fa-circle text-'+ comm_typeColour + '"> </i> '+ comm_type);
 });
 
-$("#add-packages").click(function(){
-	$("#package-listing").modal('show');	
-});
+var initializeTagSelector = function(selectedTags){
+	
+	$("#tags_" + communication_id).select2({ 
+		width: '100%' , 
+		tags: true,
+		multiple: true,
+		createTag: function (params) {
+    		var term = $.trim(params.term);
 
+		    if (term === ''  && $("#tags_" + communication_id).find('option').attr("tagname", term).length >0) {
+		      return null;
+		    }
 
-$('body').on('click', '#attach-selected-files', function(){
-	$(".selected-files").remove();
-	$('input[name^="package_files"]').each(function(){
-		if($(this).is(":checked")){
-			$("#files-selected").append('<div class="col-sm-10 col-sm-offset-2"><div class="row">'+
-											'<div class="feature-files col-md-8 " data-fileid='+ $(this).val() +'> '+
-												'<div class="feature-filename selected-files" data-fileid='+ $(this).val() +'><i class="fa fa-file-o"></i> '+  $(this).attr("data-filename")+
-											'</div></div>'+
-											'<a data-document-id="'+ $(this).val()+'" id="file'+ $(this).val()+'" class="remove-staged-file btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></div></div>')
+		    return {
+		      id: term, //id of new option 
+		      text: term, //text of new option 
+		      newTag: true
+		    }
 		}
 	});
-});
+}
 
+$("body").on('select2:select', $("#tags_" + communication_id), function (evt) {
 
-$('body').on('click', ".remove-file", function(){
-	var document_id = $(this).attr('data-document-id');
-	$(this).parent().fadeOut(200);
-	$("#files-staged-to-remove").append('<div class="remove_document"  data-documentid='+ document_id +'>')
-});
+	var communication_id = $("#communicationId").val();
+    if(evt.params.data.newTag){
+    	$.post("/admin/tag",{ tag_name: evt.params.data.text })
+    	.done(function(tag){
+    		
+    		//change the id of the newly added tag to be the id from db
+			$('#tags_'+ communication_id +' option[value="'+tag.name+'"]').val(tag.id);
+			
+			var selectedTags = $("#tags_" + communication_id).val();
+			//update tag communication mapping
+			$.post("/admin/communicationtag",{ 'communication_id' : communication_id, 'tags': selectedTags })
+			.done(function(){
+				$('#tags').select2('destroy');
+				$("#tag-selector-container").load("/admin/communicationtag/"+communication_id, function(){
+					initializeTagSelector();
+					$("#tags_" + communication_id).focus();
 
-$("body").on('click', ".remove-staged-file", function(){
-	
-	var document_id = $(this).attr('data-document-id');
-	$(".feature-files[data-fileid = '" + document_id + "']").remove();
-	$(this).parent().fadeOut(200);
+				});	
+			});				
+
+    	});
+    }
 
 });
 
@@ -73,11 +89,12 @@ $(document).on('click','.communication-update',function(){
 	var start = $("#send_at").val();
 	var end = $("#archive_at").val();
 	var banner_id = $("input[name='banner_id']").val();
-	var target_stores  = $("#storeSelect").val();
-	var allStores  = $("#allStores:checked").val();
+	var target_stores = getTargetStores();
+	var target_banners = getTargetBanners();
+	var store_groups = getStoreGroups();
+	var all_stores = getAllStoreStatus();
+	var tags = $("#tags_" + communication_id).val();
 
-	console.log(communication_type_id);
-	
 	var importance = "1";
 	var sender = "";
 
@@ -100,7 +117,6 @@ $(document).on('click','.communication-update',function(){
 	$(".selected-packages").each(function(){
 		communication_packages.push($(this).attr('data-packageid'));
 	});
- 
 
     if(subject == '' || body == '') {
 		swal("Oops!", "Communication title/body incomplete.", "error"); 
@@ -114,13 +130,13 @@ $(document).on('click','.communication-update',function(){
 		$(window).scrollTop(0);
 		return false;
 	}
-	if( target_stores == null && typeof allStores === 'undefined' ) {
+	if( target_stores == null || all_stores == null || store_groups == null ) {
 		swal("Oops!", "Target stores not selected.", "error"); 
 		hasError = true;
 		$(window).scrollTop(0);
 		return false;
 	}
-	console.log(communication_type_id);
+	
      if(hasError == false) {
 
 		$.ajax({
@@ -129,20 +145,23 @@ $(document).on('click','.communication-update',function(){
 		    dataType : 'json',
 		    data: {
 
-		    	subject : subject,
-		  		communication_type_id: communication_type_id,
-		  		body : body,
-		  		sender: sender,
-		  		importance: importance,
-		  		send_at : start,
-		  		archive_at : end,
-		  		banner_id : banner_id,
-		  		target_stores : target_stores,
-		  		allStores : allStores,
-		  		communication_documents : communication_documents,
-		  		communication_packages : communication_packages,
-		  		remove_document : remove_document,
-		  		remove_package : remove_package
+
+				subject                 : subject,
+				communication_type_id   : communication_type_id,
+				body                    : body,
+				sender                  : sender,
+				importance              : importance,
+				send_at                 : start,
+				archive_at              : end,
+				target_stores           : target_stores,
+				all_stores              : all_stores,
+				target_banners          : target_banners,
+				store_groups            : store_groups,
+				communication_documents : communication_documents,
+				communication_packages  : communication_packages,
+				remove_document         : remove_document,
+				remove_package          : remove_package,
+		  	tags                    : tags
 
 		    },
 		    
@@ -199,9 +218,9 @@ $(document).on('click','.communication-update',function(){
 		    }
 		}).done(function(response){
 			console.log(response);
-			$(".existing-files-container").load("/admin/communicationdocuments/"+communicationId);
 			$("#files-staged-to-remove").empty();
 			$("#files-selected").empty();
+			$("#files-selected").load("/admin/communicationdocuments/"+communicationId);
 			$("#document-listing").find(".document-checkbox").prop('checked', false);
 		});    	
     }

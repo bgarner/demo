@@ -10,7 +10,7 @@ use App\Models\Document\DocumentPackage;
 use Carbon\Carbon;
 use App\Models\Tag\Tag;
 use App\Models\Tag\ContentTag;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use DB;
 use App\Models\Alert\Alert;
 use App\Models\Utility\Utility;
@@ -20,7 +20,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Validation\DocumentValidator;
 use App\Models\Feature\FeatureDocument;
 use App\Models\Communication\CommunicationDocument;
-use App\Models\UrgentNotice\UrgentNoticeAttachment;
+use App\Models\UrgentNotice\UrgentNoticeDocument;
+use App\Models\StoreApi\StoreInfo;
 
 
 class Document extends Model
@@ -67,55 +68,34 @@ class Document extends Model
             $folder_type = $global_folder_details->folder_type;
             $folder_id = $global_folder_details->folder_id;
 
-            $now = Carbon::now()->toDatetimeString();
-
             if ($forStore) {
-                $files = \DB::table('file_folder')
-                            ->join('documents', 'file_folder.document_id', '=', 'documents.id')
-                            ->join('document_target', 'document_target.document_id' , '=', 'documents.id')
-                            ->where('file_folder.folder_id', '=', $global_folder_id)
-                            ->where('documents.start', '<=', $now )
-                            ->where(function($query) use ($now) {
-                                $query->where('documents.end', '>=', $now)
-                                    ->orWhere('documents.end', '=', '0000-00-00 00:00:00' );
-                            })
-                            ->where('documents.deleted_at', '=', null)
-                            ->where('document_target.deleted_at', '=', null)
-                            ->where('document_target.store_id', strval($storeNumber))
-                            ->select('documents.*')
-                            ->get();
-
+                $documents = Document::getDocumentsForStore($global_folder_id, $storeNumber);
             }
             else{
-                $files = \DB::table('file_folder')
-                            ->join('documents', 'file_folder.document_id', '=', 'documents.id')
-                            ->where('file_folder.folder_id', '=', $global_folder_id)
-                            ->where('documents.deleted_at', '=', null)
-                            ->select('documents.*')
-                            ->get();
+                $documents = Document::getDocumentsForAdmin($global_folder_id);
             }
 
+            if (count($documents) > 0) {
 
+                foreach ($documents as $document) {
 
+                    //$document = Document::getDocumentMetaData();
+                    $document->link = Utility::getModalLink($document->filename, $document->title, $document->original_extension, $document->id, 0);
+                    $document->link_with_icon = Utility::getModalLink($document->filename, $document->title, $document->original_extension, $document->id, 1);
+                    $document->icon = Utility::getIcon($document->original_extension);
+                    $document->prettyDateCreated = Utility::prettifyDate($document->created_at);
+                    $document->prettyDateUpdated = Utility::prettifyDate($document->updated_at);
+                    $document->prettyDateStart = Utility::prettifyDate($document->start);
+                    $document->prettyDateEnd = Utility::prettifyDate($document->end);
 
-            if (count($files) > 0) {
-                foreach ($files as $file) {
-                    $file->link = Utility::getModalLink($file->filename, $file->title, $file->original_extension, $file->id, 0);
-                    $file->link_with_icon = Utility::getModalLink($file->filename, $file->title, $file->original_extension, $file->id, 1);
-                    $file->icon = Utility::getIcon($file->original_extension);
-                    $file->prettyDateCreated = Utility::prettifyDate($file->created_at);
-                    $file->prettyDateUpdated = Utility::prettifyDate($file->updated_at);
-                    $file->prettyDateStart = Utility::prettifyDate($file->start);
-                    $file->prettyDateEnd = Utility::prettifyDate($file->end);
-
-                    $file->is_alert = '';
-                    if (Alert::where('document_id', $file->id)->first()) {
-                        $file->is_alert = Utility::getAlertIcon();
+                    $document->is_alert = '';
+                    if (Alert::where('document_id', $document->id)->first()) {
+                        $document->is_alert = Utility::getAlertIcon();
                     }
 
                 }
 
-                return $files;
+                return $documents;
             }
             else{
                 return [];
@@ -130,6 +110,7 @@ class Document extends Model
     public static function storeDocument($request)
     {
 
+        \Log::info($request->all());
         $validate = Document::validateCreateDocument($request);
 
         if($validate['validation_result'] == 'false') {
@@ -159,6 +140,7 @@ class Document extends Model
                 'start'             => $request->start,
                 'end'               => $request->end
             );
+
 
             $document = Document::create($documentdetails);
             $document->save();
@@ -236,7 +218,7 @@ class Document extends Model
         CommunicationDocument::where('document_id', $id)->delete();
 
         //delete from Urgent Notice
-        UrgentNoticeAttachment::deleteAttachment($id, 'Document');
+        UrgentNoticeDocument::deleteDocument($id);
 
         //delete from quicklink
         $quicklink = Quicklinks::where('url', $id)->where('type', 2)->first();
@@ -282,21 +264,32 @@ class Document extends Model
 
         $global_parent_folder_id = FileFolder::where('document_id', $id)->first()->folder_id;
         Folder::updateTimestamp($global_parent_folder_id, $document->updated_at );
+        $is_alert = $request->get('is_alert');
+        if( $is_alert == 1) {
+            Alert::markDocumentAsAlert($request, $id);
+        }
 
     }
 
     public static function updateDocument($request, $id) {
 
-        $document       = Document::find($id);
-        $title          = $request->get('title');
-        $description    = $request->get('description');
-        $doc_start      = $request->get('document_start');
-        $doc_end        = $request->get('document_end');
 
-        $document['title']  = $title;
-        $document['description'] = $description;
-        $document['start']  = $doc_start;
-        $document['end']  = $doc_end;
+        \Log::info($request->all());
+
+        $document       = Document::find($id);
+
+        if(isset($request['title'])){
+            $document['title']  = $request->get('title');
+        }
+        if(isset($request['description']) ){
+            $document['description'] = $request->get('description');
+        }
+        if(isset($request['document_start'])){
+            $document['start'] = $request->get('document_start');
+        }
+        if(isset($request['document_end'])){
+            $document['end'] = $request->get('document_end');
+        }
 
         $document->save();
 
@@ -310,8 +303,60 @@ class Document extends Model
             Alert::deleteAlert($document->id);
         }
 
+        if(isset($request->tags) && $request->tags != null) {
+            ContentTag::updateTags( 'document', $id, $request->tags);
+        }
+
+        $document->prettyDateStart = Utility::prettifyDate($document->start);
+        $document->prettyDateEnd = Utility::prettifyDate($document->end);
+
         return $document;
 
+    }
+
+    public static function replaceDocument($request, $id)
+    {
+
+        //validate document type
+        $v = \Validator::make(
+                    ['filename' => $request->file('document')],
+                    ['filename'    => 'required|mimes:jpeg,bmp,png,pdf,xls,xlsx,xlsm,webm']
+                );
+
+        $response = ['validation_result' => 'true'] ;
+
+        if ($v->fails())
+        {
+            $response =  ['validation_result' => 'false', 'errors' => $v->errors()];
+            if($response['validation_result'] == 'false'){
+                return $response;
+            }
+
+        }
+
+        $metadata = Document::getDocumentMetaData($request->file('document'));
+
+        $directory = public_path() . '/files';
+        $uniqueHash = sha1(time() . time());
+        $filename  = $metadata["modifiedName"] . "_" . $uniqueHash . "." . $metadata["originalExtension"];
+
+        $upload_success = $request->file('document')->move($directory, $filename); //move and rename file
+
+        // $banner = UserSelectedBanner::getBanner();
+
+        if ($upload_success) {
+
+            $document = Document::find($id);
+            $documentdetails = array(
+                'original_filename' => $metadata["originalName"],
+                'filename'          => $filename,
+                'original_extension'=> $metadata["originalExtension"]
+            );
+
+            $document->update($documentdetails);
+        }
+
+        return $document;
     }
 
     public static function getRecentDocuments($banner_id, $days)
@@ -350,19 +395,30 @@ class Document extends Model
     {
 
         $now = Carbon::now()->toDatetimeString();
-
         $files = \DB::table('file_folder')
                     ->join('documents', 'file_folder.document_id', '=', 'documents.id')
                     ->join('document_target', 'document_target.document_id' , '=', 'documents.id')
                     ->where('file_folder.folder_id', '=', $global_folder_id)
                     ->where('documents.end', '<=', $now)
                     ->where('documents.end', '!=', '0000-00-00 00:00:00')
+                    ->where('documents.end', '!=', NULL)
                     ->where('document_target.store_id', strval($storeNumber))
                     ->where('documents.deleted_at', '=', null)
-                    ->where('document_target.deleted_at', '=', null)
                     ->select('documents.*')
 
                     ->get();
+
+        $allStoreDocuments = \DB::table('file_folder')
+                    ->join('documents', 'file_folder.document_id', '=', 'documents.id')
+                    ->where('file_folder.folder_id', '=', $global_folder_id)
+                    ->where('documents.end', '<=', $now)
+                    ->where('documents.end', '!=', '0000-00-00 00:00:00')
+                    ->where('documents.end', '!=', NULL)
+                    ->where('documents.all_stores', 1)
+                    ->where('documents.deleted_at', '=', null)
+                    ->select('documents.*')
+                    ->get();
+        $files = $files->merge($allStoreDocuments);
 
         if (count($files) > 0) {
             foreach ($files as $file) {
@@ -479,20 +535,105 @@ class Document extends Model
 
     public static function updateDocumentTarget(Request $request, $document)
     {
-         if ($request['stores'] != '') {
+        $all_stores = $request['all_stores'];
+        if($all_stores == 'on') {
             DocumentTarget::where('document_id', $document->id)->delete();
-            $target_stores = $request['stores'];
-            if(! is_array($target_stores) ) {
-                $target_stores = explode(',',  $request['stores'] );
-            }
+            $document->all_stores = 1;
+            $document->save();
+        }
+        else{
+            if ($request['stores'] != '') {
+                $document->all_stores = 0;
+                $document->save();
+                DocumentTarget::where('document_id', $document->id)->delete();
+                $target_stores = $request['stores'];
+                if(! is_array($target_stores) ) {
+                    $target_stores = explode(',',  $request['stores'] );
+                }
+                foreach ($target_stores as $key=>$store) {
+                    DocumentTarget::insert([
+                        'document_id' => $document->id,
+                        'store_id' => $store
+                        ]);
+                }
+                if(!in_array('0940', $target_stores)){
+                    Utility::addHeadOffice($document->id, 'document_target', 'document_id');
+                }
 
-            foreach ($target_stores as $key=>$store) {
-                DocumentTarget::insert([
-                    'document_id' => $document->id,
-                    'store_id' => $store
-                    ]);
             }
         }
-            return;
+
+        return;
     }
+
+    public static function getDocumentsForStore($global_folder_id, $storeNumber)
+    {
+        $now = Carbon::now()->toDatetimeString();
+
+        $banner_id = StoreInfo::getStoreInfoByStoreId($storeNumber)->banner_id;
+
+        $allStoreDocuments = Document::join('file_folder', 'file_folder.document_id', '=', 'documents.id')
+                                    ->where('file_folder.folder_id', $global_folder_id)
+                                    ->where('documents.all_stores', 1)
+                                    ->where('documents.banner_id', $banner_id)
+                                    ->where('documents.start', '<=', $now )
+                                    ->where(function($query) use ($now) {
+                                        $query->where('documents.end', '>=', $now)
+                                            ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                            ->orWhere('documents.end', '=', NULL );
+                                    })
+                                    ->where('documents.deleted_at', '=', null)
+                                    ->select('documents.*')
+                                    ->get();
+
+
+        $targetedDocuments = \DB::table('file_folder')
+                            ->join('documents', 'file_folder.document_id', '=', 'documents.id')
+                            ->join('document_target', 'document_target.document_id' , '=', 'documents.id')
+                            ->where('file_folder.folder_id', '=', $global_folder_id)
+                            ->where('documents.start', '<=', $now )
+                            ->where(function($query) use ($now) {
+                                $query->where('documents.end', '>=', $now)
+                                    ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                    ->orWhere('documents.end', '=', NULL ); 
+                            })
+                            ->where('documents.deleted_at', '=', null)
+                            ->where('document_target.store_id', strval($storeNumber))
+                            ->select('documents.*')
+                            ->get();
+
+        $documents = $targetedDocuments->merge($allStoreDocuments);
+
+        return $documents;
+    }
+
+    public static function getDocumentsForAdmin($global_folder_id)
+    {
+        return $documents = \DB::table('file_folder')
+                            ->join('documents', 'file_folder.document_id', '=', 'documents.id')
+                            ->where('file_folder.folder_id', '=', $global_folder_id)
+                            ->where('documents.deleted_at', '=', null)
+                            ->select('documents.*')
+                            ->get();
+    }
+
+    public static function batchUpload($request)
+    {
+
+        $metadata = Document::getDocumentMetaData($request->file('document'));
+        $original_filename = $metadata["originalName"];
+
+        if($request->dir){
+            $directory = public_path() . '/' . $request->dir;
+        } else {
+            $directory = public_path() . '/';
+        }
+
+        $request->file('document')->move($directory, $original_filename);
+
+        \Log::info( $original_filename . " uploaded to " . $directory);
+
+        return;
+    }
+
 }

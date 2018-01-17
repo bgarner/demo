@@ -18,33 +18,13 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Playlists</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li class="active">
-                            <strong>Playlists</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
 		                <div class="col-lg-12">
 		                    <div class="ibox">
 		                        <div class="ibox-title">
-		                            <h5>Playlists</h5>
+		                            <h5>Video Playlists</h5>
 
 		                            <div class="ibox-tools">
 
@@ -56,7 +36,7 @@
 	                            	<table class="table datatable">
 		                            	<thead>
 		                            	<tr>
-											
+
 											<td>Title</td>
 											<td>Actions</td>
 										</tr>
@@ -64,10 +44,10 @@
 										<tbody>
 		                            	@foreach($playlists as $playlist)
 		                            	<tr>
-		                            		
-		                            		<td>{!! $playlist->title !!}</a></td>
+
+		                            		<td><a href="/admin/playlist/{{$playlist->id}}/edit">{!! $playlist->title !!}</a></td>
 		                            		<td>
-		                            			<a href="/admin/playlist/{{$playlist->id}}/edit" class=" btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+
 		                            			<a data-playlist="{{$playlist->id}}" id="playlist{{$playlist->id}}" class="playlist-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 
 		                            		</td>
@@ -84,11 +64,11 @@
 
 		        </div>
 
-				@include('site.includes.footer')
+				@include('admin.includes.footer')
 
 			    @include('admin.includes.scripts')
 
-				
+
 
 				<script type="text/javascript" src="/js/custom/admin/videos/playlists/deletePlaylist.js"></script>
 				<script type="text/javascript" src="/js/custom/site/launchModal.js" ></script>
@@ -100,12 +80,12 @@
 				        }
 					});
 
-					
+
 					$(".datatable").DataTable({
 	  	                pageLength: 10,
 	 					responsive: true,
 	 					fixedHeader: true
-	  
+
 	  	            });
 				</script>
 

@@ -16,29 +16,7 @@
 	        </div>
 	    </nav>
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
 
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Calendar Events</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li>
-                            <a>Calendar</a>
-                        </li>
-                        <li class="active">
-                            <strong>Manage Events</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
@@ -55,38 +33,43 @@
 
 		                            <div class="table-responsive">
 
-										<table class="table table-hover issue-tracker">
+										<table class="table datatable">
+                                            <thead>
+        										<tr>
+        											
+        											<td>Title</td>
+        											<td>Description</td>
+                                                    <td>Event Type</td>
+        											<td>Start</td>
+        											<td>End</td>
+        											<td></td>
 
-										<tr>
-											<td>id</td>
-											<td>Title</td>
-											<td>Description</td>
-											<td>Start</td>
-											<td>End</td>
-											<td></td>
+        										</tr>
+                                            </thead>
 
-										</tr>
-										@foreach($events as $event)
-										<tr>
+                                            <tbody>
+    										@foreach($events as $event)
+    										<tr>
 
 
-											<td>{{ $event->id }}</td>
-											<td><a href="/admin/calendar/{{ $event->id }}/edit">{{ $event->title }}</a></td>
-											<td>{{ mb_strimwidth($event->description, 0, 50, "...") }}</td>
-											<td>{{ $event->start }}</td>
-											<td>{{ $event->end }}</td>
+    											<td>{{ $event->id }}</td>
+    											<td><a href="/admin/calendar/{{ $event->id }}/edit">{{ $event->title }}</a></td>
+    											<td>{!! mb_strimwidth($event->description, 0, 50, "...") !!}</td>
+                                                <td><span class="label label-sm" style="background-color: #{{$event->background_colour}}; color: #{{$event->foreground_colour}}; ">
+                                                        {{ $event->event_type }}</span> </td>
+    											<td data-order="{{$event->start}}">{{ $event->prettyStartDate }}</td>
+    											<td data-order="{{$event->end}}">{{ $event->prettyEndDate }}</td>
 
-											<td>
+    											<td>
 
-												<a data-event="{{ $event->id }}" id="event{{$event->id}}" class="event-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+    												<a data-event="{{ $event->id }}" id="event{{$event->id}}" class="event-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 
-											</td>
-										</tr>
-										@endforeach
-
+    											</td>
+    										</tr>
+    										@endforeach
+                                            <tbody>
 										</table>
 
-										{!! $events->render() !!}
 
 		                            </div>
 		                        </div>
@@ -98,7 +81,7 @@
 
 		        </div>
 
-				@include('site.includes.footer')
+				@include('admin.includes.footer')
 
 			    @include('admin.includes.scripts')
 
@@ -108,6 +91,22 @@
 				            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				        }
 					});
+
+                    $(".datatable").DataTable({
+                        pageLength: 50,
+            			responsive: true,
+            			fixedHeader: true,
+                        "order": [[ 0, 'desc' ]],
+                        "columns": [
+                            { 'visible' : false },
+                            { "width": "25%" },
+                            null,
+                            null,
+                            null,
+                            null,
+                            { "orderable": false, "searchable": false }
+                        ]
+                    });
 
 				</script>
 

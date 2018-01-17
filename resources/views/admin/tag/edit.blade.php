@@ -17,29 +17,6 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Edit Tag</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li>
-                            <a href="/admin/tag">Tag</a>
-                        </li>
-                        <li class="active">
-                            <strong>Edit Tag</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
@@ -49,10 +26,10 @@
 		                            <h5>Edit Tag</h5>
 		                        </div>
 		                        <div class="ibox-content">
-		                  
+
                                     {!! Form::model($tag, ['action' => ['Tag\TagAdminController@update', 'id'=>$tag->id], 'method' => 'PATCH', 'class'=>'form-horizontal']) !!}
                                     	<input type="hidden" name="banner_id" id="banner_id" value="{{ $tag->banner_id }}">
-                                        
+
                                         <div class="form-group"><label class="col-sm-2 control-label">Tag Name</label>
                                             <div class="col-sm-10"><input type="text" class="form-control" name="tag_name" id="tag_name" value="{{ $tag->name }}"></div>
                                         </div>
@@ -82,7 +59,7 @@
 
 		        </div>
 
-				@include('site.includes.footer')
+				@include('admin.includes.footer')
 
 			    @include('admin.includes.scripts')
 

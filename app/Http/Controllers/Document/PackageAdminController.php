@@ -10,15 +10,15 @@ use App\Models\Document\Document;
 use App\Models\Document\FolderStructure;
 use App\Models\Document\FileFolder;
 use App\Models\Document\Package;
-use App\Models\Banner;
+use App\Models\StoreApi\Banner;
 use App\Models\Document\DocumentPackage;
 use App\Models\Tag\Tag;
 use App\Models\Tag\ContentTag;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Document\Folder;
 use App\Models\Document\FolderPackage;
 use App\Models\Feature\FeaturePackage;
-use App\Models\UserBanner;
+use App\Models\Auth\User\UserBanner;
 
 class PackageAdminController extends Controller
 {
@@ -27,8 +27,7 @@ class PackageAdminController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin.auth');
-        $this->middleware('banner');
+        //
     }
 
     /**
@@ -37,17 +36,11 @@ class PackageAdminController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
-        $user_id = \Auth::user()->id;
-        $banner_ids = UserBanner::where('user_id', $user_id)->get()->pluck('banner_id');
-        $banners = Banner::whereIn('id', $banner_ids)->get();        
-        $banner_id = UserSelectedBanner::where('user_id', \Auth::user()->id)->first()->selected_banner_id;
-        $banner  = Banner::find($banner_id);
-
+    {    
+        $banner = UserSelectedBanner::getBanner();
         $packages = Package::where('banner_id', $banner->id)->get();
         return view('admin/package/index')
                 ->with('banner', $banner)
-                ->with('banners',$banners)
                 ->with('packages',$packages);
     }
 
@@ -59,16 +52,14 @@ class PackageAdminController extends Controller
     public function create(Request $request)
     {
         $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
 
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
         $folderStructure = FolderStructure::getNavigationStructure($banner->id);
 
-        $tags = Tag::where('banner_id', $banner->id)->lists('name', 'id');
+        $tags = Tag::all()->pluck('name', 'id');
             
         return view('admin.package.create')
                     ->with('banner', $banner)
-                    ->with('banners',$banners)
                     ->with('navigation', $fileFolderStructure)
                     ->with('folderStructure', $folderStructure)
                     ->with('tags', $tags);
@@ -122,13 +113,8 @@ class PackageAdminController extends Controller
         $package = Package::find($id);
         $documentDetails = Package::getPackageDocumentDetails($id);
         $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all(); 
 
         $fileFolderStructure = FileFolder::getFileFolderStructure($banner->id);
-        $tags = Tag::where('banner_id', $banner->id)->lists('name', 'id');
-
-        $tag_ids = ContentTag::where('content_id', $id)->where('content_type', 'package')->get()->pluck('tag_id');
-        $selected_tags = Tag::findMany($tag_ids)->pluck('id')->toArray();
 
         $folderStructure = FolderStructure::getNavigationStructure($banner->id);
         
@@ -147,10 +133,7 @@ class PackageAdminController extends Controller
         return view('admin.package.edit')->with('package', $package)
                                         ->with('documentDetails', $documentDetails)
                                         ->with('banner', $banner)
-                                        ->with('banners', $banners)
                                         ->with('navigation', $fileFolderStructure)
-                                        ->with('tags', $tags)
-                                        ->with('selected_tags', $selected_tags)
                                         ->with('folders', $selected_folders)
                                         ->with('folderStructure', $folderStructure);
     }

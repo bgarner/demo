@@ -8,6 +8,11 @@
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 	<link rel="stylesheet" href="/css/plugins/dataTables/datatables.min.css">
 	{{-- <link rel="stylesheet" href="/css/plugins/dataTables/dataTables.tableTools.min.css"> --}}
+	<style>
+		.modal-dialog{
+		    overflow-y: initial !important
+		}
+    </style>
 </head>
 
 <body class="fixed-navigation adminview">
@@ -19,34 +24,12 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-            <div class="col-lg-12">
-                <h2>Flyer</h2>
-                <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li class="active">
-                            <strong>Flyer</strong>
-                        </li>
-                    </ol>
-                
-                <div class="col-lg-2">
-
-                </div>
-            </div>
-        </div>        
-
-
+     
 		<div class="wrapper wrapper-content  animated fadeInRight">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="ibox">
-                    
+
                         <div class="ibox-title">
 							<h5>{{$flyer->flyer_name}} <i><small> {{$flyer->pretty_start_date}} to {{$flyer->pretty_end_date}} </small></i> </h5>
                             <div class="ibox-tools">
@@ -54,8 +37,8 @@
                             </div>
                         </div>
 
-                        <div class="ibox-content">       	
-			                    
+                        <div class="ibox-content">
+
 	                    	<table class="table dataTable" id="flyerDataTable">
 	                    		<thead>
 	                    			<tr role="row">
@@ -88,7 +71,7 @@
 											<td>{{ $item->notes }}</td>
 											<td>
 												@foreach($item->images as $image)
-												<img src="{{ $image['thumb'] }}" /><br /> 
+												<img src="{{ $image['thumb'] }}" /><br />
 												@endforeach
 											</td>
 											<td>
@@ -96,10 +79,10 @@
 											</td>
 										</tr>
 	                    			@endforeach
-				                    
+
 				                </tbody>
 			                </table>
-					               
+
                         </div>
 
                     </div>
@@ -107,11 +90,11 @@
 		    </div>
 		</div>
 
-		@include('site.includes.footer')
+		@include('admin.includes.footer')
 
 	    @include('admin.includes.scripts')
 
-	
+
 		<script type="text/javascript" src="/js/plugins/dataTables/datatables.min.js"></script>
 		<script type="text/javascript" src="/js/custom/admin/flyers/editFlyer.js"></script>
 		<script type="text/javascript" src="/js/custom/admin/flyers/deleteFlyer.js"></script>
@@ -134,7 +117,7 @@
 
 
 		</script>
-		
+
 
 		@include('site.includes.modal')
         @include('admin.folder.foldermodal')

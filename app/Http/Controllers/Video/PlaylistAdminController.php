@@ -6,11 +6,14 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\UserSelectedBanner;
-use App\Models\Banner;
+use App\Models\Auth\User\UserSelectedBanner;
+use App\Models\StoreApi\Banner;
 use App\Models\Video\Playlist;
 use App\Models\Video\PlaylistVideo;
 use App\Models\Video\Video;
+use App\Models\Utility\Utility;
+use App\Models\Tag\Tag;
+use App\Models\Tag\ContentTag;
 
 class PlaylistAdminController extends Controller
 {
@@ -20,8 +23,7 @@ class PlaylistAdminController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin.auth');
-        $this->middleware('banner');
+        //
     }
 
     /**
@@ -31,17 +33,11 @@ class PlaylistAdminController extends Controller
      */
     public function index()
     {
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
 
-        $playlists =Playlist::where('banner_id', $banner->id)
-                    ->latest('created_at')
-                    ->get();
+        $playlists = Playlist::getPlaylistsForAdmin();
 
         return view('admin.video.playlist-manager.index')
-                ->with('playlists', $playlists)
-                ->with('banners', $banners)
-                ->with('banner', $banner);
+                ->with('playlists', $playlists);
     }
 
     /**
@@ -51,14 +47,18 @@ class PlaylistAdminController extends Controller
      */
     public function create()
     {
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
-
-        $videos = Video::getAllVideos();
+        
+        $optGroupOptions    = Utility::getStoreAndBannerSelectDropdownOptions($allAccessibleBanners = true);
+        $optGroupSelections = json_encode([]);
+        $videos             = Video::getAllVideosForAdmin();
+        $tags               = Tag::all()->pluck('name', 'id');
+        $selected_tags      = [];
         return view('admin.video.playlist-manager.create')
                 ->with('videos', $videos)
-                ->with('banners', $banners)
-                ->with('banner', $banner);
+                ->with('optGroupSelections', $optGroupSelections)
+                ->with('optGroupOptions', $optGroupOptions)
+                ->with('tags', $tags)
+                ->with('selected_tags', $selected_tags);
 
     }
 
@@ -70,6 +70,7 @@ class PlaylistAdminController extends Controller
      */
     public function store(Request $request)
     {
+        \Log::info($request->all());
         return Playlist::storePlaylist($request);
     }
 
@@ -92,26 +93,29 @@ class PlaylistAdminController extends Controller
      */
     public function edit($id)
     {
-        $banner = UserSelectedBanner::getBanner();
-        $banners = Banner::all();
-        $playlist = Playlist::find($id);
-        $videos = Video::getAllVideos();
+        
+        $playlist           = Playlist::getPlaylistById($id);
+        $videos             = Video::getAllVideosForAdmin();
 
-        $selectedVideos = PlaylistVideo::where('playlist_id', $id)->orderBy('order')->get();
+        $selectedVideos     = PlaylistVideo::getPlaylistVideos($id);
 
+        $optGroupOptions    = Utility::getStoreAndBannerSelectDropdownOptions($allAccessibleBanners = true);
+        $optGroupSelections = json_encode(Playlist::getSelectedStoresAndBannersByPlaylistId($id));
 
-        foreach($selectedVideos as $sv){
-            $video_info = Video::find($sv->video_id);
-            $sv->title = $video_info->title;
-            $sv->thumbnail =  $video_info->thumbnail;
-        }
+        $tags               = Tag::all()->pluck('name', 'id');
+
+        $selectedTags       = ContentTag::getTagsByContentId('playlist', $id);
+
 
         return view('admin.video.playlist-manager.edit')
                 ->with('playlist', $playlist)
                 ->with('videos', $videos)
                 ->with('playlist_videos', $selectedVideos)
-                ->with('banners', $banners)
-                ->with('banner', $banner);
+                ->with('optGroupOptions', $optGroupOptions)
+                ->with('optGroupSelections', $optGroupSelections)
+                ->with('tags', $tags)
+                ->with('selectedTags', $selectedTags)
+                ->with('resourceId', $id);
 
     }
 

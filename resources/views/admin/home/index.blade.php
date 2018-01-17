@@ -27,24 +27,10 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
-		<div class="row border-bottom">
-			@include('admin.includes.topbar')
-        </div>
+
 
 		<div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-{{--                     <h2>Edit an Event</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li>
-                            <a href="/admin/calendar">Calendar</a>
-                        </li>
-                        <li class="active">
-                            <strong>Edit an Event</strong>
-                        </li>
-                    </ol> --}}
                 </div>
                 <div class="col-lg-2">
 
@@ -59,12 +45,12 @@
 {{-- 		                            <h5>Edit Event: {{ $event->title }}</h5>
 		                            <div class="ibox-tools">
 		                                <a href="/admin/calendar/create" class="btn btn-primary" role="button"><i class="fa fa-plus"></i> Add New Event</a>
-                                        
+
 		                            </div> --}}
 		                        </div>
 		                        <div class="ibox-content">
 
-      								
+
 
 
                                 </div>
@@ -79,7 +65,7 @@
 
 		        </div>
 
-				@include('site.includes.footer')
+				@include('admin.includes.footer')
 
 			    @include('admin.includes.scripts')
 

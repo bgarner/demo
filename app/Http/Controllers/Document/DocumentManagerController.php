@@ -6,30 +6,24 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Banner;
+use App\Models\StoreApi\Banner;
 use App\Models\Document\FolderStructure;
 use App\Models\Document\Folder;
 use App\Models\Document\Package;
 use App\Models\Communication\Communication;
-use App\User;
-use App\Models\UserBanner;
-use App\Models\UserSelectedBanner;
+use App\Models\Auth\User\User;
+use App\Models\Auth\User\UserBanner;
+use App\Models\Auth\User\UserSelectedBanner;
 
 class DocumentManagerController extends Controller
 {
 
-    private $group_id;
-    private $user_id;
      /**
      * Instantiate a new DocumentManagerController instance.
      */
     public function __construct()
     {
-        $this->middleware('admin.auth');
-        $this->middleware('banner');
-        $this->user_id = \Auth::user()->id;
-        $this->group_id = \Auth::user()->group_id;
-        
+        //
     }
 
     /**
@@ -39,9 +33,8 @@ class DocumentManagerController extends Controller
      */
     public function index(Request $request)
     {
-        $banner_id = UserSelectedBanner::where('user_id', \Auth::user()->id)->first()->selected_banner_id;
 
-        $banner  = Banner::find($banner_id);
+        $banner = UserSelectedBanner::getBanner();
 
         $navigation = FolderStructure::getNavigationStructure($banner->id);
 
@@ -57,19 +50,13 @@ class DocumentManagerController extends Controller
             $defaultFolder = null;
         }
 
-
-            $banner_ids = UserBanner::where('user_id', $this->user_id)->get()->pluck('banner_id');
-            $banners = Banner::whereIn('id', $banner_ids)->get();
-            
-            //return view('admin.document-view')
-            return view('admin.documentmanager.index')
-                ->with('navigation', $navigation)
-                ->with('folders', $folders)
-                ->with('packageHash', $packageHash)
-                ->with('banner', $banner)
-                ->with('banners', $banners)
-                ->with('packages', $packages)
-                ->with('defaultFolder' , $defaultFolder);
+        return view('admin.documentmanager.index')
+            ->with('navigation', $navigation)
+            ->with('folders', $folders)
+            ->with('packageHash', $packageHash)
+            ->with('banner', $banner)
+            ->with('packages', $packages)
+            ->with('defaultFolder' , $defaultFolder);
 
     }
 

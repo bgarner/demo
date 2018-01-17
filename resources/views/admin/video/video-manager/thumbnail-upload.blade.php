@@ -12,7 +12,7 @@
             color: #ccc;
             padding: 0px;
             margin: 0px;
-            top: 80px;
+            top: 40px;
         }
 
     </style>
@@ -27,23 +27,7 @@
     </nav>
 
     <div id="page-wrapper" class="gray-bg">
-        <div class="row border-bottom">
-            @include('admin.includes.topbar')
-        </div>
 
-       <div class="row wrapper border-bottom white-bg page-heading">
-            <div class="col-lg-10">
-                <h2>Upload Thumbnail for <span id="folder-name-for-upload"> {{$video->title}} </span></h2>
-                <ol class="breadcrumb">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/admin/video">Videos</a></li>
-                    <li><a href="/admin/video/{{$video->id}}/uploadthumbnail">Thumbnail</a></li>
-                </ol>
-            </div>
-            <div class="col-lg-2">
-
-            </div>
-        </div>
 
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
@@ -54,15 +38,10 @@
 
                 <div class="ibox">
 
-                <!--
-                <div class="ibox-title">
-                    <h5>Event Types</h5>
-
-                    <div class="ibox-tools">
-                    </div>
-                </div> -->
+                <div class="ibox-title"><h5>Upload Thumbnail for: {{ $video->title }}</h5></div>
 
                 <div class="ibox-content form-group form-horizontal">
+
 
                 	<div id="file-uploader" class="visible">
 
@@ -81,12 +60,12 @@
 
 					            <div>
 					                <p style="display: inline;"class="name" data-dz-name></p> ( <p style="display: inline;" class="size" data-dz-size></p> )
-                                    
+
 					                <strong class="error text-danger" data-dz-errormessage></strong>
 					            </div>
 
 					            <div>
-					                  
+
 					                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" style="width: 200px;">
 					                  <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
 					                </div>
@@ -117,7 +96,7 @@
 
                        <div id="actions" class="row">
                         {!! csrf_field() !!}
-                        
+
                         <input type="hidden" id="banner_id" name="banner_id" value="{{$banner->id}}" />
                         <input type="hidden" id="video_id" name="video_id" value="{{$video->id}}" />
 
@@ -147,14 +126,14 @@
                                 <i class="glyphicon glyphicon-ban-circle"></i>
                                 <span>Cancel upload</span>
                             </button>
-                          </div>                          
+                          </div>
 
                         </div>
 
 
-				
 
-          
+
+
                 </div> <!-- end ibox content -->
                 </div> <!-- end ibox -->
 
@@ -164,16 +143,16 @@
 
 		</div>
 
-                    
+
 
 	</div>
 </div>
 
-{{-- 
+{{--
             @include('site.includes.modal') --}}
 
-            @include('site.includes.footer')
-        
+            @include('admin.includes.footer')
+
             @include('admin.includes.scripts')
 
             <script type="text/javascript" src="/js/vendor/underscore-1.8.3.js"></script>
@@ -182,8 +161,8 @@
             <script type="text/javascript" src="/js/vendor/lightbox.min.js"></script>
             <script type="text/javascript" src="/js/custom/admin/documents/breadcrumb.js"></script>
             <script type="text/javascript" src="/js/custom/admin/videos/uploadThumbnail.js"></script>
-            
-            
+
+
             <script type="text/javascript">
             $.ajaxSetup({
                 headers: {

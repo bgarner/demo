@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Store Selector</title>
+    <title>{{__("Store Selector")}}</title>
 
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -30,27 +30,23 @@
         <div>
             <div>
 
-                
+
 
             </div>
-            <h3>Welcome!</h3>
+            <h3>{{__("Welcome")}}</h3>
             <form class="m-t" role="form" action="index.html">
                 <div class="form-group">
-                	<labeL>Select Your Banner</labeL>
+                	<labeL>{{__("Select Your Banner")}}</labeL>
                     <select id="bannerSelect" class="form-control">
 							<option></option>
-						</select>
+					</select>
                 </div>
                 <div class="form-group">
-                	<labeL>Select Your Store</labeL>
+                	<labeL>{{__("Select Your Store")}}</labeL>
                     <select id="storeSelect" class="form-control">
-						</select>	
+					</select>
                 </div>
-{{--                 <button type="submit" class="btn btn-primary block full-width m-b">Login</button> --}}
 
-{{--                 <a href="#"><small>Forgot password?</small></a>
-                <p class="text-muted text-center"><small>Do not have an account?</small></p>
-                <a class="btn btn-sm btn-white btn-block" href="register.html">Create an account</a> --}}
             </form>
 
         </div>

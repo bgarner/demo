@@ -22,16 +22,6 @@
     .modal-content{ height: 100% !important;}
     .modal-body{ padding: 0; margin: 0; height: 100% !important; }
 
-
-    /* styles for '...' */
-    .video-list-box h4{
-
-
-    }
-
-
-
-
     .giveMeEllipsis {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -41,19 +31,7 @@
         -webkit-box-orient: vertical;
     }
 
-    /* hide ... if we have text, which is less than or equal to max lines */
 
-
-    /*.video-list-box h4{
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-
-    }
-    .video-list-box h4 a{
-
-    }*/
 
     #file-table tr td:last-child {
         white-space: nowrap;
@@ -77,28 +55,17 @@
                 @include('site.includes.topbar')
             </div>
 
-            <div class="row wrapper border-bottom white-bg page-heading">
 
-                {{-- <h1 style="color: #333; font-size: 65px; text-transform: uppercase; font-family: GalaxiePolarisCondensed-Bold;padding-bottom: 0px; line-height: 50px;">Video Library</h1> --}}
-                {{-- <div class="col-lg-10">
-                    <h2>Video</h2>
-                </div> --}}
-
-                {{-- <div class="col-lg-2">
-
-                </div> --}}
-
-                <h2>Video Library</h2>
-
-            </div>
 
             <br />
+
             <div class="row">
+                @if(isset($featured->id))
                 <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
 
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h2>Featured Video</h2>
+                            <h2>{{__("Featured Video")}}</h2>
                         </div>
 
                         <a href="video/watch/{{$featured->id}}"><img src="/video/thumbs/{{$featured->thumbnail}}" data-video-id="{{$featured->id}}" class="trackclick img-responsive" style="width: 100%" /></a>
@@ -124,11 +91,12 @@
                         </div>
                     </div>
                 </div>
+                @endif
 
                 <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h2><a href="video/playlists">Latest Playlists</a></h2>
+                            <h2><a href="video/playlists">{{__("Latest Playlists")}}</a></h2>
                         </div>
 
                         <div class="ibox-content clearfix playlist-container">
@@ -142,13 +110,13 @@
                                         <a href="video/playlist/{{$lp->id}}" class="trackclick" data-playlist-id="{{$lp->id}}">{{$lp->title}}</a>
                                         </h4>
                                         {!! $lp->description !!}
-                                        <p>{{$lp->count}} videos &middot; {{$lp->sinceCreated}} ago</p>
+                                        <p>{{$lp->count}} {{__("videos")}} &middot; {{$lp->sinceCreated}} {{__("ago")}}</p>
                                     </div>
                                 </div>
                             @endforeach
 
 
-                            <a class="pull-right" href="video/playlists">&raquo; More Playlists</a>
+                            <a class="pull-right" href="video/playlists">&raquo; {{__("More Playlists")}}</a>
                         </div>
                     </div>
                 </div>
@@ -160,7 +128,7 @@
                     <div class="col-lg-12">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
-                                <h2><a href="video/latest">Most Recent</a></h2>
+                                <h2><a href="video/latest">{{__("Most Recent")}}</a></h2>
                             </div>
                             <div class="ibox-content clearfix">
                                 @foreach($mostRecent as $mr)
@@ -168,15 +136,15 @@
                                         <div class="embed-responsive embed-responsive-16by9">
                                         <a href="video/watch/{{$mr->id}}" class="trackclick" data-video-id="{{$mr->id}}"><img src="/video/thumbs/{{$mr->thumbnail}}" class="embed-responsive-item img-responsive" /></a>
                                         </div>
-                                        
+
                                         <h4>
                                             <a href="video/watch/{{$mr->id}}" class="trackclick" data-video-id="{{$mr->id}}">{{$mr->title}}</a>
                                         </h4>
-                                        
-                                        <p>{{$mr->views}} views &middot; {{$mr->sinceCreated}} ago</p>
+
+                                        <p>{{$mr->views}} {{__("views")}} &middot; {{$mr->sinceCreated}} {{__("ago")}}</p>
                                     </div>
                                 @endforeach
-                                <a class="pull-right" href="video/latest">&raquo; More Recent Videos</a>
+                                <a class="pull-right" href="video/latest">&raquo; {{__("More Recent Videos")}}</a>
                             </div>
                         </div>
                     </div>
@@ -186,7 +154,7 @@
                     <div class="col-lg-12">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
-                                <h2><a href="video/popular">Most Viewed</a></h2>
+                                <h2><a href="video/popular">{{__("Most Viewed")}}</a></h2>
                             </div>
                             <div class="ibox-content clearfix">
                                 @foreach($mostViewed as $mv)
@@ -195,10 +163,10 @@
                                         <a href="video/watch/{{$mv->id}}" class="trackclick" data-video-id="{{$mv->id}}"><img src="/video/thumbs/{{$mv->thumbnail}}" class="embed-responsive-item img-responsive" /></a>
                                         </div>
                                         <h4><a href="video/watch/{{$mv->id}}" class="trackclick" data-video-id="{{$mv->id}}">{{$mv->title}}</a></h4>
-                                        <p>{{$mv->views}} views &middot; {{$mv->sinceCreated}} ago</p>
+                                        <p>{{$mv->views}} {{__("views")}} &middot; {{$mv->sinceCreated}} {{__("ago")}}</p>
                                     </div>
                                 @endforeach
-                                <a class="pull-right" href="video/popular">&raquo; More Popular Videos</a>
+                                <a class="pull-right" href="video/popular">&raquo; {{__("More Popular Videos")}}</a>
                             </div>
                         </div>
                     </div>
