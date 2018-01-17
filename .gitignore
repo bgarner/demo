@@ -16,9 +16,8 @@ Homestead.json
 .vscode
 .env
 .env.dusk.local
+.env.local
 .catapult
 .idea
 .vscode
 .DS_STORE
-
-
