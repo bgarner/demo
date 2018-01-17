@@ -36,5 +36,4 @@ class FlashSale extends Model
         }
         return Utility::prettifyDate($date);
     }
-
 }

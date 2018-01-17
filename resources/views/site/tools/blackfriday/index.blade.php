@@ -29,7 +29,7 @@
 
        <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-12">
-                <h2>Doorcrasher Tracker</h2>
+                <h2>Boxing Day Doorcrasher Tracker</h2>
             </div>
         </div>
 
@@ -70,7 +70,7 @@
 {{--                     <table class="table table-striped table-bordered table-hover dataTable addSelector" id="" style="display: none;" aria-describedby="DataTables_Table_0_info" role="grid">
                     </table> --}}
 
-                        <p>Last Updated: {{ $last_updated }} </p>
+                        <p>Last Updated: Friday, December 23, 2016 - 9:25 AM MST</p>
 
                     <table class="table table-bordered table-hover" id="">
                         <thead>
@@ -93,6 +93,7 @@
 
                             <th>Total</th>
 
+
                         </tr>
                         </thead>
 
@@ -110,10 +111,10 @@
                             @endif
 
                             <tr>
-                                <td colspan="11" style="background: #f9ef2c; color: #000;">
+                                <td colspan="11" style="background: yellow;">
                                 <span class="pull-right">
-                                    <strong>Group:</strong> {{ $d->flyer_page }} &nbsp;&nbsp;&nbsp;&nbsp;
-                                    {{-- <strong>Ad Box:</strong> {{$d->ad_box}} &nbsp;&nbsp;&nbsp;&nbsp; --}}
+                                    <strong>Flyer Page:</strong> {{ $d->flyer_page }} &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <strong>Ad Box:</strong> {{$d->ad_box}} &nbsp;&nbsp;&nbsp;&nbsp;
                                     <strong>MIN:</strong> {{$d->ad_min}}
                                 </span>
 

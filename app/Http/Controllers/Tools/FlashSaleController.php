@@ -30,7 +30,6 @@ class FlashSaleController extends Controller
     {
         
         $data = FlashSale::getDataByStoreNumber($this->storeNumber);
-        $sale_date = FlashSale::getSaleDate();
         $last_updated = FlashSale::getLastUpdatedDate();
         $sale_date = FlashSale::getSaleDate();
         if(!$last_updated){
@@ -40,14 +39,7 @@ class FlashSaleController extends Controller
         return view('site.tools.flashsale.index')
             ->with('sale_date', $sale_date)
             ->with('last_updated', $last_updated)
-            ->with('sale_date', $sale_date)
-            ->with('data', $data)
-            ->with('skin', $this->skin)
-            ->with('communicationCount', $this->communicationCount)
-            ->with('alertCount', $this->alertCount)
-            ->with('urgentNoticeCount', $this->urgentNoticeCount)
-            ->with('banner', $this->banner)
-            ->with('isComboStore', $this->isComboStore);
+            ->with('data', $data);
     }
 
     /**
