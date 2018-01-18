@@ -1464,17 +1464,17 @@
     },
     {
         "name": "laravel/dusk",
-        "version": "v2.0.8",
-        "version_normalized": "2.0.8.0",
+        "version": "v2.0.9",
+        "version_normalized": "2.0.9.0",
         "source": {
             "type": "git",
             "url": "https://github.com/laravel/dusk.git",
-            "reference": "a7529e19592879d3a6408728080ba657499890bc"
+            "reference": "b0f87be905a4930e8d0a43e962ae584ea6486f4c"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/laravel/dusk/zipball/a7529e19592879d3a6408728080ba657499890bc",
-            "reference": "a7529e19592879d3a6408728080ba657499890bc",
+            "url": "https://api.github.com/repos/laravel/dusk/zipball/b0f87be905a4930e8d0a43e962ae584ea6486f4c",
+            "reference": "b0f87be905a4930e8d0a43e962ae584ea6486f4c",
             "shasum": ""
         },
         "require": {
@@ -1490,7 +1490,7 @@
             "mockery/mockery": "~1.0",
             "phpunit/phpunit": "~6.0"
         },
-        "time": "2017-12-08T14:18:11+00:00",
+        "time": "2018-01-18T18:03:05+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1527,17 +1527,17 @@
     },
     {
         "name": "laravel/framework",
-        "version": "v5.5.31",
-        "version_normalized": "5.5.31.0",
+        "version": "v5.5.32",
+        "version_normalized": "5.5.32.0",
         "source": {
             "type": "git",
             "url": "https://github.com/laravel/framework.git",
-            "reference": "a47b50a5981c0cf0139939dfaea4191784b65acb"
+            "reference": "254e4c3e133f5bc8d6068cdf28ea062abc10adf2"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/laravel/framework/zipball/a47b50a5981c0cf0139939dfaea4191784b65acb",
-            "reference": "a47b50a5981c0cf0139939dfaea4191784b65acb",
+            "url": "https://api.github.com/repos/laravel/framework/zipball/254e4c3e133f5bc8d6068cdf28ea062abc10adf2",
+            "reference": "254e4c3e133f5bc8d6068cdf28ea062abc10adf2",
             "shasum": ""
         },
         "require": {
@@ -1627,7 +1627,7 @@
             "symfony/dom-crawler": "Required to use most of the crawler integration testing tools (~3.3).",
             "symfony/psr-http-message-bridge": "Required to psr7 bridging features (~1.0)."
         },
-        "time": "2018-01-16T15:39:45+00:00",
+        "time": "2018-01-18T13:27:23+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {

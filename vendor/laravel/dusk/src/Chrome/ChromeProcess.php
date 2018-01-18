@@ -3,6 +3,7 @@
 namespace Laravel\Dusk\Chrome;
 
 use RuntimeException;
+use Illuminate\Support\Str;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
 
@@ -16,13 +17,22 @@ class ChromeProcess
     protected $driver;
 
     /**
+     * The port to run the Chromedriver on.
+     *
+     * @var int
+     */
+    protected $port;
+
+    /**
      * Create a new ChromeProcess instance.
      *
      * @param  string  $driver
+     * @param  int     $port
      * @return void
      */
-    public function __construct($driver = null)
+    public function __construct($driver = null, $port = 9515)
     {
+        $this->port = $port;
         $this->driver = $driver;
 
         if (! is_null($driver) && realpath($driver) === false) {
@@ -62,7 +72,7 @@ class ChromeProcess
     protected function process()
     {
         return (new Process(
-            [realpath($this->driver)], null, $this->chromeEnvironment()
+            [realpath($this->driver), " --port={$this->port}"], null, $this->chromeEnvironment()
         ));
     }
 
@@ -75,6 +85,7 @@ class ChromeProcess
     {
         return (new ProcessBuilder)
             ->setPrefix(realpath($this->driver))
+            ->add("--port={$this->port}")
             ->getProcess()
             ->setEnv($this->chromeEnvironment());
     }
@@ -94,13 +105,13 @@ class ChromeProcess
     }
 
     /**
-     * Determine if Dusk is running on Windows.
+     * Determine if Dusk is running on Windows or Windows Subsystem for Linux.
      *
      * @return bool
      */
     protected function onWindows()
     {
-        return PHP_OS === 'WINNT';
+        return PHP_OS === 'WINNT' || Str::contains(php_uname(), 'Microsoft');
     }
 
     /**
