@@ -23,17 +23,6 @@
     <div class=" text-center animated fadeInDown" style="width: 90% !important; margin: 0 auto; padding-top: 50px;">
 
 
-        {{-- <h1 style="font-size: 60px;">NOPE</h1>
-        <h3 class="font-bold">This is what we call a 503 error, folks.</h3> --}}
-
-
-<!--             <form class="form-inline m-t" role="form">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search for page">
-                </div>
-                <button type="submit" class="btn btn-primary">Search</button>
-            </form> -->
-
             <h1>Update in Progress</h1>
 
             <img src="/images/waiting.gif" />

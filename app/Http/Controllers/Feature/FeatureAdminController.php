@@ -66,7 +66,7 @@ class FeatureAdminController extends Controller
         $communications      = Communication::getCommunicationsForAdmin()->pluck('subject', 'id');
         $optGroupOptions     = Utility::getStoreAndBannerSelectDropdownOptions();
         $optGroupSelections  = json_encode([]);
-        $flyers              = Flyer::getFlyersByBannerId($banner->id);
+        $flyers              = Flyer::getAdminFlyersByBannerId($banner->id);
 
         $eventTypes          = EventType::getEventTypesForAdmin();
         $eventTypes          = $eventTypes->pluck('event_type', 'id')->toArray();
@@ -137,7 +137,7 @@ class FeatureAdminController extends Controller
         $optGroupOptions              = Utility::getStoreAndBannerSelectDropdownOptions();
         $optGroupSelections           = json_encode(Feature::getSelectedStoresAndBannersByFeatureId($id));
 
-        $flyers                       = Flyer::getFlyersByBannerId($banner->id);
+        $flyers                       = Flyer::getAdminFlyersByBannerId($banner->id);
         $selected_flyers              = FeatureFlyer::getFlyersByFeatureId($id);
 
         $eventTypes                   = EventType::getEventTypesForAdmin();
