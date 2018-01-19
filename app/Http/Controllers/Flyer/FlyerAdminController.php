@@ -26,7 +26,7 @@ class FlyerAdminController extends Controller
     public function index()
     {
         $banner = UserSelectedBanner::getBanner();
-        $flyers = Flyer::getFlyersByBannerId($banner->id);
+        $flyers = Flyer::getAdminFlyersByBannerId($banner->id);
         return view('admin.flyer.index')->with('flyers', $flyers);
     }
 

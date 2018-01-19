@@ -86,10 +86,25 @@ class Flyer extends Model
     	return $activeFlyers;
     }
 
+    public static function getAdminFlyersByBannerId($banner_id, $request=null)
+    {
+        $activeFlyers = Self::getFutureAndActiveFlyersByBanner($banner_id);
+
+        if ((isset($request['archives']) && !empty($request['archives'])) || !isset($request)) {
+
+            $archivedFlyers = Self::getArchivedFlyersByBannerId($banner_id);
+            foreach ($archivedFlyers as $archivedFlyer) {
+                $activeFlyers->add($archivedFlyer);
+            }
+
+        }
+        return $activeFlyers;
+    }    
+
     public static function getActiveFlyersByBanner($banner_id)
     {
         $now = Carbon::now();
-        return Self::where('banner_id', $banner_id)
+        $flyers = Self::where('banner_id', $banner_id)
                     ->where('start_date', '<=', $now )
                     ->where('end_date', '>=', $now )
                     ->get()
@@ -97,7 +112,21 @@ class Flyer extends Model
                         $flyer->pretty_start_date = Utility::prettifyDate($flyer->start_date);
                         $flyer->pretty_end_date = Utility::prettifyDate($flyer->end_date);
                     });
+        return $flyers;
     }
+
+    public static function getFutureAndActiveFlyersByBanner($banner_id)
+    {
+        $now = Carbon::now();
+        $flyers = Self::where('banner_id', $banner_id)
+                    ->where('end_date', '>=', $now )
+                    ->get()
+                    ->each(function($flyer){
+                        $flyer->pretty_start_date = Utility::prettifyDate($flyer->start_date);
+                        $flyer->pretty_end_date = Utility::prettifyDate($flyer->end_date);
+                    });
+        return $flyers;
+    }    
 
     public static function getArchivedFlyersByBannerId($banner_id)
     {

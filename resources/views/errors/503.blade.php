@@ -46,7 +46,7 @@
             location.reload(true);
         document.getElementById('countdown').innerHTML = remaining;
         setTimeout(function(){ countdown(remaining - 1); }, 1000);
-    })(20);
+    })(30);
     </script>
 
 
