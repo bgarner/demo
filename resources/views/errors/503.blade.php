@@ -16,6 +16,9 @@
 
         <link rel="stylesheet" type="text/css" media="screen" href="/css/animate.css">
         <link rel="stylesheet" type="text/css" media="screen" href="/css/app.css">
+        <style type="text/css">
+            body{background-color: #fff !important;}
+        </style>
     </head>
 
     <body class="gray-bg">
