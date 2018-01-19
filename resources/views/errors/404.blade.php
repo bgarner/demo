@@ -11,8 +11,18 @@
         $images = scandir($dir);
         $i = rand(2, sizeof($images)-1);
         ?>
-        @section('title', '404')
-        @include('site.includes.head')
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="csrf-token" content="{!! csrf_token() !!}"/>
+
+        <title> Whoops...Not Found </title>
+
+        <link rel="stylesheet" type="text/css" media="all" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" media="all" href="/fonts/font-awesome/css/font-awesome.css">
+
+        <link rel="stylesheet" type="text/css" media="screen" href="/css/animate.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="/css/app.css">
+
     </head> 
 
     <body class="gray-bg">
