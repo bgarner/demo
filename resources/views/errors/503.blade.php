@@ -5,9 +5,17 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="csrf-token" content="{!! csrf_token() !!}"/>
 
-        @section('title', '503')
-        @include('site.includes.head')
+        <title> Deployment in Progress... </title>
+
+        <link rel="stylesheet" type="text/css" media="all" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" media="all" href="/fonts/font-awesome/css/font-awesome.css">
+
+        <link rel="stylesheet" type="text/css" media="screen" href="/css/animate.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="/css/app.css">
     </head>
 
     <body class="gray-bg">
