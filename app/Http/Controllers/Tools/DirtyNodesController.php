@@ -18,6 +18,6 @@ class DirtyNodesController extends Controller
 
     public function index()
     {
-        return "hello, dirty nodes";
+        return view('site.tools.dirtynodes.index');
     }
 }
