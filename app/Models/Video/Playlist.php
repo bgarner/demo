@@ -51,7 +51,7 @@ class Playlist extends Model
         {
             $validateThis['playlist_videos'] = $request['playlist_videos'];
         }
-        
+
         if(isset($request['remove_videos']) && !empty($request['remove_videos']))
         {
             $validateThis['remove_videos'] = $request['remove_videos'];
@@ -116,16 +116,16 @@ class Playlist extends Model
         PlaylistTarget::updateTargetStores($request, $id);
         $tags = $request->get('tags');
         ContentTag::updateTags( 'playlist', $id, $tags);
-        
+
     	return $playlist;
     }
 
-    
+
 
     public static function getPlaylistsForAdmin()
     {
         $banners = UserBanner::getAllBanners()->pluck('id')->toArray();
-        
+
         //stores in accessible banners
         $storeList = [];
         foreach ($banners as $banner) {
@@ -143,10 +143,10 @@ class Playlist extends Model
 
 
         $allStorePlaylists = Utility::groupBannersForAllStoreContent($allStorePlaylists);
-        
+
         $targetedPlaylists = Playlist::join('playlist_target', 'playlist_target.playlist_id', '=', 'playlists.id')
                                 ->whereIn('playlist_target.store_id', $storeList)
-                                
+
                                 ->select(\DB::raw('playlists.*, GROUP_CONCAT(DISTINCT playlist_target.store_id) as stores'))
                                 ->groupBy('playlists.id')
                                 ->get()
@@ -175,12 +175,12 @@ class Playlist extends Model
 
 
         foreach ($playlists as $playlist) {
-            
+
             $playlist->prettyDateCreated = Utility::prettifyDate($playlist->created_at);
             $playlist->prettyDateUpdated = Utility::prettifyDate($playlist->updated_at);
         }
-                        
-                        
+
+
         return $playlists;
     }
 
@@ -197,7 +197,7 @@ class Playlist extends Model
     public static function getLatestPlaylists($store_id, $limit=0)
     {
         if($limit == 0){
-            
+
             $list = Playlist::getPlaylistForStore($store_id)->sortByDesc('created_at');
             $list = Video::paginate($list, 24)->setPath('playlists');
 
@@ -206,9 +206,16 @@ class Playlist extends Model
         }
 
         foreach($list as $li){
-            $li->count = PlaylistVideo::where('playlist_id', $li->id)->count();
-            $firstVideoinList = PlaylistVideo::where('playlist_id', $li->id)->first();
-            $li->thumbnail = Video::getVideoThumbnail($firstVideoinList->video_id);
+            $li->count = PlaylistVideo::getPlaylistVideos($li->id)->count();
+
+            // if the playlist has videos, but those videos are deleted, the count should return as 0,
+            // and we should treat it as a deleted playlist - in fact, lets clean it up here.
+            if($li->count < 1){
+                $emptyPlaylist = Playlist::find($li->id);
+                $emptyPlaylist->delete();
+                continue;
+            }
+            $li->thumbnail = PlayListVideo::getPlaylistThumbnail($li->id);
             $li->sinceCreated = Utility::getTimePastSinceDate($li->created_at);
             $li->prettyDateCreated = Utility::prettifyDate($li->created_at);
         }
@@ -218,8 +225,9 @@ class Playlist extends Model
     public static function getPlaylistForStore($store_id)
     {
         $banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
-        $allStorePlaylistsForBanners = Playlist::join('playlist_banner', 'playlists.id', '=', 'playlist_banner.playlist_id' )          
+        $allStorePlaylistsForBanners = Playlist::join('playlist_banner', 'playlists.id', '=', 'playlist_banner.playlist_id' )
                                             ->where('playlists.all_stores', 1)
+                                            ->where('playlists.deleted_at', '=', null)
                                             ->where('playlist_banner.banner_id', $banner_id)
                                             ->select('playlists.*')
                                             ->get();
@@ -233,6 +241,7 @@ class Playlist extends Model
 
         $targetedPlaylistsForStoreGroups = Playlist::join('playlist_store_group', 'playlist_store_group.playlist_id', '=', 'playlists.id')
                                             ->whereIn('playlist_store_group.store_group_id', $storeGroups)
+                                            ->where('playlists.deleted_at', '=', null)
                                             ->select('playlists.*')
                                             ->get();
 
@@ -259,10 +268,10 @@ class Playlist extends Model
             array_push($optGroupSelections, 'banner'.$banner);
         }
         foreach ($targetStores as $stores) {
-            array_push($optGroupSelections, 'store'.$stores);   
+            array_push($optGroupSelections, 'store'.$stores);
         }
         foreach ($storeGroups as $group) {
-            array_push($optGroupSelections, 'storegroup'.$group);   
+            array_push($optGroupSelections, 'storegroup'.$group);
         }
 
 
@@ -279,14 +288,14 @@ class Playlist extends Model
                array_push($compiledPlaylists[$index]->stores, $playlist["store_id"]);
             }
             else{
-               
+
                $playlist["stores"] = [];
                array_push( $playlist["stores"] , $playlist["store_id"]);
                array_push( $compiledPlaylists , (object) $playlist);
             }
 
         }
-        
+
         return collect($compiledPlaylists);
     }
 
