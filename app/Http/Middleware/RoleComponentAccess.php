@@ -40,7 +40,6 @@ class RoleComponentAccess
     {
         $controllerAction = $request->route()->getActionName();
         $controller = preg_split('/@/',  $controllerAction)[0];
-
         $componentName = config('app.controllerComponentMap')[$controller];
         $component_id = Component::getComponentIdByComponentName($componentName);
 
