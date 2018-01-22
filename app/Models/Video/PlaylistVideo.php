@@ -19,10 +19,10 @@ class PlaylistVideo extends Model
         $playlist_videos = PlaylistVideo::join('videos', 'playlist_videos.video_id', '=', 'videos.id')
         								->where('playlist_id', $playlistId)
         								->where('playlist_videos.deleted_at', '=', null)
+                                        ->where('videos.deleted_at', '=', null)
         								->select('videos.*')
                                         ->orderBy('playlist_videos.order')
         								->get();
-
 
         foreach($playlist_videos as $video){
             $video->likes = number_format($video->likes);
@@ -30,10 +30,7 @@ class PlaylistVideo extends Model
             $video->sinceCreated = Utility::getTimePastSinceDate($video->created_at);
             $video->prettyDateCreated = Utility::prettifyDate($video->created_at);
         }
-        
         return $playlist_videos;
-
-
     }
 
     public static function updatePlaylistVideos($id, $request)
@@ -86,5 +83,15 @@ class PlaylistVideo extends Model
 
         }
         return json_encode($playlistVideos);
+    }
+
+    public static function getPlaylistThumbnail($playlistId)
+    {
+        $videoCollection = collect(Self::getPlaylistVideos($playlistId));
+        // if($playlistId == "39"){
+        //     dd($videoCollection);
+        // }
+        $firstVideoinList = $videoCollection->first();
+        return $firstVideoinList->thumbnail;
     }
 }
