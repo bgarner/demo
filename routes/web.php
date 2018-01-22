@@ -83,6 +83,8 @@ Route::get('/{storeno}/tools/hginitials', array('uses' => 'Tools\HardgoodsInitia
 Route::get('/{storeno}/tools/lcinitials', array('uses' => 'Tools\LicensedInitialsController@index'));
 Route::post('/getFlyerBoxes', 'Tools\FlyerPageSelectionController@show');
 Route::post('/getFlyerBoxData', 'Tools\FlyerBoxSelectionController@show');
+Route::get('/{storeno}/tools/dirtynodes', array('uses' => 'Tools\DirtyNodesController@index'));
+
 
 //TRAINING
 Route::get('/{storeno}/training', array('uses' => 'Training\TrainingController@index'));
