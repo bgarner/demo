@@ -74,11 +74,9 @@
 
    <div class="modal-dialog">
        <div class="modal-content">
-<!--                 <div class="modal-header clearfix">
-                   <h4 id="modalTitle" class="modal-title">What's New?</h4>
-               </div> -->
+
                <div id="modalBody" class="modal-body event-modal-body" style="padding: 20px;">
-                   <input type="hidden" id="dirtyNodeDBID" value="">
+                  <span id="dirtyNodeDBID" style="display: hidden"></span>
                    <h2 id="dirtyNodeTitle">Title<h2>
                        <h3 id="dirtyNodeItemID">Item ID: <span class="value">330134923</span></h3>
                        <h3 id="dirtyNodeUPC">UPC: <span class="value">883096192367</span></h3>
