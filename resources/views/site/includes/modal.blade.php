@@ -70,6 +70,24 @@
 </div>
 
 
+<div class="modal inmodal" id="dirtynodemodal" tabindex="-1" role="event" aria-hidden="true" style="display: none;" >
+
+   <div class="modal-dialog">
+       <div class="modal-content">
+<!--                 <div class="modal-header clearfix">
+                   <h4 id="modalTitle" class="modal-title">What's New?</h4>
+               </div> -->
+               <div id="modalBody" class="modal-body event-modal-body" style="padding: 20px;">
+
+               </div>
+               <div class="modal-footer">
+                   <button type="button" class="btn btn-primary btn-sm btn-outline" data-dismiss="modal"><i class="fa fa-times"></i> {{__("Close")}}</button>
+               </div>
+       </div>
+   </div>
+</div>
+
+
 <div class="modal inmodal" id="bugreportmodal" tabindex="-1" role="event" aria-hidden="true" style="display: none;">
 
     <div class="modal-dialog">

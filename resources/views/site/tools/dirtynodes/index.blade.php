@@ -2,14 +2,13 @@
 <html>
 
 <head>
-    @section('title', 'Door-Crasher Tracker')
+    @section('title', 'Dirty Nodes')
     @include('site.includes.head')
 
  {{--    <link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet"> --}}
     <style>
-        .table td{ font-size: 10px; }
-        .table th{ font-size: 11px; }
-        #ad_min{ font-size: 24px; color: #c00; margin-left: 10px; }
+        /* .table td{ font-size: 10px; }
+        .table th{ font-size: 11px; } */
     </style>
 </head>
 
@@ -37,9 +36,32 @@
         <div class="wrapper wrapper-content printable">
             <div class="row">
                 <div class="col-lg-12 animated fadeInRight mail-box-header">
-                    table
+                    <table class="table table-bordered table-hover dirtynodestable" id="">
+                        <thead>
+                        <tr>
+                            <th>Item ID</th>
+                            <th>Description</th>
+                            <th>UPC</th>
+                            <th>Start Date</th>
+                            <th>Quantity</th>
+                        </tr>
+                        </thead>
 
+                        <tbody>
+                            @foreach($data as $d)
 
+                            <tr>
+                                <td><a href="#" data-toggle="modal" data-target="#dirtynodemodal">{{ $d->item_id }}</a></td>
+                                <td>{{ $d->desc }}</td>
+                                <td>{{ $d->UPC }}</td>
+                                <td>{{ $d->start_date }}</td>
+                                <td>{{ $d->quantity }}</td>
+                            </tr>
+
+                            @endforeach
+                        </tbody>
+
+                    </table>
                 </div>
             </div>
         </div>
@@ -58,14 +80,13 @@
     <script src="/js/custom/site/tools/flyerPages.js"></script>
 
     <script>
-        // $(document).ready(function(){
-        //     $('.dataTables-example').DataTable({
-        //         paging: false,
-        //         responsive: true,
-        //         // "order": [[ 8, 'asc' ], [ 9, 'asc' ]]
-        //     });
-
-        // });
+        $(document).ready(function(){
+            $('.dirtynodestable').DataTable({
+                paging: true,
+                pageLength: 50,
+                responsive: true,
+            });
+        });
 
         $.ajaxSetup({
             headers: {

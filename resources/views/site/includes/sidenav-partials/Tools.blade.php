@@ -8,8 +8,9 @@
             {{-- <li><a href="/{{ Request::segment(1) }}/tools/boxingday" class="trackclick" data-tool-type="doorcrasherTracker">Doorcrasher Tracker</a></li> --}}
             {{-- <li><a href="/{{ Request::segment(1) }}/tools/bikecount" class="trackclick" data-tool-type="bikecountTracker">Bike Count Tracker</a></li> --}}
             <li><a href="/{{ Request::segment(1) }}/tools/flashsale" class="trackclick" data-tool-type="flashsaleTracker">DOM Flash Sale Tracker</a></li>
+            <li><a href="/{{ Request::segment(1) }}/tools/dirtynodes" class="trackclick" data-tool-type="dirtyNodes">Dirty Nodes</a></li>
 
-            {{-- 
+            {{--
             <li><a href="#"> Product Deliveries <span class="fa arrow"></span></a>
                 <ul class="nav nav-third-level collapse ">
                     <li><a href="/{{ Request::segment(1) }}/tools/fwinitials" class="trackclick" data-tool-type="fwinitialsTracker">Footwear</a></li>
