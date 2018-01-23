@@ -15,6 +15,29 @@ class DirtyNode extends Model
 	    $store_number = ltrim($store_number, 'A');
 		$store_number = ltrim($store_number, '0');
 		$data = DirtyNode::where('store_number', $store_number)->get();
+        foreach($data as $d){
+            $d->start_date = Utility::prettifyDate($d->start_date);
+        }
     	return $data;
+    }
+
+    public static function getCleanNodesByStoreNumber($store_number)
+    {
+        $store_number = ltrim($store_number, 'A');
+        $store_number = ltrim($store_number, '0');
+        $data = DirtyNode::where('store_number', $store_number)
+                        ->whereNotNull('updated_at')
+                        ->get();
+        foreach($data as $d){
+            $d->start_date = Utility::prettifyDate($d->start_date);
+           // $d->updated_at = Utility::prettifyDateWithTime($d->updated_at);
+        }
+        return $data;       
+    }
+
+    public static function cleanNode($id)
+    {
+        $node = DirtyNode::find($id);
+        $node->touch();
     }
 }

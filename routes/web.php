@@ -84,7 +84,7 @@ Route::get('/{storeno}/tools/lcinitials', array('uses' => 'Tools\LicensedInitial
 Route::post('/getFlyerBoxes', 'Tools\FlyerPageSelectionController@show');
 Route::post('/getFlyerBoxData', 'Tools\FlyerBoxSelectionController@show');
 Route::get('/{storeno}/tools/dirtynodes', array('uses' => 'Tools\DirtyNodesController@index'));
-
+Route::patch('/{storeno}/tools/dirtynodes/clean', array('uses' => 'Tools\DirtyNodesController@update'));
 
 //TRAINING
 Route::get('/{storeno}/training', array('uses' => 'Training\TrainingController@index'));

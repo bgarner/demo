@@ -20,7 +20,14 @@ class DirtyNodesController extends Controller
     public function index()
     {
         $data = DirtyNode::getDataByStoreNumber($this->storeNumber);
+        $cleanNodes = DirtyNode::getCleanNodesByStoreNumber($this->storeNumber);
         return view('site.tools.dirtynodes.index')
-            ->with('data', $data);
+            ->with('data', $data)
+            ->with('cleanNodes', $cleanNodes);
+    }
+
+    public function update(Request $request)
+    {
+        DirtyNode::cleanNode($request->node_id);
     }
 }

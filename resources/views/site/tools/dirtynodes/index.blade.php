@@ -32,7 +32,6 @@
             </div>
         </div>
 
-
         <div class="wrapper wrapper-content printable">
             <div class="row">
                 <div class="col-lg-12 animated fadeInRight mail-box-header">
@@ -51,7 +50,8 @@
                             @foreach($data as $d)
 
                             <tr>
-                                <td><a href="#" data-toggle="modal" data-target="#dirtynodemodal">{{ $d->item_id }}</a></td>
+                                <input class="dirtyNodeID" name="dirtyNodeID" type="hidden" value="{{ $d->id }}">
+                                <td>{{ $d->item_id }}</td>
                                 <td>{{ $d->desc }}</td>
                                 <td>{{ $d->UPC }}</td>
                                 <td>{{ $d->start_date }}</td>
@@ -86,6 +86,48 @@
                 pageLength: 50,
                 responsive: true,
             });
+
+            $('button.cleannode').on('click', function() {
+
+                var id = $('#dirtyNodeDBID').val();
+                console.log("from clic button func:  " +id);
+                $.ajax({
+                    url: window.location.href + "/clean/",
+                    type: 'PATCH',
+                    data: {
+                        node_id : id
+                    },
+                    success: function(result) {
+                        alert('success: ' + id);
+                    }
+                }).done(function(response){
+                    alert('cleaned: ' + id);
+                });
+            })
+
+            $('.dataTable').on('click', 'tbody td', function() {
+                //<a href="#" data-toggle="modal" data-target="#dirtynodemodal">
+                //console.log('API row values : ', table.row(this).data());
+                $('#dirtynodemodal').modal('show');
+
+                var id = $(this).closest("tr").find('input.dirtyNodeID').val();
+                console.log(id);
+                $('#dirtyNodeDBID').val(id);
+
+                var itemID = $(this).closest("tr").find('td:eq(0)').text();
+                $('#dirtyNodeItemID span.value').text(itemID);
+
+                var desc = $(this).closest("tr").find('td:eq(1)').text();
+                $('#dirtyNodeTitle').text(desc);
+
+                var upc = $(this).closest("tr").find('td:eq(2)').text();
+                $('#dirtyNodeUPC span.value').text(upc);
+
+                //var start_date = $(this).closest("tr").find('td:eq(3)').text();
+                var qty = $(this).closest("tr").find('td:eq(4)').text();
+                $('#dirtyNodeQuantity span.value').text(qty);
+            });
+
         });
 
         $.ajaxSetup({
