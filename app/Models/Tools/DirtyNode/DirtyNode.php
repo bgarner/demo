@@ -14,7 +14,9 @@ class DirtyNode extends Model
     	//strip off the leading zero
 	    $store_number = ltrim($store_number, 'A');
 		$store_number = ltrim($store_number, '0');
-		$data = DirtyNode::where('store_number', $store_number)->get();
+		$data = DirtyNode::where('store_number', $store_number)
+                        ->whereNull('updated_at')
+                        ->get();
         foreach($data as $d){
             $d->start_date = Utility::prettifyDate($d->start_date);
         }

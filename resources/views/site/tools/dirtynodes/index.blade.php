@@ -59,6 +59,7 @@
                                 <table class="table table-bordered table-hover dirtynodestable" id="">
                                     <thead>
                                     <tr>
+                                        <th style="display: none;">ID</th>
                                         <th>Item ID</th>
                                         <th>Description</th>
                                         <th>UPC</th>
@@ -69,8 +70,8 @@
 
                                     <tbody>
                                         @foreach($data as $d)
-                                        <tr>
-                                            <input type="hidden" class="dirtyNodeID" value="{{ $d->id }}">
+                                        <tr id="nodeID_{{ $d->id }}">
+                                            <td style="display: none;">{{ $d->id }}</td>
                                             <td>{{ $d->item_id }}</td>
                                             <td>{{ $d->desc }}</td>
                                             <td>{{ $d->UPC }}</td>
@@ -167,40 +168,48 @@
 
                 $('#dirtynodemodal').modal('show');
 
-                var id = $(this).closest("tr").find('input.dirtyNodeID').val();
-                console.log("populate the hidden field:" + id);
-                $('span#dirtyNodeDBID').text(id);
+                window.nodeID = $(this).closest("tr").find('td:eq(0)').text();
 
-                var itemID = $(this).closest("tr").find('td:eq(0)').text();
+                var itemID = $(this).closest("tr").find('td:eq(1)').text();
                 $('#dirtyNodeItemID span.value').text(itemID);
 
-                var desc = $(this).closest("tr").find('td:eq(1)').text();
+                var desc = $(this).closest("tr").find('td:eq(2)').text();
                 $('#dirtyNodeTitle').text(desc);
 
-                var upc = $(this).closest("tr").find('td:eq(2)').text();
+                var upc = $(this).closest("tr").find('td:eq(3)').text();
                 $('#dirtyNodeUPC span.value').text(upc);
 
-                //var start_date = $(this).closest("tr").find('td:eq(3)').text();
-                var qty = $(this).closest("tr").find('td:eq(4)').text();
+                var start_date = $(this).closest("tr").find('td:eq(4)').text();
+
+                var qty = $(this).closest("tr").find('td:eq(5)').text();
                 $('#dirtyNodeQuantity span.value').text(qty);
+
+                var currentdate = new Date();
+                var now = "Today at " + currentdate.getHours() +":"+ currentdate.getMinutes();
+
+                window.removedRow = "<tr><td>"+itemID+"</td><td>"+desc+"</td><td>"+upc+"</td><td>"+start_date+"</td><td>"+qty+"</td><td>"+now+"</td></tr>";
+
             });
 
         });
 
         $('button.cleannode').on('click', function() {
-            var id = $('span#dirtyNodeDBID').text();
-            console.log('from click: ' + id);
+  
+            console.log('from click: ' + window.nodeID);
             $.ajax({
-                url: window.location.href + "/clean/",
+                url: location.protocol + '//' + location.host + location.pathname + "/clean/",
                 type: 'PATCH',
                 data: {
-                    node_id : id
+                    node_id : window.nodeID
                 },
                 success: function(result) {
-                    
+                    $('#nodeID_' + window.nodeID).fadeOut( 400, function() {
+                        // Animation complete.
+                        $('.cleannodestable tr:last').after(window.removedRow);
+                    });
                 }
             }).done(function(response){
-                swal("Good job 🍭!", "Node is clean!", "success");
+                swal("Good job 🍭", "Node is clean!", "success");
             });
         });        
 
