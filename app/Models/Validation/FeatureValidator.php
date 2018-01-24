@@ -34,7 +34,7 @@ class FeatureValidator extends PortalValidator
 
     protected $messages = [
         'name'                      => 'Feature name required',
-        //'documents.exists'          => 'Invalid documents attached',
+        'documents.exists'          => 'Invalid documents attached',
         'packages.exists'           => 'Invalid packages attached',
         'remove_documents.exists'   => 'Invalid value in documents',
         'remove_packages.exists'    => 'Invalid value in packages',
