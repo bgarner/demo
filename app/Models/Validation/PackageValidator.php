@@ -21,7 +21,7 @@ class PackageValidator extends PortalValidator
     protected $messages = [
     	'package_screen_name' 	=> 'Package name required',
     	'package_name'        	=> 'Package label required',
-    	'documents.exists'	  	=> 'Invalid documents attached',
+    	//'documents.exists'	  	=> 'Invalid documents attached',
     	'folders.exists'		=> 'Invalid folders attached',
     	'remove_documents.exists'	=> 'Invalid value in documents',
     	'remove_folders.exists'		=> 'Invalid value in folders'
