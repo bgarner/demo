@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    @section('title', 'Dirty Nodes')
+    @section('title', 'DOM Nodes')
     @include('site.includes.head')
 
  {{--    <link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet"> --}}
@@ -141,8 +141,9 @@
     <script src="/js/plugins/dataTables/dataTables.tableTools.min.js"></script>
     <script src="/js/plugins/dataTables/dataTables.responsive.js"></script>
     <script src="/js/plugins/dataTables/dataTables.bootstrap.js"></script>
-    <script src="/js/custom/site/tools/flyerPages.js"></script>
+    <script src="/js/custom/site/tools/dirtyNodes.js"></script>
     <script src="/js/plugins/sweetalert/sweetalert.min.js"></script>
+
     <script>
         $(document).ready(function(){
 
@@ -164,55 +165,7 @@
                 responsive: true,
             });            
 
-            $('.dirtynodestable').on('click', 'tbody td', function() {
-
-                $('#dirtynodemodal').modal('show');
-
-                window.nodeID = $(this).closest("tr").find('td:eq(0)').text();
-
-                var itemID = $(this).closest("tr").find('td:eq(1)').text();
-                $('#dirtyNodeItemID span.value').text(itemID);
-
-                var desc = $(this).closest("tr").find('td:eq(2)').text();
-                $('#dirtyNodeTitle').text(desc);
-
-                var upc = $(this).closest("tr").find('td:eq(3)').text();
-                $('#dirtyNodeUPC span.value').text(upc);
-
-                var start_date = $(this).closest("tr").find('td:eq(4)').text();
-
-                var qty = $(this).closest("tr").find('td:eq(5)').text();
-                $('#dirtyNodeQuantity span.value').text(qty);
-
-                var currentdate = new Date();
-                var now = "Today at " + currentdate.getHours() +":"+ currentdate.getMinutes();
-
-                window.removedRow = "<tr><td>"+itemID+"</td><td>"+desc+"</td><td>"+upc+"</td><td>"+start_date+"</td><td>"+qty+"</td><td>"+now+"</td></tr>";
-
-            });
-
         });
-
-        $('button.cleannode').on('click', function() {
-  
-            console.log('from click: ' + window.nodeID);
-            $.ajax({
-                url: location.protocol + '//' + location.host + location.pathname + "/clean/",
-                type: 'PATCH',
-                data: {
-                    node_id : window.nodeID
-                },
-                success: function(result) {
-                    $('#nodeID_' + window.nodeID).fadeOut( 400, function() {
-                        // Animation complete.
-                        $('.cleannodestable tr:last').after(window.removedRow);
-                    });
-                }
-            }).done(function(response){
-                swal("Good job 🍭", "Node is clean!", "success");
-            });
-        });        
-
 
     </script>
 
