@@ -19,8 +19,7 @@ $(document).ready(function(){
         var qty = $(this).closest("tr").find('td:eq(5)').text();
         $('#dirtyNodeQuantity span.value').text(qty);
 
-        var currentdate = new Date();
-        var now = "Today at " + currentdate.getHours() +":"+ currentdate.getMinutes();
+        var now = "Today at " + new Date().toLocaleTimeString();
 
         window.removedRow = "<tr><td>"+itemID+"</td><td>"+desc+"</td><td>"+upc+"</td><td>"+start_date+"</td><td>"+qty+"</td><td>"+now+"</td></tr>";
 
