@@ -19,3 +19,11 @@ New Requests:
 Not sure:
  ☐ (???) Need to be able to change times for Library items and communications on upload
  ☐ (???) Need dates when adding on admin side as well 
+
+Brent's List:
+ ☐ Re-order analytics page (show active comm by date, show videos by date added, newest first)
+ ☐ Remove 940 and A940 from analytics calculations
+ ☐ ticket for firewall/VPN changes for portal
+ ☐ Cron tab on new servers
+ ☐ Permissions to view access logs on new servers
+
