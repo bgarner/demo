@@ -3,7 +3,6 @@
     <div class="col-sm-10">
 
         <select name="targets[]" id="targets" multiple class="chosen">
-            <option value="">Select Some Options</option>
             @foreach($optGroupOptions as $optionGroups)
                 <optgroup label="{{$optionGroups['optgroup-label']}}">
                 @foreach($optionGroups["options"] as $key=>$value)

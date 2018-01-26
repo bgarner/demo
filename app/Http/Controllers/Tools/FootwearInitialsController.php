@@ -31,7 +31,7 @@ class FootwearInitialsController extends Controller
         
         return view('site.tools.fwinitials.index')->with('fwinitials', $fwInitials)
                                                 ->with('fwInitialsMonths', $fwInitialsMonths)
-                                                ->with('trackerTitle', 'Footwear Initials Tracker');
+                                                ->with('trackerTitle', 'Footwear Deliveries Tracker');
     }
  
 }

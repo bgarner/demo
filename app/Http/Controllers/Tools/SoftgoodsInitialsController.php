@@ -29,7 +29,7 @@ class SoftgoodsInitialsController extends Controller
         
         return view('site.tools.sginitials.index')->with('fwinitials', $fwInitials)
                                                 ->with('fwInitialsMonths', $fwInitialsMonths)
-                                                ->with('trackerTitle', 'Softgoods Initials Tracker');
+                                                ->with('trackerTitle', 'Softgoods Deliveries Tracker');
     }
  
 }

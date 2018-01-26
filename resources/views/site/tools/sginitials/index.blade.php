@@ -16,6 +16,9 @@
         .viewStyle, .expand_brand, .expand_category, .expand_subdept{
             cursor: pointer;
         }
+        .fwinitialsTable{
+            display: none;
+        }        
 
     </style>
 </head>
@@ -52,6 +55,11 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="table-responsive clearfix">
+
+                                    <div id="loading">
+                                        <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading..n.</span>
+                                    </div>
+
                                     <table class="table table-bordered table-hover fwinitialsTable">
                                         <thead>
                                         <tr>
@@ -145,6 +153,12 @@
              "searching": false
         });
         table.column(9).visible( false );
+
+        $(window).load(function() {
+            // When the page has loaded
+            $('#loading').hide();
+            $(".fwinitialsTable").fadeIn(500);
+        });        
         
     </script>
 

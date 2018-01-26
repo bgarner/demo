@@ -29,7 +29,7 @@ class HardgoodsInitialsController extends Controller
         
         return view('site.tools.hginitials.index')->with('fwinitials', $initials)
                                                 ->with('fwInitialsMonths', $initialsMonths)
-                                                ->with('trackerTitle', 'Hardgoods Initials Tracker');
+                                                ->with('trackerTitle', 'Hardgoods Deliveries Tracker');
     }
  
 }

@@ -29,6 +29,6 @@ class LicensedInitialsController extends Controller
         
         return view('site.tools.hginitials.index')->with('fwinitials', $initials)
                                                 ->with('fwInitialsMonths', $initialsMonths)
-                                                ->with('trackerTitle', 'Licensed Initials Tracker');
+                                                ->with('trackerTitle', 'Licensed Product Deliveries Tracker');
     }
 }
