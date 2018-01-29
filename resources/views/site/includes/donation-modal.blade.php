@@ -41,7 +41,19 @@
                 <div class="form-group">
                     <label class="control-label"><small>Team/Event Name</small></label>
                     <div><input type="text" class="form-control input-sm" id="team_event_name" name="team_event_name"></div>
-                </div>      
+                </div>     
+
+                <div class="form-group">
+                    <label class="control-label"><small>Sport/Category</small></label>
+                    <div>
+                        <select class="form-control input-sm" id="sport_category" name="sport_category"> 
+                            <option value="" disabled selected>Select a sport/category</option>     
+                            @foreach($sport_dropdown as $sport)
+                            <option value="{{ $sport->id }}">{{ $sport->sport }}</option> 
+                            @endforeach                            
+                        </select>
+                    </div>
+                </div>  
 
                 <div class="form-group">
                     
