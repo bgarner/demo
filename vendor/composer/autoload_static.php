@@ -1361,6 +1361,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'SebastianBergmann\\RecursionContext\\InvalidArgumentException' => __DIR__ . '/..' . '/sebastian/recursion-context/src/InvalidArgumentException.php',
         'SebastianBergmann\\ResourceOperations\\ResourceOperations' => __DIR__ . '/..' . '/sebastian/resource-operations/src/ResourceOperations.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
+        'SeedCommunityDonationSportsTable' => __DIR__ . '/../..' . '/database/seeds/SeedCommunityDonationSportsTable.php',
         'SessionUpdateTimestampHandlerInterface' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/SessionUpdateTimestampHandlerInterface.php',
         'StoreComponentTableSeeder' => __DIR__ . '/../..' . '/database/seeds/StoreComponentTableSeeder.php',
         'StoreTableSeeder' => __DIR__ . '/../..' . '/database/seeds/StoreTableSeeder.php',

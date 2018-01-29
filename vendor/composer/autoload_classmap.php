@@ -879,6 +879,7 @@ return array(
     'SebastianBergmann\\RecursionContext\\InvalidArgumentException' => $vendorDir . '/sebastian/recursion-context/src/InvalidArgumentException.php',
     'SebastianBergmann\\ResourceOperations\\ResourceOperations' => $vendorDir . '/sebastian/resource-operations/src/ResourceOperations.php',
     'SebastianBergmann\\Version' => $vendorDir . '/sebastian/version/src/Version.php',
+    'SeedCommunityDonationSportsTable' => $baseDir . '/database/seeds/SeedCommunityDonationSportsTable.php',
     'SessionUpdateTimestampHandlerInterface' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/SessionUpdateTimestampHandlerInterface.php',
     'StoreComponentTableSeeder' => $baseDir . '/database/seeds/StoreComponentTableSeeder.php',
     'StoreTableSeeder' => $baseDir . '/database/seeds/StoreTableSeeder.php',
