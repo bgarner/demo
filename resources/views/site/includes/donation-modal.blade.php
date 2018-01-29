@@ -44,7 +44,7 @@
                 </div>     
 
                 <div class="form-group">
-                    <label class="control-label"><small>Sport/Category</small></label>
+                    <label class="control-label"><small><span class="req">*</span>Sport/Category</small></label>
                     <div>
                         <select class="form-control input-sm" id="sport_category" name="sport_category"> 
                             <option value="" disabled selected>Select a sport/category</option>     

@@ -104,6 +104,7 @@ var validateStep1 = function(){
 var validateStep2 = function(){
 	var modal = $(".modal-body.step-2");
 	var org_name = modal.find("#org_name").val();
+	var sport_category = modal.find("#sport_category").val();
 	var hasError = false;
 
 	if(org_name == '') {
@@ -111,6 +112,12 @@ var validateStep2 = function(){
 		hasError = true;
 		$(window).scrollTop(0);
 	}
+
+	if(sport_category == '' || !sport_category ) {
+		$("#sport_category").css('borderColor', '#c00');
+		hasError = true;
+		$(window).scrollTop(0);
+	}	
 
 	if(hasError){
 		return false;
@@ -270,6 +277,9 @@ $("body").on('click', '#add-product', function(){
 
 var submitForm = function(){
 
+		this.disabled=true;
+		this.value='Submitting...';
+
 		$("input[type='text']").css ('borderColor', '#e5e6e7');
 		$("select").css ('borderColor', '#e5e6e7');
 		//$(".error").hide();
@@ -285,6 +295,7 @@ var submitForm = function(){
 		
 		var org_name = $("#org_name").val();
 		var team_event_name = $("#team_event_name").val();
+		var sport_category = $("#sport_category").val();
 		var event_date = $("#event_date").val();
 		var event_location = $("#event_location").val();
 
@@ -341,6 +352,7 @@ var submitForm = function(){
 				emp_number: emp_number,
 				org_name: org_name,
 				team_event_name: team_event_name,
+				sport_category: sport_category,
 				event_date: event_date,
 				event_location: event_location,
 				pickup_name: pickup_name,
@@ -355,7 +367,7 @@ var submitForm = function(){
 	
 		    },
 		    success: function(result) {
-		        
+		        this.disabled=false;
 				swal({
 					title: "Thanks!", 
 					text: "", 
@@ -376,6 +388,7 @@ var submitForm = function(){
 			
 			$("#org_name").val('');
 			$("#team_event_name").val('');
+			$("#sport_category").val('');
 			$("#event_date").val('');
 			$("#event_location").val('');
 
