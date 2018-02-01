@@ -2,23 +2,11 @@
 <html>
 
 <head>
-    @section('title', $trackerTitle )
+    @section('title', 'Title')
     @include('site.includes.head')
-
-    <link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
-    <style>
-        .fa-plus-circle {
-            color:#1ab394;
-        }
-        .fa-minus-circle {
-            color:#ed5565;
-        }
-        .viewStyle, .expand_brand, .expand_category, .expand_subdept{
-            cursor: pointer;
-        }
-
-        .fwinitialsTable{
-            display: none;
+    <style type="text/css">
+        .appendedtable td{
+            background-color: white !important;
         }
 
     </style>
@@ -37,18 +25,6 @@
             @include('site.includes.topbar')
         </div>
 
-
-       <div class="row wrapper border-bottom white-bg page-heading">
-            <div class="col-lg-12">
-                <h2>{{$trackerTitle}}</h2>
-                @if(isset ($fwInitials))
-                <small class="pull-right"> Last Updated : {{ $fwinitials[0]->updated_at }}  </small>
-                @endif
-            </div>
-            <div id="rolling-months" class="hidden"  data-months="{{json_encode($fwInitialsMonths)}}"></div>
-        </div>
-
-
         <div class="wrapper wrapper-content printable">
             <div class="row">
                 <div class="col-lg-12 animated fadeInRight">
@@ -57,48 +33,37 @@
                             <div class="col-md-12">
                                 <div class="table-responsive clearfix">
 
-                                    <div id="loading">
-                                        <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading..n.</span>
-                                    </div>
+                                    <h1>Product Deliveries</h1>
 
-                                    <table class="table table-bordered table-hover fwinitialsTable">
-                                        <thead>
+                                    <table class="table table-bordered departmenttable">                          
                                         <tr>
-                                            <th>Subdepartment</th>
-                                            <th>LY {{$fwInitialsMonths->month1}}</th>
-                                            <th>TY {{$fwInitialsMonths->month1}}</th>
-                                            <th>LY {{$fwInitialsMonths->month2}}</th>
-                                            <th>TY {{$fwInitialsMonths->month2}}</th>
-                                            <th>LY {{$fwInitialsMonths->month3}}</th>
-                                            <th>TY {{$fwInitialsMonths->month3}}</th>
+                                            <thead>
+                                            <th></th>
+                                            <th>LY Jan</th>
+                                            <th>TY Jan</th>
+                                            <th>LY Feb</th>
+                                            <th>TY Feb</th>
+                                            <th>LY Mar</th>
+                                            <th>TY Mar</th>
                                             <th>LY Season Total</th>
                                             <th>TY Season Total</th>
-                                            <th>data</th>
+                                            </thead>
                                         </tr>
-                                        </thead>
-
-                                        <tbody>
-                                        @foreach($fwinitials as $key=>$fw)
-                                          
-                                            <tr>                            
-                                                <td class="expand_subdept" data-toplevel="true" id="subdept_{{$key}}"><i class="fa fa-plus-circle"></i> {{$fw->subdept}}</td>
-                                                <td>{{$fw->ly_month1}}</td>
-                                                <td>{{$fw->cy_month1}}</td>
-                                                <td>{{$fw->ly_month2}}</td>
-                                                <td>{{$fw->cy_month2}}</td>
-                                                <td>{{$fw->ly_month3}}</td>
-                                                <td>{{$fw->cy_month3}}</td>
-                                                <td>{{$fw->last_year_total}}</td>
-                                                <td>{{$fw->current_year_total}}</td>
-                                                <td>{{$fw->category_totals}}</td>
-
-                                            </tr>                    
-                                                
+                                        @foreach($departments as $department)
+                                        <tr>
+                                            <td><a class='department' data-department='{{ $department->DEPT_NAME }}'>{{ $department->DEPT_NAME }}</a></td>
+                                            <td>1</td>
+                                            <td>2</td>
+                                            <td>3</td>
+                                            <td>4</td>
+                                            <td>5</td>
+                                            <td>6</td>
+                                            <td>7</td>
+                                            <td>8</td>
+                                        </tr>
                                         @endforeach
-
-                                        </tbody>
                                     </table>
-
+           
                                 </div>
                             </div>
                         </div>
@@ -135,33 +100,8 @@
     @include('site.includes.scripts')
 
     @include('site.includes.modal')
-    <script src="/js/plugins/dataTables/jquery.dataTables.js"></script>
-    <script src="/js/plugins/dataTables/dataTables.tableTools.min.js"></script>
-    <script src="/js/plugins/dataTables/dataTables.responsive.js"></script>
-    <script src="/js/plugins/dataTables/dataTables.bootstrap.js"></script>
-    <script src="/js/custom/site/tools/fwinitials.js"></script>
 
-    <script>
-        var table = $('.fwinitialsTable').DataTable({
-        
-            "info"   :false,
-            "bPaginate": false,
-            "paging":   false,
-            "columns": [    
-               { "className":'expand-subdept'},
-               null,null,null,null,null,null,null,null,null
-             ],
-             "searching": false                
-        });
-        table.column(9).visible( false );
-    
-        $(window).load(function() {
-            // When the page has loaded
-            $('#loading').hide();
-            $(".fwinitialsTable").fadeIn(500);
-        });
-        
-    </script>
-
+    <script type="text/javascript" src="/js/vendor/underscore-1.8.3.js"></script>
+    <script src="/js/custom/site/tools/initials.js"></script>
 </body>
 </html>

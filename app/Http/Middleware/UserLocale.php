@@ -30,7 +30,8 @@ class UserLocale
             return $next($request);
         }
 
-        $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+        //$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+        $lang = isset($_SERVER["HTTP_ACCEPT_LANGUAGE"]) ? substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2) : '';
         session(['language' => $lang]);
         App::setLocale($lang);
 
