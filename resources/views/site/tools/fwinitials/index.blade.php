@@ -5,8 +5,17 @@
     @section('title', 'Title')
     @include('site.includes.head')
     <style type="text/css">
+        table{
+            font-size: 11px;
+        }
         .appendedtable td{
             background-color: white !important;
+        }
+
+        .open {
+            display: block;
+            background-color: #b7e4ff !important;
+
         }
 
     </style>
@@ -35,7 +44,7 @@
 
                                     <h1>Product Deliveries</h1>
 
-                                    <table class="table table-bordered departmenttable">                          
+                                    <table class="table table-bordered departmenttable">
                                         <tr>
                                             <thead>
                                             <th></th>
@@ -51,7 +60,7 @@
                                         </tr>
                                         @foreach($departments as $department)
                                         <tr>
-                                            <td><a class='department' data-department='{{ $department->DEPT_NAME }}'>{{ $department->DEPT_NAME }}</a></td>
+                                            <td><a class='department' data-department='{{ $department->name }}'>{{ $department->name }}</a></td>
                                             <td>1</td>
                                             <td>2</td>
                                             <td>3</td>

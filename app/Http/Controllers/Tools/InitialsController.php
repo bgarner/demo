@@ -39,7 +39,7 @@ class InitialsController extends Controller
 
     public function getClasses(Request $request)
     {
-    	return Data::getClasses($request->storenumber, $request->division, $request->subdepartment);
+    	return Data::getClasses($request->storenumber, $request->division, $request->department, $request->subdepartment);
     }
 
     public function getBrands(Request $request)

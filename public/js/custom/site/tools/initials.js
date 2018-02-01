@@ -10,6 +10,15 @@ $(document).on('click', 'a.department', function() {
 	var department = $(this).data("department");
 	var table;
 	var element = $(this);
+
+	if( $( element ).hasClass( "open" ) ) {
+		$( element ).parent().next('tr').remove();
+		$( element ).toggleClass( "open" );
+		return;	
+	} else {
+		$( element ).toggleClass( "open" );
+	}
+
     $.ajax({
         url: "/tools/productdelivery/subdepartments",
         type: 'get',
@@ -31,9 +40,19 @@ $(document).on('click', 'a.department', function() {
 
 $(document).on('click', 'a.subdepartment', function() {
 	//this will return a list of Classes for the clicked Department
+	
 	var subdepartment = $(this).data("subdepartment");
 	var table;
 	var element = $(this);
+
+	if( $( element ).hasClass( "open" ) ) {
+		$( element ).parent().next('tr').remove();
+		$( element ).toggleClass( "open" );
+		return;	
+	} else {
+		$( element ).toggleClass( "open" );
+	}
+
     $.ajax({
         url: "/tools/productdelivery/classes",
         type: 'get',
@@ -53,9 +72,19 @@ $(document).on('click', 'a.subdepartment', function() {
 
 $(document).on('click', 'a.fglclass', function() { 
 	//get the brand for a given class
+	
 	var fglclass = $(this).data("fglclass");
 	var table;
 	var element = $(this);
+
+	if( $( element ).hasClass( "open" ) ) {
+		$( element ).parent().next('tr').remove();
+		$( element ).toggleClass( "open" );
+		return;	
+	} else {
+		$( element ).toggleClass( "open" );
+	}
+
     $.ajax({
         url: "/tools/productdelivery/brands",
         type: 'get',
@@ -76,10 +105,20 @@ $(document).on('click', 'a.fglclass', function() {
 });
 
 $(document).on('click', 'a.brand', function() { 
+	
 	var brand = $(this).data("brand");
 	var fglclass = $(this).data("fglclass");
 	var table;
 	var element = $(this);
+
+	if( $( element ).hasClass( "open" ) ) {
+		$( element ).parent().next('tr').remove();
+		$( element ).toggleClass( "open" );
+		return;	
+	} else {
+		$( element ).toggleClass( "open" );
+	}
+
     $.ajax({
         url: "/tools/productdelivery/styles",
         type: 'get',
@@ -101,6 +140,8 @@ $(document).on('click', 'a.brand', function() {
 $('a.style').on('click', function() {
 
 });
+
+
 
 
 
