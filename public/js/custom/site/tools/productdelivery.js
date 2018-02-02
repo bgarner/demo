@@ -130,7 +130,21 @@ $(document).on('click', 'a.brand', function() {
 });
 
 $('a.style').on('click', function() {
+        
+        var modal = $('#view-style-modal');
+        var modalHeader = $('#view-style-modal .modal-title');
+        var modalBody = $('#view-style-modal .modal-body');
 
+        var styleNumber = data[0];
+        var styleName = data[1];
+        var styleSrc = data[10];
+        
+        modalHeader.empty().html(styleNumber +" - "+ styleName);
+        modalBody.empty().html(styleSrc);
+        
+        modal.modal({show:true})
+            
+    }
 });
 
 
