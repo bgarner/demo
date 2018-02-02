@@ -12,10 +12,8 @@
             background-color: white !important;
         }
 
-        .open {
-            display: block;
-            background-color: #b7e4ff !important;
-
+        .open{
+            font-weight: bold;
         }
 
     </style>
@@ -48,27 +46,27 @@
                                         <tr>
                                             <thead>
                                             <th></th>
-                                            <th>LY Jan</th>
-                                            <th>TY Jan</th>
-                                            <th>LY Feb</th>
-                                            <th>TY Feb</th>
-                                            <th>LY Mar</th>
-                                            <th>TY Mar</th>
+                                            <th>LY {{ date('M', mktime(0, 0, 0, $window[0], 10)) }}</th>
+                                            <th>TY {{ date('M', mktime(0, 0, 0, $window[0], 10)) }}</th>
+                                            <th>LY {{ date('M', mktime(0, 0, 0, $window[1], 10)) }}</th>
+                                            <th>TY {{ date('M', mktime(0, 0, 0, $window[1], 10)) }}</th>
+                                            <th>LY {{ date('M', mktime(0, 0, 0, $window[2], 10)) }}</th>
+                                            <th>TY {{ date('M', mktime(0, 0, 0, $window[2], 10)) }}</th>
                                             <th>LY Season Total</th>
                                             <th>TY Season Total</th>
                                             </thead>
                                         </tr>
                                         @foreach($departments as $department)
                                         <tr>
-                                            <td><a class='department' data-department='{{ $department->name }}'>{{ $department->name }}</a></td>
-                                            <td>1</td>
-                                            <td>2</td>
-                                            <td>3</td>
-                                            <td>4</td>
-                                            <td>5</td>
-                                            <td>6</td>
-                                            <td>7</td>
-                                            <td>8</td>
+                                            <td><i class="fa fa-caret-right"></i> <a class='department' data-department='{{ $department->name }}'>{{ $department->name }}</a></td>
+                                            <td>{{ $department->ly_month1 }}</td>
+                                            <td>{{ $department->cy_month1 }}</td>
+                                            <td>{{ $department->ly_month2 }}</td>
+                                            <td>{{ $department->cy_month2 }}</td>
+                                            <td>{{ $department->ly_month3 }}</td>
+                                            <td>{{ $department->cy_month3 }}</td>
+                                            <td>{{ $department->last_year_total }}</td>
+                                            <td>{{ $department->current_year_total }}</td>
                                         </tr>
                                         @endforeach
                                     </table>

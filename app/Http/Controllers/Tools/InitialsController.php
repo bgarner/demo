@@ -23,7 +23,9 @@ class InitialsController extends Controller
     public function index()
     {
     	$depts = Data::getDepartments($this->storeNumber, $this->division);
+    	$window = Data::calculateWindow();
     		return view('site.tools.fwinitials.index')
+    		->with('window', $window)
     		->with('departments', $depts);
     }
 
@@ -49,6 +51,6 @@ class InitialsController extends Controller
 
     public function getStyles(Request $request)
     {
-    	return Data::getStyles($request->storenumber, $request->division, $request->class, $request->brand);
+    	return Data::getStyles($request->storenumber, $request->division, $request->class, $request->subdepartment, $request->brand);
     }
 }

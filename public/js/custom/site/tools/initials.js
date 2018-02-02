@@ -10,9 +10,12 @@ $(document).on('click', 'a.department', function() {
 	var department = $(this).data("department");
 	var table;
 	var element = $(this);
+	var tr = $(this).parent();
+	tr.find("i.fa").toggleClass("fa-caret-right").toggleClass('fa-caret-down');
 
 	if( $( element ).hasClass( "open" ) ) {
-		$( element ).parent().next('tr').remove();
+		tr.siblings(':first').remove();
+		alert('close!');
 		$( element ).toggleClass( "open" );
 		return;	
 	} else {
@@ -28,10 +31,10 @@ $(document).on('click', 'a.department', function() {
             department: department
         },
         success: function(result) {
-       		table = createTable(result, "Sub Departments", 9, "subdepartment");
+        	var extraDataAttr = [{ "attribs": { "name": "department", "value": department } }];
+       		table = createTable(result, "Sub Departments", 9, "subdepartment", extraDataAttr);
         }
     }).done(function(response){
-       console.log("done!");
        $(element).closest("tr").after( table );
     });
 
@@ -42,11 +45,15 @@ $(document).on('click', 'a.subdepartment', function() {
 	//this will return a list of Classes for the clicked Department
 	
 	var subdepartment = $(this).data("subdepartment");
+	var department = $(this).data("department");
 	var table;
 	var element = $(this);
+	var tr = $(this).parent();
+	tr.find("i.fa").toggleClass("fa-caret-right").toggleClass('fa-caret-down');
 
 	if( $( element ).hasClass( "open" ) ) {
-		$( element ).parent().next('tr').remove();
+		tr.siblings(':first').remove();
+		alert('close!');
 		$( element ).toggleClass( "open" );
 		return;	
 	} else {
@@ -59,26 +66,33 @@ $(document).on('click', 'a.subdepartment', function() {
         data: {
         	storenumber: storenumber,
         	division: division,
-            subdepartment: subdepartment
+            subdepartment: subdepartment,
+            department: department
         },
         success: function(result) {
-       		table = createTable(result, "Classes", 9, "fglclass");
+        	var extraDataAttr = [{ "attribs": { "name": "subdepartment", "value": subdepartment } }];
+       		table = createTable(result, "Classes", 9, "fglclass", extraDataAttr);
         }
     }).done(function(response){
-       console.log("done!");
        $(element).closest("tr").after( table );
     });
 });
+
 
 $(document).on('click', 'a.fglclass', function() { 
 	//get the brand for a given class
 	
 	var fglclass = $(this).data("fglclass");
+	var subdepartment = $(this).data("subdepartment");
 	var table;
 	var element = $(this);
+	var tr = $(this).parent();
+	tr.find("i.fa").toggleClass("fa-caret-right").toggleClass('fa-caret-down');	
 
 	if( $( element ).hasClass( "open" ) ) {
-		$( element ).parent().next('tr').remove();
+
+		tr.siblings(':first').remove();
+		alert('close!');
 		$( element ).toggleClass( "open" );
 		return;	
 	} else {
@@ -94,25 +108,30 @@ $(document).on('click', 'a.fglclass', function() {
             class: fglclass
         },
         success: function(result) {
-       		table = createTable(result, "Brands", 9, "brand");
+        	var extraDataAttr = [{ "attribs": { "name": "subdepartment", "value": subdepartment } }];
+       		table = createTable(result, "Brands", 9, "brand", extraDataAttr);
         }
     }).done(function(response){
-       console.log("done!");
        $(element).closest("tr").after( table );
 
        $('table.brandtable a').data('fglclass', fglclass);
     });
 });
 
+
 $(document).on('click', 'a.brand', function() { 
 	
 	var brand = $(this).data("brand");
 	var fglclass = $(this).data("fglclass");
+	var subdepartment = $(this).data("subdepartment");
 	var table;
 	var element = $(this);
+	var tr = $(this).parent();
+	tr.find("i.fa").toggleClass("fa-caret-right").toggleClass('fa-caret-down');
 
 	if( $( element ).hasClass( "open" ) ) {
-		$( element ).parent().next('tr').remove();
+		tr.siblings(':first').remove();
+		alert('close!');
 		$( element ).toggleClass( "open" );
 		return;	
 	} else {
@@ -126,13 +145,13 @@ $(document).on('click', 'a.brand', function() {
         	storenumber: storenumber,
         	division: division,
             class: fglclass,
+            subdepartment: subdepartment,
             brand: brand
         },
         success: function(result) {
        		table = createStyleTable(result);
         }
     }).done(function(response){
-       console.log("done!");
        $(element).closest("tr").after( table );
     });
 });
@@ -142,10 +161,7 @@ $('a.style').on('click', function() {
 });
 
 
-
-
-
-function createTable(data, title, colspan, datatype)
+function createTable(data, title, colspan, datatype, extraDataAttr=0)
 {
 	var table="<table class='table table-bordered "+datatype+"table'>";
 	var tableBody="";
@@ -165,19 +181,31 @@ function createTable(data, title, colspan, datatype)
 		"</thead>";
 
 		_.forEach(data, function (d) {
-			console.log(d);
-			var row = ""+
-			"<tr>" +
-	        "     <td><a class='"+datatype+"' data-"+datatype+"='"+d.name+"'>"+d.name+"</a></td>" +
-	        "     <td>143</td>" +
-	        "     <td>52</td>" +
-	        "     <td>523</td>" +
-	        "     <td>5321</td>" +
-	        "     <td>2143</td>" +
-	        "     <td>23</td>" +
-	        "     <td>325</td>" +
-	        "     <td>342</td>" +
+
+			var row = "<tr>";
+			
+			if(extraDataAttr){
+				var count = Object.keys(extraDataAttr).length;
+				var attirbStr = "";
+				extraDataAttr.forEach(function(obj) { 
+					attirbStr = " data-"+obj.attribs.name+"='"+obj.attribs.value+"'";
+				});
+			
+				row = row + "<td><i class='fa fa-caret-right'></i> <a class='"+datatype+"' data-"+datatype+"='"+d.name+"'"+attirbStr+">"+d.name+"</a></td>";
+
+			} else {
+				row = row + "<td><i class='fa fa-caret-right'></i> <a class='"+datatype+"' data-"+datatype+"='"+d.name+"'>"+d.name+"</a></td>";
+			}
+	        row = row + "<td>"+d.ly_month1+"</td>" +
+				        "<td>"+d.cy_month1+"</td>" +
+				        "<td>"+d.ly_month2+"</td>" +
+				        "<td>"+d.cy_month2+"</td>" +
+				        "<td>"+d.ly_month3+"</td>" +
+				        "<td>"+d.cy_month3+"</td>" +
+				        "<td>"+d.last_year_total+"</td>" +
+				        "<td>"+d.current_year_total+"</td>" +
 			"</tr>";
+
 			tableBody = tableBody + row;
 		});
 
@@ -207,19 +235,19 @@ function createStyleTable(data)
 		"</thead>";
 
 		_.forEach(data, function (d) {
-			console.log(d);
+			console.log(d.STYLE_NAME);
 			var row = ""+
 			"<tr>" +
 	        "     <td><a class='style' id='"+d.STYLE_NUMBER+"'>"+d.STYLE_NUMBER+"</a></td>" +
-	        "     <td><a class='style' id='"+d.STYLE_NUMBER+"'>"+d.STYLE_NAME+"</a></td>" +
-	        "     <td>143</td>" +
-	        "     <td>52</td>" +
-	        "     <td>523</td>" +
-	        "     <td>5321</td>" +
-	        "     <td>2143</td>" +
-	        "     <td>23</td>" +
-	        "     <td>325</td>" +
-	        "     <td>342</td>" +
+	        "     <td><a class='style' id='"+d.STYLE_NUMBER+"'>"+d.STYLE_NAME+" "+d.CODI_NUMBER+"</a></td>" +
+	        "	  <td>"+d.ly_month1+"</td>" +
+			"	  <td>"+d.cy_month1+"</td>" +
+			"	  <td>"+d.ly_month2+"</td>" +
+			"	  <td>"+d.cy_month2+"</td>" +
+			"	  <td>"+d.ly_month3+"</td>" +
+			"     <td>"+d.cy_month3+"</td>" +
+			"     <td>"+d.last_year_total+"</td>" +
+			"     <td>"+d.current_year_total+"</td>" +
 			"</tr>";
 			tableBody = tableBody + row;
 		});
@@ -227,4 +255,3 @@ function createStyleTable(data)
 		table = "<tr><td colspan='10'>"+table + header + tableBody + "</table></td></tr>";
 		return table;
 }
-
