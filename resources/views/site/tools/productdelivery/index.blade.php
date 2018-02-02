@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    @section('title', 'Title')
+    @section('title', 'Product Deliveries')
     @include('site.includes.head')
     <style type="text/css">
         table{
