@@ -143,15 +143,15 @@ function createTable(data, title, colspan, datatype, extraDataAttr=0)
 	var header = ""+
 		"<thead>" +
 		"  <tr>" +
-        "     <th>"+title+"</th>" +
-        "     <th>LY Jan</th>" +
-        "     <th>TY Jan</th>" +
-        "     <th>LY Feb</th>" +
-        "     <th>TY Feb</th>" +
-        "     <th>LY Mar</th>" +
-        "     <th>TY Mar</th>" +
-        "     <th>LY Season Total</th>" +
-        "     <th>TY Season Total</th>" +
+        "     <th class='fixedwidthheader'>"+title+"</th>" +
+        "     <th class='monthly'>LY Jan</th>" +
+        "     <th class='monthly'>TY Jan</th>" +
+        "     <th class='monthly'>LY Feb</th>" +
+        "     <th class='monthly'>TY Feb</th>" +
+        "     <th class='monthly'>LY Mar</th>" +
+        "     <th class='monthly'>TY Mar</th>" +
+        "     <th class='yearly'>LY Season Total</th>" +
+        "     <th class='yearly'>TY Season Total</th>" +
 		"  </tr>" +
 		"</thead>";
 
@@ -232,15 +232,13 @@ function createStyleTable(data)
 }
 
 function toggleTable(el)
-{
-	
-	
+{	
+	var tr = $(el).parent('tr');		
+	tr.find("i.fa").toggleClass("fa-caret-right").toggleClass('fa-caret-down');
 
 	if( $( el ).hasClass( "open" ) ) {
 		$(el).closest("tr").next("tr").remove();
 		$( el ).toggleClass( "open" );
-		var tr = $(el).parent('tr');		
-		tr.find("i.fa").toggleClass("fa-caret-right").toggleClass('fa-caret-down');
 		return false;	
 	} else {
 		$( el ).toggleClass( "open" );

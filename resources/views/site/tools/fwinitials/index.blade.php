@@ -16,6 +16,17 @@
             font-weight: bold;
         }
 
+        th.fixedwidthheader{
+            width: 20%
+        }
+
+        th.monthly{
+            width: 10%;
+        }
+
+        th.yearly{
+            width: 10%;
+        }
 
 
         .styletable tr:hover {
@@ -67,15 +78,15 @@
                                     <table class="table table-bordered departmenttable">
                                         <tr>
                                             <thead>
-                                            <th></th>
-                                            <th>LY {{ date('M', mktime(0, 0, 0, $window[0], 10)) }}</th>
-                                            <th>TY {{ date('M', mktime(0, 0, 0, $window[0], 10)) }}</th>
-                                            <th>LY {{ date('M', mktime(0, 0, 0, $window[1], 10)) }}</th>
-                                            <th>TY {{ date('M', mktime(0, 0, 0, $window[1], 10)) }}</th>
-                                            <th>LY {{ date('M', mktime(0, 0, 0, $window[2], 10)) }}</th>
-                                            <th>TY {{ date('M', mktime(0, 0, 0, $window[2], 10)) }}</th>
-                                            <th>LY Season Total</th>
-                                            <th>TY Season Total</th>
+                                            <th class="fixedwidthheader"></th>
+                                            <th class="monthly">LY {{ date('M', mktime(0, 0, 0, $window[0], 10)) }}</th>
+                                            <th class="monthly">TY {{ date('M', mktime(0, 0, 0, $window[0], 10)) }}</th>
+                                            <th class="monthly">LY {{ date('M', mktime(0, 0, 0, $window[1], 10)) }}</th>
+                                            <th class="monthly">TY {{ date('M', mktime(0, 0, 0, $window[1], 10)) }}</th>
+                                            <th class="monthly">LY {{ date('M', mktime(0, 0, 0, $window[2], 10)) }}</th>
+                                            <th class="monthly">TY {{ date('M', mktime(0, 0, 0, $window[2], 10)) }}</th>
+                                            <th class="yearly">LY Season Total</th>
+                                            <th class="yearly">TY Season Total</th>
                                             </thead>
                                         </tr>
                                         @foreach($departments as $department)
