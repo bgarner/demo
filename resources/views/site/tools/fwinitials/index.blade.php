@@ -16,6 +16,28 @@
             font-weight: bold;
         }
 
+
+
+        .styletable tr:hover {
+          background-color: #ffa !important;
+        }
+
+        .styletable tr:hover td.lastyear{
+            background-color: #F6F6E1;
+        }
+
+        .styletable tr:hover td.lastyeartotal{
+            background-color: #E6E6D0;
+        }
+        
+
+        td.lastyear{
+            background-color: #f3f3f3;
+        }
+        td.lastyeartotal{
+            background-color: #ddd;
+        }
+
     </style>
 </head>
 
@@ -59,13 +81,13 @@
                                         @foreach($departments as $department)
                                         <tr>
                                             <td><i class="fa fa-caret-right"></i> <a class='department' data-department='{{ $department->name }}'>{{ $department->name }}</a></td>
-                                            <td>{{ $department->ly_month1 }}</td>
+                                            <td class='lastyear'>{{ $department->ly_month1 }}</td>
                                             <td>{{ $department->cy_month1 }}</td>
-                                            <td>{{ $department->ly_month2 }}</td>
+                                            <td class='lastyear'>{{ $department->ly_month2 }}</td>
                                             <td>{{ $department->cy_month2 }}</td>
-                                            <td>{{ $department->ly_month3 }}</td>
+                                            <td class='lastyear'>{{ $department->ly_month3 }}</td>
                                             <td>{{ $department->cy_month3 }}</td>
-                                            <td>{{ $department->last_year_total }}</td>
+                                            <td class='lastyeartotal'>{{ $department->last_year_total }}</td>
                                             <td>{{ $department->current_year_total }}</td>
                                         </tr>
                                         @endforeach
