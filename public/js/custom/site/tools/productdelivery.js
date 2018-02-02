@@ -129,22 +129,24 @@ $(document).on('click', 'a.brand', function() {
     });
 });
 
-$('a.style').on('click', function() {
-        
-        var modal = $('#view-style-modal');
-        var modalHeader = $('#view-style-modal .modal-title');
-        var modalBody = $('#view-style-modal .modal-body');
+$(document).on('click', 'a.openstyle', function() {
+    
+    console.log("open stuff");
 
-        var styleNumber = data[0];
-        var styleName = data[1];
-        var styleSrc = data[10];
-        
-        modalHeader.empty().html(styleNumber +" - "+ styleName);
-        modalBody.empty().html(styleSrc);
-        
-        modal.modal({show:true})
+    var modal = $('#view-style-modal');
+    var modalHeader = $('#view-style-modal .modal-title');
+    var modalBody = $('#view-style-modal .modal-body');
+
+	var stylenumber = $(this).data("stylenumber");
+	var stylename = $(this).data("stylename");
+	var codi = $(this).data("codi");
+    var styleSrc = '<img src="https://fgl.scene7.com/is/image/FGLSportsLtd/'+stylenumber+'_'+ codi +'_a?hei=520"/>';
+
+    modalHeader.empty().html(stylenumber +" - "+ stylename +"  ("+codi+")");
+    modalBody.empty().html(styleSrc);
+    
+    modal.modal({show:true})
             
-    }
 });
 
 
@@ -228,8 +230,8 @@ function createStyleTable(data)
 		_.forEach(data, function (d) {
 			var row = ""+
 			"<tr>" +
-	        "     <td><a class='style' id='"+d.STYLE_NUMBER+"'>"+d.STYLE_NUMBER+"</a></td>" +
-	        "     <td><a class='style' id='"+d.STYLE_NUMBER+"'>"+d.STYLE_NAME+" "+d.CODI_NUMBER+"</a></td>" +
+	        "     <td><a class='openstyle' id='"+d.STYLE_NUMBER+"' data-stylenumber='"+d.STYLE_NUMBER+"' data-stylename='"+d.STYLE_NAME+"' data-codi='"+d.CODI_NUMBER+"'>"+d.STYLE_NUMBER+"</a></td>" +
+	        "     <td><a class='openstyle' id='"+d.STYLE_NUMBER+"' data-stylenumber='"+d.STYLE_NUMBER+"' data-stylename='"+d.STYLE_NAME+"' data-codi='"+d.CODI_NUMBER+"'>"+d.STYLE_NAME+" "+d.CODI_NUMBER+"</a></td>" +
 	        "	  <td class='lastyear'>"+d.ly_month1+"</td>" +
 			"	  <td>"+d.cy_month1+"</td>" +
 			"	  <td class='lastyear'>"+d.ly_month2+"</td>" +

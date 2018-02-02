@@ -24,7 +24,7 @@ class ProductDeliveryController extends Controller
     {
     	$depts = Data::getDepartments($this->storeNumber, $this->division);
     	$window = Data::calculateWindow();
-    		return view('site.tools.fwinitials.index')
+    		return view('site.tools.productdelivery.index')
     		->with('window', $window)
     		->with('departments', $depts)
     		->with('division', $this->division);
