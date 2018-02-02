@@ -151,7 +151,7 @@ function createTable(data, title, colspan, datatype, extraDataAttr=0)
         "     <th class='monthly'>LY Mar</th>" +
         "     <th class='monthly'>TY Mar</th>" +
         "     <th class='yearly'>LY Season Total</th>" +
-        "     <th class='yearly'>TY Season Total</th>" +
+        "     <th clas='yearly'>TY Season Total</th>" +
 		"  </tr>" +
 		"</thead>";
 

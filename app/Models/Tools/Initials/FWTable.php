@@ -10,15 +10,18 @@ class FWTable extends Model
     protected $table = 'initials_dump';
 	
 	/**
-	 * [calculateWindow - this will calculate the rolling window so we don't have to do that every 3 months]
-	 * @return array $window 
+	 * [calculateWindow description]
+	 * @return [type] [description]
 	 */
 	public static function calculateWindow()
 	{
 		$window = [];
 		$currentMonth = date('n');
 
-		/* I could write some clever code to handle this, but I am lazying and running out of time */
+		/* 
+		I could write some clever code to handle this, 
+		but I am lazying and running out of time 
+		*/
 		if($currentMonth == 10){
 			array_push($window, 10, 11, 12);
 			return $window;
@@ -124,14 +127,6 @@ class FWTable extends Model
 	    					->orderBy('CLASS_NAME','ASC')
 	    					->groupBy('CLASS_NAME')
 	    					->get();
-    					// ->get(['CLASS_NAME as name']);
-    	// 				    	
-    	// $classes = FWTable::distinct()
-    	// 				->where('DIVISION_NAME','LIKE','%'.$division.'%')
-    	// 				->where('STORE_NUMBER', '=', $storenumber)
-    	// 				->where('SUBDEPT_NAME','=', $subDept)
-    	// 				->orderBy('CLASS_NAME','ASC')
-    	// 				->get(['CLASS_NAME as name']);
     	return $classes;
     }
 
@@ -143,7 +138,7 @@ class FWTable extends Model
      * @param  [type] $class       [description]
      * @return [type]              [description]
      */
-    public static function getBrands($storenumber, $division, $class)
+    public static function getBrands($storenumber, $division, $department, $subdepartment, $class)
     {
     	$window = Self::calculateWindow();
 
@@ -160,6 +155,8 @@ class FWTable extends Model
 							))
     					->where('STORE_NUMBER', '=', $storenumber)
     					->where('DIVISION_NAME','LIKE','%'.$division.'%')
+    					->where('DEPT_NAME','=', $department)
+    					->where('SUBDEPT_NAME','=', $subdepartment)
     					->where('CLASS_NAME','=', $class)
     					->orderBy('BRAND','ASC')
     					->groupBy('BRAND')
@@ -176,7 +173,7 @@ class FWTable extends Model
      * @param  [type] $brand       [description]
      * @return [type]              [description]
      */
-    public static function getStyles($storenumber, $division, $class, $subdepartment, $brand)
+    public static function getStyles($storenumber, $division, $subdepartment, $class, $brand)
     {
     	$window = Self::calculateWindow();
 

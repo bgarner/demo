@@ -31,26 +31,45 @@ class InitialsController extends Controller
 
     public function getDepartments(Request $request)
     {
-    	return Data::getDepartments($request->storenumber, $request->division);
+    	return Data::getDepartments( $request->storenumber, 
+    								 $request->division
+    							 	);
     }
 
     public function getSubDepartments(Request $request)
     {
-    	return Data::getSubDepartments($request->storenumber, $request->division, $request->department);
+    	return Data::getSubDepartments( $request->storenumber, 
+    									$request->division, 
+    									$request->department
+    								  );
     }
 
     public function getClasses(Request $request)
     {
-    	return Data::getClasses($request->storenumber, $request->division, $request->department, $request->subdepartment);
+    	return Data::getClasses( $request->storenumber, 
+    							 $request->division, 
+    							 $request->department, 
+    							 $request->subdepartment
+    							);
     }
 
     public function getBrands(Request $request)
     {
-    	return Data::getBrands($request->storenumber, $request->division, $request->class);
+    	return Data::getBrands( $request->storenumber, 
+    							$request->division, 
+    							$request->department,
+    							$request->subdepartment,
+    							$request->class
+    						);
     }
 
     public function getStyles(Request $request)
     {
-    	return Data::getStyles($request->storenumber, $request->division, $request->class, $request->subdepartment, $request->brand);
+    	return Data::getStyles(	$request->storenumber, 
+								$request->division, 
+								$request->subdepartment, 
+								$request->class,
+								$request->brand
+							);
     }
 }
