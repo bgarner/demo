@@ -160,7 +160,6 @@ function createTable(data, title, colspan, datatype, extraDataAttr)
 			if (typeof extraDataAttr === 'undefined') {
 				namestring = d.name;
 				namestring = namestring.replace("'", "&apos;");
-				console.log(d.name +" / "+ namestring);
 				row = row + "<td><i class='fa fa-caret-right'></i> <a class='"+datatype+"' data-"+datatype+"='"+namestring+"'>"+d.name+"</a></td>";
 			} else {
 				var attribStr = "";
@@ -171,7 +170,6 @@ function createTable(data, title, colspan, datatype, extraDataAttr)
 				}
 				namestring = d.name;
 				namestring = namestring.replace("'", "&apos;");
-				console.log(d.name +" / "+ namestring);
 				row = row + "<td><i class='fa fa-caret-right'></i> <a class='"+datatype+"' data-"+datatype+"='"+namestring+"'"+attribStr+">"+namestring+"</a></td>";
 			}
 
@@ -214,7 +212,6 @@ function createStyleTable(data)
 		"</thead>";
 
 		_.forEach(data, function (d) {
-			console.log(d.STYLE_NAME);
 			var row = ""+
 			"<tr>" +
 	        "     <td><a class='style' id='"+d.STYLE_NUMBER+"'>"+d.STYLE_NUMBER+"</a></td>" +
