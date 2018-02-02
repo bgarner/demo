@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Tools;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Tools\Initials\FWTable as Data;
+use App\Models\Tools\ProductDelivery\ProductDelivery as Data;
 use Illuminate\Support\Facades\Request as RequestFacade;
 use DB;
 
-class InitialsController extends Controller
+class ProductDeliveryController extends Controller
 {
 
 	public $storeNumber;
@@ -26,7 +26,8 @@ class InitialsController extends Controller
     	$window = Data::calculateWindow();
     		return view('site.tools.fwinitials.index')
     		->with('window', $window)
-    		->with('departments', $depts);
+    		->with('departments', $depts)
+    		->with('division', $this->division);
     }
 
     public function getDepartments(Request $request)

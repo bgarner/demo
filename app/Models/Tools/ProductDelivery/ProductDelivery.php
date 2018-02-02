@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Models\Tools\Initials;
+namespace App\Models\Tools\ProductDelivery;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
 
-class FWTable extends Model
+class ProductDelivery extends Model
 {
-    protected $table = 'initials_dump';
+    protected $table = 'product_deliveries';
 	
 	/**
 	 * [calculateWindow description]
@@ -47,7 +47,7 @@ class FWTable extends Model
     {				
     	$window = Self::calculateWindow();
     	
-		$depts = FWTable::select(\DB::raw(
+		$depts = ProductDelivery::select(\DB::raw(
 							'DEPT_NAME as name,
 							sum(LY_TOTAL) as last_year_total, 
 						  	sum(TY_TOTAL) as current_year_total,
@@ -77,7 +77,7 @@ class FWTable extends Model
     {				
     	$window = Self::calculateWindow();
 
-		$subdepts = FWTable::select(\DB::raw(
+		$subdepts = ProductDelivery::select(\DB::raw(
 								'SUBDEPT_NAME as name,
 								sum(LY_TOTAL) as last_year_total, 
 							  	sum(TY_TOTAL) as current_year_total,
@@ -109,7 +109,7 @@ class FWTable extends Model
     {
     	$window = Self::calculateWindow();
 
-    	$classes = FWTable::select(\DB::raw(
+    	$classes = ProductDelivery::select(\DB::raw(
 								'CLASS_NAME as name,
 								sum(LY_TOTAL) as last_year_total, 
 							  	sum(TY_TOTAL) as current_year_total,
@@ -142,7 +142,7 @@ class FWTable extends Model
     {
     	$window = Self::calculateWindow();
 
-    	$brands = FWTable::select(\DB::raw(
+    	$brands = ProductDelivery::select(\DB::raw(
 								'BRAND as name,
 								sum(LY_TOTAL) as last_year_total, 
 							  	sum(TY_TOTAL) as current_year_total,
@@ -177,7 +177,7 @@ class FWTable extends Model
     {
     	$window = Self::calculateWindow();
 
-    	$styles = FWTable::select(\DB::raw(
+    	$styles = ProductDelivery::select(\DB::raw(
 								'id,
 								STYLE_NUMBER,
 								STYLE_NAME,
@@ -209,7 +209,7 @@ class FWTable extends Model
      */
     public static function getItemClassification($id)
     {
-    	$classification = FWTable::find($id)->get();
+    	$classification = ProductDelivery::find($id)->get();
     	
     }
 

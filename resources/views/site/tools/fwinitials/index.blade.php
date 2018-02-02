@@ -73,7 +73,7 @@
                             <div class="col-md-12">
                                 <div class="table-responsive clearfix">
 
-                                    <h1>Product Deliveries</h1>
+                                    <h2>Product Deliveries: {{ ucfirst($division) }}</h2>
 
                                     <table class="table table-bordered departmenttable">
                                         <tr>

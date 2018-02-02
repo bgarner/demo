@@ -10,13 +10,10 @@ $(document).on('click', 'a.department', function() {
 	var department = $(this).data("department");
 	var table;
 	var element = $(this);
-	var tr = $(this).parent();
-	// tr.find("i.fa").toggleClass("fa-caret-right").toggleClass('fa-caret-down');
+
 	if(!toggleTable(element)){
 		return;
 	}
-	console.log(element);
-	
 
     $.ajax({
         url: "/tools/productdelivery/subdepartments",
@@ -27,7 +24,7 @@ $(document).on('click', 'a.department', function() {
             department: department
         },
         success: function(result) {
-        	var extraDataAttr = [{ "attribs": { "name": "department", "value": department } }];
+        	var extraDataAttr = { "attribs": [{ "name": "department", "value": department }] };
        		table = createTable(result, "Sub Departments", 9, "subdepartment", extraDataAttr);
         }
     }).done(function(response){
@@ -39,7 +36,6 @@ $(document).on('click', 'a.department', function() {
 
 $(document).on('click', 'a.subdepartment', function() {
 	//this will return a list of Classes for the clicked Department
-	
 	var subdepartment = $(this).data("subdepartment");
 	var department = $(this).data("department");
 	var table;
@@ -49,7 +45,6 @@ $(document).on('click', 'a.subdepartment', function() {
 		return;
 	}
 	
-
     $.ajax({
         url: "/tools/productdelivery/classes",
         type: 'get',
@@ -60,7 +55,7 @@ $(document).on('click', 'a.subdepartment', function() {
             department: department
         },
         success: function(result) {
-        	var extraDataAttr = [{ "attribs": { "name": "subdepartment", "value": subdepartment } }];
+        	var extraDataAttr = { "attribs": [{ "name": "subdepartment", "value": subdepartment}, {"name": "department", "value": department }] };
        		table = createTable(result, "Classes", 9, "fglclass", extraDataAttr);
         }
     }).done(function(response){
@@ -73,6 +68,7 @@ $(document).on('click', 'a.fglclass', function() {
 	//get the brand for a given class
 	
 	var fglclass = $(this).data("fglclass");
+	var department = $(this).data("department");
 	var subdepartment = $(this).data("subdepartment");
 	var table;
 	var element = $(this);
@@ -87,15 +83,17 @@ $(document).on('click', 'a.fglclass', function() {
         data: {
         	storenumber: storenumber,
         	division: division,
+        	department: department,
+        	subdepartment: subdepartment,
             class: fglclass
         },
         success: function(result) {
-        	var extraDataAttr = [{ "attribs": { "name": "subdepartment", "value": subdepartment } }];
+        	//var extraDataAttr = [{ "attribs": { "name": "subdepartment", "value": subdepartment } }];
+        	var extraDataAttr = { "attribs":[{"name":"subdepartment", "value":subdepartment},{"name":"department", "value":department}] };
        		table = createTable(result, "Brands", 9, "brand", extraDataAttr);
         }
     }).done(function(response){
        $(element).closest("tr").after( table );
-
        $('table.brandtable a').data('fglclass', fglclass);
     });
 });
@@ -136,7 +134,7 @@ $('a.style').on('click', function() {
 });
 
 
-function createTable(data, title, colspan, datatype, extraDataAttr=0)
+function createTable(data, title, colspan, datatype, extraDataAttr)
 {
 	var table="<table class='table table-bordered "+datatype+"table'>";
 	var tableBody="";
@@ -158,19 +156,25 @@ function createTable(data, title, colspan, datatype, extraDataAttr=0)
 		_.forEach(data, function (d) {
 
 			var row = "<tr>";
-			
-			if(extraDataAttr){
-				var count = Object.keys(extraDataAttr).length;
-				var attirbStr = "";
-				extraDataAttr.forEach(function(obj) { 
-					attirbStr = " data-"+obj.attribs.name+"='"+obj.attribs.value+"'";
-				});
-			
-				row = row + "<td><i class='fa fa-caret-right'></i> <a class='"+datatype+"' data-"+datatype+"='"+d.name+"'"+attirbStr+">"+d.name+"</a></td>";
-
+			var namestring;
+			if (typeof extraDataAttr === 'undefined') {
+				namestring = d.name;
+				namestring = namestring.replace("'", "&apos;");
+				console.log(d.name +" / "+ namestring);
+				row = row + "<td><i class='fa fa-caret-right'></i> <a class='"+datatype+"' data-"+datatype+"='"+namestring+"'>"+d.name+"</a></td>";
 			} else {
-				row = row + "<td><i class='fa fa-caret-right'></i> <a class='"+datatype+"' data-"+datatype+"='"+d.name+"'>"+d.name+"</a></td>";
+				var attribStr = "";
+				var count = Object.keys(extraDataAttr.attribs).length;
+				for (i = 0; i < count; i++){
+  					//attrib = extraDataAttr.attribs[i];
+  					attribStr = attribStr + " data-"+extraDataAttr.attribs[i].name+"='"+extraDataAttr.attribs[i].value+"'";
+				}
+				namestring = d.name;
+				namestring = namestring.replace("'", "&apos;");
+				console.log(d.name +" / "+ namestring);
+				row = row + "<td><i class='fa fa-caret-right'></i> <a class='"+datatype+"' data-"+datatype+"='"+namestring+"'"+attribStr+">"+namestring+"</a></td>";
 			}
+
 	        row = row + "<td class='lastyear'>"+d.ly_month1+"</td>" +
 				        "<td>"+d.cy_month1+"</td>" +
 				        "<td class='lastyear'>"+d.ly_month2+"</td>" +
