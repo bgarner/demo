@@ -140,7 +140,7 @@
     @include('site.includes.scripts')
 
     @include('site.includes.modal')
-
+    <script type="text/javascript" src="/js/vendor/moment.js"></script>
     <script type="text/javascript" src="/js/vendor/underscore-1.8.3.js"></script>
     <script src="/js/custom/site/tools/productdelivery.js"></script>
 </body>

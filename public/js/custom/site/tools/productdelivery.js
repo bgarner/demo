@@ -3,6 +3,9 @@ storenumber = storenumber.slice(1);
 var currenturl = $(location).attr('href');
 var parts = currenturl.split("/");
 var division = parts[parts.length-1];
+var mo1 = moment().format("MMM");
+var mo2 = moment().add(1, 'months').format("MMM");
+var mo3 = moment().add(2, 'months').format("MMM");
 
 //event bindings
 $(document).on('click', 'a.department', function() {
@@ -158,12 +161,12 @@ function createTable(data, title, colspan, datatype, extraDataAttr)
 		"<thead>" +
 		"  <tr>" +
         "     <th class='fixedwidthheader'>"+title+"</th>" +
-        "     <th class='monthly'>LY Jan</th>" +
-        "     <th class='monthly'>TY Jan</th>" +
-        "     <th class='monthly'>LY Feb</th>" +
-        "     <th class='monthly'>TY Feb</th>" +
-        "     <th class='monthly'>LY Mar</th>" +
-        "     <th class='monthly'>TY Mar</th>" +
+        "     <th class='monthly'>LY "+mo1+"</th>" +
+        "     <th class='monthly'>TY "+mo1+"</th>" +
+        "     <th class='monthly'>LY "+mo2+"</th>" +
+        "     <th class='monthly'>TY "+mo2+"</th>" +
+        "     <th class='monthly'>LY "+mo3+"</th>" +
+        "     <th class='monthly'>TY "+mo3+"</th>" +
         "     <th class='yearly'>LY Season Total</th>" +
         "     <th clas='yearly'>TY Season Total</th>" +
 		"  </tr>" +
@@ -216,12 +219,12 @@ function createStyleTable(data)
 		"  <tr>" +
         "     <th>Style #</th>" +
         "     <th>Name</th>" +
-        "     <th>LY Jan</th>" +
-        "     <th>TY Jan</th>" +
-        "     <th>LY Feb</th>" +
-        "     <th>TY Feb</th>" +
-        "     <th>LY Mar</th>" +
-        "     <th>TY Mar</th>" +
+        "     <th>LY "+mo1+"</th>" +
+        "     <th>TY "+mo1+"</th>" +
+        "     <th>LY "+mo2+"</th>" +
+        "     <th>TY "+mo2+"</th>" +
+        "     <th>LY "+mo3+"</th>" +
+        "     <th>TY "+mo3+"</th>" +
         "     <th>LY Season Total</th>" +
         "     <th>TY Season Total</th>" +
 		"  </tr>" +
