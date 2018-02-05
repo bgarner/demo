@@ -29,7 +29,7 @@
     @include('site.includes.footer')
     @include('site.includes.scripts')
     @include('site.includes.modal')
-    <script type="text/javascript" src="/js/custom/site/tasks/completeTask.js"></script>
+    <script type="text/javascript" src="/js/custom/site/tasks/completeTask.js?<?=time();?>"></script>
 
 </body>
 </html>

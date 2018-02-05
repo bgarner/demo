@@ -92,8 +92,8 @@
     @include('site.includes.footer')
     @include('site.includes.scripts')
 
-    <script type="text/javascript" src="/js/plugins/videojs-playlist/dist/videojs-playlist.js"></script>
-    <script type="text/javascript" src="/js/plugins/videojs-playlist-ui/dist/videojs-playlist-ui.js"></script>
+    <script type="text/javascript" src="/js/plugins/videojs-playlist/dist/videojs-playlist.js?<?=time();?>"></script>
+    <script type="text/javascript" src="/js/plugins/videojs-playlist-ui/dist/videojs-playlist-ui.js?<?=time();?>"></script>
     <script type="text/javascript" src="/js/vendor/underscore-1.8.3.js"></script>
     <script type="text/javascript" src="/js/vendor/lightbox.min.js"></script>
     <script type="text/javascript" src="/js/custom/site/video/incrementViewCountPlaylist.js?<?php echo time();?>"></script>

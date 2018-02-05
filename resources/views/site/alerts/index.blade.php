@@ -133,7 +133,7 @@
     @include('site.includes.footer')
 
     @include('site.includes.scripts')
-    <script type="text/javascript" src="/js/custom/site/getArchivedContent.js"></script>
+    <script type="text/javascript" src="/js/custom/site/getArchivedContent.js?<?=time();?>"></script>
 
     <script type="text/javascript">
         $("body").on("click", ".launchPDFViewer", function(e){

@@ -137,7 +137,7 @@
 
     <script type="text/javascript" src="/js/plugins/fullcalendar/moment.min.js"></script>
     @include('site.includes.scripts')
-    <script src="/js/custom/site/getArchivedContent.js"></script>
+    <script src="/js/custom/site/getArchivedContent.js?<?=time();?>"></script>
     <script src="/js/plugins/iCheck/icheck.min.js"></script>
 
 

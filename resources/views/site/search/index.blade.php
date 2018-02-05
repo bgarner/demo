@@ -342,8 +342,8 @@
     @include('site.includes.scripts')
     @include('site.includes.bugreport')
     @include('site.includes.modal')
-    <script type="text/javascript" src="/js/custom/site/getArchivedContent.js"></script>
-    <script type="text/javascript" src="/js/custom/site/highlightSearch.js"></script>
+    <script type="text/javascript" src="/js/custom/site/getArchivedContent.js?<?=time();?>"></script>
+    <script type="text/javascript" src="/js/custom/site/highlightSearch.js?<?=time();?>"></script>
 
     <script>
         $(".datatable").dataTable({

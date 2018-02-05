@@ -138,7 +138,7 @@
     <script src="/js/plugins/dataTables/dataTables.tableTools.min.js"></script>
     <script src="/js/plugins/dataTables/dataTables.responsive.js"></script>
     <script src="/js/plugins/dataTables/dataTables.bootstrap.js"></script>
-    <script src="/js/custom/site/tools/sginitials.js"></script>
+    <script src="/js/custom/site/tools/sginitials.js?<?=time();?>"></script>
 
     <script>
         var table = $('.fwinitialsTable').DataTable({
