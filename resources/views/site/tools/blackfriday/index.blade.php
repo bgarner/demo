@@ -169,7 +169,7 @@
     <script src="/js/plugins/dataTables/dataTables.tableTools.min.js"></script>
     <script src="/js/plugins/dataTables/dataTables.responsive.js"></script>
     <script src="/js/plugins/dataTables/dataTables.bootstrap.js"></script>
-    <script src="/js/custom/site/tools/flyerPages.js"></script>
+    <script src="/js/custom/site/tools/flyerPages.js?<?=time();?>"></script>
 
     <script>
         // $(document).ready(function(){

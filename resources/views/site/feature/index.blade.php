@@ -354,10 +354,10 @@
     @include('site.includes.scripts')
 
     <script type="text/javascript" src="/js/vendor/underscore-1.8.3.js"></script>
-    <script type="text/javascript" src="/js/custom/tree.js"></script>
+    <script type="text/javascript" src="/js/custom/tree.js?<?=time();?>"></script>
     <script type="text/javascript" src="/js/vendor/lightbox.min.js"></script>
-    <script type="text/javascript" src="/js/custom/site/documents/fileTable.js"></script>
-    <script type="text/javascript" src="/js/custom/site/features/showFeaturePackageDetails.js"></script>
+    <script type="text/javascript" src="/js/custom/site/documents/fileTable.js?<?=time();?>"></script>
+    <script type="text/javascript" src="/js/custom/site/features/showFeaturePackageDetails.js?<?=time();?>"></script>
     <script type="text/javascript">
         $(".tree").treed({openedClass : 'fa-folder-open', closedClass : 'fa-folder'});
     </script>

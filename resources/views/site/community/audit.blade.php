@@ -49,7 +49,7 @@
                         <div class="row">
                             <div class="col-md-12">
 
-                            <h1 class="pull-left">{{__("Total Donations")}}: &nbsp;&nbsp;&nbsp; <strong>{{ $totalDonation }}</strong></h1>
+                            <h1 class="pull-left">{{ date('Y') }} {{__("Total Donations")}}: &nbsp;&nbsp;&nbsp; <strong>{{ $totalDonation }}</strong></h1>
 
                             <a href="#" class="pull-right btn btn-outline btn-primary dim" data-toggle="modal" data-target="#newdonationmodal"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;&nbsp;{{__("New Donation")}}</a>
                             </div>
@@ -125,10 +125,10 @@
     @include('site.includes.scripts')
     @include('site.includes.modal')
     @include('site.includes.donation-modal')
-    <script type="text/javascript" src="/js/plugins/multi-step-modal-master/multi-step-modal.js"></script>
+    <script type="text/javascript" src="/js/plugins/multi-step-modal-master/multi-step-modal.js?<?=time();?>"></script>
     <script type="text/javascript" src="/js/plugins/fullcalendar/moment.min.js"></script>
     <script type="text/javascript" src="/js/vendor/bootstrap-datetimepicker.min.js"></script>
-    <script type="text/javascript" src="/js/custom/site/community/donationform.js"></script>
+    <script type="text/javascript" src="/js/custom/site/community/donationform.js?<?=time();?>"></script>
 
     <script>
 

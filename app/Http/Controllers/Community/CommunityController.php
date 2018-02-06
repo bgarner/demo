@@ -14,6 +14,7 @@ use App\Models\StoreApi\StoreInfo;
 use App\Models\Community\Donation;
 use App\Models\Community\DonationItem;
 use App\Models\Community\Item;
+use App\Models\Community\DonationSport;
 
 class CommunityController extends Controller
 {
@@ -41,10 +42,12 @@ class CommunityController extends Controller
 
         $donations = Donation::getDonations($this->storeNumber);
         $totalDonation = Donation::getTotalDonationforStore($this->storeNumber);
-
+        $sports = DonationSport::all();
+        
         return view('site.community.audit')
             ->with('donations', $donations)
             ->with('totalDonation', $totalDonation)
+            ->with('sport_dropdown', $sports)
             ->with('skin', $this->skin);          
     }
 

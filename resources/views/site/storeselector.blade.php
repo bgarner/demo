@@ -54,9 +54,9 @@
 
 
 
-    <script type="text/javascript" src="/js/env.js"></script>
+    <script type="text/javascript" src="/js/env.js?<?=time();?>"></script>
 	<script type="text/javascript" src="/js/jquery-2.1.1.min.js"></script>
-	<script type="text/javascript" src="/js/custom/site/storeselector/storeSelector.js"></script>
+	<script type="text/javascript" src="/js/custom/site/storeselector/storeSelector.js?<?=time();?>"></script>
     <script src="/js/bootstrap.min.js"></script>
 
 </body>

@@ -102,7 +102,7 @@
 	    @include('site.includes.scripts')
 
 		@include('site.includes.modal')
-		<script type="text/javascript" src="/js/custom/site/getArchivedContent.js"></script>
+		<script type="text/javascript" src="/js/custom/site/getArchivedContent.js?<?=time();?>"></script>
 		
 		<script type="text/javascript">
 

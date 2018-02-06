@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'AddAllDayToEventsTable' => $baseDir . '/database/migrations/2017_06_28_152315_add_all_day_to_events_table.php',
     'AddOnOrderCountToBikeTracker' => $baseDir . '/database/migrations/2017_06_23_142132_add_on_order_count_to_bike_tracker.php',
+    'AddSportCatToCommunityDonationsTable' => $baseDir . '/database/migrations/2018_01_29_112304_add_sport_cat_to_community_donations_table.php',
     'AnalyticsAssetTypesTableSeeder' => $baseDir . '/database/seeds/AnalyticsAssetTypesTableSeeder.php',
     'App\\Models\\Alert\\Alert' => $baseDir . '/app/Models/Alert/Alert.php',
     'App\\Models\\Alert\\AlertType' => $baseDir . '/app/Models/Alert/AlertType.php',
@@ -880,6 +881,7 @@ return array(
     'SebastianBergmann\\RecursionContext\\InvalidArgumentException' => $vendorDir . '/sebastian/recursion-context/src/InvalidArgumentException.php',
     'SebastianBergmann\\ResourceOperations\\ResourceOperations' => $vendorDir . '/sebastian/resource-operations/src/ResourceOperations.php',
     'SebastianBergmann\\Version' => $vendorDir . '/sebastian/version/src/Version.php',
+    'SeedCommunityDonationSportsTable' => $baseDir . '/database/seeds/SeedCommunityDonationSportsTable.php',
     'SessionUpdateTimestampHandlerInterface' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/SessionUpdateTimestampHandlerInterface.php',
     'StoreComponentTableSeeder' => $baseDir . '/database/seeds/StoreComponentTableSeeder.php',
     'StoreTableSeeder' => $baseDir . '/database/seeds/StoreTableSeeder.php',
