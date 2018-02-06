@@ -125,10 +125,10 @@
     @include('site.includes.scripts')
     @include('site.includes.modal')
     @include('site.includes.donation-modal')
-    <script type="text/javascript" src="/js/plugins/multi-step-modal-master/multi-step-modal.js"></script>
+    <script type="text/javascript" src="/js/plugins/multi-step-modal-master/multi-step-modal.js?<?=time();?>"></script>
     <script type="text/javascript" src="/js/plugins/fullcalendar/moment.min.js"></script>
     <script type="text/javascript" src="/js/vendor/bootstrap-datetimepicker.min.js"></script>
-    <script type="text/javascript" src="/js/custom/site/community/donationform.js"></script>
+    <script type="text/javascript" src="/js/custom/site/community/donationform.js?<?=time();?>"></script>
 
     <script>
 

@@ -1,5 +1,5 @@
 <!-- Mainly scripts -->
-<script src="/js/env.js"></script>
+<script src="/js/env.js?<?=time();?>"></script>
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/custom/admin/global/bannerSelector.js"></script>
 <script src="/js/bootstrap.min.js"></script>

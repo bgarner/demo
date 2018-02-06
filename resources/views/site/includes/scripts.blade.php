@@ -1,6 +1,5 @@
     <!-- Mainly scripts -->
-    <script src="/js/env.js"></script>
-    {{-- <script src="/js/console.frog.js"></script> --}}
+    <script src="/js/env.js?<?=time()?>"></script>
     <script src="/js/jquery-2.1.1.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
@@ -17,11 +16,11 @@
     <!-- Alerts -->
     <script src="/js/plugins/sweetalert/sweetalert.min.js"></script>
 
-    <script src="/js/custom/site/storeselector/storeSelector.js"></script>
-    <script src="/js/custom/site/launchModal.js"></script>
-    <script src="/js/custom/trackEvent.js"></script>
-    <script src="/js/custom/sendBugReport.js"></script>
-    <script src="/js/custom/setLang.js"></script>
+    <script src="/js/custom/site/storeselector/storeSelector.js?<?=time();?>"></script>
+    <script src="/js/custom/site/launchModal.js?<?=time();?>"></script>
+    <script src="/js/custom/trackEvent.js?<?=time();?>"></script>
+    <script src="/js/custom/sendBugReport.js?<?=time();?>"></script>
+    <script src="/js/custom/setLang.js?<?=time();?>"></script>
 
     <script type="text/javascript">
         $.ajaxSetup({
@@ -93,4 +92,4 @@
     </script>
 
     <script type="text/javascript" src="/js/plugins/dataTables/datatables.min.js"></script>
-    <script type="text/javascript" src="/js/plugins/videojs/video.js"></script>
+    <script type="text/javascript" src="/js/plugins/videojs/video.js?<?=time();?>"></script>
