@@ -70,6 +70,26 @@
 </div>
 
 
+<div class="modal inmodal" id="dirtynodemodal" tabindex="-1" role="event" aria-hidden="true" style="display: none;" >
+
+   <div class="modal-dialog">
+       <div class="modal-content">
+
+               <div id="modalBody" class="modal-body event-modal-body" style="padding: 20px;">
+                   <h2 id="dirtyNodeTitle">Title<h2>
+                   <h3 id="dirtyNodeItemID">Item ID: <span class="value">330134923</span></h3>
+                   <h3 id="dirtyNodeUPC">UPC: <span class="value">883096192367</span></h3>
+                   <h3 id="dirtyNodeQuantity">Quantity: <span class="value">7</span></h3>
+               </div>
+               <div class="modal-footer">
+                   <button type="button" class="btn btn-primary btn-md cleannode" data-dismiss="modal"><i class="fa fa-check"></i> {{__("Clean Node")}}</button>
+                   <button type="button" class="btn btn-primary btn-md btn-outline" data-dismiss="modal"><i class="fa fa-times"></i> {{__("Cancel")}}</button>
+               </div>
+       </div>
+   </div>
+</div>
+
+
 <div class="modal inmodal" id="bugreportmodal" tabindex="-1" role="event" aria-hidden="true" style="display: none;">
 
     <div class="modal-dialog">

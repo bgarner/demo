@@ -6,11 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Request as RequestFacade; 
+use Illuminate\Support\Facades\Request as RequestFacade;
 use DB;
-
 use App\Models\Tools\BlackFriday\BlackFriday;
-
 
 class BlackFridayController extends Controller
 {
@@ -18,7 +16,7 @@ class BlackFridayController extends Controller
     protected $storeNumber;
     protected $storeBanner;
     protected $skin;
-    
+
     public function __construct()
     {
         $this->storeNumber = RequestFacade::segment(1);
