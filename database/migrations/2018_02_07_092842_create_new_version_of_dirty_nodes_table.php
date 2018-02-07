@@ -13,7 +13,7 @@ class CreateNewVersionOfDirtyNodesTable extends Migration
      */
     public function up()
     {
-        Schema::create('dirty_nodes_new', function (Blueprint $table) {
+        Schema::create('dirty_nodes', function (Blueprint $table) {
             $table->increments('id')->autoIncrement();
             $table->string('banner');
             $table->string('store');
