@@ -218,6 +218,7 @@ return array(
     'CreateGroupRolePivot' => $baseDir . '/database/migrations/2017_02_15_132648_create_group_role_pivot.php',
     'CreateHardgoodsInitialsTable' => $baseDir . '/database/migrations/2017_12_19_165026_create_hardgoods_initials_table.php',
     'CreateLicensedInitialsTable' => $baseDir . '/database/migrations/2017_12_20_095559_create_licensed_initials_table.php',
+    'CreateNewVersionOfDirtyNodesTable' => $baseDir . '/database/migrations/2018_02_07_092842_create_new_version_of_dirty_nodes_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreatePlaylistBannerTable' => $baseDir . '/database/migrations/2017_06_09_193202_create_playlist_banner_table.php',
     'CreatePlaylistStoreGroupTable' => $baseDir . '/database/migrations/2017_09_27_174854_create_playlist_store_group_table.php',

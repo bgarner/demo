@@ -700,6 +700,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'CreateGroupRolePivot' => __DIR__ . '/../..' . '/database/migrations/2017_02_15_132648_create_group_role_pivot.php',
         'CreateHardgoodsInitialsTable' => __DIR__ . '/../..' . '/database/migrations/2017_12_19_165026_create_hardgoods_initials_table.php',
         'CreateLicensedInitialsTable' => __DIR__ . '/../..' . '/database/migrations/2017_12_20_095559_create_licensed_initials_table.php',
+        'CreateNewVersionOfDirtyNodesTable' => __DIR__ . '/../..' . '/database/migrations/2018_02_07_092842_create_new_version_of_dirty_nodes_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
         'CreatePlaylistBannerTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_09_193202_create_playlist_banner_table.php',
         'CreatePlaylistStoreGroupTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_27_174854_create_playlist_store_group_table.php',
