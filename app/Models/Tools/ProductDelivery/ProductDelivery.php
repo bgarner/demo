@@ -49,13 +49,13 @@ class ProductDelivery extends Model
     	
 		$depts = ProductDelivery::select(\DB::raw(
 							'DEPT_NAME as name,
-							sum(LY_TOTAL) as last_year_total, 
-						  	sum(TY_TOTAL) as current_year_total,
+							(SUM(LY_MO_'.$window[0].')+SUM(LY_MO_'.$window[1].')+SUM(LY_MO_'.$window[2].')) as last_year_total,
+							(SUM(TY_MO_'.$window[0].')+SUM(TY_MO_'.$window[1].')+SUM(TY_MO_'.$window[2].')) as current_year_total,
 						  	sum(LY_MO_'.$window[0].') as ly_month1, 
 						  	sum(TY_MO_'.$window[0].') as cy_month1,
 						  	sum(LY_MO_'.$window[1].') as ly_month2, 
 						  	sum(TY_MO_'.$window[1].') as cy_month2,
-						  	sum(LY_MO_'.$window[2].')  as ly_month3,  
+						  	sum(LY_MO_'.$window[2].') as ly_month3,  
 						  	sum(TY_MO_'.$window[2].') as cy_month3'
 						))
 						->where('DIVISION_NAME','LIKE','%'.$division.'%')
@@ -79,8 +79,8 @@ class ProductDelivery extends Model
 
 		$subdepts = ProductDelivery::select(\DB::raw(
 								'SUBDEPT_NAME as name,
-								sum(LY_TOTAL) as last_year_total, 
-							  	sum(TY_TOTAL) as current_year_total,
+								(SUM(LY_MO_'.$window[0].')+SUM(LY_MO_'.$window[1].')+SUM(LY_MO_'.$window[2].')) as last_year_total,
+								(SUM(TY_MO_'.$window[0].')+SUM(TY_MO_'.$window[1].')+SUM(TY_MO_'.$window[2].')) as current_year_total,
 							  	sum(LY_MO_'.$window[0].') as ly_month1, 
 							  	sum(TY_MO_'.$window[0].') as cy_month1,
 							  	sum(LY_MO_'.$window[1].') as ly_month2, 
@@ -109,10 +109,13 @@ class ProductDelivery extends Model
     {
     	$window = Self::calculateWindow();
 
+		// sum(LY_TOTAL) as last_year_total, 
+		// sum(TY_TOTAL) as current_year_total,
+		// 
     	$classes = ProductDelivery::select(\DB::raw(
 								'CLASS_NAME as name,
-								sum(LY_TOTAL) as last_year_total, 
-							  	sum(TY_TOTAL) as current_year_total,
+								(SUM(LY_MO_'.$window[0].')+SUM(LY_MO_'.$window[1].')+SUM(LY_MO_'.$window[2].')) as last_year_total,
+								(SUM(TY_MO_'.$window[0].')+SUM(TY_MO_'.$window[1].')+SUM(TY_MO_'.$window[2].')) as current_year_total,
 							  	sum(LY_MO_'.$window[0].') as ly_month1, 
 							  	sum(TY_MO_'.$window[0].') as cy_month1,
 							  	sum(LY_MO_'.$window[1].') as ly_month2, 
@@ -144,13 +147,13 @@ class ProductDelivery extends Model
 
     	$brands = ProductDelivery::select(\DB::raw(
 								'BRAND as name,
-								sum(LY_TOTAL) as last_year_total, 
-							  	sum(TY_TOTAL) as current_year_total,
+								(SUM(LY_MO_'.$window[0].')+SUM(LY_MO_'.$window[1].')+SUM(LY_MO_'.$window[2].')) as last_year_total,
+								(SUM(TY_MO_'.$window[0].')+SUM(TY_MO_'.$window[1].')+SUM(TY_MO_'.$window[2].')) as current_year_total,
 							  	sum(LY_MO_'.$window[0].') as ly_month1, 
 							  	sum(TY_MO_'.$window[0].') as cy_month1,
 							  	sum(LY_MO_'.$window[1].') as ly_month2, 
 							  	sum(TY_MO_'.$window[1].') as cy_month2,
-							  	sum(LY_MO_'.$window[2].')  as ly_month3,  
+							  	sum(LY_MO_'.$window[2].') as ly_month3,  
 							  	sum(TY_MO_'.$window[2].') as cy_month3'
 							))
     					->where('STORE_NUMBER', '=', $storenumber)
@@ -182,13 +185,13 @@ class ProductDelivery extends Model
 								STYLE_NUMBER,
 								STYLE_NAME,
 								CODI_NUMBER,
-								sum(LY_TOTAL) as last_year_total, 
-							  	sum(TY_TOTAL) as current_year_total,
+								(SUM(LY_MO_'.$window[0].')+SUM(LY_MO_'.$window[1].')+SUM(LY_MO_'.$window[2].')) as last_year_total,
+								(SUM(TY_MO_'.$window[0].')+SUM(TY_MO_'.$window[1].')+SUM(TY_MO_'.$window[2].')) as current_year_total,
 							  	sum(LY_MO_'.$window[0].') as ly_month1, 
 							  	sum(TY_MO_'.$window[0].') as cy_month1,
 							  	sum(LY_MO_'.$window[1].') as ly_month2, 
 							  	sum(TY_MO_'.$window[1].') as cy_month2,
-							  	sum(LY_MO_'.$window[2].')  as ly_month3,  
+							  	sum(LY_MO_'.$window[2].') as ly_month3,  
 							  	sum(TY_MO_'.$window[2].') as cy_month3'
 							))
     					->where('STORE_NUMBER', '=', $storenumber)
