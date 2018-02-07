@@ -7,7 +7,7 @@ use App\Models\Utility\Utility;
 
 class DirtyNode extends Model
 {
-    protected $table = 'dirty_nodes_new';
+    protected $table = 'dirty_nodes';
 
     public static function getDataByStoreNumber($store_number)
     {
