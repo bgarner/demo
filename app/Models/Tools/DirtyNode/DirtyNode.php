@@ -7,18 +7,18 @@ use App\Models\Utility\Utility;
 
 class DirtyNode extends Model
 {
-    protected $table = 'dirty_nodes';
+    protected $table = 'dirty_nodes_new';
 
     public static function getDataByStoreNumber($store_number)
     {
     	//strip off the leading zero
 	    $store_number = ltrim($store_number, 'A');
 		$store_number = ltrim($store_number, '0');
-		$data = DirtyNode::where('store_number', $store_number)
+		$data = DirtyNode::where('store', $store_number)
                         ->whereNull('updated_at')
                         ->get();
         foreach($data as $d){
-            $d->start_date = Utility::prettifyDate($d->start_date);
+            //$d->start_date = Utility::prettifyDate($d->start_date);
         }
     	return $data;
     }
@@ -27,12 +27,12 @@ class DirtyNode extends Model
     {
         $store_number = ltrim($store_number, 'A');
         $store_number = ltrim($store_number, '0');
-        $data = DirtyNode::where('store_number', $store_number)
+        $data = DirtyNode::where('store', $store_number)
                         ->whereNotNull('updated_at')
                         ->get();
         foreach($data as $d){
-            $d->start_date = Utility::prettifyDate($d->start_date);
-           // $d->updated_at = Utility::prettifyDateWithTime($d->updated_at);
+            //$d->start_date = Utility::prettifyDate($d->start_date);
+            //$d->updated_at = Utility::prettifyDateWithTime($d->updated_at);
         }
         return $data;       
     }
