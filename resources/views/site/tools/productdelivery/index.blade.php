@@ -49,6 +49,18 @@
             background-color: #ddd;
         }
 
+        .modal-body img{
+            width: 520px;
+            margin: 0 auto !important;
+            display: block;
+        }
+
+        .inmodal .modal-title {
+            font-size: 20px;
+            text-align: left;
+        }
+
+
     </style>
 </head>
 
