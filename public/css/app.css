@@ -8659,3 +8659,16 @@ a:hover span.badge{
 .align-right{
   text-align: right;
 }
+
+.navbar-default{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    width: 220px;
+    overflow-y: auto;
+}
+
+.navbar-default::-webkit-scrollbar { 
+    display: none; 
+}
