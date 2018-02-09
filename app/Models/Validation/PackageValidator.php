@@ -11,10 +11,10 @@ class PackageValidator extends PortalValidator
     	
         'package_screen_name' 	=> 'required',
     	'package_name'			=> 'required',
-    	'documents'				=> 'sometimes|exists:documents,id',
-    	'folders'				=> 'sometimes|exists:folder_ids,id,folder_type,folder',
-    	'remove_documents'		=> 'sometimes|exists:documents,id',
-    	'remove_folders'		=> 'sometimes|exists:folder_ids,id,folder_type,folder'
+    	// 'documents'				=> 'sometimes|exists:documents,id',
+    	// 'folders'				=> 'sometimes|exists:folder_ids,id,folder_type,folder',
+    	// 'remove_documents'		=> 'sometimes|exists:documents,id',
+    	// 'remove_folders'		=> 'sometimes|exists:folder_ids,id,folder_type,folder'
             
     ];
 

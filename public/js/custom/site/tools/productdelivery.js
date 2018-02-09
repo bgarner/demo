@@ -1,5 +1,8 @@
 var storenumber = localStorage.getItem('userStoreNumber').replace("A", "");
-storenumber = storenumber.slice(1);
+if(storenumber.charAt(0) == "0"){
+	storenumber = storenumber.slice(1);	
+}
+
 var currenturl = $(location).attr('href');
 var parts = currenturl.split("/");
 var division = parts[parts.length-1];
