@@ -82,6 +82,7 @@
                    <h3 id="dirtyNodeQuantity">Quantity: <span class="value">7</span></h3>
 
                    <img class="styleImage" src="" alt="">
+
                </div>
                <div class="modal-footer">
                    <button type="button" class="btn btn-primary btn-md cleannode" data-dismiss="modal"><i class="fa fa-check"></i> {{__("Clean Node")}}</button>

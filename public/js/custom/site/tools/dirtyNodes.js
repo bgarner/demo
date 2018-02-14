@@ -39,6 +39,7 @@ function showModal(el)
 
 }
 
+
 $('button.cleannode').on('click', function() {
 
     $.ajax({
