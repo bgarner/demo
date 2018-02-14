@@ -4,6 +4,7 @@ namespace App\Models\Tools\DirtyNode;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Utility\Utility;
+use App\Models\Tools\DirtyNode\DirtyNodeArchive;
 
 class DirtyNode extends Model
 {
@@ -17,9 +18,9 @@ class DirtyNode extends Model
 		$data = DirtyNode::where('store', $store_number)
                         ->whereNull('updated_at')
                         ->get();
-        foreach($data as $d){
+        //foreach($data as $d){
             //$d->start_date = Utility::prettifyDate($d->start_date);
-        }
+        // }
     	return $data;
     }
 
@@ -30,10 +31,10 @@ class DirtyNode extends Model
         $data = DirtyNode::where('store', $store_number)
                         ->whereNotNull('updated_at')
                         ->get();
-        foreach($data as $d){
+        // foreach($data as $d){
             //$d->start_date = Utility::prettifyDate($d->start_date);
             //$d->updated_at = Utility::prettifyDateWithTime($d->updated_at);
-        }
+        // }
         return $data;       
     }
 
@@ -41,5 +42,6 @@ class DirtyNode extends Model
     {
         $node = DirtyNode::find($id);
         $node->touch();
+        DirtyNodeArchive::insert($node->toArray());
     }
 }
