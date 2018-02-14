@@ -51,8 +51,6 @@
 		                                        <th>Start</th>
 		                                        <th>Week</th>
 		                                        <th>Qty</th>
-		                                        <th>Dept</th>
-		                                        <th>Sub-Dept</th>
 		                                        <th>Cleaned At</th>
 
 		                                    </tr>
@@ -72,8 +70,6 @@
 		                                            <td>{{ $d->startdate }}</td>
 		                                            <td>{{ $d->week }}</td>
 		                                            <td>{{ $d->quantity }}</td>
-		                                            <td>{{ $d->department }}</td>
-		                                            <td>{{ $d->sub_department }}</td>
 		                                            <td>{{ $d->updated_at }}</td>
 		                                        
 		                                        </tr>
