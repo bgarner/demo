@@ -49,7 +49,7 @@
 		                                        <th>Color</th>
 		                                        <th>Size</th>
 		                                        <th>Start</th>
-		                                        <th>Week</th>
+		                                        {{--  <th>Week</th>  --}}
 		                                        <th>Qty</th>
 		                                        <th>Cleaned At</th>
 
@@ -68,7 +68,7 @@
 		                                            <td>{{ $d->color }}</td>
 		                                            <td>{{ $d->sizename }}</td>
 		                                            <td>{{ $d->startdate }}</td>
-		                                            <td>{{ $d->week }}</td>
+		                                            {{--  <td>{{ $d->week }}</td>  --}}
 		                                            <td>{{ $d->quantity }}</td>
 		                                            <td>{{ $d->updated_at }}</td>
 		                                        

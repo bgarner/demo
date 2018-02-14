@@ -68,7 +68,7 @@
                                         <th>Color</th>
                                         <th>Size</th>
                                         <th>Start</th>
-                                        <th>Week</th>
+                                        {{--  <th>Week</th>  --}}
                                         <th>Qty</th>
                                         {{--  <th>Dept</th>
                                         <th>Sub-Dept</th>  --}}
@@ -87,7 +87,7 @@
                                             <td>{{ $d->color }}</td>
                                             <td>{{ $d->sizename }}</td>
                                             <td>{{ $d->startdate }}</td>
-                                            <td>{{ $d->week }}</td>
+                                            {{--  <td>{{ $d->week }}</td>  --}}
                                             <td>{{ $d->quantity }}</td>
                                             {{--  <td>{{ $d->department }}</td>
                                             <td>{{ $d->sub_department }}</td>  --}}
@@ -115,7 +115,7 @@
                                         <th>Color</th>
                                         <th>Size</th>
                                         <th>Start</th>
-                                        <th>Week</th>
+                                        {{--  <th>Week</th>  --}}
                                         <th>Qty</th>
                                         {{--  <th>Dept</th>
                                         <th>Sub-Dept</th>  --}}
@@ -133,7 +133,7 @@
                                             <td>{{ $cn->color }}</td>
                                             <td>{{ $cn->sizename }}</td>
                                             <td>{{ $cn->startdate }}</td>
-                                            <td>{{ $cn->week }}</td>
+                                            {{--  <td>{{ $cn->week }}</td>  --}}
                                             <td>{{ $cn->quantity }}</td>
                                             {{--  <td>{{ $cn->department }}</td>
                                             <td>{{ $cn->sub_department }}</td>  --}}
