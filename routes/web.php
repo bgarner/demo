@@ -83,14 +83,14 @@ Route::get('/{storeno}/tools/hginitials', array('uses' => 'Tools\HardgoodsInitia
 Route::get('/{storeno}/tools/lcinitials', array('uses' => 'Tools\LicensedInitialsController@index'));
 Route::post('/getFlyerBoxes', 'Tools\FlyerPageSelectionController@show');
 Route::post('/getFlyerBoxData', 'Tools\FlyerBoxSelectionController@show');
+Route::get('/{storeno}/tools/dirtynodes', array('uses' => 'Tools\DirtyNodesController@index'));
+Route::patch('/{storeno}/tools/dirtynodes/clean', array('uses' => 'Tools\DirtyNodesController@update'));
 Route::get('/{storeno}/tools/productdelivery/{division}', array('uses' => 'Tools\ProductDeliveryController@index'));
-
 Route::get('/tools/productdelivery/departments', array('uses' => 'Tools\ProductDeliveryController@getDepartments'));
 Route::get('/tools/productdelivery/subdepartments', array('uses' => 'Tools\ProductDeliveryController@getSubDepartments'));
 Route::get('/tools/productdelivery/classes', array('uses' => 'Tools\ProductDeliveryController@getClasses'));
 Route::get('/tools/productdelivery/brands', array('uses' => 'Tools\ProductDeliveryController@getBrands'));
 Route::get('/tools/productdelivery/styles', array('uses' => 'Tools\ProductDeliveryController@getStyles'));
-
 
 //TRAINING
 Route::get('/{storeno}/training', array('uses' => 'Training\TrainingController@index'));
