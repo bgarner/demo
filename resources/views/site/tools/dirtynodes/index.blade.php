@@ -7,8 +7,8 @@
 
  {{--    <link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet"> --}}
     <style>
-        /* .table td{ font-size: 10px; }
-        .table th{ font-size: 11px; } */
+        .table td{ font-size: 11px; }
+        .table th{ font-size: 11px; } 
     </style>
 </head>
 
@@ -55,16 +55,23 @@
                 <div id="tab-1" class="tab-pane active">
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-md-12">
-                                <table class="table table-bordered table-hover dirtynodestable" id="">
+                            <div class="col-md-12 table-responsive">
+                                <table class="table table-hover table-striped dirtynodestable" id="">
                                     <thead>
                                     <tr>
                                         <th style="display: none;">ID</th>
-                                        <th>Item ID</th>
-                                        <th>Description</th>
+                                        <th></th>
+                                        <th>Style</th>
                                         <th>UPC</th>
-                                        <th>Start Date</th>
-                                        <th>Quantity</th>
+                                        <th>Desc</th>
+                                        <th>Color</th>
+                                        <th>Size</th>
+                                        <th>Start</th>
+                                        <th>Week</th>
+                                        <th>Qty</th>
+                                        <th>Dept</th>
+                                        <th>Sub-Dept</th>
+
                                     </tr>
                                     </thead>
 
@@ -72,11 +79,17 @@
                                         @foreach($data as $d)
                                         <tr id="nodeID_{{ $d->id }}">
                                             <td style="display: none;">{{ $d->id }}</td>
-                                            <td>{{ $d->item_id }}</td>
-                                            <td>{{ $d->desc }}</td>
-                                            <td>{{ $d->UPC }}</td>
-                                            <td>{{ $d->start_date }}</td>
+                                            <td><input type="button" class="cleannodebutton btn btn-sm btn-primary" value="Clean"></td>
+                                            <td>{{ $d->stylecode }}</td>
+                                            <td>{{ $d->upccode }}</td>
+                                            <td>{{ $d->styledesc }}</td>
+                                            <td>{{ $d->color }}</td>
+                                            <td>{{ $d->sizename }}</td>
+                                            <td>{{ $d->startdate }}</td>
+                                            <td>{{ $d->week }}</td>
                                             <td>{{ $d->quantity }}</td>
+                                            <td>{{ $d->department }}</td>
+                                            <td>{{ $d->sub_department }}</td>
                                         </tr>
 
                                         @endforeach
@@ -91,27 +104,38 @@
                 <div id="tab-2" class="tab-pane">
                     <div class="panel-body">
                         <div class="row">  
-                            <div class="col-md-12">
-                                <table class="table table-bordered table-hover cleannodestable" id="">
+                            <div class="col-md-12 table-responsive">
+                                <table class="table table-hover table-striped cleannodestable" id="">
                                     <thead>
                                     <tr>
-                                        <th>Item ID</th>
-                                        <th>Description</th>
+                                        <th>Style</th>
                                         <th>UPC</th>
-                                        <th>Start Date</th>
-                                        <th>Quantity</th>
-                                        <th>Cleaned At</th>
+                                        <th>Desc</th>
+                                        <th>Color</th>
+                                        <th>Size</th>
+                                        <th>Start</th>
+                                        <th>Week</th>
+                                        <th>Qty</th>
+                                        <th>Dept</th>
+                                        <th>Sub-Dept</th>
+                                        <th>Cleaned</th>
                                     </tr>
                                     </thead>
 
                                     <tbody>
                                         @foreach($cleanNodes as $cn)
                                         <tr>
-                                            <td>{{ $cn->item_id }}</td>
-                                            <td>{{ $cn->desc }}</td>
-                                            <td>{{ $cn->UPC }}</td>
-                                            <td>{{ $cn->start_date }}</td>
+
+                                            <td>{{ $cn->stylecode }}</td>
+                                            <td>{{ $cn->upccode }}</td>
+                                            <td>{{ $cn->styledesc }}</td>
+                                            <td>{{ $cn->color }}</td>
+                                            <td>{{ $cn->sizename }}</td>
+                                            <td>{{ $cn->startdate }}</td>
+                                            <td>{{ $cn->week }}</td>
                                             <td>{{ $cn->quantity }}</td>
+                                            <td>{{ $cn->department }}</td>
+                                            <td>{{ $cn->sub_department }}</td>
                                             <td>{{ $cn->updated_at }}</td>
                                         </tr>
                                         @endforeach
@@ -157,12 +181,14 @@
                 paging: true,
                 pageLength: 50,
                 responsive: true,
+                ordering: true
             });
 
             $('.cleannodestable').DataTable({
                 paging: true,
                 pageLength: 50,
                 responsive: true,
+                ordering: true
             });            
 
         });

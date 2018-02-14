@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNewVersionOfDirtyNodesTable extends Migration
+class CreateDirtyNodesArchiveTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateNewVersionOfDirtyNodesTable extends Migration
      */
     public function up()
     {
-        Schema::create('dirty_nodes', function (Blueprint $table) {
-            $table->increments('id')->autoIncrement();
+        Schema::create('dirty_nodes_archive', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('banner');
             $table->string('store');
             $table->string('avp');
@@ -48,6 +48,6 @@ class CreateNewVersionOfDirtyNodesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dirty_nodes_new');
+        Schema::dropIfExists('dirty_nodes_archive');
     }
 }

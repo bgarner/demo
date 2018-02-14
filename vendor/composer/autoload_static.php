@@ -672,6 +672,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'CreateCommunicationTypeBannerTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_13_161248_create_communication_type_banner_table.php',
         'CreateComponentsTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_16_114508_create_components_table.php',
         'CreateCustomStoreGroupTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_26_160803_create_custom_store_group_table.php',
+        'CreateDirtyNodesArchiveTable' => __DIR__ . '/../..' . '/database/migrations/2018_02_13_143836_create_dirty_nodes_archive_table.php',
         'CreateDirtyNodesTable' => __DIR__ . '/../..' . '/database/migrations/2018_01_22_144711_create_dirty_nodes_table.php',
         'CreateDistrictRegionPivot' => __DIR__ . '/../..' . '/database/migrations/2017_08_14_170626_create_district_region_pivot.php',
         'CreateDistrictStorePivotTable' => __DIR__ . '/../..' . '/database/migrations/2017_08_14_170406_create_district_store_pivot_table.php',
