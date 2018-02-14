@@ -7,7 +7,7 @@
 
  {{--    <link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet"> --}}
     <style>
-         .table td{ font-size: 11px; }
+        .table td{ font-size: 11px; }
         .table th{ font-size: 11px; } 
     </style>
 </head>
@@ -69,8 +69,8 @@
                                         <th>Start</th>
                                         <th>Week</th>
                                         <th>Qty</th>
-                                        <th>Dept</th>
-                                        <th>Sub-Dept</th>
+                                        {{--  <th>Dept</th>
+                                        <th>Sub-Dept</th>  --}}
 
                                     </tr>
                                     </thead>
@@ -88,9 +88,8 @@
                                             <td>{{ $d->startdate }}</td>
                                             <td>{{ $d->week }}</td>
                                             <td>{{ $d->quantity }}</td>
-                                            <td>{{ $d->department }}</td>
-                                            <td>{{ $d->sub_department }}</td>
-                                        
+                                            {{--  <td>{{ $d->department }}</td>
+                                            <td>{{ $d->sub_department }}</td>  --}}
                                         </tr>
 
                                         @endforeach
@@ -126,6 +125,7 @@
                                     <tbody>
                                         @foreach($cleanNodes as $cn)
                                         <tr>
+
                                             <td>{{ $cn->stylecode }}</td>
                                             <td>{{ $cn->upccode }}</td>
                                             <td>{{ $cn->styledesc }}</td>
@@ -181,15 +181,14 @@
                 paging: true,
                 pageLength: 50,
                 responsive: true,
-                ordering: true,
+                ordering: true
             });
 
             $('.cleannodestable').DataTable({
                 paging: true,
-                responsive: false,
-                autoWidth: true,
                 pageLength: 50,
-                
+                responsive: true,
+                ordering: true
             });            
 
         });
