@@ -20,17 +20,15 @@ class DirtyNodesAdminController extends Controller
     public function show(Request $request)
     {
     	if(!isset($request->start)){
-    		$start = Carbon::now()->subDay()->toDateTimeString();
-    		$end = Carbon::now()->toDateTimeString();
+    		$start = Carbon::yesterday()->toDateTimeString();
+    		$end = Carbon::yesterday()->endOfDay()->toDateTimeString();
     	}
     	else{
     		$start = $request->start;
     		$end = $request->end;
     	}
-
     	
     	$data = DirtyNodeArchive::whereBetween('updated_at', [$start, $end])->get();
-
     	return $data;
     }
 }
