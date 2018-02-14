@@ -140,7 +140,7 @@
 				</script>
 				<script src="/js/custom/admin/dirtynodes/generateReport.js"></script>
 				<script type="text/javascript" src="/js/custom/site/launchModal.js" ></script>
-				<script type="text/javascript" src="/js/custom/datetimepicker-with-default-time.js"></script>
+				<script type="text/javascript" src="/js/custom/datetimepicker.js"></script>
 				@include('site.includes.bugreport')
 
 

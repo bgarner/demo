@@ -8,13 +8,12 @@ $(document).ready(function(){
 		    success: function(result) {
 		    }
 		}).done(function(response){
-			console.log(response);
 			JSONToCSVConvertor(response, "_last24Hours", true);
 		});
 	});
 
 	$("#advanced_report").on('click', function(){
-		$("#advanced_report_modal").modal('show');
+		$("#advanced_report_modal").modal('show');  
 	});
 
 	$("#generate_advanced_report").on('click', function(){
@@ -28,8 +27,9 @@ $(document).ready(function(){
 		    success: function(result) {
 		    }
 		}).done(function(response){
-			console.log(response);
 			JSONToCSVConvertor(response, "_custom", true);
+			$("#advanced_report_modal").modal('hide');
+
 		});
 	});
 })
