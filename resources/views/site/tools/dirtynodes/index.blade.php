@@ -116,8 +116,8 @@
                                         <th>Start</th>
                                         <th>Week</th>
                                         <th>Qty</th>
-                                        <th>Dept</th>
-                                        <th>Sub-Dept</th>
+                                        {{--  <th>Dept</th>
+                                        <th>Sub-Dept</th>  --}}
                                         <th>Cleaned</th>
                                     </tr>
                                     </thead>
@@ -134,8 +134,8 @@
                                             <td>{{ $cn->startdate }}</td>
                                             <td>{{ $cn->week }}</td>
                                             <td>{{ $cn->quantity }}</td>
-                                            <td>{{ $cn->department }}</td>
-                                            <td>{{ $cn->sub_department }}</td>
+                                            {{--  <td>{{ $cn->department }}</td>
+                                            <td>{{ $cn->sub_department }}</td>  --}}
                                             <td>{{ $cn->updated_at }}</td>
                                         </tr>
                                         @endforeach
