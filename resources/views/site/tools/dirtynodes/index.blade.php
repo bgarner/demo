@@ -7,6 +7,7 @@
 
  {{--    <link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet"> --}}
     <style>
+        table{ width: 100% !important; }
         .table td{ font-size: 11px; }
         .table th{ font-size: 11px; } 
     </style>
