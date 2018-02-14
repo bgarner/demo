@@ -27,7 +27,7 @@ function showModal(el)
 
     var start_date = $(el).closest("tr").find('td:eq(7)').text();
 
-    var qty = $(el).closest("tr").find('td:eq(9)').text();
+    var qty = $(el).closest("tr").find('td:eq(8)').text();
     $('#dirtyNodeQuantity span.value').text(qty);
 
     var now = "Today at " + new Date().toLocaleTimeString();

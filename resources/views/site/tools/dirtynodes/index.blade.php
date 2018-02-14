@@ -166,7 +166,7 @@
     <script src="/js/plugins/dataTables/dataTables.tableTools.min.js"></script>
     <script src="/js/plugins/dataTables/dataTables.responsive.js"></script>
     <script src="/js/plugins/dataTables/dataTables.bootstrap.js"></script>
-    <script src="/js/custom/site/tools/dirtyNodes.js"></script>
+    <script src="/js/custom/site/tools/dirtyNodes.js?<?=time();?>"></script>
     <script src="/js/plugins/sweetalert/sweetalert.min.js"></script>
 
     <script>
