@@ -1,13 +1,41 @@
 $(document).ready(function(){
-
 	$("#generate_cleaned_nodes_report").on('click', function(){
-			
+		var domit = $("#domfields").is(':checked');
+
 		$.ajax({
 		    url: '/admin/dirtynodes/report' ,
 		    type: 'GET',
 		    success: function(result) {
 		    }
 		}).done(function(response){
+            if(domit){
+                $.each(response, function(key, value) {
+                    delete value.id;
+                    delete value.banner;
+                    delete value.store;
+                    delete value.avp;
+                    delete value.dm;
+                    delete value.storename;
+                    delete value.styledesc;
+                    delete value.color;
+                    delete value.sizename;
+                    delete value.startdate;
+                    delete value.week;
+                    delete value.starttime;
+                    delete value.enddate;
+                    delete value.endtime;
+                    delete value.quantity;
+                    delete value.reasoncode;
+                    delete value.product_status_name;
+                    delete value.department;
+                    delete value.sub_department;
+                    delete value.created_at;
+                    delete value.updated_at;
+                });
+                JSONToCSVConvertor(response, "_domit_last24Hours", true);
+                return;
+            } 
+            //if checked, clean the data
 			JSONToCSVConvertor(response, "_last24Hours", true);
 		});
 	});
@@ -19,6 +47,7 @@ $(document).ready(function(){
 	$("#generate_advanced_report").on('click', function(){
 		var start_date = $("#start_date").val();
 		var end_date = $("#end_date").val();
+        var domit = $("#domfields").is(':checked');
 			
 		$.ajax({
 		    url: '/admin/dirtynodes/report' ,
@@ -27,7 +56,35 @@ $(document).ready(function(){
 		    success: function(result) {
 		    }
 		}).done(function(response){
-			JSONToCSVConvertor(response, "_custom", true);
+            if(domit){
+                $.each(response, function(key, value) {
+                    delete value.id;
+                    delete value.banner;
+                    delete value.store;
+                    delete value.avp;
+                    delete value.dm;
+                    delete value.storename;
+                    delete value.styledesc;
+                    delete value.color;
+                    delete value.sizename;
+                    delete value.startdate;
+                    delete value.week;
+                    delete value.starttime;
+                    delete value.enddate;
+                    delete value.endtime;
+                    delete value.quantity;
+                    delete value.reasoncode;
+                    delete value.product_status_name;
+                    delete value.department;
+                    delete value.sub_department;
+                    delete value.created_at;
+                    delete value.updated_at;
+                });
+                JSONToCSVConvertor(response, "_domit_customrange", true);
+                return;
+            }
+
+			JSONToCSVConvertor(response, "_customrange", true);
 			$("#advanced_report_modal").modal('hide');
 
 		});

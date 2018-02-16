@@ -26,6 +26,7 @@
 		                            <h5>Cleaned Nodes</h5>
 
 		                            <div class="ibox-tools">
+										<input type="checkbox" id="domfields" /> DOM IT Fields Only
 		                            	<a id="generate_cleaned_nodes_report" class="btn btn-primary btn"> Generate Report</a>
 		                            	<a id="advanced_report" class="btn btn-primary btn"> Advanced</a>
 		                            </div>
