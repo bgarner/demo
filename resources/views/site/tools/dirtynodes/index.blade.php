@@ -10,11 +10,36 @@
         table{ width: 100% !important; }
         .table td{ font-size: 11px; }
         .table th{ font-size: 11px; } 
+
+        .loading{
+            position: fixed; /* Sit on top of the page content */
+            width: 100%; /* Full width (cover the whole page) */
+            height: 100%; /* Full height (cover the whole page) */
+            top: 0; 
+            left: 220px;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.8); /* Black background with opacity */
+            z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+            cursor: pointer;
+
+        }
+        .loading h1{
+           position: relative;
+            top: 40%;
+            text-align: center;
+            color: #fff;
+        }
+        .loadingimg{
+            position: relative;
+            top: 50%;
+        }
     </style>
 </head>
 
 <body class="fixed-navigation">
     <div id="wrapper">
+    
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
           @include('site.includes.sidenav')
@@ -22,12 +47,14 @@
     </nav>
 
     <div id="page-wrapper" class="gray-bg">
+        <div class="loading"><h1>Loading DOM Nodes...<br /><img src="/images/ajax-loader.gif" class="loadingimg" /></h1></div>
         <div class="row border-bottom">
             @include('site.includes.topbar')
         </div>
 
 
 <div class="wrapper wrapper-content  animated fadeInRight printable">
+
             <div class="row">
                 <div class="col-lg-12">
 
@@ -171,6 +198,7 @@
 
     <script>
         $(document).ready(function(){
+            //$('<div class="loading">Loading</div>').appendTo('body');
 
             $.ajaxSetup({
                 headers: {
@@ -182,7 +210,10 @@
                 paging: true,
                 pageLength: 50,
                 responsive: true,
-                ordering: true
+                ordering: true,
+                "initComplete": function( settings, json ) {
+                     $('div.loading').remove();
+                }
             });
 
             $('.cleannodestable').DataTable({
