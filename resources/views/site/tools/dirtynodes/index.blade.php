@@ -113,7 +113,7 @@
                                             <td>{{ $d->styledesc }}</td>
                                             <td>{{ $d->color }}</td>
                                             <td>{{ $d->sizename }}</td>
-                                            <td>{{ $d->startdate }}</td>
+                                            <td data-order={{$d->startDateTime}}>{{ $d->startdate }}</td>
                                             {{--  <td>{{ $d->week }}</td>  --}}
                                             <td>{{ $d->quantity }}</td>
                                             <td>{{ $d->department }}</td>
@@ -211,6 +211,7 @@
                 pageLength: 50,
                 responsive: true,
                 ordering: true,
+                order: [[ 7, "desc" ]],
                 "initComplete": function( settings, json ) {
                      $('div.loading').remove();
                 }
