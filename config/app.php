@@ -296,7 +296,8 @@ return [
         'App\Http\Controllers\StoreComponent\StoreComponentAdminController'     => 'Components',
         'App\Http\Controllers\Flyer\FlyerAdminController'                       => 'Flyer',
         'App\Http\Controllers\Flyer\FlyerItemAdminController'                   => 'Flyer',
-        'App\Http\Controllers\Utilities\BatchFileUploadController'              => 'Batch File Upload'
+        'App\Http\Controllers\Utilities\BatchFileUploadController'              => 'Batch File Upload',
+        'App\Http\Controllers\Form\StoreFeedbackFormAdminController'            => 'Form',
 
     ],
 

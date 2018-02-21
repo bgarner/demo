@@ -146,3 +146,7 @@ Route::resource('/admin/storegroup', 'Tools\CustomStoreGroupAdminController');
 
 //Store Components
 Route::resource('/admin/storecomponent', 'StoreComponent\StoreComponentAdminController');
+
+
+//Forms
+Route::resource('/admin/form/storefeedbackform', 'Form\StoreFeedbackFormAdminController');

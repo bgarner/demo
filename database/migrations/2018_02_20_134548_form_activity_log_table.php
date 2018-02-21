@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class FormInstanceStatusTable extends Migration
+class FormActivityLogTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class FormInstanceStatusTable extends Migration
      */
     public function up()
     {
-        Schema::create('form_instance_status', function (Blueprint $table) {
+        Schema::create('form_activity_log', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('form_data_id');
-            $table->integer('status_code_id')->unsigned();
+            $table->integer('form_data_id')->unsigned();
+            $table->mediumText('log');
             $table->timestamps();
-            $table->foreign('status_code_id')->references('id')->on('form_status_code');
+            $table->foreign('form_data_id')->references('id')->on('form_data');
         });
     }
 
@@ -29,6 +29,6 @@ class FormInstanceStatusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('form_instance_status');
+        Schema::dropIfExists('form_activity_log');
     }
 }
