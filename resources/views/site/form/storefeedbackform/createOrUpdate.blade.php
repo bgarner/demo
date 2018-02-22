@@ -3,18 +3,17 @@
 
 <head>
     @section('title', 'Store Feedback Form')
-    @include('admin.includes.head')
+    @include('site.includes.head')
+    <link rel="stylesheet" type="text/css" href="/css/custom/site/event.css">
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
-    <link rel="stylesheet" type="text/css" href="/css/custom/tree.css">
-    <link rel="stylesheet" href="/css/plugins/select/select2.min.css">
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 </head>
 
-<body class="fixed-navigation adminview">
+<body class="fixed-navigation">
     <div id="wrapper">
 	    <nav class="navbar-default navbar-static-side" role="navigation">
 	        <div class="sidebar-collapse">
-	          @include('admin.includes.sidenav')
+	          @include('site.includes.sidenav')
 	        </div>
 	    </nav>
 
@@ -25,7 +24,7 @@
             <div class="col-lg-12">
                 <div class="ibox">
                     <div class="ibox-title">
-                    	@if(isset($formdata))
+                    	@if(isset($formInstance))
 							<h5>Edit Store Feedback Form</h5>
                     	@else
                         	<h5>New Store Feedback Form</h5>
@@ -33,8 +32,10 @@
                     </div>
                     <div class="ibox-content">
 
-						@if(isset($formdata))
-						    {{ Form::model($formdata, ['action' => ['Form\StoreFeedbackFormController@update', $formdata->id], 'method' => 'patch']) }}
+						@if(isset($formInstance))
+							<form class="form-horizontal" id="editStoreFeedbackForm">
+							<input type="text" hidden value="{{$formInstance->form_data}}" id="formdata">
+							
 						@else
 						    <form class="form-horizontal" id="createNewStoreFeedbackForm">
 						@endif
@@ -95,7 +96,7 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Sub Category</label>
 					            <div class="col-sm-10">
-					            	<select name="subdepartment" id="subdepartment">
+					            	<select name="subcategory" id="subcategory">
 										<option data-dept="hg" value="dept-hg-subcategory-Men\'s">Men's</option>
 										<option data-dept="hg" value="dept-hg-subcategory-Women\'s">Women's</option>
 										<option data-dept="hg" value="dept-hg-subcategory-Jr/Kid\'s">Jr/Kid's</option>
@@ -162,8 +163,8 @@
 
 				<div class="form-group">
 					<div class="col-sm-10 col-sm-offset-2">
-						<a class="btn btn-white" href="/admin/communication"><i class="fa fa-close"></i> Cancel</a>
-						<button class="btn btn-primary communication-create"><i class="fa fa-check"></i> Save and Send</button>
+						<a class="btn btn-white" href="/{{$storeNumber}}/form/storefeedbackform"><i class="fa fa-close"></i> Cancel</a>
+						<button class="btn btn-primary" id="form_send"><i class="fa fa-check"></i> Save and Send</button>
 		            </div>
 		        </div>
     
@@ -190,7 +191,7 @@
 		
 
 		<script type="text/javascript">
-
+						
 			$.ajaxSetup({
 		        headers: {
 		            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
