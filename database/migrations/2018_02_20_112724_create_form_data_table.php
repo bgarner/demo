@@ -16,7 +16,8 @@ class CreateFormDataTable extends Migration
         Schema::create('form_data', function (Blueprint $table) {
             $table->increments('id');
             $table->string('store_number');
-            $table->string('unique_form_id');
+            $table->string('form_name');
+            $table->string('form_version');
             $table->string('submitted_by');
             $table->mediumText('form_data');
             $table->timestamps();

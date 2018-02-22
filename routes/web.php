@@ -120,3 +120,6 @@ Route::post('/setLanguage', 'Locale\LocaleController@setLanguage');
 // Route::get('/admin', function(){
 // //	return view('admin.index');
 // });
+
+
+Route::resource('/{storeno}/form/storefeedbackform', 'Form\StoreFeedbackFormController');

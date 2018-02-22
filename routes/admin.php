@@ -149,4 +149,4 @@ Route::resource('/admin/storecomponent', 'StoreComponent\StoreComponentAdminCont
 
 
 //Forms
-Route::resource('/admin/form/storefeedbackform', 'Form\StoreFeedbackFormAdminController');
+// Route::resource('/admin/form/storefeedbackform', 'Form\StoreFeedbackFormAdminController');

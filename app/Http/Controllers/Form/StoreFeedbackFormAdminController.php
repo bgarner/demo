@@ -27,32 +27,32 @@ class StoreFeedbackFormAdminController extends Controller
     	$form_name = $this->form_name;
     	$formStructures = Form::where('form_name', $form_name)->get();
     	$forms = FormData::where('unique_form_id', 'like',  $form_name . "_%")->get();
-    	return view('admin.forms.storefeedbackform.index')->with('forms', $forms)
+    	return view('admin.form.storefeedbackform.index')->with('forms', $forms)
     												->with('formStructures', $formStructures);
-   }
+   	
+   	}
 
-   public function create()
-   {
-
-   		$formStructure = Form::where('form_name', $this->form_name)
-    							->where('version', $this->current_version)
-    							->first()
-    							->pluck('form_structure');
-
-    	//render formStructure.json
-   }
+   
 
     public function show($id)
     {
-    	$formInstanceId = $id;
-    	$formData = FormData::find($id);
-    	$form_name = $formData->form_name;
-    	$form_version = $formData->form_version;
-    	$form = Form::where('form_name', $form_name)
-    							->where('form_version', $form_version)
-    							->first();
-    	$formStructure = $form->form_structure;
+    	$formData = [];
+    	// $formInstanceId = $id;
+    	// $formInstance = FormData::find($formInstanceId);
+    	// $formData =$formInstance->form_data;
+    	// $formName = $formInstance->form_name;
+    	// $formVersion = $formInstance->form_version;
+    	
+    	// $form = Form::where('form_name', $formName)
+					// ->where('form_version', $formVersion)
+					// ->first();
 
-    	//render form_structure.json and pass it the form data
+    	// $formStructure = $form->form_structure;
+
+    	$formStructure = 'view';
+
+    	$view = 'admin.form.storefeedbackform.' . $formStructure;
+    	return view($view)->with('formdata', $formData);
+    												
     }
 }
