@@ -32,7 +32,7 @@ class DirtyNode extends Model
     {
         $store_number = ltrim($store_number, 'A');
         $store_number = ltrim($store_number, '0');
-        $data = DirtyNodeArchive::where('store', $store_number)
+        $data = DirtyNode::where('store', $store_number)
                         ->whereNotNull('updated_at')
                         ->get();
 
