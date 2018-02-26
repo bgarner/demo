@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
          $schedule->call(function () {
             AnalyticsTask::compileAnalytics();
             \Log::info('scheduler ran');
-        })->everyMinute();
+        })->dailyAt('05:00');
     }
 
     /**
