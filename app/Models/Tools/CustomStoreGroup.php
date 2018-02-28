@@ -134,4 +134,14 @@ class CustomStoreGroup extends Model
         
     }
 
+    public static function getStoreGroupsForManager($user_id)
+    {
+    	$storeList = StoreInfo::getStoreListingByManagerId($user_id);
+        $stores = array_column($storeList, 'store_number');
+        $storeGroups = CustomStoreGroup::all()->pluck( 'id');
+        return $storeGroups;
+        
+
+    }
+
 }

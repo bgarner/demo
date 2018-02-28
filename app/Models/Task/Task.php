@@ -273,7 +273,9 @@ class Task extends Model
         $allStoreTasks = Self::getAllStoreTasksForStoreList($storeInfo);
 		$tasks = Task::getTasksByStoreList($stores);
 
-		$tasks = $tasks->merge($allStoreTasks);
+		foreach ($allStoreTasks as $task) {
+			array_push( $tasks , (object) $task);
+		}
 		
 		return $tasks;
 		
@@ -315,6 +317,27 @@ class Task extends Model
 		return $tasks;
 		
 	}
+
+	public static function groupTaskStores($tasks)
+	{
+		
+		$compiledTasks = [];
+		foreach ($tasks as $task) {
+	        $index = array_search($task['id'], array_column($compiledTasks, 'id'));
+	        if(  $index !== false ){
+	           array_push($compiledTasks[$index]->stores, $task["store_id"]);
+	        }
+	        else{
+	           
+	           $task["stores"] = [];
+	           array_push( $task["stores"] , $task["store_id"]);
+	           array_push( $compiledTasks , (object) $task);
+	        }
+        }
+        
+		return $compiledTasks;
+	}
+
 
 	public static function getTaskCompletionStatistics($task)
 	{	

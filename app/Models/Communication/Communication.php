@@ -521,9 +521,37 @@ class Communication extends Model
 		return $count;
 	}
 
-	public static function getActiveCommunicationsForStoreList($storeNumbersArray)
+	public static function getActiveCommunicationsForStoreList($storeNumbersArray, $banners, $storeGroups)
 	{
 		$now = Carbon::now()->toDatetimeString();
+		$targetedComm = Communication::getActiveTargetedCommunicationsForStoreList($storeNumbersArray);
+
+		$allStoreComm = Communication::join('communication_banner', 'communication_banner.communication_id', '=', 'communications.id')
+									->where('all_stores', '=', 1)
+                                    ->whereIn('communication_banner.banner_id', $banners)
+                                    ->where('communications.send_at', '<=', $now )
+                                    ->where('communications.archive_at', '>=', $now )
+                                    ->select('communications.*')
+                                    ->get();
+
+        $storeGroupCommunications = Communication::join('communication_store_group', 'communication_store_group.communication_id', '=', 'communications.id')
+        										->whereIn('communication_store_group.store_group_id', $storeGroups)
+												->where('communications.send_at', '<=', $now )
+												->where('communications.archive_at', '>=', $now )
+												->select('communications.*')
+						                        ->get();
+
+		$targetedComm = Utility::mergeTargetedAndStoreGroupContent($targetedComm, $storeGroupCommunications);
+         
+        $communications = Utility::mergeTargetedAndAllStoreContent($targetedComm, $allStoreComm);
+
+        return($communications);
+	}
+
+	public static function getActiveTargetedCommunicationsForStoreList($storeNumbersArray)
+	{
+		$now = Carbon::now()->toDatetimeString();
+		
 		$communications = Communication::join('communications_target', 'communications_target.communication_id' ,  '=', 'communications.id')
 								   ->whereIn('communications_target.store_id', $storeNumbersArray)
 								   ->where('communications.send_at' , '<=', $now)
@@ -531,23 +559,26 @@ class Communication extends Model
 								   ->whereNull('communications.deleted_at')
 								   ->whereNull('communications_target.deleted_at')
 								   ->select('communications.*', 'communications_target.store_id')
-								   ->get()
-								   ->toArray();
+								   ->get();
+								   // ->toArray();
 	 	$compiledComm = [];
 
 		foreach ($communications as $communication) {
-			$index = array_search($communication['id'], array_column($compiledComm, 'id'));
+			$communication->stores = [];
+			$index = array_search($communication->id, array_column($compiledComm, 'id'));
+			
 			if(  $index !== false ){
-				array_push($compiledComm[$index]->stores, $communication["store_id"]);
+
+				array_push($compiledComm[$index]->attributes["stores"] ,  $communication->store_id);
 			}
 			else{
 
-				$communication["stores"] = [];
-				array_push( $communication["stores"] , $communication["store_id"]);
-				array_push( $compiledComm , (object) $communication);
+				array_push($communication->attributes["stores"] , $communication->store_id);
+				array_push( $compiledComm ,  $communication);
 			}
 		}
-	 	return (object)($compiledComm);
+		
+	 	return collect($compiledComm);
 	}
 
 	public static function getCommunicationCategoryName($id)

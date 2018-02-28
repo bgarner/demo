@@ -581,8 +581,7 @@ class Utility extends Model
     }
 
     public static function mergeTargetedAndAllStoreContent($targetedContent, $allStoreContent)
-    {
-
+    {        
         foreach($targetedContent as $content)
         {
             $id = $content->id;
