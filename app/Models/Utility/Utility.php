@@ -593,7 +593,7 @@ class Utility extends Model
                 
             }
             else{
-                $allStoreContent->merge($content);
+                $allStoreContent = $allStoreContent->push($content);
             }
         }
 

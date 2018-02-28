@@ -13,18 +13,7 @@ use App\Models\Auth\User\UserBanner;
 
 class ManagerDashboard extends Model
 {
-    // public static function compileDashboardDataByDistrictId($id)
-    // {
-    // 	$stores = StoreInfo::getStoresByDistrictId($id);
-    // 	return ManagerDashboard::compileDashboardDataByStoreList($stores);
-    // }
-
-    // public static function compileDashboardDataByRegionId($id)
-    // {
-    //     $stores = StoreInfo::getStoresByRegionId($id);
-    //     return ManagerDashboard::compileDashboardDataByStoreList($stores);
-    // }
-
+    
     public static function compileDashboardDataForManager($user_id)
     {
         $storeList = StoreInfo::getStoreListingByManagerId($user_id);
@@ -39,8 +28,8 @@ class ManagerDashboard extends Model
         $compiledData = [];
         $compiledData["communications"] = Communication::getActiveCommunicationsForStoreList($stores, $banners, $storeGroups);
         
-        // $compiledData["alerts"] = Alert::getActiveAlertsForStoreList($stores);
-        // $compiledData["urgentNotices"] = UrgentNotice::getActiveUrgentNoticesForStoreList($stores);
+        $compiledData["alerts"] = Alert::getActiveAlertsForStoreList($stores, $banners, $storeGroups);
+        $compiledData["urgentNotices"] = UrgentNotice::getActiveUrgentNoticesForStoreList($stores, $banners, $storeGroups);
         // $compiledData["productLaunches"] = ProductLaunch::getActiveProductLaunchesForStoreList($stores);
         return ( $compiledData );
     }

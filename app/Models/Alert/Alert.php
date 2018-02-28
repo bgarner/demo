@@ -392,10 +392,31 @@ class Alert extends Model
         return $alerts;
     }
 
-    public static function getActiveAlertsForStoreList($storeNumbersArray)
+    public static function getActiveAlertsForStoreList($storeNumbersArray, $banners, $storeGroups)
+    {
+        $now = Carbon::now()->toDatetimeString();
+        $targetedComm = Alert::getActiveTargetedAlertsForStoreList($storeNumbersArray);
+
+        $allStoreAlerts = Alert::join('documents', 'alerts.document_id', '=', 'documents.id')
+                        ->where('documents.all_stores', 1)
+                        ->whereIn('alerts.banner_id', $banners)
+                        ->where('documents.end', '<=', $now)
+                        ->where('documents.end', '!=', '0000-00-00 00:00:00')
+                        ->where('documents.end', '!=', NULL)
+                        ->select('alerts.*', 'documents.start as start', 'documents.end as end')
+                        ->get();
+         
+        $alerts = Utility::mergeTargetedAndAllStoreContent($targetedComm, $allStoreAlerts);
+
+        return ($alerts);
+    }
+
+
+    public static function getActiveTargetedAlertsForStoreList($storeNumbersArray)
       {
-         $now = Carbon::now()->toDatetimeString();
-         $alerts = Alert::join('document_target', 'document_target.document_id' ,  '=', 'alerts.document_id')
+        $now = Carbon::now()->toDatetimeString();
+
+        $alerts = Alert::join('document_target', 'document_target.document_id' ,  '=', 'alerts.document_id')
                         ->join('documents', 'documents.id', '=', 'alerts.document_id')
                         ->join('alert_types', 'alerts.alert_type_id', '=', 'alert_types.id') 
                         ->whereIn('document_target.store_id', $storeNumbersArray)
@@ -407,24 +428,29 @@ class Alert extends Model
                         })
                         ->whereNull('alerts.deleted_at')
                         ->whereNull('documents.deleted_at')
-                        ->select('documents.*', 'alerts_target.store_id', 'alert_types.name')
-                       ->get()
-                       ->toArray();
-         $compiledAlerts = [];
+                        ->select('documents.*', 'document_target.store_id', 'alert_types.name')
+                       ->get();
 
-         foreach ($alerts as $alert) {
-            $index = array_search($alert['id'], array_column($compiledAlerts, 'id'));
+        
+        $compiledAlerts = [];
+
+        foreach ($alerts as $alert) {
+
+            $alert->stores = [];
+
+            $index = array_search($alert->id, array_column($compiledAlerts, 'id'));
+            
             if(  $index !== false ){
-               array_push($compiledAlerts[$index]->stores, $alert["store_id"]);
+               array_push($compiledAlerts[$index]->attributes['stores'], $alert->store_id);
             }
             else{
                
-               $alert["stores"] = [];
-               array_push( $alert["stores"] , $alert["store_id"]);
-               array_push( $compiledAlerts , (object) $alert);
+               array_push( $alert->attributes["stores"] , $alert->store_id);
+               array_push( $compiledAlerts , $alert);
             }
-         }
-         return (object)($compiledAlerts);
+        }
+        
+        return collect($compiledAlerts);
       }       
 
     public static function addStoreViewData($alerts)
