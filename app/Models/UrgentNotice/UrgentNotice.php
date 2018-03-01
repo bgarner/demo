@@ -247,25 +247,15 @@ class UrgentNotice extends Model
                             ->orWhere('urgent_notices.end', '=', '0000-00-00 00:00:00' ); 
                     })
                     ->whereNull('urgent_notice_target.deleted_at')
-                    ->select('urgent_notices.*', 'urgent_notice_target.store_id')
-                    ->get();
+                    ->select(\DB::raw('urgent_notices.*, GROUP_CONCAT(DISTINCT urgent_notice_target.store_id) as stores'))
+                    ->groupBy('urgent_notices.id')
+                    ->get()
+                    ->each(function($urgentNotice){
+                        $urgentNotice->stores = explode(',', $urgentNotice->stores);
+                    });
         
-        $compiledUrgentNotices = [];
-
-        foreach ($urgent_notices as $urgent_notice) {
-            
-            $urgent_notice->stores = [];
-            $index = array_search($urgent_notice->id, array_column($compiledUrgentNotices, 'id'));
-            if(  $index !== false ){
-               array_push($compiledUrgentNotices[$index]->attributes["stores"], $urgent_notice->store_id);
-            }
-            else{
-               
-               array_push( $urgent_notice->attributes["stores"] , $urgent_notice->store_id);
-               array_push( $compiledUrgentNotices , $urgent_notice);
-            }
-        }
-        return collect($compiledUrgentNotices);
+        
+        return $urgent_notices;
     }   
 
 

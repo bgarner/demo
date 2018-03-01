@@ -84,7 +84,6 @@ class ProductLaunch extends Model
     public static function getAllProductLaunches()
     {
 
-
     	return ProductLaunch::all()
     						->sortBy('launch_date')
     						->each(function ($item) {
@@ -94,34 +93,23 @@ class ProductLaunch extends Model
     }
 
     public static function getActiveProductLaunchesForStoreList($storeNumbersArray)
-      {
-         $today = Carbon::today()->toDatetimeString();
+	{
+		$today = Carbon::today()->toDatetimeString();
 
-         $productlaunches = ProductLaunch::join('productlaunch_target', 'productlaunch_target.productlaunch_id' ,  '=', 'productlaunch.id')
-                        ->whereIn('productlaunch_target.store_id', $storeNumbersArray)
-                        ->where('productlaunch.launch_date', '>=', $today )
-                        ->select('productlaunch.*', 'productlaunch_target.store_id')
-                       ->get()
-                       ->toArray();
+		$productlaunches = ProductLaunch::join('productlaunch_target', 'productlaunch_target.productlaunch_id' ,  '=', 'productlaunch.id')
+		        ->whereIn('productlaunch_target.store_id', $storeNumbersArray)
+		        ->select(\DB::raw('productlaunch.*, GROUP_CONCAT(DISTINCT productlaunch_target.store_id) as stores'))
+                                ->groupBy('productlaunch.id')
+                                ->get()
+                                ->each(function($comm){
+                                    $comm->stores = explode(',', $comm->stores);
+                                });
 
-         $compiledproductLaunches = [];
+		return $productlaunches;
+		
+	}
 
-         foreach ($productlaunches as $productlaunch) {
-            $index = array_search($productlaunch['id'], array_column($compiledproductLaunches, 'id'));
-            if(  $index !== false ){
-               array_push($compiledproductLaunches[$index]->stores, $productlaunch["store_id"]);
-            }
-            else{
-
-               $productlaunch["stores"] = [];
-               array_push( $productlaunch["stores"] , $productlaunch["store_id"]);
-               array_push( $compiledproductLaunches , (object) $productlaunch);
-            }
-         }
-         return (object)($compiledproductLaunches);
-      }
-
-    public static function addProductLaunchData($request)
+	    public static function addProductLaunchData($request)
     {
         $productLaunchDocument = $request->file('document');
         $uploadOption = $request->uploadOption;

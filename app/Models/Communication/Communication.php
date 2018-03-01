@@ -558,27 +558,14 @@ class Communication extends Model
 								   ->where('communications.archive_at', '>=', $now)
 								   ->whereNull('communications.deleted_at')
 								   ->whereNull('communications_target.deleted_at')
-								   ->select('communications.*', 'communications_target.store_id')
-								   ->get();
-								   // ->toArray();
-	 	$compiledComm = [];
-
-		foreach ($communications as $communication) {
-			$communication->stores = [];
-			$index = array_search($communication->id, array_column($compiledComm, 'id'));
-			
-			if(  $index !== false ){
-
-				array_push($compiledComm[$index]->attributes["stores"] ,  $communication->store_id);
-			}
-			else{
-
-				array_push($communication->attributes["stores"] , $communication->store_id);
-				array_push( $compiledComm ,  $communication);
-			}
-		}
-		
-	 	return collect($compiledComm);
+								   ->select(\DB::raw('communications.*, GROUP_CONCAT(DISTINCT communications_target.store_id) as stores'))
+	                                ->groupBy('communications.id')
+	                                ->get()
+	                                ->each(function($comm){
+	                                    $comm->stores = explode(',', $comm->stores);
+	                                });
+	 	
+		return $communications;
 	}
 
 	public static function getCommunicationCategoryName($id)

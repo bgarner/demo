@@ -10,6 +10,7 @@ use App\Models\UrgentNotice\UrgentNotice;
 use App\Models\ProductLaunch\ProductLaunch;
 use App\Models\Tools\CustomStoreGroup;
 use App\Models\Auth\User\UserBanner;
+use App\Models\Event\Event;
 
 class ManagerDashboard extends Model
 {
@@ -29,8 +30,10 @@ class ManagerDashboard extends Model
         $compiledData["communications"] = Communication::getActiveCommunicationsForStoreList($stores, $banners, $storeGroups);
         
         $compiledData["alerts"] = Alert::getActiveAlertsForStoreList($stores, $banners, $storeGroups);
-        $compiledData["urgentNotices"] = UrgentNotice::getActiveUrgentNoticesForStoreList($stores, $banners, $storeGroups);
-        // $compiledData["productLaunches"] = ProductLaunch::getActiveProductLaunchesForStoreList($stores);
+        $compiledData["urgentNotices"] = UrgentNotice::getActiveUrgentNoticesForStoreList($stores, $banners, $storeGroups); 
+        $compiledData["productLaunches"] = ProductLaunch::getActiveProductLaunchesForStoreList($stores);
+
+        $compiledData['calendar'] = Event::getActiveEventsForStoreList($stores, $banners, $storeGroups);
         return ( $compiledData );
     }
 }

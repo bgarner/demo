@@ -158,6 +158,7 @@ class Event extends Model
                         ->orderBy('start')
                         ->get();
 
+
         $storeGroups = CustomStoreGroup::getStoreGroupsForStore($store_id);
         $storeGroupEvents = Event::join('event_store_groups', 'event_store_groups.event_id', '=', 'events.id')
                                     ->whereIn('event_store_groups.store_group_id', $storeGroups)
@@ -177,7 +178,48 @@ class Event extends Model
         return $allEvents;
     }
 
-     public static function getListofEventsByStoreAndMonth($storeNumber, $yearMonth)
+    public static function getActiveEventsForStoreList($stores, $banners, $storeGroups )
+    {
+
+        $allStoreEvents = Event::join('event_banner', 'event_banner.event_id', '=', 'events.id' )
+                            ->where('all_stores', '1')
+                            ->whereIn('event_banner.banner_id', $banners)
+                            ->select('events.*', 'event_banner.banner_id')
+                            ->orderBy('start')
+                            ->get();
+
+        $targetedEvents = Event::join('events_target', 'events.id', '=', 'events_target.event_id')
+                        ->whereIn('store_id', $stores)
+                        ->select(\DB::raw('events.*, GROUP_CONCAT(DISTINCT events_target.store_id) as stores'))
+                        ->groupBy('events.id')
+                        ->orderBy('start')
+                        ->get()
+                        ->each(function($event){
+                            $event->stores = explode(',', $event->stores);
+                        });
+
+
+        $storeGroupEvents = Event::join('event_store_groups', 'event_store_groups.event_id', '=', 'events.id')
+                                    ->whereIn('event_store_groups.store_group_id', $storeGroups)
+                                    ->select('events.*')
+                                    ->get();
+
+        $allEvents = $allStoreEvents->merge($targetedEvents)->merge($storeGroupEvents)
+                    ->each(function($event){
+                        $attachments = EventAttachment::getEventAttachments($event->id);
+                        $attachment_link_string = "";
+                        foreach ($attachments as $a) {
+                            $attachment_link_string .= "<a href='/".$store_id."/document#!/".$a->id."'>". $a->name ."</a><br>";
+                        }
+                        $event->attachment = $attachment_link_string;
+                    });
+
+        return $allEvents;
+    }
+
+
+
+    public static function getListofEventsByStoreAndMonth($storeNumber, $yearMonth)
     {
         $eventsList = Event::getActiveEventsByStoreAndMonth($storeNumber, $yearMonth);
         $productLaunchList = ProductLaunch::getActiveProductLaunchByStoreandMonth($storeNumber, $yearMonth);

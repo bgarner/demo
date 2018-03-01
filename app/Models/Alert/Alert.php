@@ -428,29 +428,15 @@ class Alert extends Model
                         })
                         ->whereNull('alerts.deleted_at')
                         ->whereNull('documents.deleted_at')
-                        ->select('documents.*', 'document_target.store_id', 'alert_types.name')
-                       ->get();
+                       ->select(\DB::raw('documents.*, GROUP_CONCAT(DISTINCT document_target.store_id) as stores'))
+                        ->groupBy('documents.id')
+                        ->get()
+                        ->each(function($document){
+                            $document->stores = explode(',', $document->stores);
+                        });
 
         
-        $compiledAlerts = [];
-
-        foreach ($alerts as $alert) {
-
-            $alert->stores = [];
-
-            $index = array_search($alert->id, array_column($compiledAlerts, 'id'));
-            
-            if(  $index !== false ){
-               array_push($compiledAlerts[$index]->attributes['stores'], $alert->store_id);
-            }
-            else{
-               
-               array_push( $alert->attributes["stores"] , $alert->store_id);
-               array_push( $compiledAlerts , $alert);
-            }
-        }
-        
-        return collect($compiledAlerts);
+        return $alerts;
       }       
 
     public static function addStoreViewData($alerts)
