@@ -10,18 +10,15 @@ use App\Models\Form\FormData;
 
 class StoreFeedbackFormController extends Controller
 {
-    
     protected $form_name;
     protected $current_version;
     protected $store_number;
 
     public function __construct()
     {
-
         $this->form_name = 'store_feedback_form';
         $this->current_version = '1.0';
         $this->store_number = RequestFacade::segment(1);
-
     }
 
     public function index()
@@ -31,12 +28,10 @@ class StoreFeedbackFormController extends Controller
         $forms = FormData::where('form_name', $form_name)->get();
         return view('site.form.storefeedbackform.index')->with('forms', $forms)
                                                     ->with('formStructures', $formStructures);
-    
     }
 
     public function create()
     {
-
    		// $formStructure = Form::where('form_name', $this->form_name)
     	// 						->where('version', $this->current_version)
     	// 						->first()
@@ -50,14 +45,12 @@ class StoreFeedbackFormController extends Controller
 
     public function store(Request $request)
     {
-        
         $form =FormData::create([
             "store_number" =>$request->storeNumber,
             "form_name" => $this->form_name,
             "form_version" => $this->current_version,
             "submitted_by" => "this person",
             "form_data" => serialize($request->all())
-
         ]);
 
         return $form;
@@ -72,7 +65,7 @@ class StoreFeedbackFormController extends Controller
         $formInstance->form_data = json_encode(unserialize( $formInstance->form_data));
 
         // dd($formInstance);
-        
+
         $form = Form::where('form_name', $formName)
                     ->where('version', $formVersion)
                     ->first();
