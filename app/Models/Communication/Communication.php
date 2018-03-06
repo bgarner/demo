@@ -260,6 +260,7 @@ class Communication extends Model
         $storeGroupCommunications = Communication::join('communication_store_group', 'communication_store_group.communication_id', '=', 'communications.id')
         										->whereIn('communication_store_group.store_group_id', $storeGroups)
 												->where('archive_at', '<=', $now)
+												->select('communications.*')
 						                        ->get();
 
 		$comm = $allStoreComm->merge($targetedComm)
