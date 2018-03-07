@@ -538,8 +538,23 @@ class Communication extends Model
         										->whereIn('communication_store_group.store_group_id', $storeGroups)
 												->where('communications.send_at', '<=', $now )
 												->where('communications.archive_at', '>=', $now )
-												->select('communications.*')
-						                        ->get();
+												->select(\DB::raw('communications.*, GROUP_CONCAT(DISTINCT communication_store_group.store_group_id) as store_groups'))
+												->groupBy('communications.id')
+						                        ->get()
+						                        ->each(function($comm)use ($storeNumbersArray){
+	                                    			$store_groups = explode(',', $comm->store_groups);
+
+	                                                $comm->store_groups = $store_groups;
+	                                                $group_stores = [];
+	                                                foreach ($store_groups as $group) {
+	                                                    $stores = unserialize(CustomStoreGroup::find($group)->stores);
+	                                                    $group_stores = array_merge($group_stores,$stores);
+	                                                }
+	                                                $group_stores = array_unique( $group_stores);
+
+	                                                $comm->stores = array_intersect($storeNumbersArray, $group_stores);
+	                                			});
+
 
 		$targetedComm = Utility::mergeTargetedAndStoreGroupContent($targetedComm, $storeGroupCommunications);
          

@@ -34,6 +34,7 @@ class ManagerDashboard extends Model
         $compiledData["productLaunches"] = ProductLaunch::getActiveProductLaunchesForStoreList($stores);
 
         $compiledData['calendar'] = Event::getActiveEventsForStoreList($stores, $banners, $storeGroups);
+
         return ( $compiledData );
     }
 }

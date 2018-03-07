@@ -22,17 +22,17 @@ class ManagerDashboardController extends Controller
     {
 
         $user_id = \Auth::user()->id;
-        // $storeList = StoreInfo::getStoreListingByManagerId($user_id);
-        // $stores = array_column($storeList, 'store_number');
+        $storeList = StoreInfo::getStoreListingByManagerId($user_id);
+        $stores = array_column($storeList, 'store_number');
 
         
 
         $data = ManagerDashboard::compileDashboardDataForManager($user_id);
 
-        dd($data);
-        // $region = StoreInfo::getStoresByRegionGroupedByDistrict(2);
-        // return view('manager.dashboard')
-        //     ->with('region', $region);
+        // dd($data);
+        $region = StoreInfo::getStoresByRegionGroupedByDistrict(2);
+        return view('manager.dashboard')
+            ->with('region', $region);
 
     }
 

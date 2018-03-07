@@ -3,11 +3,25 @@
 //MANAGER DASHBOARD
 Route::get('/manager', ['uses' => 'ManagerDashboard\ManagerDashboardController@index']);
 Route::get('/manager/dashboard', ['uses' => 'ManagerDashboard\ManagerDashboardController@index']);
-Route::get('/manager/avp-dashboard', ['uses' => 'ManagerDashboard\ManagerDashboardController@avp']);
-Route::get('/manager/dm-dashboard', ['uses' => 'ManagerDashboard\ManagerDashboardController@dm']);
 
 //MANAGER TASKS
 Route::resource('/manager/task', 'Task\TaskManagerController');
 
 //Store View
 Route::get('/manager/store/{store}', 'ManagerDashboard\StoreProfileController@show');
+
+//communication
+Route::get('/manager/communication', 'Communication\CommunicationManagerController@index');
+
+//calendar
+Route::get('/manager/calendar', 'Calendar\CalendarManagerController@index');
+Route::get('/manager/productlaunch', 'Calendar\ProductLaunchManagerController@index');
+
+//alert and Urgent Notice
+Route::get('/manager/alert', 'Alert\AlertManagerController@index');
+Route::get('/manager/urgentnotice', 'UrgentNotice\UrgentNoticeManagerController@index');
+
+
+//task and tasklist
+Route::get('/manager/task', 'Task\TaskManagerController@index');
+Route::get('/manager/tasklist', 'Task\TasklistManagerController@index');

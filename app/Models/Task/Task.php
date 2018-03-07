@@ -265,78 +265,66 @@ class Task extends Model
 
 	}
 
-	public static function getActiveTasksByUserId($user_id)
-	{
-		$storeInfo = StoreInfo::getStoreListingByManagerId($user_id);
-        $stores = array_column($storeInfo, 'store_number');
-
-        $allStoreTasks = Self::getAllStoreTasksForStoreList($storeInfo);
-		$tasks = Task::getTasksByStoreList($stores);
-
-		foreach ($allStoreTasks as $task) {
-			array_push( $tasks , (object) $task);
-		}
-		
-		return $tasks;
-		
-	}
-
-	public static function getAllStoreTasksForStoreList($stores)
+	public static function getActiveTasksForStoreList($stores, $banners, $storeGroups)
 	{
 		
-		$storesGroupedByBannerId = Self::groupStoresByBannerId($stores);
+		$allStoreTasks = Task::join('task_banner', 'task_banner.task_id', '=', 'tasks.id')
+                                ->where('all_stores', 1)
+                                ->whereIn('task_banner.banner_id', $banners)
+                                ->select(\DB::raw('tasks.*, GROUP_CONCAT(DISTINCT task_banner.banner_id) as banners'))
+                                ->get()
+                                ->each(function($item)use ($stores, $banners){
+                                	$item->banners = explode(',', $item->banners);
+                                	$item->stores = [];
+                                	foreach ($item->banners as $banner) {
+                                		$item->stores = array_merge($item->stores, array_column(StoreInfo::getStoresInfo($banner), 'store_number'));
+                                	}
 
-		$banners = array_keys($storesGroupedByBannerId);
-
-		$allStoreTasks = Task::where('all_stores', 1)->whereIn('banner_id', $banners)->get();
-
-		foreach ($allStoreTasks as $task) {
-			$task['stores'] = $storesGroupedByBannerId[$task->banner_id];
-			Task::getTaskCompletionStatistics($task);
-			Task::getTaskStatus($task);
-		}
-
-		return $allStoreTasks;
-	} 
-
-	
-
-	public static function getTasksByStoreList($stores)
-	{
-		$tasks =  Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
-								->whereIn('store_id', $stores)
-								->select('tasks.*', 'tasks_target.store_id')
-								->get();
-	
-		$tasks = Task::groupTaskStores($tasks);
-
-		foreach ($tasks as $task) {
-			Task::getTaskCompletionStatistics($task);
-			Task::getTaskStatus($task);
-		}
-		return $tasks;
-		
-	}
-
-	public static function groupTaskStores($tasks)
-	{
-		
-		$compiledTasks = [];
-		foreach ($tasks as $task) {
-	        $index = array_search($task['id'], array_column($compiledTasks, 'id'));
-	        if(  $index !== false ){
-	           array_push($compiledTasks[$index]->stores, $task["store_id"]);
-	        }
-	        else{
-	           
-	           $task["stores"] = [];
-	           array_push( $task["stores"] , $task["store_id"]);
-	           array_push( $compiledTasks , (object) $task);
-	        }
-        }
+                                	$item->stores = array_intersect($item->stores, $stores);
+                                	
+                                });
         
-		return $compiledTasks;
-	}
+        $targetedTasks = Task::join('tasks_target', 'tasks_target.task_id', '=', 'tasks.id')
+                                ->whereIn('tasks_target.store_id', $stores)
+                                ->select(\DB::raw('tasks.*, GROUP_CONCAT(DISTINCT tasks_target.store_id) as stores'))
+                                ->groupBy('tasks.id')
+                                ->get()
+                                ->each(function($task){
+                                    $task->stores = explode(',', $task->stores);
+                                });
+
+        $tasksForStoreGroups = Task::join('task_store_group', 'task_store_group.task_id', '=', 'tasks.id')
+                                            ->whereIn('task_store_group.store_group_id', $storeGroups)
+                                            ->select(\DB::raw('tasks.*, GROUP_CONCAT(DISTINCT task_store_group.store_group_id) as store_groups'))
+                                            ->groupBy('tasks.id')
+                                            ->get()
+                                            ->each(function($item)use ($stores){
+                                                $store_groups = explode(',', $item->store_groups);
+                                                $item->store_groups = $store_groups;
+                                                $group_stores = [];
+                                                foreach ($store_groups as $group) {
+                                                    $temp_stores = unserialize(CustomStoreGroup::find($group)->stores);
+                                                    $group_stores = array_merge($group_stores,$temp_stores);
+                                                }
+                                                $group_stores = array_unique( $group_stores);
+                                                $item->stores = array_intersect($stores, $group_stores);
+                                            });
+
+
+        $targetedTasks = Utility::mergeTargetedAndStoreGroupContent($targetedTasks, $tasksForStoreGroups);
+                                           
+        $tasks = Utility::mergeTargetedAndAllStoreContent($targetedTasks, $allStoreTasks);
+
+        foreach ($tasks as $key=>$task) {
+        	Task::getTaskCompletionStatistics($task);
+			Task::getTaskStatus($task);
+			$task->prettyDueDate = Utility::prettifyDate($task->due_date);
+			if(TasklistTask::where('task_id', $task->id)->exists()){
+				$tasks->forget($key);
+			}
+        }
+        return $tasks;
+	}	
 
 
 	public static function getTaskCompletionStatistics($task)
@@ -344,6 +332,7 @@ class Task extends Model
     	
     	$storesDone = TaskStoreStatus::getStoresDone($task->id);
     	$taskStores = $task->stores;
+
     	$storesNotDone = array_diff($taskStores , $storesDone);
     	
     	$task->stores_done = $storesDone;

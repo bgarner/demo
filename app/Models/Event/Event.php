@@ -201,9 +201,20 @@ class Event extends Model
 
         $storeGroupEvents = Event::join('event_store_groups', 'event_store_groups.event_id', '=', 'events.id')
                                     ->whereIn('event_store_groups.store_group_id', $storeGroups)
-                                    ->select('events.*')
-                                    ->get();
+                                    ->select(\DB::raw('events.*, GROUP_CONCAT(DISTINCT event_store_groups.store_group_id) as store_groups'))
+                                                ->groupBy('events.id')
+                                                ->get()
+                                                ->each(function($item){
+                                                    $store_groups = explode(',', $item->store_groups);
 
+                                                    $item->store_groups = $store_groups;
+                                                    $item->stores = [];
+                                                    foreach ($store_groups as $group) {
+                                                        $stores = unserialize(CustomStoreGroup::find($group)->stores);
+                                                        $item->stores = array_merge($item->stores,$stores);
+                                                    }
+                                                    $item->stores = array_unique( $item->stores);
+                                                });
         $allEvents = $allStoreEvents->merge($targetedEvents)->merge($storeGroupEvents)
                     ->each(function($event){
                         $attachments = EventAttachment::getEventAttachments($event->id);
