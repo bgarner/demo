@@ -3777,7 +3777,11 @@ body.adminview .ibox-title{
     padding: 14px 15px 7px !important;
       min-height: 60px;
 }
-
+.ibox-title h5{
+    padding: 4px 0px 0px 10px !important;
+    font-size: 24px !important;
+    font-weight: 100;
+}
 body.adminview .ibox-title h5{
   padding: 4px 0px 0px 10px;
   font-size: 24px;
@@ -8643,7 +8647,7 @@ a:hover span.badge{
 }
 
 .logolabel.sc{
-  
+
   background: url('/images/labels/sc.png') top left no-repeat;
 }
 
@@ -8669,6 +8673,6 @@ a:hover span.badge{
     overflow-y: auto;
 }
 
-.navbar-default::-webkit-scrollbar { 
-    display: none; 
+.navbar-default::-webkit-scrollbar {
+    display: none;
 }

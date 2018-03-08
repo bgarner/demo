@@ -25,13 +25,32 @@
                 <div class="ibox">
                     <div class="ibox-title">
                         <h5>Store Feedback</h5>
-
-                    <div class="ibox-tools">
-                        <a href="./create/" class="btn btn-primary btn"><i class="fa fa-plus"></i> New Form</a>
-                    </div>
+                        <div class="ibox-tools">
+                            <a href="{{\Request::url()}}/create" class="btn btn-primary btn"><i class="fa fa-plus"></i> New</a>
+                        </div>
                 </div>
                     <div class="ibox-content">
 
+                        <table class="table">
+                            <thead>
+                                <th>Date Submitted</th>
+                                <th>Submitted By</th>
+                                <th>Request</th>
+                                <th>Status</th>
+                            </thead>
+                            <tbody>
+                                @foreach($forms as $form)
+
+                                    <tr>
+                                        <td><a href="{{\Request::url()}}/{{$form->id}}/edit">{{$form->created_at}}</a></td>
+                                        <td>{{$form->submitted_by}}</td>
+                                        <td>we will fill this in a min</td>
+                                        <td>stattus goes here</td>
+                                    </tr>
+
+                                @endforeach
+                            </tbody>
+                        </table>
 
 
                     </div> <!-- ibox-content closes -->

@@ -26,29 +26,27 @@ $(document).ready(function(){
 
 		var formData = JSON.parse($("#formdata").val());
 		console.log(formData);
-		$("#department").val(formData.department);	
-		$("#category").val(formData.category);	
-		$("#subcategory").val(formData.subcategory);	
-		$("#requirement").val(formData.requirement);	
-		$("#brand").val(formData.brand);	
-		$("#styleNumber").val(formData.styleNumber);	
+		$("#department").val(formData.department);
+		$("#category").val(formData.category);
+		$("#subcategory").val(formData.subcategory);
+		$("#requirement").val(formData.requirement);
+		$("#brand").val(formData.brand);
+		$("#styleNumber").val(formData.styleNumber);
 		$("#size").val(formData.size);
 		$("#quantity").val(formData.quantity);
 		$("#comments").val(formData.comments);
 		$("#description").val(formData.description);
-
-
+		$("#submitted_by").val(formData.submitted_by);
+		$("#submitted_by_position").val(formData.submitted_by_position);
+		$("#dm_approval").val(formData.dm_approval);
 	}
-	
 
 	$("#department").on('change', function(){
 		var dept = $("#department").val();
 	});
 
-
-
 	$("#form_send").click(function(){
-		
+
 		var department  = $("#department").val();
 		var category    = $("#category").val();
 		var subcategory = $("#subcategory").val();
@@ -59,6 +57,9 @@ $(document).ready(function(){
 		var quantity    = $("#quantity").val();
 		var description = $("#description").val();
 		var comments	= $("#comments").val();
+		var submitted_by = $("#submitted_by").val();
+		var submitted_by_position = $("#submitted_by_position").val();
+		var dm_approval = $("#dm_approval:checked").val();
 		var storeNumber = localStorage.getItem('userStoreNumber');
 	  	var hasError 	= false;
 
@@ -115,9 +116,8 @@ $(document).ready(function(){
 
 	    if(hasError == false) {
 
-
 			$.ajax({
-			    url: "/" + storeNumber + '/form/storefeedbackform',
+			    url: "/" + storeNumber + '/forms/storefeedback/',
 			    type: 'POST',
 			    data: {
 			    	department : department,
@@ -130,15 +130,30 @@ $(document).ready(function(){
 					quantity : quantity,
 					description : description,
 					comments : comments,
-					storeNumber : storeNumber
+					storeNumber : storeNumber,
+					submitted_by: submitted_by,
+					submitted_by_position: submitted_by_position,
+					dm_approval: dm_approval
 			    },
 
 			    dataType: 'json',
 			    error: function(data) {
+					swal("Oops!", "Ya done messed up, A-Aron!", "error");
 				    console.log(data.responseText);
 				 },
 
 			    success: function(data) {
+					$('#createNewStoreFeedbackForm')[0].reset(); // empty the form
+		        	swal({
+		        		title : 'Nice!',
+		        		text : "Your form has been submitted!",
+		        		type : 'success',
+
+		        	},
+		        	function(){
+		        		window.history.back();	
+		        	})
+
 			        console.log(data);
 			   //      if(data != null && data.validation_result == 'false') {
 			   //      	var errors = data.errors;

@@ -121,5 +121,5 @@ Route::post('/setLanguage', 'Locale\LocaleController@setLanguage');
 // //	return view('admin.index');
 // });
 
-Route::resource('/{storeno}/forms/', 'Form\FormListController');
-Route::resource('/{storeno}/forms/storefeedback/', 'Form\StoreFeedbackFormController');
+Route::resource('/{storeno}/formlist', 'Form\FormListController');
+Route::resource('/{storeno}/forms/storefeedback', 'Form\StoreFeedbackFormController');

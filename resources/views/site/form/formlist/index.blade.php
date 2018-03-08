@@ -24,7 +24,7 @@
             <div class="col-lg-12">
                 <div class="ibox">
                     <div class="ibox-title">
-                        <h2>Behold! The Forms!</h2>
+                        <h1>Behold! The Forms!</h1>
                     </div>
                     <div class="ibox-content">
 
@@ -38,7 +38,7 @@
 
                             <tbody>
                                 <tr>
-                                    <td><a href="/{{$store_number}}/forms/storefeedback/">Store Feedback</a></td>
+                                    <td><a href="/{{$store_number}}/forms/storefeedback">Store Feedback</a></td>
                                     <td>This form is for requwesting new product or getting more or less of some existing product</td>
                                 </tr>
 
