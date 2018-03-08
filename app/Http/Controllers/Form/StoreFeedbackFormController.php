@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Request as RequestFacade;
 use App\Models\Form\Form;
 use App\Models\Form\FormData;
+use App\Models\Utility\Utility;
 
 class StoreFeedbackFormController extends Controller
 {
@@ -36,14 +37,12 @@ class StoreFeedbackFormController extends Controller
         $formInstance = FormData::find($formInstanceId);
         $formName = $formInstance->form_name;
         $formVersion = $formInstance->form_version;
-        $formInstance->form_data = json_encode(unserialize( $formInstance->form_data));
-        $form = Form::where('form_name', $formName)
-                    ->where('version', $formVersion)
-                    ->first();
-
+        $formInstance->form_data = unserialize( $formInstance->form_data);
+        $formInstance->prettySubmitted = Utility::prettifyDateWithTime($formInstance->created_at);
+        $formInstance->sinceSubmitted = Utility::getTimePastSinceDate($formInstance->created_at);
         // $formStructure = $form->form_struct
         $formStructure = 'view';
-
+        // dd($formInstance);
         $view = 'site.form.storefeedbackform.' . $formStructure;
         return view($view)->with('formInstance', $formInstance)
                         ->with('storeNumber', $this->store_number);

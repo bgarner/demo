@@ -24,169 +24,146 @@
             <div class="col-lg-12">
                 <div class="ibox">
                     <div class="ibox-title">
-                    	@if(isset($formInstance))
-							<h5>Edit Store Feedback Form</h5>
-                    	@else
-                        	<h5>New Store Feedback Form</h5>
-                        @endif
+                    	<h2>Store Feedback: {{ $formInstance->store_number }} submitted on {{ $formInstance->prettySubmitted }} <small>({{ $formInstance->sinceSubmitted }} ago)</small></h2>
                     </div>
                     <div class="ibox-content">
+                        <table class="table">
+                            <tr>
+                                <td colspan="3">Submitted by: {{ $formInstance->form_data['submitted_by'] }} - {{ $formInstance->form_data['submitted_by_position'] }} at {{ $formInstance->store_number }}</td>
+                            </tr>
 
-						@if(isset($formInstance))
-							<form class="form-horizontal" id="editStoreFeedbackForm">
-							<input type="text" hidden value="{{$formInstance->form_data}}" id="formdata">
-
-						@else
-						    <form class="form-horizontal" id="createNewStoreFeedbackForm">
-						@endif
-
-							<div class="form-group">
-								<label class="col-sm-2 control-label">Department</label>
-					            <div class="col-sm-10">
-					            	<select name="department" id="department" class="form-control">
-                                        <option value=""></option>
-					            		<option data-dept="hg" value="dept-hg">Hardgoods</option>
-					            		<option data-dept="sg" value="dept-sg">Softgoods</option>
-					            		<option data-dept="fw" value="dept-fw">Footwear</option>
-					            	</select>
-					            </div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-2 control-label">Category</label>
-					            <div class="col-sm-10">
-					            	<select name="category" id="category" class="form-control">
-                                        <option value=""></option>
-										<option data-dept="hg" data-category="Ski/Snowboard" value="dept-hg-category-Ski/Snowboard"> Ski/Snowboard </option>
-										<option data-dept="hg" data-category="Hockey" value="dept-hg-category-Hockey"> Hockey </option>
-										<option data-dept="hg" data-category="Golf" value="dept-hg-category-Golf"> Golf </option>
-										<option data-dept="hg" data-category="Fitness/Yoga" value="dept-hg-category-Fitness/Yoga"> Fitness/Yoga </option>
-										<option data-dept="hg" data-category="Boxing" value="dept-hg-category-Boxing"> Boxing </option>
-										<option data-dept="hg" data-category="Soccer" value="dept-hg-category-Soccer"> Soccer </option>
-										<option data-dept="hg" data-category="Basektball" value="dept-hg-category-Basketball"> Basektball </option>
-										<option data-dept="hg" data-category="Baseball/Softball" value="dept-hg-category-Baseball/Softball"> Baseball/Softball </option>
-										<option data-dept="hg" data-category="Volleybaall" value="dept-hg-category-Volleybaall"> Volleybaall </option>
-										<option data-dept="hg" data-category="Football" value="dept-hg-category-Football"> Football </option>
-										<option data-dept="hg" data-category="Yoga" value="dept-hg-category-Yoga"> Yoga </option>
-										<option data-dept="hg" data-category="Bike" value="dept-hg-category-Bike"> Bike </option>
-										<option data-dept="hg" data-category="Racquets" value="dept-hg-category-Racquets"> Racquets </option>
-										<option data-dept="hg" data-category="Other" value="dept-hg-category-Other"> Other </option>
-
-										<option data-dept="sg" data-category="Outerwear" value="dept-sg-category-Outerwear"> Outerwear </option>
-										<option data-dept="sg" data-category="Lifestyle" value="dept-sg-category-Lifestyle"> Lifestyle </option>
-										<option data-dept="sg" data-category="Athletic" value="dept-sg-category-Athletic"> Athletic </option>
-										<option data-dept="sg" data-category="Casual" value="dept-sg-category-Casual"> Casual </option>
-										<option data-dept="sg" data-category="Kids" value="dept-sg-category-Kids"> Kids </option>
-										<option data-dept="sg" data-category="Toddler" value="dept-sg-category-Toddler"> Toddler </option>
-										<option data-dept="sg" data-category="Other" value="dept-sg-category-Other"> Other </option>
-
-										<option data-dept="fw" data-category="Running" value="dept-fw-category-Running"> Running </option>
-										<option data-dept="fw" data-category="Training" value="dept-fw-category-Training"> Training </option>
-										<option data-dept="fw" data-category="Court" value="dept-fw-category-Court"> Court </option>
-										<option data-dept="fw" data-category="Outdoor" value="dept-fw-category-Outdoor"> Outdoor </option>
-										<option data-dept="fw" data-category="Lifesyle" value="dept-fw-category-Lifesyle"> Lifesyle </option>
-										<option data-dept="fw" data-category="Trend" value="dept-fw-category-Trend"> Trend </option>
-										<option data-dept="fw" data-category="Kids" value="dept-fw-category-Kids"> Kids </option>
-										<option data-dept="fw" data-category="Toddler" value="dept-fw-category-Toddler"> Toddler </option>
-										<option data-dept="fw" data-category="Winter/Rain" value="dept-fw-category-Winter/Rain"> Winter/Rain </option>
-										<option data-dept="fw" data-category="Other" value="dept-fw-category-Other"> Other </option>
-					            	</select>
-					            </div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-2 control-label">Sub Category</label>
-					            <div class="col-sm-10">
-					            	<select name="subcategory" id="subcategory" class="form-control">
-                                        <option value=""></option>
-										<option data-dept="hg" value="dept-hg-subcategory-Men\'s">Men's</option>
-										<option data-dept="hg" value="dept-hg-subcategory-Women\'s">Women's</option>
-										<option data-dept="hg" value="dept-hg-subcategory-Jr/Kid\'s">Jr/Kid's</option>
-
-										<option data-dept="sg" value="dept-sg-subcategory-Men\'s">Men's</option>
-										<option data-dept="sg" value="dept-sg-subcategory-Women\'s"> Women's</option>
-										<option data-dept="sg" value="dept-sg-subcategory-Kid\'s"> Kid's</option>
-										<option data-dept="sg" value="dept-sg-subcategory-Toddler"> Toddler</option>
-
-										<option data-dept="fw" value="dept-fw-subcategory-Men\'s"> Men's</option>
-										<option data-dept="fw" value="dept-fw-subcategory-Women\'s"> Women's</option>
-										<option data-dept="fw" value="dept-fw-subcategory-Kid\'s"> Kid's</option>
-										<option data-dept="fw" value="dept-fw-subcategory-Toddler"> Toddler</option>
-
-					            	</select>
-					            </div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-2 control-label">Requirement</label>
-					            <div class="col-sm-10">
-					            	<select name="requirement" id="requirement" class="form-control">
-                                        <option value=""></option>
-										<option value="requirement-more">More</option>
-										<option value="requirement-less">Less</option>
-										<option value="requirement-opportunity">Opportunity</option>
-
-					            	</select>
-					            </div>
-
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-2 control-label">Brand</label>
-					            <div class="col-sm-10"><input type="text" id="brand" name="brand" class="form-control" value=""></div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">Style Number</label>
-					            <div class="col-sm-10"><input type="text" id="styleNumber" name="styleNumber" class="form-control" value=""></div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">Size</label>
-					            <div class="col-sm-10"><input type="text" id="size" name="size" class="form-control" value=""></div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">Quantity</label>
-					            <div class="col-sm-10"><input type="number" min=0 max=100 id="quantity" name="quantity" class="form-control" value=""></div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">Description</label>
-					            <div class="col-sm-10"><input type="text" id="description" name="description" class="form-control" value=""></div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-2 control-label">Comments</label>
-					            <div class="col-sm-10"><input type="text" id="comments" name="comments" class="form-control" value=""></div>
-							</div>
-
-                            <div class="form-group">
-								<label class="col-sm-2 control-label">Your Name</label>
-					            <div class="col-sm-10"><input type="text" id="submitted_by" name="submitted_by" class="form-control" value=""></div>
-							</div>
-
-                            <div class="form-group">
-								<label class="col-sm-2 control-label">Your Position</label>
-					            <div class="col-sm-10"><input type="text" id="submitted_by_position" name="submitted_by_position" class="form-control" value=""></div>
-							</div>
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <p>
+                                                Request for <strong>{{ strtoupper($formInstance->form_data['requirement']) }}</strong>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-2"><strong>Brand:</strong></div>
+                                        <div class="col-sm-8">{{ $formInstance->form_data['brand'] }} </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-2"><strong>Description:</strong></div>
+                                        <div class="col-sm-8">{{ $formInstance->form_data['description'] }} </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-2"><strong>Size:</strong></div>
+                                        <div class="col-sm-8">{{ $formInstance->form_data['size'] }} </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-2"><strong>Style:</strong></div>
+                                        <div class="col-sm-8">{{ $formInstance->form_data['styleNumber'] }} </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-2"><strong>Quantity:</strong></div>
+                                        <div class="col-sm-8">{{ $formInstance->form_data['quantity'] }} </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-2"><strong>Classification:</strong></div>
+                                        <div class="col-sm-8">{{ $formInstance->form_data['department']  }} <i class="fa fa-caret-right"></i> {{ $formInstance->form_data['category'] }} <i class="fa fa-caret-right"></i> {{ $formInstance->form_data['subcategory'] }}</div>
+                                    </div>
 
 
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label"></label>
-                                <div class="col-sm-10"><input type="checkbox" id="dm_approval" name="dm_approval"> I have approval from my DM to make this request. A copy of this form will be eamiled to them.</div>
-                            </div>
 
 
-						{{Form::close()}}
+
+
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td>
+                                    <p><strong>Comments:</strong></p>
+                                    <p>
+                                    {{ $formInstance->form_data['comments'] }}
+                                    </p>
+                                </td>
+                            </tr>
+
+                        </table>
+
+
+
 
                     </div> <!-- ibox-content closes -->
 
                 </div><!-- ibox closes -->
 
-				<div class="form-group">
-					<div class="col-sm-10 col-sm-offset-2">
-						<a class="btn btn-white" href="/{{$storeNumber}}/form/storefeedbackform"><i class="fa fa-close"></i> Cancel</a>
-						<button class="btn btn-primary" id="form_send"><i class="fa fa-check"></i> Save and Send</button>
-		            </div>
-		        </div>
+                <div id="vertical-timeline" class="vertical-container light-timeline no-margins">
+                                        <div class="vertical-timeline-block">
+                                            <div class="vertical-timeline-icon navy-bg">
+                                                <i class="fa fa-briefcase"></i>
+                                            </div>
 
+                                            <div class="vertical-timeline-content">
+                                                <h2>Meeting</h2>
+                                                <p>Conference on the sales results for the previous year. Monica please examine sales trends in marketing and products. Below please find the current status of the sale.
+                                                </p>
+                                                <a href="#" class="btn btn-sm btn-primary"> More info</a>
+                                                    <span class="vertical-date">
+                                                        Today <br>
+                                                        <small>Dec 24</small>
+                                                    </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="vertical-timeline-block">
+                                            <div class="vertical-timeline-icon blue-bg">
+                                                <i class="fa fa-file-text"></i>
+                                            </div>
+
+                                            <div class="vertical-timeline-content">
+                                                <h2>Send documents to Mike</h2>
+                                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.</p>
+                                                <a href="#" class="btn btn-sm btn-success"> Download document </a>
+                                                    <span class="vertical-date">
+                                                        Today <br>
+                                                        <small>Dec 24</small>
+                                                    </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="vertical-timeline-block">
+                                            <div class="vertical-timeline-icon lazur-bg">
+                                                <i class="fa fa-coffee"></i>
+                                            </div>
+
+                                            <div class="vertical-timeline-content">
+                                                <h2>Coffee Break</h2>
+                                                <p>Go to shop and find some products. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's. </p>
+                                                <a href="#" class="btn btn-sm btn-info">Read more</a>
+                                                <span class="vertical-date"> Yesterday <br><small>Dec 23</small></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="vertical-timeline-block">
+                                            <div class="vertical-timeline-icon yellow-bg">
+                                                <i class="fa fa-phone"></i>
+                                            </div>
+
+                                            <div class="vertical-timeline-content">
+                                                <h2>Phone with Jeronimo</h2>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut.</p>
+                                                <span class="vertical-date">Yesterday <br><small>Dec 23</small></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="vertical-timeline-block">
+                                            <div class="vertical-timeline-icon navy-bg">
+                                                <i class="fa fa-comments"></i>
+                                            </div>
+
+                                            <div class="vertical-timeline-content">
+                                                <h2>Chat with Monica and Sandra</h2>
+                                                <p>Web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like). </p>
+                                                <span class="vertical-date">Yesterday <br><small>Dec 23</small></span>
+                                            </div>
+                                        </div>
+                                    </div>
 
             </div>
         </div>

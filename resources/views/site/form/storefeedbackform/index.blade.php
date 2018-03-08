@@ -42,7 +42,7 @@
                                 @foreach($forms as $form)
 
                                     <tr>
-                                        <td><a href="{{\Request::url()}}/{{$form->id}}/edit">{{$form->created_at}}</a></td>
+                                        <td><a href="{{\Request::url()}}/{{$form->id}}">{{$form->created_at}}</a></td>
                                         <td>{{$form->submitted_by}}</td>
                                         <td>we will fill this in a min</td>
                                         <td>stattus goes here</td>
