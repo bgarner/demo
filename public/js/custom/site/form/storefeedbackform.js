@@ -1,9 +1,29 @@
+$("#category").children("option").hide();
+$("#subcategory").children("option").hide();
+
 $(document).ready(function(){
+
+	var departmentDropdown = document.getElementById('department');
+	var categoryDropdown = document.getElementById('category');
+	var subcategoryDropdown = document.getElementById('subcategory');
+
+	if(departmentDropdown) {
+
+		departmentDropdown.onchange = function() {
+			$("#category").children("option").hide();
+			$("#subcategory").children("option").hide();
+
+			var deptSelected = $("#department").children("option").filter(":selected").data();
+			console.log(deptSelected.dept);
+			$('[data-dept="'+deptSelected.dept+'"]').show();
+		}
+
+	}
+
 
 	console.log('done');
 	if($("#formdata").length){
 
-		
 		var formData = JSON.parse($("#formdata").val());
 		console.log(formData);
 		$("#department").val(formData.department);	
