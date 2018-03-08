@@ -35,7 +35,7 @@
 						@if(isset($formInstance))
 							<form class="form-horizontal" id="editStoreFeedbackForm">
 							<input type="text" hidden value="{{$formInstance->form_data}}" id="formdata">
-							
+
 						@else
 						    <form class="form-horizontal" id="createNewStoreFeedbackForm">
 						@endif
@@ -50,11 +50,11 @@
 					            	</select>
 					            </div>
 							</div>
-							
+
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Category</label>
 					            <div class="col-sm-10">
-					            	<select name="category" id="category">					            		
+					            	<select name="category" id="category">
 
 										<option data-dept="hg" data-category="Ski/Snowboard" value="dept-hg-category-Ski/Snowboard"> Ski/Snowboard </option>
 										<option data-dept="hg" data-category="Hockey" value="dept-hg-category-Hockey"> Hockey </option>
@@ -148,12 +148,28 @@
 								<label class="col-sm-2 control-label">Description</label>
 					            <div class="col-sm-10"><input type="text" id="description" name="description" class="form-control" value=""></div>
 							</div>
-							
+
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Comments</label>
 					            <div class="col-sm-10"><input type="text" id="comments" name="comments" class="form-control" value=""></div>
 							</div>
-							
+
+                            <div class="form-group">
+								<label class="col-sm-2 control-label">Your Name</label>
+					            <div class="col-sm-10"><input type="text" id="submitted_by" name="submitted_by" class="form-control" value=""></div>
+							</div>
+
+                            <div class="form-group">
+								<label class="col-sm-2 control-label">Your Position</label>
+					            <div class="col-sm-10"><input type="text" id="submitted_by_position" name="submitted_by_position" class="form-control" value=""></div>
+							</div>
+
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"></label>
+                                <div class="col-sm-10"><input type="checkbox" id="dm_approval" name="dm_approval"> I have approval from my DM to make this request. A copy of this form will be eamiled to them.</div>
+                            </div>
+
 
 						{{Form::close()}}
 
@@ -167,14 +183,14 @@
 						<button class="btn btn-primary" id="form_send"><i class="fa fa-check"></i> Save and Send</button>
 		            </div>
 		        </div>
-    
+
 
             </div>
         </div>
 
 
     </div><!-- wrapper closes -->
-		
+
 
 		@include('admin.includes.footer')
 
@@ -187,11 +203,11 @@
 		<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 		<script src="/js/custom/site/form/storefeedbackform.js"></script>
-		
-		
+
+
 
 		<script type="text/javascript">
-						
+
 			$.ajaxSetup({
 		        headers: {
 		            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

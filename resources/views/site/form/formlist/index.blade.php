@@ -38,7 +38,7 @@
 
                             <tbody>
                                 <tr>
-                                    <td><a href="/{{$store_number}}/form/storefeedback">Store Feedback</a></td>
+                                    <td><a href="/{{$store_number}}/forms/storefeedback/">Store Feedback</a></td>
                                     <td>This form is for requwesting new product or getting more or less of some existing product</td>
                                 </tr>
 

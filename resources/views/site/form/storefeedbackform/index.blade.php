@@ -24,8 +24,12 @@
             <div class="col-lg-12">
                 <div class="ibox">
                     <div class="ibox-title">
-                        <h2>Store Feedback</h2>
+                        <h5>Store Feedback</h5>
+
+                    <div class="ibox-tools">
+                        <a href="./create/" class="btn btn-primary btn"><i class="fa fa-plus"></i> New Form</a>
                     </div>
+                </div>
                     <div class="ibox-content">
 
 
