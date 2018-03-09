@@ -1,5 +1,4 @@
-@if (Request::is('admin/form/*') || Request::is('admin/form'))
-
+@if (Request::is('admin/form/*') || Request::is('admin/form') || Request::is('admin/formlist'))
 <li class="active">
 @else
 <li>
