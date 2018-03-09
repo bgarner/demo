@@ -136,6 +136,10 @@
 					            <div class="col-sm-10"><input type="text" id="brand" name="brand" class="form-control" value=""></div>
 							</div>
 							<div class="form-group">
+								<label class="col-sm-2 control-label">Description</label>
+					            <div class="col-sm-10"><input type="text" id="description" name="description" class="form-control" value=""></div>
+							</div>
+							<div class="form-group">
 								<label class="col-sm-2 control-label">Style Number</label>
 					            <div class="col-sm-10"><input type="text" id="styleNumber" name="styleNumber" class="form-control" value=""></div>
 							</div>
@@ -170,7 +174,7 @@
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label"></label>
-                                <div class="col-sm-10"><input type="checkbox" id="dm_approval" name="dm_approval"> I have approval from my DM to make this request. A copy of this form will be eamiled to them.</div>
+                                <div class="col-sm-10"><input type="checkbox" id="dm_approval" name="dm_approval"> I have approval from my DM to make this request. A copy of this form will be emailed to them.</div>
                             </div>
 
 
