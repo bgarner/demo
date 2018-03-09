@@ -47,6 +47,8 @@
                                     <tr>
                                         <th>Form Name</th>
                                         <th>Description</th>
+                                        <th>New</th>
+                                        <th>In Progress</th>
                                     </tr>
                                 <thead>
 
@@ -54,11 +56,15 @@
                                     <tr>
                                         <td><a href="/admin/form/storefeedback">Store Feedback</a></td>
                                         <td>This form is for requwesting new product or getting more or less of some existing product</td>
+                                        <td>5</td>
+                                        <td>10</td>
                                     </tr>
 
                                     <tr>
                                         <td><a href="">SOme other form</a></td>
                                         <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
+                                        <td>1</td>
+                                        <td>0</td>
                                     </tr>
 
                                 </tbody>

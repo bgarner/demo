@@ -14,4 +14,6 @@ class Form extends Model
     {
         return Form::all();
     }
+
+    
 }

@@ -23,6 +23,7 @@ Route::resource('/admin/folder', 'Document\FolderAdminController');
 
 //FORMS
 Route::get('/admin/formlist', 'Form\FormListAdminController@index');
+Route::get('/admin/form/storefeedback', 'Form\StoreFeedbackFormAdminController@index');
 
 //PACKAGES
 Route::resource('/admin/package', 'Document\PackageAdminController');
