@@ -28,7 +28,7 @@
                         <div class="ibox-tools">
                             <a href="{{\Request::url()}}/create" class="btn btn-primary btn"><i class="fa fa-plus"></i> New</a>
                         </div>
-                </div>
+                    </div>
                     <div class="ibox-content">
 
                         <table class="table">

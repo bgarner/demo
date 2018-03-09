@@ -24,9 +24,9 @@ class StoreFeedbackFormController extends Controller
 
     public function index()
     {
-        $form_name = $this->form_name;
-        $formStructures = Form::where('form_name', $form_name)->get();
-        $forms = FormData::where('form_name', $form_name)->get();
+        $forms = FormData::where('form_name', $this->form_name)
+                    ->where('store_number', $this->store_number)
+                    ->get();
         return view('site.form.storefeedbackform.index')
                 ->with('forms', $forms);
     }

@@ -48,16 +48,17 @@
                                     <th>Status</th>
                                 </thead>
                                 <tbody>
-                                    {{-- @foreach($forms as $form)
+                                    @foreach($forms as $form)
 
                                         <tr>
+                                            <td>{{ $form->store_number }}</td>
                                             <td><a href="{{\Request::url()}}/{{$form->id}}">{{$form->created_at}}</a></td>
                                             <td>{{$form->submitted_by}}</td>
                                             <td>we will fill this in a min</td>
                                             <td>stattus goes here</td>
                                         </tr>
 
-                                    @endforeach --}}
+                                    @endforeach
                                 </tbody>
                             </table>
 
