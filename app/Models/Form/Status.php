@@ -8,4 +8,9 @@ class Status extends Model
 {
     protected $table = 'form_status_code';
     protected $fillable = ['form_id', 'store_status', 'admin_status', 'icon', 'colour'];
+
+    public static function getStatusCodes()
+    {
+    	return Self::all();
+    }
 }

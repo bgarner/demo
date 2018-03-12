@@ -196,7 +196,7 @@
 		@include('admin.includes.footer')
 
 	    @include('admin.includes.scripts')
-
+        <script type="text/javascript" src="/js/custom/forms/formStatus.js"></script>
 
 
 

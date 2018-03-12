@@ -73,7 +73,7 @@
 		@include('admin.includes.footer')
 
 	    @include('admin.includes.scripts')
-
+        
 
 
 
