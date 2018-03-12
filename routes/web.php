@@ -60,6 +60,7 @@ Route::get('/{storeno}/folder/{id}', ['uses' => 'Document\FolderController@show'
 Route::resource('/{storeno}/formlist', 'Form\FormListController');
 Route::resource('/{storeno}/forms/storefeedback', 'Form\StoreFeedbackFormController');
 //FORM API ROUTES
+Route::post('/{storeno}/forms/updateStatus', 'Form\FormStatusController@update');
 
 
 

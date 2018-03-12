@@ -4,15 +4,22 @@ namespace App\Http\Controllers\Form;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Form\FormStatusMap;
+use App\Models\Form\FormActivityLog;
 
 class FormStatusController extends Controller
 {
-    public function udpate()
+    public function udpate(Request $request)
     {
-        //form_intance_id
-        //status_id
-        //store number
-        //if admin - admin user
-        //message
+    	$formStatus = FormStatusMap::create([
+            "form_data_id" => $request->form_id,
+            "status_id" =>$request->status
+        ]);
+
+
+    	$formLog =FormActivityLog::create([
+            "form_data_id" => $request->form_id,
+            "status_id" =>$request->status
+        ]);
     }
 }

@@ -50,20 +50,23 @@ class StoreFeedbackFormController extends Controller
 
     public function create()
     {
-   		// $formStructure = Form::where('form_name', $this->form_name)
-    	// 						->where('version', $this->current_version)
-    	// 						->first()
-    	// 						->pluck('form_structure');
+   		$form_id = Form::where('form_name', $this->form_name)
+    							->where('version', $this->current_version)
+    							->first()
+    							->id;
 
    		$formStructure = 'createOrUpdate';
    		$view = 'site.form.storefeedbackform.' . $formStructure;
         \Log::info($this->store_number);
-    	return view($view)->with('storeNumber', $this->store_number);
+    	return view($view)
+            ->with('storeNumber', $this->store_number)
+            ->with('form_id', $form_id);
     }
 
     public function store(Request $request)
     {
         $form =FormData::create([
+            "form_id" => $request->form_id,
             "store_number" =>$request->storeNumber,
             "form_name" => $this->form_name,
             "form_version" => $this->current_version,

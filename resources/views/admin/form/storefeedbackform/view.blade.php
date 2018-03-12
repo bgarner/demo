@@ -114,13 +114,8 @@
 
                                 <div class="ibox-content">
                                     <label>Status</label>
-                                    <select class="form-control">
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
-                                        <option>Option 3</option>
-                                        <option>Option 4</option>
-
-                                    </select>
+                                    
+                                        {!! Form::select('status', $codes, null, ['class'=>'form-control'] ) !!}
 
                                     <label>Comments</label>
                                     <textarea class="form-control"></textarea>

@@ -8,7 +8,7 @@ use App\Models\Form\Form;
 use App\Models\Form\FormData;
 use App\Models\Utility\Utility;
 use App\Models\Form\Status;
-use App\Modesl\Form\FormStatusMap;
+use App\Models\Form\FormStatusMap;
 
 class StoreFeedbackFormAdminController extends Controller
 {
@@ -40,11 +40,15 @@ class StoreFeedbackFormAdminController extends Controller
         $formInstance->form_data = unserialize( $formInstance->form_data);
         $formInstance->prettySubmitted = Utility::prettifyDateWithTime($formInstance->created_at);
         $formInstance->sinceSubmitted = Utility::getTimePastSinceDate($formInstance->created_at);
+
+        $codes = FormStatusMap::getStatusCodesByForm($formInstance->form_id);
         // $formStructure = $form->form_struct
         $formStructure = 'view';
         // dd($formInstance);
         $view = 'admin.form.storefeedbackform.' . $formStructure;
-        return view($view)->with('formInstance', $formInstance);
+        return view($view)
+            ->with('formInstance', $formInstance)
+            ->with('codes', $codes);
 
     }
 }

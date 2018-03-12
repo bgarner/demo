@@ -26,6 +26,7 @@ $(document).ready(function(){
 
 		var formData = JSON.parse($("#formdata").val());
 		console.log(formData);
+		$('#form_id').val(formData.form_id);
 		$("#department").val(formData.department);
 		$("#category").val(formData.category);
 		$("#subcategory").val(formData.subcategory);
@@ -47,6 +48,7 @@ $(document).ready(function(){
 
 	$("#form_send").click(function(){
 
+		var form_id 	= $("#form_id").val();
 		var department  = $("#department").val();
 		var category    = $("#category").val();
 		var subcategory = $("#subcategory").val();
@@ -120,6 +122,7 @@ $(document).ready(function(){
 			    url: "/" + storeNumber + '/forms/storefeedback/',
 			    type: 'POST',
 			    data: {
+			    	form_id: form_id,
 			    	department : department,
 					category : category,
 					subcategory : subcategory,

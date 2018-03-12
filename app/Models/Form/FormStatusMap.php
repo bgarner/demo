@@ -11,8 +11,11 @@ class FormStatusMap extends Model
 
     public static function getStatusCodesByForm($id)
     {
-    	return Self::join('form_status_code', 'form_status_map.status_id', 'form_status_code.id')
-    				->where('form_status_code.form_id', $id)
-    				->get();
+    	$codes = Self::join('form_status_code', 'form_status_map.status_id', 'form_status_code.id')
+    				->where('form_status_map.form_id', $id)
+    				->get()
+    				->pluck('admin_status', 'id');
+    	$codes->prepend("", null);
+    	return $codes;
     }
 }

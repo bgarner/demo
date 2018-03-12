@@ -40,6 +40,8 @@
 						    <form class="form-horizontal" id="createNewStoreFeedbackForm">
 						@endif
 
+							<input type="hidden" name="form_id" id="form_id" value="{{ $form_id }}" />
+
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Department</label>
 					            <div class="col-sm-10">
@@ -153,10 +155,6 @@
 								<label class="col-sm-2 control-label">Quantity</label>
 					            <div class="col-sm-10"><input type="number" min=0 max=100 id="quantity" name="quantity" class="form-control" value=""></div>
 							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">Description</label>
-					            <div class="col-sm-10"><input type="text" id="description" name="description" class="form-control" value=""></div>
-							</div>
 
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Comments</label>
@@ -165,13 +163,13 @@
 
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Your Name</label>
-					            <div class="col-sm-10"><input type="text" id="submitter_name" name="submitter_name" class="form-control" value=""></div>
+					            <div class="col-sm-10"><input type="text" id="submitted_by" name="submitted_by" class="form-control" value=""></div>
 							</div>		
 
 
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Your Position</label>
-					            <div class="col-sm-10"><input type="text" id="submitter_position" name="submitter_position" class="form-control" value=""></div>
+					            <div class="col-sm-10"><input type="text" id="submitted_by_position" name="submitted_by_position" class="form-control" value=""></div>
 							</div>														
 
 							<div class="form-group">
