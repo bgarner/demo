@@ -10,8 +10,8 @@
     <script src="/js/plugins/pace/pace.min.js"></script>
 
     <!-- jQuery UI -->
-    <script src="/js/plugins/jquery-ui/jquery-ui.min.js"></script>
-    <script src="/js/jquery-ui.custom.min.js"></script>
+{{--     <script src="/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="/js/jquery-ui.custom.min.js"></script> --}}
 
     <!-- Alerts -->
     <script src="/js/plugins/sweetalert/sweetalert.min.js"></script>
@@ -91,5 +91,4 @@
 
     </script>
 
-    <script type="text/javascript" src="/js/plugins/dataTables/datatables.min.js"></script>
-    <script type="text/javascript" src="/js/plugins/videojs/video.js?<?=time();?>"></script>
+    

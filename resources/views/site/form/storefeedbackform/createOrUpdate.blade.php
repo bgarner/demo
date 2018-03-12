@@ -43,7 +43,8 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Department</label>
 					            <div class="col-sm-10">
-					            	<select name="department" id="department">
+					            	<select name="department" id="department" class="form-control input-sm">
+					            		<option></option>
 					            		<option data-dept="hg" value="dept-hg">Hardgoods</option>
 					            		<option data-dept="sg" value="dept-sg">Softgoods</option>
 					            		<option data-dept="fw" value="dept-fw">Footwear</option>
@@ -54,8 +55,8 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Category</label>
 					            <div class="col-sm-10">
-					            	<select name="category" id="category">					            		
-
+					            	<select name="category" id="category" class="form-control input-sm">					            		
+					            		<option></option>
 										<option data-dept="hg" data-category="Ski/Snowboard" value="dept-hg-category-Ski/Snowboard"> Ski/Snowboard </option>
 										<option data-dept="hg" data-category="Hockey" value="dept-hg-category-Hockey"> Hockey </option>
 										<option data-dept="hg" data-category="Golf" value="dept-hg-category-Golf"> Golf </option>
@@ -96,7 +97,8 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Sub Category</label>
 					            <div class="col-sm-10">
-					            	<select name="subcategory" id="subcategory">
+					            	<select name="subcategory" id="subcategory" class="form-control input-sm">
+					            		<option></option>
 										<option data-dept="hg" value="dept-hg-subcategory-Men\'s">Men's</option>
 										<option data-dept="hg" value="dept-hg-subcategory-Women\'s">Women's</option>
 										<option data-dept="hg" value="dept-hg-subcategory-Jr/Kid\'s">Jr/Kid's</option>
@@ -118,7 +120,8 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Requirement</label>
 					            <div class="col-sm-10">
-					            	<select name="requirement" id="requirement">
+					            	<select name="requirement" id="requirement" class="form-control input-sm">
+					            		<option></option>
 										<option value="requirement-more">More</option>
 										<option value="requirement-less">Less</option>
 										<option value="requirement-opportunity">Opportunity</option>
@@ -153,6 +156,22 @@
 								<label class="col-sm-2 control-label">Comments</label>
 					            <div class="col-sm-10"><input type="text" id="comments" name="comments" class="form-control" value=""></div>
 							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Your Name</label>
+					            <div class="col-sm-10"><input type="text" id="submitter_name" name="submitter_name" class="form-control" value=""></div>
+							</div>		
+
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Your Position</label>
+					            <div class="col-sm-10"><input type="text" id="submitter_position" name="submitter_position" class="form-control" value=""></div>
+							</div>														
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label"></label>
+					            <div class="col-sm-10"><input type="checkbox" id="dm_approval" name="dm_approval" class="" />  I have approval from my DM for this request.</div>
+							</div>							
 							
 
 						{{Form::close()}}
@@ -176,15 +195,14 @@
     </div><!-- wrapper closes -->
 		
 
-		@include('admin.includes.footer')
+		@include('site.includes.footer')
 
-	    @include('admin.includes.scripts')
+	    @include('site.includes.scripts')
 
 		@include('site.includes.bugreport')
 
 		<script type="text/javascript" src="/js/vendor/moment.js"></script>
 		<script type="text/javascript" src="/js/vendor/bootstrap-datetimepicker.min.js"></script>
-		<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 		<script src="/js/custom/site/form/storefeedbackform.js"></script>
 		
