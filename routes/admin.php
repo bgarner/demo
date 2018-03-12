@@ -21,6 +21,10 @@ Route::resource('/admin/documentfolder', 'Document\DocumentFolderAdminController
 //FOLDERS
 Route::resource('/admin/folder', 'Document\FolderAdminController');
 
+//FORMS
+Route::get('/admin/formlist', 'Form\FormListAdminController@index');
+Route::resource('/admin/form/storefeedback', 'Form\StoreFeedbackFormAdminController');
+
 //PACKAGES
 Route::resource('/admin/package', 'Document\PackageAdminController');
 Route::get('/admin/packagedocuments/{package_id}', 'Document\PackagePartialController@getPackageDocumentPartial');

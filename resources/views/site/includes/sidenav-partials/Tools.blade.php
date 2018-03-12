@@ -7,6 +7,7 @@
         <ul class="nav nav-second-level collapse" style="height: 0px;">
             {{-- <li><a href="/{{ Request::segment(1) }}/tools/boxingday" class="trackclick" data-tool-type="doorcrasherTracker">Doorcrasher Tracker</a></li> --}}
             {{-- <li><a href="/{{ Request::segment(1) }}/tools/bikecount" class="trackclick" data-tool-type="bikecountTracker">Bike Count Tracker</a></li> --}}
+            <li><a href="/{{ Request::segment(1) }}/formlist" class="trackclick" data-tool-type="forms">Forms</a></li>
             <li><a href="/{{ Request::segment(1) }}/tools/flashsale" class="trackclick" data-tool-type="flashsaleTracker">DOM Flash Sale Tracker</a></li>
             <li><a href="/{{ Request::segment(1) }}/tools/dirtynodes" class="trackclick" data-tool-type="dirtyNodes">Dirty Nodes</a></li>
             <li><a href="#"> Product Deliveries <span class="fa arrow"></span></a>
@@ -16,7 +17,7 @@
                     <li><a href="/{{ Request::segment(1) }}/tools/productdelivery/hardgoods" class="trackclick" data-tool-type="hginitialsTracker">Hardgoods</a></li>
                 </ul>
             </li>
-           
+
         </ul>
 
 </li>

@@ -56,6 +56,13 @@ Route::get('/{storeno}/flyer/{flyer_id}', array('uses' => 'Flyer\FlyerController
 //FOLDER - SHOW CONTENT
 Route::get('/{storeno}/folder/{id}', ['uses' => 'Document\FolderController@show']);
 
+//FORMS
+Route::resource('/{storeno}/formlist', 'Form\FormListController');
+Route::resource('/{storeno}/forms/storefeedback', 'Form\StoreFeedbackFormController');
+//FORM API ROUTES
+
+
+
 //SEARCH
 //Route::post('/{storeno}/search', array('uses' => 'Search\SearchController@index'));
 Route::get('/{storeno}/search', array('uses' => 'Search\SearchController@index'));
@@ -120,6 +127,3 @@ Route::post('/setLanguage', 'Locale\LocaleController@setLanguage');
 // Route::get('/admin', function(){
 // //	return view('admin.index');
 // });
-
-
-Route::resource('/{storeno}/form/storefeedbackform', 'Form\StoreFeedbackFormController');

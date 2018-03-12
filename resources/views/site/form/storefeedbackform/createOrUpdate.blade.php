@@ -9,7 +9,7 @@
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 </head>
 
-<body class="fixed-navigation">
+<body class="fixed-navigation adminview">
     <div id="wrapper">
 	    <nav class="navbar-default navbar-static-side" role="navigation">
 	        <div class="sidebar-collapse">
@@ -35,7 +35,7 @@
 						@if(isset($formInstance))
 							<form class="form-horizontal" id="editStoreFeedbackForm">
 							<input type="text" hidden value="{{$formInstance->form_data}}" id="formdata">
-							
+
 						@else
 						    <form class="form-horizontal" id="createNewStoreFeedbackForm">
 						@endif
@@ -51,7 +51,7 @@
 					            	</select>
 					            </div>
 							</div>
-							
+
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Category</label>
 					            <div class="col-sm-10">
@@ -97,6 +97,7 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Sub Category</label>
 					            <div class="col-sm-10">
+
 					            	<select name="subcategory" id="subcategory" class="form-control input-sm">
 					            		<option></option>
 										<option data-dept="hg" value="dept-hg-subcategory-Men\'s">Men's</option>
@@ -112,6 +113,7 @@
 										<option data-dept="fw" value="dept-fw-subcategory-Women\'s"> Women's</option>
 										<option data-dept="fw" value="dept-fw-subcategory-Kid\'s"> Kid's</option>
 										<option data-dept="fw" value="dept-fw-subcategory-Toddler"> Toddler</option>
+
 
 					            	</select>
 					            </div>
@@ -136,6 +138,10 @@
 					            <div class="col-sm-10"><input type="text" id="brand" name="brand" class="form-control" value=""></div>
 							</div>
 							<div class="form-group">
+								<label class="col-sm-2 control-label">Description</label>
+					            <div class="col-sm-10"><input type="text" id="description" name="description" class="form-control" value=""></div>
+							</div>
+							<div class="form-group">
 								<label class="col-sm-2 control-label">Style Number</label>
 					            <div class="col-sm-10"><input type="text" id="styleNumber" name="styleNumber" class="form-control" value=""></div>
 							</div>
@@ -151,7 +157,7 @@
 								<label class="col-sm-2 control-label">Description</label>
 					            <div class="col-sm-10"><input type="text" id="description" name="description" class="form-control" value=""></div>
 							</div>
-							
+
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Comments</label>
 					            <div class="col-sm-10"><input type="text" id="comments" name="comments" class="form-control" value=""></div>
@@ -172,7 +178,7 @@
 								<label class="col-sm-2 control-label"></label>
 					            <div class="col-sm-10"><input type="checkbox" id="dm_approval" name="dm_approval" class="" />  I have approval from my DM for this request.</div>
 							</div>							
-							
+
 
 						{{Form::close()}}
 
@@ -186,14 +192,14 @@
 						<button class="btn btn-primary" id="form_send"><i class="fa fa-check"></i> Save and Send</button>
 		            </div>
 		        </div>
-    
+
 
             </div>
         </div>
 
 
     </div><!-- wrapper closes -->
-		
+
 
 		@include('site.includes.footer')
 
@@ -205,11 +211,11 @@
 		<script type="text/javascript" src="/js/vendor/bootstrap-datetimepicker.min.js"></script>
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 		<script src="/js/custom/site/form/storefeedbackform.js"></script>
-		
-		
+
+
 
 		<script type="text/javascript">
-						
+
 			$.ajaxSetup({
 		        headers: {
 		            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
