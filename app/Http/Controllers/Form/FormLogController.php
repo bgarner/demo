@@ -7,12 +7,8 @@ use App\Http\Controllers\Controller;
 
 class FormLogController extends Controller
 {
-    public function update()
+    public function show()
     {
-        //form_intance_id
-        //status_id
-        //store number
-        //if admin - admin user
-        //message
+
     }
 }
