@@ -20,15 +20,15 @@ class FormInstanceStatusController extends Controller
         switch($origin){
             case "admin":
                 $user = \Auth::user();
-                $userposition = \Auth::user()->fglposition;
+                $username = $user->firstname . " " . $user->lastname;
+                $userposition = $user->fglposition;
                 break;
 
             case "store":
-                $user = $request->submitted_by;
+                $username = $request->submitted_by;
                 $userposition = $request->submitted_by_position;
                 break;
         }
-        
 
     	$formStatus = FormInstanceStatusMap::create([
             "form_data_id" => $formInstanceId,
@@ -43,17 +43,19 @@ class FormInstanceStatusController extends Controller
             "status_store_name" => $statusMeta->store_status,
             "status_icon" => $statusMeta->icon,
             "status_colour" => $statusMeta->colour,
-            "status_admin_username" => $user->firstname . " " . $user->lastname,
-            "status_store_username" => "",
+            "user_name" => $username,
+            "user_position" => $userposition,
             "comment" => $comment
-        ]
+        ];
+
+        \Log::info($log);
 
     	$formLog =FormActivityLog::create([
             "form_data_id" => $formInstanceId,
-            "log" => 
+            "log" => serialize($log),
             "status_id" =>$request->status
         ]);
         
-
+        return "";
     }
 }

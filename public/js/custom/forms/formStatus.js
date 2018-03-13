@@ -1,20 +1,13 @@
-// var statusDropdown = document.getElementById('status_code_id');
-
 $("#update_status").on('click', function () {
-
-	//var codeSelected = $("#status_code_id").children("option").filter(":selected").val();
+	
 	var codeSelected = $("#status_code_id").val();
 	var comment = $("#comment").val();
 	var formInstanceId = $('#form_instance_id').val();
 	var origin = $('#origin').val();
 
-	console.log(codeSelected);
-    console.log(comment);
-
     $.ajax({
         url: "/forms/updateStatus",
         type: 'post',
-        dataType: 'json',
         data: {
         	origin: origin,
         	form_instance_id: formInstanceId,
@@ -22,20 +15,19 @@ $("#update_status").on('click', function () {
             comment: comment
         },
         success: function(result) {
-
-        	console.log(result);
-       		// swal({
-        	// 	title : '',
-        	// 	text : "Status Updated",
-        	// 	type : 'success',
-
-        	// },
-        	// function(){
-        	// 	//reload the partial
-        	// })
+        
+       		swal({
+        		title : "",
+        		text : "Status Updated",
+        		type : "success",
+        	},
+        	function(){
+        		$("#comment").val("");
+        		$("#status_code_id").val(0);
+        	})
         }
     }).done(function(response){
-       $(element).closest("tr").after( table );
+      	
     });
 	
 });
