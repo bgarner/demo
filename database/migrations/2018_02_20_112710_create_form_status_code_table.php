@@ -15,11 +15,12 @@ class CreateFormStatusCodeTable extends Migration
     {
         Schema::create('form_status_code', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('form_id')->unsigned();
-            $table->string('status_code');
+            $table->string('store_status');
+            $table->string('admin_status');
+            $table->string('icon');
+            $table->string('colour');
             $table->string('status_code_description');
             $table->timestamps();
-            $table->foreign('form_id')->references('id')->on('forms')->onDelete('cascade');
         });
     }
 

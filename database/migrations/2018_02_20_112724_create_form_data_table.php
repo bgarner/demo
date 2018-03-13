@@ -15,12 +15,14 @@ class CreateFormDataTable extends Migration
     {
         Schema::create('form_data', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('form_id')->unsigned();
             $table->string('store_number');
             $table->string('form_name');
             $table->string('form_version');
             $table->string('submitted_by');
             $table->mediumText('form_data');
             $table->timestamps();
+            $table->foreign('form_id')->references('id')->on('forms');
         });
     }
 

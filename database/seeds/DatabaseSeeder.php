@@ -43,5 +43,6 @@ class DatabaseSeeder extends Seeder
 
         // $this->call(ComponentDeletablePropertySeeder::class);
         $this->call(FormStatusCodeSeeder::class);
+        $this->call(FormTableSeeder::class);
     }
 }
