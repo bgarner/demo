@@ -17,6 +17,9 @@
 </head>
 
 <body class="fixed-navigation adminview">
+    <input type="text" hidden value="{{$formInstance->id}}" id="form_instance_id">
+
+
     <div id="wrapper">
 	    <nav class="navbar-default navbar-static-side" role="navigation">
 	        <div class="sidebar-collapse">
@@ -115,12 +118,12 @@
                                 <div class="ibox-content">
                                     <label>Status</label>
                                     
-                                        {!! Form::select('status', $codes, null, ['class'=>'form-control'] ) !!}
+                                        {!! Form::select('status', $codes, null, ['class'=>'form-control', 'id'=>'status_code_id'] ) !!}
 
                                     <label>Comments</label>
-                                    <textarea class="form-control"></textarea>
+                                    <textarea class="form-control" id="comment"></textarea>
 
-                                    <button type="submit" class="btn btn-md btn-primary pull-right clearfix" style="margin: 10px 0px 10px 0px;">Submit</button>
+                                    <button id="update_status" type="submit" class="btn btn-md btn-primary pull-right clearfix" style="margin: 10px 0px 10px 0px;">Submit</button>
                                     <br />
                                     <br class="clearfix" />
                                 </div>

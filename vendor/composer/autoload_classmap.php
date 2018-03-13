@@ -82,6 +82,7 @@ return array(
     'App\\Models\\Form\\Form' => $baseDir . '/app/Models/Form/Form.php',
     'App\\Models\\Form\\FormActivityLog' => $baseDir . '/app/Models/Form/FormActivityLog.php',
     'App\\Models\\Form\\FormData' => $baseDir . '/app/Models/Form/FormData.php',
+    'App\\Models\\Form\\FormInstanceStatusMap' => $baseDir . '/app/Models/Form/FormInstanceStatusMap.php',
     'App\\Models\\Form\\FormStatusMap' => $baseDir . '/app/Models/Form/FormStatusMap.php',
     'App\\Models\\Form\\Status' => $baseDir . '/app/Models/Form/Status.php',
     'App\\Models\\ManagerDashboard\\ManagerDashboard' => $baseDir . '/app/Models/ManagerDashboard/ManagerDashboard.php',

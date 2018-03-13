@@ -564,6 +564,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'App\\Models\\Form\\Form' => __DIR__ . '/../..' . '/app/Models/Form/Form.php',
         'App\\Models\\Form\\FormActivityLog' => __DIR__ . '/../..' . '/app/Models/Form/FormActivityLog.php',
         'App\\Models\\Form\\FormData' => __DIR__ . '/../..' . '/app/Models/Form/FormData.php',
+        'App\\Models\\Form\\FormInstanceStatusMap' => __DIR__ . '/../..' . '/app/Models/Form/FormInstanceStatusMap.php',
         'App\\Models\\Form\\FormStatusMap' => __DIR__ . '/../..' . '/app/Models/Form/FormStatusMap.php',
         'App\\Models\\Form\\Status' => __DIR__ . '/../..' . '/app/Models/Form/Status.php',
         'App\\Models\\ManagerDashboard\\ManagerDashboard' => __DIR__ . '/../..' . '/app/Models/ManagerDashboard/ManagerDashboard.php',
