@@ -18,6 +18,7 @@
 
 <body class="fixed-navigation adminview">
     <input type="text" hidden value="{{$formInstance->id}}" id="form_instance_id">
+    <input type="text" hidden value="admin" id="origin">
 
 
     <div id="wrapper">

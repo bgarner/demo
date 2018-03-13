@@ -77,7 +77,6 @@ Route::get('/{storeno}/tasklist/{id}', 'Task\TasklistController@index');
 Route::patch('/{storeno}/task/{id}', 'Task\TaskController@update');
 Route::patch('/{storeno}/tasklist/{id}/task/{taskId}', 'Task\TasklistController@update');
 
-
 //TOOLS
 Route::get('/{storeno}/tools/boxingday', array('uses' => 'Tools\BlackFridayController@index'));
 Route::post('/getFlyerBoxes', 'Tools\FlyerPageSelectionController@show');
