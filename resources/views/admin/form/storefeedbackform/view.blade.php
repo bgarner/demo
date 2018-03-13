@@ -98,15 +98,9 @@
 
                             </table>
 
-
-
-
                         </div> <!-- ibox-content closes -->
 
-
                     </div><!-- ibox closes -->
-
-
 
                     <div class="row">
                         <div class="col-md-6">
@@ -118,8 +112,12 @@
 
                                 <div class="ibox-content">
                                     <label>Status</label>
-                                    
-                                        {!! Form::select('status', $codes, null, ['class'=>'form-control', 'id'=>'status_code_id'] ) !!}
+                                        <select class="form-control" id="status_code_id">
+                                            <option value=""></option>
+                                            @foreach($codes as $code)
+                                            <option value="{{$code->id}}">{{$code->admin_status}}</option>
+                                            @endforeach
+                                        </select>
 
                                     <label>Comments</label>
                                     <textarea class="form-control" id="comment"></textarea>
@@ -194,7 +192,7 @@
 
 		@include('admin.includes.footer')
 	    @include('admin.includes.scripts')
-        
+
         <script type="text/javascript" src="/js/custom/forms/formStatus.js"></script>
 
 
