@@ -17,6 +17,11 @@ class FormActivityLog extends Model
     		$item->log = unserialize($item->log);
     		$item->sinceSubmitted = Utility::getTimePastSinceDate($item->created_at);
     		$item->prettySubmitted = Utility::prettifyDateWithTime($item->created_at);
+
+            if(isset($item->log["answer_time"])){
+                $item->prettySinceAnswerSubmitted = Utility::getTimePastSinceDate($item->log["answer_time"]);
+                $item->prettyAnswerSubmitted = Utility::prettifyDateWithTime($item->log["answer_time"]);
+            }
     	});
 
     	return $log;

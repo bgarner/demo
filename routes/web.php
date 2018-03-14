@@ -62,7 +62,8 @@ Route::resource('/{storeno}/forms/storefeedback', 'Form\StoreFeedbackFormControl
 Route::get('/forms/storefeedbackform/log/{id}', 'Form\FormLogController@show');
 
 //FORM API ROUTES
-Route::post('/forms/updateStatus', 'Form\FormInstanceStatusController@update');
+Route::post('/forms/updateStatus', 'Form\FormInstanceStatusController@create');
+Route::patch('/forms/updateStatus/{id}', 'Form\FormInstanceStatusController@update');
 
 
 

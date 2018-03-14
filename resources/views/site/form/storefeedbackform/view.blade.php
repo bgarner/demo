@@ -10,6 +10,7 @@
 </head>
 
 <body class="fixed-navigation adminview">
+    <input type="hidden" name="formInstanceId" id="formInstanceId" value="{{ $formInstance->id }}">
     <div id="wrapper">
 	    <nav class="navbar-default navbar-static-side" role="navigation">
 	        <div class="sidebar-collapse">
@@ -93,7 +94,7 @@
 
                 </div><!-- ibox closes -->
 
-                <div id="vertical-timeline" class="vertical-container light-timeline no-margins">
+                <div id="logContainer">
                     @include('admin.form.partials.log')
                 </div>
 
@@ -110,11 +111,8 @@
 
 		@include('site.includes.bugreport')
 
-		<script type="text/javascript" src="/js/vendor/moment.js"></script>
-		<script type="text/javascript" src="/js/vendor/bootstrap-datetimepicker.min.js"></script>
-		<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
-		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
-		<script src="/js/custom/site/form/storefeedbackform.js"></script>
+        <script src="/js/custom/forms/storefeedbackform.js"></script>
+        <script src="/js/custom/forms/respondToQuestion.js"></script>
 
 
 

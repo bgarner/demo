@@ -47,9 +47,9 @@
 					            <div class="col-sm-10">
 					            	<select name="department" id="department" class="form-control input-sm">
 					            		<option></option>
-					            		<option data-dept="hg" value="dept-hg">Hardgoods</option>
-					            		<option data-dept="sg" value="dept-sg">Softgoods</option>
-					            		<option data-dept="fw" value="dept-fw">Footwear</option>
+					            		<option data-dept="hg" value="Hardgoods">Hardgoods</option>
+					            		<option data-dept="sg" value="Softgoods">Softgoods</option>
+					            		<option data-dept="fw" value="Footwear">Footwear</option>
 					            	</select>
 					            </div>
 							</div>
@@ -59,39 +59,39 @@
 					            <div class="col-sm-10">
 					            	<select name="category" id="category" class="form-control input-sm">					            		
 					            		<option></option>
-										<option data-dept="hg" data-category="Ski/Snowboard" value="dept-hg-category-Ski/Snowboard"> Ski/Snowboard </option>
-										<option data-dept="hg" data-category="Hockey" value="dept-hg-category-Hockey"> Hockey </option>
-										<option data-dept="hg" data-category="Golf" value="dept-hg-category-Golf"> Golf </option>
-										<option data-dept="hg" data-category="Fitness/Yoga" value="dept-hg-category-Fitness/Yoga"> Fitness/Yoga </option>
-										<option data-dept="hg" data-category="Boxing" value="dept-hg-category-Boxing"> Boxing </option>
-										<option data-dept="hg" data-category="Soccer" value="dept-hg-category-Soccer"> Soccer </option>
-										<option data-dept="hg" data-category="Basektball" value="dept-hg-category-Basketball"> Basektball </option>
-										<option data-dept="hg" data-category="Baseball/Softball" value="dept-hg-category-Baseball/Softball"> Baseball/Softball </option>
-										<option data-dept="hg" data-category="Volleybaall" value="dept-hg-category-Volleybaall"> Volleybaall </option>
-										<option data-dept="hg" data-category="Football" value="dept-hg-category-Football"> Football </option>
-										<option data-dept="hg" data-category="Yoga" value="dept-hg-category-Yoga"> Yoga </option>
-										<option data-dept="hg" data-category="Bike" value="dept-hg-category-Bike"> Bike </option>
-										<option data-dept="hg" data-category="Racquets" value="dept-hg-category-Racquets"> Racquets </option>
-										<option data-dept="hg" data-category="Other" value="dept-hg-category-Other"> Other </option>
+										<option data-dept="hg" data-category="Ski/Snowboard" value="Ski/Snowboard"> Ski/Snowboard </option>
+										<option data-dept="hg" data-category="Hockey" value="Hockey"> Hockey </option>
+										<option data-dept="hg" data-category="Golf" value="Golf"> Golf </option>
+										<option data-dept="hg" data-category="Fitness/Yoga" value="Fitness/Yoga"> Fitness/Yoga </option>
+										<option data-dept="hg" data-category="Boxing" value="Boxing"> Boxing </option>
+										<option data-dept="hg" data-category="Soccer" value="Soccer"> Soccer </option>
+										<option data-dept="hg" data-category="Basektball" value="Basketball"> Basektball </option>
+										<option data-dept="hg" data-category="Baseball/Softball" value="Baseball/Softball"> Baseball/Softball </option>
+										<option data-dept="hg" data-category="Volleybaall" value="Volleybaall"> Volleybaall </option>
+										<option data-dept="hg" data-category="Football" value="Football"> Football </option>
+										<option data-dept="hg" data-category="Yoga" value="Yoga"> Yoga </option>
+										<option data-dept="hg" data-category="Bike" value="Bike"> Bike </option>
+										<option data-dept="hg" data-category="Racquets" value="Racquets"> Racquets </option>
+										<option data-dept="hg" data-category="Other" value="Other"> Other </option>
 
-										<option data-dept="sg" data-category="Outerwear" value="dept-sg-category-Outerwear"> Outerwear </option>
-										<option data-dept="sg" data-category="Lifestyle" value="dept-sg-category-Lifestyle"> Lifestyle </option>
-										<option data-dept="sg" data-category="Athletic" value="dept-sg-category-Athletic"> Athletic </option>
-										<option data-dept="sg" data-category="Casual" value="dept-sg-category-Casual"> Casual </option>
-										<option data-dept="sg" data-category="Kids" value="dept-sg-category-Kids"> Kids </option>
-										<option data-dept="sg" data-category="Toddler" value="dept-sg-category-Toddler"> Toddler </option>
-										<option data-dept="sg" data-category="Other" value="dept-sg-category-Other"> Other </option>
+										<option data-dept="sg" data-category="Outerwear" value="Outerwear"> Outerwear </option>
+										<option data-dept="sg" data-category="Lifestyle" value="Lifestyle"> Lifestyle </option>
+										<option data-dept="sg" data-category="Athletic" value="Athletic"> Athletic </option>
+										<option data-dept="sg" data-category="Casual" value="Casual"> Casual </option>
+										<option data-dept="sg" data-category="Kids" value="Kids"> Kids </option>
+										<option data-dept="sg" data-category="Toddler" value="Toddler"> Toddler </option>
+										<option data-dept="sg" data-category="Other" value="Other"> Other </option>
 
-										<option data-dept="fw" data-category="Running" value="dept-fw-category-Running"> Running </option>
-										<option data-dept="fw" data-category="Training" value="dept-fw-category-Training"> Training </option>
-										<option data-dept="fw" data-category="Court" value="dept-fw-category-Court"> Court </option>
-										<option data-dept="fw" data-category="Outdoor" value="dept-fw-category-Outdoor"> Outdoor </option>
-										<option data-dept="fw" data-category="Lifesyle" value="dept-fw-category-Lifesyle"> Lifesyle </option>
-										<option data-dept="fw" data-category="Trend" value="dept-fw-category-Trend"> Trend </option>
-										<option data-dept="fw" data-category="Kids" value="dept-fw-category-Kids"> Kids </option>
-										<option data-dept="fw" data-category="Toddler" value="dept-fw-category-Toddler"> Toddler </option>
-										<option data-dept="fw" data-category="Winter/Rain" value="dept-fw-category-Winter/Rain"> Winter/Rain </option>
-										<option data-dept="fw" data-category="Other" value="dept-fw-category-Other"> Other </option>
+										<option data-dept="fw" data-category="Running" value="Running"> Running </option>
+										<option data-dept="fw" data-category="Training" value="Training"> Training </option>
+										<option data-dept="fw" data-category="Court" value="Court"> Court </option>
+										<option data-dept="fw" data-category="Outdoor" value="Outdoor"> Outdoor </option>
+										<option data-dept="fw" data-category="Lifesyle" value="Lifesyle"> Lifesyle </option>
+										<option data-dept="fw" data-category="Trend" value="Trend"> Trend </option>
+										<option data-dept="fw" data-category="Kids" value="Kids"> Kids </option>
+										<option data-dept="fw" data-category="Toddler" value="Toddler"> Toddler </option>
+										<option data-dept="fw" data-category="Winter/Rain" value="Winter/Rain"> Winter/Rain </option>
+										<option data-dept="fw" data-category="Other" value="Other"> Other </option>
 					            	</select>
 					            </div>
 							</div>
@@ -102,19 +102,19 @@
 
 					            	<select name="subcategory" id="subcategory" class="form-control input-sm">
 					            		<option></option>
-										<option data-dept="hg" value="dept-hg-subcategory-Men\'s">Men's</option>
-										<option data-dept="hg" value="dept-hg-subcategory-Women\'s">Women's</option>
-										<option data-dept="hg" value="dept-hg-subcategory-Jr/Kid\'s">Jr/Kid's</option>
+										<option data-dept="hg" value="Men\'s">Men's</option>
+										<option data-dept="hg" value="Women\'s">Women's</option>
+										<option data-dept="hg" value="Jr/Kid\'s">Jr/Kid's</option>
 
-										<option data-dept="sg" value="dept-sg-subcategory-Men\'s">Men's</option>
-										<option data-dept="sg" value="dept-sg-subcategory-Women\'s"> Women's</option>
-										<option data-dept="sg" value="dept-sg-subcategory-Kid\'s"> Kid's</option>
-										<option data-dept="sg" value="dept-sg-subcategory-Toddler"> Toddler</option>
+										<option data-dept="sg" value="Men\'s">Men's</option>
+										<option data-dept="sg" value="Women\'s"> Women's</option>
+										<option data-dept="sg" value="Kid\'s"> Kid's</option>
+										<option data-dept="sg" value="Toddler"> Toddler</option>
 
-										<option data-dept="fw" value="dept-fw-subcategory-Men\'s"> Men's</option>
-										<option data-dept="fw" value="dept-fw-subcategory-Women\'s"> Women's</option>
-										<option data-dept="fw" value="dept-fw-subcategory-Kid\'s"> Kid's</option>
-										<option data-dept="fw" value="dept-fw-subcategory-Toddler"> Toddler</option>
+										<option data-dept="fw" value="Men\'s"> Men's</option>
+										<option data-dept="fw" value="Women\'s"> Women's</option>
+										<option data-dept="fw" value="Kid\'s"> Kid's</option>
+										<option data-dept="fw" value="Toddler"> Toddler</option>
 
 
 					            	</select>
@@ -126,9 +126,9 @@
 					            <div class="col-sm-10">
 					            	<select name="requirement" id="requirement" class="form-control input-sm">
 					            		<option></option>
-										<option value="requirement-more">More</option>
-										<option value="requirement-less">Less</option>
-										<option value="requirement-opportunity">Opportunity</option>
+										<option value="More">More</option>
+										<option value="Less">Less</option>
+										<option value="Opportunity">Opportunity</option>
 
 					            	</select>
 					            </div>
@@ -208,7 +208,8 @@
 		<script type="text/javascript" src="/js/vendor/moment.js"></script>
 		<script type="text/javascript" src="/js/vendor/bootstrap-datetimepicker.min.js"></script>
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
-		<script src="/js/custom/site/form/storefeedbackform.js"></script>
+		<script src="/js/custom/forms/storefeedbackform.js"></script>
+		<script src="/js/custom/forms/respondToQuestion.js"></script>
 
 
 

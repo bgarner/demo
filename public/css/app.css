@@ -8682,3 +8682,9 @@ a:hover span.badge{
 .navbar-default::-webkit-scrollbar {
     display: none;
 }
+
+
+.answer_to_question{
+  margin-top: 20px;
+  display: block;
+}
