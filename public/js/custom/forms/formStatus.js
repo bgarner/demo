@@ -4,6 +4,7 @@ $("#update_status").on('click', function () {
 	var comment = $("#comment").val();
 	var formInstanceId = $('#form_instance_id').val();
 	var origin = $('#origin').val();
+    var reply = $('#ask_for_reply:checked').val()
 
     $.ajax({
         url: "/forms/updateStatus",
@@ -12,7 +13,8 @@ $("#update_status").on('click', function () {
         	origin: origin,
         	form_instance_id: formInstanceId,
         	status_code_id: codeSelected,
-            comment: comment
+            comment: comment,
+            reply: reply
         },
         success: function(result) {
         
@@ -25,6 +27,7 @@ $("#update_status").on('click', function () {
                 $('#logContainer').load("/admin/forms/storefeedbackform/log/"+formInstanceId);
         		$("#comment").val("");
         		$("#status_code_id").val(0);
+                $('#ask_for_reply').prop('checked', false);
         	})
         }
     }).done(function(response){

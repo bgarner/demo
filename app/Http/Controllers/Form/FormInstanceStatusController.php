@@ -16,6 +16,7 @@ class FormInstanceStatusController extends Controller
         $status = $request->status_code_id;
         $formInstanceId = $request->form_instance_id;
         $comment = $request->comment;
+        $reply = $request->reply;
 
         switch($origin){
             case "admin":
@@ -53,7 +54,8 @@ class FormInstanceStatusController extends Controller
     	$formLog =FormActivityLog::create([
             "form_data_id" => $formInstanceId,
             "log" => serialize($log),
-            "status_id" =>$request->status
+            "status_id" =>$request->status, 
+            "allow_response" => $reply
         ]);
         
         return "";

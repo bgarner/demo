@@ -115,7 +115,8 @@
 
                                     <label>Comments</label>
                                     <textarea class="form-control" id="comment"></textarea>
-
+                                    <input type="checkbox" id="ask_for_reply" name="ask_for_reply" value="1" /> Allow the store to submit a response to this comment/question.
+                                    <br />
                                     <button id="update_status" type="submit" class="btn btn-md btn-primary pull-right clearfix" style="margin: 10px 0px 10px 0px;">Submit</button>
                                     <br />
                                     <br class="clearfix" />

@@ -491,6 +491,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'AddAllDayToEventsTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_28_152315_add_all_day_to_events_table.php',
         'AddFglpositionToUserTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_13_130628_add_fglposition_to_user_table.php',
         'AddOnOrderCountToBikeTracker' => __DIR__ . '/../..' . '/database/migrations/2017_06_23_142132_add_on_order_count_to_bike_tracker.php',
+        'AddReqestResponseToLogTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_14_102517_add_reqest_response_to_log_table.php',
         'AddSportCatToCommunityDonationsTable' => __DIR__ . '/../..' . '/database/migrations/2018_01_29_112304_add_sport_cat_to_community_donations_table.php',
         'AnalyticsAssetTypesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AnalyticsAssetTypesTableSeeder.php',
         'App\\Models\\Alert\\Alert' => __DIR__ . '/../..' . '/app/Models/Alert/Alert.php',
