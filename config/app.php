@@ -299,7 +299,8 @@ return [
         'App\Http\Controllers\Flyer\FlyerItemAdminController'                   => 'Flyer',
         'App\Http\Controllers\Utilities\BatchFileUploadController'              => 'Batch File Upload',
         'App\Http\Controllers\Form\StoreFeedbackFormAdminController'            => 'Form',
-        'App\Http\Controllers\Form\FormListAdminController'                     => 'Form'
+        'App\Http\Controllers\Form\FormListAdminController'                     => 'Form',
+        'App\Http\Controllers\Form\FormLogController'                           => 'Form'
 
     ],
 

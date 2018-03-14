@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Request as RequestFacade;
 use App\Models\Form\Form;
 use App\Models\Form\FormData;
+use App\Models\Form\FormActivityLog;
 use App\Models\Utility\Utility;
 
 class StoreFeedbackFormController extends Controller
@@ -40,12 +41,13 @@ class StoreFeedbackFormController extends Controller
         $formInstance->form_data = unserialize( $formInstance->form_data);
         $formInstance->prettySubmitted = Utility::prettifyDateWithTime($formInstance->created_at);
         $formInstance->sinceSubmitted = Utility::getTimePastSinceDate($formInstance->created_at);
-        // $formStructure = $form->form_struct
-        $formStructure = 'view';
-        // dd($formInstance);
-        $view = 'site.form.storefeedbackform.' . $formStructure;
+        
+        $log = FormActivityLog::getFormInstanceLog($id);
+    
+        $view = 'site.form.storefeedbackform.view';
         return view($view)->with('formInstance', $formInstance)
-                        ->with('storeNumber', $this->store_number);
+                        ->with('storeNumber', $this->store_number)
+                        ->with('log', $log);
     }
 
     public function create()

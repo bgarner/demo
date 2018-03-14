@@ -22,6 +22,7 @@ $("#update_status").on('click', function () {
         		type : "success",
         	},
         	function(){
+                $('#logContainer').load("/admin/forms/storefeedbackform/log/"+formInstanceId);
         		$("#comment").val("");
         		$("#status_code_id").val(0);
         	})

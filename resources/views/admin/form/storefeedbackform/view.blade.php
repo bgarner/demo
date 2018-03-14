@@ -124,55 +124,8 @@
 
                         </div>
 
-                        <div class="col-md-6">
-                            <div id="vertical-timeline" class="vertical-container light-timeline no-margins">
-                                <div class="vertical-timeline-block">
-                                    <div class="vertical-timeline-icon green-bg">
-                                        <i class="fa fa-paper-plane"></i>
-                                    </div>
-
-                                    <div class="vertical-timeline-content">
-                                        <h2>Submitted</h2>
-                                        {{-- <p>Conference on the sales results for the previous year. Monica please examine sales trends in marketing and products. Below please find the current status of the sale.
-                                        </p> --}}
-                                        {{-- <a href="#" class="btn btn-sm btn-success"> More info</a> --}}
-                                            <span class="">
-                                                <small>
-                                                {{ $formInstance->form_data['submitted_by'] }} - {{ $formInstance->form_data['submitted_by_position'] }}<br / />
-                                                <div class="pull-left">{{ $formInstance->sinceSubmitted }} ago</div>
-                                                <div class="pull-right">{{ $formInstance->prettySubmitted }}</div>
-                                                </small>
-                                            </span>
-                                    </div>
-                                </div>
-
-                                <div class="vertical-timeline-block">
-                                    <div class="vertical-timeline-icon blue-bg">
-                                        <i class="fa fa-clock-o"></i>
-                                    </div>
-
-                                    <div class="vertical-timeline-content">
-
-                                        <h2>In Progress</h2>
-                                        <i class="fa fa-quote-left" aria-hidden="true"></i>
-                                        <P><em>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                                            </em>
-                                        </P>
-                                        {{-- <p>Conference on the sales results for the previous year. Monica please examine sales trends in marketing and products. Below please find the current status of the sale.
-                                        </p> --}}
-                                        {{-- <a href="#" class="btn btn-sm btn-success"> More info</a> --}}
-                                            <span class="">
-                                                <small>Steve Smith - Hardgoods Analyst<br / />
-                                                <div class="pull-left">{{ $formInstance->sinceSubmitted }} ago</div>
-                                                <div class="pull-right">{{ $formInstance->prettySubmitted }}</div>
-                                                </small>
-                                            </span>
-                                    </div>
-                                </div>
-
-
-                            </div>
+                        <div class="col-md-6" id="logContainer">
+                            @include('admin.form.partials.log')
                         </div>
 
                     </div>
