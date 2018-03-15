@@ -703,6 +703,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'CreateFootwearInitialsTable' => __DIR__ . '/../..' . '/database/migrations/2017_12_11_091153_create_footwear_initials_table.php',
         'CreateFootwearIntialsRollingMonthTable' => __DIR__ . '/../..' . '/database/migrations/2017_12_11_091822_create_footwear_intials_rolling_month_table.php',
         'CreateFormDataTable' => __DIR__ . '/../..' . '/database/migrations/2018_02_20_112724_create_form_data_table.php',
+        'CreateFormRoleTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_15_165955_create_form_role_table.php',
         'CreateFormStatusCodeTable' => __DIR__ . '/../..' . '/database/migrations/2018_02_20_112710_create_form_status_code_table.php',
         'CreateFormStatusMapTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_12_140116_create_form_status_map_table.php',
         'CreateFormsTable' => __DIR__ . '/../..' . '/database/migrations/2018_02_20_112633_create_forms_table.php',
