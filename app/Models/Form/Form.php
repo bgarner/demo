@@ -15,5 +15,13 @@ class Form extends Model
         return Form::all();
     }
 
+    public static function getFormIdByFormNameAndVersion($formName, $formVersion)
+    {
+    	$formId = Form::where('form_name', $formName)
+    				->where('version', $formVersion)
+    				->first()->id;
+
+    	return $formId;
+    }
     
 }

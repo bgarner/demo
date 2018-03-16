@@ -305,4 +305,11 @@ return [
     ],
 
 
+    'controllerFormMap' => [
+        
+        'App\Http\Controllers\Form\StoreFeedbackFormAdminController'            => 'store_feedback_form_v_1.0'
+
+    ],
+
+
 ];
