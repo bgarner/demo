@@ -931,6 +931,7 @@ return array(
     'UpdateFeaturesTable' => $baseDir . '/database/migrations/2017_07_18_203705_update_features_table.php',
     'UpdateFeaturesTableRemoveBanner' => $baseDir . '/database/migrations/remove_banner/2017_10_18_155903_update_features_table_remove_banner.php',
     'UpdateFootwearInitalsTable' => $baseDir . '/database/migrations/2017_12_14_155123_update_footwear_initals_table.php',
+    'UpdateFormsTableAddDescription' => $baseDir . '/database/migrations/2018_03_16_121003_update_forms_table_add_description.php',
     'UpdatePlaylistTable' => $baseDir . '/database/migrations/2017_06_09_202016_update_playlist_table.php',
     'UpdateTagsTable' => $baseDir . '/database/migrations/2017_09_08_214710_update_tags_table.php',
     'UpdateTaskCreatorTable' => $baseDir . '/database/migrations/2017_09_26_211324_update_task_creator_table.php',

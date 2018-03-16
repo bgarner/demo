@@ -8,7 +8,13 @@ use App\Models\Form\FormStatusMap;
 class FormTableSeeder extends Seeder
 {
     private $forms = [ 
-    	["form_name" =>	'store_feedback_form', 'version' => '1.0']
+    	
+        [   'form_name'        => 'store_feedback_form',
+            'form_label'       => 'Store Feedback',
+            'version'          => '1.0',
+            'form_description' => 'This form is for requesting new product or getting more or less of some existing product',
+            'path'             => 'storefeedback'
+        ]
 
     ];
     

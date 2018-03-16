@@ -8,9 +8,11 @@ use App\Models\Form\Form;
 
 class FormListAdminController extends Controller
 {
-    //
+    
     public function index()
     {
-        return view('admin.form.formlist.index');
+        $user = \Auth::user();
+        $forms = Form::getFormsByAdminId($user->id);
+        return view('admin.form.formlist.index')->with('forms', $forms);
     }
 }
