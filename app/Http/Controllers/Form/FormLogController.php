@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Form;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Form\FormActivityLog;
-use App\Models\Utility\Utility;
 
 class FormLogController extends Controller
 {

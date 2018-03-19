@@ -4,6 +4,7 @@ namespace App\Models\Form;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Utility\Utility;
+use Carbon\Carbon;
 
 class FormActivityLog extends Model
 {
@@ -60,7 +61,6 @@ class FormActivityLog extends Model
             "comment" => $comment
         ];
 
-        \Log::info($log);
 
         $formLog =FormActivityLog::create([
             "form_data_id" => $formInstanceId,
@@ -70,5 +70,24 @@ class FormActivityLog extends Model
         ]);
 
         return $formLog;
+    }
+
+    public static function updateFormInstanceActivityLog($id, $request)
+    {
+        $formActivityInstance = FormActivityLog::find($id);
+
+        $log = unserialize($formActivityInstance->log);
+
+        $log["answer_submitted_by"] = $request->submitted_by;
+        $log["answer_submitted_by_position"] = $request->submitted_by_position;
+        $log["answer"] = $request->answer;
+        $log["answer_time"] = Carbon::now()->toDateTimeString();
+
+        $formActivityInstance->allow_response = null;
+
+        $formActivityInstance->log = serialize($log);
+        $formActivityInstance->save();
+
+        return $formActivityInstance;
     }
 }

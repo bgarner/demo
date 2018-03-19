@@ -4,10 +4,7 @@ namespace App\Http\Controllers\Form;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Form\Form;
 use App\Models\Form\FormData;
-use App\Models\Utility\Utility;
-use App\Models\Form\Status;
 use App\Models\Form\FormStatusMap;
 use App\Models\Form\FormActivityLog;
 
@@ -25,8 +22,8 @@ class StoreFeedbackFormAdminController extends Controller
 
     public function index()
     {
-        $form_name = $this->form_name;
-        $forms = FormData::where('form_name', $form_name)->get();
+        
+        $forms = FormData::getAdminFormDataByFormNameAndVersion($this->form_name, $this->current_version);
         return view('admin.form.storefeedbackform.index')
                 ->with('forms', $forms);
    	}
@@ -35,13 +32,9 @@ class StoreFeedbackFormAdminController extends Controller
 
     public function show($id, Request $request)
     {
-        $formInstance = FormData::find($id);
-        $formInstance->form_data = unserialize( $formInstance->form_data);
-        $formInstance->prettySubmitted = Utility::prettifyDateWithTime($formInstance->created_at);
-        $formInstance->sinceSubmitted = Utility::getTimePastSinceDate($formInstance->created_at);
-
+        
+        $formInstance = FormData::getFormInstanceById($id);
         $log = FormActivityLog::getFormInstanceLog($id);
-
         $codes = FormStatusMap::getStatusCodesByForm($formInstance->form_id);
         
         $formStructure = 'view';
