@@ -154,7 +154,8 @@ $(document).ready(function(){
 
 		        	},
 		        	function(){
-		        		window.history.back();	
+		        		// window.history.back();
+		        		window.location = "/" + storeNumber + '/forms/storefeedback/';
 		        	})
 
 			        console.log(data);
