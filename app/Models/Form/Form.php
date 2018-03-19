@@ -19,6 +19,13 @@ class Form extends Model
                             ->where('form_role.role_id', $role_id)
                             ->select('forms.*')
                             ->get();
+
+        foreach ($forms as $form) {
+            
+
+            $form->count_new = FormData::getNewFormInstanceCount( $form->id);
+            $form->count_in_progress = FormData::getInProgressFormInstanceCount($form->id);
+        }
         return $forms;
     }
 

@@ -56,7 +56,7 @@ class StoreFeedbackFormController extends Controller
 
     public function store(Request $request)
     {
-        $form =FormData::createNewFormInstance($request);
+        $form = FormData::createNewFormInstance($request);
         return $form;
     }
 

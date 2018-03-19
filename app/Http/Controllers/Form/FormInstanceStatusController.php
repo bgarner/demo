@@ -12,7 +12,7 @@ class FormInstanceStatusController extends Controller
     public function create(Request $request)
     {
         
-        $formStatus = FormInstanceStatusMap::updateFormInstanceStatus($request);
+        $formStatus = FormInstanceStatusMap::updateFormInstanceStatus($request->form_instance_id, $request->status_code_id);
         $formActivityLog = FormActivityLog::createFormInstanceActivityLog($request);
 
         return "";

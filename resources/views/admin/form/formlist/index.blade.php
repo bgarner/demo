@@ -57,8 +57,8 @@
                                     <tr>
                                         <td><a href="/admin/form/{{ $form->form_path }}">{{ $form->form_label }}</a></td>
                                         <td>{{ $form->description }}</td>
-                                        <td>5</td>
-                                        <td>10</td>
+                                        <td>{{ $form->count_new }}</td>
+                                        <td>{{ $form->count_in_progress }}</td>
                                     </tr>
                                     @endforeach
 

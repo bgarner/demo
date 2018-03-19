@@ -4,6 +4,7 @@ namespace App\Models\Form;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Utility\Utility;
+use App\Models\Form\Form;
 
 class FormData extends Model
 {
@@ -47,17 +48,40 @@ class FormData extends Model
 
     public static function createNewFormInstance($request)
     {
-    	$formInstance =  FormData::create([
+    	$form = Form::find($request->form_id);
+
+        $formInstance =  FormData::create([
 					            "form_id" => $request->form_id,
 					            "store_number" =>$request->storeNumber,
-					            "form_name" => $this->form_name,
-					            "form_version" => $this->current_version,
+					            "form_name" => $form->form_name,
+					            "form_version" => $form->version,
 					            "submitted_by" => $request->submitted_by,
 					            "form_data" => serialize($request->all())
 					        ]);
 
+        $status_code_id_for_new = Status::where('admin_status', 'new')->first()->id;
+        FormInstanceStatusMap::updateFormInstanceStatus($formInstance->id, $status_code_id_for_new);
     	return $formInstance;
     }
+
+    public static function getNewFormInstanceCount($form_id)
+    {
+        return FormData::join('form_instance_status', 'form_instance_status.form_data_id', '=', 'form_data.id')
+                                        ->where('form_id', $form_id)
+                                        ->where('form_instance_status.status_code_id', 1)
+                                        ->select('form_data.*')
+                                        ->count();
+    }
+
+    public static function getInProgressFormInstanceCount($form_id)
+    {
+        return FormData::join('form_instance_status', 'form_instance_status.form_data_id', '=', 'form_data.id')
+                                        ->where('form_id', $form_id)
+                                        ->whereNotIn('form_instance_status.status_code_id', [1, 5])
+                                        ->select('form_data.*')
+                                        ->count();
+    }
+
 
 
 }
