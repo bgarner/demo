@@ -19,6 +19,9 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
+        <div class="row border-bottom">
+            @include('site.includes.topbar')
+        </div>
 
 	<div class="wrapper wrapper-content  animated fadeInRight">
         <div class="row">

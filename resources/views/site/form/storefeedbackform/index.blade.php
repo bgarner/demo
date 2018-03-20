@@ -18,6 +18,9 @@
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg" >
+        <div class="row border-bottom">
+            @include('site.includes.topbar')
+        </div>
 
 	<div class="wrapper wrapper-content  animated fadeInRight">
         <div class="row">
@@ -77,7 +80,7 @@
 		<script type="text/javascript" src="/js/vendor/bootstrap-datetimepicker.min.js"></script>
 		<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
-		<script src="/js/custom/site/form/storefeedbackform.js"></script>
+		<script src="/js/custom/forms/storefeedbackform.js"></script>
 
 
 
