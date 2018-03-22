@@ -69,7 +69,6 @@ Route::get('/{storeno}/tasklist/{id}', 'Task\TasklistController@index');
 Route::patch('/{storeno}/task/{id}', 'Task\TaskController@update');
 Route::patch('/{storeno}/tasklist/{id}/task/{taskId}', 'Task\TasklistController@update');
 
-
 //TOOLS
 Route::post('/getFlyerBoxes', 'Tools\FlyerPageSelectionController@show');
 Route::post('/getFlyerBoxData', 'Tools\FlyerBoxSelectionController@show');
@@ -84,7 +83,7 @@ Route::get('/tools/productdelivery/brands', array('uses' => 'Tools\ProductDelive
 Route::get('/tools/productdelivery/styles', array('uses' => 'Tools\ProductDeliveryController@getStyles'));
 Route::get('/{storeno}/tools/dirtynodes', array('uses' => 'Tools\DirtyNodesController@index'));
 Route::patch('/{storeno}/tools/dirtynodes/clean', array('uses' => 'Tools\DirtyNodesController@update'));
-Route::get('/{storeno}/tools/agedinventory', array('users' => 'Tools\AgedIventoryController'));
+Route::get('/{storeno}/tools/agedinventory', array('uses' => 'Tools\AgedInventoryController@index'));
 
 //TRAINING
 Route::get('/{storeno}/training', array('uses' => 'Training\TrainingController@index'));
