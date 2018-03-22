@@ -17,7 +17,5 @@
                     <li><a href="/{{ Request::segment(1) }}/tools/productdelivery/hardgoods" class="trackclick" data-tool-type="hginitialsTracker">Hardgoods</a></li>
                 </ul>
             </li>
-           
         </ul>
-
 </li>

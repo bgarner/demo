@@ -6,7 +6,11 @@
     @include('site.includes.head')
 
     <link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
-
+    <style>
+        td{ font-size: 11px; }
+        button{ float: left; margin-right: 5px;}
+    </style>
+    
 </head>
 
 <body class="fixed-navigation">
@@ -45,11 +49,12 @@
                     <div class="table-responsive clearfix">
 
 
-                    <table class="table table-bordered table-hover agedInventoryTable" id="">
+                    <table class="table table-bordered table-hover nowrap agedInventoryTable" id="">
                         <thead>
                         <tr>
                             <th>Category</th>
                             <th>Assortment</th>
+                            <th>Style</th>
                             <th>Product Name</th>
                             <th>Qty On Hand</th>
                             <th>Location</th>
@@ -57,33 +62,31 @@
                         </thead>
 
                         <tbody>
-                        {{--  @foreach($data as $d)
+                        @foreach($products as $p)
 
-                            @if($d->week)
-                            <tr class="highlight">
-                            @else
                             <tr>
-                            @endif
-                                <td>{{ substr($d->class, 8) }}</td>
-                                <td>{{ substr($d->gender, 7) }}</td>
-                                <td>{{ $d->brand }}</td>
-                                <td>{{ $d->style }}</td>
-                                <td>{{ $d->style_name }}</td>
-                                <td>{{ $d->colour }}</td>
-                                <td>{{ $d->size }}</td>
-                                <td>{{ $d->on_hand }}</td>
-                                <td>{{ $d->in_transit }}</td>
-                                <td>{{ $d->on_order }}</td>
+                                <td>{{ $p->category }}</td>
+                                <td>{{ $p->assortment }}</td>
+                                <td>{{ $p->style_colour }}</td>
+                                <td>{{ $p->style_name }}</td>
+                                <td>{{ $p->on_hand }}</td>
                                 <td>
-                                    @if($d->week)
-                                        <center>
-                                        {!!$d->week!!}
-                                        </center>
+                                    @if( $p->location_front == 0)
+                                    <button type="button" data-id='{{ $p->id }}' data-loc='Front' data-checked='{{ $p->location_front }}' class="btn setlocation btn-sm btn-outline btn-default front">Front</button>
+                                    @else
+                                    <button type="button" data-id='{{ $p->id }}' data-loc='Front' data-checked='{{ $p->location_front }}' class="btn setlocation btn-sm btn-success front"><i class="fa fa-check" aria-hidden="true"></i> Front</button>
                                     @endif
+                                    
+                                    @if( $p->location_back == 0)
+                                    <button type="button" data-id='{{ $p->id }}' data-loc='Back' data-checked='{{ $p->location_back }}' class="btn setlocation btn-sm btn-outline btn-default back">Back</button>
+                                    @else
+                                    <button type="button" data-id='{{ $p->id }}' data-loc='Back' data-checked='{{ $p->location_back }}' class="btn setlocation btn-sm btn-success back"><i class="fa fa-check" aria-hidden="true"></i> Back</button>
+                                    @endif
+
                                 </td>
                             </tr>
 
-                        @endforeach  --}}
+                        @endforeach
 
                         </tbody>
                     </table>
@@ -127,6 +130,53 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        $( ".setlocation" ).click(function() {
+
+            //get the id, etc of the item we are setting
+            var storenumber = localStorage.getItem('userStoreNumber').replace("A", "");
+            if(storenumber.charAt(0) == "0"){
+                storenumber = storenumber.slice(1);	
+            }
+            var id = $(this).data('id');
+            var loc = $(this).data('loc');  //front or back
+            var checked = $(this).data('checked');  //set or not
+            var action;
+            if(checked == 1){
+                action = "unset";
+            } else {
+                action = "set";
+            }
+
+             //add the spinner... fa fa-spinner fa-spin
+            $(this).removeClass('btn-default btn-outline').addClass('btn-warning').html('<i class="fa fa-spinner fa-spin" aria-hidden="true"></i> Updating...');
+            
+            var $t = $(this); //setting the "this" so we can use in the ajax block...
+            $.ajax({
+                url: "/tools/agedinventory/update",
+                type: 'patch',
+                data: {
+                    storenumber: storenumber,
+                    id: id,
+                    location: loc, //front or back
+                    action: action //set or unset
+                },
+                success: function(result) {
+                }
+            }).done(function(response){
+                //$(element).closest("tr").after( table );
+                    if(action == "set"){
+                        $t.removeClass('btn-warning').addClass('btn-success').html('<i class="fa fa-check" aria-hidden="true"></i> ' + loc);
+                        $t.data('checked', 1);
+                    } else {
+                        //setting back to the default look
+                        $t.removeClass('btn-warning').addClass('btn-default btn-outline').html(loc);
+                        $t.data('checked', 0);
+                    }
+            });
+           
+        });
+
     </script>
 
 </body>

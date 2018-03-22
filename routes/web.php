@@ -84,6 +84,7 @@ Route::get('/tools/productdelivery/styles', array('uses' => 'Tools\ProductDelive
 Route::get('/{storeno}/tools/dirtynodes', array('uses' => 'Tools\DirtyNodesController@index'));
 Route::patch('/{storeno}/tools/dirtynodes/clean', array('uses' => 'Tools\DirtyNodesController@update'));
 Route::get('/{storeno}/tools/agedinventory', array('uses' => 'Tools\AgedInventoryController@index'));
+Route::patch('/tools/agedinventory/update', array('uses' => 'Tools\AgedInventoryUpdateStatusController@update'));
 
 //TRAINING
 Route::get('/{storeno}/training', array('uses' => 'Training\TrainingController@index'));
