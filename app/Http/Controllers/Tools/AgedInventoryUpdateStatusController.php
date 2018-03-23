@@ -15,7 +15,7 @@ class AgedInventoryUpdateStatusController extends Controller
         \Log::info($request);
         $productToUpdate = AgedInventory::find($request->id);
         \Log::info($productToUpdate);
-        
+
         if($request->action == "set"){
             if($request->location == "Front"){
                 $productToUpdate->location_front = 1;
@@ -33,7 +33,6 @@ class AgedInventoryUpdateStatusController extends Controller
                 $productToUpdate->save();
             }
         }
-        
         return;
     }
 }

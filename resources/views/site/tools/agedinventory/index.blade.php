@@ -8,7 +8,7 @@
     <link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
     <style>
         td{ font-size: 11px; }
-        button{ float: left; margin-right: 5px;}
+        table button{ float: left; margin-right: 5px;}
     </style>
     
 </head>

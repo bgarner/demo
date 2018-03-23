@@ -14,7 +14,6 @@ class AgedInventoryController extends Controller
 
     public function __construct()
     {
-        //$this->storeNumber = RequestFacade::segment(1);
         $this->storeNumber = ltrim(ltrim(RequestFacade::segment(1), '0'), 'A');
     }
 
