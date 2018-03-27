@@ -11,7 +11,7 @@ class Component extends Model
 {
     use SoftDeletes;
     protected $table = 'components';
-    protected $fillable = ['component_name', 'banner_id'];
+    protected $fillable = ['component_name', 'banner_id', 'deletable'];
     protected $dates = ['deleted_at'];
 
     public static function validateComponent($request)
