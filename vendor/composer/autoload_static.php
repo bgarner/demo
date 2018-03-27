@@ -765,6 +765,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
         'File_Iterator_Factory' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Factory.php',
         'FormActivityLogTable' => __DIR__ . '/../..' . '/database/migrations/2018_02_20_134548_form_activity_log_table.php',
+        'FormGroupAndRolesSeeder' => __DIR__ . '/../..' . '/database/seeds/FormGroupAndRolesSeeder.php',
         'FormInstanceStatusTable' => __DIR__ . '/../..' . '/database/migrations/2018_02_20_112746_form_instance_status_table.php',
         'FormStatusCodeSeeder' => __DIR__ . '/../..' . '/database/seeds/FormStatusCodeSeeder.php',
         'FormTableSeeder' => __DIR__ . '/../..' . '/database/seeds/FormTableSeeder.php',

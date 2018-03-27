@@ -38,11 +38,12 @@ class DatabaseSeeder extends Seeder
         // $this->call(UrgentNoticeBannerTableSeeder::class);
         // $this->call(BannerTableBannerClassSeeder::class);
         // $this->call(EventTypeBannerTableSeeder::class);
-
         // $this->call(BannerTableBannerClassSeeder::class);
-
         // $this->call(ComponentDeletablePropertySeeder::class);
-        $this->call(FormStatusCodeSeeder::class);
-        $this->call(FormTableSeeder::class);
+        // $this->call(FormStatusCodeSeeder::class);
+        // $this->call(FormTableSeeder::class);
+
+        
+        $this->call(FormGroupAndRolesSeeder::class);
     }
 }

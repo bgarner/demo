@@ -283,6 +283,7 @@ return array(
     'File_Iterator_Facade' => $vendorDir . '/phpunit/php-file-iterator/src/Facade.php',
     'File_Iterator_Factory' => $vendorDir . '/phpunit/php-file-iterator/src/Factory.php',
     'FormActivityLogTable' => $baseDir . '/database/migrations/2018_02_20_134548_form_activity_log_table.php',
+    'FormGroupAndRolesSeeder' => $baseDir . '/database/seeds/FormGroupAndRolesSeeder.php',
     'FormInstanceStatusTable' => $baseDir . '/database/migrations/2018_02_20_112746_form_instance_status_table.php',
     'FormStatusCodeSeeder' => $baseDir . '/database/seeds/FormStatusCodeSeeder.php',
     'FormTableSeeder' => $baseDir . '/database/seeds/FormTableSeeder.php',
