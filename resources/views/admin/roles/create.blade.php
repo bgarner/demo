@@ -5,7 +5,6 @@
     @section('title', 'Roles')
     @include('admin.includes.head')
 
-	<link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 
 </head>
