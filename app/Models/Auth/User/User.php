@@ -39,31 +39,31 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected $hidden = ['password', 'remember_token'];
 
-    public function activateAccount($code)
-    {
-        $user = User::where('activation_code', '=', $code)->first();
-        $user->active = 1;
-        $user->activation_code = '';
-        if($user->save()) {
-        \Auth::login($user);
-        }
-        return $user;
-    }
-    public function approveAccount($code)
-    {
-        $user = User::where('approval_code', '=', $code)->first();
-        $user->approved = 1;
-        $approvalCode = $user->approval_code;
-        $user->approval_code = '';
+    // public function activateAccount($code)
+    // {
+    //     $user = User::where('activation_code', '=', $code)->first();
+    //     $user->active = 1;
+    //     $user->activation_code = '';
+    //     if($user->save()) {
+    //     \Auth::login($user);
+    //     }
+    //     return $user;
+    // }
+    // public function approveAccount($code)
+    // {
+    //     $user = User::where('approval_code', '=', $code)->first();
+    //     $user->approved = 1;
+    //     $approvalCode = $user->approval_code;
+    //     $user->approval_code = '';
 
-        if($user->save()) {
+    //     if($user->save()) {
             
-            $store = substr($approvalCode, 60);
-            $profile = Profile::initiateProfile($store, $user);  
+    //         $store = substr($approvalCode, 60);
+    //         $profile = Profile::initiateProfile($store, $user);  
 
-        }
-        return $user;
-    }
+    //     }
+    //     return $user;
+    // }
 
     public static function getAdminUsers()
     {

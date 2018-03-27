@@ -41,9 +41,10 @@ class Component extends Model
             return $validate;
         }
 
-        $component = component::create([
+        $component = Component::create([
                 'component_name' => $request['component_name'],
-                'banner_id' => $request['banner_id']
+                'banner_id' => $request['banner_id'],
+                'deletable' => 1
 
             ]);
     	RoleComponent::createRoleComponentPivotWithComponentId($component, $request);
