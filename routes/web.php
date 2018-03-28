@@ -57,7 +57,7 @@ Route::get('/{storeno}/flyer/{flyer_id}', array('uses' => 'Flyer\FlyerController
 Route::get('/{storeno}/folder/{id}', ['uses' => 'Document\FolderController@show']);
 
 //FORMS
-Route::resource('/{storeno}/formlist', 'Form\FormListController');
+Route::get('/{storeno}/forms', 'Form\FormListController@index');
 Route::resource('/{storeno}/forms/productrequest', 'Form\ProductRequestFormController');
 Route::get('/forms/productrequest/log/{id}', 'Form\FormLogController@show');
 
