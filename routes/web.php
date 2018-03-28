@@ -58,8 +58,8 @@ Route::get('/{storeno}/folder/{id}', ['uses' => 'Document\FolderController@show'
 
 //FORMS
 Route::resource('/{storeno}/formlist', 'Form\FormListController');
-Route::resource('/{storeno}/forms/storefeedback', 'Form\StoreFeedbackFormController');
-Route::get('/forms/storefeedbackform/log/{id}', 'Form\FormLogController@show');
+Route::resource('/{storeno}/forms/productrequest', 'Form\ProductRequestFormController');
+Route::get('/forms/productrequest/log/{id}', 'Form\FormLogController@show');
 
 //FORM API ROUTES
 Route::post('/forms/updateStatus', 'Form\FormInstanceStatusController@create');

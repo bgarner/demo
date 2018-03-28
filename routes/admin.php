@@ -23,8 +23,8 @@ Route::resource('/admin/folder', 'Document\FolderAdminController');
 
 //FORMS
 Route::get('/admin/formlist', 'Form\FormListAdminController@index');
-Route::resource('/admin/form/storefeedback', 'Form\StoreFeedbackFormAdminController')->middleware(['formaccess']);
-Route::get('/admin/forms/storefeedbackform/log/{id}', 'Form\FormLogController@show');
+Route::resource('/admin/form/productrequest', 'Form\ProductRequestFormAdminController')->middleware(['formaccess']);
+Route::get('/admin/forms/productrequestform/log/{id}', 'Form\FormLogController@show');
 
 //PACKAGES
 Route::resource('/admin/package', 'Document\PackageAdminController');

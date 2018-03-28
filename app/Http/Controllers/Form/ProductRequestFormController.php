@@ -9,7 +9,7 @@ use App\Models\Form\Form;
 use App\Models\Form\FormData;
 use App\Models\Form\FormActivityLog;
 
-class StoreFeedbackFormController extends Controller
+class ProductRequestFormController extends Controller
 {
     protected $form_name;
     protected $current_version;
@@ -17,7 +17,7 @@ class StoreFeedbackFormController extends Controller
 
     public function __construct()
     {
-        $this->form_name = 'store_feedback_form';
+        $this->form_name = 'product_request_form';
         $this->current_version = '1.0';
         $this->store_number = RequestFacade::segment(1);
     }
@@ -26,7 +26,7 @@ class StoreFeedbackFormController extends Controller
     {
         $forms = FormData::getAdminFormDataByFormNameAndVersionAndStore($this->form_name, $this->current_version, $this->store_number);
         
-        return view('site.form.storefeedbackform.index')
+        return view('site.form.productrequestform.index')
                 ->with('forms', $forms);
     }
 
@@ -37,7 +37,7 @@ class StoreFeedbackFormController extends Controller
         
         $log = FormActivityLog::getFormInstanceLog($id);
     
-        $view = 'site.form.storefeedbackform.view';
+        $view = 'site.form.productrequestform.view';
         return view($view)->with('formInstance', $formInstance)
                         ->with('storeNumber', $this->store_number)
                         ->with('log', $log);
@@ -48,7 +48,7 @@ class StoreFeedbackFormController extends Controller
    		$form_id = Form::getFormIdByFormNameAndVersion($this->form_name, $this->current_version);
    		
         $formStructure = 'createOrUpdate';
-   		$view = 'site.form.storefeedbackform.' . $formStructure;
+   		$view = 'site.form.productrequestform.' . $formStructure;
     	return view($view)
             ->with('storeNumber', $this->store_number)
             ->with('form_id', $form_id);

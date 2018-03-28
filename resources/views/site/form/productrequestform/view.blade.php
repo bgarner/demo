@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    @section('title', 'Store Feedback Form')
+    @section('title', 'Product Request Form')
     @include('site.includes.head')
     <link rel="stylesheet" type="text/css" href="/css/custom/site/event.css">
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
@@ -28,7 +28,7 @@
             <div class="col-lg-12">
                 <div class="ibox">
                     <div class="ibox-title">
-                    	<h2>Store Feedback: {{ $formInstance->store_number }} submitted on {{ $formInstance->prettySubmitted }} <small>({{ $formInstance->sinceSubmitted }} ago)</small></h2>
+                    	<h2>Product Request: {{ $formInstance->store_number }} submitted on {{ $formInstance->prettySubmitted }} <small>({{ $formInstance->sinceSubmitted }} ago)</small></h2>
                     </div>
                     <div class="ibox-content">
                         <table class="table">
@@ -114,7 +114,7 @@
 
 		@include('site.includes.bugreport')
 
-        <script src="/js/custom/forms/storefeedbackform.js"></script>
+        <script src="/js/custom/forms/ProductRequestForm.js"></script>
         <script src="/js/custom/forms/respondToQuestion.js"></script>
 
 

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    @section('title', 'Store Feedback Form')
+    @section('title', 'Product Request Form')
     @include('site.includes.head')
     <link rel="stylesheet" type="text/css" href="/css/custom/site/event.css">
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
@@ -36,11 +36,11 @@
                     <div class="ibox-content">
 
 						@if(isset($formInstance))
-							<form class="form-horizontal" id="editStoreFeedbackForm">
+							<form class="form-horizontal" id="editProductRequestForm">
 							<input type="text" hidden value="{{$formInstance->form_data}}" id="formdata">
 
 						@else
-						    <form class="form-horizontal" id="createNewStoreFeedbackForm">
+						    <form class="form-horizontal" id="createNewProductRequestForm">
 						@endif
 
 							<input type="hidden" name="form_id" id="form_id" value="{{ $form_id }}" />
@@ -189,7 +189,7 @@
 
 				<div class="form-group">
 					<div class="col-sm-10 col-sm-offset-2">
-						<a class="btn btn-white" href="/{{$storeNumber}}/form/storefeedbackform"><i class="fa fa-close"></i> Cancel</a>
+						<a class="btn btn-white" href="/{{$storeNumber}}/form/ProductRequestform"><i class="fa fa-close"></i> Cancel</a>
 						<button class="btn btn-primary" id="form_send"><i class="fa fa-check"></i> Save and Send</button>
 		            </div>
 		        </div>
@@ -211,7 +211,7 @@
 		<script type="text/javascript" src="/js/vendor/moment.js"></script>
 		<script type="text/javascript" src="/js/vendor/bootstrap-datetimepicker.min.js"></script>
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
-		<script src="/js/custom/forms/storefeedbackform.js"></script>
+		<script src="/js/custom/forms/ProductRequestForm.js"></script>
 		<script src="/js/custom/forms/respondToQuestion.js"></script>
 
 

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    @section('title', 'Store Feedback Form')
+    @section('title', 'Product Request Form')
     @include('site.includes.head')
     <link rel="stylesheet" type="text/css" href="/css/custom/site/event.css">
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
@@ -27,7 +27,7 @@
             <div class="col-lg-12">
                 <div class="ibox">
                     <div class="ibox-title">
-                        <h5>Store Feedback</h5>
+                        <h5>Product Request</h5>
                         <div class="ibox-tools">
                             <a href="{{\Request::url()}}/create" class="btn btn-primary btn"><i class="fa fa-plus"></i> New</a>
                         </div>
@@ -80,7 +80,7 @@
 		<script type="text/javascript" src="/js/vendor/bootstrap-datetimepicker.min.js"></script>
 		<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
-		<script src="/js/custom/forms/storefeedbackform.js"></script>
+		<script src="/js/custom/forms/ProductRequestForm.js"></script>
 
 
 

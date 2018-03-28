@@ -298,7 +298,7 @@ return [
         'App\Http\Controllers\Flyer\FlyerAdminController'                       => 'Flyer',
         'App\Http\Controllers\Flyer\FlyerItemAdminController'                   => 'Flyer',
         'App\Http\Controllers\Utilities\BatchFileUploadController'              => 'Batch File Upload',
-        'App\Http\Controllers\Form\StoreFeedbackFormAdminController'            => 'Form',
+        'App\Http\Controllers\Form\ProductRequestFormAdminController'           => 'Form',
         'App\Http\Controllers\Form\FormListAdminController'                     => 'Form',
         'App\Http\Controllers\Form\FormLogController'                           => 'Form'
 
@@ -307,7 +307,7 @@ return [
 
     'controllerFormMap' => [
         
-        'App\Http\Controllers\Form\StoreFeedbackFormAdminController'            => 'store_feedback_form_v_1.0'
+        'App\Http\Controllers\Form\ProductRequestFormAdminController'            => 'product_request_form_v_1.0'
 
     ],
 

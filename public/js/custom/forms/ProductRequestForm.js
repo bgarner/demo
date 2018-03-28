@@ -119,7 +119,7 @@ $(document).ready(function(){
 	    if(hasError == false) {
 
 			$.ajax({
-			    url: "/" + storeNumber + '/forms/storefeedback/',
+			    url: "/" + storeNumber + '/forms/productrequest/',
 			    type: 'POST',
 			    data: {
 			    	form_id: form_id,
@@ -146,7 +146,7 @@ $(document).ready(function(){
 				 },
 
 			    success: function(data) {
-					$('#createNewStoreFeedbackForm')[0].reset(); // empty the form
+					$('#createNewProductRequestForm')[0].reset(); // empty the form
 		        	swal({
 		        		title : 'Nice!',
 		        		text : "Your form has been submitted!",
@@ -155,7 +155,7 @@ $(document).ready(function(){
 		        	},
 		        	function(){
 		        		// window.history.back();
-		        		window.location = "/" + storeNumber + '/forms/storefeedback/';
+		        		window.location = "/" + storeNumber + '/forms/productrequest/';
 		        	})
 
 			        console.log(data);

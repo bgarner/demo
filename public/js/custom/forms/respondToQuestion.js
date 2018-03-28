@@ -22,7 +22,7 @@ $("#send_response_to_question").on('click', function () {
         		type : "success",
         	},
         	function(){
-                $('#logContainer').load("/admin/forms/storefeedbackform/log/"+formInstanceId);
+                $('#logContainer').load("/admin/forms/productrequestform/log/"+formInstanceId);
         		// $("#comment").val("");
         		// $("#status_code_id").val(0);
           //       $('#ask_for_reply').prop('checked', false);

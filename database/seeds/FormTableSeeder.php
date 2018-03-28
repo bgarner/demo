@@ -9,11 +9,11 @@ class FormTableSeeder extends Seeder
 {
     private $forms = [ 
     	
-        [   'form_name'        => 'store_feedback_form',
-            'form_label'       => 'Store Feedback',
+        [   'form_name'        => 'product_request_form',
+            'form_label'       => 'Product Request',
             'version'          => '1.0',
             'description'      => 'This form is for requesting new product or getting more or less of some existing product',
-            'form_path'        => 'storefeedback'
+            'form_path'        => 'productrequest'
         ]
 
     ];

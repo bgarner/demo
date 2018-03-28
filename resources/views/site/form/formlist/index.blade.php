@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    @section('title', 'Store Feedback Form')
+    @section('title', 'Product Request Form')
     @include('site.includes.head')
     <link rel="stylesheet" type="text/css" href="/css/custom/site/event.css">
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
@@ -27,7 +27,7 @@
             <div class="col-lg-12">
                 <div class="ibox">
                     <div class="ibox-title">
-                        <h1>Behold! The Forms!</h1>
+                        <h1>Forms</h1>
                     </div>
                     <div class="ibox-content">
 
@@ -41,7 +41,7 @@
 
                             <tbody>
                                 <tr>
-                                    <td><a href="/{{$store_number}}/forms/storefeedback">Store Feedback</a></td>
+                                    <td><a href="/{{$store_number}}/forms/productrequest">Product Request</a></td>
                                     <td>This form is for requwesting new product or getting more or less of some existing product</td>
                                 </tr>
 
@@ -79,7 +79,7 @@
 		<script type="text/javascript" src="/js/vendor/bootstrap-datetimepicker.min.js"></script>
 		<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
-		<script src="/js/custom/forms/storefeedbackform.js"></script>
+		<script src="/js/custom/forms/ProductRequestForm.js"></script>
 
 
 
