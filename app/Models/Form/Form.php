@@ -16,8 +16,10 @@ class Form extends Model
     {
         return Form::pluck( 'form_label', 'id');
 
-        
     }
+
+    
+
     public static function getFormsByAdminId($id)
     {
         $role_id = UserRole::where('user_id', $id)->first()->role_id;
