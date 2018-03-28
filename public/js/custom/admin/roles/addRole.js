@@ -5,6 +5,7 @@ $(document).ready(function(){
 
 	$("#components").closest('.form-group').hide();
 	$("#resource_type").closest('.form-group').hide();
+	$("#forms").closest('.form-group').hide();
 });
 
 $("#group").change(function(){
@@ -14,10 +15,18 @@ $("#group").change(function(){
 		{
 			$("#components").closest('.form-group').show();
 			$("#resource_type").closest('.form-group').hide();
+			$("#forms").closest('.form-group').hide();
 		}
 		if(groupId == 2)
 		{
 			$("#resource_type").closest('.form-group').show();
+			$("#components").closest('.form-group').hide();
+			$("#forms").closest('.form-group').hide();
+		}
+		if(groupId == 3)
+		{
+			$("#forms").closest('.form-group').show();
+			$("#resource_type").closest('.form-group').hide();
 			$("#components").closest('.form-group').hide();
 		}
 
@@ -31,6 +40,7 @@ $(document).on('click','.role-create',function(){
     var group =  $("#group").val();
     var components =  $("#components").val();
     var resource_type =  $("#resource_type").val();
+    var forms =  $("#forms").val();
     var bannerId = localStorage.getItem('admin-banner-id');
 
     console.log(role_name, 
@@ -55,6 +65,7 @@ $(document).on('click','.role-create',function(){
 		    	group: group, 
 		    	components : components, 
 		    	resource_type : resource_type,
+		    	forms : forms,
 		    	banner_id: bannerId 
 		    },
 		    success: function(result) {

@@ -63,6 +63,15 @@
 
                                         </div>
 
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Accessible Forms</label>
+                                            <div class="col-sm-10">
+                                                {!! Form::select('forms[]', $forms, null, [ 'class'=>'chosen', 'id'=> 'forms', 'multiple'=>'true']) !!}
+
+                                            </div>
+
+                                        </div>
+
                                         <div class="hr-line-dashed"></div>
 
                                         <div class="form-group">

@@ -55,7 +55,7 @@
                                 <tbody>
                                     @foreach($forms as $form)
                                     <tr>
-                                        <td><a href="/admin/form/{{ $form->form_path }}">{{ $form->form_label }}</a></td>
+                                        <td><a href="form/{{ $form->form_path }}">{{ $form->form_label }}</a></td>
                                         <td>{{ $form->description }}</td>
                                         <td>{{ $form->count_new }}</td>
                                         <td>{{ $form->count_in_progress }}</td>

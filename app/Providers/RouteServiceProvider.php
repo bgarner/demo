@@ -43,6 +43,8 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapAdminRoutes();
 
         $this->mapManagerRoutes();
+
+        $this->mapFormRoutes();
     }
 
     /**
@@ -95,5 +97,19 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
+    }
+
+    /**
+     * Define the "form" routes for the application.
+     *
+     * These routes are typically stateless.
+     *
+     * @return void
+     */
+    protected function mapFormRoutes()
+    {
+        Route::middleware(['web','admin.auth', 'banner'])
+             ->namespace($this->namespace)
+             ->group(base_path('routes/form.php'));
     }
 }

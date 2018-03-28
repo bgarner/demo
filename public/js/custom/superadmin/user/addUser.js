@@ -39,6 +39,8 @@ $(document).ready(function(){
 	$("#select-role").change(function(){
 		
 		var role = $('#select-role option:selected').val();
+
+		console.log(role);
 		$.ajax({
 			    url: '/admin/role/' + role + '/resources',
 			    type: 'GET',

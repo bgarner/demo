@@ -11,6 +11,13 @@ class Form extends Model
 
     protected $fillable = ['form_name', 'version', 'form_structure'];
 
+    
+    public static function getFormList()
+    {
+        return Form::pluck( 'form_label', 'id');
+
+        
+    }
     public static function getFormsByAdminId($id)
     {
         $role_id = UserRole::where('user_id', $id)->first()->role_id;

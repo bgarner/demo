@@ -64,7 +64,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Resource</label>
                                             <div class="col-sm-10">
-                                                <select name="role" id="select-resource" class="form-control"></select>
+                                                <select name="resource" id="select-resource" class="form-control"></select>
                                             </div>
                                         </div>
 
