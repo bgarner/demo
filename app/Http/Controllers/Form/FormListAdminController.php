@@ -13,11 +13,9 @@ class FormListAdminController extends Controller
     
     public function index()
     {
-        $user = \Auth::user();
-        $role_id = UserRole::where('user_id', $user->id)->first()->role_id;
-        $permissions = RolePermission::getPermissionsByRoleId($role_id);
-		
-        $forms = Form::getFormsByAdminId($user->id);
+
+        $permissions = RolePermission::getPermissionsByRoleId();
+        $forms = Form::getFormsByAdminRoleId();
         return view('admin.form.formlist.index')->with('forms', $forms);
     }
 }

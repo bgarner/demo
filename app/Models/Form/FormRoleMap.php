@@ -26,9 +26,9 @@ class FormRoleMap extends Model
     	
     }
 
-    public static function getFormListByRoleId($id)
+    public static function getFormListByRoleId()
     {
-        return FormRoleMap::where('role_id', $id)->get()->pluck('form_id')->toArray();
+        return FormRoleMap::where('role_id', \Auth::user()->role_id)->get()->pluck('form_id')->toArray();
     }
     
 }

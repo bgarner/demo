@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use App\Models\Auth\User\UserBanner;
+use App\Models\Auth\User\UserRole;
 use App\Models\Validation\UserValidator;
 
 
@@ -28,4 +29,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    public function getRoleIdAttribute()
+    {
+        return UserRole::where('user_id', \Auth::user()->id)->first()->role_id;
+    }
 }

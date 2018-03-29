@@ -18,23 +18,21 @@ class Form extends Model
 
     }
 
-    
 
-    public static function getFormsByAdminId($id)
+    public static function getFormsByAdminRoleId()
     {
-        $role_id = UserRole::where('user_id', $id)->first()->role_id;
 
-        $forms = Form::join('form_role', 'forms.id', '=', 'form_role.form_id' )
-                            ->where('form_role.role_id', $role_id)
-                            ->select('forms.*')
-                            ->get();
+        $formIds = FormRoleMap::getFormListByRoleId();
 
-        foreach ($forms as $form) {
-            
+        $forms = Form::whereIn('id', $formIds)
+                    ->select('forms.*')
+                    ->get()
+                    ->each(function($form){
+                        $form->count_new = FormData::getNewFormInstanceCount( $form->id);
+                        $form->count_in_progress = FormData::getInProgressFormInstanceCount($form->id);
+                    });
 
-            $form->count_new = FormData::getNewFormInstanceCount( $form->id);
-            $form->count_in_progress = FormData::getInProgressFormInstanceCount($form->id);
-        }
+        
         return $forms;
     }
 
