@@ -21,4 +21,13 @@ class UserRole extends Model
     	return;
     }
 
+    public static function getFormUsersByRoleList($roleList)
+    {
+        return UserRole::join('users', 'users.id', '=', 'user_role.user_id')
+                        ->whereIn('role_id', $roleList)
+                        ->where('users.group_id', 3)
+                        ->select('users.*')
+                        ->get();  
+    }
+
 }

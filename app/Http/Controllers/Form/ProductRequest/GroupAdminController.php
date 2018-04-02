@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Form\ProductRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Form\FormGroup;
+use App\Models\Auth\User\User;
+use App\Models\Utility\Utility;
+use App\Models\Form\Form;
+
 
 class GroupAdminController extends Controller
 {
@@ -34,7 +38,10 @@ class GroupAdminController extends Controller
     public function create()
     {
         
-        return view('formuser.groups.create')->with('formusers', $formusers);
+        $formusers  = [];
+        $forms = Form::getFormListByRoleId();
+        return view('formuser.groups.create')->with('formusers', $formusers)
+        									->with('forms', $forms);
                                             
     }
 
@@ -46,8 +53,9 @@ class GroupAdminController extends Controller
      */
     public function store(Request $request)
     {
-        $group = Group::createGroup($request);
-        return  $group;
+     
+        FormGroup::createGroup($request);
+        return ;
     }
 
     /**

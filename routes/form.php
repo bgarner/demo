@@ -6,3 +6,4 @@ Route::get('/form/productrequestform/log/{id}', 'Form\FormLogController@show');
 
 
 Route::resource('/form/group', 'Form\ProductRequest\GroupAdminController');
+Route::get('/form/{id}/users', 'Form\ProductRequest\FormUserAdminController@show');

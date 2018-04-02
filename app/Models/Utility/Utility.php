@@ -648,4 +648,14 @@ class Utility extends Model
     }
 
 
+    public static function formatUsersList($users)
+    {
+    	$userlist = [];
+    	foreach ($users as $user) {
+    		$userlist[$user->id] = $user->firstname . " " . $user->lastname . " ( " . $user->fglposition . " )"; 
+    	}
+
+    	return $userlist;
+    }
+
 }

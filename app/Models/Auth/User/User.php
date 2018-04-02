@@ -181,4 +181,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $user;
 
     }
+
+    public static function getUsersByGroupId($group_id)
+    {
+        return Self::where('group_id', $group_id)->get();
+    }
+
 }

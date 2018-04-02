@@ -39,8 +39,8 @@
 										<table class="table table-hover issue-tracker tablesorter">
 											<thead>
 												<tr>
-													<td>Form</td>
 													<td>Group</td>
+													<td>Form</td>
 													<td class="actions">Action</td>
 												</tr>
 											</thead>
@@ -48,10 +48,8 @@
 										@foreach($groups as $group)
 
 										<tr>
-											<td class="col-xs-2">{{ $group->form_label }}</td>
 											<td class="col-xs-2">{{ $group->group_name }}</td>
-											
-
+											<td class="col-xs-2">{{ $group->form_label }}</td>
 											<td class="col-xs-2">
 												<a href="/form/group/{{ $group->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
 
@@ -80,7 +78,6 @@
 
 
 				<script type="text/javascript" src="/js/custom/forms/groups/deleteGroup.js"></script>
-				<script type="text/javascript" src="/js/vendor/tablesorter.min.js"></script>
 				<script type="text/javascript">
 
 					

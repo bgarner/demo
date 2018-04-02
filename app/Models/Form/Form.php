@@ -44,5 +44,11 @@ class Form extends Model
 
     	return $formId;
     }
+
+    public static function getFormListByRoleId()
+    {
+        $formIds = FormRoleMap::getFormListByRoleId();
+        return Form::whereIn('id', $formIds)->pluck('form_label', 'id')->prepend('Select one', '');
+    }
     
 }
