@@ -16,81 +16,83 @@
 	        </div>
 	    </nav>
 
-	<div id="page-wrapper" class="gray-bg" >
+		<div id="page-wrapper" class="gray-bg" >
 
-		<div class="wrapper wrapper-content  animated fadeInRight">
-		            <div class="row">
-		                <div class="col-lg-12">
-		                    <div class="ibox">
-		                        <div class="ibox-title">
-		                            <h5>Groups</h5>
+			<div class="wrapper wrapper-content  animated fadeInRight">
+	            <div class="row">
+	                <div class="col-lg-12">
+	                    <div class="ibox">
+	                        <div class="ibox-title">
+	                            <h5>Groups</h5>
 
-		                            <div class="ibox-tools">
-										<a href="/form/group/create" class="btn btn-primary btn"><i class="fa fa-plus"></i> Add New Group</a>
+	                            <div class="ibox-tools">
+									<a href="/form/group/create" class="btn btn-primary btn"><i class="fa fa-plus"></i> Add New Group</a>
 
-		                            </div>
-		                        </div>
-		                        <div class="ibox-content">
-
-
-
-		                            <div class="table-responsive">
-
-										<table class="table table-hover issue-tracker tablesorter">
-											<thead>
-												<tr>
-													<td>Group</td>
-													<td>Form</td>
-													<td class="actions">Action</td>
-												</tr>
-											</thead>
-											<tbody>
-										@foreach($groups as $group)
-
-										<tr>
-											<td class="col-xs-2">{{ $group->group_name }}</td>
-											<td class="col-xs-2">{{ $group->form_label }}</td>
-											<td class="col-xs-2">
-												<a href="/form/group/{{ $group->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
-
-												<a data-groupId="{{ $group->id }}" id="group{{ $group->id }}" class="group-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
-
-											</td>
-										</tr>
-										@endforeach
-										</tbody>
-										</table>
-
-		                            </div>
-		                        </div>
-
-		                    </div>
-		                </div>
-		            </div>
-
-
-		        </div>
-
-				@include('admin.includes.footer')
-
-			    @include('admin.includes.scripts')
+	                            </div>
+	                        </div>
+	                        <div class="ibox-content">
 
 
 
-				<script type="text/javascript" src="/js/custom/forms/groups/deleteGroup.js"></script>
-				<script type="text/javascript">
+	                            <div class="table-responsive">
 
-					
-					$.ajaxSetup({
-				        headers: {
-				            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				        }
-					});
+									<table class="table table-hover issue-tracker tablesorter">
+										<thead>
+											<tr>
+												<td>Group</td>
+												<td>Form</td>
+												<td class="actions">Action</td>
+											</tr>
+										</thead>
+										<tbody>
+									@foreach($groups as $group)
+
+									<tr>
+										<td class="col-xs-2">{{ $group->group_name }}</td>
+										<td class="col-xs-2">{{ $group->form_label }}</td>
+										<td class="col-xs-2">
+											<a href="/form/group/{{ $group->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+
+											<a data-groupId="{{ $group->id }}" id="group{{ $group->id }}" class="group-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+
+										</td>
+									</tr>
+									@endforeach
+									</tbody>
+									</table>
+
+	                            </div>
+	                        </div>
+
+	                    </div>
+	                </div>
+	            </div>
 
 
-				</script>
-				@include('site.includes.bugreport')
+	        </div>
+	    </div>
+	</div>
+
+	@include('admin.includes.footer')
+
+    @include('admin.includes.scripts')
 
 
-			</body>
-			</html>
+
+	<script type="text/javascript" src="/js/custom/forms/groups/deleteGroup.js"></script>
+	<script type="text/javascript">
+
+		
+		$.ajaxSetup({
+	        headers: {
+	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	        }
+		});
+
+
+	</script>
+	@include('site.includes.bugreport')
+
+
+</body>
+</html>

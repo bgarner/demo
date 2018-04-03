@@ -7,15 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 class GroupUser extends Model
 {
     protected $table = 'form_group_user';
-    protected $fillable = ['group_id', 'user_id'];
+    protected $fillable = ['form_group_id', 'user_id'];
 
-    public static function createGroupUserPivotByGroupId($request, $group_id)
+    public static function updateGroupUserPivotByGroupId($users, $group_id)
     {
-    	foreach ($request->users as $user) {
+    	GroupUser::where('form_group_id', $group_id)->delete();
+    	foreach ($users as $user) {
     		GroupUser::create([
-    			'group_id' => $group_id,
-    			'user_id'	=> $user_id
+    			'form_group_id' => $group_id,
+    			'user_id'	=> $user
     		]);
     	}
     }
+
+    public static function getUsersByGroupId($group_id)
+    {
+    	return GroupUser::where('form_group_id', $group_id)->pluck('user_id');
+    }
+
+    
 }

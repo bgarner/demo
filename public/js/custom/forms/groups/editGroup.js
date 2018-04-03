@@ -1,55 +1,9 @@
-$(document).ready(function(){
-	$("#users").closest('.form-group').hide();
-});
-
-
-$("#form").change(function(){
-	
-	var form = $('#form option:selected').val();
-	console.log('/form/' + form + '/users');
-	$.ajax({
-		    url: '/form/' + form + '/users',
-		    type: 'GET',
-		    dataType: 'json',
-		    success: function(result) {
-		    	console.log(result);
-		    	if( result.length >0 ) {
-		    		$("#users option").remove();
-		    		$('<option>').val("")
-		    					 .text("Select one")
-		    					 .appendTo('#users');
-					for (var i = 0; i < result.length ; i++) {
-						console.log(result[i].id);
-						console.log(result[i].firstname);
-						$('<option>').val(result[i].id)
-									 .text(result[i].firstname + " " + 
-									 		result[i].lastname + " ( " +
-									 		result[i].fglposition + " )"
-									 	)
-									 .appendTo('#users');
-					}
-					console.log($("#users option"));
-					$("#users").closest('.form-group').show();
-					$("#users").trigger("chosen:updated");
-					
-		        }
-		        else{
-		        	$("#users").closest('.form-group').hide();
-		        }
-		        
-		    }
-		}).done(function(data){
-			// console.log(data);
-		});    
-});
-
-$(".group-create").click(function(){
+$(".group-edit").click(function(){
     var hasError = false;
 
-    var form_id = $("#form").val();
     var users = $("#users").val();
     var group_name = $("#group_name").val();
-    console.log(users);
+    var group_id = $("#group_id").val();
 
     // if(document_id == '') {
     //     swal("Oops!", "This we need a document to be marked as alert.", "error");
@@ -65,10 +19,10 @@ $(".group-create").click(function(){
 
     if(hasError == false) {
         $.ajax({
-            url: '/form/group',
-            type: 'POST',
+            url: '/form/group/' + group_id,
+            type: 'PATCH',
             data: { 
-            	'form_id': form_id,
+            	// 'form_id': form_id,
             	'group_name' : group_name, 
             	'users': users,
             },
@@ -91,7 +45,7 @@ $(".group-create").click(function(){
                 // }
                 // else{
                     // $("#event_type").val(""); // empty the form
-                    swal("Nice!", "Group has been created", "success");
+                    swal("Nice!", "Group has been updated", "success");
                 // }
 
             }

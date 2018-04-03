@@ -3,40 +3,57 @@
 namespace App\Models\Form;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Form\FormRoleMap;
-use App\Models\Auth\User\UserRole;
 use App\Models\Form\GroupUser;
+use App\Models\Form\FormGroupMap;
+use App\Models\Form\FormRoleMap;
 
 class FormGroup extends Model
 {
     protected $table = 'form_usergroups';
 
-    protected $fillables = ['form_id', 'group_name'];
-
-    public static function getUserGroupsByFormAndRoleId()
-    {
-
-        $forms = FormRoleMap::where('form_role.role_id', \Auth::user()->role_id)->get()->pluck('form_id');
-
-    	return FormGroup::join('forms', 'forms.id', '=', 'form_usergroups.form_id')
-    					->whereIn('form_id', $forms)
-    					->select('forms.form_label', 'form_usergroups.*' )
-    					->get();
-
-    }
+    protected $fillable = ['group_name'];
 
     public static function createGroup($request)
     {
         $group = FormGroup::create([
 
-            'form_id' => $request["form_id"],
             'group_name' => $request["group_name"]
+
         ]);
 
-        GroupUser::createGroupUserPivotByGroupId($request, $group->id);
+        FormGroupMap::updateGroupFormPivotByGroupId($request->form_id, $group->id);
+        GroupUser::updateGroupUserPivotByGroupId($request->users, $group->id);
 
-        return;
+        return $group;
     }
 
+    public static function editGroup($request, $id)
+    {
+        $group = FormGroup::find($id);
+        $group['group_name'] = $request["group_name"];
+        $group->save();
 
+        // FormGroupMap::updateGroupFormPivotByGroupId($request->form_id, $group->id);
+        GroupUser::updateGroupUserPivotByGroupId($request->users, $group->id);
+
+        return $group;
+    }
+
+    public static function deleteGroup($id)
+    {
+        FormGroupMap::where('form_group_id', $id)->delete();
+        GroupUser::where('form_group_id', $id)->delete();
+        FormGroup::where('id', $id)->delete();    
+    }
+
+    public static function getGroupDetailsByFormGroupId($group_id)
+    {   
+        $group = FormGroup::find($group_id);
+        $group->setAttribute("users", FormGroupMap::getPossibleUsersByFormGroupId($group_id));
+        $group->setAttribute("selected_users", GroupUser::getUsersByGroupId($group_id));
+
+        return $group;
+    }
+
+    
 }

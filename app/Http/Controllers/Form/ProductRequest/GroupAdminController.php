@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Form\ProductRequest;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Form\FormGroupMap;
 use App\Models\Form\FormGroup;
 use App\Models\Auth\User\User;
 use App\Models\Utility\Utility;
@@ -25,7 +26,7 @@ class GroupAdminController extends Controller
     public function index()
     {
         
-		$groups =  FormGroup::getUserGroupsByFormAndRoleId();
+		$groups =  FormGroupMap::getUserGroupsByFormAndRoleId();
         return view('formuser.groups.index')->with('groups', $groups);
                         
     }
@@ -53,9 +54,7 @@ class GroupAdminController extends Controller
      */
     public function store(Request $request)
     {
-     
-        FormGroup::createGroup($request);
-        return ;
+        return FormGroup::createGroup($request);
     }
 
     /**
@@ -77,12 +76,8 @@ class GroupAdminController extends Controller
      */
     public function edit($id)
     {
-        $group = Group::find($id);
-        $roles = Role::getRoleList();
-        $selected_roles = GroupRole::getRoleListByGroupId($id);
-        return view('formuser.groups.edit')->with('group', $group)
-                                        ->with('roles', $roles)
-                                        ->with('selected_roles', $selected_roles);
+        $group = FormGroup::getGroupDetailsByFormGroupId($id);
+        return view('formuser.groups.edit')->with('group', $group);
     }
 
     /**
@@ -94,7 +89,7 @@ class GroupAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return Group::editGroup($request, $id);
+        return FormGroup::editGroup($request, $id);
     }
 
     /**
@@ -105,6 +100,6 @@ class GroupAdminController extends Controller
      */
     public function destroy($id)
     {
-        Group::deleteGroup($id);
+        FormGroup::deleteGroup($id);
     }
 }
