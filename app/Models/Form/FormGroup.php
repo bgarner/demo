@@ -32,10 +32,8 @@ class FormGroup extends Model
         $group = FormGroup::find($id);
         $group['group_name'] = $request["group_name"];
         $group->save();
-
-        // FormGroupMap::updateGroupFormPivotByGroupId($request->form_id, $group->id);
+        
         GroupUser::updateGroupUserPivotByGroupId($request->users, $group->id);
-
         return $group;
     }
 
@@ -49,7 +47,7 @@ class FormGroup extends Model
     public static function getGroupDetailsByFormGroupId($group_id)
     {   
         $group = FormGroup::find($group_id);
-        $group->setAttribute("users", FormGroupMap::getPossibleUsersByFormGroupId($group_id));
+        $group->setAttribute("users", FormGroupMap::getPossibleUsersForFormGroup($group_id));
         $group->setAttribute("selected_users", GroupUser::getUsersByGroupId($group_id));
 
         return $group;
