@@ -20,6 +20,7 @@ class AgedInventoryController extends Controller
     public function index()
     {
         $products = AgedInventory::getAllProductsByStoreNumber($this->storeNumber);
+        
         return view('site.tools.agedinventory.index')
                     ->with("products", $products);
     }
