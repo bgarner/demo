@@ -45,6 +45,8 @@ class DatabaseSeeder extends Seeder
 
         
         // $this->call(FormGroupAndRolesSeeder::class);
-        $this->call(FormPermissionTableSeeder::class);
+        // $this->call(FormPermissionTableSeeder::class);
+        $this->call(BusinessUnitTypesTableSeeder::class);
+
     }
 }

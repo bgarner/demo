@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Form\ProductRequest;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\User\User;
+use App\Models\Auth\User\User;
 use App\Models\Form\FormRoleHierarchy;
 
 class UserAdminController extends Controller

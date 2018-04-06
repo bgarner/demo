@@ -50,7 +50,7 @@
 
                                         <div class="form-group" hidden ><label class="col-sm-2 control-label">Group</label>
                                             <div class="col-sm-10">
-                                                <input name="group" value="3" class="form-control" >
+                                                <input name="group" value="3" class="form-control" id="group" >
                                             </div>
                                         </div>
 
@@ -121,7 +121,7 @@
 	</div>
 
 
-	<script src="/js/custom/forms/groups/addUser.js"></script>
+	<script src="/js/custom/forms/users/addUser.js"></script>
 	<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 	<script type="text/javascript">
 
