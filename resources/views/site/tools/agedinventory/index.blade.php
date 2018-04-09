@@ -77,11 +77,11 @@
                                     <button type="button" data-id='{{ $p->id }}' data-loc='Front' data-checked='{{ $p->location_front }}' class="btn setlocation btn-sm btn-success front"><i class="fa fa-check" aria-hidden="true"></i> Front</button>
                                     @endif
                                     
-                                    @if( $p->location_back == 0)
+                                    {{--  @if( $p->location_back == 0)
                                     <button type="button" data-id='{{ $p->id }}' data-loc='Back' data-checked='{{ $p->location_back }}' class="btn setlocation btn-sm btn-outline btn-default back">Back</button>
                                     @else
                                     <button type="button" data-id='{{ $p->id }}' data-loc='Back' data-checked='{{ $p->location_back }}' class="btn setlocation btn-sm btn-success back"><i class="fa fa-check" aria-hidden="true"></i> Back</button>
-                                    @endif
+                                    @endif  --}}
 
                                 </td>
                             </tr>
