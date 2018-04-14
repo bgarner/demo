@@ -9,6 +9,8 @@ use App\Models\Form\FormGroup;
 use App\Models\Auth\User\User;
 use App\Models\Utility\Utility;
 use App\Models\Form\Form;
+use App\Models\Form\ProductRequest\BusinessUnitTypes;
+use App\Models\Form\ProductRequest\FormGroupBusinessUnitMap;
 
 
 class GroupAdminController extends Controller
@@ -41,8 +43,10 @@ class GroupAdminController extends Controller
         
         $formusers  = [];
         $forms = Form::getFormListByRoleId();
+        $businessUnits = BusinessUnitTypes::getBUList();
         return view('formuser.groups.create')->with('formusers', $formusers)
-        									->with('forms', $forms);
+        									->with('forms', $forms)
+                                            ->with('businessUnits', $businessUnits);
                                             
     }
 
@@ -77,7 +81,12 @@ class GroupAdminController extends Controller
     public function edit($id)
     {
         $group = FormGroup::getGroupDetailsByFormGroupId($id);
-        return view('formuser.groups.edit')->with('group', $group);
+        $businessUnits = BusinessUnitTypes::getBUList();
+        $selectedBU = FormGroupBusinessUnitMap::getBusinessUnitByGroup($id);
+        return view('formuser.groups.edit')
+                ->with('group', $group)
+                ->with('businessUnits', $businessUnits)
+                ->with('selectedBU', $selectedBU);
     }
 
     /**

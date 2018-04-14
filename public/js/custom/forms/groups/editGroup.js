@@ -4,6 +4,7 @@ $(".group-edit").click(function(){
     var users = $("#users").val();
     var group_name = $("#group_name").val();
     var group_id = $("#group_id").val();
+    var businessUnit = $("#businessUnit").val();
 
     // if(document_id == '') {
     //     swal("Oops!", "This we need a document to be marked as alert.", "error");
@@ -25,6 +26,7 @@ $(".group-edit").click(function(){
             	// 'form_id': form_id,
             	'group_name' : group_name, 
             	'users': users,
+                'businessUnit' : businessUnit
             },
             dataType : 'json',
             success: function(data) {

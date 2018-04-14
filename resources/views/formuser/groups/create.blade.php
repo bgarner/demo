@@ -44,6 +44,14 @@
 
 	                                </div>
 	                                <div class="form-group">
+	                                	<label class="col-sm-2 control-label">Business Unit</label>
+	                                	<div class="col-sm-10">
+	                                		{!! Form::select('businessUnit', $businessUnits	, null, [ 'class'=>'chosen', 'id'=> 'businessUnit']) !!}
+
+	                                	</div>
+
+	                                </div>
+	                                <div class="form-group">
 	                                	<label class="col-sm-2 control-label">Users</label>
 	                                	<div class="col-sm-10">
 	                                		{!! Form::select('users[]', $formusers, null, [ 'class'=>'chosen', 'id'=> 'users', 'multiple'=>

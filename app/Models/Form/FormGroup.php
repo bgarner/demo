@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Form\GroupUser;
 use App\Models\Form\FormGroupMap;
 use App\Models\Form\FormRoleMap;
-
+use App\Models\Form\ProductRequest\FormGroupBusinessUnitMap;
 class FormGroup extends Model
 {
     protected $table = 'form_usergroups';
@@ -22,6 +22,7 @@ class FormGroup extends Model
         ]);
 
         FormGroupMap::updateGroupFormPivotByGroupId($request->form_id, $group->id);
+        FormGroupBusinessUnitMap::updateGroupBUPivotByGroupId($request->businessUnit, $group->id);
         GroupUser::updateGroupUserPivotByGroupId($request->users, $group->id);
 
         return $group;
@@ -34,6 +35,7 @@ class FormGroup extends Model
         $group->save();
         
         GroupUser::updateGroupUserPivotByGroupId($request->users, $group->id);
+        FormGroupBusinessUnitMap::updateGroupBUPivotByGroupId($request->businessUnit, $group->id);
         return $group;
     }
 

@@ -49,6 +49,7 @@ $(".group-create").click(function(){
     var form_id = $("#form").val();
     var users = $("#users").val();
     var group_name = $("#group_name").val();
+    var businessUnit = $("#businessUnit").val();
     console.log(users);
 
     // if(document_id == '') {
@@ -71,6 +72,7 @@ $(".group-create").click(function(){
             	'form_id': form_id,
             	'group_name' : group_name, 
             	'users': users,
+                'businessUnit' : businessUnit
             },
             dataType : 'json',
             success: function(data) {

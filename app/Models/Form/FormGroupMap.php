@@ -36,7 +36,7 @@ class FormGroupMap extends Model
     		]);
     }
 
-    public static function getPossibleUsersFormFormGroup($group_id)
+    public static function getPossibleUsersForFormGroup($group_id)
     {
 
         $form_id = FormGroupMap::where('form_group_id', $group_id)->first()->form_id;
