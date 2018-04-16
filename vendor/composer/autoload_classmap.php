@@ -9,6 +9,7 @@ return array(
     'AddAllDayToEventsTable' => $baseDir . '/database/migrations/2017_06_28_152315_add_all_day_to_events_table.php',
     'AddOnOrderCountToBikeTracker' => $baseDir . '/database/migrations/2017_06_23_142132_add_on_order_count_to_bike_tracker.php',
     'AddPriceToDirtyNodeTable' => $baseDir . '/database/migrations/2018_04_16_131328_add_price_to_dirty_node_table.php',
+    'AddPriceToDnArchiveTable' => $baseDir . '/database/migrations/2018_04_16_131842_add_price_to_dn_archive_table.php',
     'AddSportCatToCommunityDonationsTable' => $baseDir . '/database/migrations/2018_01_29_112304_add_sport_cat_to_community_donations_table.php',
     'AnalyticsAssetTypesTableSeeder' => $baseDir . '/database/seeds/AnalyticsAssetTypesTableSeeder.php',
     'App\\Models\\Alert\\Alert' => $baseDir . '/app/Models/Alert/Alert.php',
