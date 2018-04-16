@@ -97,6 +97,7 @@
                                         <th>Start</th>
                                         {{--  <th>Week</th>  --}}
                                         <th>Qty</th>
+                                        <th>Price</th>
                                         <th>Dept</th>
                                         <th>Sub-Dept</th>
 
@@ -116,6 +117,7 @@
                                             <td data-order={{$d->startDateTime}}>{{ $d->startdate }}</td>
                                             {{--  <td>{{ $d->week }}</td>  --}}
                                             <td>{{ $d->quantity }}</td>
+                                            <td>{{ $d->selling_price }}</td>
                                             <td>{{ $d->department }}</td>
                                             <td>{{ $d->sub_department }}</td>
                                         </tr>
@@ -144,6 +146,7 @@
                                         <th>Start</th>
                                         {{--  <th>Week</th>  --}}
                                         <th>Qty</th>
+                                        <th>Price</th>
                                         <th>Dept</th>
                                         <th>Sub-Dept</th>
                                         <th>Cleaned</th>
@@ -162,6 +165,7 @@
                                             <td>{{ $cn->startdate }}</td>
                                             {{--  <td>{{ $cn->week }}</td>  --}}
                                             <td>{{ $cn->quantity }}</td>
+                                            <td>{{ $cn->selling_price }}</td>
                                             <td>{{ $cn->department }}</td>
                                             <td>{{ $cn->sub_department }}</td>
                                             <td>{{ $cn->updated_at }}</td>
