@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'AddAllDayToEventsTable' => $baseDir . '/database/migrations/2017_06_28_152315_add_all_day_to_events_table.php',
     'AddOnOrderCountToBikeTracker' => $baseDir . '/database/migrations/2017_06_23_142132_add_on_order_count_to_bike_tracker.php',
+    'AddPriceToDirtyNodeTable' => $baseDir . '/database/migrations/2018_04_16_131328_add_price_to_dirty_node_table.php',
     'AddSportCatToCommunityDonationsTable' => $baseDir . '/database/migrations/2018_01_29_112304_add_sport_cat_to_community_donations_table.php',
     'AnalyticsAssetTypesTableSeeder' => $baseDir . '/database/seeds/AnalyticsAssetTypesTableSeeder.php',
     'App\\Models\\Alert\\Alert' => $baseDir . '/app/Models/Alert/Alert.php',
@@ -177,7 +178,6 @@ return array(
     'AssertionError' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',
     'BannerStorePivotSeeder' => $baseDir . '/database/seeds/BannerStorePivotSeeder.php',
     'BannerTableBannerClassSeeder' => $baseDir . '/database/seeds/BannerTableBannerClassSeeder.php',
-    'ChangeCustomStoreGroupDataTypeForStores' => $baseDir . '/database/migrations/2018_03_15_133316_change_custom_store_group_data_type_for_stores.php',
     'CommunicationTypeBannerTableSeeder' => $baseDir . '/database/seeds/CommunicationTypeBannerTableSeeder.php',
     'ComponentDeletablePropertySeeder' => $baseDir . '/database/seeds/ComponentDeletablePropertySeeder.php',
     'ComponentGroupPivotSeeder' => $baseDir . '/database/seeds/ComponentGroupPivotSeeder.php',

@@ -490,6 +490,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
     public static $classMap = array (
         'AddAllDayToEventsTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_28_152315_add_all_day_to_events_table.php',
         'AddOnOrderCountToBikeTracker' => __DIR__ . '/../..' . '/database/migrations/2017_06_23_142132_add_on_order_count_to_bike_tracker.php',
+        'AddPriceToDirtyNodeTable' => __DIR__ . '/../..' . '/database/migrations/2018_04_16_131328_add_price_to_dirty_node_table.php',
         'AddSportCatToCommunityDonationsTable' => __DIR__ . '/../..' . '/database/migrations/2018_01_29_112304_add_sport_cat_to_community_donations_table.php',
         'AnalyticsAssetTypesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AnalyticsAssetTypesTableSeeder.php',
         'App\\Models\\Alert\\Alert' => __DIR__ . '/../..' . '/app/Models/Alert/Alert.php',
@@ -659,7 +660,6 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'AssertionError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',
         'BannerStorePivotSeeder' => __DIR__ . '/../..' . '/database/seeds/BannerStorePivotSeeder.php',
         'BannerTableBannerClassSeeder' => __DIR__ . '/../..' . '/database/seeds/BannerTableBannerClassSeeder.php',
-        'ChangeCustomStoreGroupDataTypeForStores' => __DIR__ . '/../..' . '/database/migrations/2018_03_15_133316_change_custom_store_group_data_type_for_stores.php',
         'CommunicationTypeBannerTableSeeder' => __DIR__ . '/../..' . '/database/seeds/CommunicationTypeBannerTableSeeder.php',
         'ComponentDeletablePropertySeeder' => __DIR__ . '/../..' . '/database/seeds/ComponentDeletablePropertySeeder.php',
         'ComponentGroupPivotSeeder' => __DIR__ . '/../..' . '/database/seeds/ComponentGroupPivotSeeder.php',
