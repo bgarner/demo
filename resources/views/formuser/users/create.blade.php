@@ -61,6 +61,14 @@
                                                 {!! Form::select('role', $roles , "", ['class'=>'form-control', 'id'=>'select-role']) !!}
                                             </div>
                                         </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Business Unit</label>
+                                            <div class="col-sm-10">
+                                                
+                                                {!! Form::select('businessUnit', $businessUnits , "", ['class'=>'form-control', 'id'=>'select-bu']) !!}
+                                            </div>
+                                        </div>
                                         
 
                                         <div class="hr-line-dashed"></div>

@@ -13,6 +13,7 @@ use App\Models\Auth\User\UserBanner;
 use App\Models\Validation\UserValidator;
 use App\Models\Auth\User\UserRole;
 use App\Models\Auth\User\UserResource;
+use App\Models\Form\ProductRequest\FormUserBusinessUnitMap;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
@@ -125,6 +126,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
                 ]);
         }
 
+        if(isset($request['business_unit'])){
+            FormUserBusinessUnitMap::create([
+                'user_id' => $user->id,
+                'business_unit_id' => $request["business_unit"]
+            ]);
+        }
 
         \Log::info($user);
         return $user;
@@ -175,9 +182,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         
         $user->save();
 
-        UserRole::updateUserRole($user->id, intval($request['role']));
-        UserResource::updateUserResource($user->id, intval($request['resource']));
+        UserRole::updateUserRole($user->id, ($request['role']));
+        UserResource::updateUserResource($user->id, ($request['resource']));
         UserBanner::updateAdminBanner($id, $request['banners']);
+        FormUserBusinessUnitMap::updateBusinessUnit($user->id,($request['business_unit']));
         return $user;
 
     }

@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Auth\User\User;
 use App\Models\Form\FormRoleHierarchy;
+use App\Models\Form\ProductRequest\BusinessUnitTypes;
+use App\Models\Auth\Group\Group;
+use App\Models\Auth\Group\GroupRole;
+use App\Models\Auth\User\UserRole;
+use App\Models\Form\ProductRequest\FormUserBusinessUnitMap;
 
 class UserAdminController extends Controller
 {
@@ -31,7 +36,9 @@ class UserAdminController extends Controller
     {
         
        	$roles = FormRoleHierarchy::getCurrentEmployeeRoles();
-		return view('formuser.users.create')->with('roles', $roles);
+        $businessUnits = BusinessUnitTypes::getBUList();
+		return view('formuser.users.create')->with('roles', $roles)
+                                            ->with('businessUnits', $businessUnits);
                                             
     }
 
@@ -43,7 +50,6 @@ class UserAdminController extends Controller
      */
     public function store(Request $request)
     {
-        \Log::info($request->all());
         $user = User::createAdminUser($request);
         return $user;
     }
@@ -67,8 +73,23 @@ class UserAdminController extends Controller
      */
     public function edit($id)
     {
-        // $group = FormGroup::getGroupDetailsByFormGroupId($id);
-        // return view('formuser.groups.edit')->with('group', $group);
+        $user = User::find($id);
+
+        $groups = Group::pluck('name', 'id');
+
+        $roles = GroupRole::getRoleNameListByGroupId($user->group_id)->pluck('role_name', 'id');
+        $selected_role = UserRole::where('user_id', $user->id)->first()->role_id;
+
+        $businessUnits = BusinessUnitTypes::getBUList();
+        $selected_bu = FormUserBusinessUnitMap::getBUIdBuUserId($user->id);
+        
+
+        return view('formuser.users.edit')->with('user', $user)
+                                            ->with('groups', $groups)
+                                            ->with('roles', $roles)
+                                            ->with('selected_role', $selected_role)
+                                            ->with('businessUnits', $businessUnits)
+                                            ->with('selected_bu', $selected_bu);
     }
 
     /**
@@ -80,7 +101,7 @@ class UserAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // return FormGroup::editGroup($request, $id);
+        return User::updateAdminUser($id, $request);    
     }
 
     /**
@@ -91,7 +112,7 @@ class UserAdminController extends Controller
      */
     public function destroy($id)
     {
-        // FormGroup::deleteGroup($id);
+        
         
     }
 }

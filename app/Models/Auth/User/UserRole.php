@@ -13,10 +13,7 @@ class UserRole extends Model
     public static function updateUserRole($user_id, $role_id)
     {
     	$userRole = UserRole::where('user_id', $user_id)
-    			->first();
-
-    	$userRole['role_id'] = $role_id;
-    	$userRole->save();
+    			->first()->update(['role_id' => $role_id]);
 
     	return;
     }

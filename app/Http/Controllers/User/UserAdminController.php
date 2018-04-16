@@ -10,12 +10,15 @@ use App\Models\Auth\User\User;
 use App\Models\StoreApi\Banner;
 use App\Models\StoreApi\StoreInfo;
 use App\Models\Auth\Group\Group;
+use App\Models\Auth\Group\GroupRole;
 use App\Models\Auth\Role\Role;
 use App\Models\Auth\Role\RoleResource;
 use App\Models\Auth\User\UserRole;
 use App\Models\Auth\User\UserBanner;
 use App\Models\Auth\User\UserResource;
 use App\Models\Auth\User\UserSelectedBanner;
+use App\Models\Form\ProductRequest\BusinessUnitTypes;
+use App\Models\Form\ProductRequest\FormUserBusinessUnitMap;
 
 
 class UserAdminController extends Controller
@@ -54,12 +57,13 @@ class UserAdminController extends Controller
         $groups = Group::getGroupNamesList();
         $district_name_list = StoreInfo::getDistrictNamesList();
         $region_name_list = StoreInfo::getRegionNamesList();
+        $businessUnits = BusinessUnitTypes::getBUList();
 
         return view('superadmin.user.create')
                                             ->with('group_names', $groups)
                                             ->with('banners_list', $banners_list)
-                                            ->with('district_names', $district_name_list)
-                                            ->with('region_names', $region_name_list);
+                                            ->with('businessUnits', $businessUnits);
+                                            
     }
 
     /**
@@ -104,11 +108,14 @@ class UserAdminController extends Controller
 
         $groups = Group::pluck('name', 'id');
 
-        $roles = Role::pluck('role_name', 'id');
+        $roles = GroupRole::getRoleNameListByGroupId($user->group_id)->pluck('role_name', 'id');
         $selected_role = UserRole::where('user_id', $user->id)->first()->role_id;
 
         $resources = RoleResource::getResourcesByRoleId($selected_role);
         $selected_resource = UserResource::getResourceIdByUserId($user->id);
+
+        $businessUnits = BusinessUnitTypes::getBUList();
+        $selected_bu = FormUserBusinessUnitMap::getBUIdBuUserId($user->id);
         
         return view('superadmin.user.edit')->with('user', $user)
                                             ->with('banners_list', $banners_list)
@@ -117,7 +124,9 @@ class UserAdminController extends Controller
                                             ->with('roles', $roles)
                                             ->with('selected_role', $selected_role)
                                             ->with('resources', $resources)
-                                            ->with('selected_resource', $selected_resource);
+                                            ->with('selected_resource', $selected_resource)
+                                            ->with('businessUnits', $businessUnits)
+                                            ->with('selected_bu', $selected_bu);
 
     }
 

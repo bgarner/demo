@@ -11,6 +11,9 @@ class BusinessUnitTypes extends Model
 
     public static function getBUList()
     {
-    	return Self::all()->pluck('business_unit', 'id')->toArray();
+    	return Self::all()
+    				->pluck('business_unit', 'id')
+    				->prepend("Select one", "")
+    				->toArray();
     }
 }

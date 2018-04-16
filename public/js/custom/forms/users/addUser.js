@@ -1,3 +1,23 @@
+$(document).ready(function(){
+
+	$("#select-bu").closest('.form-group').hide();
+	$("#select-role").change(function(){
+		
+		var role = $('#select-role option:selected').text();
+		if(role != 'Product Request Form Admin'){
+			$("#select-bu").closest('.form-group').show();
+		}
+		else{
+			$("#select-bu").closest('.form-group').hide();
+		}
+
+	});
+
+});
+
+
+
+
 $(".user-create").click(function(){
 	var firstname = $('input[name="firstname"]').val();
 	var lastname = $('input[name="lastname"]').val();
@@ -9,6 +29,7 @@ $(".user-create").click(function(){
 	var role = $("#select-role").val();
 	var rolename = $("#select-role option:selected").text();
 	var banners = [1,2];
+	var business_unit = $("#select-bu").val();
 	// $('#select-banner option:selected').each(function(){ banners.push($(this).val()); });
 
 
@@ -70,6 +91,7 @@ $(".user-create").click(function(){
 		    	email : email,
 		    	group : group,
 		    	role : role,
+		    	business_unit : business_unit,
 		    	banners : banners,
 		    	password : password,
 		    	confirm_password : confirm_password

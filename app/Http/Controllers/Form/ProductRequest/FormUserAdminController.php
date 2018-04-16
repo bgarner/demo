@@ -8,6 +8,7 @@ use App\Models\Form\FormRoleMap;
 use App\Models\Auth\User\UserRole;
 use App\Models\Form\FormRoleHierarchy;
 
+
 class FormUserAdminController extends Controller
 {
     public function show($id)
@@ -16,10 +17,10 @@ class FormUserAdminController extends Controller
         $employeeRoles = FormRoleHierarchy::getCurrentEmployeeRoleIds();
         $formRoles =  FormRoleMap::getRoleListByFormId($id);
         
-
         $roles = array_intersect( $employeeRoles, $formRoles);
 
         $users = UserRole::getFormUsersByRoleList($roles);    
+        
         return $users;
     }
 }

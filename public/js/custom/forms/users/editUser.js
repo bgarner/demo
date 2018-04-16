@@ -1,77 +1,18 @@
 $(document).ready(function(){
 
-	// $("#select-role").closest('.form-group').hide();
-	// $("#select-resource").closest('.form-group').hide();
-
-	$("#select-group").change(function(){
-		
-		var group = $('#select-group option:selected').val();
-		console.log('/admin/group/' + group + '/roles');
-		$.ajax({
-			    url: '/admin/group/' + group + '/roles',
-			    type: 'GET',
-			    dataType: 'json',
-			    success: function(result) {
-			    	console.log(result);
-			    	if( result.length >0 ) {
-			    		$("#select-role option").remove();
-			    		$('<option>').val("")
-			    					 .text("Select one")
-			    					 .appendTo('#select-role');
-						for (var i = 0; i < result.length ; i++) {
-							
-							$('<option>').val(result[i].id)
-										 .text(result[i].role_name)
-										 .appendTo('#select-role');
-						}
-						$("#select-role").closest('.form-group').show();
-			        }
-			        else{
-			        	$("#select-role").closest('.form-group').hide();
-			        }
-			        
-			    }
-			}).done(function(data){
-				// console.log(data);
-			});    
-	});
-
 	$("#select-role").change(function(){
 		
-		var role = $('#select-role option:selected').val();
-		console.log('getting resources for : ' + role);
-		$.ajax({
-			    url: '/admin/role/' + role + '/resources',
-			    type: 'GET',
-			    dataType: 'json',
-			    success: function(result) {
-			        
-			        console.log(result);
-			    	if( result) {
-			    		
-			    		$("#select-resource option").remove();
-			    		$('<option>').val("")
-										 .text("Select one")
-										 .appendTo('#select-resource');
-			    		$.each( result, function( key, value ) {
-			    			
-						    $('<option>').val(key)
-										 .text(value)
-										 .appendTo('#select-resource');
-						});
+		
+		var role = $('#select-role option:selected').text();
+		if(role != 'Product Request Form Admin'){
+			$("#select-bu").closest('.form-group').show();
+		}
+		else{
+			$("#select-bu").val(null).trigger("chosen:updated");
+			$("#select-bu").closest('.form-group').hide();
+		}
 
-						$("#select-resource").closest('.form-group').show();
-						// $("#select-resource").closest('.form-group').hide();
-			        }
-			        else{
-			        	$("#select-resource").closest('.form-group').hide();
-
-			        }
-			        
-			    }
-			}).done(function(data){
-				// console.log(data);
-			});    
+	    
 	});
 
 
@@ -80,13 +21,14 @@ $(document).ready(function(){
 		var lastname = $('input[name="lastname"]').val();
 		var group = $('#select-group option:selected').val();
 		var role = $("#select-role option:selected").val();
-		var resource = $("#select-resource option:selected").val();
+		// var resource = $("#select-resource option:selected").val();
 
-		var banners = [];
-		$('#select-banner option:selected').each(function(){ banners.push($(this).val()); });
+		var banners = [1,2];
+		
 
 		var business_unit = $("#select-bu option:selected").val();
 		console.log(business_unit);
+		
 
 		var newPassword = $('input[name="password"]').val();
 		var newPasswordConfirm = $('input[name="confirm_password"]').val();
@@ -131,7 +73,7 @@ $(document).ready(function(){
 	    if(hasError == false) {
 	    	var userId = $('input[name="userId"]').val();
 			$.ajax({
-			    url: '/admin/user/' + userId ,
+			    url: '/form/user/' + userId ,
 			    type: 'PATCH',
 			    dataType: 'json',
 			    data: {
@@ -139,7 +81,7 @@ $(document).ready(function(){
 			    	lastname : lastname,
 			    	group : group,
 			    	role : role,
-			    	resource : resource,
+			    	// resource : resource,
 			    	business_unit : business_unit,
 			    	banners : banners,
 			    	password : newPassword,

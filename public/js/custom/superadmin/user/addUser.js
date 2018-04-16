@@ -2,6 +2,7 @@ $(document).ready(function(){
 
 	$("#select-role").closest('.form-group').hide();
 	$("#select-resource").closest('.form-group').hide();
+	$("#select-bu").closest('.form-group').hide();
 
 	$("#select-group").change(function(){
 		
@@ -37,10 +38,23 @@ $(document).ready(function(){
 	});
 
 	$("#select-role").change(function(){
+
+		var group = $('#select-group').val();
 		
+		if( group == 2 ){
+			getResources();
+		}
+		if(group == 3){
+			showBU();
+		}
+		
+		
+	});
+
+	var getResources = function(){
 		var role = $('#select-role option:selected').val();
 
-		console.log(role);
+		// console.log("getting resources for role : " + role);
 		$.ajax({
 			    url: '/admin/role/' + role + '/resources',
 			    type: 'GET',
@@ -71,7 +85,20 @@ $(document).ready(function(){
 			}).done(function(data){
 				// console.log(data);
 			});    
-	});
+	}
+
+	var showBU = function(){
+		
+		var role = $('#select-role option:selected').text();
+		if(role != 'Product Request Form Admin'){
+			$("#select-bu").closest('.form-group').show();
+		}
+		else{
+			$("#select-bu").closest('.form-group').hide();
+		}
+
+	};
+
 
 	$(".user-create").click(function(){
 		var firstname = $('input[name="firstname"]').val();
@@ -83,12 +110,13 @@ $(document).ready(function(){
 		var group = $('#select-group option:selected').val();
 		var role = $("#select-role option:selected").val();
 		var resource = $("#select-resource option:selected").val();
+		var business_unit = $("#select-bu option:selected").val();
 		var groupname = $('#select-group option:selected').text();
 		var banners = [];
 		$('#select-banner option:selected').each(function(){ banners.push($(this).val()); });
 
 
-		console.log(firstname, lastname, email, group, role, resource);
+		console.log(firstname, lastname, email, group, role, resource, business_unit);
 		var hasError = false;
 		if(firstname == '') {
 			swal("Oops!", "Need a first name.", "error"); 
@@ -147,7 +175,8 @@ $(document).ready(function(){
 			    	group : group,
 			    	role : role,
 			    	resource : resource,
-			    	banners : banners,
+			    	business_unit : business_unit, 
+ 			    	banners : banners,
 			    	password : password,
 			    	confirm_password : confirm_password
 			    },

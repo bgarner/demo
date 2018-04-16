@@ -9,7 +9,7 @@ use App\Models\Form\Form;
 class FormData extends Model
 {
     protected $table = 'form_data';
-    protected $fillable = ['form_id', 'store_number', 'submitted_by', 'form_data', 'form_name', 'form_version'];
+    protected $fillable = ['form_id', 'store_number', 'submitted_by', 'form_data', 'form_name', 'form_version', 'business_unit'];
 
     public static function getAdminFormDataByFormNameAndVersion($name, $version)
     {
@@ -56,6 +56,7 @@ class FormData extends Model
 					            "form_name" => $form->form_name,
 					            "form_version" => $form->version,
 					            "submitted_by" => $request->submitted_by,
+                                "business_unit" => $request->department,
 					            "form_data" => serialize($request->all())
 					        ]);
 
