@@ -14,7 +14,7 @@ class UpdateFormDataTableAddBusinessUnit extends Migration
     public function up()
     {
         Schema::table('form_data', function (Blueprint $table) {
-            $table->string('business_unit')->after('submitted_by');
+            $table->integer('business_unit_id')->unsigned()->after('submitted_by');
         });
     }
 

@@ -83,6 +83,16 @@ class FormData extends Model
                                         ->count();
     }
 
+    public static function getFormInstancesByBusinessUnitId($business_unit)
+    {
+        return FormData::where('business_unit_id', $business_unit)
+                        ->select('*')
+                        ->get()
+                        ->each(function($form) {
+                            $form->form_data = unserialize($form->form_data);
+                        });
 
+
+    }
 
 }

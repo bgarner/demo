@@ -22,8 +22,9 @@ class UserAdminController extends Controller
     public function index()
     {
         
-		// $groups =  FormUsers::getUserGroupsByFormAndRoleId();
-        return view('formuser.users.index');
+		$users = User::where('group_id', 3)->get();
+        dd($users);
+        // return view('formuser.users.index');
                         
     }
 
@@ -77,7 +78,7 @@ class UserAdminController extends Controller
 
         $groups = Group::pluck('name', 'id');
 
-        $roles = GroupRole::getRoleNameListByGroupId($user->group_id)->pluck('role_name', 'id');
+        $roles = FormRoleHierarchy::getCurrentEmployeeRoles();
         $selected_role = UserRole::where('user_id', $user->id)->first()->role_id;
 
         $businessUnits = BusinessUnitTypes::getBUList();

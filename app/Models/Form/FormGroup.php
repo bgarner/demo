@@ -43,6 +43,7 @@ class FormGroup extends Model
     {
         FormGroupMap::where('form_group_id', $id)->delete();
         GroupUser::where('form_group_id', $id)->delete();
+        FormGroupBusinessUnitMap::where('group_id', $id)->delete();
         FormGroup::where('id', $id)->delete();    
     }
 

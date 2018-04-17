@@ -35,4 +35,12 @@ class User extends Authenticatable
     {
         return UserRole::where('user_id', \Auth::user()->id)->first()->role_id;
     }
+
+    public function getRoleAttribute()
+    {
+        return UserRole::join('roles', 'roles.id', '=', 'user_role.role_id')
+                        ->where('user_id', \Auth::user()->id)
+                        ->select('roles.*')
+                        ->first()->role_name;
+    }
 }

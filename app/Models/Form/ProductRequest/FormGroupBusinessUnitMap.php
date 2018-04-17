@@ -22,4 +22,5 @@ class FormGroupBusinessUnitMap extends Model
     {
     	return Self::where('group_id', $group_id)->first()->business_unit_id;
     }
+
 }

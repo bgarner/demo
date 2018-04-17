@@ -37,4 +37,12 @@ class FormUserBusinessUnitMap extends Model
 
         return;
     }
+
+    public static function getBusinessUnitsByFormUserId($user_id)
+    {
+        return FormUserBusinessUnitMap::join('form_business_unit_types', 'form_business_unit_types.id', '=', 'form_business_unit_user.business_unit_id')
+                            ->where('user_id', $user_id)
+                            ->select('form_business_unit_types.*')
+                            ->get()->pluck('business_unit', 'id')->toArray();
+    }
 }
