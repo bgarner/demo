@@ -183,6 +183,7 @@ return array(
     'ComponentDeletablePropertySeeder' => $baseDir . '/database/seeds/ComponentDeletablePropertySeeder.php',
     'ComponentGroupPivotSeeder' => $baseDir . '/database/seeds/ComponentGroupPivotSeeder.php',
     'ComponentsTableSeeder' => $baseDir . '/database/seeds/ComponentsTableSeeder.php',
+    'CreateAgedInventoryTable' => $baseDir . '/database/migrations/2018_03_22_100959_create_aged_inventory_table.php',
     'CreateAnalyticsAssetTypesTable' => $baseDir . '/database/migrations/2017_08_10_212331_create_analytics_asset_types_table.php',
     'CreateAnalyticsCollectionTable' => $baseDir . '/database/migrations/2017_08_10_214450_create_analytics_collection_table.php',
     'CreateBannerStorePivotTable' => $baseDir . '/database/migrations/2017_08_14_165643_create_banner_store_pivot_table.php',

@@ -665,6 +665,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'ComponentDeletablePropertySeeder' => __DIR__ . '/../..' . '/database/seeds/ComponentDeletablePropertySeeder.php',
         'ComponentGroupPivotSeeder' => __DIR__ . '/../..' . '/database/seeds/ComponentGroupPivotSeeder.php',
         'ComponentsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/ComponentsTableSeeder.php',
+        'CreateAgedInventoryTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_22_100959_create_aged_inventory_table.php',
         'CreateAnalyticsAssetTypesTable' => __DIR__ . '/../..' . '/database/migrations/2017_08_10_212331_create_analytics_asset_types_table.php',
         'CreateAnalyticsCollectionTable' => __DIR__ . '/../..' . '/database/migrations/2017_08_10_214450_create_analytics_collection_table.php',
         'CreateBannerStorePivotTable' => __DIR__ . '/../..' . '/database/migrations/2017_08_14_165643_create_banner_store_pivot_table.php',
