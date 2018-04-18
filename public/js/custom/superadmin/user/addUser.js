@@ -109,14 +109,26 @@ $(document).ready(function(){
 		var confirm_password = $('input[name="confirm_password"]').val();
 		var group = $('#select-group option:selected').val();
 		var role = $("#select-role option:selected").val();
+		var roleValue = $("#select-role option:selected").text();
 		var resource = $("#select-resource option:selected").val();
-		var business_unit = $("#select-bu option:selected").val();
+		
+		var business_unit = $.makeArray($("#select-bu option:selected").val());
+
+		
+		if(group== 3 && roleValue == 'Product Request Form Admin'){
+			var business_unit = [];
+			$('#select-bu option').each(function() {
+			    if($(this).val()){
+			    	business_unit.push($(this).val());
+			    }
+			});
+		}
 		var groupname = $('#select-group option:selected').text();
 		var banners = [];
 		$('#select-banner option:selected').each(function(){ banners.push($(this).val()); });
 
 
-		console.log(firstname, lastname, email, group, role, resource, business_unit);
+		// console.log(firstname, lastname, email, group, role, resource, business_unit);
 		var hasError = false;
 		if(firstname == '') {
 			swal("Oops!", "Need a first name.", "error"); 

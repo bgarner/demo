@@ -80,12 +80,23 @@ $(document).ready(function(){
 		var lastname = $('input[name="lastname"]').val();
 		var group = $('#select-group option:selected').val();
 		var role = $("#select-role option:selected").val();
+		var roleValue = $("#select-role option:selected").text();
 		var resource = $("#select-resource option:selected").val();
 
 		var banners = [];
 		$('#select-banner option:selected').each(function(){ banners.push($(this).val()); });
 
-		var business_unit = $("#select-bu option:selected").val();
+		var business_unit = $.makeArray($("#select-bu option:selected").val());
+
+		
+		if(group== 3 && roleValue == 'Product Request Form Admin'){
+			var business_unit = [];
+			$('#select-bu option').each(function() {
+			    if($(this).val()){
+			    	business_unit.push($(this).val());
+			    }
+			});
+		}
 		console.log(business_unit);
 
 		var newPassword = $('input[name="password"]').val();

@@ -127,10 +127,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         }
 
         if(isset($request['business_unit'])){
-            FormUserBusinessUnitMap::create([
-                'user_id' => $user->id,
-                'business_unit_id' => $request["business_unit"]
-            ]);
+            foreach ($request->business_unit as $bu) {
+                FormUserBusinessUnitMap::create([
+                    'user_id' => $user->id,
+                    'business_unit_id' => $bu
+                ]);
+            }
+            
         }
 
         \Log::info($user);

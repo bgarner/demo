@@ -20,20 +20,21 @@ class FormUserBusinessUnitMap extends Model
     	else return null;
     }
 
-    public static function updateBusinessUnit($user_id, $business_unit_id)
+    public static function updateBusinessUnit($user_id, $business_unit)
     {
         
-        if(isset($business_unit_id)){
+        Self::where('user_id', $user_id)->delete();
 
-            Self::updateOrCreate(
-                        ['user_id' => $user_id],
-                        ['business_unit_id' => $business_unit_id]
-                    );
+        if(isset($business_unit)){
 
+            foreach ($business_unit as $bu) {
+                 Self::create([
+                        'user_id' => $user_id,
+                        'business_unit_id' => $bu
+                    ]);
+            }
+           
         }    
-        else{
-            Self::where('user_id', $user_id)->delete();
-        }
 
         return;
     }

@@ -45,6 +45,9 @@ class Analytics extends Model
 
     public static function getAnalyticsForFormUser()
     {
-    	return ;
+    	// Total new forms in last 7 days
+    	// Total completed forms in last 7 days
+    	// Total in progress forms
+    	// Average time to close a ticket in last 7 days
     }
 }

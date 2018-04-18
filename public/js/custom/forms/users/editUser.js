@@ -21,12 +21,21 @@ $(document).ready(function(){
 		var lastname = $('input[name="lastname"]').val();
 		var group = $('#select-group option:selected').val();
 		var role = $("#select-role option:selected").val();
-		// var resource = $("#select-resource option:selected").val();
+		var rolename = $("#select-role option:selected").text();
 
 		var banners = [1,2];
 		
 
-		var business_unit = $("#select-bu option:selected").val();
+		var business_unit = $.makeArray($("#select-bu").val());
+		if(group== 3 && rolename == 'Product Request Form Admin'){
+			var business_unit = [];
+			$('#select-bu option').each(function() {
+			    if($(this).val()){
+			    	business_unit.push($(this).val());
+			    }
+			});
+		}
+
 		console.log(business_unit);
 		
 

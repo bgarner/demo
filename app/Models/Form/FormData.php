@@ -5,11 +5,12 @@ namespace App\Models\Form;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Utility\Utility;
 use App\Models\Form\Form;
+use App\Models\Form\ProductRequest\BusinessUnitTypes;
 
 class FormData extends Model
 {
     protected $table = 'form_data';
-    protected $fillable = ['form_id', 'store_number', 'submitted_by', 'form_data', 'form_name', 'form_version', 'business_unit'];
+    protected $fillable = ['form_id', 'store_number', 'submitted_by', 'form_data', 'form_name', 'form_version', 'business_unit_id'];
 
     public static function getAdminFormDataByFormNameAndVersion($name, $version)
     {
@@ -49,6 +50,7 @@ class FormData extends Model
     public static function createNewFormInstance($request)
     {
     	$form = Form::find($request->form_id);
+        $business_unit_id = BusinessUnitTypes::where('business_unit', $request->department)->first()->id;
 
         $formInstance =  FormData::create([
 					            "form_id" => $request->form_id,
@@ -56,7 +58,7 @@ class FormData extends Model
 					            "form_name" => $form->form_name,
 					            "form_version" => $form->version,
 					            "submitted_by" => $request->submitted_by,
-                                "business_unit" => $request->department,
+                                "business_unit_id" => $business_unit_id,
 					            "form_data" => serialize($request->all())
 					        ]);
 

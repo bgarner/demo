@@ -29,11 +29,19 @@ $(".user-create").click(function(){
 	var role = $("#select-role").val();
 	var rolename = $("#select-role option:selected").text();
 	var banners = [1,2];
-	var business_unit = $("#select-bu").val();
-	// $('#select-banner option:selected').each(function(){ banners.push($(this).val()); });
+	
+	var business_unit = $.makeArray($("#select-bu").val());
+	if(group== 3 && rolename == 'Product Request Form Admin'){
+		var business_unit = [];
+		$('#select-bu option').each(function() {
+		    if($(this).val()){
+		    	business_unit.push($(this).val());
+		    }
+		});
+	}
 
 
-	console.log(firstname, lastname, email, group, role);
+	// console.log(firstname, lastname, email, group, role, business_unit);
 	var hasError = false;
 	if(firstname == '') {
 		swal("Oops!", "Need a first name.", "error"); 
