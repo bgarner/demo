@@ -6,6 +6,32 @@
     @include('admin.includes.head')
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
+	<style>
+            .modal-dialog{
+                height: 380px;
+            }
+            .bignumber{
+                font-size: 72px;
+                text-align: center;
+                letter-spacing: -3px;
+                font-weight: bold;
+                margin: 0; padding: 0;
+                min-height: 72px;
+            }
+            .bignumber-ttc{
+                font-size: 60px;
+                font-weight: bold;
+                min-height: 80px;
+            }
+            .stat-percent{
+                font-size: 36px;
+            }
+            .perc-box{
+                width: 100%; 
+                padding: 5px 10px 15px 10px;
+                min-height: 60px;
+            }
+        </style>
 </head>
 
 <body class="fixed-navigation adminview">
@@ -21,14 +47,92 @@
 			<div class="wrapper wrapper-content  animated fadeInRight">
 	            <div class="row">
 	                <div class="col-lg-12">
+						
+						<h2>Product Request</h2>
+
+						<div class="wrapper wrapper-content animated fadeInRight">
+
+				            <div class="row">
+				                    <div class="col-lg-3">
+				                        <div class="ibox float-e-margins">
+				                            <div class="ibox-title">
+				                                {{--  <span class="label label-success pull-right">New Forms</span>  --}}
+				                                <h5>New Requests</h5>
+				                            </div>
+				                            <div class="ibox-content">
+				                                <h1 class="no-margins bignumber">{{$analytics["totalNewFormsInLastWeek"]}}</h1>
+				                            </div>
+				                                <div class="perc-box" style="background-color: #cddcf4; ">
+				                                    <div class="stat-percent font-bold text-success">98% <i class="fa fa-level-up"></i></div>
+				                                    <small>This Week<br />({{$analytics['start']}} - {{$analytics['end']}})</small>
+				                                </div>
+				                        </div>
+				                    </div>
+
+				                    <div class="col-lg-3">
+				                        <div class="ibox float-e-margins">
+				                            <div class="ibox-title">
+				                                {{--  <span class="label label-info pull-right">In Progress</span>  --}}
+				                                <h5>In Progress</h5>
+				                            </div>
+				                            <div class="ibox-content">
+				                                <h1 class="no-margins bignumber">{{$analytics["totalInProgressForms"]}}</h1>
+				                            </div>  
+				                                <div class="perc-box" style="background-color: #d9f9f5;">
+				                                
+				                                    <div class="stat-percent font-bold text-info">12 days</div>
+				                                    <small>Oldest Request:</small>    
+				                                </div>
+				                            </div>
+				                    </div>
+				                        
+				                    
+
+				                    <div class="col-lg-3">
+				                        <div class="ibox float-e-margins">
+				                            <div class="ibox-title">
+				                                <span class="label label-primary pull-right"></span>
+				                                <h5>Closed</h5>
+				                            </div>
+				                            <div class="ibox-content">
+				                                <h1 class="no-margins bignumber">{{$analytics["totalClosedFormsInLastWeek"]}}</h1>
+				                            </div>
+
+				                                <div class="perc-box" style="background-color: #f9f5d9;">
+				                                    <div class="stat-percent font-bold text-yellow">44% <i class="fa fa-level-up"></i></div>
+				                                    <small>This Week<br />({{$analytics['start']}} - {{$analytics['end']}})</small>
+				                                    
+				                                </div>
+				                            
+				                        </div>
+				                    </div>
+
+
+
+
+				                    <div class="col-lg-3">
+				                        <div class="ibox float-e-margins">
+				                            <div class="ibox-title">
+				                                {{--  <span class="label label-danger pull-right">Average</span>  --}}
+				                                <h5>Avg Time to Close</h5>
+				                            </div>
+				                            <div class="ibox-content">
+				                                <h1 class="no-margins bignumber-ttc">{{$analytics["avgTimeToCloseTicketLastWeek"]}} <small>hrs</small></h1>
+				                                
+				                            </div>
+				                            
+				                            <div class="perc-box" style="background-color: #f9dad9;">
+				                                <div class="stat-percent font-bold text-danger">38% <i class="fa fa-level-down"></i></div>
+				                                <small>This Week<br />({{$analytics['start']}} - {{$analytics['end']}})</small>
+				                            </div>
+				                        </div>
+				                    </div>
+				                </div>
+						</div>
 
 
 	                    <div class="ibox">
-	                        <div class="ibox-title">
-	                            <h5>Dashboard</h5>
-
-	                            
-	                        </div>
+	                        
 	                        <div class="ibox-content">
 								<div class="tabs-container">
 			                        <ul class="nav nav-tabs">
@@ -75,6 +179,8 @@
 	                        </div>
 
 	                    </div>
+
+	                    
 	                </div>
 	            </div>
 
