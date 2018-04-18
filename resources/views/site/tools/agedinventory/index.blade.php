@@ -5,10 +5,36 @@
     @section('title', 'Aged Inventory')
     @include('site.includes.head')
 
-    <link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+    {{--  <link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet">  --}}
     <style>
-        td{ font-size: 11px; }
-        table button{ float: left; margin-right: 5px;}
+        table{ width: 100% !important; }
+        .table td{ font-size: 11px; }
+        .table th{ font-size: 11px; } 
+        
+
+        .loading{
+            position: fixed; /* Sit on top of the page content */
+            width: 100%; /* Full width (cover the whole page) */
+            height: 100%; /* Full height (cover the whole page) */
+            top: 0; 
+            left: 220px;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.8); /* Black background with opacity */
+            z-index: 1000; /* Specify a stack order in case you're using a different order for other elements */
+            cursor: pointer;
+
+        }
+        .loading h1{
+           position: relative;
+            top: 40%;
+            text-align: center;
+            color: #fff;
+        }
+        .loadingimg{
+            position: relative;
+            top: 50%;
+        }
     </style>
     
 </head>
@@ -22,6 +48,7 @@
     </nav>
 
     <div id="page-wrapper" class="gray-bg">
+    <div class="loading"><h1>Loading Inventory...<br /><img src="/images/ajax-loader.gif" class="loadingimg" /></h1></div>
         <div class="row border-bottom">
             @include('site.includes.topbar')
         </div>
@@ -44,12 +71,12 @@
 
 
                     <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-12 table-responsive">
 
-                    <div class="table-responsive clearfix">
+                  
 
 
-                    <table class="table table-bordered table-hover nowrap agedInventoryTable" id="">
+                    <table class="table table-hover table-striped agedInventoryTable" id="">
                         <thead>
                         <tr>
                             <th>Category</th>
@@ -91,7 +118,7 @@
                         </tbody>
                     </table>
 
-                    </div>
+         
                         </div>
 
                             </div>
@@ -111,70 +138,28 @@
     <script src="/js/plugins/dataTables/jquery.dataTables.js"></script>
     <script src="/js/plugins/dataTables/dataTables.tableTools.min.js"></script>
     <script src="/js/plugins/dataTables/dataTables.responsive.js"></script>
-    <script src="/js/plugins/dataTables/dataTables.bootstrap.js"></script>
-    
+    <script src="/js/plugins/dataTables/dataTables.bootstrap.js"></script>    
+    <script src="/js/custom/site/tools/agedInventory.js?<?=time();?>"></script>
 
     <script>
         $(document).ready(function(){
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
             $('.agedInventoryTable').DataTable({
                 paging: true,
                 pageLength: 50,
                 responsive: true,
-                // "order": [[ 8, 'asc' ], [ 9, 'asc' ]]
-            });
-
-        });
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $( ".setlocation" ).click(function() {
-
-            //get the id, etc of the item we are setting
-            var storenumber = localStorage.getItem('userStoreNumber').replace("A", "");
-            if(storenumber.charAt(0) == "0"){
-                storenumber = storenumber.slice(1);	
-            }
-            var id = $(this).data('id');
-            var loc = $(this).data('loc');  //front or back
-            var checked = $(this).data('checked');  //set or not
-            var action;
-            if(checked == 1){
-                action = "unset";
-            } else {
-                action = "set";
-            }
-
-             //add the spinner... fa fa-spinner fa-spin
-            $(this).removeClass('btn-default btn-outline').addClass('btn-warning').html('<i class="fa fa-spinner fa-spin" aria-hidden="true"></i> Updating...');
-            
-            var $t = $(this); //setting the "this" so we can use in the ajax block...
-            $.ajax({
-                url: "/tools/agedinventory/update",
-                type: 'patch',
-                data: {
-                    storenumber: storenumber,
-                    id: id,
-                    location: loc, //front or back
-                    action: action //set or unset
-                },
-                success: function(result) {
+                ordering: true,
+                "initComplete": function( settings, json ) {
+                     $('div.loading').remove();
                 }
-            }).done(function(response){
-                //$(element).closest("tr").after( table );
-                    if(action == "set"){
-                        $t.removeClass('btn-warning').addClass('btn-success').html('<i class="fa fa-check" aria-hidden="true"></i> ' + loc);
-                        $t.data('checked', 1);
-                    } else {
-                        //setting back to the default look
-                        $t.removeClass('btn-warning').addClass('btn-default btn-outline').html(loc);
-                        $t.data('checked', 0);
-                    }
             });
-           
+
         });
 
     </script>
