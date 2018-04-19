@@ -76,10 +76,18 @@ class Analytics extends Model
         // Total new forms in last 7 days
         $analytics["totalNewFormsInLastWeek"] = FormInstanceStatusMap::where('status_code_id', '1')->where('created_at', '>=', $startDate)->get()->count();
 
-        // Total in progress forms
-        $analytics["totalInProgressForms"] = FormInstanceStatusMap::whereNotIn('status_code_id', ['1', '5'])->get()->count();    	    
+        // In progress forms
+        $inProgress = FormInstanceStatusMap::whereNotIn('status_code_id', ['1', '5'])->orderBy('created_at')->get();    	    
 
-    	//total closed in last 7 days
+
+        if(count($inProgress) > 0){
+            $analytics["oldestInProgressSince"] = Carbon::createFromFormat('Y-m-d H:i:s', $inProgress->first()->created_at)->diffInDays($endDate);
+        }
+
+        $analytics["totalInProgressForms"] = count($inProgress);
+
+    	
+        //total closed in last 7 days
         $analytics["closedLastWeek"] = FormInstanceStatusMap::where('status_code_id', '5')->where('updated_at', '>=', $startDate)->get();
 
         //total time to close
@@ -120,13 +128,23 @@ class Analytics extends Model
                                 ->get()
                                 ->count();
 
-        // Total in progress forms
-        $analytics["totalInProgressForms"] = FormInstanceStatusMap::join('form_data', 'form_data.id', '=', 'form_instance_status.form_data_id')
+        // In progress forms
+        $inProgress = FormInstanceStatusMap::join('form_data', 'form_data.id', '=', 'form_instance_status.form_data_id')
                                 ->whereNotIn('status_code_id', ['1', '5'])
                                 ->where('form_data.business_unit_id', $business_unit_id)
                                 ->select('form_instance_status.*')
-                                ->get()
-                                ->count();           
+                                ->orderBy('form_data.created_at')
+                                ->get();   
+
+        
+
+        if(count($inProgress) > 0){
+            
+            $analytics["oldestInProgressSince"] = Carbon::createFromFormat('Y-m-d H:i:s', $inProgress->first()->created_at)->diffInDays($endDate);
+        }
+
+        $analytics["totalInProgressForms"] = count($inProgress);
+
 
         //total closed in last 7 days
         $analytics["closedLastWeek"] = FormInstanceStatusMap::join('form_data', 'form_data.id', '=', 'form_instance_status.form_data_id')

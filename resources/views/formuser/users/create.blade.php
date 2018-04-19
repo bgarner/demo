@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    @section('title', 'Manage Groups')
+    @section('title', 'Manage Users')
     @include('admin.includes.head')
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
@@ -12,7 +12,7 @@
     <div id="wrapper">
 	    <nav class="navbar-default navbar-static-side" role="navigation">
 	        <div class="sidebar-collapse">
-	          @include('admin.includes.sidenav')
+	          @include('formuser.includes.sidenav')
 	        </div>
 	    </nav>
 

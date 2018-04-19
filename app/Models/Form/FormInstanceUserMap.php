@@ -3,6 +3,7 @@
 namespace App\Models\Form;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Utility\Utility;
 
 class FormInstanceUserMap extends Model
 {
@@ -14,9 +15,23 @@ class FormInstanceUserMap extends Model
         return Self::join('form_data', 'form_data.id', '=', 'form_user_form_instance.form_instance_id')
                     ->where('form_user_form_instance.user_id', $user_id)
                     ->select('form_data.*')
+                    ->orderBy('form_data.created_at', 'desc')
                     ->get()
-                    ->each(function($form) {
-                        $form->form_data = unserialize($form->form_data);
+                    ->each(function($formInstance) {
+                        $formInstance->form_data = unserialize($formInstance->form_data);
+                        $formInstance->description = $formInstance->form_data['department'] . " > " . $formInstance->form_data['category'] . " > " . $formInstance->form_data['subcategory'];
+                        $formInstance->prettySubmitted = Utility::prettifyDateWithTime($formInstance->created_at);
+                        $formInstance->assignedTo = FormInstanceUserMap::getUserByFormInstanceId($formInstance->id);
+                        $formInstance->lastFormAction = FormActivityLog::getLastFormInstanceAction($formInstance->id);
+
                     });
+    }
+
+    public static function getUserByFormInstanceId($formInstanceId)
+    {
+        return Self::join('users', 'users.id', '=', 'form_user_form_instance.user_id')
+                    ->where('form_user_form_instance.form_instance_id', $formInstanceId)
+                    ->select('users.*')
+                    ->first();
     }
 }

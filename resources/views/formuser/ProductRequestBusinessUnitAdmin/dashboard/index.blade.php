@@ -38,7 +38,7 @@
     <div id="wrapper">
 	    <nav class="navbar-default navbar-static-side" role="navigation">
 	        <div class="sidebar-collapse">
-	          @include('admin.includes.sidenav')
+	          @include('formuser.includes.sidenav')
 	        </div>
 	    </nav>
 
@@ -63,7 +63,7 @@
 				                                <h1 class="no-margins bignumber">{{$analytics["totalNewFormsInLastWeek"]}}</h1>
 				                            </div>
 				                                <div class="perc-box" style="background-color: #cddcf4; ">
-				                                    <div class="stat-percent font-bold text-success">98% <i class="fa fa-level-up"></i></div>
+				                                    <!-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-level-up"></i></div> -->
 				                                    <small>This Week<br />({{$analytics['start']}} - {{$analytics['end']}})</small>
 				                                </div>
 				                        </div>
@@ -79,9 +79,11 @@
 				                                <h1 class="no-margins bignumber">{{$analytics["totalInProgressForms"]}}</h1>
 				                            </div>  
 				                                <div class="perc-box" style="background-color: #d9f9f5;">
-				                                
-				                                    <div class="stat-percent font-bold text-info">12 days</div>
-				                                    <small>Oldest Request:</small>    
+				                                	@if(isset($analytics["oldestInProgressSince"]))
+				                                    <div class="stat-percent font-bold text-info">{{$analytics["oldestInProgressSince"]}} days</div>
+				                                    <small>Oldest Request:</small>   
+				                                    @endif
+				                                     
 				                                </div>
 				                            </div>
 				                    </div>
@@ -99,7 +101,7 @@
 				                            </div>
 
 				                                <div class="perc-box" style="background-color: #f9f5d9;">
-				                                    <div class="stat-percent font-bold text-yellow">44% <i class="fa fa-level-up"></i></div>
+				                                    <!-- <div class="stat-percent font-bold text-yellow">44% <i class="fa fa-level-up"></i></div> -->
 				                                    <small>This Week<br />({{$analytics['start']}} - {{$analytics['end']}})</small>
 				                                    
 				                                </div>
@@ -122,7 +124,7 @@
 				                            </div>
 				                            
 				                            <div class="perc-box" style="background-color: #f9dad9;">
-				                                <div class="stat-percent font-bold text-danger">38% <i class="fa fa-level-down"></i></div>
+				                                <!-- <div class="stat-percent font-bold text-danger">38% <i class="fa fa-level-down"></i></div> -->
 				                                <small>This Week<br />({{$analytics['start']}} - {{$analytics['end']}})</small>
 				                            </div>
 				                        </div>
@@ -150,7 +152,7 @@
 			                                <div class="panel-body">
 			                                    <table class="table">
 			                                    	<thead>
-			                                    		
+			                                    		<th>Description</th>
 			                                    		<th>Store#</th>
 			                                    		<th>Submitted At</th>
 			                                    		<th>User Assigned To</th>
@@ -159,10 +161,20 @@
 			                                    	<tbody>
 			                                    		@foreach($formInstances as $formInstance)
 			                                    		<tr>
+			                                    			<td><a href="/form/productrequest/{{$formInstance->id}}"> {{$formInstance->description}}</a></td>
 															<td>{{$formInstance->store_number}}</td>
-															<td>{{$formInstance->created_at}}</td>
-															<td>User Assigned to </td>
-															<td>Last Action</td>
+															<td>{{$formInstance->prettySubmitted}}</td>
+															<td>
+																@if(isset($formInstance->assignedTo))
+																{{$formInstance->assignedTo->firstname}} {{$formInstance->assignedTo->lastname}}
+																@endif
+															</td>
+															<td>
+																@if(isset($formInstance->lastFormAction))
+																
+																{{$formInstance->lastFormAction->log["status_admin_name"]}} by {{$formInstance->lastFormAction->log["user_name"]}}
+																@endif
+															</td>
 														</tr>
 			                                    		@endforeach
 			                                    	</tbody>

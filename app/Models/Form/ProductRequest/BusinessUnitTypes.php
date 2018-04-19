@@ -13,7 +13,6 @@ class BusinessUnitTypes extends Model
     {
     	return Self::all()
     				->pluck('business_unit', 'id')
-    				->prepend("Select one", "")
     				->toArray();
     }
 }

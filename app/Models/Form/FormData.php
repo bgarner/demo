@@ -5,6 +5,7 @@ namespace App\Models\Form;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Utility\Utility;
 use App\Models\Form\Form;
+use App\Models\Form\FormActivityLog;
 use App\Models\Form\ProductRequest\BusinessUnitTypes;
 
 class FormData extends Model
@@ -89,9 +90,15 @@ class FormData extends Model
     {
         return FormData::where('business_unit_id', $business_unit)
                         ->select('*')
+                        ->orderBy('created_at', 'desc')
                         ->get()
-                        ->each(function($form) {
-                            $form->form_data = unserialize($form->form_data);
+                        ->each(function($formInstance) {
+                            $formInstance->form_data = unserialize($formInstance->form_data);
+                            $formInstance->description = $formInstance->form_data['department'] . " > " . $formInstance->form_data['category'] . " > " . $formInstance->form_data['subcategory'];
+                            $formInstance->prettySubmitted = Utility::prettifyDateWithTime($formInstance->created_at);
+                            $formInstance->assignedTo = FormInstanceUserMap::getUserByFormInstanceId($formInstance->id);
+                            $formInstance->lastFormAction = FormActivityLog::getLastFormInstanceAction($formInstance->id);
+
                         });
 
 

@@ -22,9 +22,26 @@ class UserAdminController extends Controller
     public function index()
     {
         
-		$users = User::where('group_id', 3)->get();
-        dd($users);
-        // return view('formuser.users.index');
+		$employeeRoleIds = FormRoleHierarchy::where('manager_role_id', \Auth::user()->role_id)->get()->pluck('employee_role_id')->toArray();
+        $businessUnitId = FormUserBusinessUnitMap::where('user_id', \Auth::user()->id)->get()->pluck('business_unit_id')->toArray();
+
+        $users = User::join('user_role', 'users.id' , '=', 'user_role.user_id')
+                    ->join('roles', 'user_role.role_id', '=', 'roles.id')
+                    ->where('users.group_id', 3)
+                    ->whereIn('roles.id', $employeeRoleIds)
+                    ->select('users.*', 'roles.role_name', 'roles.id as role_id' )
+                    ->get();
+                    // ->each(function($user) use ($employeeRoleIds, $businessUnitId){
+                    //     $user->disabled = true;
+                    //     $user->business_unit_id = 
+                    //     if(in_array($user->role_id, $employeeRoleIds )&& in_array($user->business_unit_id,$businessUnitId))
+                    //     {
+                    //         $user->disabled = false;
+                    //     }
+                        
+                    // });            
+
+        return view('formuser.users.index')->with('users', $users);
                         
     }
 

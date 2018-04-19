@@ -90,4 +90,14 @@ class FormActivityLog extends Model
 
         return $formActivityInstance;
     }
+
+    public static function getLastFormInstanceAction($formInstanceId)
+    {
+        $lastAction = Self::where('form_data_id', $formInstanceId)->orderBy('created_at', 'desc')->first();
+        if($lastAction){
+            $lastAction->log = unserialize($lastAction->log);    
+        }
+        
+        return $lastAction;
+    }
 }

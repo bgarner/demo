@@ -189,6 +189,7 @@ return [
         App\Providers\StoreFooterProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        App\Providers\FormUserSidenavServiceProvider::class,
 
     ],
 

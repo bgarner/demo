@@ -12,7 +12,7 @@
     <div id="wrapper">
 	    <nav class="navbar-default navbar-static-side" role="navigation">
 	        <div class="sidebar-collapse">
-	          @include('admin.includes.sidenav')
+	          @include('formuser.includes.sidenav')
 	        </div>
 	    </nav>
 
@@ -49,7 +49,7 @@
                                     <div class="form-group">
 	                                	<label class="col-sm-2 control-label">Business Unit</label>
 	                                	<div class="col-sm-10">
-	                                		{!! Form::select('businessUnit', $businessUnits	, $selectedBU, [ 'class'=>'chosen', 'id'=> 'businessUnit']) !!}
+	                                		{!! Form::select('businessUnit', $businessUnits	, $selectedBU, [ 'class'=>'chosen', 'id'=> 'businessUnit', 'multiple'=>'multiple']) !!}
 
 	                                	</div>
 

@@ -12,15 +12,18 @@ class FormGroupBusinessUnitMap extends Model
     public static function updateGroupBUPivotByGroupId($businessUnit, $group_id)
     {
     	FormGroupBusinessUnitMap::where('group_id', $group_id)->delete();
-    	FormGroupBusinessUnitMap::create([
-    			'group_id' => $group_id,
-    			'business_unit_id' => $businessUnit
-    		]);
+    	foreach ($businessUnit as $bu) {
+            FormGroupBusinessUnitMap::create([
+                'group_id' => $group_id,
+                'business_unit_id' => $bu
+            ]);
+        }
+        
     }
 
     public static function getBusinessUnitByGroup($group_id)
     {
-    	return Self::where('group_id', $group_id)->first()->business_unit_id;
+    	return Self::where('group_id', $group_id)->get()->pluck('business_unit_id')->toArray();
     }
 
 }

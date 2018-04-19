@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    @section('title', 'Manage Groups')
+    @section('title', 'Manage Users')
     @include('admin.includes.head')
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
@@ -12,7 +12,7 @@
     <div id="wrapper">
 	    <nav class="navbar-default navbar-static-side" role="navigation">
 	        <div class="sidebar-collapse">
-	          @include('admin.includes.sidenav')
+	          @include('formuser.includes.sidenav')
 	        </div>
 	    </nav>
 
@@ -32,28 +32,29 @@
 	                        </div>
 	                        <div class="ibox-content">
 
-
-								{{--
 	                            <div class="table-responsive">
 
 									<table class="table table-hover issue-tracker tablesorter">
 										<thead>
 											<tr>
-												<td>Group</td>
-												<td>Form</td>
+												<td>User</td>
+												<td>Role</td>
 												<td class="actions">Action</td>
 											</tr>
 										</thead>
 										<tbody>
-									@foreach($groups as $group)
+									@foreach($users as $user)
 
-									<tr>
-										<td class="col-xs-2">{{ $group->group_name }}</td>
-										<td class="col-xs-2">{{ $group->form_label }}</td>
+									<tr >
+										<td class="col-xs-2">{{ $user->firstname }} {{ $user->lastname }}</td>
+										<td class="col-xs-2">{{ $user->role_name }}</td>
 										<td class="col-xs-2">
-											<a href="/form/group/{{ $group->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+											@if(!$user->disabled) 
+											<a href="/form/user/{{ $user->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
 
-											<a data-groupId="{{ $group->id }}" id="group{{ $group->id }}" class="group-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+											<a data-groupId="{{ $user->id }}" id="user{{ $user->id }}" class="user-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+
+											@endif
 
 										</td>
 									</tr>
@@ -61,7 +62,7 @@
 									</tbody>
 									</table>
 
-	                            </div> --}}
+	                            </div>
 	                        </div>
 
 	                    </div>

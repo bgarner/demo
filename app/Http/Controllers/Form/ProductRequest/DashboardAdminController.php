@@ -12,9 +12,8 @@ class DashboardAdminController extends Controller
     {
     	$forms = Analytics::getFormsForFormUser();
     	$analytics = Analytics::getAnalyticsForFormUser();
-
-    	//change view to formuser.{role}.dashboard
-    	return view('formuser.dashboard.index')->with('forms', $forms)
+    	$role = preg_replace("/\s+/", "", \Auth::user()->role);
+    	return view('formuser.'.$role.'.dashboard.index')->with('forms', $forms)
     									->with('analytics', $analytics);
     }
 }
