@@ -152,21 +152,29 @@
 			                                <div class="panel-body">
 			                                    <table class="table">
 			                                    	<thead>
+			                                    		<th></th>
 			                                    		<th>Description</th>
 			                                    		<th>Store#</th>
 			                                    		<th>Submitted At</th>
 			                                    		<th>User Assigned To</th>
+			                                    		<th>Form Assigned To</th>
 			                                    		<th>Last Action</th>
 			                                    	</thead>
 			                                    	<tbody>
 			                                    		@foreach($formInstances as $formInstance)
 			                                    		<tr>
+			                                    			<td></td>
 			                                    			<td><a href="/form/productrequest/{{$formInstance->id}}">{{$formInstance->description}}</a></td>
 															<td>{{$formInstance->store_number}}</td>
 															<td>{{$formInstance->prettySubmitted}}</td>
-															<td>
-																@if(isset($formInstance->assignedTo))
-																{{$formInstance->assignedTo->firstname}} {{$formInstance->assignedTo->lastname}}
+															<td class="assignedToUser">
+																@if(isset($formInstance->assignedToUser))
+																{{$formInstance->assignedToUser->firstname}} {{$formInstance->assignedToUser->lastname}}
+																@endif
+															</td>
+															<td class="assignedToGroup">
+																@if(isset($formInstance->assignedToGroup))
+																{{$formInstance->assignedToGroup->group_name}} 
 																@endif
 															</td>
 															<td>

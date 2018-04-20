@@ -3,6 +3,7 @@
 namespace App\Models\Form\ProductRequest;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Form\ProductRequest\FormUserBusinessUnitMap;
 
 class FormGroupBusinessUnitMap extends Model
 {
@@ -24,6 +25,16 @@ class FormGroupBusinessUnitMap extends Model
     public static function getBusinessUnitByGroup($group_id)
     {
     	return Self::where('group_id', $group_id)->get()->pluck('business_unit_id')->toArray();
+    }
+
+    public static function getGroupsByCurrentBusinessUnitId()
+    {
+        $currentBusinessUnit = FormUserBusinessUnitMap::where('user_id', \Auth::user()->id)->first()->business_unit_id;
+        
+        return Self::join('form_usergroups', 'form_usergroups.id', '=', 'form_business_unit_group.group_id')
+                ->where('business_unit_id', $currentBusinessUnit)
+                ->select('form_usergroups.*')
+                ->get();
     }
 
 }

@@ -27,4 +27,22 @@ class FormInstanceGroupMap extends Model
 
                     });
     }
+
+    public static function updateFormAssignment($form_instance_id, $group_id)
+    {
+        Self::where('form_instance_id', $form_instance_id)
+            ->delete();
+        return Self::create([
+            'form_instance_id' => $form_instance_id,
+            'form_group_id'           => $group_id
+        ]);
+    }
+
+    public static function getGroupByFormInstanceId($form_instance_id)
+    {
+        return Self::join('form_usergroups', 'form_usergroups.id', '=', 'form_group_form_instance.form_group_id')
+                    ->where('form_group_form_instance.form_instance_id', $form_instance_id)
+                    ->select('form_usergroups.*')
+                    ->first();
+    }
 }

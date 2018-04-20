@@ -31,15 +31,7 @@ class UserAdminController extends Controller
                     ->whereIn('roles.id', $employeeRoleIds)
                     ->select('users.*', 'roles.role_name', 'roles.id as role_id' )
                     ->get();
-                    // ->each(function($user) use ($employeeRoleIds, $businessUnitId){
-                    //     $user->disabled = true;
-                    //     $user->business_unit_id = 
-                    //     if(in_array($user->role_id, $employeeRoleIds )&& in_array($user->business_unit_id,$businessUnitId))
-                    //     {
-                    //         $user->disabled = false;
-                    //     }
-                        
-                    // });            
+                                
 
         return view('formuser.users.index')->with('users', $users);
                         

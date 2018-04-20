@@ -46,4 +46,14 @@ class FormUserBusinessUnitMap extends Model
                             ->select('form_business_unit_types.*')
                             ->get()->pluck('business_unit', 'id')->toArray();
     }
+
+    public static function getUsersByCurrentBusinessUnitId()
+    {
+        $currentBusinessUnit = FormUserBusinessUnitMap::where('user_id', \Auth::user()->id)->first()->business_unit_id;
+        
+        return Self::join('users', 'users.id', '=', 'form_business_unit_user.user_id')
+                ->where('business_unit_id', $currentBusinessUnit)
+                ->select('users.*')
+                ->get();
+    }
 }

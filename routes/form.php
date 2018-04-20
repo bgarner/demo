@@ -11,3 +11,6 @@ Route::resource('/form/group', 'Form\ProductRequest\GroupAdminController');
 //Form Users
 Route::resource('/form/user', 'Form\ProductRequest\UserAdminController');
 Route::get('/form/{id}/users', 'Form\ProductRequest\FormUserAdminController@show');
+
+//Assignments
+Route::patch('/form/assignment/forminstance/{form_instance_id}' , 'Form\ProductRequest\AssignmentAdminController@update');

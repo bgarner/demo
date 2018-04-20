@@ -34,4 +34,14 @@ class FormInstanceUserMap extends Model
                     ->select('users.*')
                     ->first();
     }
+
+    public static function updateFormAssignment($form_instance_id, $user_id)
+    {
+        Self::where('form_instance_id', $form_instance_id)
+            ->delete();
+        return Self::create([
+            'form_instance_id' => $form_instance_id,
+            'user_id'           => $user_id
+        ]);
+    }
 }
