@@ -108,9 +108,9 @@
     </div><!-- wrapper closes -->
 
 
-		@include('admin.includes.footer')
+		@include('site.includes.footer')
 
-	    @include('admin.includes.scripts')
+	    @include('site.includes.scripts')
 
 		@include('site.includes.bugreport')
 

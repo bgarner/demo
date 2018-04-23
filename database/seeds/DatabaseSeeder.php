@@ -46,7 +46,10 @@ class DatabaseSeeder extends Seeder
         
         // $this->call(FormGroupAndRolesSeeder::class);
         // $this->call(FormPermissionTableSeeder::class);
-        $this->call(BusinessUnitTypesTableSeeder::class);
+        // $this->call(BusinessUnitTypesTableSeeder::class);
+        $this->call(FormTargetTableSeeder::class);
+        $this->call(UpdateStoreComponentsTableSeeder::class);
+        
 
     }
 }
