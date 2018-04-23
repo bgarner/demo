@@ -6,6 +6,11 @@ $(document).ready(function(){
     $('.dirtynodestable').on('click', '.cleannodebutton', function() {
         showModal(this);
     });
+
+ 
+
+
+
 });
 
 

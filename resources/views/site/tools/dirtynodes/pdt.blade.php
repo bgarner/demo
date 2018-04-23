@@ -9,18 +9,6 @@
  {{--    <link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet"> --}}
     <style>
 
-    @media screen and (min-width: 320px) and (max-width: 767px) and (orientation: landscape) {
-        html {
-            transform: rotate(-90deg);
-            transform-origin: left top;
-            width: 100vh;
-            overflow-x: hidden;
-            position: absolute;
-            top: 100%;
-            left: 0;
-        }
-    }
-
         table{ width: 100% !important; }
         .table td{ font-size: 11px; }
         .table th{ font-size: 11px; } 
@@ -79,7 +67,7 @@
             text-align: center;
             height: 100%;
             padding: 10px;
-            width: 95% !important;
+            width: 80% !important;
             display:none;
         }
         .panel-body, .table-responsive{
@@ -221,13 +209,16 @@
                 "initComplete": function( settings, json ) {
                      $('div.loading').remove();
                      $('#DataTables_Table_0_filter input').focus();
-            
+                     $( "#DataTables_Table_0_filter input" ).after( "<button type='button' value='X' style='margin-left: 5px;' class='clearupc btn btn-sm btn-danger'>X</button>" );
                 }
             });
            
+            $(".clearupc").click(function() {
+                $("#DataTables_Table_0_filter input").val('');
+                $('#DataTables_Table_0_filter input').focus();
+            });
             
         });
-
 
         var field = $('#DataTables_Table_0_filter input');
         field.setAttribute('type', 'text');
