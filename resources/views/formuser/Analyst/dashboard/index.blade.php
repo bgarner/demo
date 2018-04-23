@@ -48,10 +48,24 @@
 	            <div class="row">
 	                <div class="col-lg-12">
 						
-						<h2>Product Request</h2>
+						<!-- <h2>Product Request</h2> -->
 
 	                    <div class="ibox">
-	                        
+	                        <div class="ibox-title">
+	                        	<h2>Request Status</h2>
+	                        	<div class="ibox-tools">
+	                        		<span class="dropdown" id="edit_multiple_forms" style="display: inline;">
+                                        <button class="btn btn-warning dropdown-toggle" type="button" id="edit_selected" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Edit Selected
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="edit_selected">
+                                            <li id="assign_to_self" data-userid= "{{ Auth::user()->id}}" ><a>Assign to Self</a></li>
+                                            
+                                        </ul>
+                                    </span>
+									
+	                            </div>
+	                        </div>
 	                        <div class="ibox-content">
 								<div class="tabs-container">
 			                        <ul class="nav nav-tabs">
@@ -69,6 +83,7 @@
 			                                <div class="panel-body">
 			                                    <table class="table">
 			                                    	<thead>
+			                                    		<th>@if(count($formInstances)>0)<input id="select_all" type="checkbox">@endif</th>
 			                                    		<th>Description</th>
 			                                    		<th>Store#</th>
 			                                    		<th>Submitted At</th>
@@ -78,6 +93,7 @@
 			                                    	<tbody>
 			                                    		@foreach($formInstances as $formInstance)
 			                                    		<tr>
+			                                    			<td><input class="select_form" id="select_form" type="checkbox" data-formInstanceId = "{{$formInstance->id}}"></td>
 			                                    			<td><a href='/form/productrequest/{{$formInstance->id}}'> {{$formInstance->description}} </a></td>
 															<td>{{$formInstance->store_number}}</td>
 															<td>{{$formInstance->prettySubmitted}}</td>
@@ -118,13 +134,15 @@
 	    </div>
 	</div>
 
+
+
 	@include('admin.includes.footer')
 
     @include('admin.includes.scripts')
 
 
 
-	<script type="text/javascript" src="/js/custom/forms/groups/deleteGroup.js"></script>
+	<script type="text/javascript" src="/js/custom/forms/assignments/assign.js"></script>
 	<script type="text/javascript">
 
 		

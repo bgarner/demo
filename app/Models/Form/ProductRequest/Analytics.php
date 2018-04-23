@@ -32,11 +32,11 @@ class Analytics extends Model
 
     	if( $user->group_id = 3 && $user->role == 'Analyst' ){
 
-	    	$forms['userAssignments'] = FormInstanceUserMap::getFormInstancesByUserId($user->id);
+	    	$forms['My Assignments'] = FormInstanceUserMap::getFormInstancesByUserId($user->id);
 
 	    	$user_groups = GroupUser::getGroupsByUserId($user->id);
 	    	
-	    	$forms['groupAssignments'] = FormInstanceGroupMap::getFormInstancesByGroupId($user_groups);
+	    	$forms['My Group Assignments'] = FormInstanceGroupMap::getFormInstancesByGroupId($user_groups);
 	    	
     	}
 
@@ -103,8 +103,14 @@ class Analytics extends Model
         // Total closed forms in last 7 days
         $analytics["totalClosedFormsInLastWeek"] = count($analytics["closedLastWeek"]);
 
+        $analytics["avgTimeToCloseTicketLastWeek"] = "-";
+        if(count($analytics["closedLastWeek"])){
 
-        $analytics["avgTimeToCloseTicketLastWeek"] = round(($time/$analytics["totalClosedFormsInLastWeek"])/60, 2);
+            $analytics["avgTimeToCloseTicketLastWeek"] = round(($time/$analytics["totalClosedFormsInLastWeek"])/60, 2);
+
+        }
+
+        
 
         $analytics["start"] = Utility::prettifyDate($startDate->toDateTimeString());
         $analytics["end"] = Utility::prettifyDate($endDate->toDateTimeString());

@@ -169,7 +169,7 @@
 			                                <div class="panel-body">
 			                                    <table class="table">
 			                                    	<thead>
-			                                    		<th><input id="select_all" type="checkbox"></th>
+			                                    		<th>@if(count($formInstances)>0)<input id="select_all" type="checkbox">@endif</th>
 			                                    		<th>Description</th>
 			                                    		<th>Store#</th>
 			                                    		<th>Submitted At</th>

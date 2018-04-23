@@ -157,7 +157,7 @@
 			                                    		<th>Store#</th>
 			                                    		<th>Submitted At</th>
 			                                    		<th>User Assigned To</th>
-			                                    		<th>Form Assigned To</th>
+			                                    		<th>Group Assigned To</th>
 			                                    		<th>Last Action</th>
 			                                    	</thead>
 			                                    	<tbody>

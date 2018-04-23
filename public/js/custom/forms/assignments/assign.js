@@ -33,6 +33,26 @@ $("#assign_to_group").click(function(){
 	$("#group_assignment_modal").modal('show');
 });
 
+$("#assign_to_self").click(function(){
+	
+	var user_id = $(this).data('userid');
+	var selectedForms = $(".select_form:checked");
+	$.each(selectedForms, function(index, form){
+		var form_instance_id = $(this).attr('data-formInstanceId');		
+		$.ajax({
+		    url: '/form/assignment/forminstance/' + form_instance_id ,
+		    type: 'PATCH',
+		    data: { 'user_id': user_id  },
+		    async: false,
+		    success: function(result) {
+		       $("tr[data-formInstanceid='"+result.id+"']").find(".assignedToUser").html(result.assignedTo);
+		    }
+		}).done(function(response){
+			
+		});   
+	}); 
+});
+
 $("#update_user_assignment").click(function(){
 	
 	var user_id = $(".user-checkbox:checked").data('userid');
