@@ -82,6 +82,7 @@ Route::get('/tools/productdelivery/classes', array('uses' => 'Tools\ProductDeliv
 Route::get('/tools/productdelivery/brands', array('uses' => 'Tools\ProductDeliveryController@getBrands'));
 Route::get('/tools/productdelivery/styles', array('uses' => 'Tools\ProductDeliveryController@getStyles'));
 Route::get('/{storeno}/tools/dirtynodes', array('uses' => 'Tools\DirtyNodesController@index'));
+Route::get('/{storeno}/tools/dirtynodes-pdt', array('uses' => 'Tools\DirtyNodesController@pdt'));
 Route::patch('/{storeno}/tools/dirtynodes/clean', array('uses' => 'Tools\DirtyNodesController@update'));
 Route::get('/{storeno}/tools/agedinventory', array('uses' => 'Tools\AgedInventoryController@index'));
 Route::patch('/tools/agedinventory/update', array('uses' => 'Tools\AgedInventoryUpdateStatusController@update'));
