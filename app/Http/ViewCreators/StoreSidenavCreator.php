@@ -25,7 +25,7 @@ class StoreSidenavCreator
     protected $taskCount;
     protected $components;
     protected $isFormComponentVisible;
-    
+
     /**
      * Create a new profile composer.
      *
@@ -42,7 +42,8 @@ class StoreSidenavCreator
         $this->allCompletedTasks  = Task::getAllCompletedTasksByStoreId($this->storeNumber)->count();
         $this->components         = StoreComponent::getComponents($this->storeNumber);
 
-        $this->isFormComponentVisible      = FormTarget::isFormComponentVisible($this->storeNumber);
+        $this->isFormComponentVisible  = FormTarget::isFormComponentVisible($this->storeNumber);
+
                 
     }
     /**
