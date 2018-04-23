@@ -57,13 +57,13 @@ Route::get('/{storeno}/flyer/{flyer_id}', array('uses' => 'Flyer\FlyerController
 Route::get('/{storeno}/folder/{id}', ['uses' => 'Document\FolderController@show']);
 
 //FORMS
-Route::get('/{storeno}/forms', 'Form\FormListController@index');
-Route::resource('/{storeno}/forms/productrequest', 'Form\ProductRequestFormController');
-Route::get('/forms/productrequest/log/{id}', 'Form\FormLogController@show');
+Route::get('/{storeno}/form', 'Form\FormListController@index');
+Route::resource('/{storeno}/form/productrequest', 'Form\ProductRequestFormController');
+Route::get('/form/productrequest/log/{id}', 'Form\FormLogController@show');
 
 //FORM API ROUTES
-Route::post('/forms/updateStatus', 'Form\FormInstanceStatusController@create');
-Route::patch('/forms/updateStatus/{id}', 'Form\FormInstanceStatusController@update');
+Route::post('/form/updateStatus', 'Form\FormInstanceStatusController@create');
+Route::patch('/form/updateStatus/{id}', 'Form\FormInstanceStatusController@update');
 
 
 

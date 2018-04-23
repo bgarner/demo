@@ -119,7 +119,7 @@ $(document).ready(function(){
 	    if(hasError == false) {
 
 			$.ajax({
-			    url: "/" + storeNumber + '/forms/productrequest/',
+			    url: "/" + storeNumber + '/form/productrequest/',
 			    type: 'POST',
 			    data: {
 			    	form_id: form_id,
@@ -155,7 +155,7 @@ $(document).ready(function(){
 		        	},
 		        	function(){
 		        		// window.history.back();
-		        		window.location = "/" + storeNumber + '/forms/productrequest/';
+		        		window.location = "/" + storeNumber + '/form/productrequest/';
 		        	})
 
 			        console.log(data);

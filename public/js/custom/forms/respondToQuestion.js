@@ -7,7 +7,7 @@ $("#send_response_to_question").on('click', function () {
     var answer = $('#answer').val();
 
     $.ajax({
-        url: "/forms/updateStatus/" + logActivityId,
+        url: "/form/updateStatus/" + logActivityId,
         type: 'patch',
         data: {
         	submitted_by: submitted_by,
@@ -22,7 +22,7 @@ $("#send_response_to_question").on('click', function () {
         		type : "success",
         	},
         	function(){
-                $('#logContainer').load("/forms/productrequestform/log/"+formInstanceId);
+                $('#logContainer').load("/form/productrequestform/log/"+formInstanceId);
 
         	})
         }
