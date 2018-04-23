@@ -36,7 +36,7 @@ $("#assign_to_group").click(function(){
 $("#assign_to_self").click(function(){
 	
 	var user_id = $(this).data('userid');
-	var selectedForms = $(".select_form:checked");
+	var selectedForms = $(".tab-pane.active").find(".select_form:checked");
 	$.each(selectedForms, function(index, form){
 		var form_instance_id = $(this).attr('data-formInstanceId');		
 		$.ajax({
@@ -52,6 +52,25 @@ $("#assign_to_self").click(function(){
 		});   
 	}); 
 });
+
+$("#show_update_status").click(function(){
+	$("#status_update_modal").modal('show');
+})
+
+$("#update_form_status").click(function(){
+ 
+ 	var selectedForms = $(".tab-pane.active").find(".select_form:checked");
+	
+	$.each(selectedForms, function(index, form){
+		var form_instance_id = $(this).attr('data-formInstanceId');	
+		updateFormInstanceStatus(form_instance_id);
+	});
+
+	$('#status_update_modal').modal('hide');
+
+
+});
+
 
 $("#update_user_assignment").click(function(){
 	

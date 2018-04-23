@@ -7,29 +7,8 @@
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 	<style>
-            .modal-dialog{
-                height: 380px;
-            }
-            .bignumber{
-                font-size: 72px;
-                text-align: center;
-                letter-spacing: -3px;
-                font-weight: bold;
-                margin: 0; padding: 0;
-                min-height: 72px;
-            }
-            .bignumber-ttc{
-                font-size: 60px;
-                font-weight: bold;
-                min-height: 80px;
-            }
-            .stat-percent{
-                font-size: 36px;
-            }
-            .perc-box{
-                width: 100%; 
-                padding: 5px 10px 15px 10px;
-                min-height: 60px;
+            #status_update_modal .modal-body{
+            	height: 75% !important;
             }
         </style>
 </head>
@@ -59,7 +38,11 @@
                                             Edit Selected
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="edit_selected">
+                                            
+
                                             <li id="assign_to_self" data-userid= "{{ Auth::user()->id}}" ><a>Assign to Self</a></li>
+
+                                            <li id="show_update_status"><a>Update Status</a></li>
                                             
                                         </ul>
                                     </span>
@@ -76,10 +59,11 @@
 
 			                            @endforeach
 			                        </ul>
-			                        <div class="tab-content">
+			                        <div class="tab-content" >
 			                        	@foreach($forms as $formCategory => $formInstances)
 
-			                            <div id="tab-{{$loop->iteration}}" class="tab-pane @if ($loop->first) active @endif">
+			                            <div id="tab-{{$loop->iteration}}" class="tab-pane @if ($loop->first) active @endif" id="tab-{{$loop->iteration}}">
+
 			                                <div class="panel-body">
 			                                    <table class="table">
 			                                    	<thead>
@@ -134,7 +118,36 @@
 	    </div>
 	</div>
 
+	<div id="status_update_modal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Update Status</h4>
+                </div>
+                <div class="modal-body">
+                	<input type="text" hidden value="admin" id="origin">
+                    <label>Status</label>
+                    <select class="form-control" id="status_code_id">
+                        <option value=""></option>
+                        @foreach($codes as $code)
+                        <option value="{{$code->id}}">{{$code->admin_status}}</option>
+                        @endforeach
+                    </select>
 
+	                <label>Comments</label>
+	                <textarea class="form-control" id="comment"></textarea>
+	                <input type="checkbox" id="ask_for_reply" name="ask_for_reply" value="1" /> Allow the store to submit a response to this comment/question.
+	                <br />
+	                
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="update_form_status">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 	@include('admin.includes.footer')
 
@@ -143,6 +156,7 @@
 
 
 	<script type="text/javascript" src="/js/custom/forms/assignments/assign.js"></script>
+	<script type="text/javascript" src="/js/custom/forms/formStatus.js"></script>
 	<script type="text/javascript">
 
 		

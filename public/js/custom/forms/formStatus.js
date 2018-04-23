@@ -18,12 +18,6 @@ var updateFormInstanceStatus =  function(formInstanceId){
     var origin = $('#origin').val();
     var reply = $('#ask_for_reply:checked').val()
 
-
-    console.log(codeSelected);
-    console.log(comment);
-    console.log(origin);
-    console.log(reply);
-    console.log(formInstanceId);
     $.ajax({
         url: "/form/updateStatus",
         type: 'post',
@@ -42,10 +36,16 @@ var updateFormInstanceStatus =  function(formInstanceId){
                 type : "success",
             },
             function(){
-                $('#logContainer').load("/form/productrequestform/log/"+formInstanceId);
-                $("#comment").val("");
-                $("#status_code_id").val(0);
-                $('#ask_for_reply').prop('checked', false);
+                if($('#logContainer').length>0){
+                    $('#logContainer').load("/form/productrequestform/log/"+formInstanceId);
+                    $("#comment").val("");
+                    $("#status_code_id").val(0);
+                    $('#ask_for_reply').prop('checked', false);    
+                }
+                else{
+                    window.location.reload();
+                }
+                
             })
         }
     }).done(function(response){

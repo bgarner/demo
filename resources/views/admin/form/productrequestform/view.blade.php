@@ -7,7 +7,6 @@
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 	<link rel="stylesheet" href="/css/plugins/dataTables/datatables.min.css">
-	{{-- <link rel="stylesheet" href="/css/plugins/dataTables/dataTables.tableTools.min.css"> --}}
 	<style>
         .modal-dialog{
             height: 380px;
