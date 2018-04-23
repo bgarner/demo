@@ -8,6 +8,19 @@
 
  {{--    <link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet"> --}}
     <style>
+
+    @media screen and (min-width: 320px) and (max-width: 767px) and (orientation: landscape) {
+        html {
+            transform: rotate(-90deg);
+            transform-origin: left top;
+            width: 100vh;
+            overflow-x: hidden;
+            position: absolute;
+            top: 100%;
+            left: 0;
+        }
+    }
+
         table{ width: 100% !important; }
         .table td{ font-size: 11px; }
         .table th{ font-size: 11px; } 
@@ -17,7 +30,7 @@
             width: 100%; /* Full width (cover the whole page) */
             height: 100%; /* Full height (cover the whole page) */
             top: 0; 
-            left: 220px;
+            left: 0px;
             right: 0;
             bottom: 0;
             background-color: rgba(0,0,0,0.8); /* Black background with opacity */
@@ -67,6 +80,7 @@
             height: 100%;
             padding: 10px;
             width: 95% !important;
+            display:none;
         }
         .panel-body, .table-responsive{
             border: none !important;
@@ -102,7 +116,7 @@
 
 <div class="ibox">
     <div class="ibox-title">
-        <h2>Dirty Node Scanner for PDT</h2>
+        <h2>UPC Dirty Node Scanner</h2>
         <div class="ibox-tools">
             <!-- <a class="btn btn-xs" id="videoReportModal">View Report by Date</a> -->
             <a class="collapse-link">
@@ -127,16 +141,7 @@
                                         <th style="display: none;">ID</th>
                                         <th></th>
                                         <th>UPC</th>
-                                        <th>Style</th>
-                                        <th>Desc</th>
-                                        <th>Color</th>
-                                        <th>Size</th>
-                                        <th>Start</th>
-                                        {{--  <th>Week</th>  --}}
-                                        <th>Qty</th>
-                                        <th>Price</th>
-                                        <th>Dept</th>
-                                        <th>Sub-Dept</th>
+      
 
                                     </tr>
                                     </thead>
@@ -145,18 +150,23 @@
                                         @foreach($data as $d)
                                         <tr id="nodeID_{{ $d->id }}">
                                             <td style="display: none;">{{ $d->id }}</td>
-                                            <td><input type="button" class="cleannodebutton btn btn-sm btn-primary" value="Clean"></td>
+                                            <td>
+                                                <input type="button" class="cleannodebutton btn btn-sm btn-primary" value="Clean"
+                                                    data-nodeid="{{ $d->id }}"
+                                                    data-upc="{{ $d->upccode }}"
+                                                    data-style="{{ $d->stylecode }}"
+                                                    data-desc="{{ $d->styledesc }}"
+                                                    data-color="{{ $d->color }}"
+                                                    data-size="{{ $d->sizename }}"
+                                                    data-start="{{ $d->startdate }}"
+                                                    data-qty="{{ $d->quantity }}"
+                                                    data-price="{{ $d->selling_price }}"
+                                                    data-dept="{{ $d->department }}"
+                                                    data-subdept="{{ $d->sub_department }}"
+                                                >
+                                            </td>
                                             <td>{{ $d->upccode }}</td>
-                                            <td>{{ $d->stylecode }}</td>
-                                            <td>{{ $d->styledesc }}</td>
-                                            <td>{{ $d->color }}</td>
-                                            <td>{{ $d->sizename }}</td>
-                                            <td data-order={{$d->startDateTime}}>{{ $d->startdate }}</td>
-                                            {{--  <td>{{ $d->week }}</td>  --}}
-                                            <td>{{ $d->quantity }}</td>
-                                            <td>{{ $d->selling_price }}</td>
-                                            <td>{{ $d->department }}</td>
-                                            <td>{{ $d->sub_department }}</td>
+                                            
                                         </tr>
 
                                         @endforeach
@@ -195,6 +205,8 @@
         $(document).ready(function(){
             //$('<div class="loading">Loading</div>').appendTo('body');
 
+            //document.getElementById("searchfield").focus();
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -208,11 +220,27 @@
                 responsive: true,                
                 "initComplete": function( settings, json ) {
                      $('div.loading').remove();
+                     $('#DataTables_Table_0_filter input').focus();
+            
                 }
             });
            
-
+            
         });
+
+
+        var field = $('#DataTables_Table_0_filter input');
+        field.setAttribute('type', 'text');
+        document.body.appendChild(field);
+
+        setTimeout(function() {
+            field.focus();
+            setTimeout(function() {
+                field.setAttribute('style', 'display:none;');
+            }, 50);
+        }, 50);
+
+        
 
     </script>
 

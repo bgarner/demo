@@ -93,6 +93,34 @@
 </div>
 
 
+<div class="modal inmodal" id="dirtynodemodalpdt" tabindex="-1" role="event" aria-hidden="true" style="display: none;" >
+
+   <div class="modal-dialog">
+       <div class="modal-content">
+
+               <div id="modalBody" class="modal-body event-modal-body" style="padding: 20px;">
+                   
+                   <h2 id="dirtyNodepdtTitle">Title</h2>
+                   <p id="dirtyNodepdtItemID">Style: <span class="value"></span></p>
+                   <p id="dirtyNodepdtUPC">UPC: <span class="value"></span></p>
+                   <p id="dirtyNodepdtQuantity">Quantity: <span class="value"></span></p>
+                   <p id="dirtyNodepdtDept">Dept: <span class="value"></span></p>
+                   <p id="dirtyNodepdtSubDept">SubDept: <span class="value"></span></p>
+                   <p id="dirtyNodepdtColour">Colour: <span class="value"></span></p>
+                   <p id="dirtyNodepdtSize">Size: <span class="value"></span></p>
+                   <p id="dirtyNodepdtPrice">Price: <span class="value"></span></p>
+                   <p id="dirtyNodepdtStart">Start: <span class="value"></span></p>
+                   <img class="styleImage" src="" alt="">
+
+               </div>
+               <div class="modal-footer">
+                   <button type="button" class="btn btn-primary btn-md cleannode" data-dismiss="modal"><i class="fa fa-check"></i> {{__("Clean Node")}}</button>
+                   <button type="button" class="btn btn-primary btn-md btn-outline" data-dismiss="modal"><i class="fa fa-times"></i> {{__("Cancel")}}</button>
+               </div>
+       </div>
+   </div>
+</div>
+
 <div class="modal inmodal" id="bugreportmodal" tabindex="-1" role="event" aria-hidden="true" style="display: none;">
 
     <div class="modal-dialog">
