@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
     @section('title', 'DOM Nodes')
     @include('site.includes.head')
 

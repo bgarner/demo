@@ -46,7 +46,7 @@
                             <h2>{{__("Featured Content")}}</h2>
                         </div>
 
-                        <div class="ibox-content clearfix">
+                        <div class="ibox-content clearfix features">
 
                             @foreach($features as $feature)
 
@@ -65,6 +65,21 @@
                                     </div>
 
                             @endforeach
+
+
+                            {{--  <div class="product-box">
+                                <a href="/{{ Request::segment(1) }}/tools/dirtynodes-pdt">
+                                    <div class="image" style="background-image:url('/images/pdt.jpg'); background-size: cover; background-position: 50%">
+
+                                    </div>
+                                    <div class="product-desc">
+                                        <span class="product-price">
+                                        Dirty Node Scanner for PDT
+                                        </span>
+
+                                    </div>
+                                </a>
+                            </div>  --}}
 
                         </div>
 
@@ -224,10 +239,16 @@
 
     <script>
         
-        $(document).ready(function(){
+        $(document).ready(function(){            
             var height = $("#ql-container").height();
             $("#notification-container").height(height).css("overflow", "auto");
             $("#comm-container").height(height).css("overflow", "auto");
+
+            if(screen.width < 370){
+                var html = `<div class='product-box'><a href='/{{ Request::segment(1) }}/tools/dirtynodes-pdt'><div class='image' style='background-image:url("/images/pdt.jpg"); background-size: cover; background-position: 50%'></div><div class='product-desc'><span class='product-price'>Dirty Node Scanner for PDT</span></div></a></div>`;
+                $( ".features" ).append( html );
+            }
+            
         })
     </script>
 </body>
