@@ -198,4 +198,17 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return Self::where('group_id', $group_id)->get();
     }
 
+    public static function getUsersByBusinessUnitAndRoles($roles, $businessUnits)
+    {
+        return User::join('user_role', 'users.id' , '=', 'user_role.user_id')
+                    ->join('roles', 'user_role.role_id', '=', 'roles.id')
+                    ->join('form_business_unit_user', 'users.id', '=', 'form_business_unit_user.user_id')
+                    ->join('form_business_unit_types', 'form_business_unit_user.business_unit_id', '=', 'form_business_unit_types.id' )
+                    ->where('users.group_id', 3)
+                    ->whereIn('roles.id', $roles)
+                    ->whereIn('form_business_unit_user.business_unit_id', $businessUnits)
+                    ->select('users.*', 'roles.role_name', 'roles.id as role_id', 'form_business_unit_types.business_unit' )
+                    ->get();
+    }
+
 }

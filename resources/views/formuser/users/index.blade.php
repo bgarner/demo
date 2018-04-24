@@ -47,7 +47,7 @@
 
 									<tr >
 										<td class="col-xs-2">{{ $user->firstname }} {{ $user->lastname }}</td>
-										<td class="col-xs-2">{{ $user->role_name }}</td>
+										<td class="col-xs-2">{{ $user->role_name }} ({{$user->business_unit}})</td>
 										<td class="col-xs-2">
 											@if(!$user->disabled) 
 											<a href="/form/user/{{ $user->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>

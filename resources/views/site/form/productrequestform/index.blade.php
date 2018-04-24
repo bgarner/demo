@@ -36,19 +36,24 @@
 
                         <table class="table">
                             <thead>
+                                <th>Request</th>
                                 <th>Date Submitted</th>
                                 <th>Submitted By</th>
-                                <th>Request</th>
                                 <th>Status</th>
                             </thead>
                             <tbody>
                                 @foreach($forms as $form)
-
+                                    
                                     <tr>
-                                        <td><a href="{{\Request::url()}}/{{$form->id}}">{{$form->created_at}}</a></td>
-                                        <td>{{$form->submitted_by}}</td>
-                                        <td>we will fill this in a min</td>
-                                        <td>stattus goes here</td>
+                                        <td><a href="{{\Request::url()}}/{{$form->id}}">{{$form->description}}</a></td>
+                                        <td>{{$form->prettySubmitted}}</td>
+                                        <td>{{$form->form_data["submitted_by"]}} ({{$form->form_data["submitted_by_position"]}})</td>
+                                        
+                                        <td>
+                                            @if(isset($form->lastFormAction))
+                                            {{$form->lastFormAction->log["status_store_name"]}} by {{$form->lastFormAction->log["user_name"]}} ( {{$form->lastFormAction->log["user_position"]}} ) 
+                                            @endif
+                                        </td>
                                     </tr>
 
                                 @endforeach

@@ -14,7 +14,7 @@ use App\Models\Utility\Utility;
 
 class Analytics extends Model
 {
-    public static function getFormsForFormUser()
+    public static function getFormsForDashboard()
     {
     	$user = \Auth::user();
     	

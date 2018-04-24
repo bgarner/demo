@@ -22,16 +22,11 @@ class UserAdminController extends Controller
     public function index()
     {
         
-		$employeeRoleIds = FormRoleHierarchy::where('manager_role_id', \Auth::user()->role_id)->get()->pluck('employee_role_id')->toArray();
-        $businessUnitId = FormUserBusinessUnitMap::where('user_id', \Auth::user()->id)->get()->pluck('business_unit_id')->toArray();
+		$employeeRoleIds = FormRoleHierarchy::getCurrentEmployeeRoleIds();
 
-        $users = User::join('user_role', 'users.id' , '=', 'user_role.user_id')
-                    ->join('roles', 'user_role.role_id', '=', 'roles.id')
-                    ->where('users.group_id', 3)
-                    ->whereIn('roles.id', $employeeRoleIds)
-                    ->select('users.*', 'roles.role_name', 'roles.id as role_id' )
-                    ->get();
-                                
+        $businessUnitId = array_keys(FormUserBusinessUnitMap::getBusinessUnitsByFormUserId(\Auth::user()->id));
+
+        $users = User::getUsersByBusinessUnitAndRoles($employeeRoleIds, $businessUnitId);
 
         return view('formuser.users.index')->with('users', $users);
                         
@@ -46,7 +41,8 @@ class UserAdminController extends Controller
     {
         
        	$roles = FormRoleHierarchy::getCurrentEmployeeRoles();
-        $businessUnits = BusinessUnitTypes::getBUList();
+        $businessUnits = FormUserBusinessUnitMap::getBusinessUnitsByFormUserId(\Auth::user()->id);
+
 		return view('formuser.users.create')->with('roles', $roles)
                                             ->with('businessUnits', $businessUnits);
                                             
@@ -90,7 +86,7 @@ class UserAdminController extends Controller
         $roles = FormRoleHierarchy::getCurrentEmployeeRoles();
         $selected_role = UserRole::where('user_id', $user->id)->first()->role_id;
 
-        $businessUnits = BusinessUnitTypes::getBUList();
+        $businessUnits = FormUserBusinessUnitMap::getBusinessUnitsByFormUserId(\Auth::user()->id);
         $selected_bu = FormUserBusinessUnitMap::getBUIdBuUserId($user->id);
         
 

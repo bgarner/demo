@@ -22,4 +22,13 @@ class FormRoleHierarchy extends Model
     	$roles = Role::whereIn('id', $ids)->get()->pluck('role_name', 'id')->prepend('Select one', '')->toArray();
     	return ($roles);
     }
+
+    public static function getAllAccessibleRoles()
+    {
+        $employeeRoleIds = FormRoleHierarchy::getCurrentEmployeeRoleIds();
+
+        $accessibleRoles = array_prepend( $employeeRoleIds , \Auth::user()->role_id);
+
+        return $accessibleRoles;
+    }
 }

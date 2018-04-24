@@ -21,3 +21,12 @@
         <li><a href="/form/group">Groups</a></li>
     </ul>
 </li>
+
+@if (   Request::is('form/assignment/*') || Request::is('form/assignment') )
+<li class="active">
+@else
+<li>
+@endif
+    <a href="/form/assignment"><i class="fa fa-users"></i> <span class="nav-label">My Assignments</span></a>
+    
+</li>
