@@ -8,6 +8,10 @@ use App\Models\Form\FormInstanceUserMap;
 use App\Models\Form\FormInstanceGroupMap;
 use App\Models\Form\GroupUser;
 use App\Models\Form\FormStatusMap;
+use App\Models\Form\FormRoleHierarchy;
+use App\Models\Auth\User\User;
+use App\Models\Form\ProductRequest\FormUserBusinessUnitMap;
+
 
 class AssignmentAdminController extends Controller
 {
@@ -21,11 +25,19 @@ class AssignmentAdminController extends Controller
         
         $assignments['My Group Assignments'] = FormInstanceGroupMap::getFormInstancesByGroupId($user_groups);
         $role = preg_replace("/\s+/", "", \Auth::user()->role);
+
+        $accessibleRoles = FormRoleHierarchy::getAllAccessibleRoles();
+        
+        $businessUnitId = FormUserBusinessUnitMap::getBusinessUnitIdsByFormUserId(\Auth::user()->id);
+
+        $users = User::getUsersByBusinessUnitAndRoles($accessibleRoles, $businessUnitId);
+
         $codes = FormStatusMap::getStatusCodesByForm(1);
 
         return view('formuser.'.$role.'.assignments.index')
                     ->with('assignments', $assignments)
-                    ->with('codes', $codes);
+                    ->with('codes', $codes)
+                    ->with('users', $users);
         
 
     }
@@ -35,10 +47,10 @@ class AssignmentAdminController extends Controller
     {
     	
     	if(isset($request->user_id) ){
-    		FormInstanceUserMap::updateFormAssignment($form_instance_id, $request->user_id);
+    		return FormInstanceUserMap::updateFormAssignment($form_instance_id, $request->user_id);
     	}
     	if(isset($request->group_id) ){
-    		FormInstanceGroupMap::updateFormAssignment($form_instance_id, $request->group_id);
+    		return FormInstanceGroupMap::updateFormAssignment($form_instance_id, $request->group_id);
     	}
     }
 

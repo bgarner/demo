@@ -22,7 +22,8 @@ class FormInstanceGroupMap extends Model
                         $formInstance->form_data = unserialize($formInstance->form_data);
                         $formInstance->description = $formInstance->form_data['department'] . " > " . $formInstance->form_data['category'] . " > " . $formInstance->form_data['subcategory'];
                         $formInstance->prettySubmitted = Utility::prettifyDateWithTime($formInstance->created_at);
-                        $formInstance->assignedTo = FormInstanceUserMap::getUserByFormInstanceId($formInstance->id);
+                        $formInstance->assignedToUser = FormInstanceUserMap::getUserByFormInstanceId($formInstance->id);
+                        $formInstance->assignedToGroup = FormInstanceGroupMap::getGroupByFormInstanceId($formInstance->id);
                         $formInstance->lastFormAction = FormActivityLog::getLastFormInstanceAction($formInstance->id);
 
                     });

@@ -137,7 +137,7 @@
 
 
 	                    <div class="ibox">
-	                        <div class="ibox-title">
+	                        {{-- <div class="ibox-title">
 	                        	<h2>Request Status</h2>
 	                        	<div class="ibox-tools">
 	                        		<span class="dropdown" id="edit_multiple_forms" style="display: inline;">
@@ -151,7 +151,7 @@
                                     </span>
 									
 	                            </div>
-	                        </div>
+	                        </div> --}}
 	                        <div class="ibox-content">
 								<div class="tabs-container">
 			                        <ul class="nav nav-tabs">
@@ -163,10 +163,21 @@
 			                            @endforeach
 			                        </ul>
 			                        <div class="tab-content">
+
+
 			                        	@foreach($forms as $formCategory => $formInstances)
 
 			                            <div id="tab-{{$loop->iteration}}" class="tab-pane @if ($loop->first) active @endif">
 			                                <div class="panel-body">
+												<span class="dropdown pull-right" id="edit_multiple_forms" style="display: inline;">
+			                                        <button class="btn btn-warning dropdown-toggle" type="button" id="edit_selected" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			                                            Edit Selected
+			                                        </button>
+			                                        <ul class="dropdown-menu" aria-labelledby="edit_selected">
+			                                            <li id="assign_to_group"><a>Assign to Group</a></li>
+			                                            <li id="assign_to_user"><a>Assign to User</a></li>
+			                                        </ul>
+			                                    </span>
 			                                    <table class="table">
 			                                    	<thead>
 			                                    		<th>@if(count($formInstances)>0)<input id="select_all" type="checkbox">@endif</th>

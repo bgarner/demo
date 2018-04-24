@@ -1,15 +1,16 @@
 $(document).ready(function(){
-	$("#edit_multiple_forms").hide();	
+	$("#show_update_status").hide();	
+	
 });
 
 $("body").on('click', "#select_all", function(){
 	if($(this).is(':checked')){
 		$(".select_form").prop("checked", true);
-		$("#edit_multiple_forms").show();
+		$("#show_update_status").show();
 	}
 	else{
 		$(".select_form").prop("checked", false);
-		$("#edit_multiple_forms").hide();	
+		$("#show_update_status").hide();	
 	}
 });
 $("body").on('click', '.select_form', function(){
@@ -17,10 +18,10 @@ $("body").on('click', '.select_form', function(){
 		$("#select_all").prop('checked', false);
 	}
 	if($(".select_form:checked").length >0){
-		$("#edit_multiple_forms").show();
+		$("#show_update_status").show();
 	}
 	else{
-		$("#edit_multiple_forms").hide();
+		$("#show_update_status").hide();
 	}
 });
 
@@ -33,27 +34,31 @@ $("#assign_to_group").click(function(){
 	$("#group_assignment_modal").modal('show');
 });
 
-$("#assign_to_self").click(function(){
+$(".assign_to_self").click(function(){
+	
 	
 	var user_id = $(this).data('userid');
-	var selectedForms = $(".tab-pane.active").find(".select_form:checked");
-	$.each(selectedForms, function(index, form){
-		var form_instance_id = $(this).attr('data-formInstanceId');		
-		$.ajax({
-		    url: '/form/assignment/forminstance/' + form_instance_id ,
-		    type: 'PATCH',
-		    data: { 'user_id': user_id  },
-		    async: false,
-		    success: function(result) {
-		       $("tr[data-formInstanceid='"+result.id+"']").find(".assignedToUser").html(result.assignedTo);
-		    }
-		}).done(function(response){
-			
-		});   
-	}); 
+	var form_instance_id = $(this).data('forminstanceid');
+
+	$.ajax({
+	    url: '/form/assignment/forminstance/' + form_instance_id ,
+	    type: 'PATCH',
+	    data: { 'user_id': user_id  },
+	    // async: false,
+	    success: function(result) {
+	    	acknowledgeUpdate();
+	    }
+	}).done(function(response){
+		
+	});   
+	
 });
 
 $("#show_update_status").click(function(){
+	$("#status_update_modal").modal('show');
+})
+
+$("#show_update_status_group_assign").click(function(){
 	$("#status_update_modal").modal('show');
 })
 
@@ -83,9 +88,8 @@ $("#update_user_assignment").click(function(){
 		    url: '/form/assignment/forminstance/' + form_instance_id ,
 		    type: 'PATCH',
 		    data: { 'user_id': user_id  },
-		    async: false,
 		    success: function(result) {
-		       $("tr[data-formInstanceid='"+result.id+"']").find(".assignedToUser").html(result.assignedTo);
+		    	acknowledgeUpdate();
 		    }
 		}).done(function(response){
 			
@@ -103,12 +107,26 @@ $("#update_group_assignment").click(function(){
 		    url: '/form/assignment/forminstance/' + form_instance_id ,
 		    type: 'PATCH',
 		    data: { 'group_id': group_id},
-		    async: false,
 		    success: function(result) {
-		       $("tr[data-formInstanceid='"+result.id+"']").find(".assignedToGroup").html(result.assignedTo);
+		    	acknowledgeUpdate();
 		    }
 		}).done(function(response){
 			
 		});   
 	}); 
 });
+
+
+var acknowledgeUpdate = function(){
+	swal({
+                title : "",
+                text : "Asssignment Updated",
+                type : "success",
+            },
+            function(){
+                
+                    window.location.reload();
+                
+                
+            });
+};

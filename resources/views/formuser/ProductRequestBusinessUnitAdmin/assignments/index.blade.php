@@ -30,25 +30,7 @@
 						<!-- <h2>Product Request</h2> -->
 
 	                    <div class="ibox">
-	                        {{--<div class="ibox-title">
-	                        	<h2>My Assignments</h2>
-	                        	<div class="ibox-tools">
-	                        		<span class="dropdown" id="edit_multiple_forms" style="display: inline;">
-                                        <button class="btn btn-warning dropdown-toggle" type="button" id="edit_selected" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Edit Selected
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="edit_selected">
-                                            
-
-                                            <li id="assign_to_self" data-userid= "{{ Auth::user()->id}}" ><a>Assign to Self</a></li>
-
-                                            <li id="show_update_status"><a>Update Status</a></li>
-                                            
-                                        </ul>
-                                    </span>
-									
-	                            </div>
-	                        </div> --}}
+	                        
 	                        <div class="ibox-content">
 								<div class="tabs-container">
 			                        <ul class="nav nav-tabs">
@@ -65,13 +47,40 @@
 			                            <div id="tab-{{$loop->iteration}}" class="tab-pane @if ($loop->first) active @endif" id="tab-{{$loop->iteration}}">
 
 			                                <div class="panel-body">
+												@if ($loop->first)
+												<span class="pull-right">
+			                                        <button class="btn btn-warning" type="button" id="show_update_status" >
+			                                            Update Status
+			                                        </button>
+		                                        </span>
+		                                        @else
+                                    			<span class="pull-right dropdown" id="edit_multiple_forms" style="display: inline;">
+			                                        <button class="btn btn-warning dropdown-toggle" type="button" id="edit_selected" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			                                            Edit Selected
+			                                        </button>
+			                                        <ul class="dropdown-menu" aria-labelledby="edit_selected">
+			                                            
+			                                            <li id="assign_to_user"><a>Assign to User</a></li>
+			                                            <li id="show_update_status_group_assign"><a>Update Status</a></li>
+
+			                                        </ul>
+			                                    </span>
+		                                        @endif
+			                                        														
 			                                    <table class="table">
 			                                    	<thead>
-			                                    		<th>@if(count($formInstances)>0)<input id="select_all" type="checkbox">@endif</th>
+			                                    		<th>
+			                                    			@if(count($formInstances)>0)
+			                                    			<input id="select_all" type="checkbox">
+
+			                                    			@endif
+			                                    		</th>
 			                                    		<th>Description</th>
 			                                    		<th>Store#</th>
 			                                    		<th>Submitted At</th>
 			                                    		<th>User Assigned To</th>
+			                                    		<th>Group Assigned To</th>
+
 			                                    		<th>Last Action</th>
 			                                    	</thead>
 			                                    	<tbody>
@@ -82,8 +91,15 @@
 															<td>{{$formInstance->store_number}}</td>
 															<td>{{$formInstance->prettySubmitted}}</td>
 															<td>
-																@if(isset($formInstance->assignedTo))
-																{{$formInstance->assignedTo->firstname}} {{$formInstance->assignedTo->lastname}}
+																@if(isset($formInstance->assignedToUser))
+																{{$formInstance->assignedToUser->firstname}} {{$formInstance->assignedToUser->lastname}}
+																@else
+																	<button class="btn btn-warning assign_to_self" data-userid= "{{ Auth::user()->id}}" data-formInstanceId = "{{$formInstance->id}}" >Assign to Self</button>
+																@endif
+															</td>
+															<td class="assignedToGroup">
+																@if(isset($formInstance->assignedToGroup))
+																{{$formInstance->assignedToGroup->group_name}} 
 																@endif
 															</td>
 															<td>
@@ -148,6 +164,26 @@
             </div>
         </div>
     </div>
+
+    <div id="user_assignment_modal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Select User</h4>
+                </div>
+                <div class="modal-body">
+                    @include('formuser.assignments.user-list-partial', ['users' =>$users])
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="update_user_assignment">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
 
 	@include('admin.includes.footer')
 

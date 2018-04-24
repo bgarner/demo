@@ -82,8 +82,12 @@
 															<td>{{$formInstance->store_number}}</td>
 															<td>{{$formInstance->prettySubmitted}}</td>
 															<td>
+																{{isset($formInstance->assignedTo)}}
 																@if(isset($formInstance->assignedTo))
 																{{$formInstance->assignedTo->firstname}} {{$formInstance->assignedTo->lastname}}
+																@else
+																	<button class="btn btn-warning assign_to_self" data-userid= "{{ Auth::user()->id}}" >Assign to Self</button>
+
 																@endif
 															</td>
 															<td>

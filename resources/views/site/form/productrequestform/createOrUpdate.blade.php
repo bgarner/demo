@@ -189,7 +189,7 @@
 
 				<div class="form-group">
 					<div class="col-sm-10 col-sm-offset-2">
-						<a class="btn btn-white" href="/{{$storeNumber}}/form/ProductRequestform"><i class="fa fa-close"></i> Cancel</a>
+						<a class="btn btn-white" href="/{{$storeNumber}}/form/productrequest"><i class="fa fa-close"></i> Cancel</a>
 						<button class="btn btn-primary" id="form_send"><i class="fa fa-check"></i> Save and Send</button>
 		            </div>
 		        </div>

@@ -30,7 +30,7 @@
 						<!-- <h2>Product Request</h2> -->
 
 	                    <div class="ibox">
-	                        <div class="ibox-title">
+	                        {{--<div class="ibox-title">
 	                        	<h2>Request Status</h2>
 	                        	<div class="ibox-tools">
 	                        		<span class="dropdown" id="edit_multiple_forms" style="display: inline;">
@@ -48,7 +48,7 @@
                                     </span>
 									
 	                            </div>
-	                        </div>
+	                        </div>--}}
 	                        <div class="ibox-content">
 								<div class="tabs-container">
 			                        <ul class="nav nav-tabs">
@@ -65,6 +65,13 @@
 			                            <div id="tab-{{$loop->iteration}}" class="tab-pane @if ($loop->first) active @endif" id="tab-{{$loop->iteration}}">
 
 			                                <div class="panel-body">
+			                                	@if ($loop->first)
+												<span class="pull-right">
+			                                        <button class="btn btn-warning" type="button" id="show_update_status" >
+			                                            Update Status
+			                                        </button>
+		                                        </span>
+		                                        @endif
 			                                    <table class="table">
 			                                    	<thead>
 			                                    		<th>@if(count($formInstances)>0)<input id="select_all" type="checkbox">@endif</th>
@@ -72,6 +79,7 @@
 			                                    		<th>Store#</th>
 			                                    		<th>Submitted At</th>
 			                                    		<th>User Assigned To</th>
+			                                    		<th>Group Assigned To</th>
 			                                    		<th>Last Action</th>
 			                                    	</thead>
 			                                    	<tbody>
@@ -82,10 +90,19 @@
 															<td>{{$formInstance->store_number}}</td>
 															<td>{{$formInstance->prettySubmitted}}</td>
 															<td>
-																@if(isset($formInstance->assignedTo))
-																{{$formInstance->assignedTo->firstname}} {{$formInstance->assignedTo->lastname}}
+																@if(isset($formInstance->assignedToUser))
+																{{$formInstance->assignedToUser->firstname}} {{$formInstance->assignedToUser->lastname}}
+																@else
+																	<button class="btn btn-warning assign_to_self" data-userid= "{{ Auth::user()->id}}" data-formInstanceId = "{{$formInstance->id}}" >Assign to Self</button>
 																@endif
 															</td>
+															
+															<td>
+																@if(isset($formInstance->assignedToGroup))
+																	{{$formInstance->assignedToGroup->group_name}} 
+																@endif
+															</td>
+															
 															<td>
 																@if(isset($formInstance->lastFormAction))
 																
