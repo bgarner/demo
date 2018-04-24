@@ -76,6 +76,10 @@
         .collapse-link{
             display: none;
         }
+        .dataTables_empty{
+            font-size: 16px !important;
+            color: #f00;
+        }
         
     </style>
 </head>
@@ -191,9 +195,6 @@
 
     <script>
         $(document).ready(function(){
-            //$('<div class="loading">Loading</div>').appendTo('body');
-
-            //document.getElementById("searchfield").focus();
 
             $.ajaxSetup({
                 headers: {
