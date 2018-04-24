@@ -10,7 +10,7 @@
     <style>
 
         table{ width: 100% !important; }
-        .table td{ font-size: 11px; }
+        .table td{ font-size: 14px; }
         .table th{ font-size: 11px; } 
 
         .loading{
