@@ -48,15 +48,21 @@
 
 			                                <div class="panel-body">
 												@if ($loop->first)
-												<span class="pull-right">
-			                                        <button class="btn btn-warning" type="button" id="show_update_status" >
-			                                            Update Status
+												
+		                                        <span class="pull-right dropdown edit_multiple_forms" style="display: inline;">
+			                                        <button class="btn btn-primary btn-outline dropdown-toggle" type="button" id="edit_selected" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			                                            <i class="fa fa-bars"></i> Actions
 			                                        </button>
-		                                        </span>
+			                                        <ul class="dropdown-menu" aria-labelledby="edit_selected">
+			                                            <li id="show_update_status"><a>Update Status</a></li>
+
+			                                        </ul>
+			                                    </span>
+
 		                                        @else
-                                    			<span class="pull-right dropdown" id="edit_multiple_forms" style="display: inline;">
-			                                        <button class="btn btn-warning dropdown-toggle" type="button" id="edit_selected" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			                                            Edit Selected
+                                    			<span class="pull-right dropdown ="edit_multiple_forms" style="display: inline;">
+			                                        <button class="btn btn-primary btn-outline dropdown-toggle" type="button" id="edit_selected" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			                                            <i class="fa fa-bars"></i> Actions
 			                                        </button>
 			                                        <ul class="dropdown-menu" aria-labelledby="edit_selected">
 			                                            
@@ -94,7 +100,8 @@
 																@if(isset($formInstance->assignedToUser))
 																{{$formInstance->assignedToUser->firstname}} {{$formInstance->assignedToUser->lastname}}
 																@else
-																	<button class="btn btn-warning assign_to_self" data-userid= "{{ Auth::user()->id}}" data-formInstanceId = "{{$formInstance->id}}" >Assign to Self</button>
+																	<button class="btn btn-sm btn-primary assign_to_self" data-userid= "{{ Auth::user()->id}}" data-formInstanceId = "{{$formInstance->id}}" > 
+																	<i class="fa fa-user"></i> Assign to Self</button>
 																@endif
 															</td>
 															<td class="assignedToGroup">

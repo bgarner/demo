@@ -86,7 +86,7 @@
 																@if(isset($formInstance->assignedTo))
 																{{$formInstance->assignedTo->firstname}} {{$formInstance->assignedTo->lastname}}
 																@else
-																	<button class="btn btn-warning assign_to_self" data-userid= "{{ Auth::user()->id}}" >Assign to Self</button>
+																	<button class="btn btn-sm btn-warning assign_to_self" data-userid= "{{ Auth::user()->id}}" >Assign to Self</button>
 
 																@endif
 															</td>

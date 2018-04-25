@@ -137,21 +137,7 @@
 
 
 	                    <div class="ibox">
-	                        {{-- <div class="ibox-title">
-	                        	<h2>Request Status</h2>
-	                        	<div class="ibox-tools">
-	                        		<span class="dropdown" id="edit_multiple_forms" style="display: inline;">
-                                        <button class="btn btn-warning dropdown-toggle" type="button" id="edit_selected" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Edit Selected
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="edit_selected">
-                                            <li id="assign_to_group"><a>Assign to Group</a></li>
-                                            <li id="assign_to_user"><a>Assign to User</a></li>
-                                        </ul>
-                                    </span>
-									
-	                            </div>
-	                        </div> --}}
+	                        
 	                        <div class="ibox-content">
 								<div class="tabs-container">
 			                        <ul class="nav nav-tabs">
@@ -169,9 +155,9 @@
 
 			                            <div id="tab-{{$loop->iteration}}" class="tab-pane @if ($loop->first) active @endif">
 			                                <div class="panel-body">
-												<span class="dropdown pull-right" id="edit_multiple_forms" style="display: inline;">
-			                                        <button class="btn btn-warning dropdown-toggle" type="button" id="edit_selected" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			                                            Edit Selected
+												<span class="dropdown pull-right edit_multiple_forms" style="display: inline;">
+			                                        <button class="btn btn-primary btn-outline dropdown-toggle" type="button" id="edit_selected" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			                                            <i class="fa fa-bars"></i> Actions
 			                                        </button>
 			                                        <ul class="dropdown-menu" aria-labelledby="edit_selected">
 			                                            <li id="assign_to_group"><a>Assign to Group</a></li>

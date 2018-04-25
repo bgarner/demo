@@ -30,25 +30,7 @@
 						<!-- <h2>Product Request</h2> -->
 
 	                    <div class="ibox">
-	                        {{--<div class="ibox-title">
-	                        	<h2>Request Status</h2>
-	                        	<div class="ibox-tools">
-	                        		<span class="dropdown" id="edit_multiple_forms" style="display: inline;">
-                                        <button class="btn btn-warning dropdown-toggle" type="button" id="edit_selected" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Edit Selected
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="edit_selected">
-                                            
-
-                                            <li id="assign_to_self" data-userid= "{{ Auth::user()->id}}" ><a>Assign to Self</a></li>
-
-                                            <li id="show_update_status"><a>Update Status</a></li>
-                                            
-                                        </ul>
-                                    </span>
-									
-	                            </div>
-	                        </div>--}}
+	                        
 	                        <div class="ibox-content">
 								<div class="tabs-container">
 			                        <ul class="nav nav-tabs">
@@ -66,11 +48,17 @@
 
 			                                <div class="panel-body">
 			                                	@if ($loop->first)
-												<span class="pull-right">
-			                                        <button class="btn btn-warning" type="button" id="show_update_status" >
-			                                            Update Status
+												
+		                                        <span class="pull-right dropdown edit_multiple_forms" style="display: inline;">
+			                                        <button class="btn btn-primary btn-outline dropdown-toggle" type="button" id="edit_selected" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			                                            <i class="fa fa-bars"></i> Actions
 			                                        </button>
-		                                        </span>
+			                                        <ul class="dropdown-menu" aria-labelledby="edit_selected">
+			                                            <li id="show_update_status"><a>Update Status</a></li>
+
+			                                        </ul>
+			                                    </span>
+
 		                                        @endif
 			                                    <table class="table">
 			                                    	<thead>

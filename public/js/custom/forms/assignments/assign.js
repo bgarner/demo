@@ -1,16 +1,16 @@
 $(document).ready(function(){
-	$("#show_update_status").hide();	
-	
+	$(".edit_multiple_forms").hide();	
+
 });
 
 $("body").on('click', "#select_all", function(){
 	if($(this).is(':checked')){
 		$(".select_form").prop("checked", true);
-		$("#show_update_status").show();
+		$(".edit_multiple_forms").show();
 	}
 	else{
 		$(".select_form").prop("checked", false);
-		$("#show_update_status").hide();	
+		$(".edit_multiple_forms").hide();	
 	}
 });
 $("body").on('click', '.select_form', function(){
@@ -18,10 +18,10 @@ $("body").on('click', '.select_form', function(){
 		$("#select_all").prop('checked', false);
 	}
 	if($(".select_form:checked").length >0){
-		$("#show_update_status").show();
+		$(".edit_multiple_forms").show();
 	}
 	else{
-		$("#show_update_status").hide();
+		$(".edit_multiple_forms").hide();
 	}
 });
 
