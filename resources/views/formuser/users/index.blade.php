@@ -83,7 +83,14 @@
 	<script type="text/javascript" src="/js/custom/forms/groups/deleteGroup.js"></script>
 	<script type="text/javascript">
 
-		
+		$(".table").dataTable(
+        	{
+    			
+				pageLength: 50,
+				responsive: true,
+				fixedHeader: true
+			}
+		);
 		$.ajaxSetup({
 	        headers: {
 	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

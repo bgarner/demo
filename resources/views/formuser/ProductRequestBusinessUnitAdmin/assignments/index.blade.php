@@ -33,6 +33,25 @@
 	                        
 	                        <div class="ibox-content">
 								<div class="tabs-container">
+									
+									@foreach($assignments as $formCategory => $formInstances)
+									<span class="pull-right dropdown edit_multiple_forms" id="actions-tab-{{$loop->iteration}}" style="display: inline;">
+                                        <button class="btn btn-primary btn-outline dropdown-toggle" type="button" id="edit_selected" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-bars"></i> Actions
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="edit_selected">
+                                            
+                                            <li id="assign_to_user"><a>Assign to User</a></li>
+											@if($loop->last)
+                                            <li id="show_update_status_group_assign"><a>Update Status</a></li>
+                                            @endif
+
+                                        </ul>
+                                    </span>
+
+                                    @endforeach
+
+
 			                        <ul class="nav nav-tabs">
 										
 			                        	@foreach($assignments as $formCategory => $formInstances)
@@ -47,32 +66,7 @@
 			                            <div id="tab-{{$loop->iteration}}" class="tab-pane @if ($loop->first) active @endif" id="tab-{{$loop->iteration}}">
 
 			                                <div class="panel-body">
-												@if ($loop->first)
-												
-		                                        <span class="pull-right dropdown edit_multiple_forms" style="display: inline;">
-			                                        <button class="btn btn-primary btn-outline dropdown-toggle" type="button" id="edit_selected" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			                                            <i class="fa fa-bars"></i> Actions
-			                                        </button>
-			                                        <ul class="dropdown-menu" aria-labelledby="edit_selected">
-			                                            <li id="show_update_status"><a>Update Status</a></li>
-
-			                                        </ul>
-			                                    </span>
-
-		                                        @else
-                                    			<span class="pull-right dropdown ="edit_multiple_forms" style="display: inline;">
-			                                        <button class="btn btn-primary btn-outline dropdown-toggle" type="button" id="edit_selected" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			                                            <i class="fa fa-bars"></i> Actions
-			                                        </button>
-			                                        <ul class="dropdown-menu" aria-labelledby="edit_selected">
-			                                            
-			                                            <li id="assign_to_user"><a>Assign to User</a></li>
-			                                            <li id="show_update_status_group_assign"><a>Update Status</a></li>
-
-			                                        </ul>
-			                                    </span>
-		                                        @endif
-			                                        														
+												    														
 			                                    <table class="table">
 			                                    	<thead>
 			                                    		<th>
@@ -201,7 +195,14 @@
 	<script type="text/javascript" src="/js/custom/forms/assignments/assign.js"></script>
 	<script type="text/javascript" src="/js/custom/forms/formStatus.js"></script>
 	<script type="text/javascript">
-
+		$(".table").dataTable(
+        	{
+    			
+				pageLength: 50,
+				responsive: true,
+				fixedHeader: true
+			}
+		);
 		
 		$.ajaxSetup({
 	        headers: {

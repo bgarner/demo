@@ -33,6 +33,23 @@
 	                        
 	                        <div class="ibox-content">
 								<div class="tabs-container">
+
+									@foreach($forms as $formCategory => $formInstances)
+										@if ($loop->first)
+												
+	                                        <span class="pull-right dropdown edit_multiple_forms" id="actions-tab-{{$loop->iteration}}" style="display: inline;">
+		                                        <button class="btn btn-primary btn-outline dropdown-toggle" type="button" id="edit_selected" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		                                            <i class="fa fa-bars"></i> Actions
+		                                        </button>
+		                                        <ul class="dropdown-menu" aria-labelledby="edit_selected">
+		                                            <li id="show_update_status"><a>Update Status</a></li>
+
+		                                        </ul>
+		                                    </span>
+			                            @endif
+
+		                            @endforeach
+
 			                        <ul class="nav nav-tabs">
 										
 			                        	@foreach($forms as $formCategory => $formInstances)
@@ -47,22 +64,15 @@
 			                            <div id="tab-{{$loop->iteration}}" class="tab-pane @if ($loop->first) active @endif" id="tab-{{$loop->iteration}}">
 
 			                                <div class="panel-body">
-			                                	@if ($loop->first)
-												
-		                                        <span class="pull-right dropdown edit_multiple_forms" style="display: inline;">
-			                                        <button class="btn btn-primary btn-outline dropdown-toggle" type="button" id="edit_selected" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			                                            <i class="fa fa-bars"></i> Actions
-			                                        </button>
-			                                        <ul class="dropdown-menu" aria-labelledby="edit_selected">
-			                                            <li id="show_update_status"><a>Update Status</a></li>
-
-			                                        </ul>
-			                                    </span>
-
-		                                        @endif
-			                                    <table class="table">
+			                                	
+			                                    <table class="table" id="table-{{$loop->iteration}}">
 			                                    	<thead>
-			                                    		<th>@if(count($formInstances)>0)<input id="select_all" type="checkbox">@endif</th>
+			                                    		
+			                                    		<th>
+			                                    			@if(count($formInstances)>0)
+			                                    			<input id="select_all" type="checkbox">
+			                                    			@endif
+			                                    		</th>
 			                                    		<th>Description</th>
 			                                    		<th>Store#</th>
 			                                    		<th>Submitted At</th>
@@ -73,7 +83,13 @@
 			                                    	<tbody>
 			                                    		@foreach($formInstances as $formInstance)
 			                                    		<tr>
-			                                    			<td><input class="select_form" id="select_form" type="checkbox" data-formInstanceId = "{{$formInstance->id}}"></td>
+			                                    			
+			                                    			<td>
+			                                    				@if(count($formInstances)>0)
+			                                    				<input class="select_form" id="select_form" type="checkbox" data-formInstanceId = "{{$formInstance->id}}">
+			                                    				@endif
+			                                    			</td>
+			                                    			
 			                                    			<td><a href='/form/productrequest/{{$formInstance->id}}'> {{$formInstance->description}} </a></td>
 															<td>{{$formInstance->store_number}}</td>
 															<td>{{$formInstance->prettySubmitted}}</td>
@@ -164,7 +180,25 @@
 	<script type="text/javascript" src="/js/custom/forms/formStatus.js"></script>
 	<script type="text/javascript">
 
-		
+		$("#table-1").dataTable(
+        	{
+    			
+				pageLength: 50,
+				responsive: true,
+				fixedHeader: true
+			}
+		);		
+		$("#table-2").dataTable(
+        	{
+    			"columns": [
+				    { "visible": false },null,null,null,null,null,null
+				  ],
+
+				pageLength: 50,
+				responsive: true,
+				fixedHeader: true
+			}
+		);		
 		$.ajaxSetup({
 	        headers: {
 	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

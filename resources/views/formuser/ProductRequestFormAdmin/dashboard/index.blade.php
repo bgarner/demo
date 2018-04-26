@@ -152,7 +152,7 @@
 			                                <div class="panel-body">
 			                                    <table class="table">
 			                                    	<thead>
-			                                    		<th></th>
+			                                    		
 			                                    		<th>Description</th>
 			                                    		<th>Store#</th>
 			                                    		<th>Submitted At</th>
@@ -163,7 +163,7 @@
 			                                    	<tbody>
 			                                    		@foreach($formInstances as $formInstance)
 			                                    		<tr>
-			                                    			<td></td>
+			                                    			
 			                                    			<td><a href="/form/productrequest/{{$formInstance->id}}">{{$formInstance->description}}</a></td>
 															<td>{{$formInstance->store_number}}</td>
 															<td>{{$formInstance->prettySubmitted}}</td>
@@ -215,9 +215,15 @@
 
 
 
-	<script type="text/javascript" src="/js/custom/forms/groups/deleteGroup.js"></script>
 	<script type="text/javascript">
-
+		$(".table").dataTable(
+        	{
+    			
+				pageLength: 50,
+				responsive: true,
+				fixedHeader: true
+			}
+		);
 		
 		$.ajaxSetup({
 	        headers: {

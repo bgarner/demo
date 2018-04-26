@@ -1,27 +1,44 @@
 $(document).ready(function(){
 	$(".edit_multiple_forms").hide();	
 
+
+});
+$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+	$(".edit_multiple_forms").hide();	
+
+	$(".select_form").prop('checked', false);
+	$("#select_all").prop('checked', false);
 });
 
 $("body").on('click', "#select_all", function(){
+
+	var tabId = $(this).closest(".tab-pane").attr('id');
+	var actionsMenu = "#actions-" + tabId;
+	$(".edit_multiple_forms").hide();
+
 	if($(this).is(':checked')){
 		$(".select_form").prop("checked", true);
-		$(".edit_multiple_forms").show();
+		$(actionsMenu).show();
 	}
 	else{
 		$(".select_form").prop("checked", false);
-		$(".edit_multiple_forms").hide();	
+		$(actionsMenu).hide();	
 	}
 });
 $("body").on('click', '.select_form', function(){
+	
+	var tabId = $(this).closest(".tab-pane").attr('id');
+	var actionsMenu = "#actions-" + tabId;
+	$(".edit_multiple_forms").hide();
+	
 	if(!$(this).is(":checked")){
 		$("#select_all").prop('checked', false);
 	}
 	if($(".select_form:checked").length >0){
-		$(".edit_multiple_forms").show();
+		$(actionsMenu).show();
 	}
 	else{
-		$(".edit_multiple_forms").hide();
+		$(actionsMenu).hide();
 	}
 });
 
