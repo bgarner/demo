@@ -39,7 +39,7 @@
                                     	</div>
                                     </div>
                                     <div class="form-group">
-                                    	<label class="col-sm-2 control-label"> Roles Associated </label>
+                                    	<label class="col-sm-2 control-label"> Users </label>
                                     	<div class="col-sm-10">
 
                                     		{!! Form::select('users[]', $group["users"], $group["selected_users"], [ 'class'=>'chosen', 'id'=> 'users', 'multiple'=>'true']) !!}

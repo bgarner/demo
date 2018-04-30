@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
+use App\Models\Auth\Group\GroupRole;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -25,6 +26,54 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('accessAdminRoutes', function($user) {
+            
+            if( $user->group_id == 1 ){
+
+                \Log::info($user->group_id);
+                return true;
+
+            }
+            return false;
+
+        });
+
+
+        Gate::define('accessManagerRoutes', function($user) {
+            
+            if( $user->group_id == 2 ){
+                return true;
+            }
+            return false;
+        });
+
+        Gate::define('accessFormRoutes', function($user) {
+            
+            if( $user->group_id == 3 ){
+                return true;
+            }
+            return false;
+        });
+
+
+        Gate::define('accessFormGroupRoutes', function($user) {
+            
+            $formGroupRoles = ['Product Request Form Admin', 'Product Request Business Unit Admin'];
+            if( $user->group_id == 3 && in_array($user->role, $formGroupRoles) ){
+                return true;
+            }
+            return false;
+        });
+
+        Gate::define('accessFormUserRoutes', function($user) {
+            
+            $formGroupRoles = ['Product Request Form Admin', 'Product Request Business Unit Admin'];
+            if( $user->group_id == 3 && in_array($user->role, $formGroupRoles) ){
+                return true;
+            }
+            return false;
+        });
+
+
     }
 }

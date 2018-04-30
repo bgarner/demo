@@ -15,11 +15,7 @@ use App\Models\Form\ProductRequest\FormGroupBusinessUnitMap;
 
 class GroupAdminController extends Controller
 {
-    public function __construct()
-    {
-        //
-    }
-
+    
     /**
      * Display a listing of the resource.
      *

@@ -68,7 +68,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapAdminRoutes()
     {
-        Route::middleware(['web','admin.auth', 'componentaccess', 'banner'])
+        Route::middleware(['web','admin.auth', 'can:accessAdminRoutes', 'componentaccess', 'banner'])
              ->namespace($this->namespace)
              ->group(base_path('routes/admin.php'));
     }
@@ -80,7 +80,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapManagerRoutes()
     {
-        Route::middleware(['web','admin.auth', 'banner'])
+        Route::middleware(['web','admin.auth', 'can:accessManagerRoutes', 'banner'])
              ->namespace($this->namespace)
              ->group(base_path('routes/manager.php'));
     }
@@ -108,7 +108,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapFormRoutes()
     {
-        Route::middleware(['web','admin.auth', 'banner'])
+        Route::middleware(['web','admin.auth', 'can:accessFormRoutes'])
              ->namespace($this->namespace)
              ->group(base_path('routes/form.php'));
     }

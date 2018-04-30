@@ -150,7 +150,9 @@ class UserAdminController extends Controller
      */
     public function destroy($id)
     {
+        FormUserBusinessUnitMap::where('user_id', $id)->delete();
         User::where('id', $id)->delete();
+
         return;
     }
 }

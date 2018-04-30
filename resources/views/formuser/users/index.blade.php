@@ -52,7 +52,7 @@
 											@if(!$user->disabled) 
 											<a href="/form/user/{{ $user->id }}/edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
 
-											<a data-groupId="{{ $user->id }}" id="user{{ $user->id }}" class="user-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+											<a data-userId="{{ $user->id }}" id="user{{ $user->id }}" class="delete-user btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 
 											@endif
 
@@ -80,7 +80,7 @@
 
 
 
-	<script type="text/javascript" src="/js/custom/forms/groups/deleteGroup.js"></script>
+	<script type="text/javascript" src="/js/custom/forms/users/deleteUser.js"></script>
 	<script type="text/javascript">
 
 		$(".table").dataTable(
