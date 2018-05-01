@@ -17,12 +17,16 @@ class FormGroup extends Model
     public static function validateFormGroup($request)
     {
         $validateThis = [
-                            "form_id"      => $request->form_id,
+                            
                             "group_name"   => $request->group_name,
                             "users"        => $request->users,
                             "businessUnit" => $request->businessUnit
 
                         ]; 
+        if(isset($request->form_id)){
+            $validateThis["form_id"]    = $request->form_id;
+        }
+                        
 
         \Log::info($validateThis);
         $groupValidator = new ProductRequestGroupValidator();

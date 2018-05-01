@@ -33,13 +33,13 @@
                                 <form method="get" class="form-horizontal">
                                 	<input type="hidden" name="group_id" id="group_id" value="{{ $group->id }}">
                                     <div class="form-group">
-                                    	<label class="col-sm-2 control-label">Group Name</label>
+                                    	<label class="col-sm-2 control-label">Group Name <span class="req">*</span></label>
                                     	<div class="col-sm-10">
                                     		<input type="text" class="form-control" name="group_name" id="group_name" value="{{ $group->group_name }}" />
                                     	</div>
                                     </div>
                                     <div class="form-group">
-                                    	<label class="col-sm-2 control-label"> Users </label>
+                                    	<label class="col-sm-2 control-label"> Users <span class="req">*</span></label>
                                     	<div class="col-sm-10">
 
                                     		{!! Form::select('users[]', $group["users"], $group["selected_users"], [ 'class'=>'chosen', 'id'=> 'users', 'multiple'=>'true']) !!}
@@ -47,7 +47,7 @@
 
                                     </div>
                                     <div class="form-group">
-	                                	<label class="col-sm-2 control-label">Business Unit</label>
+	                                	<label class="col-sm-2 control-label">Business Unit <span class="req">*</span></label>
 	                                	<div class="col-sm-10">
 	                                		{!! Form::select('businessUnit', $businessUnits	, $selectedBU, [ 'class'=>'chosen', 'id'=> 'businessUnit', 'multiple'=>'multiple']) !!}
 
