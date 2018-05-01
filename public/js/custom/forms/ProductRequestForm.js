@@ -78,42 +78,32 @@ $(document).ready(function(){
 			$(window).scrollTop(0);
 			return false;
 		}
-		if(subcategory == '') {
-			swal("Oops!", "Subcategory cannot be empty.", "error");
-			hasError = true;
-			$(window).scrollTop(0);
-			return false;
-		}
+		
 		if(requirement == '') {
 			swal("Oops!", "Requirement cannot be empty.", "error");
 			hasError = true;
 			$(window).scrollTop(0);
 			return false;
 		}
-		if(brand == '') {
-			swal("Oops!", "Brand cannot be empty.", "error");
+
+		var submitted_by = $("#submitted_by").val();
+		var submitted_by_position = $("#submitted_by_position").val();
+		var dm_approval = $("#dm_approval:checked").val();
+
+		if(submitted_by == '' || submitted_by_position == '' ) {
+			swal("Oops!", "Your name or position cannot be empty.", "error");
 			hasError = true;
 			$(window).scrollTop(0);
 			return false;
 		}
-		if(styleNumber == '') {
-			swal("Oops!", "Style Number cannot be empty.", "error");
+
+		if(dm_approval == null) {
+			swal("Oops!", "You need your DM's approval for the request.", "error");
 			hasError = true;
 			$(window).scrollTop(0);
 			return false;
 		}
-		if(size == '') {
-			swal("Oops!", "Size cannot be empty.", "error");
-			hasError = true;
-			$(window).scrollTop(0);
-			return false;
-		}
-		if(quantity == '') {
-			swal("Oops!", "Quantity cannot be empty.", "error");
-			hasError = true;
-			$(window).scrollTop(0);
-			return false;
-		}
+		
 
 
 	    if(hasError == false) {
@@ -146,72 +136,56 @@ $(document).ready(function(){
 				 },
 
 			    success: function(data) {
-					$('#createNewProductRequestForm')[0].reset(); // empty the form
-		        	swal({
-		        		title : 'Nice!',
-		        		text : "Your form has been submitted!",
-		        		type : 'success',
 
-		        	},
-		        	function(){
-		        		// window.history.back();
-		        		window.location = "/" + storeNumber + '/form/productrequest/';
-		        	})
+			    	if(data.validation_result == 'false'){
+			    		var errors = data.errors;
+			    		console.log(errors);
+			    		$( ".error" ).remove();
+			    		if(errors.hasOwnProperty("department")) {
+			        		$.each(errors.department, function(index){
+			        			$("#department").parent().append('<div class="req error">' + errors.department[index]  + '</div>');	
+			        		}); 	
+			        	}
+			        	
+				        if(errors.hasOwnProperty("category")) {
+				        	$.each(errors.category, function(index){
+				        		$("#category").parent().append('<div class="req error">' + errors.category[index]  + '</div>');
+				        	});
+				        }
+				        if(errors.hasOwnProperty("requirement")) {
+				        	$.each(errors.requirement, function(index){
+				        		$("#requirement").parent().append('<div class="req error">' + errors.requirement[index]  + '</div>');	
+				        	});
+				        }
+				        if(errors.hasOwnProperty("submitted_by")) {
+				        	$.each(errors.submitted_by, function(index){
+				        		$("#submitted_by").parent().append('<div class="req error">' + errors.submitted_by[index]  + '</div>');	
+				        	});
+				        }
+				        if(errors.hasOwnProperty("submitted_by_position")) {
+				        	$.each(errors.submitted_by_position, function(index){
+				        		$("#submitted_by_position").parent().append('<div class="req error">' + errors.submitted_by_position[index]  + '</div>');	
+				        	});
+				        }
+			    	}
+			    	else{
+
+
+						$('#createNewProductRequestForm')[0].reset(); // empty the form
+			        	swal({
+			        		title : 'Nice!',
+			        		text : "Your form has been submitted!",
+			        		type : 'success',
+
+			        	},
+			        	function(){
+			        		// window.history.back();
+			        		window.location = "/" + storeNumber + '/form/productrequest/';
+			        	})
+			        }
 
 			        console.log(data);
-			   //      if(data != null && data.validation_result == 'false') {
-			   //      	var errors = data.errors;
-			   //      	if(errors.hasOwnProperty("title")) {
-			   //      		$.each(errors.title, function(index){
-			   //      			$("#title").parent().append('<div class="req">' + errors.title[index]  + '</div>');
-			   //      		});
-			   //      	}
-			   //      	if(errors.hasOwnProperty("event_type")) {
-				  //       	$.each(errors.title, function(index){
-				  //       		$("#event_type").parent().append('<div class="req">' + errors.event_type[0]  + '</div>');
-				  //       	});
-				  //       }
-				  //       if(errors.hasOwnProperty("start")) {
-				  //       	$.each(errors.title, function(index){
-				  //       		$("#start").parent().parent().append('<div class="req">' + errors.start[0]  + '</div>');
-				  //       	});
-				  //       }
-				  //       if(errors.hasOwnProperty("end")) {
-				  //       	$.each(errors.title, function(index){
-				  //       		$("#end").parent().parent().append('<div class="req">' + errors.end[0]  + '</div>');
-				  //       	});
-				  //       }
-				  //       if(errors.hasOwnProperty("target_stores")) {
-			   //      		$("#storeSelect").parent().append('<div class="req">' + errors.target_stores[0]  + '</div>');
-			   //      	}
-			   //      }
-			   //      else{
 
-				  //       $('#createNewEventForm')[0].reset(); // empty the form
-				  //       CKEDITOR.instances['description'].setData('');
-				  //       $('#datepicker').find('input').datepicker('setDate', null);
-
-				  //       $(".search-field").find('input').val('');
-				  //       processStorePaste();
-						// // $("#storeSelect").chosen("destroy");
-				  //       $("#allStores").click();
-
-						// $('.event-create i').removeClass("fa-spinner faa-spin animated");
-		    // 			$('.event-create i').addClass("fa-check");
-				  //       $('.event-create span').text(' Event Created!');
-
-				  //       $(function(){
-						//    function revertButton(){
-						// 	   	$( ".event-create span" ).fadeOut( "fast", function() {
-			   //  					$('.event-create span').text(' Create New Event');
-			  	// 				});
-			  	// 				$('.event-create span').fadeIn();
-
-						//    };
-						//    window.setTimeout( revertButton, 2000 ); // 2 seconds
-			   //      	});
-
-			   //  	}
 				}
 	    	});
 

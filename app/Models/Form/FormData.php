@@ -7,11 +7,32 @@ use App\Models\Utility\Utility;
 use App\Models\Form\Form;
 use App\Models\Form\FormActivityLog;
 use App\Models\Form\ProductRequest\BusinessUnitTypes;
+use App\Models\Validation\Form\FormInstanceValidator as FormInstanceValidator;
+use App\Models\Validation\Form\ProductRequestFormInstanceValidator;
 
 class FormData extends Model
 {
     protected $table = 'form_data';
     protected $fillable = ['form_id', 'store_number', 'submitted_by', 'form_data', 'form_name', 'form_version', 'business_unit_id'];
+
+    public static function validateFormInstance($request)
+    {
+        $validateThis = [
+                            "department" => $request->department,
+                            "category"  => $request->category,
+                            "requirement" =>$request->requirement,
+                            "form_id" => $request->form_id,
+                            "store_number" =>$request->storeNumber,
+                            "submitted_by" => $request->submitted_by,
+                            "submitted_by_position" => $request->submitted_by_position
+
+                        ]; 
+
+        \Log::info($validateThis);
+        $productRequestValidator = new ProductRequestFormInstanceValidator();
+
+        return $productRequestValidator->validate($validateThis);
+    }
 
     public static function getAdminFormDataByFormNameAndVersion($name, $version)
     {
@@ -61,7 +82,15 @@ class FormData extends Model
 
     public static function createNewFormInstance($request)
     {
-    	$form = Form::find($request->form_id);
+    	
+        \Log::info($request);
+        $validate = Self::validateFormInstance($request);
+
+        if($validate['validation_result'] == 'false') {
+          return json_encode($validate);
+        }
+
+        $form = Form::find($request->form_id);
         $business_unit_id = BusinessUnitTypes::where('business_unit', $request->department)->first()->id;
 
         $formInstance =  FormData::create([

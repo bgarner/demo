@@ -46,7 +46,7 @@
 							<input type="hidden" name="form_id" id="form_id" value="{{ $form_id }}" />
 
 							<div class="form-group">
-								<label class="col-sm-2 control-label">Department</label>
+								<label class="col-sm-2 control-label">Department <span class="req">*</span></label>
 					            <div class="col-sm-10">
 					            	<select name="department" id="department" class="form-control input-sm">
 					            		<option></option>
@@ -58,7 +58,7 @@
 							</div>
 
 							<div class="form-group">
-								<label class="col-sm-2 control-label">Category</label>
+								<label class="col-sm-2 control-label">Category <span class="req">*</span></label>
 					            <div class="col-sm-10">
 					            	<select name="category" id="category" class="form-control input-sm">					            		
 					            		<option></option>
@@ -125,13 +125,14 @@
 							</div>
 
 							<div class="form-group">
-								<label class="col-sm-2 control-label">Requirement</label>
+								<label class="col-sm-2 control-label">Requirement <span class="req">*</span></label>
 					            <div class="col-sm-10">
 					            	<select name="requirement" id="requirement" class="form-control input-sm">
 					            		<option></option>
 										<option value="More">More</option>
 										<option value="Less">Less</option>
-										<option value="Opportunity">Opportunity</option>
+										<option value="StyleRequest">Style Request</option>
+										<option value="AssortmentRequest">Assortment Request</option>
 
 					            	</select>
 					            </div>
@@ -165,13 +166,14 @@
 							</div>
 
 							<div class="form-group">
-								<label class="col-sm-2 control-label">Your Name</label>
+								<label class="col-sm-2 control-label">Your Name
+								<span class="req">*</span></label>
 					            <div class="col-sm-10"><input type="text" id="submitted_by" name="submitted_by" class="form-control" value=""></div>
 							</div>		
 
 
 							<div class="form-group">
-								<label class="col-sm-2 control-label">Your Position</label>
+								<label class="col-sm-2 control-label">Your Position<span class="req">*</span></label>
 					            <div class="col-sm-10"><input type="text" id="submitted_by_position" name="submitted_by_position" class="form-control" value=""></div>
 							</div>														
 
