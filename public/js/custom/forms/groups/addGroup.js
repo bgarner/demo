@@ -1,5 +1,6 @@
 $(document).ready(function(){
-	$("#users").closest('.form-group').hide();
+	// $("#users").closest('.form-group').hide();
+    // check the "product request form option"
 });
 
 
@@ -50,19 +51,30 @@ $(".group-create").click(function(){
     var users = $("#users").val();
     var group_name = $("#group_name").val();
     var businessUnit = $("#businessUnit").val();
-    console.log(users);
 
-    // if(document_id == '') {
-    //     swal("Oops!", "This we need a document to be marked as alert.", "error");
-    //     hasError = true;
-    //     $(window).scrollTop(0);
-    // }
 
-    // if(alert_type_id == '') {
-    //     swal("Oops!", "This we need an alert type.", "error");
-    //     hasError = true;
-    //     $(window).scrollTop(0);
-    // }
+    if(group_name == '') {
+        swal("Oops!", "We need a group name.", "error");
+        hasError = true;
+        $(window).scrollTop(0);
+    }
+
+    if(form_id == '') {
+        swal("Oops!", "Form missing.", "error");
+        hasError = true;
+        $(window).scrollTop(0);
+    }
+
+    if(businessUnit == null) {
+        swal("Oops!", "We need a Business Unit.", "error");
+        hasError = true;
+        $(window).scrollTop(0);
+    }
+    if(users == null) {
+        swal("Oops!", "We need some users for the group.", "error");
+        hasError = true;
+        $(window).scrollTop(0);
+    }
 
     if(hasError == false) {
         $.ajax({
@@ -77,24 +89,37 @@ $(".group-create").click(function(){
             dataType : 'json',
             success: function(data) {
                 console.log(data);
-                // if(data != null && data.validation_result == 'false') {
-                    // var errors = data.errors;
-                    // console.log(errors);
-                    // if(errors.hasOwnProperty("document_id")) {
-                    //     $.each(errors.document_id, function(index){
-                    //         $("#search_document").parent().parent().append('<div class="req">' + errors.document_id[index]  + '</div>');
-                    //     });
-                    // }
-                    // if(errors.hasOwnProperty("alert_type_id")) {
-                    //     $.each(errors.alert_type_id, function(index){
-                    //         $("#alert_type").parent().append('<div class="req">' + errors.alert_type_id[index]  + '</div>');
-                    //     });
-                    // }
-                // }
-                // else{
-                    // $("#event_type").val(""); // empty the form
+                if(data.validation_result == 'false'){
+                    var errors = data.errors;
+                    console.log(errors);
+                    $( ".error" ).remove();
+                    if(errors.hasOwnProperty("group_name")) {
+                        $.each(errors.group_name, function(index){
+                            $("#group_name").parent().append('<div class="req error">' + errors.group_name[index]  + '</div>'); 
+                        });     
+                    }
+                    if(errors.hasOwnProperty("form_id")) {
+                        $.each(errors.form_id, function(index){
+                            $("#form").parent().append('<div class="req error">' + errors.form_id[index]  + '</div>'); 
+                        });     
+                    }
+                    if(errors.hasOwnProperty("users")) {
+                        $.each(errors.users, function(index){
+                            $("#users").parent().append('<div class="req error">' + errors.users[index]  + '</div>'); 
+                        });     
+                    }
+                    if(errors.hasOwnProperty("businessUnit")) {
+                        $.each(errors.businessUnit, function(index){
+                            $("#businessUnit").parent().append('<div class="req error">' + errors.businessUnit[index]  + '</div>'); 
+                        });     
+                    }
+
+                }
+                else{
+
+                
                     swal("Nice!", "Group has been created", "success");
-                // }
+                }
 
             }
         });

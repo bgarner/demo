@@ -7,14 +7,37 @@ use App\Models\Form\GroupUser;
 use App\Models\Form\FormGroupMap;
 use App\Models\Form\FormRoleMap;
 use App\Models\Form\ProductRequest\FormGroupBusinessUnitMap;
+use App\Models\Validation\Form\ProductRequestGroupValidator;
 class FormGroup extends Model
 {
     protected $table = 'form_usergroups';
 
     protected $fillable = ['group_name'];
 
+    public static function validateFormGroup($request)
+    {
+        $validateThis = [
+                            "form_id"      => $request->form_id,
+                            "group_name"   => $request->group_name,
+                            "users"        => $request->users,
+                            "businessUnit" => $request->businessUnit
+
+                        ]; 
+
+        \Log::info($validateThis);
+        $groupValidator = new ProductRequestGroupValidator();
+
+        return $groupValidator->validate($validateThis);
+    }
+
     public static function createGroup($request)
     {
+        $validate = Self::validateFormGroup($request);
+
+        if($validate['validation_result'] == 'false') {
+          return json_encode($validate);
+        }
+
         $group = FormGroup::create([
 
             'group_name' => $request["group_name"]
@@ -30,6 +53,12 @@ class FormGroup extends Model
 
     public static function editGroup($request, $id)
     {
+        $validate = Self::validateFormGroup($request);
+
+        if($validate['validation_result'] == 'false') {
+          return json_encode($validate);
+        }
+
         $group = FormGroup::find($id);
         $group['group_name'] = $request["group_name"];
         $group->save();

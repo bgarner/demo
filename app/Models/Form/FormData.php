@@ -7,7 +7,6 @@ use App\Models\Utility\Utility;
 use App\Models\Form\Form;
 use App\Models\Form\FormActivityLog;
 use App\Models\Form\ProductRequest\BusinessUnitTypes;
-use App\Models\Validation\Form\FormInstanceValidator as FormInstanceValidator;
 use App\Models\Validation\Form\ProductRequestFormInstanceValidator;
 
 class FormData extends Model
@@ -18,12 +17,12 @@ class FormData extends Model
     public static function validateFormInstance($request)
     {
         $validateThis = [
-                            "department" => $request->department,
-                            "category"  => $request->category,
-                            "requirement" =>$request->requirement,
-                            "form_id" => $request->form_id,
-                            "store_number" =>$request->storeNumber,
-                            "submitted_by" => $request->submitted_by,
+                            "department"            => $request->department,
+                            "category"              => $request->category,
+                            "requirement"           => $request->requirement,
+                            "form_id"               => $request->form_id,
+                            "store_number"          => $request->storeNumber,
+                            "submitted_by"          => $request->submitted_by,
                             "submitted_by_position" => $request->submitted_by_position
 
                         ]; 

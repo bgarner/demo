@@ -31,12 +31,12 @@
 	                        <div class="ibox-content">
 
 	                            <form method="get" class="form-horizontal">
-	                                <div class="form-group"><label class="col-sm-2 control-label">Group Name</label>
+	                                <div class="form-group"><label class="col-sm-2 control-label">Group Name <span class="req">*</span></label>
 	                                    <div class="col-sm-10"><input type="text" class="form-control" name="group_name" id="group_name" value=""></div>
 	                                </div>
 
 	                                <div class="form-group">
-	                                	<label class="col-sm-2 control-label">Form</label>
+	                                	<label class="col-sm-2 control-label">Form <span class="req">*</span></label>
 	                                	<div class="col-sm-10">
 	                                		{!! Form::select('form', $forms, null, [ 'class'=>'chosen', 'id'=> 'form']) !!}
 
@@ -44,7 +44,7 @@
 
 	                                </div>
 	                                <div class="form-group">
-	                                	<label class="col-sm-2 control-label">Business Unit</label>
+	                                	<label class="col-sm-2 control-label">Business Unit <span class="req">*</span></label>
 	                                	<div class="col-sm-10">
 	                                		{!! Form::select('businessUnit', $businessUnits	, null, [ 'class'=>'chosen', 'id'=> 'businessUnit', 'multiple'=>'multiple']) !!}
 
@@ -52,7 +52,7 @@
 
 	                                </div>
 	                                <div class="form-group">
-	                                	<label class="col-sm-2 control-label">Users</label>
+	                                	<label class="col-sm-2 control-label">Users <span class="req">*</span></label>
 	                                	<div class="col-sm-10">
 	                                		{!! Form::select('users[]', $formusers, null, [ 'class'=>'chosen', 'id'=> 'users', 'multiple'=>
 	                                		'true']) !!}
