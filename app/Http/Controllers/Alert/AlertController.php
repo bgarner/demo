@@ -28,7 +28,6 @@ class AlertController extends Controller
 
         $alerts = Alert::getAlertsByStoreNumber($request, $storeNumber);        
  
-
         return view('site.alerts.index')
             ->with('alerts', $alerts)
             ->with('alertTypes', $alertTypes)
