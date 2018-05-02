@@ -26,12 +26,6 @@ class DirtyNodesController extends Controller
             ->with('cleanNodes', $cleanNodes);
     }
 
-
-    // public function update(Request $request)
-    // {
-    //     DirtyNode::cleanNode($request->node_id);
-    // }
-
     public function pdt()
     {
         $data = DirtyNode::getDataByStoreNumber($this->storeNumber);
@@ -43,7 +37,6 @@ class DirtyNodesController extends Controller
     {
         DirtyNode::cleanNode($request);
     }
-
 
 
 }
