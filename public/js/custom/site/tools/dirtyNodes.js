@@ -3,18 +3,23 @@ $(document).ready(function(){
         showModal(this);
     });
 
-    $('.dirtynodestable').on('click', '.cleannodebutton', function() {
-        showModal(this);
-    });
+    // $('.dirtynodestable').on('click', '.cleannodebutton', function() {
+    //     showModal(this);
+    // });
 });
 
 
 function showModal(el)
 {
     $('#dirtynodemodal').modal('show');
-
+    console.log(el);
     window.nodeID = $(el).closest("tr").find('td:eq(0)').text();
-    console.log(window.nodeID);
+    window.item_id_sku = $(el).parent().find(".item_id_sku").val();
+    window.node_key = $(el).parent().find(".node_key").val();
+
+    console.log("our ID: " + window.nodeID);
+    console.log("item_id_sku: " + window.item_id_sku);
+    console.log("node_key: " + window.node_key);
 
     var itemID = $(el).closest("tr").find('td:eq(2)').text();
     $('#dirtyNodeItemID span.value').text(itemID);
@@ -39,22 +44,42 @@ function showModal(el)
 
 }
 
-
 $('button.cleannode').on('click', function() {
 
     $.ajax({
-        url: location.protocol + '//' + location.host + location.pathname + "/clean/",
-        type: 'PATCH',
+        url: "http://ordermgmt-qat.cicada.cs.ctc/OrderManagement/manageInventoryNodeControl",
+        type: POST,
+        dataType: "JSON",
         data: {
-            node_id : window.nodeID
+            ItemID: window.item_id_sku,
+            Node: window.node_key,
+            RequestedBy: localStorage.getItem("userStoreNumber")
         },
-        success: function(result) {
-            $('#nodeID_' + window.nodeID).fadeOut( 400, function() {
-                // Animation complete.
-                $('.cleannodestable tr:last').after(window.removedRow);
+        success: function(result){
+            // window.result = {
+            //     "Code": "499",
+            //     "Severity": "E",
+            //     "Error_Message": "Unknown Dirty Node CleanUp error - No Content returned to caller."
+            // };
+
+            $.ajax({
+                url: location.protocol + '//' + location.host + location.pathname + "/clean/",
+                type: 'PATCH',
+                data: {
+                    node_id : window.nodeID,
+                    //DOM_API_result: result.stringify()
+                    DOM_API_result: JSON.stringify(window.result)
+                },
+                success: function(result) {
+                    $('#nodeID_' + window.nodeID).fadeOut( 400, function() {
+                        // Animation complete.
+                        $('.cleannodestable tr:last').after(window.removedRow);
+                    });
+                }
+                   
+            }).done(function(response){
+                swal("Good job 🍭", "Node is clean!", "success");
             });
         }
-    }).done(function(response){
-        swal("Good job 🍭", "Node is clean!", "success");
-    });
+    })
 });

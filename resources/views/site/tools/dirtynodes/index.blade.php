@@ -108,6 +108,8 @@
                                     <tbody>
                                         @foreach($data as $d)
                                         <tr id="nodeID_{{ $d->id }}">
+                                            <input type="hidden" name="item_id_sku" class="item_id_sku" value="{{ $d->item_id_sku }}" />
+                                            <input type="hidden" name="node_key" class="node_key" value="{{ $d->node_key }}" />
                                             <td style="display: none;">{{ $d->id }}</td>
                                             <td><input type="button" class="cleannodebutton btn btn-sm btn-primary" value="Clean"></td>
                                             <td>{{ $d->stylecode }}</td>

@@ -11,6 +11,7 @@ use Carbon\Carbon;
 class DirtyNode extends Model
 {
     protected $table = 'dirty_nodes';
+    protected $fillable = ['API_response'];
 
     public static function getDataByStoreNumber($store_number)
     {
@@ -39,10 +40,12 @@ class DirtyNode extends Model
         return $data;       
     }
 
-    public static function cleanNode($id)
+    public static function cleanNode($request)
     {
-        $node = DirtyNode::find($id);
+        $node = DirtyNode::find($request->node_id);
         $node->touch();
+        $node->API_response = $request->DOM_API_result;
+        $node->save();
         DirtyNodeArchive::insert($node->toArray());
 
     }
