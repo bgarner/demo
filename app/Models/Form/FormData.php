@@ -53,7 +53,8 @@ class FormData extends Model
 
         $forms = FormData::where('form_id', $form_id)
 						->where('store_number', $store_number)        				
-        				->get()
+        				->orderBy('created_at', 'desc')
+                        ->get()
                         ->each(function($formInstance){
                             $formInstance->form_data = unserialize($formInstance->form_data);
                             $formInstance->description = $formInstance->form_data['department'] . " > " . $formInstance->form_data['category'] . " > " . $formInstance->form_data['subcategory'];

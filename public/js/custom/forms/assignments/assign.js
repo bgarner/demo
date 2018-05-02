@@ -94,6 +94,18 @@ $("#update_form_status").click(function(){
 });
 
 
+$("body").on('click', '.user-list-item', function () {
+    
+    $(this).parent().find(".user-checkbox").prop('checked', false);
+    $(this).find(".user-checkbox").prop('checked', true);
+});
+
+$("body").on('click', '.group-list-item', function () {
+    
+    $(this).parent().find(".group-checkbox").prop('checked', false);
+    $(this).find(".group-checkbox").prop('checked', true);
+});
+
 $("#update_user_assignment").click(function(){
 	
 	var user_id = $(".user-checkbox:checked").data('userid');
