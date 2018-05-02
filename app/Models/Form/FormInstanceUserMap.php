@@ -4,11 +4,26 @@ namespace App\Models\Form;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Utility\Utility;
+use App\Models\Validation\Form\FormInstanceUserMapValidator;
 
 class FormInstanceUserMap extends Model
 {
     protected $table = 'form_user_form_instance';
     protected $fillable = ['user_id', 'form_instance_id'];
+
+    public static function validateFormInstanceUser($form_instance_id, $user_id)
+    {
+        $validateThis = [
+                            "form_instance_id"  => $form_instance_id,
+                            "user_id" => $user_id
+
+                        ]; 
+
+        \Log::info($validateThis);
+        $v = new FormInstanceUserMapValidator();
+
+        return $v->validate($validateThis);
+    }
 
     public static function getFormInstancesByUserId($user_id)
     {
@@ -38,6 +53,12 @@ class FormInstanceUserMap extends Model
 
     public static function updateFormAssignment($form_instance_id, $user_id)
     {
+        $validate = Self::validateFormInstanceUser($form_instance_id, $user_id);
+
+        if($validate['validation_result'] == 'false') {
+          return json_encode($validate);
+        }
+
         Self::where('form_instance_id', $form_instance_id)
             ->delete();
         return Self::create([

@@ -4,12 +4,27 @@ namespace App\Models\Form;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Utility\Utility;
+use App\Models\Validation\Form\FormInstanceGroupMapValidator;
 
 class FormInstanceGroupMap extends Model
 {
     protected $table = 'form_group_form_instance';
     protected $fillable = ['form_group_id', 'form_instance_id'];
 
+
+    public static function validateFormInstanceGroup($form_instance_id, $group_id)
+    {
+        $validateThis = [
+                            "form_instance_id"  => $form_instance_id,
+                            "form_group_id" => $group_id
+
+                        ]; 
+
+        \Log::info($validateThis);
+        $v = new FormInstanceGroupMapValidator();
+
+        return $v->validate($validateThis);
+    }
 
     public static function getFormInstancesByGroupId($group_id)
     {
@@ -31,6 +46,12 @@ class FormInstanceGroupMap extends Model
 
     public static function updateFormAssignment($form_instance_id, $group_id)
     {
+        $validate = Self::validateFormInstanceGroup($form_instance_id, $group_id);
+
+        if($validate['validation_result'] == 'false') {
+          return json_encode($validate);
+        }
+
         Self::where('form_instance_id', $form_instance_id)
             ->delete();
         return Self::create([

@@ -105,8 +105,34 @@ $("#update_user_assignment").click(function(){
 		    url: '/form/assignment/forminstance/' + form_instance_id ,
 		    type: 'PATCH',
 		    data: { 'user_id': user_id  },
-		    success: function(result) {
-		    	acknowledgeUpdate();
+		    dataType : 'JSON',
+		    success: function(data) {
+		    	console.log((data));
+		    	if(data.validation_result == 'false'){
+		    		var errors = data.errors;
+                    var errorString = '';
+                    if(errors.hasOwnProperty("form_instance_id")){
+                        $.each(errors.form_instance_id, function(index){
+                            errorString +=  errors.form_instance_id[index] + "\n" ; 
+                        });     
+                    }
+                    if(errors.hasOwnProperty("user_id")){
+                        $.each(errors.user_id, function(index){
+                            errorString += errors.user_id[index] + "\n"; 
+                        });     
+                    }
+
+                    swal({
+                        title : "",
+                        text : errorString,
+                        type : "error",
+                    })    
+		    	}
+		    	else{
+		    		acknowledgeUpdate();		
+		    	}
+		    	
+
 		    }
 		}).done(function(response){
 			
@@ -124,8 +150,32 @@ $("#update_group_assignment").click(function(){
 		    url: '/form/assignment/forminstance/' + form_instance_id ,
 		    type: 'PATCH',
 		    data: { 'group_id': group_id},
-		    success: function(result) {
-		    	acknowledgeUpdate();
+		    dataType : 'JSON',
+		    success: function(data) {
+		    	console.log(data);
+		    	if(data.validation_result == 'false'){
+		    		var errors = data.errors;
+                    var errorString = '';
+                    if(errors.hasOwnProperty("form_instance_id")){
+                        $.each(errors.form_instance_id, function(index){
+                            errorString +=  errors.form_instance_id[index] + "\n" ; 
+                        });     
+                    }
+                    if(errors.hasOwnProperty("form_group_id")){
+                        $.each(errors.form_group_id, function(index){
+                            errorString += errors.form_group_id[index] + "\n"; 
+                        });     
+                    }
+
+                    swal({
+                        title : "",
+                        text : errorString,
+                        type : "error",
+                    })    
+		    	}
+		    	else{
+		    		acknowledgeUpdate();		
+		    	}
 		    }
 		}).done(function(response){
 			
