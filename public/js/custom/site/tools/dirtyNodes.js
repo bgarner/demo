@@ -48,7 +48,7 @@ $('button.cleannode').on('click', function() {
 
     $.ajax({
         url: "http://ordermgmt-qat.cicada.cs.ctc/OrderManagement/manageInventoryNodeControl",
-        type: POST,
+        type: 'POST',
         dataType: "JSON",
         data: {
             ItemID: window.item_id_sku,
