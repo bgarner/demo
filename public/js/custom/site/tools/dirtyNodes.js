@@ -56,11 +56,6 @@ $('button.cleannode').on('click', function() {
             RequestedBy: localStorage.getItem("userStoreNumber")
         },
         success: function(result){
-            // window.result = {
-            //     "Code": "499",
-            //     "Severity": "E",
-            //     "Error_Message": "Unknown Dirty Node CleanUp error - No Content returned to caller."
-            // };
 
             $.ajax({
                 url: location.protocol + '//' + location.host + location.pathname + "/clean/",
@@ -75,11 +70,18 @@ $('button.cleannode').on('click', function() {
                         // Animation complete.
                         $('.cleannodestable tr:last').after(window.removedRow);
                     });
-                }
+                }, 
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    swal("Something went wrong", "Couldn't move node to cleaned nodes table", "error");
+                 }
                    
             }).done(function(response){
                 swal("Good job 🍭", "Node is clean!", "success");
             });
-        }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            swal("Something went wrong", "Couldn't make connection to DOM", "error");
+         }
+        
     })
 });
