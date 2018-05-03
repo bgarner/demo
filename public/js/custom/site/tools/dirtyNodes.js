@@ -55,7 +55,8 @@ $('button.cleannode').on('click', function() {
         data: {
             ItemID: window.item_id_sku,
             Node: window.node_key,
-            RequestedBy: localStorage.getItem("userStoreNumber")
+            RequestedBy: localStorage.getItem("userStoreNumber"),
+            OrganizationCode: "FGL"
         },
         success: function(result){
 
