@@ -8688,3 +8688,28 @@ a:hover span.badge{
   margin-top: 20px;
   display: block;
 }
+
+.vote-item{
+  padding: 10px 25px;
+  border: none;
+}
+.vote-item:last-child {
+  border-bottom: none;
+}
+
+.vote-title{
+  margin-left: 10px;
+  font-size: 14px;
+}
+.vote-title label{
+  margin-left: 5px;
+}
+.vote-info{
+  margin-left: 25px;
+}
+.vote-info .user-position{
+  float:left;
+}
+.vote-info .user-group{
+  padding-left: 20px;
+}

@@ -8,7 +8,7 @@
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 	<style>
             .modal-dialog{
-                height: 380px;
+                height: 500px;
             }
             .bignumber{
                 font-size: 72px;
@@ -32,7 +32,7 @@
                 min-height: 60px;
             }
             #user_assignment_modal .modal-body, #group_assignment_modal .modal-body{
-            	height: 70% !important;
+            	height: 77% !important;
             }
         </style>
 </head>
