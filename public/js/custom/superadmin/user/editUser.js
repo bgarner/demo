@@ -78,6 +78,7 @@ $(document).ready(function(){
 	$(".user-update").click(function(){
 		var firstname = $('input[name="firstname"]').val();
 		var lastname = $('input[name="lastname"]').val();
+		var jobtitle = $('input[name="jobtitle"]').val();
 		var group = $('#select-group option:selected').val();
 		var role = $("#select-role option:selected").val();
 		var roleValue = $("#select-role option:selected").text();
@@ -150,6 +151,7 @@ $(document).ready(function(){
 			    	lastname : lastname,
 			    	group : group,
 			    	role : role,
+			    	jobtitle : jobtitle,
 			    	resource : resource,
 			    	business_unit : business_unit,
 			    	banners : banners,

@@ -17,10 +17,10 @@
                     
                 </div>
                 <div class="vote-info">
-                    <span class="user-position">
+                    <span class="user-position" title="Job Title">
                     <i class="fa fa-id-card"></i> {{$user->fglposition}}
                     </span>
-                    <span class="user-group">
+                    <span class="user-group" title="User Role and Business Unit">
                     <i class="fa fa-users"></i> {{$user->role_name}} -  {{$user->business_unit}}
                     </span>
                 </div>

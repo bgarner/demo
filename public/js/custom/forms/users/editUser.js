@@ -19,6 +19,7 @@ $(document).ready(function(){
 	$(".user-update").click(function(){
 		var firstname = $('input[name="firstname"]').val();
 		var lastname = $('input[name="lastname"]').val();
+		var jobtitle = $('input[name="jobtitle"]').val();
 		var group = $('#select-group option:selected').val();
 		var role = $("#select-role option:selected").val();
 		var rolename = $("#select-role option:selected").text();
@@ -36,8 +37,8 @@ $(document).ready(function(){
 			});
 		}
 
-		console.log(business_unit);
-		
+		// console.log(business_unit);
+		// console.log(jobtitle);
 
 		var newPassword = $('input[name="password"]').val();
 		var newPasswordConfirm = $('input[name="confirm_password"]').val();
@@ -90,7 +91,7 @@ $(document).ready(function(){
 			    	lastname : lastname,
 			    	group : group,
 			    	role : role,
-			    	// resource : resource,
+			    	jobtitle : jobtitle,
 			    	business_unit : business_unit,
 			    	banners : banners,
 			    	password : newPassword,

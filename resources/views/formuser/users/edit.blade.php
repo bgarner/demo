@@ -45,7 +45,12 @@
                                                 <input name="email" value="{{$user->email}}" readonly class="form-control">
                                             </div>
                                         </div>
-
+                                        <div class="form-group"><label class="col-sm-2 control-label">Job Title</label>
+                                            <div class="col-sm-10">
+                                                <input name="jobtitle" value="{{$user->fglposition}}" class="form-control">
+                                            </div>
+                                        </div>
+                                            
 
                                         <div class="form-group"><label class="col-sm-2 control-label">Group</label>
                                             <div class="col-sm-10">

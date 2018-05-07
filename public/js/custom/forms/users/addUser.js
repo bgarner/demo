@@ -22,6 +22,7 @@ $(".user-create").click(function(){
 	var firstname = $('input[name="firstname"]').val();
 	var lastname = $('input[name="lastname"]').val();
 	var email = $('input[name="email"]').val();
+	var jobtitle = $('input[name="jobtitle"]').val();
 
 	var password = $('input[name="password"]').val();
 	var confirm_password = $('input[name="confirm_password"]').val();
@@ -39,7 +40,7 @@ $(".user-create").click(function(){
 		    }
 		});
 	}
-
+	console.log(jobtitle);
 
 	// console.log(firstname, lastname, email, group, role, business_unit);
 	var hasError = false;
@@ -96,6 +97,7 @@ $(".user-create").click(function(){
 		    data: {
 		    	firstname : firstname,
 		    	lastname : lastname,
+		    	jobtitle : jobtitle,
 		    	email : email,
 		    	group : group,
 		    	role : role,

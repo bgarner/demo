@@ -31,7 +31,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      *
      * @var array
      */
-    protected $fillable = ['firstname', 'lastname', 'email', 'password', 'group_id'];
+    protected $fillable = ['firstname', 'lastname', 'email', 'password', 'group_id', 'fglposition'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -96,13 +96,17 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             return json_encode($validate);
         }
 
+        \Log::info($request['jobtitle']);
         $user = User::create([
-            'firstname' => $request['firstname'],
-            'lastname'  => $request['lastname'],
-            'email'     => $request['email'],
-            'group_id'  => intval($request['group']),
-            'password'  => Hash::make($request['password'])
+            'firstname'   => $request['firstname'],
+            'lastname'    => $request['lastname'],
+            'email'       => $request['email'],
+            'fglposition' => $request['jobtitle'],
+            'group_id'    => intval($request['group']),
+            'password'    => Hash::make($request['password'])
         ]);
+
+
 
         $banners = $request['banners'];
         foreach ($banners as $banner) {
@@ -150,12 +154,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         \Log::info( $request['firstname'] . ' ' . $request['lastname'] . ' was updated.');
         \Log::info('IP address : ' . $request->server('HTTP_USER_AGENT'));
         \Log::info(\Request::getClientIp());
+        \Log::info($request['jobtitle']);
 
         $validateThis = [
-            'firstname' => $request['firstname'],
-            'lastname'  => $request['lastname'],
-            'group'     => $request['group'],
-            'banners'   => $request['banners']
+            'firstname'   => $request['firstname'],
+            'lastname'    => $request['lastname'],
+            'group'       => $request['group'],
+            'banners'     => $request['banners']
 
         ];
 
@@ -175,9 +180,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
         $user = User::find($id);
 
-        $user['firstname'] = $request['firstname'];
-        $user['lastname']  = $request['lastname'];
-        $user['group_id']  = intval($request['group']);
+        $user['firstname']   = $request['firstname'];
+        $user['lastname']    = $request['lastname'];
+        $user['group_id']    = intval($request['group']);
+        $user['fglposition'] = $request['jobtitle'];
 
         if(isset($request['password']) && $request['password'] != ''){
             $user['password'] = Hash::make($request['password']);

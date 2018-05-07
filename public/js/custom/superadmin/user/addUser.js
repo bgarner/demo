@@ -104,6 +104,7 @@ $(document).ready(function(){
 		var firstname = $('input[name="firstname"]').val();
 		var lastname = $('input[name="lastname"]').val();
 		var email = $('input[name="email"]').val();
+		var jobtitle = $('input[name="jobtitle"]').val();
 
 		var password = $('input[name="password"]').val();
 		var confirm_password = $('input[name="confirm_password"]').val();
@@ -184,6 +185,7 @@ $(document).ready(function(){
 			    	firstname : firstname,
 			    	lastname : lastname,
 			    	email : email,
+			    	jobtitle : jobtitle,
 			    	group : group,
 			    	role : role,
 			    	resource : resource,
