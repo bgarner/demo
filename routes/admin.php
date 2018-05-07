@@ -152,6 +152,6 @@ Route::resource('/admin/storegroup', 'Tools\CustomStoreGroupAdminController');
 //Store Components
 Route::resource('/admin/storecomponent', 'StoreComponent\StoreComponentAdminController');
 
-
-//Forms
-// Route::resource('/admin/form/storefeedbackform', 'Form\StoreFeedbackFormAdminController');
+//Dirty Nodes
+Route::get('/admin/dirtynodes', 'Tools\DirtyNodesAdminController@index');
+Route::get('/admin/dirtynodes/report', 'Tools\DirtyNodesAdminController@show');

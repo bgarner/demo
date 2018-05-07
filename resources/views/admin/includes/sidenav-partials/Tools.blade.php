@@ -9,5 +9,6 @@
     <ul class="nav nav-second-level collapse">
         <li><a href="/admin/storegroup">Custom Store Groups</a></li>
         <li><a href="/admin/tag">Tags</a></li>
+        <li><a href="/admin/dirtynodes">Dirty Nodes</a></li>
     </ul>
 </li>
