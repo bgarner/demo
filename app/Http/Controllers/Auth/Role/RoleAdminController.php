@@ -15,6 +15,8 @@ use App\Models\Auth\Group\GroupRole;
 use App\Models\Auth\Role\RoleComponent;
 use App\Models\Auth\Role\RoleResource;
 use App\Models\Auth\Resource\ResourceTypes;
+use App\Models\Form\Form;
+use App\Models\Form\FormRoleMap;
 
 class RoleAdminController extends Controller
 {
@@ -44,9 +46,11 @@ class RoleAdminController extends Controller
         $groups = Group::getGroupList();
         $components = Component::getComponentList();
         $resourceTypes = ResourceTypes::getResourceTypeList();
+        $forms = Form::getFormList();
         return view('admin.roles.create')->with('groups', $groups)
                                         ->with('components', $components)
-                                        ->with('resourceTypes', $resourceTypes);
+                                        ->with('resourceTypes', $resourceTypes)
+                                        ->with('forms', $forms);
     }
 
     /**
@@ -84,18 +88,21 @@ class RoleAdminController extends Controller
         $groups = Group::getGroupList();
         $components = Component::getComponentList();
         $resourceTypes = ResourceTypes::getResourceTypeList();
+        $forms = Form::getFormList();
         $selected_group = GroupRole::getGroupListByRoleId($id);
         $selected_components = RoleComponent::getComponentListByRoleId($id);
         $selected_resource_type = RoleResource::getResourceTypeIdByRoleId($id);
-        
+        $selected_forms = FormRoleMap::getFormListByRoleId($id);
 
         return view('admin.roles.edit')->with('role', $role)
                                         ->with('groups', $groups)
                                         ->with('components', $components)
                                         ->with('resourceTypes', $resourceTypes)
+                                        ->with('forms', $forms)
                                         ->with('selected_group', $selected_group)
                                         ->with('selected_components', $selected_components)
-                                        ->with('selected_resource_type', $selected_resource_type);
+                                        ->with('selected_resource_type', $selected_resource_type)
+                                        ->with('selected_forms', $selected_forms);
     }
 
     /**

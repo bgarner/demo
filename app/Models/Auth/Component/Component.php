@@ -11,7 +11,7 @@ class Component extends Model
 {
     use SoftDeletes;
     protected $table = 'components';
-    protected $fillable = ['component_name', 'banner_id'];
+    protected $fillable = ['component_name', 'banner_id', 'deletable'];
     protected $dates = ['deleted_at'];
 
     public static function validateComponent($request)
@@ -41,9 +41,10 @@ class Component extends Model
             return $validate;
         }
 
-        $component = component::create([
+        $component = Component::create([
                 'component_name' => $request['component_name'],
-                'banner_id' => $request['banner_id']
+                'banner_id' => $request['banner_id'],
+                'deletable' => 1
 
             ]);
     	RoleComponent::createRoleComponentPivotWithComponentId($component, $request);

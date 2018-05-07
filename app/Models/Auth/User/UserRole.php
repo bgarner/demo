@@ -13,12 +13,18 @@ class UserRole extends Model
     public static function updateUserRole($user_id, $role_id)
     {
     	$userRole = UserRole::where('user_id', $user_id)
-    			->first();
-
-    	$userRole['role_id'] = $role_id;
-    	$userRole->save();
+    			->first()->update(['role_id' => $role_id]);
 
     	return;
+    }
+
+    public static function getFormUsersByRoleList($roleList)
+    {
+        return UserRole::join('users', 'users.id', '=', 'user_role.user_id')
+                        ->whereIn('role_id', $roleList)
+                        ->where('users.group_id', 3)
+                        ->select('users.*')
+                        ->get();  
     }
 
 }

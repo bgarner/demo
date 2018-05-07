@@ -65,6 +65,14 @@
                                             </div>
 
                                         </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Forms</label>
+                                            <div class="col-sm-10">
+                                                {!! Form::select('forms', $forms, $selected_forms, [ 'class'=>'chosen', 'id'=> 'forms', 'multiple'=>'true']) !!}
+
+                                            </div>
+
+                                        </div>
 
 
                                         <div class="hr-line-dashed"></div>

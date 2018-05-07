@@ -39,12 +39,14 @@ $(document).ready(function(){
 	$("#select-role").change(function(){
 		
 		var role = $('#select-role option:selected').val();
+		console.log('getting resources for : ' + role);
 		$.ajax({
 			    url: '/admin/role/' + role + '/resources',
 			    type: 'GET',
 			    dataType: 'json',
 			    success: function(result) {
 			        
+			        console.log(result);
 			    	if( result) {
 			    		
 			    		$("#select-resource option").remove();
@@ -59,7 +61,7 @@ $(document).ready(function(){
 						});
 
 						$("#select-resource").closest('.form-group').show();
-						$("#selected-resource").closest('.form-group').hide();
+						// $("#select-resource").closest('.form-group').hide();
 			        }
 			        else{
 			        	$("#select-resource").closest('.form-group').hide();
@@ -76,12 +78,27 @@ $(document).ready(function(){
 	$(".user-update").click(function(){
 		var firstname = $('input[name="firstname"]').val();
 		var lastname = $('input[name="lastname"]').val();
+		var jobtitle = $('input[name="jobtitle"]').val();
 		var group = $('#select-group option:selected').val();
 		var role = $("#select-role option:selected").val();
+		var roleValue = $("#select-role option:selected").text();
 		var resource = $("#select-resource option:selected").val();
 
 		var banners = [];
 		$('#select-banner option:selected').each(function(){ banners.push($(this).val()); });
+
+		var business_unit = $.makeArray($("#select-bu option:selected").val());
+
+		
+		if(group== 3 && roleValue == 'Product Request Form Admin'){
+			var business_unit = [];
+			$('#select-bu option').each(function() {
+			    if($(this).val()){
+			    	business_unit.push($(this).val());
+			    }
+			});
+		}
+		console.log(business_unit);
 
 		var newPassword = $('input[name="password"]').val();
 		var newPasswordConfirm = $('input[name="confirm_password"]').val();
@@ -134,7 +151,9 @@ $(document).ready(function(){
 			    	lastname : lastname,
 			    	group : group,
 			    	role : role,
+			    	jobtitle : jobtitle,
 			    	resource : resource,
+			    	business_unit : business_unit,
 			    	banners : banners,
 			    	password : newPassword,
 			    	password_confirmation : newPasswordConfirm

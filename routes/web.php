@@ -56,6 +56,18 @@ Route::get('/{storeno}/flyer/{flyer_id}', array('uses' => 'Flyer\FlyerController
 //FOLDER - SHOW CONTENT
 Route::get('/{storeno}/folder/{id}', ['uses' => 'Document\FolderController@show']);
 
+//FORMS
+Route::get('/{storeno}/form', 'Form\FormListController@index');
+Route::resource('/{storeno}/form/productrequest', 'Form\ProductRequestFormController');
+Route::get('/form/productrequest/log/{id}', 'Form\FormLogController@show');
+
+//FORM API ROUTES
+Route::post('/form/updateStatus', 'Form\FormInstanceStatusController@create');
+Route::patch('/form/updateStatus/{id}', 'Form\FormInstanceStatusController@update');
+
+
+
+
 //SEARCH
 //Route::post('/{storeno}/search', array('uses' => 'Search\SearchController@index'));
 Route::get('/{storeno}/search', array('uses' => 'Search\SearchController@index'));
@@ -75,17 +87,20 @@ Route::post('/getFlyerBoxData', 'Tools\FlyerBoxSelectionController@show');
 Route::get('/{storeno}/tools/boxingday', array('uses' => 'Tools\BlackFridayController@index'));
 Route::get('/{storeno}/tools/bikecount', array('uses' => 'Tools\BikeCountController@index'));
 Route::get('/{storeno}/tools/flashsale', array('uses' => 'Tools\FlashSaleController@index'));
+
 Route::get('/{storeno}/tools/productdelivery/{division}', array('uses' => 'Tools\ProductDeliveryController@index'));
 Route::get('/tools/productdelivery/departments', array('uses' => 'Tools\ProductDeliveryController@getDepartments'));
 Route::get('/tools/productdelivery/subdepartments', array('uses' => 'Tools\ProductDeliveryController@getSubDepartments'));
 Route::get('/tools/productdelivery/classes', array('uses' => 'Tools\ProductDeliveryController@getClasses'));
 Route::get('/tools/productdelivery/brands', array('uses' => 'Tools\ProductDeliveryController@getBrands'));
 Route::get('/tools/productdelivery/styles', array('uses' => 'Tools\ProductDeliveryController@getStyles'));
+
 Route::get('/{storeno}/tools/dirtynodes', array('uses' => 'Tools\DirtyNodesController@index'));
 Route::get('/{storeno}/tools/dirtynodes-pdt', array('uses' => 'Tools\DirtyNodesController@pdt'));
 Route::patch('/{storeno}/tools/dirtynodes/clean', array('uses' => 'Tools\DirtyNodesController@update'));
 Route::get('/{storeno}/tools/agedinventory', array('uses' => 'Tools\AgedInventoryController@index'));
 Route::patch('/tools/agedinventory/update', array('uses' => 'Tools\AgedInventoryUpdateStatusController@update'));
+
 
 //TRAINING
 Route::get('/{storeno}/training', array('uses' => 'Training\TrainingController@index'));
