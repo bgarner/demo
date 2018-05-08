@@ -51,13 +51,13 @@ $('button.cleannode').on('click', function() {
         type: 'POST',
         dataType: "JSON",
         crossDomain: true,
-        contentType: "application/json",
-        data: {
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
             ItemID: window.item_id_sku,
             Node: window.node_key,
             RequestedBy: localStorage.getItem("userStoreNumber"),
             OrganizationCode: "FGL"
-        },
+        }),
         success: function(result){
             // $.ajaxSetup({
             //     headers: {
