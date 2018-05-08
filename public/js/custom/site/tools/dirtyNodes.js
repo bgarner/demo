@@ -63,7 +63,7 @@ $('button.cleannode').on('click', function() {
         contentType: "application/json; charset=utf-8",
         data: cleanJSON,
         success: function(result){
-      
+            window.result = result;
             $.ajax({
                 url: location.protocol + '//' + location.host + location.pathname + "/clean/",
                 type: 'PATCH',
