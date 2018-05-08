@@ -52,6 +52,8 @@ $('button.cleannode').on('click', function() {
         RequestedBy: localStorage.getItem("userStoreNumber"),
         OrganizationCode: "FGL"
     });
+    console.log("JSON to clean: ");
+    console.log( cleanJSON );
 
     $.ajax({
         url: "http://ordermgmt-qat.cicada.cs.ctc/OrderManagement/manageInventoryNodeControl",
