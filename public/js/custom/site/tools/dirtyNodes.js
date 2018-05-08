@@ -46,25 +46,22 @@ function showModal(el)
 
 $('button.cleannode').on('click', function() {
 
+    cleanJSON = JSON.stringify({
+        ItemID: window.item_id_sku,
+        Node: window.node_key,
+        RequestedBy: localStorage.getItem("userStoreNumber"),
+        OrganizationCode: "FGL"
+    });
+
     $.ajax({
         url: "http://ordermgmt-qat.cicada.cs.ctc/OrderManagement/manageInventoryNodeControl",
         type: 'POST',
         dataType: "JSON",
         crossDomain: true,
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({
-            ItemID: window.item_id_sku,
-            Node: window.node_key,
-            RequestedBy: localStorage.getItem("userStoreNumber"),
-            OrganizationCode: "FGL"
-        }),
+        data: cleanJSON,
         success: function(result){
-            // $.ajaxSetup({
-            //     headers: {
-            //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //     }
-            // });
-
+      
             $.ajax({
                 url: location.protocol + '//' + location.host + location.pathname + "/clean/",
                 type: 'PATCH',
