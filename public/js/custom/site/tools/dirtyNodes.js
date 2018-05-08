@@ -90,10 +90,9 @@ $('button.cleannode').on('click', function() {
             });
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-            console.log(errorThrown)
-            console.log(textStatus)
-            console.log(XMLHttpRequest);
-            swal("Something went wrong", "Couldn't make connection to DOM: \n" + errorThrown + "\n" + textStatus, "error");
+            console.log(XMLHttpRequest.status)
+            console.log(XMLHttpRequest.responseText);
+            swal("Something Went Wrong", XMLHttpRequest.status + "\n" + XMLHttpRequest.responseText, "error");
          }
         
     })
