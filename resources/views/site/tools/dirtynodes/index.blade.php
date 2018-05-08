@@ -192,7 +192,7 @@
     @include('site.includes.footer')
 
     <script type="text/javascript" src="/js/plugins/fullcalendar/moment.min.js"></script>
-    @include('site.includes.scripts')
+    @include('site.includes.scripts-dn')
 
     @include('site.includes.modal')
     <script type="text/javascript" src="/js/vendor/underscore-1.8.3.js"></script>
@@ -206,14 +206,6 @@
     <script>
         $(document).ready(function(){
             //$('<div class="loading">Loading</div>').appendTo('body');
-
-/*
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-*/
 
             $('.dirtynodestable').DataTable({
                 paging: true,
