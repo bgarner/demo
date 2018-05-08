@@ -59,10 +59,18 @@ $('button.cleannode').on('click', function() {
             OrganizationCode: "FGL"
         },
         success: function(result){
+            // $.ajaxSetup({
+            //     headers: {
+            //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //     }
+            // });
 
             $.ajax({
                 url: location.protocol + '//' + location.host + location.pathname + "/clean/",
                 type: 'PATCH',
+                beforeSend: function(request) {
+                    request.setRequestHeader("X-CSRF-TOKEN", $('meta[name="csrf-token"]').attr('content'));
+                },
                 data: {
                     node_id : window.nodeID,
                     //DOM_API_result: result.stringify()
