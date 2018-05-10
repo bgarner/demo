@@ -28,9 +28,18 @@ class Package extends Model
         $validateThis = [ 
                         'package_screen_name'   => $request['title'],
                         'package_name'          => $request['name'],
-                        'documents'             => $request['package_files'],
-                        'folders'               => $request['package_folders']
+                        // 'documents'             => $request['package_files'],
+                        // 'folders'               => $request['package_folders']
                       ];
+
+        if ($request['package_files'] != NULL) {
+            $validateThis['documents'] = $request['package_files'];
+        }
+
+        if ($request['package_folders'] != NULL) {
+            $validateThis['folders'] = $request['package_folders'];
+        }
+
         
         $v = new PackageValidator();
           
@@ -42,11 +51,26 @@ class Package extends Model
         $validateThis = [ 
                         'package_screen_name'   => $request['title'],
                         'package_name'          => $request['name'],
-                        'documents'             => $request['package_files'],
-                        'folders'               => $request['package_folders'],
-                        'remove_documents'      => $request['remove_document'],
-                        'remove_folders'        => $request['remove_folder']
+                        // 'documents'             => $request['package_files'],
+                        // 'folders'               => $request['package_folders'],
+                        // 'remove_documents'      => $request['remove_document'],
+                        // 'remove_folders'        => $request['remove_folder']
                       ];
+
+        if ($request['package_files'] != NULL) {
+            $validateThis['documents'] = $request['package_files'];
+        }
+
+        if ($request['package_folders'] != NULL) {
+            $validateThis['folders'] = $request['package_folders'];
+        }
+        if ($request['remove_document'] != NULL) {
+            $validateThis['remove_documents'] = $request['remove_document'];
+        }
+
+        if ($request['remove_folder'] != NULL) {
+            $validateThis['remove_folders'] = $request['remove_folder'];
+        }
         
         $v = new PackageValidator();
           
