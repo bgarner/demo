@@ -10,8 +10,8 @@ class FormGroupAndRolesSeeder extends Seeder
 {
     private $roles = [
 
-        ['role_name' => 'Form Admin'],
-        ['role_name' => 'Business Unit Admin' ],
+        ['role_name' => 'Product Request Form Admin'],
+        ['role_name' => 'Product Request Business Unit Admin' ],
         ['role_name' => 'Analyst' ],
 
     ];
