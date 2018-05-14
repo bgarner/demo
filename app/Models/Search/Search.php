@@ -186,6 +186,9 @@ class Search extends Model
 
     public static function searchCommunications($query, $store)
     {
+        $storeInfo = StoreInfo::getStoreInfoByStoreId($store);
+        $storeBanner = $storeInfo->banner_id;
+
     	$communications = collect();
         $allStoreCommunications = collect();
 
@@ -203,18 +206,21 @@ class Search extends Model
     								$q->where('archive_at', '>=', $today)
     								->orWhere('archive_at', '=', '0000-00-00 00:00:00');
     							})
-
+                                ->select('communications.*')
     							->get()
     				        );
 
             $allStoreCommunications = $allStoreCommunications->merge(
-                                            Communication::where('subject', 'LIKE', '%'.$term.'%')
+                                            Communication::join('communication_banner', 'communication_banner.communication_id', '=', 'communications.id')
+                                            ->where('subject', 'LIKE', '%'.$term.'%')
+                                            ->where('communication_banner.banner_id', $storeBanner)
                                             ->where('all_stores', 1)
                                             ->where('send_at', '<=', $today )
                                             ->where(function($q) use($today) {
                                                 $q->where('archive_at', '>=', $today)
                                                 ->orWhere('archive_at', '=', '0000-00-00 00:00:00');
                                             })
+                                            ->select('communications.*')
                                             ->get()
                                         );
             $communications = $communications->merge($allStoreCommunications);

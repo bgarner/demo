@@ -241,7 +241,7 @@
                                         <tr>
                                     @endif
                                         <td class="check-mail"><i class="fa fa-envelope-o"></i></td>
-                                        <td class="mail-subject"><a href="/{{ Request::segment(1) }}/communication/show/{{ $comm->communication_id }}">{{ $comm->subject }}</a></td>
+                                        <td class="mail-subject"><a href="/{{ Request::segment(1) }}/communication/show/{{ $comm->id }}">{{ $comm->subject }}</a></td>
                                         <td>{{ $comm->trunc }}</td>
                                         <td>{{ $comm->since }} {{__("ago")}}</td>
                                     </tr>
