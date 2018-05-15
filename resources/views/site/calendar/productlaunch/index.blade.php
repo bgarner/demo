@@ -7,6 +7,10 @@
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 	<link rel="stylesheet" href="/css/plugins/dataTables/datatables.min.css">
+	<style>
+		tbody{font-size: 11px;}
+		thead{font-size: 12px;}
+	</style>
 	<!-- <link rel="stylesheet" href="/css/plugins/dataTables/dataTables.tableTools.min.css"> -->
 </head>
 
@@ -47,6 +51,7 @@
 	                    				<th>{{__("Style")}}</th>
 	                    				<th>{{__("Retail Price")}}</th>
 	                    				<th>{{__("Tracking")}}</th>
+										<th>{{__("Changes")}}</th>
 
 	                    			</tr>
 	                    		</thead>
@@ -60,6 +65,7 @@
 											<td>{{$productLaunch->style_name}}</td>
 											<td>{{$productLaunch->retail_price}}</td>
 											<td>{{$productLaunch->tracking}}</td>
+											<td>{{$productLaunch->changes}}</td>
 
 
 										</tr>

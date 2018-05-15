@@ -489,6 +489,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
 
     public static $classMap = array (
         'AddAllDayToEventsTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_28_152315_add_all_day_to_events_table.php',
+        'AddChangesColumnToProdLaunchTable' => __DIR__ . '/../..' . '/database/migrations/2018_05_15_105631_add_changes_column_to_prod_launch_table.php',
         'AddOnOrderCountToBikeTracker' => __DIR__ . '/../..' . '/database/migrations/2017_06_23_142132_add_on_order_count_to_bike_tracker.php',
         'AddPriceToDirtyNodeTable' => __DIR__ . '/../..' . '/database/migrations/2018_04_16_131328_add_price_to_dirty_node_table.php',
         'AddPriceToDnArchiveTable' => __DIR__ . '/../..' . '/database/migrations/2018_04_16_131842_add_price_to_dn_archive_table.php',
@@ -601,6 +602,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'App\\Models\\Task\\TasklistStoreGroup' => __DIR__ . '/../..' . '/app/Models/Task/TasklistStoreGroup.php',
         'App\\Models\\Task\\TasklistTarget' => __DIR__ . '/../..' . '/app/Models/Task/TasklistTarget.php',
         'App\\Models\\Task\\TasklistTask' => __DIR__ . '/../..' . '/app/Models/Task/TasklistTask.php',
+        'App\\Models\\Tools\\AgedInventory\\AgedInventory' => __DIR__ . '/../..' . '/app/Models/Tools/AgedInventory/AgedInventory.php',
         'App\\Models\\Tools\\BikeCount\\BikeBuildPriority' => __DIR__ . '/../..' . '/app/Models/Tools/BikeCount/BikeBuildPriority.php',
         'App\\Models\\Tools\\BikeCount\\BikeCount' => __DIR__ . '/../..' . '/app/Models/Tools/BikeCount/BikeCount.php',
         'App\\Models\\Tools\\BlackFriday\\BlackFriday' => __DIR__ . '/../..' . '/app/Models/Tools/BlackFriday/BlackFriday.php',
