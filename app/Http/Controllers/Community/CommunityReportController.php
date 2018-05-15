@@ -87,7 +87,7 @@ class CommunityReportController extends Controller
        //echo $all_stores[0];
         foreach($details as $d){
             $d->value = str_replace(",","", $d->value);
-            $csv = $csv . $d->store_number . ', ' . $d->event_or_team_name . ', ' . $d->recipient_organization . ', ' . $d->description . ', ' . $d->value . ', ' . $d->dm_approval . ', ' . $d->created_at . "\r\n";
+            $csv = $csv . $d->store_number . ', "' . $d->event_or_team_name . '", "' . $d->recipient_organization . '", "' . $d->description . '", "' . $d->value . '", ' . $d->dm_approval . ', ' . $d->created_at . "\r\n";
         }
         echo $csv;
               

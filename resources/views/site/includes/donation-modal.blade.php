@@ -152,13 +152,23 @@
                 </div>
 
                 <div id="giftcardfields">
+                    <p><i>
+                        Please enter the gift card number as it is shown on the card. <br />
+                        eg 606039 42697 19233800 4
+                    </i></p>
+
                     <div >
                         <a id="add-gift-card" ><i class="fa fa-plus"></i> Gift Card</a>
                     </div>
                     <div class="giftcard well" id="giftcard1" data-giftcard-number=1>
-                        <div class="form-group">
+                        <div class="form-group form-inline">
                             <label class="control-label"><small><span class="req">*</span>Gift Card Number</small></label>
-                            <div><input type="text" class="form-control input-sm" id="gc_number" name="gc_number"></div>
+                            <div>
+                                <input type="text" class="form-control input-sm" style="width: 20%" maxlength="6" id="gc_number_1" name="gc_number_1">
+                                <input type="text" class="form-control input-sm" style="width: 30%" maxlength="5" id="gc_number_2" name="gc_number_2">
+                                <input type="text" class="form-control input-sm" style="width: 30%" maxlength="8" id="gc_number_3" name="gc_number_3">
+                                <input type="text" class="form-control input-sm" style="width: 10%" maxlength="4" id="gc_number_4" name="gc_number_4">
+                            </div>
                         </div>  
 
                         <div class="form-group">
