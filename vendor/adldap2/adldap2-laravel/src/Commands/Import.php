@@ -120,7 +120,7 @@ class Import
             'email' => 'userprincipalname',
             'name' => 'cn',
         ]);
-
+        
         foreach ($toSync as $modelField => $ldapField) {
             // If the field is a loaded class, we can
             // assume it's an attribute handler.

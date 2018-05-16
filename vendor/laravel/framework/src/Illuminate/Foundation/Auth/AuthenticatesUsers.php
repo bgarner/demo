@@ -28,9 +28,7 @@ trait AuthenticatesUsers
      */
     public function login(Request $request)
     {
-        \Log::info("************************");
-        \Log::info($request->all());
-        \Log::info("************************");
+
         $this->validateLogin($request);
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle

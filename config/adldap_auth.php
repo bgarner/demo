@@ -257,9 +257,9 @@ return [
 
     'sync_attributes' => [
 
-        'email' => 'samaccountname', // Changed from `userprincipalname`
+        'email' => 'userprincipalname', 
 
-        'name' => 'cn',
+        // 'name' => 'cn', // Name is not a field in Portal's User Model hence no sync is needed
 
     ],
 
