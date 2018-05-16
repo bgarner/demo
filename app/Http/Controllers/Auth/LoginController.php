@@ -70,4 +70,12 @@ class LoginController extends Controller
     {
         return 'username';
     }
+
+    protected function validateLogin(Request $request)
+    {
+        $this->validate($request, [
+            $this->username() => 'required|string|exists:users,username',
+            'password' => 'required|string',
+        ], [ 'exists' => 'User account does not exist on the Ops Portal' ]);
+    }
 }
