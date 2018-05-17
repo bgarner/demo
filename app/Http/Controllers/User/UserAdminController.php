@@ -115,7 +115,7 @@ class UserAdminController extends Controller
         $selected_resource = UserResource::getResourceIdByUserId($user->id);
 
         $businessUnits = BusinessUnitTypes::getBUList();
-        $selected_bu = FormUserBusinessUnitMap::getBUIdBuUserId($user->id);
+        $selected_bu = FormUserBusinessUnitMap::getBUIdByUserId($user->id);
         
         return view('superadmin.user.edit')->with('user', $user)
                                             ->with('banners_list', $banners_list)

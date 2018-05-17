@@ -31,7 +31,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      *
      * @var array
      */
-    protected $fillable = ['firstname', 'lastname', 'email', 'password', 'group_id', 'fglposition', 'username'];
+    protected $fillable = ['firstname', 'lastname', 'email', 'group_id', 'fglposition', 'username'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -81,11 +81,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         $validateThis = [
             'firstname' => $request['firstname'],
             'lastname'  => $request['lastname'],
-            'email'     => $request['email'],
             'group'     => $request['group'],
             'banners'   => $request['banners'],
-            'password'  => $request['password'],
-            'password_confirmation' => $request['confirm_password']
+            'username'  => $request['username']
 
         ];      
 
@@ -100,10 +98,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         $user = User::create([
             'firstname'   => $request['firstname'],
             'lastname'    => $request['lastname'],
-            'email'       => $request['email'],
             'fglposition' => $request['jobtitle'],
-            'group_id'    => intval($request['group']),
-            'password'    => Hash::make($request['password'])
+            'username'    => $request['username'],
+            'group_id'    => intval($request['group'])
         ]);
 
 
@@ -130,7 +127,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
                 ]);
         }
 
-        if(isset($request['business_unit'])){
+        if(isset($request['business_unit']) && ! is_null($request['business_unit'])){
             foreach ($request->business_unit as $bu) {
                 FormUserBusinessUnitMap::create([
                     'user_id' => $user->id,
@@ -140,7 +137,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             
         }
 
-        \Log::info($user);
         return $user;
 
     }
@@ -154,21 +150,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         \Log::info( $request['firstname'] . ' ' . $request['lastname'] . ' was updated.');
         \Log::info('IP address : ' . $request->server('HTTP_USER_AGENT'));
         \Log::info(\Request::getClientIp());
-        \Log::info($request['jobtitle']);
 
         $validateThis = [
             'firstname'   => $request['firstname'],
             'lastname'    => $request['lastname'],
             'group'       => $request['group'],
             'banners'     => $request['banners']
-
         ];
-
-        if (isset($request['password']) && ($request['password']) != '') {
-            $validateThis['password']  = $request['password'];
-            $validateThis['password_confirmation'] = $request['password_confirmation'];
-        }
-        
         
         $v = new UserValidator;
 
@@ -185,10 +173,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         $user['group_id']    = intval($request['group']);
         $user['fglposition'] = $request['jobtitle'];
 
-        if(isset($request['password']) && $request['password'] != ''){
-            $user['password'] = Hash::make($request['password']);
-        }
-        
         $user->save();
 
         UserRole::updateUserRole($user->id, ($request['role']));

@@ -1,8 +1,5 @@
 $(document).ready(function(){
 
-	// $("#select-role").closest('.form-group').hide();
-	// $("#select-resource").closest('.form-group').hide();
-
 	$("#select-group").change(function(){
 		
 		var group = $('#select-group option:selected').val();
@@ -37,6 +34,20 @@ $(document).ready(function(){
 	});
 
 	$("#select-role").change(function(){
+
+		var group = $('#select-group').val();
+		
+		if( group == 2 ){
+			getResources();
+		}
+		if(group == 3){
+			showBU();
+		}
+		
+		
+	});
+
+	var getResources = function(){
 		
 		var role = $('#select-role option:selected').val();
 		console.log('getting resources for : ' + role);
@@ -74,6 +85,18 @@ $(document).ready(function(){
 			});    
 	});
 
+	var showBU = function(){
+		
+		var role = $('#select-role option:selected').text();
+		if(role != 'Product Request Form Admin'){
+			$("#select-bu").closest('.form-group').show();
+		}
+		else{
+			$("#select-bu").closest('.form-group').hide();
+		}
+
+	};
+
 
 	$(".user-update").click(function(){
 		var firstname = $('input[name="firstname"]').val();
@@ -87,21 +110,20 @@ $(document).ready(function(){
 		var banners = [];
 		$('#select-banner option:selected').each(function(){ banners.push($(this).val()); });
 
-		var business_unit = $.makeArray($("#select-bu option:selected").val());
-
-		
-		if(group== 3 && roleValue == 'Product Request Form Admin'){
-			var business_unit = [];
-			$('#select-bu option').each(function() {
-			    if($(this).val()){
-			    	business_unit.push($(this).val());
-			    }
-			});
+		if(group == 3){
+			if( roleValue == 'Product Request Form Admin'){
+				var business_unit = [];
+				$('#select-bu option').each(function() {
+				    if($(this).val()){
+				    	business_unit.push($(this).val());
+				    }
+				});
+			}
+			else{
+				var business_unit = $.makeArray($("#select-bu option:selected").val());
+			}
 		}
-		console.log(business_unit);
 
-		var newPassword = $('input[name="password"]').val();
-		var newPasswordConfirm = $('input[name="confirm_password"]').val();
 
 		var hasError = false;
 		if(firstname == '') {
@@ -133,13 +155,6 @@ $(document).ready(function(){
 			return false;
 		}
 
-		if (newPassword != newPasswordConfirm) {
-			swal("Oops!", "Passwords do not match", "error"); 
-			hasError = true;
-			$(window).scrollTop(0);	
-			return false;
-		}
-
 	    if(hasError == false) {
 	    	var userId = $('input[name="userId"]').val();
 			$.ajax({
@@ -154,9 +169,7 @@ $(document).ready(function(){
 			    	jobtitle : jobtitle,
 			    	resource : resource,
 			    	business_unit : business_unit,
-			    	banners : banners,
-			    	password : newPassword,
-			    	password_confirmation : newPasswordConfirm
+			    	banners : banners
 			    },
 			    success: function(result) {
 
@@ -185,16 +198,6 @@ $(document).ready(function(){
 				        	});
 				        }
 				        
-				        if(errors.hasOwnProperty("password")) {
-				        	$.each(errors.password, function(index){
-				        		$('input[name="password"]').parent().append('<div class="req">' + errors.password[index]  + '</div>');	
-				        	});
-				        }
-				        if(errors.hasOwnProperty("password_confirmation")) {
-				        	$.each(errors.password_confirmation, function(index){
-				        		$('input[name="confirm_password"]').parent().append('<div class="req">' + errors.password_confirmation[index]  + '</div>');	
-				        	});
-				        }
 				        
 			        }
 			        else{
