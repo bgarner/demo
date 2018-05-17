@@ -73,19 +73,12 @@
                                         </div>
                                         @endif
 
-                                        @if(isset($selected_bu) && count($selected_bu) > 0)
+                                        @if(isset($selected_bu) )
                                             @if(count($selected_bu) > 1)
-                                            <div class="form-group">
-                                                <label class="col-sm-2 control-label">Business Unit</label>
-                                                <div class="col-sm-10">
-                                                    {!! Form::select('businessUnit', $businessUnits , $selected_bu, ['class'=>'form-control chosen', 'id'=>'select-bu', 'multiple']) !!}
-
-
-                                                </div>
-                                            </div>
-
+                                            <div class="form-group hidden">
                                             @else
                                             <div class="form-group">
+                                            @endif
                                                 <label class="col-sm-2 control-label">Business Unit</label>
                                                 <div class="col-sm-10">
                                                     {!! Form::select('businessUnit', $businessUnits , $selected_bu, ['class'=>'form-control', 'id'=>'select-bu']) !!}
@@ -93,7 +86,6 @@
 
                                                 </div>
                                             </div>
-                                            @endif
                                         @endif
 
                                         <div class="hr-line-dashed"></div>

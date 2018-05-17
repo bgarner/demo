@@ -83,16 +83,18 @@ $(document).ready(function(){
 			}).done(function(data){
 				// console.log(data);
 			});    
-	});
+	};
 
 	var showBU = function(){
 		
+
 		var role = $('#select-role option:selected').text();
 		if(role != 'Product Request Form Admin'){
-			$("#select-bu").closest('.form-group').show();
+
+			$("#select-bu").closest('.form-group').removeClass('hidden');
 		}
 		else{
-			$("#select-bu").closest('.form-group').hide();
+			$("#select-bu").closest('.form-group').addClass('hidden');
 		}
 
 	};
