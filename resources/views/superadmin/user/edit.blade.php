@@ -73,8 +73,9 @@
                                         </div>
                                         @endif
 
-                                        @if(isset($selected_bu) )
-                                            @if(count($selected_bu) > 1)
+                                        @if(isset($selected_bu) && (count($selected_bu) > 0) )
+
+                                            @if(count($selected_bu) > 1 )
                                             <div class="form-group hidden">
                                             @else
                                             <div class="form-group">
