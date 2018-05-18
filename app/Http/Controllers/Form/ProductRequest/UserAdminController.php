@@ -87,7 +87,7 @@ class UserAdminController extends Controller
         $selected_role = UserRole::where('user_id', $user->id)->first()->role_id;
 
         $businessUnits = FormUserBusinessUnitMap::getBusinessUnitsByFormUserId(\Auth::user()->id);
-        $selected_bu = FormUserBusinessUnitMap::getBUIdBuUserId($user->id);
+        $selected_bu = FormUserBusinessUnitMap::getBUIdByUserId($user->id);
         
 
         return view('formuser.users.edit')->with('user', $user)

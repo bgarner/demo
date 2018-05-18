@@ -40,9 +40,9 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group"><label class="col-sm-2 control-label">Email</label>
-                                                <div class="col-sm-10">
-                                                <input name="email" value="{{$user->email}}" readonly class="form-control">
+                                        <div class="form-group"><label class="col-sm-2 control-label">FGL Username</label>
+                                            <div class="col-sm-10">
+                                                <input name="username" value="{{$user->username}}" readonly class="form-control">
                                             </div>
                                         </div>
                                         <div class="form-group"><label class="col-sm-2 control-label">Job Title</label>
@@ -63,16 +63,6 @@
                                             </div>
                                         </div>
 
-                                        {{-- @if(isset($selected_resource))
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">Resource</label>
-                                            <div class="col-sm-10">
-                                                {!! Form::select('resource', $resources , $selected_resource, ['class'=>'chosen form-control', 'id'=>'select-resource']) !!}
-
-
-                                            </div>
-                                        </div>
-                                        @endif --}}
 
                                         @if(isset($selected_bu))
                                         <div class="form-group">

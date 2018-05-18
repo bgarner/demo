@@ -30,7 +30,6 @@ class AuthServiceProvider extends ServiceProvider
             
             if( $user->group_id == 1 ){
 
-                \Log::info($user->group_id);
                 return true;
 
             }

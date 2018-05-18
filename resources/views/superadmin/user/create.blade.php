@@ -39,21 +39,20 @@
                                         <input name="lastname" value class="form-control" placeholder="Last Name">
                                     </div>
                                 </div>
+
+                                <div class="form-group"><label class="col-sm-2 control-label">FGL Username</label>
+                                    <div class="col-sm-10">
+                                        <input name="username" value="" class="form-control">
+                                    </div>
+                                </div>
+
                                 <div class="form-group"><label class="col-sm-2 control-label">Job Title</label>
                                     <div class="col-sm-10">
                                         <input name="jobtitle" value="" class="form-control">
                                     </div>
                                 </div>
-
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Email</label>
-                                    <div class="col-sm-10">
-                                        <input name="email" value class="form-control">
-                                    </div>
-                                </div>
-
-
-
+                                
+                                
                                 <div class="form-group"><label class="col-sm-2 control-label">Group</label>
                                     <div class="col-sm-10">
                                         {!! Form::select('group', $group_names , "", ['class'=>'form-control', 'id'=>'select-group']) !!}
@@ -79,23 +78,6 @@
                                         
                                         {!! Form::select('businessUnit', $businessUnits , "", ['class'=>'form-control', 'id'=>'select-bu']) !!}
                                     </div>
-                                </div>
-
-                                <div class="hr-line-dashed"></div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Password</label>
-                                    <div class="col-sm-10">
-                                        <input type="password" name="password" value class="form-control">
-                                    </div>
-
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Confirm Password</label>
-                                    <div class="col-sm-10">
-                                        <input type="password" name="confirm_password" value class="form-control">
-                                    </div>
-
                                 </div>
 
                                 <div class="hr-line-dashed"></div>

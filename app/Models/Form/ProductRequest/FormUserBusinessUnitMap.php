@@ -10,12 +10,12 @@ class FormUserBusinessUnitMap extends Model
 
     protected $fillable = ['user_id', 'business_unit_id'];
 
-    public static function getBUIdBuUserId($user_id)
+    public static function getBUIdByUserId($user_id)
     {
-    	$userBU = Self::where('user_id', $user_id)->first();
+    	$userBU = Self::where('user_id', $user_id)->get();
     	if($userBU)
     	{
-    		return $userBU->business_unit_id;
+    		return $userBU->pluck('business_unit_id');
     	}
     	else return null;
     }
