@@ -190,6 +190,8 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         App\Providers\FormUserSidenavServiceProvider::class,
+        Adldap\Laravel\AdldapServiceProvider::class,
+        Adldap\Laravel\AdldapAuthServiceProvider::class
 
     ],
 
