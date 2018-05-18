@@ -39,6 +39,11 @@
                                                 <input name="lastname" value="{{$user->lastname}}" class="form-control">
                                             </div>
                                         </div>
+                                        <div class="form-group"><label class="col-sm-2 control-label">Job Title</label>
+                                            <div class="col-sm-10">
+                                                <input name="jobtitle" value="{{$user->fglposition}}" class="form-control">
+                                            </div>
+                                        </div>
 
                                         <div class="form-group"><label class="col-sm-2 control-label">Email</label>
                                                 <div class="col-sm-10">
@@ -50,7 +55,7 @@
 
                                         <div class="form-group"><label class="col-sm-2 control-label">Group</label>
                                             <div class="col-sm-10">
-                                                {!! Form::select('group', $groups , $user->group_id, ['class'=>'form-control', 'id'=>'select-group']) !!}
+                                                {!! Form::select('group', $groups , $user->group_id, ['class'=>'form-control', 'id'=>'select-group', 'disabled']) !!}
                                             </div>
                                         </div>
                                         <div class="form-group"><label class="col-sm-2 control-label">Role</label>
@@ -64,6 +69,17 @@
                                             <label class="col-sm-2 control-label">Resource</label>
                                             <div class="col-sm-10">
                                                 {!! Form::select('resource', $resources , $selected_resource, ['class'=>'form-control', 'id'=>'select-resource']) !!}
+
+
+                                            </div>
+                                        </div>
+                                        @endif
+
+                                        @if(isset($selected_bu))
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Business Unit</label>
+                                            <div class="col-sm-10">
+                                                {!! Form::select('businessUnit', $businessUnits , $selected_bu, ['class'=>'form-control', 'id'=>'select-bu']) !!}
 
 
                                             </div>

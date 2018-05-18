@@ -5,7 +5,6 @@
     @section('title', 'Roles')
     @include('admin.includes.head')
 
-	<link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 
 </head>
@@ -59,6 +58,15 @@
                                             <label class="col-sm-2 control-label">Manages Resource Type</label>
                                             <div class="col-sm-10">
                                                 {!! Form::select('resource_type', $resourceTypes, null, [ 'class'=>'chosen', 'id'=> 'resource_type']) !!}
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Accessible Forms</label>
+                                            <div class="col-sm-10">
+                                                {!! Form::select('forms[]', $forms, null, [ 'class'=>'chosen', 'id'=> 'forms', 'multiple'=>'true']) !!}
 
                                             </div>
 
