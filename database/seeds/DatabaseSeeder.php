@@ -42,13 +42,13 @@ class DatabaseSeeder extends Seeder
         // $this->call(ComponentDeletablePropertySeeder::class);
         
 
-        // $this->call(FormStatusCodeSeeder::class);
-        // $this->call(FormTableSeeder::class);
-        // $this->call(FormGroupAndRolesSeeder::class);
-        // $this->call(FormPermissionTableSeeder::class);
-        // $this->call(BusinessUnitTypesTableSeeder::class);
-        // $this->call(FormTargetTableSeeder::class);
-        // $this->call(UpdateStoreComponentsTableSeeder::class);
+        $this->call(FormStatusCodeSeeder::class);
+        $this->call(FormTableSeeder::class);
+        $this->call(FormGroupAndRolesSeeder::class);
+        $this->call(FormPermissionTableSeeder::class);
+        $this->call(BusinessUnitTypesTableSeeder::class);
+        $this->call(FormTargetTableSeeder::class);
+        $this->call(UpdateStoreComponentsTableSeeder::class);
 
 
         $this->call(UsernameSeeder::class);
