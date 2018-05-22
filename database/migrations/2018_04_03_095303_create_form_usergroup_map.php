@@ -19,7 +19,7 @@ class CreateFormUsergroupMap extends Migration
             $table->integer('form_group_id')->unsigned();
             $table->timestamps();
             $table->foreign('form_id')->references('id')->on('forms');
-            $table->foreign('form_group_id')->references('id')->on('form_usergroups');
+            $table->foreign('form_group_id')->references('id')->on('form_usergroups')->onDelete('cascade');
         });
     }
 
