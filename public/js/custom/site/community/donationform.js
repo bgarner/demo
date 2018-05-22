@@ -168,7 +168,10 @@ var validateStep4 = function(){
 	var upc = modal.find("#upc").val();
 	var product_value = modal.find("#product_value").val();
 
-	var gc_number = modal.find("#gc_number").val();
+	var gc_number_1 = modal.find("#gc_number_1").val();
+	var gc_number_2 = modal.find("#gc_number_2").val();
+	var gc_number_3 = modal.find("#gc_number_3").val();
+	var gc_number_4 = modal.find("#gc_number_4").val();
 	var gc_value = modal.find("#gc_value").val();
 
 	var approval = modal.find("#approval").is(':checked')?1:0;
@@ -195,8 +198,25 @@ var validateStep4 = function(){
 			$(window).scrollTop(0);
 		}
 
+		var isnumSN = /^\d+$/.test(style_number);
+		if(!isnumSN){
+			alert("Please enter 1 style at a time. Also, check that there are no letters or spaces in your Style Number. If there are multiple items, click the '+ Product' link above to add another product.");
+			$("#style_number").css('borderColor', '#c00');
+			hasError = true;
+			$(window).scrollTop(0);
+		}
+
+		
 		if(upc == '') {
 			$("#upc").css('borderColor', '#c00');
+			hasError = true;
+			$(window).scrollTop(0);
+		}
+
+		var isnumUPC = /^\d+$/.test(upc);
+		if(!isnumUPC){
+			alert("Please enter 1 UPC at a time. Also, check that there are no letters or spaces in your UPC. If there are multiple items, click the '+ Product' link above to add another product.");
+			$("#style_number").css('borderColor', '#c00');
 			hasError = true;
 			$(window).scrollTop(0);
 		}
@@ -210,12 +230,21 @@ var validateStep4 = function(){
 	}
 
 	if(donationtype == "giftcard"){
-
-		if(gc_number == '') {
+		if(gc_number_1 == '' || gc_number_2 == '' || gc_number_3 == ''|| gc_number_4 == '') {
 			$("#gc_number").css('borderColor', '#c00');
 			hasError = true;
 			$(window).scrollTop(0);
 		}
+
+		var gc_number = "" + gc_number_1 + gc_number_2 + gc_number_3 + gc_number_4;
+		console.log("gc_number: " + gc_number);
+		var isnumGC = /^\d+$/.test(gc_number);
+		if(!isnumGC){
+			alert("Please double check your Gift Card number to be sure there are no numbers, spaces or letters. If you need to add another card, click the '+ Gift Card' link.");
+			$("#style_number").css('borderColor', '#c00');
+			hasError = true;
+			$(window).scrollTop(0);
+		}		
 
 		if(gc_value == '') {
 			$("#gc_value").css('borderColor', '#c00');
@@ -328,7 +357,12 @@ var submitForm = function(){
 		var giftcards = [];
 		$(giftCards).each(function(index, value){
 			
-			var gc_number = $(this).find("#gc_number").val();
+			var gc_number_1 = $(this).find("#gc_number_1").val();
+			var gc_number_2 = $(this).find("#gc_number_2").val();
+			var gc_number_3 = $(this).find("#gc_number_3").val();
+			var gc_number_4 = $(this).find("#gc_number_4").val();
+
+			var gc_number = gc_number_1 + gc_number_2 + gc_number_3 + gc_number_4;
 			var gc_value = $(this).find("#gc_value").val();
 			var giftcard = { 
 							'gc_number' : gc_number, 

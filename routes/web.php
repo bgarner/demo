@@ -38,6 +38,8 @@ Route::get('/{storeno}/communication/show/{id}', 'Communication\CommunicationCon
 
 //COMMUNITY
 Route::get('/{storeno}/community', array('uses' => 'Community\CommunityController@index'));
+Route::get('/community/report/ytd', array('uses' => 'Community\CommunityReportController@ytd'));
+Route::get('/community/report/details', array('uses' => 'Community\CommunityReportController@details'));
 Route::resource('/savedonation', 'Community\CommunityFundController');
 
 //DASHBOARD

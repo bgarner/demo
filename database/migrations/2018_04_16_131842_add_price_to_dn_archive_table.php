@@ -25,6 +25,6 @@ class AddPriceToDnArchiveTable extends Migration
      */
     public function down()
     {
-        //
+        $table->dropColumn('selling_price');
     }
 }
