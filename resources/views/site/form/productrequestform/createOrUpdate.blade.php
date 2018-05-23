@@ -98,10 +98,15 @@
 					            <div class="col-sm-10">
 					            	<select name="requirement" id="requirement" class="form-control input-sm">
 					            		<option>Select</option>
-										<option value="Replenishment-More">Replenishment - More</option>
-										<option value="Replenishment-Less">Replenishment - Less</option>
-										<option value="Assortment-StyleRequest">Assortment - Specific Style</option>
-										<option value="Assortment-Collection/New Assortment">Assortment - Collection/New Assortment</option>
+										<optgroup label="Replenishment">
+										    <option value="Replenishment-More"> More</option>
+										<option value="Replenishment-Less"> Less</option>
+										</optgroup> 
+										<optgroup label="Assortment">
+										    <option value="Assortment-StyleRequest"> Specific Style</option>
+											<option value="Assortment-Collection/New Assortment"> Collection/New Assortment
+										</optgroup>
+										
 										
 					            	</select>
 					            </div>
@@ -118,7 +123,7 @@
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Style Number</label>
-					            <div class="col-sm-10"><input type="text" id="styleNumber" name="styleNumber" class="form-control" value=""></div>
+					            <div class="col-sm-10"><input type="text" pattern="\d*" maxlength="9" id="styleNumber" name="styleNumber" class="form-control" value=""></div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Size</label>
@@ -126,7 +131,7 @@
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Quantity</label>
-					            <div class="col-sm-10"><input type="number" min=0 max=100 id="quantity" name="quantity" class="form-control" value=""></div>
+					            <div class="col-sm-10"><input type="text" pattern="\d*" maxlength="3" id="quantity" name="quantity" class="form-control" value="0"></div>
 							</div>
 
 							<div class="form-group">

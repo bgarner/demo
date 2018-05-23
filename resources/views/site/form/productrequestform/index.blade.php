@@ -25,45 +25,52 @@
 	<div class="wrapper wrapper-content  animated fadeInRight">
         <div class="row">
             <div class="col-lg-12">
-                <div class="ibox">
-                    <div class="ibox-title">
-                        <h5>Product Request</h5>
-                        <div class="ibox-tools">
-                            <a href="{{\Request::url()}}/create" class="btn btn-primary btn"><i class="fa fa-plus"></i> New</a>
+                
+                    <div class="mail-box-header">
+                        
+                        <div class="row">
+                            <div class="col-md-12">
+
+                            <h1 class="pull-left">Product Request</h1>
+
+                            <a href="{{\Request::url()}}/create" class="pull-right btn btn-outline btn-primary dim" ><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;&nbsp;{{__("New Request")}}</a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="ibox-content">
+                        
+                    
+                        <div class="row" >
 
-                        <table class="table">
-                            <thead>
-                                <th>Request</th>
-                                <th>Date Submitted</th>
-                                <th>Submitted By</th>
-                                <th>Status</th>
-                            </thead>
-                            <tbody>
-                                @foreach($forms as $form)
-                                    
-                                    <tr>
-                                        <td><a href="{{\Request::url()}}/{{$form->id}}">{{$form->description}}</a></td>
-                                        <td>{{$form->prettySubmitted}}</td>
-                                        <td>{{$form->form_data["submitted_by"]}} ({{$form->form_data["submitted_by_position"]}})</td>
+                            <table class="table table-striped table-bordered datatable">
+                                <thead>
+                                    <th>Request</th>
+                                    <th>Date Submitted</th>
+                                    <th>Submitted By</th>
+                                    <th>Status</th>
+                                </thead>
+                                <tbody>
+                                    @foreach($forms as $form)
                                         
-                                        <td>
-                                            @if(isset($form->lastFormAction))
-                                            {{$form->lastFormAction->log["status_store_name"]}} by {{$form->lastFormAction->log["user_name"]}} ( {{$form->lastFormAction->log["user_position"]}} ) 
-                                            @endif
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td><a href="{{\Request::url()}}/{{$form->id}}">{{$form->description}}</a></td>
+                                            <td>{{$form->prettySubmitted}}</td>
+                                            <td>{{$form->form_data["submitted_by"]}} ({{$form->form_data["submitted_by_position"]}})</td>
+                                            
+                                            <td>
+                                                @if(isset($form->lastFormAction))
+                                                {{$form->lastFormAction->log["status_store_name"]}} by {{$form->lastFormAction->log["user_name"]}} ( {{$form->lastFormAction->log["user_position"]}} ) 
+                                                @endif
+                                            </td>
+                                        </tr>
 
-                                @endforeach
-                            </tbody>
-                        </table>
+                                    @endforeach
+                                </tbody>
+                            </table>
 
 
-                    </div> <!-- ibox-content closes -->
+                        </div> <!-- row closes -->
+                </div>
 
-                </div><!-- ibox closes -->
+                
 
 
 
