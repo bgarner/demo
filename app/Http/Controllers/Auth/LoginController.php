@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Controllers\Controller;
 use App\Models\Auth\Group\Group;
+use App\Models\Auth\User\UserRole;
 
 class LoginController extends Controller
 {
@@ -65,4 +66,16 @@ class LoginController extends Controller
         return redirect('/login');
     }
 
+    public function username()
+    {
+        return 'username';
+    }
+
+    protected function validateLogin(Request $request)
+    {
+        $this->validate($request, [
+            $this->username() => 'required|string|exists:users,username',
+            'password' => 'required|string',
+        ], [ 'exists' => 'User account does not exist on the Ops Portal' ]);
+    }
 }

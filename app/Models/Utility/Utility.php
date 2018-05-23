@@ -216,6 +216,9 @@ class Utility extends Model
 
 	public static function getTimePastSinceDate($date)
 	{
+		if($date == '0000-00-00 00:00:00' || $date == NULL) {
+			return "";
+		}
 		$date = Carbon::createFromFormat('Y-m-d H:i:s', $date);
 		$since = Carbon::now()->diffForHumans($date, true);
 		return $since;
@@ -646,5 +649,15 @@ class Utility extends Model
         return $banners;
     }
 
+
+    public static function formatUsersList($users)
+    {
+    	$userlist = [];
+    	foreach ($users as $user) {
+    		$userlist[$user->id] = $user->firstname . " " . $user->lastname . " ( " . $user->fglposition . " )"; 
+    	}
+
+    	return $userlist;
+    }
 
 }

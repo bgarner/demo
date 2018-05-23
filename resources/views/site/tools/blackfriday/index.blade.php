@@ -164,13 +164,15 @@
     @include('site.includes.scripts')
 
     @include('site.includes.modal')
+    <script type="text/javascript" src="/js/plugins/dataTables/datatables.min.js"></script>
     <script type="text/javascript" src="/js/vendor/underscore-1.8.3.js"></script>
     <script src="/js/plugins/dataTables/jquery.dataTables.js"></script>
     <script src="/js/plugins/dataTables/dataTables.tableTools.min.js"></script>
     <script src="/js/plugins/dataTables/dataTables.responsive.js"></script>
     <script src="/js/plugins/dataTables/dataTables.bootstrap.js"></script>
     <script src="/js/custom/site/tools/flyerPages.js?<?=time();?>"></script>
-
+    
+    
     <script>
         // $(document).ready(function(){
         //     $('.dataTables-example').DataTable({

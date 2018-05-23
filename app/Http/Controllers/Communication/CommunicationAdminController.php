@@ -85,7 +85,7 @@ class CommunicationAdminController extends Controller
      */
     public function store(Request $request)
     {
-        return Communication::storeCommunication($request);
+        return Communication::storeCommunication($request);         
     }
 
     /**

@@ -170,6 +170,7 @@ class Banner extends Model
         $stores = Store::join('banner_store','stores.id','=','banner_store.store_id')
                     ->where('banner_id', $id)
                     ->select('stores.*', 'banner_store.banner_id')
+                    ->orderBy('stores.store_id')
                     ->get();
         
         if (count($stores) > 0) {

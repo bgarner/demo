@@ -14,7 +14,7 @@ use App\Models\Event\EventType;
 class ProductLaunch extends Model
 {
     protected $table = 'productlaunch';
-    protected $fillable = [	'id','launch_date','style_number','vendor_code','dpt_name','sdpt_name','cls_name','style_name','retail_price','tracking','event_type'];
+    protected $fillable = [	'id','launch_date','style_number','vendor_code','dpt_name','sdpt_name','cls_name','style_name','retail_price','tracking','event_type', 'changes' ];
 
 
     public static function getActiveProductLaunchByStore($storeNumber)
@@ -164,7 +164,8 @@ class ProductLaunch extends Model
 						'style_name' => (isset($row[6]) ? $row[6] : ''),
 						'retail_price' => (isset($row[7]) ? $row[7] : ''),
 						'tracking' => (isset($row[8]) ? $row[8] : ''),
-						'event_type' => (isset($row[11])? $row[11] : '')
+						'event_type' => (isset($row[11])? $row[11] : ''),
+						'changes' => (isset($row[12])? $row[12] : '')
 
 	                )
 	            );
@@ -195,6 +196,7 @@ class ProductLaunch extends Model
 				$record['retail_price'] = (isset($row[7]) ? $row[7] : '');
 				$record['tracking'] = (isset($row[8]) ? $row[8] : '');
 				$record['event_type'] = (isset($row[11])? $row[11] : '');
+				$record['changes'] = (isset($row[12])? $row[12] : '');
 
 
                 $record->save();

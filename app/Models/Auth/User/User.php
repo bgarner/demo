@@ -13,6 +13,7 @@ use App\Models\Auth\User\UserBanner;
 use App\Models\Validation\UserValidator;
 use App\Models\Auth\User\UserRole;
 use App\Models\Auth\User\UserResource;
+use App\Models\Form\ProductRequest\FormUserBusinessUnitMap;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
@@ -30,7 +31,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      *
      * @var array
      */
-    protected $fillable = ['firstname', 'lastname', 'email', 'password', 'group_id'];
+    protected $fillable = ['firstname', 'lastname', 'email', 'group_id', 'fglposition', 'username'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -39,31 +40,31 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected $hidden = ['password', 'remember_token'];
 
-    public function activateAccount($code)
-    {
-        $user = User::where('activation_code', '=', $code)->first();
-        $user->active = 1;
-        $user->activation_code = '';
-        if($user->save()) {
-        \Auth::login($user);
-        }
-        return $user;
-    }
-    public function approveAccount($code)
-    {
-        $user = User::where('approval_code', '=', $code)->first();
-        $user->approved = 1;
-        $approvalCode = $user->approval_code;
-        $user->approval_code = '';
+    // public function activateAccount($code)
+    // {
+    //     $user = User::where('activation_code', '=', $code)->first();
+    //     $user->active = 1;
+    //     $user->activation_code = '';
+    //     if($user->save()) {
+    //     \Auth::login($user);
+    //     }
+    //     return $user;
+    // }
+    // public function approveAccount($code)
+    // {
+    //     $user = User::where('approval_code', '=', $code)->first();
+    //     $user->approved = 1;
+    //     $approvalCode = $user->approval_code;
+    //     $user->approval_code = '';
 
-        if($user->save()) {
+    //     if($user->save()) {
             
-            $store = substr($approvalCode, 60);
-            $profile = Profile::initiateProfile($store, $user);  
+    //         $store = substr($approvalCode, 60);
+    //         $profile = Profile::initiateProfile($store, $user);  
 
-        }
-        return $user;
-    }
+    //     }
+    //     return $user;
+    // }
 
     public static function getAdminUsers()
     {
@@ -80,11 +81,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         $validateThis = [
             'firstname' => $request['firstname'],
             'lastname'  => $request['lastname'],
-            'email'     => $request['email'],
             'group'     => $request['group'],
             'banners'   => $request['banners'],
-            'password'  => $request['password'],
-            'password_confirmation' => $request['confirm_password']
+            'username'  => $request['username']
 
         ];      
 
@@ -95,13 +94,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             return json_encode($validate);
         }
 
+        \Log::info($request['jobtitle']);
         $user = User::create([
-            'firstname' => $request['firstname'],
-            'lastname'  => $request['lastname'],
-            'email'     => $request['email'],
-            'group_id'  => intval($request['group']),
-            'password'  => Hash::make($request['password'])
+            'firstname'   => $request['firstname'],
+            'lastname'    => $request['lastname'],
+            'fglposition' => $request['jobtitle'],
+            'username'    => $request['username'],
+            'group_id'    => intval($request['group'])
         ]);
+
+
 
         $banners = $request['banners'];
         foreach ($banners as $banner) {
@@ -125,8 +127,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
                 ]);
         }
 
+        if(isset($request['business_unit']) && ! is_null($request['business_unit'])){
+            foreach ($request->business_unit as $bu) {
+                FormUserBusinessUnitMap::create([
+                    'user_id' => $user->id,
+                    'business_unit_id' => $bu
+                ]);
+            }
+            
+        }
 
-        \Log::info($user);
         return $user;
 
     }
@@ -142,18 +152,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         \Log::info(\Request::getClientIp());
 
         $validateThis = [
-            'firstname' => $request['firstname'],
-            'lastname'  => $request['lastname'],
-            'group'     => $request['group'],
-            'banners'   => $request['banners']
-
+            'firstname'   => $request['firstname'],
+            'lastname'    => $request['lastname'],
+            'group'       => $request['group'],
+            'banners'     => $request['banners']
         ];
-
-        if (isset($request['password']) && ($request['password']) != '') {
-            $validateThis['password']  = $request['password'];
-            $validateThis['password_confirmation'] = $request['password_confirmation'];
-        }
-        
         
         $v = new UserValidator;
 
@@ -165,20 +168,37 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
         $user = User::find($id);
 
-        $user['firstname'] = $request['firstname'];
-        $user['lastname']  = $request['lastname'];
-        $user['group_id']  = intval($request['group']);
+        $user['firstname']   = $request['firstname'];
+        $user['lastname']    = $request['lastname'];
+        $user['group_id']    = intval($request['group']);
+        $user['fglposition'] = $request['jobtitle'];
 
-        if(isset($request['password']) && $request['password'] != ''){
-            $user['password'] = Hash::make($request['password']);
-        }
-        
         $user->save();
 
-        UserRole::updateUserRole($user->id, intval($request['role']));
-        UserResource::updateUserResource($user->id, intval($request['resource']));
+        UserRole::updateUserRole($user->id, ($request['role']));
+        UserResource::updateUserResource($user->id, ($request['resource']));
         UserBanner::updateAdminBanner($id, $request['banners']);
+        FormUserBusinessUnitMap::updateBusinessUnit($user->id,($request['business_unit']));
         return $user;
 
     }
+
+    public static function getUsersByGroupId($group_id)
+    {
+        return Self::where('group_id', $group_id)->get();
+    }
+
+    public static function getUsersByBusinessUnitAndRoles($roles, $businessUnits)
+    {
+        return User::join('user_role', 'users.id' , '=', 'user_role.user_id')
+                    ->join('roles', 'user_role.role_id', '=', 'roles.id')
+                    ->join('form_business_unit_user', 'users.id', '=', 'form_business_unit_user.user_id')
+                    ->join('form_business_unit_types', 'form_business_unit_user.business_unit_id', '=', 'form_business_unit_types.id' )
+                    ->where('users.group_id', 3)
+                    ->whereIn('roles.id', $roles)
+                    ->whereIn('form_business_unit_user.business_unit_id', $businessUnits)
+                    ->select('users.*', 'roles.role_name', 'roles.id as role_id', 'form_business_unit_types.business_unit' )
+                    ->get();
+    }
+
 }

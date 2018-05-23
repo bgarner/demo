@@ -370,11 +370,12 @@ class Task extends Model
 
 	public static function getAllIncompleteTasksByStoreId($store_id, $tasklist_id = null)
 	{
-		
+		$now = Carbon::now()->format('Y-m-d H:i:s');
 		$banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
 
 		$allStoreTasks = Task::join('task_banner', 'task_banner.task_id', '=', 'tasks.id')
 							->where('all_stores', 1)
+							->where('tasks.publish_date', '<=', $now)
 							->where('task_banner.banner_id', $banner_id)
 							->select('tasks.*')
 							->get()
@@ -386,6 +387,7 @@ class Task extends Model
 
 		$targetedTasks = Task::join('tasks_target', 'tasks.id', '=', 'tasks_target.task_id')
 					->where('tasks_target.store_id', $store_id)
+					->where('tasks.publish_date', '<=', $now)
 					->select('tasks.*', 'tasks_target.store_id')
 					->get()
 					->each(function($task){
@@ -395,6 +397,7 @@ class Task extends Model
 		$storeGroups = CustomStoreGroup::getStoreGroupsForStore($store_id);
 
         $targetedTasksForStoreGroups = Task::join('task_store_group', 'task_store_group.task_id', '=', 'tasks.id')
+        									->where('tasks.publish_date', '<=', $now)
                                             ->whereIn('task_store_group.store_group_id', $storeGroups)
                                             ->select('tasks.*')
                                             ->get()

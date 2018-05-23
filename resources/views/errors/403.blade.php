@@ -12,7 +12,7 @@
         $i = rand(2, sizeof($images)-1);
         ?>
         @section('title', '403')
-        @include('site.includes.head')
+        {{--@include('site.includes.head')--}}
     </head>
 
     <body class="gray-bg">

@@ -10,17 +10,13 @@ class UserValidator extends PortalValidator
     protected $rules = [
     	'firstname' => 'required',
     	'lastname'	=> 'required',
-    	'email'		=> 'sometimes|required|email|unique:users,email',
+    	'username'	=> 'sometimes|required|string|unique:users,username',
     	'group'		=> 'required|exists:groups,id',
-    	'banners'	=> 'required|exists:banners,id',
-    	'password'	=> 'sometimes|required|min:8|regex:/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).{8,}$/|confirmed',
-    	'password_confirmation' => 'required_with:password'
+    	'banners'	=> 'required|exists:banners,id'
 
     ];
 
     protected $messages = [
-
-    	'password.regex' => 'Password must contain all characteristics, namely, UPPER case(A-Z), lower case (a-z), Numbers (0-9) or symbols (!@#$%^&* etc)'
 
     ];
 }

@@ -21,6 +21,11 @@ Route::resource('/admin/documentfolder', 'Document\DocumentFolderAdminController
 //FOLDERS
 Route::resource('/admin/folder', 'Document\FolderAdminController');
 
+//FORMS
+Route::get('/admin/formlist', 'Form\FormListAdminController@index');
+Route::resource('/admin/form/productrequest', 'Form\ProductRequestFormAdminController')->middleware(['formaccess']);
+Route::get('/admin/forms/productrequestform/log/{id}', 'Form\FormLogController@show');
+
 //PACKAGES
 Route::resource('/admin/package', 'Document\PackageAdminController');
 Route::get('/admin/packagedocuments/{package_id}', 'Document\PackagePartialController@getPackageDocumentPartial');
@@ -150,4 +155,3 @@ Route::resource('/admin/storecomponent', 'StoreComponent\StoreComponentAdminCont
 //Dirty Nodes
 Route::get('/admin/dirtynodes', 'Tools\DirtyNodesAdminController@index');
 Route::get('/admin/dirtynodes/report', 'Tools\DirtyNodesAdminController@show');
-

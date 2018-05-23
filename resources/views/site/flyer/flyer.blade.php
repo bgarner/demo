@@ -89,7 +89,7 @@
 
 	    @include('site.includes.scripts')
 
-
+	    
 		<script type="text/javascript" src="/js/plugins/dataTables/datatables.min.js"></script>
         <script type="text/javascript" src="/js/plugins/lightbox2/js/lightbox.min.js"></script>
 

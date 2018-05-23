@@ -282,6 +282,7 @@ class Alert extends Model
                         ->where('documents.all_stores', 1)
                         ->where('alerts.banner_id', $banner_id)
                         ->where('documents.start', '<=', $now )
+                        ->where('documents.deleted_at', '=', NULL)
                         ->where(function($query) use ($now) {
                             $query->where('documents.end', '>=', $now)
                                 ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
@@ -297,6 +298,7 @@ class Alert extends Model
                         ->join('alert_types', 'alert_types.id', '=', 'alerts.alert_type_id')
                         ->where('document_target.store_id', '=', $store_id)
                         ->where('documents.start', '<=', $now )
+                        ->where('documents.deleted_at', '=', NULL)
                         ->where(function($query) use ($now) {
                             $query->where('documents.end', '>=', $now)
                                 ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
@@ -327,6 +329,7 @@ class Alert extends Model
                         ->where('documents.end', '<=', $now)
                         ->where('documents.end', '!=', '0000-00-00 00:00:00')
                         ->where('documents.end', '!=', NULL)
+                        ->where('documents.deleted_at', '=', NULL)
                         ->select('alerts.*', 'documents.start as start', 'documents.end as end')
                         ->get();
 
@@ -337,6 +340,7 @@ class Alert extends Model
                         ->where('documents.end', '<=', $now)
                         ->where('documents.end', '!=', '0000-00-00 00:00:00')
                         ->where('documents.end', '!=', NULL)
+                        ->where('documents.deleted_at', '=', NULL)
                         ->select('alerts.*', 'documents.start as start', 'documents.end as end')
                         ->get();
 
@@ -441,13 +445,13 @@ class Alert extends Model
 
     public static function addStoreViewData($alerts)
     {
-        foreach($alerts as $a){
 
+        foreach($alerts as $a){
+            
                 $a->prettyDate =  Utility::prettifyDate($a->start);
                 $a->since =  Utility::getTimePastSinceDate($a->start);
                 $doc = Document::getDocumentById($a->document_id);
                 $alertType = AlertType::find($a->alert_type_id);
-
                 $a->icon = Utility::getIcon($doc->original_extension);
                 $a->link_with_icon = Utility::getModalLink($doc->filename, $doc->title, $doc->original_extension, $doc->id, 1);
                 $a->link = Utility::getModalLink($doc->filename, $doc->title, $doc->original_extension, $doc->id, 0);

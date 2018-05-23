@@ -23,7 +23,7 @@
 		                <div class="col-lg-12">
 		                    <div class="ibox">
 		                        <div class="ibox-title">
-		                            <h5>Cleaned Nodes</h5>
+		                            <h5>Cleaned Nodes <small>(displaying nodes cleaned in last 24 hours)</small></h5>
 
 		                            <div class="ibox-tools">
 										<input type="checkbox" id="domfields" /> DOM IT Fields Only
