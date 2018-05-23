@@ -523,33 +523,66 @@ class Communication extends Model
 		return $count;
 	}
 
-	public static function getActiveCommunicationsForStoreList($storeNumbersArray)
+	public static function getActiveCommunicationsForStoreList($storeNumbersArray, $banners, $storeGroups)
 	{
 		$now = Carbon::now()->toDatetimeString();
+		$targetedComm = Communication::getActiveTargetedCommunicationsForStoreList($storeNumbersArray);
+
+		$allStoreComm = Communication::join('communication_banner', 'communication_banner.communication_id', '=', 'communications.id')
+									->where('all_stores', '=', 1)
+                                    ->whereIn('communication_banner.banner_id', $banners)
+                                    ->where('communications.send_at', '<=', $now )
+                                    ->where('communications.archive_at', '>=', $now )
+                                    ->select('communications.*')
+                                    ->get();
+
+        $storeGroupCommunications = Communication::join('communication_store_group', 'communication_store_group.communication_id', '=', 'communications.id')
+        										->whereIn('communication_store_group.store_group_id', $storeGroups)
+												->where('communications.send_at', '<=', $now )
+												->where('communications.archive_at', '>=', $now )
+												->select(\DB::raw('communications.*, GROUP_CONCAT(DISTINCT communication_store_group.store_group_id) as store_groups'))
+												->groupBy('communications.id')
+						                        ->get()
+						                        ->each(function($comm)use ($storeNumbersArray){
+	                                    			$store_groups = explode(',', $comm->store_groups);
+
+	                                                $comm->store_groups = $store_groups;
+	                                                $group_stores = [];
+	                                                foreach ($store_groups as $group) {
+	                                                    $stores = unserialize(CustomStoreGroup::find($group)->stores);
+	                                                    $group_stores = array_merge($group_stores,$stores);
+	                                                }
+	                                                $group_stores = array_unique( $group_stores);
+
+	                                                $comm->stores = array_intersect($storeNumbersArray, $group_stores);
+	                                			});
+
+
+		$targetedComm = Utility::mergeTargetedAndStoreGroupContent($targetedComm, $storeGroupCommunications);
+         
+        $communications = Utility::mergeTargetedAndAllStoreContent($targetedComm, $allStoreComm);
+
+        return($communications);
+	}
+
+	public static function getActiveTargetedCommunicationsForStoreList($storeNumbersArray)
+	{
+		$now = Carbon::now()->toDatetimeString();
+		
 		$communications = Communication::join('communications_target', 'communications_target.communication_id' ,  '=', 'communications.id')
 								   ->whereIn('communications_target.store_id', $storeNumbersArray)
 								   ->where('communications.send_at' , '<=', $now)
 								   ->where('communications.archive_at', '>=', $now)
 								   ->whereNull('communications.deleted_at')
 								   ->whereNull('communications_target.deleted_at')
-								   ->select('communications.*', 'communications_target.store_id')
-								   ->get()
-								   ->toArray();
-	 	$compiledComm = [];
-
-		foreach ($communications as $communication) {
-			$index = array_search($communication['id'], array_column($compiledComm, 'id'));
-			if(  $index !== false ){
-				array_push($compiledComm[$index]->stores, $communication["store_id"]);
-			}
-			else{
-
-				$communication["stores"] = [];
-				array_push( $communication["stores"] , $communication["store_id"]);
-				array_push( $compiledComm , (object) $communication);
-			}
-		}
-	 	return (object)($compiledComm);
+								   ->select(\DB::raw('communications.*, GROUP_CONCAT(DISTINCT communications_target.store_id) as stores'))
+	                                ->groupBy('communications.id')
+	                                ->get()
+	                                ->each(function($comm){
+	                                    $comm->stores = explode(',', $comm->stores);
+	                                });
+	 	
+		return $communications;
 	}
 
 	public static function getCommunicationCategoryName($id)

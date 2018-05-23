@@ -14,11 +14,13 @@ class UserResource extends Model
     
     public static function updateUserResource($user_id, $resource_id)
     {
+
     	if(isset($resource_id)){
             
             $userResource = Self::where('user_id', $user_id)
                             ->first()
                             ->update(['resource_id' => $resource_id]);
+
         }    
 
     	return;

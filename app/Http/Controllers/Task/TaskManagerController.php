@@ -10,6 +10,8 @@ use App\Models\StoreApi\StoreInfo;
 use App\Models\Task\Task;
 use App\Models\Task\TaskTarget;
 use App\Models\Task\TaskStoreStatus;
+use App\Models\Tools\CustomStoreGroup;
+use App\Models\Auth\User\UserBanner;
 
 class TaskManagerController extends Controller
 {
@@ -20,17 +22,19 @@ class TaskManagerController extends Controller
      */
     public function index()
     {
+        $this->user_id = \Auth::user()->id;
         
-        $user_id = \Auth::user()->id;
-        $storeInfo = StoreInfo::getStoreListingByManagerId($user_id);
-        $storeList = [];
-        foreach ($storeInfo as $store) {
-            $storeList[$store->store_number] = $store->store_number . " - " . $store->name;
-        }
+        $storeList = StoreInfo::getStoreListingByManagerId($this->user_id);
+        $this->stores = array_column($storeList, 'store_number');
+        $this->storeGroups = CustomStoreGroup::getStoreGroupsForManager($this->user_id);
+
+        $this->banners = UserBanner::getAllBanners()->pluck( 'id')->toArray();
         
-        $tasks = Task::getActiveTasksByUserId($user_id);
+        $tasks = Task::getActiveTasksForStoreList($this->stores, $this->banners, $this->storeGroups);
+
+        // return $tasks;
         return view('manager.task.index')->with('tasks', $tasks)
-                                        ->with('stores', $storeList);
+                                        ->with('stores', $this->stores);
     }
 
     /**

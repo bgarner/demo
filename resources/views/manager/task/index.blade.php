@@ -180,7 +180,7 @@
 										<td class="task-status" id="task_status_{{$task->id}}">
 	                                    	<div class="task_status_box" id="task_status_box_{{$task->id}}">
 	                                    	
-
+												{{--
 	                                        	<span class="task-not-done">
 	                                        		@foreach($task->stores_done as $store)
 	                                        		<span><i class="fa fa-check"></i> {{$store}}</span>	
@@ -193,6 +193,7 @@
 	                                        		<br>
 	                                        		@endforeach
 	                                        	</span>
+	                                        	--}}
 
 	                                        
 	                                    	</div>

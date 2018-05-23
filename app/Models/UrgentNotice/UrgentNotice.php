@@ -200,9 +200,45 @@ class UrgentNotice extends Model
 
     }
 
-    public static function getActiveUrgentNoticesForStoreList($storeNumbersArray)
+    public static function getActiveUrgentNoticesForStoreList($stores, $banners, $storeGroups)
     {
         $now = Carbon::now()->toDatetimeString();
+        $targetedUN = UrgentNotice::getActiveTargetedUrgentNoticesForStoreList($stores);
+
+        $allStoreUN = UrgentNotice::join('urgent_notice_banner', 'urgent_notice_banner.urgent_notice_id', '=', 'urgent_notices.id')
+                                    ->where('all_stores', '=', 1)
+                                    ->whereIn('urgent_notice_banner.banner_id', $banners)
+                                    ->where('urgent_notices.start', '<=', $now )
+                                    ->where(function($query) use ($now) {
+                                        $query->where('urgent_notices.end', '>=', $now)
+                                            ->orWhere('urgent_notices.end', '=', '0000-00-00 00:00:00' ); 
+                                    })
+                                    ->select('urgent_notices.*', 'urgent_notice_banner.banner_id')
+                                    ->get();
+
+
+        $storeGroupUN = UrgentNotice::join('urgent_notice_store_group', 'urgent_notice_store_group.urgent_notice_id', '=', 'urgent_notices.id')
+                                                ->whereIn('urgent_notice_store_group.store_group_id', $storeGroups)
+                                                ->where('urgent_notices.start', '<=', $now )
+                                                ->where(function($query) use ($now) {
+                                                    $query->where('urgent_notices.end', '>=', $now)
+                                                        ->orWhere('urgent_notices.end', '=', '0000-00-00 00:00:00' ); 
+                                                })
+                                                ->select('urgent_notices.*', 'urgent_notice_store_group.store_group_id')
+                                                ->get();
+        // dd($storeGroupUN);
+
+        $targetedUN = Utility::mergeTargetedAndStoreGroupContent($targetedUN, $storeGroupUN);
+         
+        $urgent_notices = Utility::mergeTargetedAndAllStoreContent($targetedUN, $allStoreUN);
+
+        return($urgent_notices);
+    }
+
+    public static function getActiveTargetedUrgentNoticesForStoreList($storeNumbersArray)
+    {
+        $now = Carbon::now()->toDatetimeString();
+
         $urgent_notices = UrgentNotice::join('urgent_notice_target', 'urgent_notice_target.urgent_notice_id' ,  '=', 'urgent_notices.id')
                     ->whereIn('urgent_notice_target.store_id', $storeNumbersArray)
                     ->where('urgent_notices.start', '<=', $now )
@@ -210,27 +246,16 @@ class UrgentNotice extends Model
                         $query->where('urgent_notices.end', '>=', $now)
                             ->orWhere('urgent_notices.end', '=', '0000-00-00 00:00:00' ); 
                     })
-                    ->whereNull('urgent_notices.deleted_at')
-                    // ->whereNull('urgent_notice_target.deleted_at')
-                    ->select('urgent_notices.*', 'urgent_notice_target.store_id')
+                    ->whereNull('urgent_notice_target.deleted_at')
+                    ->select(\DB::raw('urgent_notices.*, GROUP_CONCAT(DISTINCT urgent_notice_target.store_id) as stores'))
+                    ->groupBy('urgent_notices.id')
                     ->get()
-                    ->toArray();
+                    ->each(function($urgentNotice){
+                        $urgentNotice->stores = explode(',', $urgentNotice->stores);
+                    });
         
-        $compiledUrgentNotices = [];
-
-        foreach ($urgent_notices as $urgent_notice) {
-        $index = array_search($urgent_notice['id'], array_column($compiledUrgentNotices, 'id'));
-        if(  $index !== false ){
-           array_push($compiledUrgentNotices[$index]->stores, $urgent_notice["store_id"]);
-        }
-        else{
-           
-           $urgent_notice["stores"] = [];
-           array_push( $urgent_notice["stores"] , $urgent_notice["store_id"]);
-           array_push( $compiledUrgentNotices , (object) $urgent_notice);
-        }
-        }
-        return (object)($compiledUrgentNotices);
+        
+        return $urgent_notices;
     }   
 
 
