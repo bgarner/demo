@@ -14,7 +14,7 @@ class UpdateDirtyNodeArchiveAddDomResponseCode extends Migration
     public function up()
     {
         Schema::table('dirty_nodes_archive', function (Blueprint $table) {
-            $table->mediumText('API_response')->after('updated_at');
+            $table->mediumText('API_response')->after('updated_at')->nullable();
         });
     }
 

@@ -49,10 +49,8 @@
 								<label class="col-sm-2 control-label">Department <span class="req">*</span></label>
 					            <div class="col-sm-10">
 					            	<select name="department" id="department" class="form-control input-sm">
-					            		<option></option>
-					            		<option data-dept="hg" value="Hardgoods">Hardgoods</option>
-					            		<option data-dept="sg" value="Softgoods">Softgoods</option>
-					            		<option data-dept="fw" value="Footwear">Footwear</option>
+					            		<option>Select</option>
+					            		
 					            	</select>
 					            </div>
 							</div>
@@ -60,80 +58,56 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Category <span class="req">*</span></label>
 					            <div class="col-sm-10">
-					            	<select name="category" id="category" class="form-control input-sm">					            		
-					            		<option></option>
-										<option data-dept="hg" data-category="Ski/Snowboard" value="Ski/Snowboard"> Ski/Snowboard </option>
-										<option data-dept="hg" data-category="Hockey" value="Hockey"> Hockey </option>
-										<option data-dept="hg" data-category="Golf" value="Golf"> Golf </option>
-										<option data-dept="hg" data-category="Fitness/Yoga" value="Fitness/Yoga"> Fitness/Yoga </option>
-										<option data-dept="hg" data-category="Boxing" value="Boxing"> Boxing </option>
-										<option data-dept="hg" data-category="Soccer" value="Soccer"> Soccer </option>
-										<option data-dept="hg" data-category="Basektball" value="Basketball"> Basektball </option>
-										<option data-dept="hg" data-category="Baseball/Softball" value="Baseball/Softball"> Baseball/Softball </option>
-										<option data-dept="hg" data-category="Volleybaall" value="Volleybaall"> Volleybaall </option>
-										<option data-dept="hg" data-category="Football" value="Football"> Football </option>
-										<option data-dept="hg" data-category="Yoga" value="Yoga"> Yoga </option>
-										<option data-dept="hg" data-category="Bike" value="Bike"> Bike </option>
-										<option data-dept="hg" data-category="Racquets" value="Racquets"> Racquets </option>
-										<option data-dept="hg" data-category="Other" value="Other"> Other </option>
-
-										<option data-dept="sg" data-category="Outerwear" value="Outerwear"> Outerwear </option>
-										<option data-dept="sg" data-category="Lifestyle" value="Lifestyle"> Lifestyle </option>
-										<option data-dept="sg" data-category="Athletic" value="Athletic"> Athletic </option>
-										<option data-dept="sg" data-category="Casual" value="Casual"> Casual </option>
-										<option data-dept="sg" data-category="Kids" value="Kids"> Kids </option>
-										<option data-dept="sg" data-category="Toddler" value="Toddler"> Toddler </option>
-										<option data-dept="sg" data-category="Other" value="Other"> Other </option>
-
-										<option data-dept="fw" data-category="Running" value="Running"> Running </option>
-										<option data-dept="fw" data-category="Training" value="Training"> Training </option>
-										<option data-dept="fw" data-category="Court" value="Court"> Court </option>
-										<option data-dept="fw" data-category="Outdoor" value="Outdoor"> Outdoor </option>
-										<option data-dept="fw" data-category="Lifesyle" value="Lifesyle"> Lifesyle </option>
-										<option data-dept="fw" data-category="Trend" value="Trend"> Trend </option>
-										<option data-dept="fw" data-category="Kids" value="Kids"> Kids </option>
-										<option data-dept="fw" data-category="Toddler" value="Toddler"> Toddler </option>
-										<option data-dept="fw" data-category="Winter/Rain" value="Winter/Rain"> Winter/Rain </option>
-										<option data-dept="fw" data-category="Other" value="Other"> Other </option>
+					            	<select name="category" id="category" class="form-control input-sm">
+					            		<option>Select</option>
 					            	</select>
 					            </div>
 							</div>
 
 							<div class="form-group">
-								<label class="col-sm-2 control-label">Sub Category</label>
+								<label class="col-sm-2 control-label">Sub Category <span class="req">*</span></label>
 					            <div class="col-sm-10">
 
 					            	<select name="subcategory" id="subcategory" class="form-control input-sm">
+					            		<option>Select</option>
+					            	</select>
+					            </div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Gender <span class="req">*</span></label>
+					            <div class="col-sm-10">
+					            	<select name="gender" id="gender" class="form-control input-sm">
 					            		<option></option>
-										<option data-dept="hg" value="Men\'s">Men's</option>
-										<option data-dept="hg" value="Women\'s">Women's</option>
-										<option data-dept="hg" value="Jr/Kid\'s">Jr/Kid's</option>
-
-										<option data-dept="sg" value="Men\'s">Men's</option>
-										<option data-dept="sg" value="Women\'s"> Women's</option>
-										<option data-dept="sg" value="Kid\'s"> Kid's</option>
-										<option data-dept="sg" value="Toddler"> Toddler</option>
-
-										<option data-dept="fw" value="Men\'s"> Men's</option>
-										<option data-dept="fw" value="Women\'s"> Women's</option>
-										<option data-dept="fw" value="Kid\'s"> Kid's</option>
-										<option data-dept="fw" value="Toddler"> Toddler</option>
+										<option value="Mens">Mens</option>
+										<option value="Womens">Womens</option>
+										<option value="Boys">Boys</option>
+										<option value="Girls">Girls</option>
+										<option value="Toddler">Toddler</option>
+										<option value="Infant">Infant</option>
 
 
 					            	</select>
 					            </div>
+
 							</div>
+
 
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Requirement <span class="req">*</span></label>
 					            <div class="col-sm-10">
 					            	<select name="requirement" id="requirement" class="form-control input-sm">
-					            		<option></option>
-										<option value="More">More</option>
-										<option value="Less">Less</option>
-										<option value="StyleRequest">Style Request</option>
-										<option value="AssortmentRequest">Assortment Request</option>
-
+					            		<option>Select</option>
+										<optgroup label="Replenishment">
+										    <option value="Replenishment-More"> More</option>
+										<option value="Replenishment-Less"> Less</option>
+										</optgroup> 
+										<optgroup label="Assortment">
+										    <option value="Assortment-StyleRequest"> Specific Style</option>
+											<option value="Assortment-Collection/New Assortment"> Collection/New Assortment
+										</optgroup>
+										
+										
 					            	</select>
 					            </div>
 
@@ -149,7 +123,7 @@
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Style Number</label>
-					            <div class="col-sm-10"><input type="text" id="styleNumber" name="styleNumber" class="form-control" value=""></div>
+					            <div class="col-sm-10"><input type="text" pattern="\d*" maxlength="9" id="styleNumber" name="styleNumber" class="form-control" value=""></div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Size</label>
@@ -157,7 +131,7 @@
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Quantity</label>
-					            <div class="col-sm-10"><input type="number" min=0 max=100 id="quantity" name="quantity" class="form-control" value=""></div>
+					            <div class="col-sm-10"><input type="text" pattern="\d*" maxlength="3" id="quantity" name="quantity" class="form-control" value="0"></div>
 							</div>
 
 							<div class="form-group">

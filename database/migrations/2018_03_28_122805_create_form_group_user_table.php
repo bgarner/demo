@@ -18,8 +18,8 @@ class CreateFormGroupUserTable extends Migration
             $table->integer('form_group_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->timestamps();
-            $table->foreign('form_group_id')->references('id')->on('form_usergroups');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('form_group_id')->references('id')->on('form_usergroups')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

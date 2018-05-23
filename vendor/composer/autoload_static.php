@@ -144,6 +144,8 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'A' => 
         array (
             'App\\' => 4,
+            'Adldap\\Laravel\\' => 15,
+            'Adldap\\' => 7,
         ),
     );
 
@@ -410,6 +412,14 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         array (
             0 => __DIR__ . '/../..' . '/app',
         ),
+        'Adldap\\Laravel\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/adldap2/adldap2-laravel/src',
+        ),
+        'Adldap\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/adldap2/adldap2/src',
+        ),
     );
 
     public static $prefixesPsr0 = array (
@@ -492,9 +502,9 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'AddChangesColumnToProdLaunchTable' => __DIR__ . '/../..' . '/database/migrations/2018_05_15_105631_add_changes_column_to_prod_launch_table.php',
         'AddFglpositionToUserTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_13_130628_add_fglposition_to_user_table.php',
         'AddOnOrderCountToBikeTracker' => __DIR__ . '/../..' . '/database/migrations/2017_06_23_142132_add_on_order_count_to_bike_tracker.php',
-        'AddReqestResponseToLogTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_14_102517_add_reqest_response_to_log_table.php',
         'AddPriceToDirtyNodeTable' => __DIR__ . '/../..' . '/database/migrations/2018_04_16_131328_add_price_to_dirty_node_table.php',
         'AddPriceToDnArchiveTable' => __DIR__ . '/../..' . '/database/migrations/2018_04_16_131842_add_price_to_dn_archive_table.php',
+        'AddReqestResponseToLogTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_14_102517_add_reqest_response_to_log_table.php',
         'AddSportCatToCommunityDonationsTable' => __DIR__ . '/../..' . '/database/migrations/2018_01_29_112304_add_sport_cat_to_community_donations_table.php',
         'AnalyticsAssetTypesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AnalyticsAssetTypesTableSeeder.php',
         'App\\Models\\Alert\\Alert' => __DIR__ . '/../..' . '/app/Models/Alert/Alert.php',
@@ -656,6 +666,13 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'App\\Models\\Validation\\FlyerItemValidator' => __DIR__ . '/../..' . '/app/Models/Validation/FlyerItemValidator.php',
         'App\\Models\\Validation\\FlyerValidator' => __DIR__ . '/../..' . '/app/Models/Validation/FlyerValidator.php',
         'App\\Models\\Validation\\FolderValidator' => __DIR__ . '/../..' . '/app/Models/Validation/FolderValidator.php',
+        'App\\Models\\Validation\\Form\\FormInstanceGroupMapValidator' => __DIR__ . '/../..' . '/app/Models/Validation/Form/FormInstanceGroupMapValidator.php',
+        'App\\Models\\Validation\\Form\\FormInstanceResponseValidator' => __DIR__ . '/../..' . '/app/Models/Validation/Form/FormInstanceResponseValidator.php',
+        'App\\Models\\Validation\\Form\\FormInstanceStatusValidator' => __DIR__ . '/../..' . '/app/Models/Validation/Form/FormInstanceStatusValidator.php',
+        'App\\Models\\Validation\\Form\\FormInstanceUserMapValidator' => __DIR__ . '/../..' . '/app/Models/Validation/Form/FormInstanceUserMapValidator.php',
+        'App\\Models\\Validation\\Form\\FormInstanceValidator' => __DIR__ . '/../..' . '/app/Models/Validation/Form/FormInstanceValidator.php',
+        'App\\Models\\Validation\\Form\\ProductRequestFormInstanceValidator' => __DIR__ . '/../..' . '/app/Models/Validation/Form/ProductRequestFormInstanceValidator.php',
+        'App\\Models\\Validation\\Form\\ProductRequestGroupValidator' => __DIR__ . '/../..' . '/app/Models/Validation/Form/ProductRequestGroupValidator.php',
         'App\\Models\\Validation\\GroupValidator' => __DIR__ . '/../..' . '/app/Models/Validation/GroupValidator.php',
         'App\\Models\\Validation\\PackageValidator' => __DIR__ . '/../..' . '/app/Models/Validation/PackageValidator.php',
         'App\\Models\\Validation\\PlaylistEditValidator' => __DIR__ . '/../..' . '/app/Models/Validation/PlaylistEditValidator.php',
@@ -1043,7 +1060,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'PHPUnit\\Util\\TestDox\\XmlResultPrinter' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/TestDox/XmlResultPrinter.php',
         'PHPUnit\\Util\\TextTestListRenderer' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/TextTestListRenderer.php',
         'PHPUnit\\Util\\Type' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Type.php',
-        'PHPUnit\\Util\\Xml' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Xml.php',
+        'PHPUnit\\Util\\Xml' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/XML.php',
         'PHPUnit\\Util\\XmlTestListRenderer' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/XmlTestListRenderer.php',
         'PHPUnit_Framework_MockObject_MockObject' => __DIR__ . '/..' . '/phpunit/phpunit-mock-objects/src/MockObject.php',
         'PHP_Timer' => __DIR__ . '/..' . '/phpunit/php-timer/src/Timer.php',
@@ -1466,8 +1483,12 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'UpdateTasksTableAddBannerId' => __DIR__ . '/../..' . '/database/migrations/2017_05_26_161401_update_tasks_table_add_banner_id.php',
         'UpdateUrgentNoticeTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_16_164022_update_urgent_notice_table.php',
         'UpdateUrgentNoticeTableRemoveBannerId' => __DIR__ . '/../..' . '/database/migrations/remove_banner/2017_10_23_094619_update_urgent_notice_table_remove_banner_id.php',
+        'UpdateUsersTableAddUsername' => __DIR__ . '/../..' . '/database/migrations/2018_05_15_144655_update_users_table_add_username.php',
+        'UpdateUsersTableMakeEmailNullable' => __DIR__ . '/../..' . '/database/migrations/2018_05_17_121536_update_users_table_make_email_nullable.php',
+        'UpdateUsersTableMakeUsernameUnique' => __DIR__ . '/../..' . '/database/migrations/unique_usernames/2018_05_15_150754_update_users_table_make_username_unique.php',
         'UpdateVideosTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_16_195257_update_videos_table.php',
         'UrgentNoticeBannerTableSeeder' => __DIR__ . '/../..' . '/database/seeds/UrgentNoticeBannerTableSeeder.php',
+        'UsernameSeeder' => __DIR__ . '/../..' . '/database/seeds/UsernameSeeder.php',
         'VideoTableSeeder' => __DIR__ . '/../..' . '/database/seeds/VideoTableSeeder.php',
     );
 

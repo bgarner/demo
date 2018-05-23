@@ -37,12 +37,6 @@ $(document).ready(function(){
 			});
 		}
 
-		// console.log(business_unit);
-		// console.log(jobtitle);
-
-		var newPassword = $('input[name="password"]').val();
-		var newPasswordConfirm = $('input[name="confirm_password"]').val();
-
 		var hasError = false;
 		if(firstname == '') {
 			swal("Oops!", "Need a first name.", "error"); 
@@ -73,12 +67,6 @@ $(document).ready(function(){
 			return false;
 		}
 
-		if (newPassword != newPasswordConfirm) {
-			swal("Oops!", "Passwords do not match", "error"); 
-			hasError = true;
-			$(window).scrollTop(0);	
-			return false;
-		}
 
 	    if(hasError == false) {
 	    	var userId = $('input[name="userId"]').val();
@@ -93,9 +81,7 @@ $(document).ready(function(){
 			    	role : role,
 			    	jobtitle : jobtitle,
 			    	business_unit : business_unit,
-			    	banners : banners,
-			    	password : newPassword,
-			    	password_confirmation : newPasswordConfirm
+			    	banners : banners
 			    },
 			    success: function(result) {
 
@@ -124,16 +110,6 @@ $(document).ready(function(){
 				        	});
 				        }
 				        
-				        if(errors.hasOwnProperty("password")) {
-				        	$.each(errors.password, function(index){
-				        		$('input[name="password"]').parent().append('<div class="req">' + errors.password[index]  + '</div>');	
-				        	});
-				        }
-				        if(errors.hasOwnProperty("password_confirmation")) {
-				        	$.each(errors.password_confirmation, function(index){
-				        		$('input[name="confirm_password"]').parent().append('<div class="req">' + errors.password_confirmation[index]  + '</div>');	
-				        	});
-				        }
 				        
 			        }
 			        else{

@@ -31,9 +31,14 @@
                         @endforeach
                     </ul>
                 @endif
-                <div class="form-group">
+                {{--<div class="form-group">
                     <input type="email" class="form-control" name="email" placeholder="Email" value="{{ old('email') }}" required="" autocomplete="off">
+                </div>--}}
+    
+                <div class="form-group">
+                    <input type="text" class="form-control" name="username" placeholder="Username" value="{{ old('username') }}" required="">
                 </div>
+
                 <div class="form-group">
                     <input type="password" class="form-control" placeholder="Password" name="password" required="" autocomplete="off">
                 </div>
