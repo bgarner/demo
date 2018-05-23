@@ -74,7 +74,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-2"><strong>Classification:</strong></div>
-                                            <div class="col-sm-8">{{ $formInstance->form_data['department']  }} <i class="fa fa-caret-right"></i> {{ $formInstance->form_data['category'] }} <i class="fa fa-caret-right"></i> {{ $formInstance->form_data['subcategory'] }}</div>
+                                            <div class="col-sm-8">{{ $formInstance->form_data['department']  }} <i class="fa fa-caret-right"></i> {{ $formInstance->form_data['category'] }} <i class="fa fa-caret-right"></i> {{ $formInstance->form_data['subcategory'] }} <i class="fa fa-caret-right"></i> {{ $formInstance->form_data['gender'] }}</div>
                                         </div>
 
                                     </td>
