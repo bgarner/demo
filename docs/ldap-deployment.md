@@ -3,6 +3,17 @@ Portal LDAP Deployment
 
 *See aditional documentation for troubleshooting a deployment(https://github.com/Adldap2/Adldap2-Laravel/blob/master/docs/quick-start.md)*
 
+Step 0
+---
+Update .env file with:
+```
+ADLDAP_BASEDN=dc=corp,dc=ad,dc=ctc
+ADLDAP_CONTROLLERS=corp.ad.ctc
+ADLDAP_ADMIN_USERNAME=corp\fusert2.corp
+ADLDAP_ADMIN_PASSWORD=P$94Pun$
+ADLDAP_PASSWORD_SYNC=true
+```
+
 Step 1 
 ---
 
@@ -22,7 +33,7 @@ Run these SQL queries against these tables. Make sure the role ids for the form 
 INSERT INTO `form_role` (`id`, `form_id`, `role_id`, `created_at`, `updated_at`)
 VALUES
 	(3,1,9,NULL,NULL),
-	(4,1,10,NULL,NULL),
+	(4,1,10,NULL,NULL);
 ```
 **form_role_permission**
 ```
