@@ -279,6 +279,7 @@ class Task extends Model
                                 	foreach ($item->banners as $banner) {
                                 		$item->stores = array_merge($item->stores, array_column(StoreInfo::getStoresInfo($banner), 'store_number'));
                                 	}
+                                	\Log::info($item->stores);
 
                                 	$item->stores = array_intersect($item->stores, $stores);
                                 	

@@ -12,6 +12,7 @@ Route::get('/manager/store/{store}', 'ManagerDashboard\StoreProfileController@sh
 
 //communication
 Route::get('/manager/communication', 'Communication\CommunicationManagerController@index');
+Route::get('/manager/communication/show/{id}', 'Communication\CommunicationManagerController@show');
 
 //calendar
 Route::get('/manager/calendar', 'Calendar\CalendarManagerController@index');

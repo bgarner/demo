@@ -3,41 +3,34 @@
 
 <head>
     @section('title', 'Communications')
-    @include('site.includes.head')
-    <meta name="csrf-token" content="{!! csrf_token() !!}"/>
-    <link rel="stylesheet" type="text/css" href="/css/custom/site/feature.css">
+    <link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
+    @include('manager.includes.head')
+
 </head>
 
 <body class="fixed-navigation">
-
-    <input type="hidden" id="communication_id" name="communication_id" value="{{ $communication->id }}">
-    <input type="hidden" id="store_id" name="store_id" value="{{ Request::segment(1) }}">
-    <input type="hidden" id="archives" value="" />
-
     <div id="wrapper">
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
-          @include('site.includes.sidenav')
+          @include('manager.includes.nav');
         </div>
     </nav>
 
     <div id="page-wrapper" class="gray-bg">
         <div class="row border-bottom">
-            @include('site.includes.topbar')
+            @include('manager.includes.topbar')
         </div>
 
+        <div class="wrapper wrapper-content">
+            <div class="row">
+                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+
+                @include('manager.communications.commsidebar')
+
+                </div>
 
 
-    <div class="wrapper wrapper-content">
-        <div class="row">
-            <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
-
-            @include('site.communications.commsidebar')
-
-            </div>
-
-
-            <div class="col-lg-10 col-md-9 col-sm-8 col-xs-12 animated fadeInRight printable">
+                <div class="col-lg-10 col-md-9 col-sm-8 col-xs-12 animated fadeInRight printable">
 
                 <div class="mail-box-header">
 
@@ -60,69 +53,70 @@
 
                     @endif
 
-                </div> <!-- mail-box-header -->
-                <div class="mail-box">
+                </div> <!-- mail-box-header closes -->
+                    <div class="mail-box">
 
 
-                    <div class="mail-body">
-                        {!! $communication->body !!}
-                    </div>
+                        <div class="mail-body">
+                            {!! $communication->body !!}
+                        </div> <!-- mail-body closes -->
 
-                    <div class="mail-attachment">
-                        <h3>
-                            <span><i class="fa fa-paperclip"></i> {{ count($communication_documents) }} {{__("Attachments")}}</span>
-                        </h3>
+                        <div class="mail-attachment">
+                            <h3>
+                                <span><i class="fa fa-paperclip"></i> {{ count($communication_documents) }} {{__("Attachments")}}</span>
+                            </h3>
 
-                        @if(count($communication_documents) > 0)
-                            <table class="table tablesorter table-hover table-mail tablesorter-default" id="file-table" role="grid">
-                                <thead>
-                                    <tr>
-                                        <th> {{__("Title")}} </th>
-                                        <th> {{__("Last Updated")}} </th>
-                                    </tr>
-                                </thead>
+                            @if(count($communication_documents) > 0)
+                                <table class="table tablesorter table-hover table-mail tablesorter-default" id="file-table" role="grid">
+                                    <thead>
+                                        <tr>
+                                            <th> {{__("Title")}} </th>
+                                            <th> {{__("Last Updated")}} </th>
+                                        </tr>
+                                    </thead>
 
-                                <tbody>
+                                    <tbody>
 
-                                @foreach($communication_documents as $doc)
-                                    <tr>
-                                        <td> {!! $doc->link_with_icon !!} </td>
-                                        <td> {!! $doc->prettyDate !!} </td>
-                                    </tr>
+                                    @foreach($communication_documents as $doc)
+                                        <tr>
+                                            <td> {!! $doc->link_with_icon !!} </td>
+                                            <td> {!! $doc->prettyDate !!} </td>
+                                        </tr>
+                                    @endforeach
+                                    
+                                    </tbody>
+                                </table>
+                            @endif
+
+                            @if(count($tags) > 0)
+                            <hr />
+                            <div class="tag-list">
+                                @foreach($tags as $t)
+                                    <a href="../../tag/{{ $t->linkname }}"><span class="badge">{{ $t->name }}</span></a>
                                 @endforeach
-                                
-                                </tbody>
-                            </table>
-                        @endif
-
-                        @if(count($tags) > 0)
-                        <hr />
-                        <div class="tag-list">
-                            @foreach($tags as $t)
-                                <a href="../../tag/{{ $t->linkname }}"><span class="badge">{{ $t->name }}</span></a>
-                            @endforeach
-                        </div>
-                        @endif
+                            </div>
+                            @endif
 
 
-                        <div class="clearfix"></div>
-                    </div> <!-- mail-attachment -->
+                            <div class="clearfix"></div>
+                        </div> <!-- mail-attachment closes -->
 
-                </div> <!-- mail box -->
-
-            </div>
+                    </div> <!-- mail-box closes -->
 
 
-        </div> <!-- row closes -->
-    </div> <!-- wrapper class -->
 
-    </div><!-- page wrapper -->
-    </div><!-- wrapper -->
-    @include('site.includes.footer')
+                </div> <!-- printable div closes -->
 
-    <script type="text/javascript" src="/js/plugins/fullcalendar/moment.min.js"></script>
+            </div> <!-- row closes -->
+        </div> <!-- class wrapper closes -->
 
-    @include('site.includes.scripts')
+    </div> <!-- page wrapper closes -->
+    </div> <!-- wrapper closes -->
+
+    @include('manager.includes.footer')
+
+    @include('manager.includes.scripts')
+    
 
     <script type="text/javascript" src="/js/custom/tree.js"></script>
     <script type="text/javascript" src="/js/vendor/underscore-1.8.3.js"></script>

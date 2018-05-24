@@ -8,6 +8,10 @@ use App\Models\StoreApi\StoreInfo;
 use App\Models\Tools\CustomStoreGroup;
 use App\Models\Auth\User\UserBanner;
 use App\Models\Communication\Communication;
+use App\Models\Communication\CommunicationType;
+use App\Models\Communication\CommunicationDocument;
+use App\Models\Communication\CommunicationPackage;
+use App\Models\Tag\ContentTag;
 
 class CommunicationManagerController extends Controller
 {
@@ -33,6 +37,43 @@ class CommunicationManagerController extends Controller
 
         $this->banners = UserBanner::getAllBanners()->pluck( 'id');
 
-    	return Communication::getActiveCommunicationsForStoreList($this->stores, $this->banners, $this->storeGroups);
+        // $communicationTypes = CommunicationType::getCommunicationTypesByStoreNumber($request, $storeNumber);
+
+    	$communications = Communication::getActiveCommunicationsForStoreList($this->stores, $this->banners, $this->storeGroups);
+        $communicationCount = count($communications);
+        return view('manager.communications.index')
+            ->with('communications', $communications)
+            ->with('communicationCount', $communicationCount)
+            ->with('title', '$title')
+            ->with('archives', $request['archives']);
+    }
+
+    public function show($id, Request $request)
+    {
+
+        // $communicationTypes     = CommunicationType::getCommunicationTypesByStoreNumber($request, $storeNumber);
+
+        // $communicationCount     = Communication::getCommunicationCountByStoreNumber($request, $storeNumber);
+        $communicationCount     = 3;
+
+        $communication          = Communication::getCommunicationById($id);
+
+        $communicationPackages  = CommunicationPackage::getPackagesByCommunicationId($id);
+        $communicationDocuments = CommunicationDocument::getDocumentsByCommunicationId($id);
+
+        $request->request->add(['archives' => false]);
+        // $communications         = Communication::getCommunicationByStoreNumber($request, $storeNumber);
+
+        // $communication->nextCommunicationId = Communication::getNextCommunication($communications, $communication);
+        // $communication->previousCommunicationId = Communication::getPreviousCommunication($communications, $communication);
+        $tags = ContentTag::getTagsForContent("communication", $request->id);
+
+        return view('manager.communications.message')
+            // ->with('communicationTypes', $communicationTypes)
+            ->with('communicationCount', $communicationCount)
+            ->with('communication', $communication)
+            ->with('communication_documents', $communicationDocuments)
+            ->with('communication_packages', $communicationPackages)
+            ->with('tags', $tags);
     }
 }

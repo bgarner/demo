@@ -533,8 +533,11 @@ class Communication extends Model
                                     ->whereIn('communication_banner.banner_id', $banners)
                                     ->where('communications.send_at', '<=', $now )
                                     ->where('communications.archive_at', '>=', $now )
-                                    ->select('communications.*')
-                                    ->get();
+                                    ->select('communications.*', 'communication_banner.banner_id')
+                                    ->get()
+                                    ->each(function($comm){
+                                    	$comm->banner = Banner::find($comm->banner_id)->name;
+                                    });
 
         $storeGroupCommunications = Communication::join('communication_store_group', 'communication_store_group.communication_id', '=', 'communications.id')
         										->whereIn('communication_store_group.store_group_id', $storeGroups)
@@ -561,8 +564,8 @@ class Communication extends Model
 		$targetedComm = Utility::mergeTargetedAndStoreGroupContent($targetedComm, $storeGroupCommunications);
          
         $communications = Utility::mergeTargetedAndAllStoreContent($targetedComm, $allStoreComm);
-
-        return($communications);
+        $communications = Communication::processActiveCommunications($communications);
+        return ($communications);
 	}
 
 	public static function getActiveTargetedCommunicationsForStoreList($storeNumbersArray)
