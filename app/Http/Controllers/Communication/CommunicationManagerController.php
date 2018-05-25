@@ -28,10 +28,9 @@ class CommunicationManagerController extends Controller
     public function index(Request $request)
     {	
 
-
-	    $this->user_id = \Auth::user()->id;
+        $this->user_id = \Auth::user()->id;
 	    
-    	$storeList = StoreInfo::getStoreListingByManagerId($this->user_id);
+        $storeList = StoreInfo::getStoreListingByManagerId($this->user_id);
         $this->stores = array_column($storeList, 'store_number');
         $this->storeGroups = CustomStoreGroup::getStoreGroupsForManager($this->user_id);
 
@@ -39,12 +38,16 @@ class CommunicationManagerController extends Controller
 
         // $communicationTypes = CommunicationType::getCommunicationTypesByStoreNumber($request, $storeNumber);
 
-    	$communications = Communication::getActiveCommunicationsForStoreList($this->stores, $this->banners, $this->storeGroups);
+        $communications = Communication::getCommunicationsForStoreList($this->stores, $this->banners, $this->storeGroups, $request);
+
+        $title = Communication::getCommunicationCategoryName($request['type']);
+
         $communicationCount = count($communications);
+
         return view('manager.communications.index')
             ->with('communications', $communications)
             ->with('communicationCount', $communicationCount)
-            ->with('title', '$title')
+            ->with('title', $title)
             ->with('archives', $request['archives']);
     }
 

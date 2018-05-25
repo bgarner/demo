@@ -69,7 +69,8 @@ class CommunicationType extends Model
             }
         }
         return $communicationTypes; 
-    } 
+    }
+
 
     public static function isValidCommunicationType($id)
     {
@@ -79,7 +80,7 @@ class CommunicationType extends Model
         else{
             return false;
         }
-    }   
+    } 
 
     public static function getCommunicationTypesForAdmin()
     {

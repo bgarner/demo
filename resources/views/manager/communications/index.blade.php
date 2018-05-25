@@ -104,7 +104,7 @@
 
                             <td class="text-right mail-date col-lg-2 col-md-2 col-sm-4 col-xs-2">{{ $communication->prettyDate }}<!--  <small style="font-weight: normal;padding-left: 10px;">({{ $communication->since }} ago)</small> --></td>
                         </tr>
-                        <tr class="store-row">
+                        <tr class="{{ $tr_class }} store-row">
                             <td></td>
                             <td colspan="3">
                                 @if( isset($communication->stores) )
