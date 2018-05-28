@@ -25,7 +25,6 @@ class ManagerDashboard extends Model
         $banners = UserBanner::getAllBanners()->pluck( 'id');
 
 
-
         $compiledData = [];
         // $compiledData["communications"] = Communication::getCommunicationsForStoreList($stores, $banners, $storeGroups);
         

@@ -29,10 +29,21 @@ class CalendarManagerController extends Controller
 	    
     	$storeList = StoreInfo::getStoreListingByManagerId($this->user_id);
         $this->stores = array_column($storeList, 'store_number');
-        $this->storeGroups = CustomStoreGroup::getStoreGroupsForManager($this->user_id);
-
+        $this->storeGroups = CustomStoreGroup::getStoreGroupsForManager($this->stores);
+        
         $this->banners = UserBanner::getAllBanners()->pluck( 'id');
 
-    	return Event::getActiveEventsForStoreList($this->stores, $this->banners, $this->storeGroups);
+        $today = date("Y") . "-" . date("m");
+        $today = (string) $today;
+
+        //for Calendar View
+    	$events =  Event::getActiveEventsAndProductLaunchForCalendarViewByStorelist($this->stores, $this->banners, $this->storeGroups);
+        
+        //for List View
+        $eventsList = Event::getListofEventsByStoreAndMonth($this->stores, $this->banners, $this->storeGroups, $today);
+
+        return view('manager.calendar.index')->with('events', $events)
+                                            ->with('today', $today)
+                                            ->with('eventsList', $eventsList);
     }
 }

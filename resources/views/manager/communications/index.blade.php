@@ -109,11 +109,11 @@
                             <td colspan="3">
                                 @if( isset($communication->stores) )
                                 @foreach($communication->stores as $store)
-                                    <span class="badge">{{$store}}</span></a>
+                                    <span class="badge">{{$store}}</span>
                                 @endforeach
                                 
                                 @elseif( $communication->all_stores == 1 )
-                                    <span class="badge">{{$communication->banner}}</span></a>
+                                    <span class="badge">{{$communication->banner}}</span>
                                 @endif
                             </td>
                         </tr>

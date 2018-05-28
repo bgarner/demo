@@ -134,12 +134,20 @@ class CustomStoreGroup extends Model
         
     }
 
-    public static function getStoreGroupsForManager($user_id)
+    public static function getStoreGroupsForManager($storeNumberArray)
     {
-    	$storeList = StoreInfo::getStoreListingByManagerId($user_id);
-        $stores = array_column($storeList, 'store_number');
-        $storeGroups = CustomStoreGroup::all()->pluck( 'id');
-        return $storeGroups;
+    	
+        $storeGroups = CustomStoreGroup::all();
+
+        foreach ($storeGroups as $key => $group) {
+        	$group->stores = unserialize($group->stores);
+        	
+    		if(! count(array_intersect($storeNumberArray, $group->stores)) > 0 ) {
+    			$storeGroups->forget($key);
+    		}
+        }
+               				
+        return ( $storeGroups->pluck('id') );
         
 
     }

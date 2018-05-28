@@ -541,10 +541,6 @@ class Communication extends Model
 					                    return $query->where('communications.send_at' , '<=', $now)
 								                     ->where('communications.archive_at', '>=', $now);
 					                })
-								   // ->when($isValidCommunicationType, function ($query) use ($communicationType) {
-					      //               return $query->where('communications.communication_type_id', $communicationType);
-					      //           })
-
 								   ->whereNull('communications.deleted_at')
 								   ->whereNull('communications_target.deleted_at')
 								   ->select(\DB::raw('communications.*, GROUP_CONCAT(DISTINCT communications_target.store_id) as stores'))
@@ -564,9 +560,6 @@ class Communication extends Model
 					                    return $query->where('communications.send_at' , '<=', $now)
 								                     ->where('communications.archive_at', '>=', $now);
 					                })
-					                // ->when($isValidCommunicationType, function ($query) use ($communicationType) {
-					                //     return $query->where('communications.communication_type_id', $communicationType);
-					                // })
                                     ->select('communications.*', 'communication_banner.banner_id')
                                     ->get()
                                     ->each(function($comm){
@@ -581,9 +574,6 @@ class Communication extends Model
 								                    return $query->where('communications.send_at' , '<=', $now)
 											                     ->where('communications.archive_at', '>=', $now);
 								                })
-								                // ->when($isValidCommunicationType, function ($query) use ($communicationType) {
-								                //     return $query->where('communications.communication_type_id', $communicationType);
-								                // })
 												->select(\DB::raw('communications.*, GROUP_CONCAT(DISTINCT communication_store_group.store_group_id) as store_groups'))
 												->groupBy('communications.id')
 						                        ->get()
