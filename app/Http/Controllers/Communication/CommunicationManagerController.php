@@ -36,16 +36,22 @@ class CommunicationManagerController extends Controller
 
         $this->banners = UserBanner::getAllBanners()->pluck( 'id');
 
-        // $communicationTypes = CommunicationType::getCommunicationTypesByStoreNumber($request, $storeNumber);
+        
+        //$allCategoryCommunications are active or active+archived comm for storelist
+        $allCategoryCommunications = Communication::getCommunicationsForStoreList($this->stores, $this->banners, $this->storeGroups, $request); 
 
-        $communications = Communication::getCommunicationsForStoreList($this->stores, $this->banners, $this->storeGroups, $request);
+        //filter communication if type is set
+        $communications = Communication::filterAllCommunicationByCategory($allCategoryCommunications, $request); 
+        
+        $communicationTypes = CommunicationType::getCommunicationTypesByStorelist($allCategoryCommunications);
+
+        $communicationCount = count($allCategoryCommunications);
 
         $title = Communication::getCommunicationCategoryName($request['type']);
 
-        $communicationCount = count($communications);
-
         return view('manager.communications.index')
             ->with('communications', $communications)
+            ->with('communicationTypes', $communicationTypes)
             ->with('communicationCount', $communicationCount)
             ->with('title', $title)
             ->with('archives', $request['archives']);

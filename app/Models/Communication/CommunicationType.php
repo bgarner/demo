@@ -211,4 +211,18 @@ class CommunicationType extends Model
         $communicationtype = CommunicationType::find($id);
         $communicationtype->delete();
     }
+
+    public static function getCommunicationTypesByStorelist($communications)
+    {
+        $groupedCommunications = $communications->groupBy('communication_type_id');
+        $communicationTypeIds = $groupedCommunications->keys();
+        $communicationTypes = CommunicationType::whereIn('id', $communicationTypeIds)
+                                              ->get()
+                                              ->each(function($commType) use($groupedCommunications){
+                                                $commType->count = count($groupedCommunications[$commType->id]);
+                                            });
+
+        return $communicationTypes;
+        
+    }
 }

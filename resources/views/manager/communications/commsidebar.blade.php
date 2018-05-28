@@ -16,13 +16,13 @@
             </ul>
             <h5>{{__("Categories")}}</h5>
             <ul class="category-list" style="padding: 0">
-            {{--@foreach($communicationTypes as $c)
+            @foreach($communicationTypes as $c)
 
                 @if( $c->id != "1" && $c->id != "2")
                 <li><a class="comm_category_link" href="/{{ Request::segment(1) }}/communication?type={{ $c->id }}"> <span class="label label-{{ $c->colour }} pull-right">{{ $c->count }}</span> {{ $c->communication_type }}</a></li>
                 @endif
 
-            @endforeach --}}
+            @endforeach
             </ul>
 
             <div class="clearfix"></div>
