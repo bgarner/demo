@@ -91,7 +91,7 @@
 
     @include('manager.includes.scripts')
 
-    <script type="text/javascript" src="/js/custom/site/calendar/listViewUtils.js"></script>
+    <script type="text/javascript" src="/js/custom/manager/calendar/listViewUtils.js"></script>
     <script type="text/javascript" src="/js/plugins/fullcalendar/moment.min.js"></script>
     <script type="text/javascript" src="/js/plugins/fullcalendar/fullcalendar.min.js"></script>
 

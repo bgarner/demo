@@ -32,7 +32,7 @@
                                 <span class="badge">{{$store}}</span></a>
                             @endforeach
                         
-                        @elseif( $e->all_stores == 1 )
+                        @elseif( isset( $e->all_stores ) && ( $e->all_stores == 1 ) )
                             <span class="badge">{{$e->banner}}</span></a>
                         @endif
                     </div>

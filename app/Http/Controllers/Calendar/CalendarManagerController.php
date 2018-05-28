@@ -40,7 +40,7 @@ class CalendarManagerController extends Controller
     	$events =  Event::getActiveEventsAndProductLaunchForCalendarViewByStorelist($this->stores, $this->banners, $this->storeGroups);
         
         //for List View
-        $eventsList = Event::getListofEventsByStoreAndMonth($this->stores, $this->banners, $this->storeGroups, $today);
+        $eventsList = Event::getListofEventsByStorelistAndMonth($this->stores, $this->banners, $this->storeGroups, $today);
 
         return view('manager.calendar.index')->with('events', $events)
                                             ->with('today', $today)

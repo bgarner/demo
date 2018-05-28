@@ -112,13 +112,10 @@ class ProductLaunch extends Model
 	public static function getActiveProductLaunchByStorelistForCalendar($storelist)
     {
 
-		$now = Carbon::now()->toDatetimeString();
-
     	$products =  ProductLaunch::join('productlaunch_target', 'productlaunch_target.productlaunch_id' , '=', 'productlaunch.id')
     							->whereIn('productlaunch_target.store_id', $storelist)
-				                // ->where('productlaunch.launch_date', '>=', $now)
-				                ->select('productlaunch.id', 'productlaunch.launch_date as start', 'productlaunch_target.store_id', 'productlaunch.event_type as event_type_name', 'productlaunch.style_number', 'productlaunch.style_name', 'productlaunch.retail_price')
-				                ->select(\DB::raw('productlaunch.id, productlaunch.launch_date as start, productlaunch_target.store_id, productlaunch.event_type as event_type_name, productlaunch.style_number, productlaunch.style_name, productlaunch.retail_price, GROUP_CONCAT(DISTINCT productlaunch_target.store_id) as stores'))
+				                ->select(\DB::raw('productlaunch.id, productlaunch.launch_date as start, productlaunch.event_type as event_type_name, productlaunch.style_number, productlaunch.style_name, productlaunch.retail_price, GROUP_CONCAT(DISTINCT productlaunch_target.store_id) as stores'))
+				                ->groupBy('productlaunch.id')
     							->get()
     							->each(function ($item) {
 			                        $item->end = Carbon::createFromFormat('Y-m-d H:i:s', $item->start)->addDay()->toDateTimeString();
@@ -138,8 +135,9 @@ class ProductLaunch extends Model
                     ->whereIn('productlaunch_target.store_id', $storelist)
                     ->where('productlaunch.launch_date', 'LIKE', $yearMonth.'%')
                     ->orderBy('productlaunch.launch_date')
-                    ->select('productlaunch.id', 'productlaunch.launch_date as start', 'productlaunch_target.store_id', 'productlaunch.event_type as event_type_name','productlaunch.style_number', 'productlaunch.style_name', 'productlaunch.retail_price', 'event_types.background_colour', 
-                    	'event_types.foreground_colour')
+                    ->select(\DB::raw('productlaunch.id, productlaunch.launch_date as start, productlaunch_target.store_id, productlaunch.event_type as event_type_name, productlaunch.style_number, productlaunch.style_name, productlaunch.retail_price, GROUP_CONCAT(DISTINCT productlaunch_target.store_id) as stores, event_types.background_colour,
+                    	event_types.foreground_colour'))
+                    ->groupBy('productlaunch.id')
                     ->get()
                     ->each(function ($item) {
                     	$item->end = Carbon::createFromFormat('Y-m-d H:i:s', $item->start)->addDay()->toDateTimeString();
@@ -149,12 +147,13 @@ class ProductLaunch extends Model
                         $item->description = '';
                         $title = $item->event_type_name . " - " . $item->style_number . " - " . $item->style_name . " - Reg. " . $item->retail_price;
                         $item->title = addslashes($title);
+                        $item->stores = explode(',', $item->stores);
                     })
                     ->groupBy(function($event) {
                             return Carbon::parse($event->start)->format('Y-m-d');
                     });
         
-        return $products;
+        return ($products);
 
     }
 

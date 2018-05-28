@@ -374,10 +374,13 @@ class Event extends Model
     public static function getListofEventsByStorelistAndMonth($storelist, $banners, $storeGroups, $yearMonth)
     {
         $eventsList = Event::getActiveEventsByStorelistAndMonth($storelist, $banners, $storeGroups, $yearMonth);
-        $productLaunchList = ProductLaunch::getActiveProductLaunchByStoreListandMonth($storeNumber, $yearMonth);
+
+        
+        $productLaunchList = ProductLaunch::getActiveProductLaunchByStorelistandMonth($storelist, $yearMonth);
 
         $eventsList = $eventsList->toArray();
         $productLaunchList = $productLaunchList->toArray();
+
         foreach ($productLaunchList as $date => $launch) {
             if(array_key_exists($date, $eventsList)){
                 foreach($launch as $key => $launchObj){
@@ -400,15 +403,18 @@ class Event extends Model
         
         $targetedEvents = Event::join('events_target', 'events.id', '=', 'events_target.event_id')
                     ->join('event_types', 'events.event_type', '=', 'event_types.id')
-                    ->whereIn('store_id', $store_id)
+                    ->whereIn('events_target.store_id', $storelist)
                     ->where('start', 'LIKE', $yearMonth.'%')
-                    ->select('events.*', 'event_types.event_type as event_type_name', 'event_types.foreground_colour', 'event_types.background_colour' )
+                    ->select(\DB::raw('events.*, event_types.event_type as event_type_name, event_types.foreground_colour, event_types.background_colour, GROUP_CONCAT(DISTINCT events_target.store_id) as stores'))
+                    
+                    ->groupBy('events.id')
                     ->orderBy('start')
                     ->get()
-                    ->each(function ($item) {
-                        $item->prettyDateStart = Utility::prettifyDate($item->start);
-                        $item->prettyDateEnd = Utility::prettifyDate($item->end);
-                        $item->since = Utility::getTimePastSinceDate($item->start);
+                    ->each(function($event){
+                        $event->stores = explode(',', $event->stores);
+                        $event->prettyDateStart = Utility::prettifyDate($event->start);
+                        $event->prettyDateEnd = Utility::prettifyDate($event->end);
+                        $event->since = Utility::getTimePastSinceDate($event->start);
                     });
                     
 
@@ -417,30 +423,47 @@ class Event extends Model
                         ->where('all_stores', 1)
                         ->whereIn('event_banner.banner_id', $banners)
                         ->where('start', 'LIKE', $yearMonth.'%')
-                        ->select('events.*', 'event_types.event_type as event_type_name', 'event_types.foreground_colour', 'event_types.background_colour' )
+                        ->select('events.*', 'event_types.event_type as event_type_name', 'event_types.foreground_colour', 'event_types.background_colour' , 'event_banner.banner_id')
+                        
                         ->orderBy('start')
                         ->get()
-                        ->each(function ($item) {
+                        ->each(function($event){
+                            $event->banner = Banner::find($event->banner_id)->name;
+                            $event->prettyDateStart = Utility::prettifyDate($event->start);
+                            $event->prettyDateEnd = Utility::prettifyDate($event->end);
+                            $event->since = Utility::getTimePastSinceDate($event->start);
+                        });
+
+        $storeGroupEvents = Event::join('event_store_groups', 'event_store_groups.event_id', '=', 'events.id')
+                        ->join('event_types', 'events.event_type', '=', 'event_types.id')
+                        ->whereIn('event_store_groups.store_group_id', $storeGroups)
+                        ->where('start', 'LIKE', $yearMonth.'%')
+                        ->select(\DB::raw('events.*, event_types.event_type as event_type_name, event_types.foreground_colour, event_types.background_colour, GROUP_CONCAT(DISTINCT event_store_groups.store_group_id) as store_groups'))
+                        ->groupBy('events.id')
+                        ->orderBy('start')
+                        ->get()
+                        ->each(function($item) use ($storelist){
+                            $store_groups = explode(',', $item->store_groups);
+
+                            $item->store_groups = $store_groups;
+                            $group_stores = [];
+                            foreach ($store_groups as $group) {
+                                
+                                $stores = unserialize(CustomStoreGroup::find($group)->stores);
+                                $group_stores = array_merge($group_stores,$stores);
+                            }
+                            
+                            $group_stores = array_unique( $group_stores);
+
+                            $item->stores = array_intersect($storelist, $group_stores);
                             $item->prettyDateStart = Utility::prettifyDate($item->start);
                             $item->prettyDateEnd = Utility::prettifyDate($item->end);
                             $item->since = Utility::getTimePastSinceDate($item->start);
                         });
 
-        $storeGroups = CustomStoreGroup::getStoreGroupsForStore($store_id);
-        $storeGroupEvents = Event::join('event_store_groups', 'event_store_groups.event_id', '=', 'events.id')
-                        ->join('event_types', 'events.event_type', '=', 'event_types.id')
-                        ->whereIn('event_store_groups.store_group_id', $storeGroups)
-                        ->where('start', 'LIKE', $yearMonth.'%')
-                        ->select('events.*', 'event_types.event_type as event_type_name', 'event_types.foreground_colour', 'event_types.background_colour' )
-                        ->orderBy('start')
-                        ->get()
-                        ->each(function ($item) {
-                            $item->prettyDateStart = Utility::prettifyDate($item->start);
-                            $item->prettyDateEnd = Utility::prettifyDate($item->end);
-                            $item->since = Utility::getTimePastSinceDate($item->start);
-                        });
-                        
+        
         $events = $targetedEvents->merge($allStoreEvents);
+
         $events = $events->merge($storeGroupEvents);
 
         foreach($events as $event){
