@@ -27,16 +27,15 @@ class CommunicationManagerController extends Controller
     }
     public function index(Request $request)
     {	
-
+    
         $this->user_id = \Auth::user()->id;
-	    
+        
         $storeList = StoreInfo::getStoreListingByManagerId($this->user_id);
         $this->stores = array_column($storeList, 'store_number');
         $this->storeGroups = CustomStoreGroup::getStoreGroupsForManager($this->user_id);
 
-        $this->banners = UserBanner::getAllBanners()->pluck( 'id');
+        $this->banners = UserBanner::getAllBanners()->pluck( 'id');           
 
-        
         //$allCategoryCommunications are active or active+archived comm for storelist
         $allCategoryCommunications = Communication::getCommunicationsForStoreList($this->stores, $this->banners, $this->storeGroups, $request); 
 
@@ -59,26 +58,30 @@ class CommunicationManagerController extends Controller
 
     public function show($id, Request $request)
     {
+        $this->user_id = \Auth::user()->id;
+        
+        $storeList = StoreInfo::getStoreListingByManagerId($this->user_id);
+        $this->stores = array_column($storeList, 'store_number');
+        $this->storeGroups = CustomStoreGroup::getStoreGroupsForManager($this->user_id);
 
-        // $communicationTypes     = CommunicationType::getCommunicationTypesByStoreNumber($request, $storeNumber);
+        $this->banners = UserBanner::getAllBanners()->pluck( 'id');
 
-        // $communicationCount     = Communication::getCommunicationCountByStoreNumber($request, $storeNumber);
-        $communicationCount     = 3;
+        //$allCategoryCommunications are active or active+archived comm for storelist
+        $allCategoryCommunications = Communication::getCommunicationsForStoreList($this->stores, $this->banners, $this->storeGroups, $request); 
+        
+        $communicationTypes = CommunicationType::getCommunicationTypesByStorelist($allCategoryCommunications);
+
+        $communicationCount = count($allCategoryCommunications);
 
         $communication          = Communication::getCommunicationById($id);
 
         $communicationPackages  = CommunicationPackage::getPackagesByCommunicationId($id);
         $communicationDocuments = CommunicationDocument::getDocumentsByCommunicationId($id);
 
-        $request->request->add(['archives' => false]);
-        // $communications         = Communication::getCommunicationByStoreNumber($request, $storeNumber);
-
-        // $communication->nextCommunicationId = Communication::getNextCommunication($communications, $communication);
-        // $communication->previousCommunicationId = Communication::getPreviousCommunication($communications, $communication);
         $tags = ContentTag::getTagsForContent("communication", $request->id);
 
         return view('manager.communications.message')
-            // ->with('communicationTypes', $communicationTypes)
+            ->with('communicationTypes', $communicationTypes)
             ->with('communicationCount', $communicationCount)
             ->with('communication', $communication)
             ->with('communication_documents', $communicationDocuments)
