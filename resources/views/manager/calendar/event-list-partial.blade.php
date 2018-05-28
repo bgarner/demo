@@ -27,7 +27,7 @@
                     </div>
                     <div class="event-desc">
                         <p>{!! $e->description !!}</p>
-                        @if( isset($communication->stores) )
+                        @if( isset($e->stores) )
                             @foreach($e->stores as $store)
                                 <span class="badge">{{$store}}</span></a>
                             @endforeach
