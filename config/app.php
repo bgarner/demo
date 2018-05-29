@@ -270,7 +270,7 @@ return [
         'App\Http\Controllers\Communication\CommunicationPartialController'     => 'Communications',
         'App\Http\Controllers\Communication\CommunicationTagController'         => 'Communications',
         'App\Http\Controllers\Utilities\CkeditorImageController'                => 'Communications',
-        'App\Http\Controllers\Document\DocumentManagerController'               => 'Library',
+        'App\Http\Controllers\Document\LibraryAdminController'                  => 'Library',
         'App\Http\Controllers\Document\FolderAdminController'                   => 'Library',
         'App\Http\Controllers\Document\DocumentAdminController'                 => 'Library',
         'App\Http\Controllers\Document\DocumentFolderAdminController'           => 'Library',

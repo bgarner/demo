@@ -28,7 +28,7 @@ class UrgentNoticeManagerController extends Controller
 	    
     	$storeList = StoreInfo::getStoreListingByManagerId($this->user_id);
         $this->stores = array_column($storeList, 'store_number');
-        $this->storeGroups = CustomStoreGroup::getStoreGroupsForManager($this->user_id);
+        $this->storeGroups = CustomStoreGroup::getStoreGroupsForManager($this->stores);
 
         $this->banners = UserBanner::getAllBanners()->pluck( 'id');
 

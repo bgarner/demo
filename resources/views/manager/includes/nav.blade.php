@@ -87,6 +87,16 @@
             </ul>
         </li>
 
+        @if (Request::is('manager/document/*') || Request::is('manager/document'))
+
+        <li class="active">
+        @else
+        <li>
+        @endif
+            <a href="/manager/document/manager"><i class="fa fa-book"></i> <span class="nav-label">Library</span></a>
+        </li>
+    
+
 
         <!-- Tasks  -->
         @if ( Request::is('manager/task/*') || Request::is('manager/task') || Request::is('manager/tasklist') || Request::is('/manager/tasklist/*') ) 

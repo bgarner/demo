@@ -25,5 +25,9 @@ Route::get('/manager/urgentnotice', 'UrgentNotice\UrgentNoticeManagerController@
 
 
 //task and tasklist
-Route::get('/manager/task', 'Task\TaskManagerController@index');
-Route::get('/manager/tasklist', 'Task\TasklistManagerController@index');
+// Route::get('/manager/task', 'Task\TaskManagerController@index');
+// Route::get('/manager/tasklist', 'Task\TasklistManagerController@index');
+
+
+//library
+Route::get('/manager/document', array('uses' => 'Document\LibraryAdminController@index'));

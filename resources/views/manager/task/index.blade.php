@@ -3,42 +3,44 @@
 
 <head>
     @section('title', 'Tasks')
-    @include('admin.includes.head')
+    @include('manager.includes.head')
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 	<link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
-	
+	<style>
+		.store{
+            /*border:thin solid lime;*/
+            padding: 0px 5px;
+            cursor: pointer;
+            margin: 0px 5px;
+            display: inline-block;
+            width:50px;
+            text-align: center;
+        }
+        .active-store{
+            background-color: green;
+            border-color: green;
+            color: #ffffff;
+        }
+        .task-status{
+        	width: 20%;
+        }
+	</style>
 </head>
 
 <body class="fixed-navigation adminview">
     <div id="wrapper">
 	    <nav class="navbar-default navbar-static-side" role="navigation">
 	        <div class="sidebar-collapse">
-	          
+	          	@include('manager.includes.nav');
 	        </div>
 	    </nav>
 
 	<div id="page-wrapper" class="gray-bg">
 		<div class="row border-bottom">
-			
+			@include('manager.includes.topbar')
         </div>
 
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Tasks</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-                        <li class="active">
-                            <strong>Tasks</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-		</div>
 
 		<div class="wrapper wrapper-content  animated fadeInRight">
 	        <div class="row">
@@ -86,7 +88,7 @@
 									
 										<div class="row">
 											<div class="input-group">
-											<input class="form-control" id="due_date" name="due_date" placeholder="Due Date"/>
+											<input class="form-control due_date_selector" id="due_date" name="due_date" placeholder="Due Date"/>
 											<span class="btn btn-danger input-group-addon" id="clear_due_date">Clear</span>
 											<span  class="btn btn-white input-group-addon" id="send_reminder" data-state="0">
 												<i class="fa fa-square-o"></i>
@@ -156,46 +158,42 @@
                                         <td class="project-title" rowspan="2">
                                             {{$task->title}}
                                             <br>
-                                            <small>Created {{$task->created_at}}</small>
+                                            <small>Due {{$task->prettyDueDate}}</small>
                                         </td>
                                         <td class="project-completion">
-                                                <small>Completion with: {{$task->percentage_done}}%</small>
+                                                {{--<small>Completion with: {{$task->percentage_done}}%</small>--}}
+                                                <div>
+                                                	<span>Completion :</span>
+                                                	<small class="pull-right"> {{ count($task->stores_done) }}/{{count($task->stores)}} Stores</small>
+                                                </div>
                                                 <div class="progress progress-mini">
                                                     <div style="width: {{$task->percentage_done}}%;" class="progress-bar progress-bar-primary"></div>
                                                 </div>
                                         </td>
-                                        <td class="project-people" rowspan="2">
-                                        	
-                                            <span> {{count($task->stores)}} Stores </span>
-                                            
-                                            
-                                        </td>
+                                        
                                         <td class="project-actions" rowspan="2">
-                                           
-                                            <a href="/manager/task/{{$task->id}}/edit" class="btn btn-white btn-sm edit-task" data-task-id="{{$task->id}}" ><i class="fa fa-pencil"></i> Edit </a>
-                                             <a class="btn btn-white btn-sm delete-task" data-task-id="{{$task->id}}"><i class="fa fa-trash"></i> Delete </a>
+                                           	@if($task->creator_id == Auth::user()->id)
+                                            	<a href="/manager/task/{{$task->id}}/edit" class="btn btn-white btn-sm edit-task" data-task-id="{{$task->id}}" ><i class="fa fa-pencil"></i> Edit </a>
+                                             	<a class="btn btn-white btn-sm delete-task" data-task-id="{{$task->id}}"><i class="fa fa-trash"></i> Delete </a>
+                                            @endif
                                         </td>
 									</tr>
 									<tr>
 										<td class="task-status" id="task_status_{{$task->id}}">
 	                                    	<div class="task_status_box" id="task_status_box_{{$task->id}}">
 	                                    	
-												{{--
-	                                        	<span class="task-not-done">
+												
+	                                        	<!-- <span class="task-not-done"> -->
 	                                        		@foreach($task->stores_done as $store)
-	                                        		<span><i class="fa fa-check"></i> {{$store}}</span>	
-	                                        		<br>
+	                                        		<span class="store btn btn-xs active-store">{{$store}}</span>
 	                                        		@endforeach
-	                                        	</span>
-	                                        	<span class="task-done">
+	                                        	<!-- </span>
+	                                        	<span class="task-done"> -->
 	                                        		@foreach($task->stores_not_done as $store)
-	                                        		<span><i class="fa fa-times"></i> {{$store}}</span>
-	                                        		<br>
+	                                        		<span class="store btn btn-xs">{{$store}}</span>
+	                                        		
 	                                        		@endforeach
-	                                        	</span>
-	                                        	--}}
-
-	                                        
+	                                        	<!-- </span> -->
 	                                    	</div>
 	                                	</td>
                                     </tr>
@@ -214,9 +212,9 @@
         </div>
         @include('manager.task.editmodal')
 
-		@include('admin.includes.footer')
+		@include('manager.includes.footer')
 
-	    @include('admin.includes.scripts')
+	    @include('manager.includes.scripts')
 
 		<script type="text/javascript">
 			$.ajaxSetup({

@@ -20,7 +20,7 @@ class ManagerDashboard extends Model
         $storeList = StoreInfo::getStoreListingByManagerId($user_id);
         $stores = array_column($storeList, 'store_number');
 
-        $storeGroups = CustomStoreGroup::getStoreGroupsForManager($user_id);
+        $storeGroups = CustomStoreGroup::getStoreGroupsForManager($stores);
 
         $banners = UserBanner::getAllBanners()->pluck( 'id');
 
@@ -30,9 +30,9 @@ class ManagerDashboard extends Model
         
         $compiledData["alerts"] = Alert::getActiveAlertsForStoreList($stores, $banners, $storeGroups);
         $compiledData["urgentNotices"] = UrgentNotice::getActiveUrgentNoticesForStoreList($stores, $banners, $storeGroups); 
-        $compiledData["productLaunches"] = ProductLaunch::getActiveProductLaunchesForStoreList($stores);
+        // $compiledData["productLaunches"] = ProductLaunch::getActiveProductLaunchesForStoreList($stores);
 
-        $compiledData['calendar'] = Event::getActiveEventsForStoreList($stores, $banners, $storeGroups);
+        // $compiledData['calendar'] = Event::getActiveEventsForStoreList($stores, $banners, $storeGroups);
 
         return ( $compiledData );
     }

@@ -269,9 +269,11 @@ class Task extends Model
 	{
 		
 		$allStoreTasks = Task::join('task_banner', 'task_banner.task_id', '=', 'tasks.id')
+								->join('task_creator', 'task_creator.task_id', '=', 'tasks.id')
                                 ->where('all_stores', 1)
                                 ->whereIn('task_banner.banner_id', $banners)
-                                ->select(\DB::raw('tasks.*, GROUP_CONCAT(DISTINCT task_banner.banner_id) as banners'))
+                                ->select(\DB::raw('tasks.*, GROUP_CONCAT(DISTINCT task_banner.banner_id) as banners, task_creator.creator_id'))
+                                ->groupBy('tasks.id')
                                 ->get()
                                 ->each(function($item)use ($stores, $banners){
                                 	$item->banners = explode(',', $item->banners);
@@ -279,15 +281,15 @@ class Task extends Model
                                 	foreach ($item->banners as $banner) {
                                 		$item->stores = array_merge($item->stores, array_column(StoreInfo::getStoresInfo($banner), 'store_number'));
                                 	}
-                                	\Log::info($item->stores);
 
                                 	$item->stores = array_intersect($item->stores, $stores);
                                 	
                                 });
         
         $targetedTasks = Task::join('tasks_target', 'tasks_target.task_id', '=', 'tasks.id')
+        						->join('task_creator', 'task_creator.task_id', '=', 'tasks.id')
                                 ->whereIn('tasks_target.store_id', $stores)
-                                ->select(\DB::raw('tasks.*, GROUP_CONCAT(DISTINCT tasks_target.store_id) as stores'))
+                                ->select(\DB::raw('tasks.*, GROUP_CONCAT(DISTINCT tasks_target.store_id) as stores, task_creator.creator_id'))
                                 ->groupBy('tasks.id')
                                 ->get()
                                 ->each(function($task){
@@ -295,36 +297,36 @@ class Task extends Model
                                 });
 
         $tasksForStoreGroups = Task::join('task_store_group', 'task_store_group.task_id', '=', 'tasks.id')
-                                            ->whereIn('task_store_group.store_group_id', $storeGroups)
-                                            ->select(\DB::raw('tasks.*, GROUP_CONCAT(DISTINCT task_store_group.store_group_id) as store_groups'))
-                                            ->groupBy('tasks.id')
-                                            ->get()
-                                            ->each(function($item)use ($stores){
-                                                $store_groups = explode(',', $item->store_groups);
-                                                $item->store_groups = $store_groups;
-                                                $group_stores = [];
-                                                foreach ($store_groups as $group) {
-                                                    $temp_stores = unserialize(CustomStoreGroup::find($group)->stores);
-                                                    $group_stores = array_merge($group_stores,$temp_stores);
-                                                }
-                                                $group_stores = array_unique( $group_stores);
-                                                $item->stores = array_intersect($stores, $group_stores);
-                                            });
+        							->join('task_creator', 'task_creator.task_id', '=', 'tasks.id')
+                                    ->whereIn('task_store_group.store_group_id', $storeGroups)
+                                    ->select(\DB::raw('tasks.*, GROUP_CONCAT(DISTINCT task_store_group.store_group_id) as store_groups, task_creator.creator_id'))
+                                    ->groupBy('tasks.id')
+                                    ->get()
+                                    ->each(function($item)use ($stores){
+                                        $store_groups = explode(',', $item->store_groups);
+                                        $item->store_groups = $store_groups;
+                                        $group_stores = [];
+                                        foreach ($store_groups as $group) {
+                                            $temp_stores = unserialize(CustomStoreGroup::find($group)->stores);
+                                            $group_stores = array_merge($group_stores,$temp_stores);
+                                        }
+                                        $group_stores = array_unique( $group_stores);
+                                        $item->stores = array_intersect($stores, $group_stores);
+                                    });
 
 
-        $targetedTasks = Utility::mergeTargetedAndStoreGroupContent($targetedTasks, $tasksForStoreGroups);
-                                           
-        $tasks = Utility::mergeTargetedAndAllStoreContent($targetedTasks, $allStoreTasks);
-
-        foreach ($tasks as $key=>$task) {
-        	Task::getTaskCompletionStatistics($task);
+        $allTasks = $targetedTasks->merge($tasksForStoreGroups)->merge($allStoreTasks)->sortByDesc('due_date')
+        ->each(function($task){
+        	Task::getTaskCompletionStatisticsForManager($task);
 			Task::getTaskStatus($task);
 			$task->prettyDueDate = Utility::prettifyDate($task->due_date);
 			if(TasklistTask::where('task_id', $task->id)->exists()){
 				$tasks->forget($key);
 			}
-        }
-        return $tasks;
+        });
+                                           
+
+        return $allTasks;
 	}	
 
 
@@ -342,6 +344,23 @@ class Task extends Model
     
         return $task;
 	}
+
+	public static function getTaskCompletionStatisticsForManager($task)
+	{	
+    	
+    	$allStoresDone = TaskStoreStatus::getStoresDone($task->id);
+    	$taskStores = $task->stores;
+
+    	$storesDone = array_intersect($allStoresDone, $taskStores);
+    	$storesNotDone = array_diff($taskStores , $storesDone);
+    	
+    	$task->stores_done = $storesDone;
+    	$task->stores_not_done = $storesNotDone;
+    	$task->percentage_done = round( ((count($taskStores) - count($storesNotDone))/count($taskStores))*100 );
+    
+        return $task;
+	}
+
 
 	public static function getTaskStatus($task)
 	{

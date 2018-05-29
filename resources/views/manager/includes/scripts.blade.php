@@ -21,6 +21,8 @@
     <script src="/js/custom/site/launchModal.js?<?=time();?>"></script>
     <script src="/js/custom/trackEvent.js?<?=time();?>"></script>
     <script src="/js/custom/sendBugReport.js?<?=time();?>"></script>
+    <script src="/js/vendor/moment.js"></script>
+    <script src="/js/vendor/bootstrap-datetimepicker.min.js"></script>
     
 
     <script type="text/javascript">
