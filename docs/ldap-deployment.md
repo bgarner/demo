@@ -32,8 +32,9 @@ Run these SQL queries against these tables. Make sure the role ids for the form 
 ```
 INSERT INTO `form_role` (`id`, `form_id`, `role_id`, `created_at`, `updated_at`)
 VALUES
-	(3,1,9,NULL,NULL),
-	(4,1,10,NULL,NULL);
+	(1,1,9,NULL,NULL),
+	(2,1,10,NULL,NULL)
+	(3,1,11,NULL,NULL);
 ```
 **form_role_permission**
 ```
