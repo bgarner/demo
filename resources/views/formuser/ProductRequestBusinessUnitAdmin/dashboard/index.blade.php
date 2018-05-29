@@ -31,9 +31,17 @@
                 padding: 5px 10px 15px 10px;
                 min-height: 60px;
             }
-            #user_assignment_modal .modal-body, #group_assignment_modal .modal-body{
-            	height: 77% !important;
-            }
+            
+            #user_assignment_modal .modal-dialog, #user_assignment_modal .modal-content, #group_assignment_modal .modal-dialog, #group_assignment_modal .modal-content {
+    			/* 80% of window height */
+    			height: 80%;
+			}
+
+			#user_assignment_modal .modal-body, #group_assignment_modal .modal-body {
+			    /* 100% = dialog height, 120px = header + footer */
+			    max-height: calc(100% - 120px);
+			    overflow-y: scroll;
+			}
         </style>
 </head>
 

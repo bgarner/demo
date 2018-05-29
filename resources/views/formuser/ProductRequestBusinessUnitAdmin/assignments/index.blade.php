@@ -41,8 +41,10 @@
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="edit_selected">
                                             
+                                            @if($loop->first)
+                                            <li id="show_update_status"><a>Update Status</a></li>
+											@elseif($loop->last)
                                             <li id="assign_to_user"><a>Assign to User</a></li>
-											@if($loop->last)
                                             <li id="show_update_status_group_assign"><a>Update Status</a></li>
                                             @endif
 
