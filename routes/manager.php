@@ -17,6 +17,7 @@ Route::get('/manager/communication/show/{id}', 'Communication\CommunicationManag
 //calendar
 Route::get('/manager/calendar', 'Calendar\CalendarManagerController@index');
 Route::get('/manager/productlaunch', 'Calendar\ProductLaunchManagerController@index');
+Route::get('/manager/calendar/eventlistpartial/{yearmonth}' , 'Calendar\CalendarManagerController@getEventListPartial');
 
 //alert and Urgent Notice
 Route::get('/manager/alert', 'Alert\AlertManagerController@index');

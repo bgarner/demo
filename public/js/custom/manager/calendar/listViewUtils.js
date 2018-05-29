@@ -126,7 +126,7 @@ function renderList(yearMonth)
 	$('.month-name').html( the_month_name);
 	$('.year').html(the_year);
 	// var storeno = localStorage.getItem('userStoreNumber');
-	// $(".event-list-partial").load("/" + storeno + "/calendar/eventlistpartial/" + yearMonth);
+	$(".event-list-partial").load("/manager/calendar/eventlistpartial/" + yearMonth);
 
 }
 

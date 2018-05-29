@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    @section('title', 'Communications')
+    @section('title', 'Calendar')
     <link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
     @include('manager.includes.head')
 

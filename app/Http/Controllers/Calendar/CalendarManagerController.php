@@ -46,4 +46,17 @@ class CalendarManagerController extends Controller
                                             ->with('today', $today)
                                             ->with('eventsList', $eventsList);
     }
+
+    public function getEventListPartial($yearMonth)
+    {
+        $this->user_id = \Auth::user()->id;
+        
+        $storeList = StoreInfo::getStoreListingByManagerId($this->user_id);
+        $this->stores = array_column($storeList, 'store_number');
+        $this->storeGroups = CustomStoreGroup::getStoreGroupsForManager($this->stores);
+        
+        $this->banners = UserBanner::getAllBanners()->pluck( 'id');
+        $eventsList = Event::getListofEventsByStoreListAndMonth($this->stores, $this->banners, $this->storeGroups, $yearMonth);
+        return view('manager.calendar.event-list-partial')->with('eventsList', $eventsList);
+    }
 }
