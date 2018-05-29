@@ -27,6 +27,13 @@ class ProductLaunchManagerController extends Controller
 	    $this->user_id = \Auth::user()->id;
     	$storeList = StoreInfo::getStoreListingByManagerId($this->user_id);
         $this->stores = array_column($storeList, 'store_number');
-    	return ProductLaunch::getActiveProductLaunchesForStoreList($this->stores);
+    	$productLaunches =  ProductLaunch::getActiveProductLaunchesForStoreList($this->stores);
+        $lastUpdated ="";
+        if ( count($productLaunches) > 0){
+            $lastUpdated = ProductLaunch::getLastUpdatedTimestamp();
+        }
+        return view('manager.calendar.productlaunch.index')
+            ->with('productLaunches', $productLaunches)
+            ->with('lastUpdated',  $lastUpdated); 
     }
 }
