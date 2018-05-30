@@ -30,5 +30,9 @@ class GroupUser extends Model
         return GroupUser::where('user_id', $user_id)->get()->pluck('form_group_id')->toArray();
     }
 
+    public static function getUsersByGroupIdList($groupList)
+    {
+        return GroupUser::whereIn('form_group_id', $groupList)->pluck('user_id');   
+    }
     
 }
