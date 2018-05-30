@@ -17,6 +17,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="/css/app.css?<?=time()?>">
     <link rel="stylesheet" type="text/css" media="screen" href="/css/plugins/dataTables/datatables.min.css?<?=time()?>">
     <link rel="stylesheet" type="text/css" media="screen" href="/css/plugins/videojs/video-js.css?<?=time()?>">
+    <link href="/css/vendor/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <script>
 
     </script>

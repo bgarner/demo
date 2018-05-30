@@ -55,6 +55,7 @@ class TaskManagerController extends Controller
      */
     public function store(Request $request)
     {
+        return $request->all();
         return Task::createTask($request);
     }
 
@@ -99,7 +100,7 @@ class TaskManagerController extends Controller
     public function update(Request $request, $id)
     {
         Task::updateTask($id, $request);
-        return redirect('/manager/task/');
+        return redirect('/manager/task');
 
     }
 

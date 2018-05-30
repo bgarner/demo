@@ -22,8 +22,15 @@
             border-color: green;
             color: #ffffff;
         }
-        .task-status{
-        	width: 20%;
+        .task-status, .project-completion{
+        	width: 25%;
+        }
+        
+        #task_title, .input-group-addon{
+        	border : none;
+        }
+        #add_task_input_group{
+        	border: thin solid #e9e9e9;
         }
 	</style>
 </head>
@@ -45,109 +52,49 @@
 		<div class="wrapper wrapper-content  animated fadeInRight">
 	        <div class="row">
 	            <div class="col-lg-12">
-	            	
-	            	<div class="ibox">
-	            		<div class="ibox-title">
-	            			<h5>Add New Task</h5>
-	            		</div>
-	            		<div class="ibox-content">
-	            			<form class="form-inline">
-									
-										<div class="input-group" style="width:100%;">
-											<input type="text" class="form-control" id="title" name="title">
-											<span class="input-group-addon" 
-												   id="due_date_popover"
-												   style="width:5%"
-												   title ="Select a Due Date">
-									            <i class="fa fa-calendar"></i>
-									            
-									        </span>
-											<span class="input-group-addon" 
-													style="width:5%;" 
-													id="store_select_popover"
-													title = "Select Stores">
-													<i class="fa fa-users"></i>
-											</span>
-											<span class="input-group-addon" 
-													style="width:5%;" 
-													id="description_popover"
-													title="Add Description">
-													<i class="fa fa-comment"></i>
-											</span>
-											<span class="input-group-addon task-create" 
-													style="width:5%;"
-													title="Create Task">
-													<i class="fa fa-check"></i>
-											</span>
-											
-											
-										</div>
-									
-								</form>
-								<div class="ibox-content" id="due_date_ibox">
-									
-										<div class="row">
-											<div class="input-group">
-											<input class="form-control due_date_selector" id="due_date" name="due_date" placeholder="Due Date"/>
-											<span class="btn btn-danger input-group-addon" id="clear_due_date">Clear</span>
-											<span  class="btn btn-white input-group-addon" id="send_reminder" data-state="0">
-												<i class="fa fa-square-o"></i>
-												Send Reminder
-											</span>
-											</div>
-										</div>
-										<div id="due_date_selector"></div>
-
-								</div>
-								<div class="ibox-content" id="store_selector_ibox">
-									
-										<div class="row">
-										
-							                <div class="input-group">
-							                    {!! Form::select('stores', $stores, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
-							                
-							                
-							                    
-						                    <span  class="btn btn-white input-group-addon" id="allStores" data-state="0">
-												<i class="fa fa-square-o"></i>
-												All Stores
-											</span>
-						                
-						                    <span class="btn btn-white input-group-addon" id="confirm-store-select" > Done </span>
-							                </div>
-							                
-						                </div>
-
-								</div>
-
-								<div class="ibox-content" id="description_ibox">
-									
-										<div class="row">
-										
-							                <div class="input-group">
-							                   <textarea name="description" id="description" cols="30" rows="10"></textarea>
-							                </div>
-							                
-						                </div>
-
-								</div>
-								<hr>
-	            		</div><!-- ibox content -->
-
-	            	</div> <!-- ibox ends -->
-
-
 	                <div class="ibox">
 	                    <div class="ibox-title">
 	                        <h5>All Tasks</h5>
-
-	                        <div class="ibox-tools">
-
-	                        </div>
 	                    </div>
 	                   
 	                    <div class="ibox-content">
 							<div class="project-list">
+								<form class="form-inline">
+									
+									<div class="input-group" id="add_task_input_group" style="width:100%;">
+										<input type="text" class="form-control" id="task_title" name="task_title" placeholder="Add a task...">
+										<input type="text" id="task_publish_date" hidden>
+										<input type="text" id="task_due_date" hidden>
+										<input type="text" id="task_target">
+										<span class="input-group-addon" 
+											   id="date_popover"
+											   style="width:2%;">
+								            <i class="fa fa-calendar"></i>
+								            
+								        </span>
+
+										<span class="input-group-addon" 
+												style="width:2%;" 
+												id="store_select_popover"
+												title = "Select Stores">
+												<i class="fa fa-users"></i>
+										</span>
+										<span class="input-group-addon" 
+												style="width:2%;" 
+												id="description_popover"
+												title="Add Description">
+												<i class="fa fa-comment"></i>
+										</span>
+										<span class="input-group-addon task-create" 
+												style="width:2%;"
+												title="Create Task">
+												<i class="fa fa-check"></i>
+										</span>
+										
+										
+									</div>
+								
+								</form>
                                 <table class="table table-hover">
                                     <tbody>
                                     @foreach($tasks as $task)
@@ -190,7 +137,7 @@
 	                                        	<!-- </span>
 	                                        	<span class="task-done"> -->
 	                                        		@foreach($task->stores_not_done as $store)
-	                                        		<span class="store btn btn-xs">{{$store}}</span>
+	                                        		<span class="store btn btn-xs btn-default">{{$store}}</span>
 	                                        		
 	                                        		@endforeach
 	                                        	<!-- </span> -->
@@ -216,6 +163,19 @@
 
 	    @include('manager.includes.scripts')
 
+	    <div hidden>
+
+	    <div id="date_container">
+	    	<div class="input-daterange input-group" >
+	            <input type="text" class="input-sm form-control datetimepicker-start" name="publish_date" id="publish_date" value="" placeholder="Start date" />
+	            <span class="input-group-addon"></span>
+	            <input type="text" class="input-sm form-control datetimepicker-end" name="due_date" id="due_date" value="" placeholder="Due date"/>
+	        </div>
+		</div>
+
+
+		</div>
+
 		<script type="text/javascript">
 			$.ajaxSetup({
 		        headers: {
@@ -225,7 +185,7 @@
 
 		</script>
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
-		<script type="text/javascript" src="/js/custom/manager/tasks/addTask.js"></script>
+		<script type="text/javascript" src="/js/custom/manager/tasks/crudTask.js"></script>
 		<script type="text/javascript" src="/js/plugins/ckeditor-custom/ckeditor.js"></script>
 		<!-- <script type="text/javascript" src="/js/custom/admin/global/storeSelector.js"></script> -->
 
