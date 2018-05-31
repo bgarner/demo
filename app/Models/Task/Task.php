@@ -138,7 +138,7 @@ class Task extends Model
 			'send_reminder'	=> (bool) $request["send_reminder"],
 			// 'banner_id'		=> $banner_id
 		]);
-		\Log::info($task);
+
 		TaskTarget::updateTargetStores($task->id, $request);
 		TaskDocument::updateTaskDocuments($task->id, $request);
 		TaskCreator::updateTaskCreator($task->id, \Auth::user()->id);
@@ -169,7 +169,7 @@ class Task extends Model
 		if(isset($request['publish_date'])) {
 			$task["publish_date"] = $request['publish_date'];
 		}
-		
+
 		$task->save();
 
 		TaskTarget::updateTargetStores($task->id, $request);
@@ -268,6 +268,7 @@ class Task extends Model
 
 	public static function getActiveTasksForStoreList($stores, $banners, $storeGroups)
 	{
+		$now = Carbon::now();
 		
 		$allStoreTasks = Task::join('task_banner', 'task_banner.task_id', '=', 'tasks.id')
 								->join('task_creator', 'task_creator.task_id', '=', 'tasks.id')
@@ -316,15 +317,18 @@ class Task extends Model
                                     });
 
 
-        $allTasks = $targetedTasks->merge($tasksForStoreGroups)->merge($allStoreTasks)->sortByDesc('due_date')
-        ->each(function($task){
+        $allTasks = $targetedTasks->merge($tasksForStoreGroups)->merge($allStoreTasks)->sortBy('due_date');
+        foreach ($allTasks as $key => $task) {
         	Task::getTaskCompletionStatisticsForManager($task);
 			Task::getTaskStatus($task);
 			$task->prettyDueDate = Utility::prettifyDate($task->due_date);
 			if(TasklistTask::where('task_id', $task->id)->exists()){
-				$tasks->forget($key);
+				$allTasks->forget($key);
 			}
-        });
+			if($task->due_date < $now && $task->percentage_done == 100){
+				$allTasks->forget($key);	
+			}
+        }
                                            
 
         return $allTasks;
