@@ -24,17 +24,23 @@ class TaskManagerController extends Controller
     {
         $this->user_id = \Auth::user()->id;
         
-        $storeList = StoreInfo::getStoreListingByManagerId($this->user_id);
-        $this->stores = array_column($storeList, 'store_number');
+        $storeInfo = StoreInfo::getStoreListingByManagerId($this->user_id);
+        $this->stores = array_column($storeInfo, 'store_number');
+
         $this->storeGroups = CustomStoreGroup::getStoreGroupsForManager($this->stores);
 
         $this->banners = UserBanner::getAllBanners()->pluck( 'id')->toArray();
         
         $tasks = Task::getActiveTasksForStoreList($this->stores, $this->banners, $this->storeGroups);
 
+        $storeList = [];
+        foreach ($storeInfo as $store) {
+            $storeList[$store->store_number] = $store->store_id . " " . $store->name . " (" . $store->banner_id .")" ;
+        }
+
         // return $tasks;
         return view('manager.task.index')->with('tasks', $tasks)
-                                        ->with('stores', $this->stores);
+                                        ->with('stores', $storeList);
     }
 
     /**
@@ -55,7 +61,7 @@ class TaskManagerController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->all();
+        \Log::info( $request->all() );
         return Task::createTask($request);
     }
 

@@ -63,9 +63,10 @@
 									
 									<div class="input-group" id="add_task_input_group" style="width:100%;">
 										<input type="text" class="form-control" id="task_title" name="task_title" placeholder="Add a task...">
-										<input type="text" id="task_publish_date" hidden>
+										<input type="text" id="task_publish_date" hidden >
 										<input type="text" id="task_due_date" hidden>
-										<input type="text" id="task_target">
+										<input type="text" id="task_target" hidden>
+										<input type="text" id="task_description" hidden>
 										<span class="input-group-addon" 
 											   id="date_popover"
 											   style="width:2%;">
@@ -165,13 +166,25 @@
 
 	    <div hidden>
 
-	    <div id="date_container">
-	    	<div class="input-daterange input-group" >
-	            <input type="text" class="input-sm form-control datetimepicker-start" name="publish_date" id="publish_date" value="" placeholder="Start date" />
-	            <span class="input-group-addon"></span>
-	            <input type="text" class="input-sm form-control datetimepicker-end" name="due_date" id="due_date" value="" placeholder="Due date"/>
-	        </div>
-		</div>
+		    <div id="date_container">
+		    	<div class="input-daterange input-group" >
+		            <input type="text" class="input-sm form-control datetimepicker-start" name="publish_date" id="publish_date" value="" placeholder="Start date" />
+		            <span class="input-group-addon"></span>
+		            <input type="text" class="input-sm form-control datetimepicker-end" name="due_date" id="due_date" value="" placeholder="Due date"/>
+		        </div>
+			</div>
+			<div id="store_container">
+				<div class="input-group">
+					{!! Form::select('stores', $stores, null, [ 'class'=>'chosen', 'id'=> 'storeSelect', 'multiple'=>'true']) !!}
+					<span  class="btn btn-white input-group-addon pull-right" id="allStores" data-state="0">
+						<i class="fa fa-square-o"></i> All Stores
+					</span>
+				</div>
+			</div>
+
+			<div id="description_container">
+				<textarea name="description" id="description" cols="30" rows="10"></textarea>
+			</div>
 
 
 		</div>

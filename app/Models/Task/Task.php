@@ -113,6 +113,7 @@ class Task extends Model
 
 	public static function createTask($request)
 	{
+
 		$validate = Task::validateCreateTask($request);
 		if($validate['validation_result'] == 'false') {
 			\Log::info($validate);
@@ -137,7 +138,7 @@ class Task extends Model
 			'send_reminder'	=> (bool) $request["send_reminder"],
 			// 'banner_id'		=> $banner_id
 		]);
-
+		\Log::info($task);
 		TaskTarget::updateTargetStores($task->id, $request);
 		TaskDocument::updateTaskDocuments($task->id, $request);
 		TaskCreator::updateTaskCreator($task->id, \Auth::user()->id);
@@ -168,7 +169,7 @@ class Task extends Model
 		if(isset($request['publish_date'])) {
 			$task["publish_date"] = $request['publish_date'];
 		}
-
+		
 		$task->save();
 
 		TaskTarget::updateTargetStores($task->id, $request);
