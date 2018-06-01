@@ -617,6 +617,64 @@ class Document extends Model
                             ->get();
     }
 
+    public static function getDocumentsForManager($folder_id, $storeList)
+    {
+        $now = Carbon::now()->toDatetimeString();
+
+        $allStoreDocuments = Document::join('file_folder', 'file_folder.document_id', '=', 'documents.id')
+                                    ->where('file_folder.folder_id', $folder_id)
+                                    ->where('documents.all_stores', 1)
+                                    ->where('documents.start', '<=', $now )
+                                    ->where(function($query) use ($now) {
+                                        $query->where('documents.end', '>=', $now)
+                                            ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                            ->orWhere('documents.end', '=', NULL );
+                                    })
+                                    ->where('documents.deleted_at', '=', null)
+                                    ->select('documents.*')
+                                    ->get();
+
+
+        $targetedDocuments = Document::join('file_folder', 'file_folder.document_id', '=', 'documents.id')
+                            ->join('document_target', 'document_target.document_id' , '=', 'documents.id')
+                            ->where('file_folder.folder_id', '=', $folder_id)
+                            ->where('documents.start', '<=', $now )
+                            ->where(function($query) use ($now) {
+                                $query->where('documents.end', '>=', $now)
+                                    ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                    ->orWhere('documents.end', '=', NULL ); 
+                            })
+                            ->where('documents.deleted_at', '=', null)
+                            ->whereIn('document_target.store_id', $storeList)
+                            ->select(\DB::raw('documents.*, GROUP_CONCAT(DISTINCT document_target.store_id) as stores'))
+                            ->groupBy('documents.id')
+                            ->get()
+                            ->each(function($doc){
+                                $doc->stores = explode(',', $doc->stores);
+                            });
+
+        $documents = $targetedDocuments->merge($allStoreDocuments);
+        foreach ($documents as $document) {
+
+            //$document = Document::getDocumentMetaData();
+            $document->link = Utility::getModalLink($document->filename, $document->title, $document->original_extension, $document->id, 0);
+            $document->link_with_icon = Utility::getModalLink($document->filename, $document->title, $document->original_extension, $document->id, 1);
+            $document->icon = Utility::getIcon($document->original_extension);
+            $document->prettyDateCreated = Utility::prettifyDate($document->created_at);
+            $document->prettyDateUpdated = Utility::prettifyDate($document->updated_at);
+            $document->prettyDateStart = Utility::prettifyDate($document->start);
+            $document->prettyDateEnd = Utility::prettifyDate($document->end);
+
+            $document->is_alert = '';
+            if (Alert::where('document_id', $document->id)->first()) {
+                $document->is_alert = Utility::getAlertIcon();
+            }
+
+        }
+
+        return $documents;
+    }
+
     public static function batchUpload($request)
     {
 

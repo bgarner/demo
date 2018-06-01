@@ -24,10 +24,6 @@ Route::get('/manager/alert', 'Alert\AlertManagerController@index');
 Route::get('/manager/urgentnotice', 'UrgentNotice\UrgentNoticeManagerController@index');
 
 
-//task and tasklist
-// Route::get('/manager/task', 'Task\TaskManagerController@index');
-// Route::get('/manager/tasklist', 'Task\TasklistManagerController@index');
-
-
 //library
-Route::get('/manager/document', array('uses' => 'Document\LibraryAdminController@index'));
+Route::get('/manager/document', array('uses' => 'Document\LibraryManagerController@index'));
+Route::get('/manager/folder/{folder_id}', 'Document\FolderManagerController@show');

@@ -93,7 +93,7 @@
         @else
         <li>
         @endif
-            <a href="/manager/document/manager"><i class="fa fa-book"></i> <span class="nav-label">Library</span></a>
+            <a href="/manager/document"><i class="fa fa-book"></i> <span class="nav-label">Library</span></a>
         </li>
     
 
@@ -104,11 +104,8 @@
         @else
         <li>
         @endif
-             <a href="/manager/task"><i class="fa fa-tasks"></i> <span class="nav-label">Tasks</span><span class="fa arrow"></span></a>
-             <ul class="nav nav-second-level collapse">
-                <li><a href="/manager/tasklist">Task Lists</a></li>
-                <li><a href="/manager/task">Tasks</a></li>
-            </ul>
+            <a href="/manager/task"><i class="fa fa-tasks"></i> <span class="nav-label">Tasks</span></a>
+             
         </li>
 
 </ul>

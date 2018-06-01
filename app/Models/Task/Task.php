@@ -322,9 +322,7 @@ class Task extends Model
         	Task::getTaskCompletionStatisticsForManager($task);
 			Task::getTaskStatus($task);
 			$task->prettyDueDate = Utility::prettifyDate($task->due_date);
-			if(TasklistTask::where('task_id', $task->id)->exists()){
-				$allTasks->forget($key);
-			}
+			
 			if($task->due_date < $now && $task->percentage_done == 100){
 				$allTasks->forget($key);	
 			}
