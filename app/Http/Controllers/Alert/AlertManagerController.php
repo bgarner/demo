@@ -8,6 +8,7 @@ use App\Models\StoreApi\StoreInfo;
 use App\Models\Tools\CustomStoreGroup;
 use App\Models\Auth\User\UserBanner;
 use App\Models\Alert\Alert;
+use App\Models\Alert\AlertType;
 
 class AlertManagerController extends Controller
 {
@@ -33,6 +34,23 @@ class AlertManagerController extends Controller
 
         $this->banners = UserBanner::getAllBanners()->pluck( 'id');
 
-    	return Alert::getActiveAlertsForStoreList($this->stores, $this->banners, $this->storeGroups);
+        //$allAlerts are active or active+archived alerts for storelist
+        $allAlerts = Alert::getAlertsForStoreList($this->stores, $this->banners, $this->storeGroups, $request); 
+        
+        // filter alerts if type is set
+        $alerts = Alert::filterAllAlertsByCategory($allAlerts, $request);
+        
+        $alertTypes = AlertType::getAlertTypesByStorelist($allAlerts);
+
+        $alertCount = count($allAlerts);
+
+        $title = AlertType::getAlertCategoryName($request['type']);
+
+        return view('manager.alerts.index')
+            ->with('alerts', $alerts)
+            ->with('alertTypes', $alertTypes)
+            ->with('alertCount', $alertCount)
+            ->with('title', $title)
+            ->with('archives', $request['archives']);
     }
 }

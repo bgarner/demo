@@ -12,6 +12,7 @@ use App\Models\Alert\AlertTarget;
 use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\StoreApi\StoreInfo;
 use App\Models\Validation\AlertValidator;
+use App\Models\StoreApi\Banner;
 
 class Alert extends Model
 {
@@ -24,7 +25,7 @@ class Alert extends Model
 
     public static function validateAlert($request)
     {
-         $validateThis = [
+        $validateThis = [
             'document_id'   => $request['document_id'],
             'alert_type_id' => $request['alert_type_id']
         ];
@@ -396,70 +397,111 @@ class Alert extends Model
         return $alerts;
     }
 
-    public static function getActiveAlertsForStoreList($storeNumbersArray, $banners, $storeGroups)
+    public static function getAlertsForStoreList($storeNumbersArray, $banners, $storeGroups, $request)
     {
         $now = Carbon::now()->toDatetimeString();
-        $targetedComm = Alert::getActiveTargetedAlertsForStoreList($storeNumbersArray);
-
-        $allStoreAlerts = Alert::join('documents', 'alerts.document_id', '=', 'documents.id')
-                        ->where('documents.all_stores', 1)
-                        ->whereIn('alerts.banner_id', $banners)
-                        ->where('documents.end', '<=', $now)
-                        ->where('documents.end', '!=', '0000-00-00 00:00:00')
-                        ->where('documents.end', '!=', NULL)
-                        ->select('alerts.*', 'documents.start as start', 'documents.end as end')
-                        ->get();
-         
-        $alerts = Utility::mergeTargetedAndAllStoreContent($targetedComm, $allStoreAlerts);
-
-        return ($alerts);
-    }
-
-
-    public static function getActiveTargetedAlertsForStoreList($storeNumbersArray)
-      {
-        $now = Carbon::now()->toDatetimeString();
-
-        $alerts = Alert::join('document_target', 'document_target.document_id' ,  '=', 'alerts.document_id')
+        $archives = false;
+        if( isset($request['archives']) && ($request['archives'] == "true") ){
+            $archives = true;
+        }
+        
+        $targetedComm = Alert::join('document_target', 'document_target.document_id' ,  '=', 'alerts.document_id')
                         ->join('documents', 'documents.id', '=', 'alerts.document_id')
                         ->join('alert_types', 'alerts.alert_type_id', '=', 'alert_types.id') 
                         ->whereIn('document_target.store_id', $storeNumbersArray)
-                        ->where('documents.start', '<=', $now )
-                        ->where(function($query) use ($now) {
-                            $query->where('documents.end', '>=', $now)
-                                ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
-                                ->orWhere('documents.end', '=', NULL ); 
+                        
+                        ->when($archives, function ($query) use ($archives, $now) {
+                            return $query->where('documents.start', '<=', $now);
+                            //if archives is true get all archives active and archived 
+                        }, function ($query) use($now) {
+                            return $query
+                                ->where('documents.start', '<=', $now )
+                                ->where('documents.deleted_at', '=', NULL)
+                                ->where(function($query) use ($now) {
+                                    return $query->where('documents.end', '>=', $now)
+                                    ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                    ->orWhere('documents.end', '=', NULL ); 
+                                });
                         })
                         ->whereNull('alerts.deleted_at')
                         ->whereNull('documents.deleted_at')
-                       ->select(\DB::raw('documents.*, GROUP_CONCAT(DISTINCT document_target.store_id) as stores'))
+                       ->select(\DB::raw('documents.*, GROUP_CONCAT(DISTINCT document_target.store_id) as stores, alerts.alert_type_id'))
                         ->groupBy('documents.id')
                         ->get()
                         ->each(function($document){
                             $document->stores = explode(',', $document->stores);
                         });
 
-        
+        $allStoreAlerts = Alert::join('documents', 'alerts.document_id', '=', 'documents.id')
+                        ->where('documents.all_stores', 1)
+                        ->whereIn('documents.banner_id', $banners)
+                        ->when($archives, function ($query) use ($archives, $now) {
+                            return $query->where('documents.start', '<=', $now);
+                            //if archives is true get all archives active and archived 
+                        }, function ($query) use($now) {
+                            return $query
+                                ->where('documents.start', '<=', $now )
+                                ->where('documents.deleted_at', '=', NULL)
+                                ->where(function($query) use ($now) {
+                                    return $query->where('documents.end', '>=', $now)
+                                    ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
+                                    ->orWhere('documents.end', '=', NULL ); 
+                                });
+                        })
+                        ->select(\DB::raw('documents.*, alerts.alert_type_id'))
+                        ->get()
+                        ->each(function($alert){
+                            $alert->banner = Banner::find($alert->banner_id)->name;
+                        });
+
+        $alerts = $targetedComm->merge($allStoreAlerts);
+        if (count($alerts) >0) {
+            Alert::addStoreViewData($alerts);
+        }
+
+        return ($alerts);
+    }
+
+    public static function filterAllAlertsByCategory($alerts, $request)
+    {
+        $isValidAlertType = AlertType::isValidAlertType($request['type']);
+        $alertType = $request['type'];
+
+        if ($isValidAlertType) {
+            
+            $alerts = $alerts->filter(function ($item) use($alertType) {
+
+                                if($item["alert_type_id"] == $alertType){
+                                    return $item;
+                                }
+                            })->values();
+        }
         return $alerts;
-      }       
+
+    }
+
 
     public static function addStoreViewData($alerts)
     {
 
+        $now = Carbon::now()->toDatetimeString();
         foreach($alerts as $a){
             
-                $a->prettyDate =  Utility::prettifyDate($a->start);
-                $a->since =  Utility::getTimePastSinceDate($a->start);
-                $doc = Document::getDocumentById($a->document_id);
-                $alertType = AlertType::find($a->alert_type_id);
-                $a->icon = Utility::getIcon($doc->original_extension);
-                $a->link_with_icon = Utility::getModalLink($doc->filename, $doc->title, $doc->original_extension, $doc->id, 1);
-                $a->link = Utility::getModalLink($doc->filename, $doc->title, $doc->original_extension, $doc->id, 0);
-                $a->title = $doc->title;
-                $a->filename = $doc->filename;
-                $a->description = $doc->description;
-                $a->original_extension = $doc->original_extension;
-                $a->alertTypeName = $alertType->name;
+                $a->prettyDate         = Utility::prettifyDate($a->start);
+                $a->since              = Utility::getTimePastSinceDate($a->start);
+                // $doc                = Document::getDocumentById($a->document_id);
+                $alertType             = AlertType::find($a->alert_type_id);
+                $a->icon               = Utility::getIcon($a->original_extension);
+                $a->link_with_icon     = Utility::getModalLink($a->filename, $a->title, $a->original_extension, $a->id, 1);
+                $a->link               = Utility::getModalLink($a->filename, $a->title, $a->original_extension, $a->id, 0);
+                $a->title              = $a->title;
+                $a->filename           = $a->filename;
+                $a->description        = $a->description;
+                $a->original_extension = $a->original_extension;
+                $a->alertTypeName      = $alertType->name;
+                if($a->end < $now && $a->end != NULL){
+                    $a->archived       = true;
+                }
                 
             }
     }
