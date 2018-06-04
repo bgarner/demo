@@ -22,6 +22,7 @@ Route::get('/manager/calendar/eventlistpartial/{yearmonth}' , 'Calendar\Calendar
 //alert and Urgent Notice
 Route::get('/manager/alert', 'Alert\AlertManagerController@index');
 Route::get('/manager/urgentnotice', 'UrgentNotice\UrgentNoticeManagerController@index');
+Route::get('/manager/urgentnotice/{id}', 'UrgentNotice\UrgentNoticeManagerController@show');
 
 
 //library

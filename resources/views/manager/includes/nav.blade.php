@@ -29,6 +29,15 @@
         </div>
 
     </li>
+        @if($urgentNoticeCount > 0)
+        <li class="urgetnNoticeNav animate-flicker">
+            <a style="color: white" href="/{{ Request::segment(1) }}/urgentnotice"><i class="fa fa-bolt"></i> <span class="nav-label">URGENT NOTICE</span>
+                @if(isset($urgentNoticeCount))
+                <span class="label label-inverse pull-right">{{$urgentNoticeCount}}</span>
+                @endif
+            </a>
+        </li>
+        @endif
 
     
         <!-- Dashboard  -->
@@ -75,16 +84,13 @@
         <!-- Alerts and Notices  -->
 
 
-        @if (Request::is('manager/alert/*') || Request::is('manager/alert') || Request::is('manager/urgentnotice') || Request::is('manager/urgentnotice/*')) 
+        @if (Request::is('manager/alert/*') || Request::is('manager/alert')) 
         <li class="active">
         @else
         <li>
         @endif
-            <a href="/manager/alert"><i class="fa fa-exclamation-triangle"></i> <span class="nav-label">Alerts and Notices</span><span class="fa arrow"></span></a>
-            <ul class="nav nav-second-level collapse">
-                <li><a href="/manager/alert">Alerts</a></li>
-                <li><a href="/manager/urgentnotice">Urgent Notices</a></li>
-            </ul>
+            <a href="/manager/alert"><i class="fa fa-exclamation-triangle"></i> <span class="nav-label">Alerts</span>
+            </a>
         </li>
 
         @if (Request::is('manager/document/*') || Request::is('manager/document'))

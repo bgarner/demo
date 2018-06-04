@@ -454,7 +454,7 @@ class Alert extends Model
                             $alert->banner = Banner::find($alert->banner_id)->name;
                         });
 
-        $alerts = $targetedComm->merge($allStoreAlerts);
+        $alerts = $targetedComm->merge($allStoreAlerts)->sortByDesc('start');
         if (count($alerts) >0) {
             Alert::addStoreViewData($alerts);
         }

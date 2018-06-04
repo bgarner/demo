@@ -18,6 +18,23 @@
     <link rel="stylesheet" type="text/css" media="screen" href="/css/plugins/dataTables/datatables.min.css?<?=time()?>">
     <link rel="stylesheet" type="text/css" media="screen" href="/css/plugins/videojs/video-js.css?<?=time()?>">
     <link href="/css/vendor/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+    
+    <style>
+        .metismenu li.urgetnNoticeNav {
+            border: none !important;
+            background-color: red; 
+            color: white;
+        }
+
+        .metismenu li.urgetnNoticeNav a{
+            border: none !important;
+        }
+        .animate-flicker {
+            animation: fadeIn 1.3s infinite alternate;
+        }
+
+    </style>
     <script>
 
     </script>

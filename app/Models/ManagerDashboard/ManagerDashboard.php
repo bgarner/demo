@@ -26,14 +26,9 @@ class ManagerDashboard extends Model
 
 
         $compiledData = [];
-        // $compiledData["communications"] = Communication::getCommunicationsForStoreList($stores, $banners, $storeGroups);
         
-        $compiledData["alerts"] = Alert::getActiveAlertsForStoreList($stores, $banners, $storeGroups);
         $compiledData["urgentNotices"] = UrgentNotice::getActiveUrgentNoticesForStoreList($stores, $banners, $storeGroups); 
-        // $compiledData["productLaunches"] = ProductLaunch::getActiveProductLaunchesForStoreList($stores);
 
-        // $compiledData['calendar'] = Event::getActiveEventsForStoreList($stores, $banners, $storeGroups);
-
-        return ( $compiledData );
+        return $compiledData;
     }
 }

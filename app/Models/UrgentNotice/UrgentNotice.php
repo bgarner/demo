@@ -200,10 +200,23 @@ class UrgentNotice extends Model
 
     }
 
-    public static function getActiveUrgentNoticesForStoreList($stores, $banners, $storeGroups)
+    public static function getActiveUrgentNoticesForStoreList($storeNumbersArray, $banners, $storeGroups)
     {
         $now = Carbon::now()->toDatetimeString();
-        $targetedUN = UrgentNotice::getActiveTargetedUrgentNoticesForStoreList($stores);
+        $targetedUN = UrgentNotice::join('urgent_notice_target', 'urgent_notice_target.urgent_notice_id' ,  '=', 'urgent_notices.id')
+                    ->whereIn('urgent_notice_target.store_id', $storeNumbersArray)
+                    ->where('urgent_notices.start', '<=', $now )
+                    ->where(function($query) use ($now) {
+                        $query->where('urgent_notices.end', '>=', $now)
+                            ->orWhere('urgent_notices.end', '=', '0000-00-00 00:00:00' ); 
+                    })
+                    ->whereNull('urgent_notice_target.deleted_at')
+                    ->select(\DB::raw('urgent_notices.*, GROUP_CONCAT(DISTINCT urgent_notice_target.store_id) as stores'))
+                    ->groupBy('urgent_notices.id')
+                    ->get()
+                    ->each(function($urgentNotice){
+                        $urgentNotice->stores = explode(',', $urgentNotice->stores);
+                    });
 
         $allStoreUN = UrgentNotice::join('urgent_notice_banner', 'urgent_notice_banner.urgent_notice_id', '=', 'urgent_notices.id')
                                     ->where('all_stores', '=', 1)
@@ -226,38 +239,21 @@ class UrgentNotice extends Model
                                                 })
                                                 ->select('urgent_notices.*', 'urgent_notice_store_group.store_group_id')
                                                 ->get();
-        // dd($storeGroupUN);
 
         $targetedUN = Utility::mergeTargetedAndStoreGroupContent($targetedUN, $storeGroupUN);
          
         $urgent_notices = Utility::mergeTargetedAndAllStoreContent($targetedUN, $allStoreUN);
 
+        foreach($urgent_notices as $n){
+            
+            $n->since =  Utility::getTimePastSinceDate($n->start);
+            $n->prettyDate =  Utility::prettifyDate($n->start);
+            $preview_string = strip_tags($n->description);
+            $n->trunc = Utility::truncateHtml($preview_string);
+        }
+
         return($urgent_notices);
     }
-
-    public static function getActiveTargetedUrgentNoticesForStoreList($storeNumbersArray)
-    {
-        $now = Carbon::now()->toDatetimeString();
-
-        $urgent_notices = UrgentNotice::join('urgent_notice_target', 'urgent_notice_target.urgent_notice_id' ,  '=', 'urgent_notices.id')
-                    ->whereIn('urgent_notice_target.store_id', $storeNumbersArray)
-                    ->where('urgent_notices.start', '<=', $now )
-                    ->where(function($query) use ($now) {
-                        $query->where('urgent_notices.end', '>=', $now)
-                            ->orWhere('urgent_notices.end', '=', '0000-00-00 00:00:00' ); 
-                    })
-                    ->whereNull('urgent_notice_target.deleted_at')
-                    ->select(\DB::raw('urgent_notices.*, GROUP_CONCAT(DISTINCT urgent_notice_target.store_id) as stores'))
-                    ->groupBy('urgent_notices.id')
-                    ->get()
-                    ->each(function($urgentNotice){
-                        $urgentNotice->stores = explode(',', $urgentNotice->stores);
-                    });
-        
-        
-        return $urgent_notices;
-    }   
-
 
     public static function getUrgentNoticeForAdmin()
     {

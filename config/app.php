@@ -191,7 +191,8 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         App\Providers\FormUserSidenavServiceProvider::class,
         Adldap\Laravel\AdldapServiceProvider::class,
-        Adldap\Laravel\AdldapAuthServiceProvider::class
+        Adldap\Laravel\AdldapAuthServiceProvider::class,
+        App\Providers\ManagerSidenavServiceProvider::class,
 
     ],
 

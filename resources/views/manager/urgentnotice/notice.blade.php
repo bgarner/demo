@@ -2,37 +2,32 @@
 <html>
 
 <head>
-    @section('title', 'Urgent Notice')
-    @include('site.includes.head')
-    <meta name="csrf-token" content="{!! csrf_token() !!}"/>
+    @section('title', 'Dashboard')
+    <link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
+    @include('manager.includes.head')
+
 </head>
 
 <body class="fixed-navigation">
-
-    <input type="hidden" id="communication_id" name="communication_id" value="{{ $notice->id }}">
-    <input type="hidden" id="store_id" name="store_id" value="{{ Request::segment(1) }}">
-
     <div id="wrapper">
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
-              @include('site.includes.sidenav')
+              @include('manager.includes.nav')
             </div>
         </nav>
 
         <div id="page-wrapper" class="gray-bg">
             <div class="row border-bottom">
-                @include('site.includes.topbar')
+                @include('manager.includes.topbar')
             </div>
-
 
 
             <div class="wrapper wrapper-content">
                 <div class="row">
 
-
-            		<div class="col-lg-12 animated fadeInRight">
+                    <div class="col-lg-12 animated fadeInRight">
                         <div class="mail-box-header">
-                        	 <a href="../"><i class="fa fa-chevron-left"></i> {{__("Back")}}</a>
+                             <a href="/manager/urgentnotice"><i class="fa fa-chevron-left"></i> {{__("Back")}}</a>
                             <h1>
                                 {{ $notice->title }}
                                  <span class="pull-right font-normal" style="font-size: 16px;">{{ $notice->prettyDate }} <small style="font-weight: normal;padding-left: 10px;">({{ $notice->since }} {{__("ago")}})</small></span>
@@ -41,11 +36,9 @@
                         </div>
                         <div class="mail-box">
 
-
                             <div class="mail-body">
                                 {!! $notice->description !!}
                             </div>
-
 
                             @if(count($attached_folders) > 0)
                             <div class="mail-attachment">
@@ -84,13 +77,13 @@
 
                                 <div class="attachment">
 
-                                	@foreach($attached_documents as $doc)
+                                    @foreach($attached_documents as $doc)
 
                                         <div class="file-box">
                                             <div class="file">
                                                 {!! $doc->anchor_only !!}
 
-                									<div class="icon">
+                                                    <div class="icon">
                                                         {!! $doc->icon !!}
                                                     </div>
 
@@ -112,35 +105,26 @@
 
                                     <div class="clearfix"></div>
                                 </div>
-                			</div>
+                            </div>
                             @endif
 
 
                         </div>
                     </div>
                 </div>
-
-            </div>
-        </div>
-    </div>
-
+            </div> <!-- class wrapper closes -->
+        </div> <!-- page wrapper -->
+    </div> <!-- wrapper -->
 
 
-    @include('site.includes.footer')
+    @include('manager.includes.footer')
 
-    <script type="text/javascript" src="/js/plugins/fullcalendar/moment.min.js"></script>
+    @include('manager.includes.scripts')
+    <!-- <script src="/js/custom/manager/getArchivedContent.js?<?=time();?>"></script> -->
+    <script src="/js/plugins/iCheck/icheck.min.js"></script>
 
-    @include('site.includes.scripts')
-    <script type="text/javascript">
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
 
-    </script>
+    @include('site.includes.modal')
 
-    @include('site.includes.bugreport')
-	@include('site.includes.modal')
 </body>
 </html>
