@@ -55,6 +55,19 @@
                                         <td>{{ $notice->trunc }}</td>
                                         <td class="mail-date">{{ $notice->prettyDate }} <small style="font-weight: normal;padding-left: 10px;">({{ $notice->since }} {{__("ago")}})</small></td>
                                     </tr>
+                                    <tr class=" store-row">
+                                        <td></td>
+                                        <td colspan="3">
+                                            @if( isset($notice->stores) )
+                                            @foreach($notice->stores as $store)
+                                                <span class="badge">{{$store}}</span>
+                                            @endforeach
+                                            
+                                            @elseif( $notice->all_stores == 1 )
+                                                <span class="badge">{{$notice->banner}}</span>
+                                            @endif
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                             </table>
