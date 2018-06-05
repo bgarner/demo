@@ -43,12 +43,15 @@ $(".archive-onoffswitch").on('transitionend webkitTransitionEnd oTransitionEnd o
 			window.location = window.location.href + "&archives=true"
 		}
 		else{
+
 			if (window.location.hash) { //no query present but has Hash
-					
+				
 				var parentfolder = $("#folder-title").attr('data-folderid');
-				console.log(parentfolder);
-				$(".folder#"+parentfolder).click();
-				// window.location = window.location.pathname + "?archives=true" + window.location.hash;
+				if(parentfolder){
+					getFolderDocuments(parentfolder);	
+				}
+				
+
 			}
 			else{
 				if(window.location.pathname != "/manager/document") {
@@ -71,7 +74,9 @@ $(".archive-onoffswitch").on('transitionend webkitTransitionEnd oTransitionEnd o
 		else{
 			if (window.location.hash){
 				var parentfolder = $("#folder-title").attr('data-folderid');
-				$(".folder#"+parentfolder).click();
+				if(parentfolder){
+					getFolderDocuments(parentfolder);	
+				}
 			}
 			else{
 				window.location = window.location.pathname;	
@@ -81,4 +86,3 @@ $(".archive-onoffswitch").on('transitionend webkitTransitionEnd oTransitionEnd o
 		
 	}
 });
-

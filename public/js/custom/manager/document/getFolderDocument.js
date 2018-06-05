@@ -35,7 +35,6 @@ var getFolderDocuments = function(id){
 		}
 	)
 	.done(function(data){
-		console.log(data);
 		fillTable(data);
 		setDeepLink(data);
 		fillBreadCrumbs(data);
@@ -43,7 +42,7 @@ var getFolderDocuments = function(id){
 }
 
 var checkDeepLink = function(){
-	// console.log('it all starts here;');
+	
 	if(window.location.hash){
 		folderId = window.location.hash.substr(3);
 		$("li#"+folderId).parents('.parent-folder').click();
@@ -54,8 +53,6 @@ var checkDeepLink = function(){
 }
 var setDeepLink = function(data){
 	var id = window.location.hash;
-	// console.log(id);
-	// console.log(window.location.pathname);
 	location.href = window.location.pathname + "#!/" + data.folder.global_folder_id;
 }
 	
