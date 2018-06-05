@@ -22,6 +22,7 @@
     
     <style>
         .metismenu li.urgetnNoticeNav {
+            background-color: #a50516;
             border: none !important; 
             color: white;
         }

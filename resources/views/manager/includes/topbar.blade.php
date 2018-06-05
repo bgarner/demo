@@ -152,12 +152,12 @@
 
      <script type="text/javascript">
 
-        var storeName = localStorage.getItem('userStoreName');
-        storeName = storeName.replace(/^A/, "");
+        // var storeName = localStorage.getItem('userStoreName');
+        // storeName = storeName.replace(/^A/, "");
 
-        storeNameElement = document.getElementById('store-name');
-        storeNameElement.innerHTML = storeName;
-        storeNameElement.title = storeName;
+        // storeNameElement = document.getElementById('store-name');
+        // storeNameElement.innerHTML = storeName;
+        // storeNameElement.title = storeName;
 
 
     </script>

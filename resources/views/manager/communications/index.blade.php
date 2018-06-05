@@ -135,7 +135,7 @@
     @include('manager.includes.footer')
 
     @include('manager.includes.scripts')
-    <!-- <script src="/js/custom/manager/getArchivedContent.js?<?=time();?>"></script> -->
+    <script src="/js/custom/manager/getArchivedContent.js?<?=time();?>"></script>
     <script src="/js/plugins/iCheck/icheck.min.js"></script>
 
 

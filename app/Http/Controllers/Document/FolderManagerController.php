@@ -11,7 +11,7 @@ use App\Models\Document\Folder;
 
 class FolderManagerController extends Controller
 {
-    public function show($folder_id)
+    public function show($folder_id, Request $request)
     {
 
     	$this->user_id = \Auth::user()->id;
@@ -22,10 +22,13 @@ class FolderManagerController extends Controller
 
         $folder = Folder::getFolderDescription($folder_id);
         $response = [];
-        // $response["files"] = $documents;
-
+        
+        
         if (isset($request['archives']) && $request['archives'] == true) {
-            $archivedDocuments = Document::getArchivedDocumentsByStoreNumber($folder_id, $storeNumber);
+            
+            $archivedDocuments = Document::getArchivedDocumentsByStorelist($folder_id, $storeList);
+            
+           
             if(count($archivedDocuments)>0){
                 
                 if(count($documents)>0){
@@ -41,6 +44,8 @@ class FolderManagerController extends Controller
         
         $response["files"] = $documents;
         $response["folder"] = $folder;
+
+        // \Log::info($response);
         return $response;
     }
 }

@@ -395,8 +395,7 @@ class Document extends Model
     {
 
         $now = Carbon::now()->toDatetimeString();
-        $files = \DB::table('file_folder')
-                    ->join('documents', 'file_folder.document_id', '=', 'documents.id')
+        $files = Document::join('file_folder', 'file_folder.document_id', '=', 'documents.id')
                     ->join('document_target', 'document_target.document_id' , '=', 'documents.id')
                     ->where('file_folder.folder_id', '=', $global_folder_id)
                     ->where('documents.end', '<=', $now)
@@ -408,8 +407,7 @@ class Document extends Model
 
                     ->get();
 
-        $allStoreDocuments = \DB::table('file_folder')
-                    ->join('documents', 'file_folder.document_id', '=', 'documents.id')
+        $allStoreDocuments = Document::join('file_folder', 'file_folder.document_id', '=', 'documents.id')
                     ->where('file_folder.folder_id', '=', $global_folder_id)
                     ->where('documents.end', '<=', $now)
                     ->where('documents.end', '!=', '0000-00-00 00:00:00')
@@ -419,6 +417,61 @@ class Document extends Model
                     ->select('documents.*')
                     ->get();
         $files = $files->merge($allStoreDocuments);
+
+        if (count($files) > 0) {
+            foreach ($files as $file) {
+                $file->archived = true;
+                $file->link = Utility::getModalLink($file->filename, $file->title, $file->original_extension, $file->id, 0);
+                $file->link_with_icon = Utility::getModalLink($file->filename, $file->title, $file->original_extension, $file->id, 1);
+                $file->icon = Utility::getIcon($file->original_extension);
+                $file->prettyDateCreated = Utility::prettifyDate($file->created_at);
+                $file->prettyDateUpdated = Utility::prettifyDate($file->updated_at);
+                $file->prettyDateStart = Utility::prettifyDate($file->start);
+                $file->prettyDateEnd = Utility::prettifyDate($file->end);
+
+                $file->is_alert = '';
+                if (Alert::where('document_id', $file->id)->first()) {
+                    $file->is_alert = Utility::getAlertIcon();
+                }
+
+            }
+            return $files;
+        }
+        else{
+            return [];
+        }
+    }
+    public static function getArchivedDocumentsByStorelist($global_folder_id, $storeList)
+    {
+
+        $now = Carbon::now()->toDatetimeString();
+
+        $files = Document::join('file_folder', 'file_folder.document_id', '=', 'documents.id')
+                    ->join('document_target', 'document_target.document_id' , '=', 'documents.id')
+                    ->where('file_folder.folder_id', '=', $global_folder_id)
+                    ->where('documents.end', '<=', $now)
+                    ->where('documents.end', '!=', '0000-00-00 00:00:00')
+                    ->where('documents.end', '!=', NULL)
+                    ->whereIn('document_target.store_id', $storeList)
+                    ->where('documents.deleted_at', '=', null)
+                    ->select(\DB::raw('documents.*, GROUP_CONCAT(DISTINCT document_target.store_id) as stores'))
+                    ->groupBy('documents.id')
+                    ->get()
+                    ->each(function($doc){
+                        $doc->stores = explode(',', $doc->stores);
+                    });
+
+        $allStoreDocuments = Document::join('file_folder', 'file_folder.document_id', '=', 'documents.id')
+                    ->where('file_folder.folder_id', '=', $global_folder_id)
+                    ->where('documents.end', '<=', $now)
+                    ->where('documents.end', '!=', '0000-00-00 00:00:00')
+                    ->where('documents.end', '!=', NULL)
+                    ->where('documents.all_stores', 1)
+                    ->where('documents.deleted_at', '=', null)
+                    ->select('documents.*')
+                    ->get();
+        $files = $files->merge($allStoreDocuments);
+
 
         if (count($files) > 0) {
             foreach ($files as $file) {

@@ -9,7 +9,7 @@
 
 </head>
 
-<body class="fixed-navigation">
+<body class="fixed-navigation" onload="checkDeepLink()">
     <div id="wrapper">
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
@@ -136,8 +136,8 @@
     @include('manager.includes.footer')
 
     @include('manager.includes.scripts')
-    <!-- <script src="/js/custom/manager/getArchivedContent.js?<?=time();?>"></script> -->
-    <script src="/js/plugins/iCheck/icheck.min.js"></script>
+    
+    <!-- <script src="/js/plugins/iCheck/icheck.min.js"></script> -->
 
 
     <script type="text/javascript" src="/js/vendor/underscore-1.8.3.js"></script>
@@ -147,7 +147,8 @@
     <script type="text/javascript" src="/js/custom/site/documents/fileTable.js?<?=time();?>" ></script>
     <script type="text/javascript" src="/js/vendor/tablesorter.min.js"></script>
     <script type="text/javascript" src="/js/vendor/lightbox.min.js"></script>
-    <!-- <script type="text/javascript" src="/js/custom/site/getArchivedContent.js?<?=time();?>"></script> -->
+    <script src="/js/custom/manager/getArchivedContent.js?<?=time();?>"></script>
+    
     <script type="text/javascript">
         $.ajaxSetup({
             headers: {

@@ -35,7 +35,7 @@
                         <div class="col-md-6">
                             <h2>
                                 @if($title == "")
-                                    {{__("All Messages")}} {{-- <small>({{ $alertCount }} unread)</small> --}}
+                                    {{__("All Alerts")}} {{-- <small>({{ $alertCount }} unread)</small> --}}
                                 @else
                                     {{ $title }}
                                 @endif
@@ -137,7 +137,7 @@
     @include('manager.includes.footer')
 
     @include('manager.includes.scripts')
-    <!-- <script src="/js/custom/manager/getArchivedContent.js?<?=time();?>"></script> -->
+    <script src="/js/custom/manager/getArchivedContent.js?<?=time();?>"></script>
     <script src="/js/plugins/iCheck/icheck.min.js"></script>
 
 
