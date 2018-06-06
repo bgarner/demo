@@ -99,7 +99,6 @@ class Communication extends Model
 	public static function getCommunicationsForAdmin()
 	{
 		$banner = UserSelectedBanner::getBanner()->id;
-
         $storeList = [];
 
         $storeInfo = StoreInfo::getStoresInfo($banner);
@@ -107,14 +106,15 @@ class Communication extends Model
             array_push($storeList, $store->store_number);
         }
 
+
         $allStoreCommunications = Communication::join('communication_banner', 'communication_banner.communication_id', '=', 'communications.id')
                                 ->where('all_stores', 1)
                                 ->where('communication_banner.banner_id', $banner)
                                 ->select('communications.*', 'communication_banner.banner_id')
                                 ->get();
 
-        $allStoreCommunications = Utility::groupBannersForAllStoreContent($allStoreCommunications);
-
+        //not required
+        // $allStoreCommunications = Utility::groupBannersForAllStoreContent($allStoreCommunications);
 
         $targetedCommunications = Communication::join('communications_target', 'communications_target.communication_id', '=', 'communications.id')
                                 ->whereIn('communications_target.store_id', $storeList)
@@ -125,6 +125,7 @@ class Communication extends Model
                                     $comm->stores = explode(',', $comm->stores);
                                 });
 
+        
         $storeGroups = CustomStoreGroup::getStoreGroupsForAdmin();
         $communicationForStoreGroups = Communication::join('communication_store_group', 'communication_store_group.communication_id', '=', 'communications.id')
                                             ->whereIn('communication_store_group.store_group_id', $storeGroups)
@@ -141,10 +142,13 @@ class Communication extends Model
                                                 $item->stores = array_unique( $item->stores);
                                             });
 
-        $targetedCommunications = Utility::mergeTargetedAndStoreGroupContent($targetedCommunications, $communicationForStoreGroups);
+        //no need for detailed targets in index view
+        // $targetedCommunications = Utility::mergeTargetedAndStoreGroupContent($targetedCommunications, $communicationForStoreGroups);
 
-        $communications = Utility::mergeTargetedAndAllStoreContent($targetedCommunications, $allStoreCommunications);
+        // $communications = Utility::mergeTargetedAndAllStoreContent($targetedCommunications, $allStoreCommunications);
 
+		$communications = $targetedCommunications->merge($allStoreCommunications)->merge($communicationForStoreGroups);                                            
+ 		
         foreach($communications as $c){
 			$c->prettySentAtDate = Utility::prettifyDate( $c->send_at );
 			$c->prettyArchiveAtDate = Utility::prettifyDate( $c->archive_at );
