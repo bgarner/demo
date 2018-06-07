@@ -1,14 +1,32 @@
-@extends('manager.layouts.master')
-@section('title', 'Communications' )
+<!DOCTYPE html>
+<html>
 
-@section('content')
+<head>
+    @section('title', 'Alerts')
+    <link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
+    @include('manager.includes.head')
+
+</head>
+
+<body class="fixed-navigation">
+    <div id="wrapper">
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+          @include('manager.includes.nav')
+        </div>
+    </nav>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom">
+            @include('manager.includes.topbar')
+        </div>
 
 
     <div class="wrapper wrapper-content">
         <div class="row">
             <div class="col-lg-2 col-md-3 col-sm-4 col-xs-0">
 
-            @include('manager.communications.commsidebar')
+            @include('manager.alerts.alertsidebar')
 
             </div>
             <div class="col-lg-10 col-md-9 col-sm-8 col-xs-12 animated fadeInRight">
@@ -17,7 +35,7 @@
                         <div class="col-md-6">
                             <h2>
                                 @if($title == "")
-                                    {{__("All Messages")}} {{-- <small>({{ $communicationCount }} unread)</small> --}}
+                                    {{__("All Alerts")}} {{-- <small>({{ $alertCount }} unread)</small> --}}
                                 @else
                                     {{ $title }}
                                 @endif
@@ -55,47 +73,49 @@
                 <div class="mail-box">
 
 
-                    <table class="table table-mail">
+                    <table class="table table-mail alert-table">
+                        <thead>
+                            <tr>
+
+                                <th> {{ __("Type") }}</th>
+                                <th> {{ __("Title") }} </th>
+                                <!-- <th> Description </th> -->
+                                <th> {{ __("Date") }} </th>
+                            </tr>
+                        </thead>
                         <tbody>
 
-                        @foreach($communications as $communication)
-                        <?php $tr_class="" ?>
+                        @foreach($alerts as $alert)
+                        
 
-                        @if($communication->archived)
-                            <?php $tr_class .= " archived"; ?>
+                        @if(isset($alert->archived))
+                        <tr class="unread archived">
+                        @else
+                        <tr class="unread">
                         @endif
-
-
-                        <tr class= "{{ $tr_class }} comm-row" >
-                            <td class="check-mail hidden-sm hidden-xs">
-                                <i class="fa fa-envelope-o"></i>
+                            <td class="check-mail col-lg-2 col-md-2 col-sm-2 col-xs-2 ">
+                                {{-- <i class="fa fa-bell-o"></i> --}}<span class="label">{{ $alert->alertTypeName }}</span>
                             </td>
 
-                            <td  class="mail-subject communication-name col-lg-4 col-md-4 col-sm-4 col-xs-5">
+                            <td class="mail-subject col-lg-7 col-md-6 col-sm-6 col-xs-6 ">{!! $alert->link_with_icon !!}</td>
+                            <!-- <td class="mail-preview">{{ $alert->description }}</td> -->
 
-                                @if($communication->has_attachments == true)
-                                    <i class="fa fa-paperclip"></i>
-                                @endif
-                                <a class="comm_category_link trackclick" data-comm-id="{{ $communication->id }}" href="communication/show/{{ $communication->id }}?">{{ $communication->subject }}</a>
-                                <br />
-                                <span class="label label-sm label-message-cat label-{!! $communication->label_colour !!}">{!! $communication->label_name !!}</span>
-                            </td>
-
-
-                            <td class="mail-preview col-lg-6 col-md-4 hidden-sm hidden-xs"><a href="communication/show/{{ $communication->id }}">{!! $communication->trunc !!}</a></td>
-
-                            <td class="text-right mail-date col-lg-2 col-md-2 col-sm-4 col-xs-2">{{ $communication->prettyDate }}<!--  <small style="font-weight: normal;padding-left: 10px;">({{ $communication->since }} ago)</small> --></td>
+                            <td class="mail-date col-lg-3 col-md-4 col-sm-4 col-xs-2">{{ $alert->prettyDate }}<!--  <small style="font-weight: normal;padding-left: 10px;">({{ $alert->since }} ago)</small> --></td>
                         </tr>
-                        <tr class="{{ $tr_class }} store-row">
+                         @if(isset($alert->archived))
+                        <tr class="store-row archived">
+                        @else
+                        <tr class="store-row">
+                        @endif
                             <td></td>
                             <td colspan="3">
-                                @if( isset($communication->stores) )
-                                @foreach($communication->stores as $store)
+                                @if( isset($alert->stores) )
+                                @foreach($alert->stores as $store)
                                     <span class="badge">{{$store}}</span>
                                 @endforeach
                                 
-                                @elseif( $communication->all_stores == 1 )
-                                    <span class="badge">{{$communication->banner}}</span>
+                                @elseif( $alert->all_stores == 1 )
+                                    <span class="badge">{{$alert->banner}}</span>
                                 @endif
                             </td>
                         </tr>
@@ -110,5 +130,18 @@
             </div> 
         </div>
     </div> <!-- class wrapper closes -->
+    </div> <!-- page wrapper -->
+    </div> <!-- wrapper -->
 
-@endsection
+
+    @include('manager.includes.footer')
+
+    @include('manager.includes.scripts')
+    <script src="/js/custom/manager/getArchivedContent.js?<?=time();?>"></script>
+    <script src="/js/plugins/iCheck/icheck.min.js"></script>
+
+
+    @include('site.includes.modal')
+
+</body>
+</html>

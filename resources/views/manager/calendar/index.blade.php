@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html>
-
-<head>
+@extends('manager.layouts.master')
     @section('title', 'Calendar')
-    <link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
-    @include('manager.includes.head')
-
+    
+    @section('style')
     <style>
         .event-span{
     
@@ -19,22 +15,10 @@
         }
     </style>
 
-</head>
-
-<body class="fixed-navigation">
-    <div id="wrapper">
-    <nav class="navbar-default navbar-static-side" role="navigation">
-        <div class="sidebar-collapse">
-          @include('manager.includes.nav')
-        </div>
-    </nav>
-
-    <div id="page-wrapper" class="gray-bg">
-        <div class="row border-bottom">
-            @include('manager.includes.topbar')
-        </div>
+    @endsection
 
 
+    @section('content')
         <div class="tabs-container wrapper wrapper-content animated fadeInRight">
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">{{ __("Calendar View") }}</a></li>
@@ -83,14 +67,10 @@
                 </div>
             </div>
         </div>
-    </div>
-    </div>
+    @endsection
+    
 
-
-    @include('manager.includes.footer')
-
-    @include('manager.includes.scripts')
-
+    @section('scripts')
     <script type="text/javascript" src="/js/custom/manager/calendar/listViewUtils.js"></script>
     <script type="text/javascript" src="/js/plugins/fullcalendar/moment.min.js"></script>
     <script type="text/javascript" src="/js/plugins/fullcalendar/fullcalendar.min.js"></script>
@@ -201,7 +181,5 @@
     });
     </script>
 
-    @include('site.includes.modal')
 
-</body>
-</html>
+    @endsection

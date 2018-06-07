@@ -599,6 +599,8 @@ class Communication extends Model
 		$targetedComm = Utility::mergeTargetedAndStoreGroupContent($targetedComm, $storeGroupCommunications);
          
         $communications = Utility::mergeTargetedAndAllStoreContent($targetedComm, $allStoreComm);
+
+        $communications->sortByDesc('send_at');
         $communications = Communication::postProcessCommunications($communications);
         return ($communications);
 	}
@@ -617,7 +619,7 @@ class Communication extends Model
 							    }
 							})->values();
 		}
-		return $communications;
+		return $communications->sortByDesc('send_at');
 
 	}
 
