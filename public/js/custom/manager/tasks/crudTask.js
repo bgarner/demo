@@ -223,7 +223,21 @@ $(".edit-task").click(function(e){
     modal
         .on('show.bs.modal', function() {
             
-            modalBody.load(taskEditLink);
+            modalBody.load(taskEditLink, function(){
+                $(".chosen").chosen({
+                    width:'100%'
+                });    
+                var textarea = document.getElementById('description_'+taskId);
+                CKEDITOR.replace(textarea);
+                CKEDITOR.instances['description_'+taskId].setData($("#description_"+taskId).attr('value'));
+                $('#publish_date_'+taskId).datetimepicker({
+                    format: 'YYYY-MM-DD 00:00:00'
+                });
+                $('#due_date_'+taskId).datetimepicker({
+                    format: 'YYYY-MM-DD 00:00:00'
+                });
+
+            });
 
             
         })
@@ -241,4 +255,35 @@ $(".edit-task").click(function(e){
             })
         });
     e.preventDefault();
+});
+
+
+$(".delete-task").click(function(){
+
+    var task = $(this).attr('data-task-id');
+    var selector = ".project-row[data-task-id=" + task + "]";
+
+    swal({
+        title: "Are you sure?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, delete it!",
+        closeOnConfirm: false
+        }, function () {
+        
+        $.ajax({
+            url: '/manager/task/'+ task,
+            type: 'DELETE',
+
+            success: function(result) {
+                $(selector).fadeOut(1000);
+                swal("Deleted!", "This task has been deleted.", "success");
+            }
+
+        });
+        
+    });
+
+    return false;
 });
