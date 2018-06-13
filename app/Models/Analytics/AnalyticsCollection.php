@@ -32,6 +32,9 @@ class AnalyticsCollection extends Model
     							->get()
     							->sortByDesc('communications.send_at')
     							->each(function($item){
+                                    // if ($item->sent_to_total < 1 ){
+                                    //     $item->sent_to_total = 1;
+                                    // }
     								$item->readPerc = round (($item->opened_total/$item->sent_to_total)*100);
     								$item->opened = json_encode(unserialize($item->opened));
     								$item->unopened = json_encode(unserialize($item->unopened));
@@ -85,6 +88,9 @@ class AnalyticsCollection extends Model
                                     'analytics_collection.sent_to')
     							->get()
     							->each(function($item){
+                                    // if ($item->sent_to_total < 1 ){
+                                    //     $item->sent_to_total = 1;
+                                    // }                                    
     								$item->readPerc = round (($item->opened_total/$item->sent_to_total)*100);
     								$item->opened = json_encode(unserialize($item->opened));
     								$item->unopened = json_encode(unserialize($item->unopened));
@@ -114,6 +120,9 @@ class AnalyticsCollection extends Model
     							 )
     							->get()
     							->each(function($item){
+                                    // if ($item->sent_to_total < 1 ){
+                                    //     $item->sent_to_total = 1;
+                                    // }                                    
     								$item->readPerc = round (($item->opened_total/$item->sent_to_total)*100);
     								$item->opened = json_encode(unserialize($item->opened));
     								$item->unopened = json_encode(unserialize($item->unopened));

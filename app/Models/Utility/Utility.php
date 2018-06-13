@@ -540,7 +540,30 @@ class Utility extends Model
 	        'store_id'   => $headOffice
 	    ]);
 
-    }
+	}
+	
+	public static function removeHeadOffice($stores)
+	{
+		$headOfficeStores = ['0940', 'A0940'];
+		foreach($headOfficeStores as $ho){
+			echo "\n\n---------new----------\n\n";
+		
+			$keys = array_keys($stores, $ho);
+			echo "keys: \n\n";
+			print_r($keys);
+			if( count($keys) > 0 ){
+				foreach($keys as $k){
+					echo "unset " . $stores[$k] . ",";
+					unset($stores[$k]);
+				}	
+			}
+			
+		}
+		if( count($stores) == 0 ){
+			echo "*** hey! I'm ZERO!!!";
+		}
+		return $stores;
+	}
 
     public static function groupBannersForAllStoreContent($allStoreContent)
     {
