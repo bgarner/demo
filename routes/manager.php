@@ -4,6 +4,9 @@
 Route::get('/manager', ['uses' => 'ManagerDashboard\ManagerDashboardController@index']);
 Route::get('/manager/dashboard', ['uses' => 'ManagerDashboard\ManagerDashboardController@index']);
 
+//Features
+Route::get('/manager/feature/show/{id}', 'Feature\FeatureManagerController@show');
+
 //MANAGER TASKS
 Route::resource('/manager/task', 'Task\TaskManagerController');
 
@@ -28,3 +31,5 @@ Route::get('/manager/urgentnotice/{id}', 'UrgentNotice\UrgentNoticeManagerContro
 //library
 Route::get('/manager/document', array('uses' => 'Document\LibraryManagerController@index'));
 Route::get('/manager/folder/{folder_id}', 'Document\FolderManagerController@show');
+
+

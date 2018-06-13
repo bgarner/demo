@@ -14,8 +14,6 @@ use App\Models\Feature\FeaturePackage;
 use App\Models\Feature\FeatureFlyer;
 use App\Models\Feature\FeatureEvent;
 use App\Models\Feature\FeatureCommunication;
-use App\Models\Communication\Communication;
-use App\Models\Document\Package;
 use App\Models\Feature\FeatureTasklist;
 
 class FeatureController extends Controller

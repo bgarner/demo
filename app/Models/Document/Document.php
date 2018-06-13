@@ -673,10 +673,13 @@ class Document extends Model
     public static function getDocumentsForManager($folder_id, $storeList)
     {
         $now = Carbon::now()->toDatetimeString();
+        $banner_id = Folder::find($folder_id)->banner_id;
+
 
         $allStoreDocuments = Document::join('file_folder', 'file_folder.document_id', '=', 'documents.id')
                                     ->where('file_folder.folder_id', $folder_id)
                                     ->where('documents.all_stores', 1)
+                                    ->where('documents.banner_id', $banner_id)
                                     ->where('documents.start', '<=', $now )
                                     ->where(function($query) use ($now) {
                                         $query->where('documents.end', '>=', $now)
@@ -686,7 +689,6 @@ class Document extends Model
                                     ->where('documents.deleted_at', '=', null)
                                     ->select('documents.*')
                                     ->get();
-
 
         $targetedDocuments = Document::join('file_folder', 'file_folder.document_id', '=', 'documents.id')
                             ->join('document_target', 'document_target.document_id' , '=', 'documents.id')
