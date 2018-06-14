@@ -24,7 +24,6 @@ class StoreSidenavCreator
     protected $urgentNoticeCount;
     protected $taskCount;
     protected $components;
-    protected $isFormComponentVisible;
 
     /**
      * Create a new profile composer.
@@ -40,11 +39,7 @@ class StoreSidenavCreator
         $this->urgentNoticeCount  = UrgentNotice::getUrgentNoticeCount($this->storeNumber);
         $this->allIncompleteTasks = Task::getAllIncompleteTasksByStoreId($this->storeNumber)->count();
         $this->allCompletedTasks  = Task::getAllCompletedTasksByStoreId($this->storeNumber)->count();
-        $this->components         = StoreComponent::getComponents($this->storeNumber);
-
-        $this->isFormComponentVisible  = FormTarget::isFormComponentVisible($this->storeNumber);
-
-                
+        $this->components         = StoreComponent::getComponents($this->storeNumber);        
     }
     /**
      * Bind data to the view.
@@ -60,7 +55,6 @@ class StoreSidenavCreator
             ->with('urgentNoticeCount', $this->urgentNoticeCount)
             ->with('incompleteTaskCount', $this->allIncompleteTasks)
             ->with('completedTaskCount', $this->allCompletedTasks)
-            ->with('components', $this->components)
-            ->with('isFormComponentVisible', $this->isFormComponentVisible);
+            ->with('components', $this->components);
     }
 }
