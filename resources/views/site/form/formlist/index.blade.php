@@ -42,7 +42,7 @@
                             <tbody>
                                 <tr>
                                     <td><a href="/{{$store_number}}/form/productrequest">Product Request</a></td>
-                                    <td>Request new product assortment and allocation of existing assortment.</td>
+                                    <td>For allocations, replenishment and new product requests.</td>
                                 </tr>
 
 
