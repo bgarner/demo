@@ -608,7 +608,7 @@ class Communication extends Model
 	public static function getCommunicationsByTypeForStoreList($storeNumbersArray, $banners, $storeGroups, $type)
 	{
 		$now = Carbon::now()->toDatetimeString();
-		dd($type);
+		
 
 		$targetedComm = Communication::join('communications_target', 'communications_target.communication_id' ,  '=', 'communications.id')
 								   ->whereIn('communications_target.store_id', $storeNumbersArray)
@@ -635,9 +635,10 @@ class Communication extends Model
                                     ->each(function($comm){
                                     	$comm->banner = Banner::find($comm->banner_id)->name;
                                     });
-
+		
         $storeGroupCommunications = Communication::join('communication_store_group', 'communication_store_group.communication_id', '=', 'communications.id')
         										->whereIn('communication_store_group.store_group_id', $storeGroups)
+												->where('communication_type_id', $type)
 												->where('communications.send_at' , '<=', $now)
 												->where('communications.archive_at', '>=', $now)
 												->select(\DB::raw('communications.*, GROUP_CONCAT(DISTINCT communication_store_group.store_group_id) as store_groups'))
@@ -656,7 +657,6 @@ class Communication extends Model
 
 	                                                $comm->stores = array_intersect($storeNumbersArray, $group_stores);
 	                                			});
-
 
 		$targetedComm = Utility::mergeTargetedAndStoreGroupContent($targetedComm, $storeGroupCommunications);
          

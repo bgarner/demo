@@ -67,7 +67,6 @@ class FeatureCommunication extends Model
 
         foreach ($featureCommunicationTypes as $type) {
             $communications  = Communication::getCommunicationsByTypeForStoreList($storeList, $banners, $storeGroups, $type);
-            dd($communications);
             $mergedCommunications = $communications->merge($mergedCommunications);
         }
 
