@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ProductRequest;
+namespace App\Http\Controllers\StoreFeedback;
 
 use Illuminate\Http\Request;
 
@@ -9,9 +9,9 @@ use App\Models\StoreApi\Banner;
 use App\Http\Controllers\Controller;
 use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\BugReport\BugReport;
-use App\Models\ProductRequest\FeedbackCategoryTypes;
-use App\Models\ProductRequest\FeedbackStatusTypes;
-use App\Models\ProductRequest\FeedbackResponse;
+use App\Models\StoreFeedback\FeedbackCategoryTypes;
+use App\Models\StoreFeedback\FeedbackStatusTypes;
+use App\Models\StoreFeedback\FeedbackResponse;
 
 class FeedbackAdminController extends Controller
 {
@@ -34,7 +34,7 @@ class FeedbackAdminController extends Controller
         $banner = UserSelectedBanner::getBanner();
         $feedbacks = BugReport::getAllBugReports($banner->id);
 
-        return view('admin.ProductRequest.index')->with('feedbacks', $feedbacks)
+        return view('admin.storefeedback.index')->with('feedbacks', $feedbacks)
                                                 ->with('banner', $banner);
 
         
@@ -85,7 +85,7 @@ class FeedbackAdminController extends Controller
         $feedback_category_list = FeedbackCategoryTypes::getFeedbackCategoryList();
         $feedback_status_list = FeedbackStatusTypes::getFeedbackStatusList();
         
-        return view('admin.ProductRequest.edit')->with('feedback', $feedback)
+        return view('admin.storefeedback.edit')->with('feedback', $feedback)
                                                 ->with('banner', $banner)
                                                 ->with('feedback_category_list', $feedback_category_list)
                                                 ->with('feedback_status_list', $feedback_status_list);     
