@@ -462,6 +462,52 @@ class Feature extends Model
 
     }
 
+    public static function getActiveFeatureForStoreList($storeNumbersArray, $banners, $storeGroups)
+    {
+        $now = Carbon::now()->toDatetimeString();
+        // $banner_id = StoreInfo::getStoreInfoByStoreId($storeNumber)->banner_id;
+
+        $allStoreFeatures = Feature::join('feature_banner', 'feature_banner.feature_id', '=', 'features.id')
+                                    ->where('all_stores', 1)
+                                    ->whereIn('feature_banner.banner_id', $banners)
+                                    ->where('start', '<=', $now)
+                                    ->where(function($query) use ($now) {
+                                        $query->where('features.end', '>=', $now)
+                                            ->orWhere('features.end', '=', '0000-00-00 00:00:00' ); 
+                                    })
+                                    ->select('features.*')
+                                    ->get();
+
+        $targetedFeatures = Feature::join('feature_target', 'features.id', '=', 'feature_target.feature_id')
+                                    ->whereIn('store_id', $storeNumbersArray)
+                                    ->where('start', '<=', $now)
+                                    ->where(function($query) use ($now) {
+                                        $query->where('features.end', '>=', $now)
+                                            ->orWhere('features.end', '=', '0000-00-00 00:00:00' ); 
+                                    })
+                                    ->select('features.*')
+                                    ->get();
+
+        // $storeGroups = CustomStoreGroup::getStoreGroupsForStore($storeNumber);
+
+        $targetedFeaturesForStoreGroups = Feature::join('feature_store_group', 'feature_store_group.feature_id', '=', 'features.id')
+                                            ->whereIn('feature_store_group.store_group_id', $storeGroups)
+                                            ->where('start', '<=', $now)
+                                            ->where(function($query) use ($now) {
+                                                $query->where('features.end', '>=', $now)
+                                                    ->orWhere('features.end', '=', '0000-00-00 00:00:00' ); 
+                                            })
+                                            ->select('features.*')
+                                            ->get();
+
+
+        $features = $allStoreFeatures->merge($targetedFeatures)
+                                    ->merge($targetedFeaturesForStoreGroups)
+                                    ->sortBy('order');  
+        return $features;                               
+
+    }
+
     public static function deleteFeature($id)
     {
         Feature::find($id)->delete();

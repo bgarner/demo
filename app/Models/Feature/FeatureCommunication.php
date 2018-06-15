@@ -58,4 +58,24 @@ class FeatureCommunication extends Model
 
         return $mergedCommunications;
     }
+
+    public static function getFeatureCommunicationsForStoreList($storeList,  $banners, $storeGroups, $feature_id)
+    {
+        $featureCommunicationTypes = FeatureCommunicationTypes::getCommunicationTypeId($feature_id);
+
+        $mergedCommunications = new Collection();
+
+        foreach ($featureCommunicationTypes as $type) {
+            $communications  = Communication::getCommunicationsByTypeForStoreList($storeList, $banners, $storeGroups, $type);
+            $mergedCommunications = $communications->merge($mergedCommunications);
+        }
+
+        $featureCommunications = FeatureCommunication::getCommunicationId($feature_id);
+        foreach ($featureCommunications as $comm) {
+            $communications = Communication::getCommunicationById($comm);
+            $mergedCommunications->push($communications);
+        }
+
+        return $mergedCommunications;
+    }
 }

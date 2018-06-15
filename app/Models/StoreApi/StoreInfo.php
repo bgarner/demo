@@ -163,11 +163,11 @@ class StoreInfo extends Model
     public static function getStoreListingByManagerId($user_id)
     {
         $storeAPI = env('STORE_API_DOMAIN', false);
+
         $resource_id = UserResource::where('user_id', $user_id)->first()->resource_id;
 
         $resource = Resource::find($resource_id);
         $resource_type_name = ResourceTypes::find($resource->resource_type_id)->resource_name;
-
 
         switch ($resource_type_name) {
             case 'store':

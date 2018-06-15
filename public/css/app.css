@@ -8713,3 +8713,10 @@ a:hover span.badge{
 .vote-info .user-group{
   padding-left: 20px;
 }
+/*
+.store-row{
+  border: none !important;
+}*/
+.store-row td{
+  border: none !important;
+}

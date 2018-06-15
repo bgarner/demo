@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 use App\Models\StoreApi\StoreInfo;
-use App\Models\ManagerDashboard\ManagerDashboard;
+use App\Models\Tools\CustomStoreGroup;
+use App\Models\Auth\User\UserBanner;
+use App\Models\Feature\Feature;
 
 
 class ManagerDashboardController extends Controller
@@ -21,76 +22,17 @@ class ManagerDashboardController extends Controller
     public function index()
     {
 
-        //$stores = ManagerDashboard::compileDashboardDataByRegionId(3);
-        $region = StoreInfo::getStoresByRegionGroupedByDistrict(3);
-        return view('manager.dashboard')
-            ->with('region', $region);
+    	$user_id = \Auth::user()->id;
+        $storeList = StoreInfo::getStoreListingByManagerId($user_id);
+        $stores = array_column($storeList, 'store_number');
+        $storeGroups = CustomStoreGroup::getStoreGroupsForManager($stores);
+        $banners = UserBanner::getAllBanners()->pluck( 'id');
+
+    	$features = Feature::getActiveFeatureForStoreList($stores, $banners, $storeGroups);
+    	
+        return view('manager.dashboard.index')->with('features', $features)->with('stores', $stores);
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    
 }

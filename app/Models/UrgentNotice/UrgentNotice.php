@@ -14,6 +14,7 @@ use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\StoreApi\StoreInfo;
 use App\Models\Auth\User\UserBanner;
 use App\Models\Tools\CustomStoreGroup;
+use App\Models\StoreApi\Banner;
 
 class UrgentNotice extends Model
 {
@@ -200,39 +201,77 @@ class UrgentNotice extends Model
 
     }
 
-    public static function getActiveUrgentNoticesForStoreList($storeNumbersArray)
+    public static function getActiveUrgentNoticesForStoreList($storeNumbersArray, $banners, $storeGroups)
     {
         $now = Carbon::now()->toDatetimeString();
-        $urgent_notices = UrgentNotice::join('urgent_notice_target', 'urgent_notice_target.urgent_notice_id' ,  '=', 'urgent_notices.id')
+        $targetedUN = UrgentNotice::join('urgent_notice_target', 'urgent_notice_target.urgent_notice_id' ,  '=', 'urgent_notices.id')
                     ->whereIn('urgent_notice_target.store_id', $storeNumbersArray)
                     ->where('urgent_notices.start', '<=', $now )
                     ->where(function($query) use ($now) {
                         $query->where('urgent_notices.end', '>=', $now)
                             ->orWhere('urgent_notices.end', '=', '0000-00-00 00:00:00' ); 
                     })
-                    ->whereNull('urgent_notices.deleted_at')
-                    // ->whereNull('urgent_notice_target.deleted_at')
-                    ->select('urgent_notices.*', 'urgent_notice_target.store_id')
+                    ->whereNull('urgent_notice_target.deleted_at')
+                    ->select(\DB::raw('urgent_notices.*, GROUP_CONCAT(DISTINCT urgent_notice_target.store_id) as stores'))
+                    ->groupBy('urgent_notices.id')
                     ->get()
-                    ->toArray();
-        
-        $compiledUrgentNotices = [];
+                    ->each(function($urgentNotice){
+                        $urgentNotice->stores = explode(',', $urgentNotice->stores);
+                    });
 
-        foreach ($urgent_notices as $urgent_notice) {
-        $index = array_search($urgent_notice['id'], array_column($compiledUrgentNotices, 'id'));
-        if(  $index !== false ){
-           array_push($compiledUrgentNotices[$index]->stores, $urgent_notice["store_id"]);
-        }
-        else{
-           
-           $urgent_notice["stores"] = [];
-           array_push( $urgent_notice["stores"] , $urgent_notice["store_id"]);
-           array_push( $compiledUrgentNotices , (object) $urgent_notice);
-        }
-        }
-        return (object)($compiledUrgentNotices);
-    }   
+        $allStoreUN = UrgentNotice::join('urgent_notice_banner', 'urgent_notice_banner.urgent_notice_id', '=', 'urgent_notices.id')
+                                    ->where('all_stores', '=', 1)
+                                    ->whereIn('urgent_notice_banner.banner_id', $banners)
+                                    ->where('urgent_notices.start', '<=', $now )
+                                    ->where(function($query) use ($now) {
+                                        $query->where('urgent_notices.end', '>=', $now)
+                                            ->orWhere('urgent_notices.end', '=', '0000-00-00 00:00:00' ); 
+                                    })
+                                    ->select('urgent_notices.*', 'urgent_notice_banner.banner_id')
+                                    ->get()
+                                    ->each(function($un){
+                                        $un->banner = Banner::find($un->banner_id)->name;
+                                    });
 
+
+        $storeGroupUN = UrgentNotice::join('urgent_notice_store_group', 'urgent_notice_store_group.urgent_notice_id', '=', 'urgent_notices.id')
+                                                ->whereIn('urgent_notice_store_group.store_group_id', $storeGroups)
+                                                ->where('urgent_notices.start', '<=', $now )
+                                                ->where(function($query) use ($now) {
+                                                    $query->where('urgent_notices.end', '>=', $now)
+                                                        ->orWhere('urgent_notices.end', '=', '0000-00-00 00:00:00' ); 
+                                                })
+                                                ->select(\DB::raw('urgent_notices.*, GROUP_CONCAT(DISTINCT urgent_notice_store_group.store_group_id) as store_groups'))
+                                                ->groupBy('urgent_notices.id')
+                                                ->get()
+                                                ->each(function($un)use ($storeNumbersArray){
+                                                    $store_groups = explode(',', $un->store_groups);
+
+                                                    $un->store_groups = $store_groups;
+                                                    $group_stores = [];
+                                                    foreach ($store_groups as $group) {
+                                                        $stores = unserialize(CustomStoreGroup::find($group)->stores);
+                                                        $group_stores = array_merge($group_stores,$stores);
+                                                    }
+                                                    $group_stores = array_unique( $group_stores);
+
+                                                    $un->stores = array_intersect($storeNumbersArray, $group_stores);
+                                                });
+
+        $targetedUN = Utility::mergeTargetedAndStoreGroupContent($targetedUN, $storeGroupUN);
+         
+        $urgent_notices = Utility::mergeTargetedAndAllStoreContent($targetedUN, $allStoreUN);
+
+        foreach($urgent_notices as $n){
+            
+            $n->since =  Utility::getTimePastSinceDate($n->start);
+            $n->prettyDate =  Utility::prettifyDate($n->start);
+            $preview_string = strip_tags($n->description);
+            $n->trunc = Utility::truncateHtml($preview_string);
+        }
+
+        return($urgent_notices);
+    }
 
     public static function getUrgentNoticeForAdmin()
     {
