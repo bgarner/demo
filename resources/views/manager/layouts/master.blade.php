@@ -11,23 +11,16 @@
 </head>
 
 <body class="fixed-navigation">
-    <div id="wrapper">
-    <nav class="navbar-default navbar-static-side" role="navigation">
-        <div class="sidebar-collapse">
-          @include('manager.includes.nav')
-        </div>
-    </nav>
 
-    <div id="page-wrapper" class="gray-bg">
-        <div class="row border-bottom">
-            {{-- @include('manager.includes.topbar') --}}
-        </div>
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+            @include('manager.includes.nav')
+            </div>
+        </nav>
 
-
-        @yield('content')
-    </div> <!-- page wrapper -->
-    </div> <!-- wrapper -->
-
+        <div id="page-wrapper" class="gray-bg">
+            @yield('content')
+        </div> <!-- page wrapper -->
 
     @include('manager.includes.footer')
 

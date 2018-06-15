@@ -3,14 +3,8 @@
 
 @section('title', 'Dashboard')
 @section('style')
-<style>
-.product-box {
-    padding: 1px !important;
-    margin: 10px !important;
-    height: 168px;
-    width: 168px;
-    float: left;
-</style>
+<link rel="stylesheet" type="text/css" href="/css/skins/manager/skin.css">
+
 @endsection
 
 @section('content')
@@ -56,3 +50,4 @@
     </div> <!-- class wrapper closes -->
     
 @endsection
+
