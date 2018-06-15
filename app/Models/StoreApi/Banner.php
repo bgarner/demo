@@ -167,10 +167,8 @@ class Banner extends Model
 
     public static function getStoreDetailsByBannerid($id)
     {
-        $stores = Store::join('banner_store','stores.id','=','banner_store.store_id')
-                    ->where('banner_id', $id)
-                    ->select('stores.*', 'banner_store.banner_id')
-                    ->orderBy('stores.store_id')
+        $stores = Store::where('banner_id', $id)
+                    ->orderBy('store_number')
                     ->get();
         
         if (count($stores) > 0) {

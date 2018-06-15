@@ -12,6 +12,7 @@ use App\Models\Task\TaskTarget;
 use App\Models\Task\TaskStoreStatus;
 use App\Models\Tools\CustomStoreGroup;
 use App\Models\Auth\User\UserBanner;
+use App\Models\StoreApi\Banner;
 
 class TaskManagerController extends Controller
 {
@@ -29,13 +30,16 @@ class TaskManagerController extends Controller
 
         $this->storeGroups = CustomStoreGroup::getStoreGroupsForManager($this->stores);
 
-        $this->banners = UserBanner::getAllBanners()->pluck( 'id')->toArray();
+        $this->banners = UserBanner::getAllBanners()->pluck('id')->toArray();
         
         $tasks = Task::getActiveTasksForStoreList($this->stores, $this->banners, $this->storeGroups);
 
+        $banner = Banner::whereIn("id", $this->banners)->get()->pluck("name", "id");
+
         $storeList = [];
         foreach ($storeInfo as $store) {
-            $storeList[$store->store_number] = $store->store_id . " " . $store->name . " (" . $store->banner_id .")" ;
+             
+            $storeList[$store->store_number] = $store->store_id . " " . $store->name . " (" . $banner[$store->banner_id] .")" ;
         }
 
         // return $tasks;

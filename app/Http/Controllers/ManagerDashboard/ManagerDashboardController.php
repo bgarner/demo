@@ -30,7 +30,7 @@ class ManagerDashboardController extends Controller
 
     	$features = Feature::getActiveFeatureForStoreList($stores, $banners, $storeGroups);
     	
-        return view('manager.dashboard.index')->with('features', $features);
+        return view('manager.dashboard.index')->with('features', $features)->with('stores', $stores);
 
     }
 

@@ -17,7 +17,9 @@
                 <div class="col-lg-12">
                     @if (count($features) > 0)
                     <div class="ibox float-e-margins">
-
+                        {{--  @foreach($stores as $s)
+                        {{$s}}<br />
+                        @endforeach  --}}
                         <div class="ibox-content clearfix features">
 
                             @foreach($features as $feature)
