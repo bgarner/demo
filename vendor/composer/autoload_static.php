@@ -499,6 +499,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
 
     public static $classMap = array (
         'AddAllDayToEventsTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_28_152315_add_all_day_to_events_table.php',
+        'AddBannerIdToStoresTable' => __DIR__ . '/../..' . '/database/migrations/2018_06_15_131207_add_banner_id_to_stores_table.php',
         'AddChangesColumnToProdLaunchTable' => __DIR__ . '/../..' . '/database/migrations/2018_05_15_105631_add_changes_column_to_prod_launch_table.php',
         'AddFglpositionToUserTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_13_130628_add_fglposition_to_user_table.php',
         'AddOnOrderCountToBikeTracker' => __DIR__ . '/../..' . '/database/migrations/2017_06_23_142132_add_on_order_count_to_bike_tracker.php',
@@ -1439,6 +1440,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
         'SeedCommunityDonationSportsTable' => __DIR__ . '/../..' . '/database/seeds/SeedCommunityDonationSportsTable.php',
         'SessionUpdateTimestampHandlerInterface' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/SessionUpdateTimestampHandlerInterface.php',
+        'StoreBannerSeeder' => __DIR__ . '/../..' . '/database/seeds/StoreBannerSeeder.php',
         'StoreComponentTableSeeder' => __DIR__ . '/../..' . '/database/seeds/StoreComponentTableSeeder.php',
         'StoreTableSeeder' => __DIR__ . '/../..' . '/database/seeds/StoreTableSeeder.php',
         'TaskStatusTypesSeeder' => __DIR__ . '/../..' . '/database/seeds/TaskStatusTypesSeeder.php',
