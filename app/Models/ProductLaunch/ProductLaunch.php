@@ -34,7 +34,7 @@ class ProductLaunch extends Model
     	return ($products);
     }
 
-     public static function getActiveProductLaunchByStoreForCalendar($storeNumber)
+    public static function getActiveProductLaunchByStoreForCalendar($storeNumber)
     {
 
 		$now = Carbon::now()->toDatetimeString();
@@ -84,7 +84,6 @@ class ProductLaunch extends Model
     public static function getAllProductLaunches()
     {
 
-
     	return ProductLaunch::all()
     						->sortBy('launch_date')
     						->each(function ($item) {
@@ -93,35 +92,73 @@ class ProductLaunch extends Model
 			                    });
     }
 
-    public static function getActiveProductLaunchesForStoreList($storeNumbersArray)
-      {
-         $today = Carbon::today()->toDatetimeString();
+    public static function getActiveProductLaunchesForStorelist($storeNumbersArray)
+	{
+		$today = Carbon::today()->toDatetimeString();
 
-         $productlaunches = ProductLaunch::join('productlaunch_target', 'productlaunch_target.productlaunch_id' ,  '=', 'productlaunch.id')
-                        ->whereIn('productlaunch_target.store_id', $storeNumbersArray)
-                        ->where('productlaunch.launch_date', '>=', $today )
-                        ->select('productlaunch.*', 'productlaunch_target.store_id')
-                       ->get()
-                       ->toArray();
+		$productlaunches = ProductLaunch::join('productlaunch_target', 'productlaunch_target.productlaunch_id' ,  '=', 'productlaunch.id')
+		        ->whereIn('productlaunch_target.store_id', $storeNumbersArray)
+		        ->select(\DB::raw('productlaunch.*, GROUP_CONCAT(DISTINCT productlaunch_target.store_id) as stores'))
+                                ->groupBy('productlaunch.id')
+                                ->get()
+                                ->each(function($comm){
+                                    $comm->stores = explode(',', $comm->stores);
+                                });
 
-         $compiledproductLaunches = [];
+		return $productlaunches;
+		
+	}
 
-         foreach ($productlaunches as $productlaunch) {
-            $index = array_search($productlaunch['id'], array_column($compiledproductLaunches, 'id'));
-            if(  $index !== false ){
-               array_push($compiledproductLaunches[$index]->stores, $productlaunch["store_id"]);
-            }
-            else{
+	public static function getActiveProductLaunchByStorelistForCalendar($storelist)
+    {
 
-               $productlaunch["stores"] = [];
-               array_push( $productlaunch["stores"] , $productlaunch["store_id"]);
-               array_push( $compiledproductLaunches , (object) $productlaunch);
-            }
-         }
-         return (object)($compiledproductLaunches);
-      }
+    	$products =  ProductLaunch::join('productlaunch_target', 'productlaunch_target.productlaunch_id' , '=', 'productlaunch.id')
+    							->whereIn('productlaunch_target.store_id', $storelist)
+				                ->select(\DB::raw('productlaunch.id, productlaunch.launch_date as start, productlaunch.event_type as event_type_name, productlaunch.style_number, productlaunch.style_name, productlaunch.retail_price, GROUP_CONCAT(DISTINCT productlaunch_target.store_id) as stores'))
+				                ->groupBy('productlaunch.id')
+    							->get()
+    							->each(function ($item) {
+			                        $item->end = Carbon::createFromFormat('Y-m-d H:i:s', $item->start)->addDay()->toDateTimeString();
+			                        $title = $item->event_type_name . " - " . $item->style_number . " - " . $item->style_name . " - Reg. " . $item->retail_price;
+			                        $item->title = addslashes($title);
+			                        $item->event_type = EventType::getEventTypeIdByName($item->event_type_name, 1);
+			                        $item->stores = explode(',', $item->stores);
+			                    });
+    	return ($products);
+    }
 
-    public static function addProductLaunchData($request)
+    public static function getActiveProductLaunchByStorelistandMonth($storelist, $yearMonth)
+    {
+
+        $products = ProductLaunch::join('productlaunch_target', 'productlaunch.id', '=', 'productlaunch_target.productlaunch_id')
+        			->join('event_types', 'productlaunch.event_type', '=', 'event_types.event_type')
+                    ->whereIn('productlaunch_target.store_id', $storelist)
+                    ->where('productlaunch.launch_date', 'LIKE', $yearMonth.'%')
+                    ->orderBy('productlaunch.launch_date')
+                    ->select(\DB::raw('productlaunch.id, productlaunch.launch_date as start, productlaunch_target.store_id, productlaunch.event_type as event_type_name, productlaunch.style_number, productlaunch.style_name, productlaunch.retail_price, GROUP_CONCAT(DISTINCT productlaunch_target.store_id) as stores, event_types.background_colour,
+                    	event_types.foreground_colour'))
+                    ->groupBy('productlaunch.id')
+                    ->get()
+                    ->each(function ($item) {
+                    	$item->end = Carbon::createFromFormat('Y-m-d H:i:s', $item->start)->addDay()->toDateTimeString();
+                        $item->prettyDateStart = Utility::prettifyDate($item->start);
+                        $item->prettyDateEnd = Utility::prettifyDate($item->end);
+                        $item->since = Utility::getTimePastSinceDate($item->start);
+                        $item->description = '';
+                        $title = $item->event_type_name . " - " . $item->style_number . " - " . $item->style_name . " - Reg. " . $item->retail_price;
+                        $item->title = addslashes($title);
+                        $item->stores = explode(',', $item->stores);
+                    })
+                    ->groupBy(function($event) {
+                            return Carbon::parse($event->start)->format('Y-m-d');
+                    });
+        
+        return ($products);
+
+    }
+
+
+	public static function addProductLaunchData($request)
     {
         $productLaunchDocument = $request->file('document');
         $uploadOption = $request->uploadOption;

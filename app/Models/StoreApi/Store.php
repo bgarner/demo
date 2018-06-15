@@ -25,7 +25,7 @@ class Store extends Model {
     		return Store::getStoreDetailsByCity($request->city);
     	}
     	
-    	return Store::join('banner_store', 'banner_store.store_id', '=', 'stores.id')->select('stores.*', 'banner_store.banner_id')->get();
+    	return Store::all();
     	
     }
 
@@ -48,9 +48,7 @@ class Store extends Model {
 
 	public static function getStoreDetailsByStoreNumber($id)
 	{
-		$storedetails = Store::join('banner_store', 'banner_store.store_id', '=', 'stores.id')
-								->where('store_number', $id)
-								->select('stores.*', 'banner_store.banner_id')
+		$storedetails = Store::where('store_number', $id)
 								->first();
 		if ($storedetails) {
 			return $storedetails;
@@ -61,9 +59,7 @@ class Store extends Model {
 	
 	public static function getStoreDetailsByProvince($province)
 	{
-		$stores = Store::join('banner_store', 'banner_store.store_id', '=', 'stores.id')
-						->where('province', $province)
-						->select('stores.*', 'banner_store.banner_id')
+		$stores = Store::where('province', $province)
 						->get();
 		if (count($stores) > 0) {
 			return $stores;
@@ -74,9 +70,7 @@ class Store extends Model {
 	public static function getStoreDetailsByCity($city)
 	{
 		$city = preg_replace("/\+/", " " , $city);
-		$stores = Store::join('banner_store', 'banner_store.store_id', '=', 'stores.id')
-						->where('city', $city)
-						->select('stores.*', 'banner_store.banner_id')
+		$stores = Store::where('city', $city)
 						->get();
 		if ( count($stores) > 0) {
 			return $stores;
@@ -88,10 +82,9 @@ class Store extends Model {
 
 	public static function getStoreDetailsByDistrictId($id)
     {
-    	$stores = Store::join('district_store', 'district_store.store_id', '=', 'stores.id')
-    					->join('banner_store', 'banner_store.store_id', '=', 'stores.id')
+    	$stores = Store::join('district_store', 'district_store.store_id', '=', 'stores.store_number')
 		                ->where('district_store.district_id', $id)
-		                ->select('stores.*', 'banner_store.banner_id')
+		                ->select('stores.*')
 		                ->get();
         if(count($stores)>0){
     		return $stores;

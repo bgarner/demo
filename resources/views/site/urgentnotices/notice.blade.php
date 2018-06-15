@@ -13,112 +13,116 @@
     <input type="hidden" id="store_id" name="store_id" value="{{ Request::segment(1) }}">
 
     <div id="wrapper">
-    <nav class="navbar-default navbar-static-side" role="navigation">
-        <div class="sidebar-collapse">
-          @include('site.includes.sidenav')
-        </div>
-    </nav>
-
-    <div id="page-wrapper" class="gray-bg">
-        <div class="row border-bottom">
-            @include('site.includes.topbar')
-        </div>
-
-
-
-<div class="wrapper wrapper-content">
-        <div class="row">
-
-
-		<div class="col-lg-12 animated fadeInRight">
-            <div class="mail-box-header">
-            	 <a href="../"><i class="fa fa-chevron-left"></i> {{__("Back")}}</a>
-                <h1>
-                    {{ $notice->title }}
-                     <span class="pull-right font-normal" style="font-size: 16px;">{{ $notice->prettyDate }} <small style="font-weight: normal;padding-left: 10px;">({{ $notice->since }} {{__("ago")}})</small></span>
-                </h1>
-
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+              @include('site.includes.sidenav')
             </div>
-                <div class="mail-box">
+        </nav>
+
+        <div id="page-wrapper" class="gray-bg">
+            <div class="row border-bottom">
+                @include('site.includes.topbar')
+            </div>
 
 
-                <div class="mail-body">
-                    {!! $notice->description !!}
-                </div>
+
+            <div class="wrapper wrapper-content">
+                <div class="row">
 
 
-                @if(count($attached_folders) > 0)
-                <div class="mail-attachment">
-                    <h3>
-                        <span><i class="fa fa-paperclip"></i> {{ count($attached_folders) }} {{__("folders")}}</span>
-                    </h3>
-                    @foreach($attached_folders as $folder)
+            		<div class="col-lg-12 animated fadeInRight">
+                        <div class="mail-box-header">
+                        	 <a href="../"><i class="fa fa-chevron-left"></i> {{__("Back")}}</a>
+                            <h1>
+                                {{ $notice->title }}
+                                 <span class="pull-right font-normal" style="font-size: 16px;">{{ $notice->prettyDate }} <small style="font-weight: normal;padding-left: 10px;">({{ $notice->since }} {{__("ago")}})</small></span>
+                            </h1>
 
-                            <div class="file-box">
-                                <div class="file">
-                                    <a href="/{{ Request::segment(1) }}/document#!/{{ $folder->global_folder_id }}">
+                        </div>
+                        <div class="mail-box">
 
-                                        <div class="icon">
-                                            <i class="fa fa-folder-open"></i>
-                                        </div>
 
-                                        <div class="file-name">
-                                            <div style="font-size: 16px; padding-bottom: 10px;"> {{ $folder->name }}</div>
-
-                                            <small class="clearfix"><span class="text-muted pull-left">{{ $folder->prettyDate }}</span> <span class="text-muted pull-right">{{ $folder->since }} {{__("ago")}}</span></small>
-                                        </div>
-                                    </a>
-                                </div>
-
+                            <div class="mail-body">
+                                {!! $notice->description !!}
                             </div>
 
-                    @endforeach
-                    <div class="clearfix"></div>
-                </div>
-                @endif
-                @if(count($attached_documents) > 0)
-               <div class="mail-attachment">
-                    <h3>
-                        <span><i class="fa fa-paperclip"></i> {{ count($attached_documents) }} {{__("documents")}}</span>
-                    </h3>
 
-                    <div class="attachment">
+                            @if(count($attached_folders) > 0)
+                            <div class="mail-attachment">
+                                <h3>
+                                    <span><i class="fa fa-paperclip"></i> {{ count($attached_folders) }} {{__("folders")}}</span>
+                                </h3>
+                                @foreach($attached_folders as $folder)
 
-                    	@foreach($attached_documents as $doc)
+                                        <div class="file-box">
+                                            <div class="file">
+                                                <a href="/{{ Request::segment(1) }}/document#!/{{ $folder->global_folder_id }}">
 
-                            <div class="file-box">
-                                <div class="file">
-                                    {!! $doc->anchor_only !!}
+                                                    <div class="icon">
+                                                        <i class="fa fa-folder-open"></i>
+                                                    </div>
 
-										<div class="icon">
-                                            {!! $doc->icon !!}
-                                        </div>
+                                                    <div class="file-name">
+                                                        <div style="font-size: 16px; padding-bottom: 10px;"> {{ $folder->name }}</div>
 
-
-                                        <div class="file-name">
-                                            <div style="font-size: 16px; padding-bottom: 10px;"> {{ $doc->title }}</div>
-
-                                            <small class="clearfix"><span class="text-muted pull-left">{{ $doc->prettyDate }}</span> <span class="text-muted pull-right">{{ $doc->since }} {{__("ago")}}</span></small>
+                                                        <small class="clearfix"><span class="text-muted pull-left">{{ $folder->prettyDate }}</span> <span class="text-muted pull-right">{{ $folder->since }} {{__("ago")}}</span></small>
+                                                    </div>
+                                                </a>
+                                            </div>
 
                                         </div>
-                                    </a>
 
-                                </div>
-
+                                @endforeach
+                                <div class="clearfix"></div>
                             </div>
+                            @endif
+                            @if(count($attached_documents) > 0)
+                           <div class="mail-attachment">
+                                <h3>
+                                    <span><i class="fa fa-paperclip"></i> {{ count($attached_documents) }} {{__("documents")}}</span>
+                                </h3>
 
-                        @endforeach
+                                <div class="attachment">
+
+                                	@foreach($attached_documents as $doc)
+
+                                        <div class="file-box">
+                                            <div class="file">
+                                                {!! $doc->anchor_only !!}
+
+                									<div class="icon">
+                                                        {!! $doc->icon !!}
+                                                    </div>
 
 
-                        <div class="clearfix"></div>
+                                                    <div class="file-name">
+                                                        <div style="font-size: 16px; padding-bottom: 10px;"> {{ $doc->title }}</div>
+
+                                                        <small class="clearfix"><span class="text-muted pull-left">{{ $doc->prettyDate }}</span> <span class="text-muted pull-right">{{ $doc->since }} {{__("ago")}}</span></small>
+
+                                                    </div>
+                                                
+
+                                            </div>
+
+                                        </div>
+
+                                    @endforeach
+
+
+                                    <div class="clearfix"></div>
+                                </div>
+                			</div>
+                            @endif
+
+
+                        </div>
                     </div>
-				</div>
-                @endif
-
+                </div>
 
             </div>
-
-</div>
+        </div>
+    </div>
 
 
 

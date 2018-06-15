@@ -47,8 +47,9 @@ $(".archive-onoffswitch").on('transitionend webkitTransitionEnd oTransitionEnd o
 			if (window.location.hash) { //no query present but has Hash
 					
 				var parentfolder = $("#folder-title").attr('data-folderid');
-				$(".folder#"+parentfolder).click();
-				// window.location = window.location.pathname + "?archives=true" + window.location.hash;
+				if(parentfolder){
+					getFolderDocuments(parentfolder);	
+				}
 			}
 			else{
 				if(window.location.pathname != "/" + localStorage.getItem('userStoreNumber') + "/document") {
@@ -71,7 +72,9 @@ $(".archive-onoffswitch").on('transitionend webkitTransitionEnd oTransitionEnd o
 		else{
 			if (window.location.hash){
 				var parentfolder = $("#folder-title").attr('data-folderid');
-				$(".folder#"+parentfolder).click();
+				if(parentfolder){
+					getFolderDocuments(parentfolder);	
+				}
 			}
 			else{
 				window.location = window.location.pathname;	

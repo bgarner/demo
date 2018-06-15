@@ -95,4 +95,27 @@ class AlertType extends Model
         return $alertTypes;
 
     }
+    public static function getAlertTypesByStorelist($alerts)
+    {
+        $groupedAlerts = $alerts->groupBy('alert_type_id');
+        $alertTypeIds = $groupedAlerts->keys();
+        $alertTypes = AlertType::whereIn('id', $alertTypeIds)
+                              ->get()
+                              ->each(function($alertType) use($groupedAlerts){
+                                $alertType->count = count($groupedAlerts[$alertType->id]);
+                            });
+
+        return $alertTypes;
+        
+    }
+    public static function getAlertCategoryName($id)
+    {
+        if(isset($id) && !empty($id)){
+
+            if( AlertType::find($id) ){
+                return AlertType::find($id)->name;
+            }
+        }
+
+    }
 }
