@@ -3,6 +3,7 @@
 namespace App\Models\Tools;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Validation\CustomStoreGroupValidator;
 use App\Models\Auth\User\UserBanner;
 use App\Models\Auth\User\UserSelectedBanner;
@@ -11,6 +12,7 @@ use App\Models\StoreApi\StoreInfo;
 
 class CustomStoreGroup extends Model
 {
+	use SoftDeletes;
  	protected $table = 'custom_store_group';
 
  	protected $fillable = ['group_name', 'stores', 'banner_id'];
