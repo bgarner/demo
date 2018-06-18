@@ -49,11 +49,11 @@ class DatabaseSeeder extends Seeder
         // $this->call(UpdateStoreComponentsTableSeeder::class);
         // $this->call(UsernameSeeder::class);
 
-        $this->call(DistrictTableSeeder::class);
-        $this->call(DistrictStorePivotSeeder::class);
-        $this->call(RegionTableSeeder::class);
-        $this->call(DistrictRegionPivotSeeder::class);
-        $this->call(StoreBannerSeeder::class);
+        // $this->call(DistrictTableSeeder::class);
+        // $this->call(DistrictStorePivotSeeder::class);
+        // $this->call(RegionTableSeeder::class);
+        // $this->call(DistrictRegionPivotSeeder::class);
+        // $this->call(StoreBannerSeeder::class);
         
 
     }
