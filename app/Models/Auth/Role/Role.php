@@ -7,6 +7,7 @@ use App\Models\Auth\Group\GroupRole;
 use App\Models\Auth\Role\RoleComponent;
 use App\Models\Auth\Role\RoleResource;
 use App\Models\Validation\RoleValidator;
+use App\Models\Form\FormRoleMap;
 
 class Role extends Model
 {
@@ -85,6 +86,9 @@ class Role extends Model
         if(isset($request->resource_type)){
             RoleResource::createRoleResourceTypePivotWithRoleId($role, $request);    
         }
+        if(isset($request->forms)){
+            FormRoleMap::createFormRolePivotWithRoleId($role, $request);    
+        }
         
     	return;
 
@@ -116,6 +120,8 @@ class Role extends Model
     {
     	GroupRole::where('role_id', $id)->delete();
     	RoleComponent::where('role_id', $id)->delete();
+        RoleResource::where('role_id', $id)->delete();
+        FormRoleMap::where('role_id', $id)->delete();
         Role::find($id)->delete();
     }
 }

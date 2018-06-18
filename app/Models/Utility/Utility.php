@@ -579,31 +579,44 @@ class Utility extends Model
                 $targetedContent = $targetedContent->push((object)$content);                
             }
         }
+        
         return $targetedContent;
 
     }
 
     public static function mergeTargetedAndAllStoreContent($targetedContent, $allStoreContent)
-    {
+    {        
+        
+        // \Log::info("before merge count : " . count($allStoreContent));
+        // foreach($targetedContent as $content)
+        // {
+        //     $id = $content->id;
 
-        foreach($targetedContent as $content)
-        {
-            $id = $content->id;
-
-            if($allStoreContent->contains('id', $id)){
+        //     if($allStoreContent->contains('id', $id)){
+        //         $contentIndex = $allStoreContent->where('id', $id)->keys()->toArray()[0];
+        //         $allStoreContent[$contentIndex]->stores = $content->stores;
                 
-                $contentIndex = $allStoreContent->where('id', $id)->keys()->toArray()[0];
-                $allStoreContent[$contentIndex]->stores = $content->stores;
+        //     }
+        //     else{
+        //         $allStoreContent = $allStoreContent->push($content);
+        //     }
+        // }
+        // \Log::info("after merge count : " . count($allStoreContent));
+
+
+        foreach ($allStoreContent as $content) {
+        	$id = $content->id;
+        	if($targetedContent->contains('id', $id)){
+                $contentIndex = $targetedContent->where('id', $id)->keys()->toArray()[0];
+                $targetedContent[$contentIndex]->banner_id = $content->banner_id;
                 
             }
             else{
-                $allStoreContent->merge($content);
+                $targetedContent = $targetedContent->push($content);
             }
         }
 
-        $mergedContent = $allStoreContent->merge($targetedContent)->unique('id')->sortByDesc('created_at');
-
-        return $mergedContent;
+        return $targetedContent;
     }
 
     public static function getUniqueBannersForTarget($request)
@@ -650,5 +663,15 @@ class Utility extends Model
         return $banners;
     }
 
+
+    public static function formatUsersList($users)
+    {
+    	$userlist = [];
+    	foreach ($users as $user) {
+    		$userlist[$user->id] = $user->firstname . " " . $user->lastname . " ( " . $user->fglposition . " )"; 
+    	}
+
+    	return $userlist;
+    }
 
 }

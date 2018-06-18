@@ -2673,8 +2673,8 @@ a.forum-item-title:hover {
 /* New Timeline style */
 .vertical-container {
   /* this class is used to give a max-width to the element it is applied to, and center it horizontally when it reaches that max-width */
-  width: 90%;
-  max-width: 1170px;
+  /*width: 90%;
+  max-width: 1170px;*/
   margin: 0 auto;
 }
 .vertical-container::after {
@@ -3777,7 +3777,11 @@ body.adminview .ibox-title{
     padding: 14px 15px 7px !important;
       min-height: 60px;
 }
-
+.ibox-title h5{
+    padding: 4px 0px 0px 10px !important;
+    font-size: 24px !important;
+    font-weight: 100;
+}
 body.adminview .ibox-title h5{
   padding: 4px 0px 0px 10px;
   font-size: 24px;
@@ -3901,6 +3905,11 @@ table.table-mail tr td {
   background-color: #23c6c8;
   color: #ffffff;
 }
+
+.green-bg {
+  background-color: #3db72a;
+  color: #ffffff;
+}
 .yellow-bg {
   background-color: #f8ac59;
   color: #ffffff;
@@ -3911,6 +3920,7 @@ table.table-mail tr td {
 }
 .black-bg {
   background-color: #262626;
+   color: #ffffff;
 }
 .panel-primary {
   border-color: #489bd5;
@@ -8643,7 +8653,7 @@ a:hover span.badge{
 }
 
 .logolabel.sc{
-  
+
   background: url('/images/labels/sc.png') top left no-repeat;
 }
 
@@ -8669,6 +8679,44 @@ a:hover span.badge{
     overflow-y: auto;
 }
 
-.navbar-default::-webkit-scrollbar { 
-    display: none; 
+.navbar-default::-webkit-scrollbar {
+    display: none;
+}
+
+
+.answer_to_question{
+  margin-top: 20px;
+  display: block;
+}
+
+.vote-item{
+  padding: 10px 25px;
+  border: none;
+}
+.vote-item:last-child {
+  border-bottom: none;
+}
+
+.vote-title{
+  margin-left: 10px;
+  font-size: 14px;
+}
+.vote-title label{
+  margin-left: 5px;
+}
+.vote-info{
+  margin-left: 25px;
+}
+.vote-info .user-position{
+  float:left;
+}
+.vote-info .user-group{
+  padding-left: 20px;
+}
+/*
+.store-row{
+  border: none !important;
+}*/
+.store-row td{
+  border: none !important;
 }

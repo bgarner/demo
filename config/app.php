@@ -189,6 +189,10 @@ return [
         App\Providers\StoreFooterProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        App\Providers\FormUserSidenavServiceProvider::class,
+        Adldap\Laravel\AdldapServiceProvider::class,
+        Adldap\Laravel\AdldapAuthServiceProvider::class,
+        App\Providers\ManagerSidenavServiceProvider::class,
 
     ],
 
@@ -241,6 +245,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Input' => Illuminate\Support\Facades\Input::class,
+        'Adldap' => Adldap\Laravel\Facades\Adldap::class
 
     ],
 
@@ -265,7 +271,7 @@ return [
         'App\Http\Controllers\Communication\CommunicationPartialController'     => 'Communications',
         'App\Http\Controllers\Communication\CommunicationTagController'         => 'Communications',
         'App\Http\Controllers\Utilities\CkeditorImageController'                => 'Communications',
-        'App\Http\Controllers\Document\DocumentManagerController'               => 'Library',
+        'App\Http\Controllers\Document\LibraryAdminController'                  => 'Library',
         'App\Http\Controllers\Document\FolderAdminController'                   => 'Library',
         'App\Http\Controllers\Document\DocumentAdminController'                 => 'Library',
         'App\Http\Controllers\Document\DocumentFolderAdminController'           => 'Library',
@@ -297,7 +303,17 @@ return [
         'App\Http\Controllers\StoreComponent\StoreComponentAdminController'     => 'Components',
         'App\Http\Controllers\Flyer\FlyerAdminController'                       => 'Flyer',
         'App\Http\Controllers\Flyer\FlyerItemAdminController'                   => 'Flyer',
-        'App\Http\Controllers\Utilities\BatchFileUploadController'              => 'Batch File Upload'
+        'App\Http\Controllers\Utilities\BatchFileUploadController'              => 'Batch File Upload',
+        'App\Http\Controllers\Form\ProductRequestFormAdminController'           => 'Form',
+        'App\Http\Controllers\Form\FormListAdminController'                     => 'Form',
+        'App\Http\Controllers\Form\FormLogController'                           => 'Form'
+
+    ],
+
+
+    'controllerFormMap' => [
+        
+        'App\Http\Controllers\Form\ProductRequestFormAdminController'            => 'product_request_form_v_1.0'
 
     ],
 

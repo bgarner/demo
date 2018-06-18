@@ -21,6 +21,7 @@ $(document).on('click','.role-edit',function(){
     var group  = $("#group").val();
     var components = $("#components").val();
     var resource_type = $("#resource_type").val();
+    var forms = $("#forms").val();
 
 
     console.log(role_name, 
@@ -47,7 +48,8 @@ $(document).on('click','.role-edit',function(){
 		  		role_name: role_name,
 		    	group : group,
 		    	components : components,
-		    	resource_type : resource_type
+		    	resource_type : resource_type,
+		    	forms:forms
 		    },
 
 		    success: function(result) {
@@ -99,11 +101,20 @@ var showDropdowns = function(){
 	{
 		$("#components").closest('.form-group').show();
 		$("#resource_type").closest('.form-group').hide();
+		$("#forms").closest('.form-group').hide();
 
 	}
 	if(groupId == 2)
 	{
 		$("#resource_type").closest('.form-group').show();
+		$("#components").closest('.form-group').hide();
+		$("#forms").closest('.form-group').hide();
+		$("#components").val('').trigger("chosen:updated");
+	}
+	if(groupId == 3)
+	{
+		$("#forms").closest('.form-group').show();
+		$("#resource_type").closest('.form-group').hide();
 		$("#components").closest('.form-group').hide();
 		$("#components").val('').trigger("chosen:updated");
 	}

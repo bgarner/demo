@@ -16,7 +16,7 @@ $(document).ready(function() {
 		}
 
 		if(!user_email){
-			user_email ="";
+			user_email ="not supplied";
 		}
 
 		$.ajax({

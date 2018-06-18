@@ -12,7 +12,7 @@ Route::get('/admin/home', 'AdminController@index');
 //FILES
 Route::get('/admin/document/add-meta-data', 'Document\DocumentAdminController@showMetaDataForm');
 Route::post('/admin/document/add-meta-data', 'Document\DocumentAdminController@updateMetaData');
-Route::get('/admin/document/manager',  ['middleware' => 'admin.auth', 'uses' =>'Document\DocumentManagerController@index' ] );
+Route::get('/admin/document/manager',  ['middleware' => 'admin.auth', 'uses' =>'Document\LibraryAdminController@index' ] );
 
 Route::resource('/admin/document', 'Document\DocumentAdminController');
 Route::post('/admin/document/{id}', 'Document\DocumentAdminController@replaceDocument');
@@ -20,6 +20,11 @@ Route::resource('/admin/documentfolder', 'Document\DocumentFolderAdminController
 
 //FOLDERS
 Route::resource('/admin/folder', 'Document\FolderAdminController');
+
+//FORMS
+Route::get('/admin/formlist', 'Form\FormListAdminController@index');
+Route::resource('/admin/form/productrequest', 'Form\ProductRequestFormAdminController')->middleware(['formaccess']);
+Route::get('/admin/forms/productrequestform/log/{id}', 'Form\FormLogController@show');
 
 //PACKAGES
 Route::resource('/admin/package', 'Document\PackageAdminController');
@@ -150,4 +155,3 @@ Route::resource('/admin/storecomponent', 'StoreComponent\StoreComponentAdminCont
 //Dirty Nodes
 Route::get('/admin/dirtynodes', 'Tools\DirtyNodesAdminController@index');
 Route::get('/admin/dirtynodes/report', 'Tools\DirtyNodesAdminController@show');
-

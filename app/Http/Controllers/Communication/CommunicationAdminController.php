@@ -39,8 +39,8 @@ class CommunicationAdminController extends Controller
     public function index(Request $request)
     {
         
-        $banner = UserSelectedBanner::getBanner();
-        $communications = Communication::getCommunicationsForAdmin($banner->id);
+        $communications = Communication::getCommunicationsForAdmin();
+        
         return view('admin.communication.index')->with('communications', $communications);
                                                 
     }
@@ -85,7 +85,7 @@ class CommunicationAdminController extends Controller
      */
     public function store(Request $request)
     {
-        return Communication::storeCommunication($request);
+        return Communication::storeCommunication($request);         
     }
 
     /**

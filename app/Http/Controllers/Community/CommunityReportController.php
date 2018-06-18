@@ -70,16 +70,16 @@ class CommunityReportController extends Controller
 
         $details = \DB::select( 
                     \DB::raw('select community_donations.store_number, 
-                    community_donations.event_or_team_name, 
-                    community_donations.recipient_organization, 
-                    community_donated_items.description, 
-                    community_donated_items.value, 
-                    community_donations.dm_approval,
-                    community_donations.created_at
-                    FROM community_donations 
-                    left join community_donated_items 
-                    on community_donations.id = community_donated_items.id
-                    order by community_donations.store_number')
+                            community_donations.event_or_team_name, 
+                            community_donations.recipient_organization, 
+                            community_donated_items.description, 
+                            community_donated_items.value, 
+                            community_donations.dm_approval,
+                            community_donations.created_at
+                        FROM `community_donations`
+                        left join `community_donations_items` on `community_donations`.`id` = `community_donations_items`.`donation_id`
+                        left join `community_donated_items` on `community_donations_items`.`item_id` = `community_donated_items`.`id`
+                        order by `community_donations`.`store_number`')
                     );
         //dd($details);
 

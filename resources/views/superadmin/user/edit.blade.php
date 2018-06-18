@@ -39,18 +39,21 @@
                                                 <input name="lastname" value="{{$user->lastname}}" class="form-control">
                                             </div>
                                         </div>
-
-                                        <div class="form-group"><label class="col-sm-2 control-label">Email</label>
-                                                <div class="col-sm-10">
-                                                <input name="email" value="{{$user->email}}" readonly class="form-control">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">FGL Username</label>
+                                            <div class="col-sm-10">
+                                                <input name="username" value="{{$user->username}}" readonly class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group"><label class="col-sm-2 control-label">Job Title</label>
+                                            <div class="col-sm-10">
+                                                <input name="jobtitle" value="{{$user->fglposition}}" class="form-control">
                                             </div>
                                         </div>
 
-
-
                                         <div class="form-group"><label class="col-sm-2 control-label">Group</label>
                                             <div class="col-sm-10">
-                                                {!! Form::select('group', $groups , $user->group_id, ['class'=>'form-control', 'id'=>'select-group']) !!}
+                                                {!! Form::select('group', $groups , $user->group_id, ['class'=>'form-control', 'id'=>'select-group', 'disabled']) !!}
                                             </div>
                                         </div>
                                         <div class="form-group"><label class="col-sm-2 control-label">Role</label>
@@ -68,6 +71,22 @@
 
                                             </div>
                                         </div>
+                                        @endif
+
+                                        @if(isset($selected_bu) && (count($selected_bu) > 0) )
+
+                                            @if(count($selected_bu) > 1 )
+                                            <div class="form-group hidden">
+                                            @else
+                                            <div class="form-group">
+                                            @endif
+                                                <label class="col-sm-2 control-label">Business Unit</label>
+                                                <div class="col-sm-10">
+                                                    {!! Form::select('businessUnit', $businessUnits , $selected_bu, ['class'=>'form-control', 'id'=>'select-bu']) !!}
+
+
+                                                </div>
+                                            </div>
                                         @endif
 
                                         <div class="hr-line-dashed"></div>
@@ -88,29 +107,7 @@
 
                                 </div>
 		                    </div> <!-- ibox closes -->
-                            <div class="ibox">
-                                <div class="ibox-title">
-                                    <h5>Update Password</h5>
-
-                                </div>
-                                <div class="ibox-content">
-                                    <form class="form-horizontal">
-                                    <div class="form-group"><label class="col-sm-2 control-label">New Password</label>
-                                        <div class="col-sm-10">
-                                            <input type="password" name="password" value class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group"><label class="col-sm-2 control-label">Confirm New Password</label>
-                                        <div class="col-sm-10">
-                                            <input type="password" name="confirm_password" value class="form-control">
-                                        </div>
-                                    </div>
-
-                                    </form>
-                                </div>
-
-                            </div> <!-- ibox closes -->
+                           
                             <div class="ibox">
                                 <div class="form-group">
                                     <div class="col-sm-4 col-sm-offset-2">

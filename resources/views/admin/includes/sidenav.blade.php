@@ -15,7 +15,7 @@
             </a>
 
             <br />
-
+           @if(Auth::user()->group_id != 3) {{-- hide the banner selector for the forms group --}}
             <ul class="banner-selector-menu metismenu text-xs">
                 <span style="font-size: 10px;" class="text-muted">Current Banner</span>
                 <li>
@@ -28,7 +28,8 @@
                         @endforeach
                     </ul>
                 </li>
-            </ul>
+            </ul>   
+            @endif
 
 
 

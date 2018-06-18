@@ -2,6 +2,7 @@ $(document).ready(function(){
 
 	$("#select-role").closest('.form-group').hide();
 	$("#select-resource").closest('.form-group').hide();
+	$("#select-bu").closest('.form-group').hide();
 
 	$("#select-group").change(function(){
 		
@@ -37,8 +38,23 @@ $(document).ready(function(){
 	});
 
 	$("#select-role").change(function(){
+
+		var group = $('#select-group').val();
 		
+		if( group == 2 ){
+			getResources();
+		}
+		if(group == 3){
+			showBU();
+		}
+		
+		
+	});
+
+	var getResources = function(){
 		var role = $('#select-role option:selected').val();
+
+		// console.log("getting resources for role : " + role);
 		$.ajax({
 			    url: '/admin/role/' + role + '/resources',
 			    type: 'GET',
@@ -59,7 +75,6 @@ $(document).ready(function(){
 						});
 
 						$("#select-resource").closest('.form-group').show();
-						$("#selected-resource").closest('.form-group').hide();
 			        }
 			        else{
 			        	$("#select-resource").closest('.form-group').hide();
@@ -69,24 +84,50 @@ $(document).ready(function(){
 			}).done(function(data){
 				// console.log(data);
 			});    
-	});
+	}
+
+	var showBU = function(){
+		
+		var role = $('#select-role option:selected').text();
+		if(role != 'Product Request Form Admin'){
+			$("#select-bu").closest('.form-group').show();
+		}
+		else{
+			$("#select-bu").closest('.form-group').hide();
+		}
+
+	};
+
 
 	$(".user-create").click(function(){
 		var firstname = $('input[name="firstname"]').val();
 		var lastname = $('input[name="lastname"]').val();
-		var email = $('input[name="email"]').val();
+		var username = $('input[name="username"]').val();
+		var jobtitle = $('input[name="jobtitle"]').val();
 
-		var password = $('input[name="password"]').val();
-		var confirm_password = $('input[name="confirm_password"]').val();
 		var group = $('#select-group option:selected').val();
 		var role = $("#select-role option:selected").val();
+		var roleValue = $("#select-role option:selected").text();
 		var resource = $("#select-resource option:selected").val();
+			
+		if(group == 3){
+			if( roleValue == 'Product Request Form Admin'){
+				var business_unit = [];
+				$('#select-bu option').each(function() {
+				    if($(this).val()){
+				    	business_unit.push($(this).val());
+				    }
+				});
+			}
+			else{
+				var business_unit = $.makeArray($("#select-bu option:selected").val());
+			}
+		}
 		var groupname = $('#select-group option:selected').text();
 		var banners = [];
 		$('#select-banner option:selected').each(function(){ banners.push($(this).val()); });
 
 
-		console.log(firstname, lastname, email, group, role, resource);
 		var hasError = false;
 		if(firstname == '') {
 			swal("Oops!", "Need a first name.", "error"); 
@@ -102,26 +143,19 @@ $(document).ready(function(){
 			return false;
 		}
 
-	    if(email == '') {
-			swal("Oops!", "We need an email.", "error"); 
-			hasError = true;
-			return false;
-		}
-
-		if (password == '' || confirm_password == '') {
-			swal("Oops!", "Password and Confirm Password needs to be filled.", "error");
-			hasError = true;
-			return false;
-		}
-
-		if (password != confirm_password) {
-			swal("Oops!", "Passwords do not match.", "error"); 
+	    if(username == '') {
+			swal("Oops!", "We need a username.", "error"); 
 			hasError = true;
 			return false;
 		}
 
 		if(group == '') {
 			swal("Oops!", "We need an group.", "error"); 
+			hasError = true;
+			return false;
+		}
+		if(role == '') {
+			swal("Oops!", "We need an role.", "error"); 
 			hasError = true;
 			return false;
 		}
@@ -141,59 +175,51 @@ $(document).ready(function(){
 			    data: {
 			    	firstname : firstname,
 			    	lastname : lastname,
-			    	email : email,
+			    	username : username,
+			    	jobtitle : jobtitle,
 			    	group : group,
 			    	role : role,
 			    	resource : resource,
-			    	banners : banners,
-			    	password : password,
-			    	confirm_password : confirm_password
+			    	business_unit : business_unit, 
+ 			    	banners : banners
 			    },
 			    success: function(result) {
 			        
 			    	if(result.validation_result == 'false') {
 			        	var errors = result.errors;
+			        	$( ".error" ).remove();
 			        	if(errors.hasOwnProperty("firstname")) {
 			        		$.each(errors.firstname, function(index){
-			        			$('input[name="firstname"]').parent().append('<div class="req">' + errors.firstname[index]  + '</div>');	
+			        			$('input[name="firstname"]').parent().append('<div class="req error">' + errors.firstname[index]  + '</div>');	
 			        		}); 	
 			        	}
 			        	
 				        if(errors.hasOwnProperty("lastname")) {
 				        	$.each(errors.lastname, function(index){
-				        		$('input[name="lastname"]').parent().append('<div class="req">' + errors.lastname[index]  + '</div>');
+				        		$('input[name="lastname"]').parent().append('<div class="req error">' + errors.lastname[index]  + '</div>');
 				        	});
 				        }
-				        if(errors.hasOwnProperty("email")) {
-				        	$.each(errors.email, function(index){
-				        		$('input[name="email"]').parent().append('<div class="req">' + errors.email[index]  + '</div>');	
+				        if(errors.hasOwnProperty("username")) {
+				        	$.each(errors.username, function(index){
+				        		$('input[name="username"]').parent().append('<div class="req error">' + errors.username[index]  + '</div>');	
 				        	});
 				        }
 				        if(errors.hasOwnProperty("group")) {
 				        	$.each(errors.group, function(index){
-				        		$('#select-group').parent().append('<div class="req">' + errors.group[index]  + '</div>');	
+				        		$('#select-group').parent().append('<div class="req error">' + errors.group[index]  + '</div>');	
 				        	});
 				        }
 				        if(errors.hasOwnProperty("banners")) {
 				        	$.each(errors.banners, function(index){
-				        		$('#select-banner').parent().append('<div class="req">' + errors.banners[index]  + '</div>');	
+				        		$('#select-banner').parent().append('<div class="req error">' + errors.banners[index]  + '</div>');	
 				        	});
 				        }
 				        
-				        if(errors.hasOwnProperty("password")) {
-				        	$.each(errors.password, function(index){
-				        		$('input[name="password"]').parent().append('<div class="req">' + errors.password[index]  + '</div>');	
-				        	});
-				        }
-				        if(errors.hasOwnProperty("password_confirmation")) {
-				        	$.each(errors.password_confirmation, function(index){
-				        		$('input[name="confirm_password"]').parent().append('<div class="req">' + errors.password_confirmation[index]  + '</div>');	
-				        	});
-				        }
 				        
 			        }
 			        else{
 			        	console.log(result);
+			        	$( ".error" ).remove();
 				        $('form')[0].reset(); // empty the form
 						swal("Nice!", groupname+ " '" + firstname + " " + lastname +"' has been created", "success");        
 			        }

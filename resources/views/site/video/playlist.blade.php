@@ -98,6 +98,7 @@
     <script type="text/javascript" src="/js/vendor/lightbox.min.js"></script>
     <script type="text/javascript" src="/js/custom/site/video/incrementViewCountPlaylist.js?<?php echo time();?>"></script>
     <script type="text/javascript" src="/js/custom/site/video/loadPlaylist.js?<?php echo time();?>"></script>
+    <script type="text/javascript" src="/js/plugins/videojs/video.js?<?=time();?>"></script>
     @include('site.includes.modal')
 
 </body>

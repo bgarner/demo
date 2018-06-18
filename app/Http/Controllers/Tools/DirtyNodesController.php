@@ -35,7 +35,7 @@ class DirtyNodesController extends Controller
 
     public function update(Request $request)
     {
-        DirtyNode::cleanNode($request->node_id);
+        DirtyNode::cleanNode($request);
     }
 
 
