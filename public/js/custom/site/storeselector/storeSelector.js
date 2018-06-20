@@ -8,6 +8,10 @@ $( document ).ready(function() {
 		return;
 	});
 
+	// if( !!localStorage.getItem('userStoreNumber')){
+	// 	window.location="/";
+	// }
+
 	//direct to the dashboard if the localStorage value is set
 	if( !!localStorage.getItem('userStoreNumber') && window.location.pathname == "/" ) {
 		window.location="/" + localStorage.getItem('userStoreNumber');
@@ -73,9 +77,13 @@ var getStores = function(banner)
 
 var resetStore = function()
 {
-	localStorage.removeItem('userBanner');
-	localStorage.removeItem('userStoreNumber');
-	localStorage.removeItem('userStoreName');
+	// localStorage.removeItem('userBanner');
+	// localStorage.removeItem('userStoreNumber');
+	// localStorage.removeItem('userStoreName');
+
+	localStorage.setItem('userBanner', '');
+	localStorage.setItem('userStoreNumber', '');
+	localStorage.setItem('userStoreName', '');	
 
 	window.location="/";
 }
