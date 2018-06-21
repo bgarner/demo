@@ -480,7 +480,6 @@ class Utility extends Model
 
     public static function getStoreGroupsByAdminId()
     {
-    	
     	$banners = UserBanner::getAllBanners()->pluck('id')->toArray();
     	$storeGroups = CustomStoreGroup::getGroupsForMultipleBanners($banners);
     	$groupList = [];
@@ -491,37 +490,10 @@ class Utility extends Model
         		'data-attributes' => [
         				'optionType'  => 'storegroup',
         				'resourceId'  => $group->id
-
         			]
             	];
         }
         return $groupList;
-    }
-
-    public static function getStoreAndStoreGroupList($banner_id)
-    {
-    	$storeList           = StoreInfo::getStoreListing($banner_id);
-        $storeGroups         = CustomStoreGroup::getAllGroups();
-        $storeAndStoreGroups = [];
-        foreach ($storeList as $storeNumber => $storeName) {
-            $temp = [];
-            $temp['id'] = $storeNumber;
-            $temp['name'] = $storeName;
-            array_push($storeAndStoreGroups, $temp);
-            unset($temp);
-        }
-
-        foreach ($storeGroups as $storeGroup) {
-            $temp = [];
-            $temp['id'] = $storeGroup->id;
-            $temp['name'] = $storeGroup->group_name;
-            $temp['isStoreGroup'] = true;
-            $temp['stores'] = json_encode($storeGroup->stores);
-            array_push($storeAndStoreGroups, $temp);
-            unset($temp);
-        }
-
-        return $storeAndStoreGroups;
     }
 
     public static function addHeadOffice($contentId, $table, $pivotColumn)

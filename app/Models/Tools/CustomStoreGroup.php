@@ -3,19 +3,18 @@
 namespace App\Models\Tools;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Validation\CustomStoreGroupValidator;
 use App\Models\Auth\User\UserBanner;
 use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\StoreApi\Store;
 use App\Models\StoreApi\StoreInfo;
+use Carbon\Carbon;
 
 class CustomStoreGroup extends Model
 {
-	use SoftDeletes;
  	protected $table = 'custom_store_group';
 
- 	protected $fillable = ['group_name', 'stores', 'banner_id'];
+ 	protected $fillable = ['group_name', 'stores', 'banner_id', 'archived_at'];
 
  	public static function validateCustomStoreGroup($request)
 	{
@@ -53,14 +52,15 @@ class CustomStoreGroup extends Model
 
  	public static function getAllGroups()
  	{
- 		return CustomStoreGroup::all()->each(function($group){
+ 		return CustomStoreGroup::whereNull('archived_at')->get()->each(function($group){
  			$group->stores = unserialize($group->stores);
  		});
  	}
 
  	public static function getGroupsByBanner($banner_id)
  	{	
- 		return CustomStoreGroup::where('banner_id', $banner_id)
+		 return CustomStoreGroup::where('banner_id', $banner_id)
+		 								->whereNull('archived_at')
                                         ->get()
                                         ->each(function($group){
                             $group->stores = unserialize($group->stores);
@@ -134,6 +134,11 @@ class CustomStoreGroup extends Model
     	$storeGroups = CustomStoreGroup::getGroupsByBanner($adminBanner->id);
     	return $storeGroups;
         
-    }
+	}
+	
+	public static function archiveGroup($id)
+	{
+		Self::find($id)->update(['archived_at' => Carbon::now()->toDateTimeString() ]);
+	}
 
 }

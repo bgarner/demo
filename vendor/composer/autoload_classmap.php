@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AddAllDayToEventsTable' => $baseDir . '/database/migrations/2017_06_28_152315_add_all_day_to_events_table.php',
+    'AddArchivedAtToCustomStoreGroups' => $baseDir . '/database/migrations/2018_06_21_111944_add_archived_at_to_custom_store_groups.php',
     'AddChangesColumnToProdLaunchTable' => $baseDir . '/database/migrations/2018_05_15_105631_add_changes_column_to_prod_launch_table.php',
     'AddFglpositionToUserTable' => $baseDir . '/database/migrations/2018_03_13_130628_add_fglposition_to_user_table.php',
     'AddOnOrderCountToBikeTracker' => $baseDir . '/database/migrations/2017_06_23_142132_add_on_order_count_to_bike_tracker.php',
