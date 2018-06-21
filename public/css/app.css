@@ -1123,6 +1123,19 @@ button.dim:active:before {
   background-color: #489bd5;
   color: #FFFFFF;
 }
+
+.label-more,
+.badge-more {
+  background-color: #090;
+  color: #FFFFFF;
+}
+
+.label-less,
+.badge-less {
+  background-color: #900;
+  color: #FFFFFF;
+}
+
 .label-success,
 .badge-success {
   background-color: #1c84c6;
