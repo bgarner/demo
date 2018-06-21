@@ -98,6 +98,17 @@
                 }
             }
         }
+        .notifications{
+            color: #999c9e;
+            padding-right : 10px;
+        }
+        .count-info .label {
+            line-height: 12px;
+            padding: 2px 5px;
+            position: absolute;
+            right: 6px;
+            top: 12px;
+        }
 
         input:focus::-webkit-input-placeholder { color:transparent; }
 
@@ -117,10 +128,44 @@
 
         <!-- <div class="hidden-xs hidden-sm"> -->
         <div>
-
-
+    
 
             <div class="" style="padding: 15px 30px 0px 0px; float:right">
+
+                @if(count($notifications) > 0)
+
+                <a class="faa-parent animated-hover notifications count-info" id="notification_popover">
+                    <i class="fa fa-bell faa-shake "></i>
+                    <span class="label label-primary">{{count($notifications)}}</span>
+                </a>
+
+                <div id="notification_container" hidden>
+                    
+                    @foreach($notifications as $notification)
+                    <div class="feed-element">
+                        <div class="media-body">
+                            <span class="pull-left" style="padding: 0px 10px 0px 0px;">
+                                <h4 style="padding: 0; margin: 0;"><a href="#" ><i class="fa fa-paper-plane"></i></a></h4>
+                            </span>
+                            <small class="pull-right" style="padding-left: 10px;">{{$notification->prettyCreatedAt }}</small>
+                            <a href="#" > {{$notification->data['notification_text']}} </a>
+                        </div>
+                    </div>
+                    @endforeach
+                    
+                    <div>
+                        <div class="text-center link-block">
+                            <a href="/">
+                                <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                    
+                @endif
+
+
+
                 <span class="truncate" id="store-name">
                 </span>
                 @if($isComboStore == 1)
@@ -157,7 +202,7 @@
 
         storeNameElement = document.getElementById('store-name');
         storeNameElement.innerHTML = storeName;
-        storeNameElement.title = storeName;
+        storeNameElement.title = storeName;        
 
 
     </script>

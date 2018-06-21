@@ -5,6 +5,8 @@ namespace App\Models\Form;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Utility\Utility;
 use Carbon\Carbon;
+use App\Notifications\ProductRequestFormResponse;
+use App\Models\StoreApi\Store;
 
 class FormActivityLog extends Model
 {
@@ -68,6 +70,14 @@ class FormActivityLog extends Model
             "status_id" =>$request->status, 
             "allow_response" => $reply
         ]);
+
+        if($reply){ //if reply required
+            $formInstanceData = FormData::find($formInstanceId);
+            // $formInstanceData->form_data = unserialize($formInstanceData->form_data);
+            
+            $store = Store::where('store_number', $formInstanceData->store_number)->get();
+            \Notification::send($store, new ProductRequestFormResponse( ['form_instance_id' => $formInstanceId, 'notification_text' => 'Response required on a Product Request'] ));
+        }
 
         return $formLog;
     }

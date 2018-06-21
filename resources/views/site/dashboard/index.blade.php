@@ -248,6 +248,14 @@
                 var html = `<div class='product-box'><a href='/{{ Request::segment(1) }}/tools/dirtynodes-pdt'><div class='image' style='background-image:url("/images/pdt.jpg"); background-size: cover; background-position: 50%'></div><div class='product-desc'><span class='product-price'>Dirty Node Scanner for PDT</span></div></a></div>`;
                 $( ".features" ).append( html );
             }
+            console.log($('#notification_container').html());
+            $('#notification_popover').popover({
+   
+                placement: 'bottom',
+                html: true,
+                content:  $('#notification_container').html()
+
+            });    
             
         })
     </script>
