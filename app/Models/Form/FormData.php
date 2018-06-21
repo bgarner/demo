@@ -97,9 +97,7 @@ class FormData extends Model
                             $formInstance->prettySubmitted = Utility::prettifyDateWithTime($formInstance->created_at);
                             $formInstance->since = Utility::getTimePastSinceDate($formInstance->created_at);
                             $formInstance->assignedToUser = FormInstanceUserMap::getUserByFormInstanceId($formInstance->id);
-
                             $formInstance->assignedToGroup = FormInstanceGroupMap::getGroupByFormInstanceId($formInstance->id);
-
                             $formInstance->lastFormAction = FormActivityLog::getLastFormInstanceAction($formInstance->id);
 
                         });
