@@ -24,6 +24,10 @@ class Analytics extends Model
 
     public static function store($request)
     {
+        if($request->store_number == "0940" || $request->store_number == "A0940" ){
+            return;
+        }
+        
     	$event = Analytics::create([
             'device' => $request->device,
     		'type' => $request->type,

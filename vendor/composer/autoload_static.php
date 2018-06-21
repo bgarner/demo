@@ -499,12 +499,14 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
 
     public static $classMap = array (
         'AddAllDayToEventsTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_28_152315_add_all_day_to_events_table.php',
+        'AddArchivedAtToCustomStoreGroups' => __DIR__ . '/../..' . '/database/migrations/2018_06_21_111944_add_archived_at_to_custom_store_groups.php',
         'AddChangesColumnToProdLaunchTable' => __DIR__ . '/../..' . '/database/migrations/2018_05_15_105631_add_changes_column_to_prod_launch_table.php',
         'AddFglpositionToUserTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_13_130628_add_fglposition_to_user_table.php',
         'AddOnOrderCountToBikeTracker' => __DIR__ . '/../..' . '/database/migrations/2017_06_23_142132_add_on_order_count_to_bike_tracker.php',
         'AddPriceToDirtyNodeTable' => __DIR__ . '/../..' . '/database/migrations/2018_04_16_131328_add_price_to_dirty_node_table.php',
         'AddPriceToDnArchiveTable' => __DIR__ . '/../..' . '/database/migrations/2018_04_16_131842_add_price_to_dn_archive_table.php',
         'AddReqestResponseToLogTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_14_102517_add_reqest_response_to_log_table.php',
+        'AddSoftDeletesToCustomStoreGroupTable' => __DIR__ . '/../..' . '/database/migrations/2018_06_18_120339_add_soft_deletes_to_custom_store_group_table.php',
         'AddSportCatToCommunityDonationsTable' => __DIR__ . '/../..' . '/database/migrations/2018_01_29_112304_add_sport_cat_to_community_donations_table.php',
         'AnalyticsAssetTypesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AnalyticsAssetTypesTableSeeder.php',
         'App\\Models\\Alert\\Alert' => __DIR__ . '/../..' . '/app/Models/Alert/Alert.php',
@@ -1060,7 +1062,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'PHPUnit\\Util\\TestDox\\XmlResultPrinter' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/TestDox/XmlResultPrinter.php',
         'PHPUnit\\Util\\TextTestListRenderer' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/TextTestListRenderer.php',
         'PHPUnit\\Util\\Type' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Type.php',
-        'PHPUnit\\Util\\Xml' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/XML.php',
+        'PHPUnit\\Util\\Xml' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Xml.php',
         'PHPUnit\\Util\\XmlTestListRenderer' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/XmlTestListRenderer.php',
         'PHPUnit_Framework_MockObject_MockObject' => __DIR__ . '/..' . '/phpunit/phpunit-mock-objects/src/MockObject.php',
         'PHP_Timer' => __DIR__ . '/..' . '/phpunit/php-timer/src/Timer.php',

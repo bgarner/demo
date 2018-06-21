@@ -55,7 +55,7 @@ class AnalyticsTask extends Model
 
         $compiledAnalytics = Self::processAnalytics($compiledAnalytics, 
                                                     $asset_type_id, 
-                                                    'App\\Models\\Communication\CommunicationTarget', 
+                                                    'App\\Models\\Communication\\CommunicationTarget', 
                                                     'App\\Models\\Communication\\Communication');
     	
     	return $compiledAnalytics;

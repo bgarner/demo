@@ -7,12 +7,14 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AddAllDayToEventsTable' => $baseDir . '/database/migrations/2017_06_28_152315_add_all_day_to_events_table.php',
+    'AddArchivedAtToCustomStoreGroups' => $baseDir . '/database/migrations/2018_06_21_111944_add_archived_at_to_custom_store_groups.php',
     'AddChangesColumnToProdLaunchTable' => $baseDir . '/database/migrations/2018_05_15_105631_add_changes_column_to_prod_launch_table.php',
     'AddFglpositionToUserTable' => $baseDir . '/database/migrations/2018_03_13_130628_add_fglposition_to_user_table.php',
     'AddOnOrderCountToBikeTracker' => $baseDir . '/database/migrations/2017_06_23_142132_add_on_order_count_to_bike_tracker.php',
     'AddPriceToDirtyNodeTable' => $baseDir . '/database/migrations/2018_04_16_131328_add_price_to_dirty_node_table.php',
     'AddPriceToDnArchiveTable' => $baseDir . '/database/migrations/2018_04_16_131842_add_price_to_dn_archive_table.php',
     'AddReqestResponseToLogTable' => $baseDir . '/database/migrations/2018_03_14_102517_add_reqest_response_to_log_table.php',
+    'AddSoftDeletesToCustomStoreGroupTable' => $baseDir . '/database/migrations/2018_06_18_120339_add_soft_deletes_to_custom_store_group_table.php',
     'AddSportCatToCommunityDonationsTable' => $baseDir . '/database/migrations/2018_01_29_112304_add_sport_cat_to_community_donations_table.php',
     'AnalyticsAssetTypesTableSeeder' => $baseDir . '/database/seeds/AnalyticsAssetTypesTableSeeder.php',
     'App\\Models\\Alert\\Alert' => $baseDir . '/app/Models/Alert/Alert.php',
@@ -568,7 +570,7 @@ return array(
     'PHPUnit\\Util\\TestDox\\XmlResultPrinter' => $vendorDir . '/phpunit/phpunit/src/Util/TestDox/XmlResultPrinter.php',
     'PHPUnit\\Util\\TextTestListRenderer' => $vendorDir . '/phpunit/phpunit/src/Util/TextTestListRenderer.php',
     'PHPUnit\\Util\\Type' => $vendorDir . '/phpunit/phpunit/src/Util/Type.php',
-    'PHPUnit\\Util\\Xml' => $vendorDir . '/phpunit/phpunit/src/Util/XML.php',
+    'PHPUnit\\Util\\Xml' => $vendorDir . '/phpunit/phpunit/src/Util/Xml.php',
     'PHPUnit\\Util\\XmlTestListRenderer' => $vendorDir . '/phpunit/phpunit/src/Util/XmlTestListRenderer.php',
     'PHPUnit_Framework_MockObject_MockObject' => $vendorDir . '/phpunit/phpunit-mock-objects/src/MockObject.php',
     'PHP_Timer' => $vendorDir . '/phpunit/php-timer/src/Timer.php',

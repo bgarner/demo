@@ -45,10 +45,9 @@ class VideoTarget extends Model
         foreach ($storeGroups as $group) {
             $groupStores = unserialize($group->stores);
             $stores = array_merge($stores, $groupStores);
-        }                                  
-
-        
-    	return $stores;
+        }                  
+                    
+    	return Utility::removeHeadOffice($stores);
     }
 
     public static function updateTargetStores($request, $id)
