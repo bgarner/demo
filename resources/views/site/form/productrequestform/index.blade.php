@@ -49,11 +49,10 @@
                                         @foreach($forms as $form)
                                             
                                             <tr>
-                                                                                                
                                                 <td>
-                                                    <p>{!! $form->requirement !!} &nbsp;&nbsp;&nbsp; <strong>{{$form->form_data["submitted_by"]}}</strong> <small>({{$form->form_data["submitted_by_position"]}})</small> &nbsp;&nbsp;&nbsp; {{ $form->since }} ago</p>
+                                                    <p><a href="{{\Request::url()}}/{{$form->id}}">{!! $form->requirement !!}</a> &nbsp;&nbsp;&nbsp; <strong>{{$form->form_data["submitted_by"]}}</strong> <small>({{$form->form_data["submitted_by_position"]}})</small> &nbsp;&nbsp;&nbsp; {{ $form->since }} ago</p>
                                                     <small><a href="{{\Request::url()}}/{{$form->id}}">{{$form->description}}</a></small>
-                                                    <p><strong>{{ $form->longDesc }}</strong></p>
+                                                    <p><strong><a href="{{\Request::url()}}/{{$form->id}}">{{ $form->longDesc }}</a></strong></p>
                                                     <p>{{ $form->comments }}</p>
 
                                                 </td>
