@@ -5,6 +5,7 @@ $("#send_response_to_question").on('click', function () {
 	var submitted_by = $("#submitted_by").val();
 	var submitted_by_position = $('#submitted_by_position').val();
     var answer = $('#answer').val();
+    var storeNumber = localStorage.getItem('userStoreNumber');
 
     $.ajax({
         url: "/form/updateStatus/" + logActivityId,
@@ -24,7 +25,7 @@ $("#send_response_to_question").on('click', function () {
         	},
         	function(){
                 $('#logContainer').load("/form/productrequestform/log/"+formInstanceId);
-
+                $("#notification_container").load("/"+storeNumber + '/notification');
         	})
         }
     }).done(function(response){

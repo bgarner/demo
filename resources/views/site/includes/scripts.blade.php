@@ -90,6 +90,17 @@
 
     });
 
+
+    $(document).ready(function(){
+        $('#notification_popover').popover({
+   
+            placement: 'bottom',
+            html: true,
+            content:  $('#notification_detail_container').html()
+
+        });  
+    })
+
     </script>
 
     

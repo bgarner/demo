@@ -78,7 +78,7 @@ class FormActivityLog extends Model
                 [
                     'form_instance_id' => $formInstanceId, 
                     'notification_text' => 'Response required on a Product Request', 
-                    'url' => $formInstanceData->store_number. "/form/productrequest/". $formInstanceId
+                    'url' => "/".$formInstanceData->store_number. "/form/productrequest/". $formInstanceId
                 ] ));
         }
 

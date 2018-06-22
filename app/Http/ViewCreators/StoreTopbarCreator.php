@@ -39,7 +39,7 @@ class StoreTopbarCreator
         $this->isComboStore = $storeInfo->is_combo_store;
 
         $this->notifications = Store::where('store_number', $this->storeNumber)->first()->unreadNotifications->each(function($item){
-            $item->prettyCreatedAt = Utility::prettifyDateWithTime($item->created_at);
+            $item->prettyCreatedAt = Utility::getTimePastSinceDate($item->created_at);
         });
 
 
