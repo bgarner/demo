@@ -104,10 +104,10 @@
         }
         .count-info .label {
             line-height: 12px;
-            padding: 2px 5px;
-            position: absolute;
-            right: 6px;
-            top: 12px;
+            padding: 1px 4px;
+            position: relative;
+            right: 8px;
+            top: -10px;
         }
 
         input:focus::-webkit-input-placeholder { color:transparent; }
@@ -133,11 +133,12 @@
             <div class="" style="padding: 15px 30px 0px 0px; float:right">
 
                 @if(count($notifications) > 0)
-
+                <span>
                 <a class="faa-parent animated-hover notifications count-info" id="notification_popover">
                     <i class="fa fa-bell faa-shake "></i>
-                    <span class="label label-primary">{{count($notifications)}}</span>
+                    <span class="label label-danger">{{count($notifications)}}</span>
                 </a>
+                </span>
 
                 <div id="notification_container" hidden>
                     
@@ -148,7 +149,7 @@
                                 <h4 style="padding: 0; margin: 0;"><a href="#" ><i class="fa fa-paper-plane"></i></a></h4>
                             </span>
                             <small class="pull-right" style="padding-left: 10px;">{{$notification->prettyCreatedAt }}</small>
-                            <a href="#" > {{$notification->data['notification_text']}} </a>
+                            <a href="{{$notification->data['url']}}" > {{$notification->data['notification_text']}} </a>
                         </div>
                     </div>
                     @endforeach

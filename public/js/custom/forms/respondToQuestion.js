@@ -12,7 +12,8 @@ $("#send_response_to_question").on('click', function () {
         data: {
         	submitted_by: submitted_by,
         	submitted_by_position: submitted_by_position,
-            answer: answer
+            answer: answer,
+            formInstanceId : formInstanceId
         },
         success: function(result) {
         
