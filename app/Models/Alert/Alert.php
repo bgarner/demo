@@ -425,7 +425,7 @@ class Alert extends Model
                         })
                         ->whereNull('alerts.deleted_at')
                         ->whereNull('documents.deleted_at')
-                       ->select(\DB::raw('documents.*, GROUP_CONCAT(DISTINCT document_target.store_id) as stores, alerts.alert_type_id'))
+                       ->select(\DB::raw('alerts.*, GROUP_CONCAT(DISTINCT document_target.store_id) as stores, alerts.alert_type_id'))
                         ->groupBy('documents.id')
                         ->get()
                         ->each(function($document){
@@ -448,7 +448,7 @@ class Alert extends Model
                                     ->orWhere('documents.end', '=', NULL ); 
                                 });
                         })
-                        ->select(\DB::raw('documents.*, alerts.alert_type_id'))
+                        ->select('alerts.*', 'documents.banner_id as banner_id')
                         ->get()
                         ->each(function($alert){
                             $alert->banner = Banner::find($alert->banner_id)->name;
@@ -489,17 +489,17 @@ class Alert extends Model
             
                 $a->prettyDate         = Utility::prettifyDate($a->start);
                 $a->since              = Utility::getTimePastSinceDate($a->start);
-                // $doc                = Document::getDocumentById($a->document_id);
+                $doc                   = Document::getDocumentById($a->document_id);
                 $alertType             = AlertType::find($a->alert_type_id);
-                $a->icon               = Utility::getIcon($a->original_extension);
-                $a->link_with_icon     = Utility::getModalLink($a->filename, $a->title, $a->original_extension, $a->id, 1);
-                $a->link               = Utility::getModalLink($a->filename, $a->title, $a->original_extension, $a->id, 0);
-                $a->title              = $a->title;
-                $a->filename           = $a->filename;
-                $a->description        = $a->description;
-                $a->original_extension = $a->original_extension;
+                $a->icon               = Utility::getIcon($doc->original_extension);
+                $a->link_with_icon     = Utility::getModalLink($doc->filename, $doc->title, $doc->original_extension, $doc->id, 1);
+                $a->link               = Utility::getModalLink($doc->filename, $doc->title, $doc->original_extension, $doc->id, 0);
+                $a->title              = $doc->title;
+                $a->filename           = $doc->filename;
+                $a->description        = $doc->description;
+                $a->original_extension = $doc->original_extension;
                 $a->alertTypeName      = $alertType->name;
-                if($a->end < $now && $a->end != NULL){
+                if($doc->end < $now && $doc->end != NULL){
                     $a->archived       = true;
                 }
                 
