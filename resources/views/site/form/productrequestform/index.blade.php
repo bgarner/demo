@@ -22,29 +22,26 @@
             @include('site.includes.topbar')
         </div>
 
-	    <div class="wrapper wrapper-content  animated fadeInRight">
+	    <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="pull-left">Product Requests</h1>
-                    <a href="{{\Request::url()}}/create" class="pull-right btn btn-outline btn-primary dim" ><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;&nbsp;{{__("New Request")}}</a>
+                    <h1 class="">Product Requests
+                    <a href="{{\Request::url()}}/create" class="pull-right btn btn-outline btn-primary dim" ><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;&nbsp;{{__("Create New Request")}}</a></h1>
 
-                    <br style="clear: both;" />
-
+                
                     <div class="mail-box-header animated fadeInRight">
                         <div class="row" >
                             <div class="col-md-12">
-                                <h2>New and In Progress</h2>
+                                <h3>New and In Progress</h3>
                             </div>
                         </div>
 
                         <div class="">
                             <table class="table table-hover table-mail datatable">
-                                    <thead>
+{{--                                     <thead>
                                         <th>Request</th>
-                                        
-                                        
                                         <th>Status</th>
-                                    </thead>
+                                    </thead> --}}
                                     <tbody>
                                         @foreach($forms as $form)
                                             
@@ -68,7 +65,46 @@
                                     </tbody>
                                 </table>
                             </div>
-                    </div>
+                        </div>
+                        <br /><br />
+                        
+                    <div class="mail-box-header animated fadeInRight">
+                        <div class="row" >
+                            <div class="col-md-12">
+                                <h3>Closed</h3>
+                            </div>
+                        </div>
+
+                        <div class="">
+                            <table class="table table-hover table-mail datatable">
+{{--                                     <thead>
+                                        <th>Request</th>
+                                        <th>Status</th>
+                                    </thead> --}}
+                                    <tbody>
+                                        @foreach($forms as $form)
+                                            
+                                            <tr>
+                                                <td>
+                                                    <p><a href="{{\Request::url()}}/{{$form->id}}">{!! $form->requirement !!}</a> &nbsp;&nbsp;&nbsp; <strong>{{$form->form_data["submitted_by"]}}</strong> <small>({{$form->form_data["submitted_by_position"]}})</small> &nbsp;&nbsp;&nbsp; {{ $form->since }} ago</p>
+                                                    <small><a href="{{\Request::url()}}/{{$form->id}}">{{$form->description}}</a></small>
+                                                    <p><strong><a href="{{\Request::url()}}/{{$form->id}}">{{ $form->longDesc }}</a></strong></p>
+                                                    <p>{{ $form->comments }}</p>
+
+                                                </td>
+
+                                                <td>
+                                                    @if(isset($form->lastFormAction))
+                                                    {{$form->lastFormAction->log["status_store_name"]}} by {{$form->lastFormAction->log["user_name"]}} ( {{$form->lastFormAction->log["user_position"]}} ) 
+                                                    @endif
+                                                </td>
+                                            </tr>
+
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>                        
 
             </div> <!-- row closes -->
         </div>

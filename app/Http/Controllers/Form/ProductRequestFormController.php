@@ -11,20 +11,24 @@ use App\Models\Form\FormActivityLog;
 
 class ProductRequestFormController extends Controller
 {
-    protected $form_name;
-    protected $current_version;
-    protected $store_number;
+    protected $formMeta;
+    // protected $form_name;
+    // protected $current_version;
+    // protected $store_number;
 
     public function __construct()
     {
-        $this->form_name = 'product_request_form';
-        $this->current_version = '1.0';
-        $this->store_number = RequestFacade::segment(1);
+        $this->formMeta = [
+            'name' => 'product_request_form',
+            'version' => '1.0',
+            'store_number' => RequestFacade::segment(1),
+            'model' => "\\App\\Models\\Form\\ProductRequest\\ProductRequestForm"
+        ];
     }
 
     public function index()
     {
-        $forms = FormData::getAdminFormDataByFormNameAndVersionAndStore($this->form_name, $this->current_version, $this->store_number);
+        $forms = FormData::getFormData($this->formMeta);
         
         return view('site.form.productrequestform.index')
                 ->with('forms', $forms);
@@ -45,12 +49,12 @@ class ProductRequestFormController extends Controller
 
     public function create()
     {
-   		$form_id = Form::getFormIdByFormNameAndVersion($this->form_name, $this->current_version);
+   		$form_id = Form::getFormId($this->formMeta);
    		
         $formStructure = 'createOrUpdate';
    		$view = 'site.form.productrequestform.' . $formStructure;
     	return view($view)
-            ->with('storeNumber', $this->store_number)
+            ->with('storeNumber', $this->formMeta['store_number'])
             ->with('form_id', $form_id);
     }
 

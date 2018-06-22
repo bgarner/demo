@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Utility\Utility;
 use App\Models\Form\Form;
 use App\Models\Form\FormActivityLog;
+use App\Models\Form\ProductRequest\ProductRequestForm;
 use App\Models\Form\ProductRequest\BusinessUnitTypes;
 use App\Models\Validation\Form\ProductRequestFormInstanceValidator;
 
@@ -33,74 +34,32 @@ class FormData extends Model
         return $productRequestValidator->validate($validateThis);
     }
 
-    public static function getAdminFormDataByFormNameAndVersion($name, $version)
+    public static function getAdminFormDataByFormNameAndVersion($formMeta)
     {
-        $form_id = Form::where('form_name', $name)
-                        ->where('version', $version)
+        $form_id = Form::where('form_name', $formMeta['name'])
+                        ->where('version', $formMeta['version'])
                         ->first()
                         ->id;
         $forms = FormData::where('form_id', $form_id)->get();
         return $forms;
     }
 
-    public static function getAdminFormDataByFormNameAndVersionAndStore($name, $version, $store_number)
+    public static function getFormData($formMeta)
     {
-
-		$form_id = Form::where('form_name', $name)
-                        ->where('version', $version)
+		$form_id = Form::where('form_name', $formMeta['name'])
+                        ->where('version', $formMeta['version'])
                         ->first()
                         ->id;
 
         $forms = FormData::where('form_id', $form_id)
-						->where('store_number', $store_number)        				
+						->where('store_number', $formMeta['store_number'])        				
         				->orderBy('created_at', 'desc')
-                        ->get()
-                        ->each(function($formInstance){
-                            $formInstance->form_data = unserialize($formInstance->form_data);
-                            
-                            $formInstance->requirement = $formInstance->form_data['requirement'];
-                            switch($formInstance->requirement){
-                                case "Replenishment-More":
-                                    $label = "Replenishment";
-                                    $icon = "fa-plus-circle";
-                                    $color = "label-more";
-                                break;
-                                case "Replenishment-Less":
-                                    $label = "Replenishment";
-                                    $icon = "fa-minus-circle";
-                                    $color = "label-less";
-                                break;
+                        ->get();
 
-                                case "Assortment-StyleRequest":
-                                    $label = "Assortment - Style Request";
-                                    $icon = "fa-question-circle";
-                                    $color = "label-primary";
-                                break;
+        $modelInstance = new $formMeta['model'];
 
-                                case "Assortment-Collection/New Assortment":
-                                    $label = "Assortment - Collection/New Assortment";
-                                    $icon = "fa-question-circle";
-                                    $color = "label-primary";
-                                break;
+        $forms = $modelInstance->prepareFormInstanceData($forms);
 
-                                default:
-                                    $label = "Replenishment";
-                                    $icon = "fa-plus-circle";
-                                    $color = "label-primary";
-                                break;
-                            }
-
-                            $formInstance->requirement = "<span class='label ".$color."'><i class='fa ".$icon."' aria-hidden='true'></i> ". $label . "</span>";
-                            $formInstance->description = $formInstance->form_data['department'] . " > " . $formInstance->form_data['category'] . " > " . $formInstance->form_data['subcategory'] . " > " . $formInstance->form_data['gender'];
-                            $formInstance->longDesc = $formInstance->form_data['description'];
-                            $formInstance->comments = $formInstance->form_data['comments'];
-                            $formInstance->prettySubmitted = Utility::prettifyDateWithTime($formInstance->created_at);
-                            $formInstance->since = Utility::getTimePastSinceDate($formInstance->created_at);
-                            $formInstance->assignedToUser = FormInstanceUserMap::getUserByFormInstanceId($formInstance->id);
-                            $formInstance->assignedToGroup = FormInstanceGroupMap::getGroupByFormInstanceId($formInstance->id);
-                            $formInstance->lastFormAction = FormActivityLog::getLastFormInstanceAction($formInstance->id);
-
-                        });
         return $forms;
     }
 
