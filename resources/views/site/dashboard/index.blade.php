@@ -249,13 +249,13 @@
                 $( ".features" ).append( html );
             }
             
-            $('#notification_popover').popover({
+            // $('#notification_popover').popover({
    
-                placement: 'bottom',
-                html: true,
-                content:  $('#notification_container').html()
+            //     placement: 'bottom',
+            //     html: true,
+            //     content:  $('#notification_container').html()
 
-            });    
+            // });    
             
         })
     </script>

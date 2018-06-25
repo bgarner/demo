@@ -91,15 +91,18 @@
     });
 
 
-    $(document).ready(function(){
-        $('#notification_popover').popover({
-   
-            placement: 'bottom',
-            html: true,
-            content:  $('#notification_detail_container').html()
 
-        });  
-    })
+   var notificationPopOverSettings = {
+        placement: 'bottom',
+        html: true,
+        selector: '#notification_popover',
+        content: function () {
+            return $('#notification_detail_container').html();
+        }
+   }
+   
+
+    $('body').popover(notificationPopOverSettings);
 
     </script>
 

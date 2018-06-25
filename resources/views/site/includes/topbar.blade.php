@@ -109,6 +109,14 @@
             right: 8px;
             top: -10px;
         }
+        .icon-background5 {
+            color: #c0ffff;
+        }
+
+        #notification_container .popover{
+            min-width:200px !important;
+            width:475px;
+        }
 
         input:focus::-webkit-input-placeholder { color:transparent; }
 
