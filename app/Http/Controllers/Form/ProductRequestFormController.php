@@ -43,7 +43,7 @@ class ProductRequestFormController extends Controller
     
         $view = 'site.form.productrequestform.view';
         return view($view)->with('formInstance', $formInstance)
-                        ->with('storeNumber', $this->store_number)
+                        ->with('storeNumber', $this->formMeta['store_number'])
                         ->with('log', $log);
     }
 
