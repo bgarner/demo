@@ -3,9 +3,12 @@
 namespace App\Models\StoreApi;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable as Notifiable;
 
 class Store extends Model {
 
+    
+    use Notifiable;
     protected $table = 'stores';
 
     protected $fillable = [];

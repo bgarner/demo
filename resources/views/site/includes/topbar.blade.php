@@ -98,6 +98,25 @@
                 }
             }
         }
+        .notifications{
+            color: #999c9e;
+            padding-right : 10px;
+        }
+        .count-info .label {
+            line-height: 12px;
+            padding: 1px 4px;
+            position: relative;
+            right: 8px;
+            top: -10px;
+        }
+        .icon-background5 {
+            color: #c0ffff;
+        }
+
+        #notification_container .popover{
+            min-width:200px !important;
+            width:475px;
+        }
 
         input:focus::-webkit-input-placeholder { color:transparent; }
 
@@ -117,10 +136,12 @@
 
         <!-- <div class="hidden-xs hidden-sm"> -->
         <div>
-
-
-
+    
             <div class="" style="padding: 15px 30px 0px 0px; float:right">
+                <span id="notification_container">            
+                    @include('site.includes.notification-partial')
+                </span>
+
                 <span class="truncate" id="store-name">
                 </span>
                 @if($isComboStore == 1)
@@ -157,7 +178,7 @@
 
         storeNameElement = document.getElementById('store-name');
         storeNameElement.innerHTML = storeName;
-        storeNameElement.title = storeName;
+        storeNameElement.title = storeName;        
 
 
     </script>

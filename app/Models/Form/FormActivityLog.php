@@ -5,6 +5,8 @@ namespace App\Models\Form;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Utility\Utility;
 use Carbon\Carbon;
+use App\Notifications\ProductRequestFormResponse;
+use App\Models\StoreApi\Store;
 
 class FormActivityLog extends Model
 {
@@ -36,7 +38,6 @@ class FormActivityLog extends Model
         $formInstanceId = $request->form_instance_id;
         $comment = $request->comment;
         $reply = $request->reply;
-
         switch($origin){
             case "admin":
                 $user = \Auth::user();
@@ -69,6 +70,18 @@ class FormActivityLog extends Model
             "allow_response" => $reply
         ]);
 
+        if($reply){ //if reply required => generate notification for store
+            $formInstanceData = FormData::find($formInstanceId);
+            
+            $store = Store::where('store_number', $formInstanceData->store_number)->get();
+            \Notification::send($store, new ProductRequestFormResponse( 
+                [
+                    'form_instance_id' => $formInstanceId, 
+                    'notification_text' => 'Response required on a Product Request', 
+                    'url' => "/".$formInstanceData->store_number. "/form/productrequest/". $formInstanceId
+                ] ));
+        }
+
         return $formLog;
     }
 
@@ -87,6 +100,19 @@ class FormActivityLog extends Model
 
         $formActivityInstance->log = serialize($log);
         $formActivityInstance->save();
+
+        // mark notification as read
+        if(isset($request->answer) && $request->answer != ''){
+            
+            $formInstanceData = FormData::find($request->formInstanceId);
+            $store = Store::where('store_number', $formInstanceData->store_number)->first();
+            $notifications = $store->unreadNotifications->filter(function ($value, $key) use ($request) {
+                    return $value->data['form_instance_id'] == $request->formInstanceId;
+                });
+
+            $notifications->markAsRead();
+
+        }
 
         return $formActivityInstance;
     }

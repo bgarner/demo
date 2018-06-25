@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as RequestFacade; 
 use App\Models\StoreApi\StoreInfo;
 use App\Models\StoreApi\Banner;
+use App\Models\StoreApi\Store;
+use App\Models\Utility\Utility;
 
 class StoreTopbarCreator
 {
@@ -18,6 +20,7 @@ class StoreTopbarCreator
     protected $storeNumber;
     protected $banner;
     protected $isComboStore;
+    protected $notifications;
 
     /**
      * Create a new profile composer.
@@ -35,6 +38,11 @@ class StoreTopbarCreator
 
         $this->isComboStore = $storeInfo->is_combo_store;
 
+        $this->notifications = Store::where('store_number', $this->storeNumber)->first()->unreadNotifications->each(function($item){
+            $item->prettyCreatedAt = Utility::getTimePastSinceDate($item->created_at);
+        });
+
+
     }
 
     /**
@@ -45,8 +53,8 @@ class StoreTopbarCreator
      */
     public function compose(View $view)
     {
-        
         $view->with('banner', $this->banner)
-            ->with('isComboStore', $this->isComboStore);
+            ->with('isComboStore', $this->isComboStore)
+            ->with('notifications', $this->notifications);
     }
 }
