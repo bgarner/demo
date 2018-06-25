@@ -136,7 +136,11 @@ class Event extends Model
             $event->event_type_name = EventType::getName($event->event_type);
             $event->background_colour = EventType::getBackground($event->event_type);
             $event->foreground_colour = EventType::getForeground($event->event_type);
+            if( strpos(EventType::getName($event->event_type), "Launch") || strpos(EventType::getName($event->event_type), "launch" ) ){
+                $event->all_day = 1;
+            }
         }
+
         return $events;
 
     }

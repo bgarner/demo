@@ -72,6 +72,7 @@ class ProductLaunch extends Model
                         $item->description = '';
                         $title = $item->event_type_name . " - " . $item->style_number . " - " . $item->style_name . " - Reg. " . $item->retail_price;
                         $item->title = addslashes($title);
+                        $item->all_day = 1;
                     })
                     ->groupBy(function($event) {
                             return Carbon::parse($event->start)->format('Y-m-d');
@@ -177,6 +178,7 @@ class ProductLaunch extends Model
 						'retail_price' => (isset($row[7]) ? $row[7] : ''),
 						'tracking' => (isset($row[8]) ? $row[8] : ''),
 						'event_type' => (isset($row[11])? $row[11] : ''),
+						'all_day' => '1',
 						'changes' => (isset($row[12])? $row[12] : '')
 
 	                )
@@ -208,6 +210,7 @@ class ProductLaunch extends Model
 				$record['retail_price'] = (isset($row[7]) ? $row[7] : '');
 				$record['tracking'] = (isset($row[8]) ? $row[8] : '');
 				$record['event_type'] = (isset($row[11])? $row[11] : '');
+				$record['all_day'] = '1';
 				$record['changes'] = (isset($row[12])? $row[12] : '');
 
 
