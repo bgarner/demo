@@ -5,6 +5,7 @@ namespace App\Models\Form;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Utility\Utility;
 use Carbon\Carbon;
+use App\Models\Form\FormResolution;
 
 class FormActivityLog extends Model
 {
@@ -36,6 +37,12 @@ class FormActivityLog extends Model
         $formInstanceId = $request->form_instance_id;
         $comment = $request->comment;
         $reply = $request->reply;
+        $resolution_code_id = $request->resolution_code_id;
+        $resolution_code = '';
+        if(isset( $request->resolution_code_id )){
+            $resolution_code = FormResolution::find($resolution_code_id)->resolution_code;    
+        }
+        
 
         switch($origin){
             case "admin":
@@ -58,7 +65,9 @@ class FormActivityLog extends Model
             "status_colour" => $statusMeta->colour,
             "user_name" => $username,
             "user_position" => $userposition,
-            "comment" => $comment
+            "comment" => $comment,
+            "resolution_code_id" => $resolution_code_id,
+            "resolution_code" => $resolution_code
         ];
 
 
