@@ -3,7 +3,7 @@
 // Route::get('/form', 'Form\FormListAdminController@index');
 Route::get('/form', 'Form\ProductRequest\DashboardAdminController@index');
 
-Route::resource('/form/productrequest', 'Form\ProductRequestFormAdminController');
+Route::get('/form/productrequest/{id}', 'Form\ProductRequestFormAdminController@show');
 Route::get('/form/productrequestform/log/{id}', 'Form\FormLogController@show');
 
 //Form Groups
