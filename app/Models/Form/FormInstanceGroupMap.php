@@ -67,4 +67,8 @@ class FormInstanceGroupMap extends Model
                     ->select('form_usergroups.*')
                     ->first();
     }
+    public static function removeFormAssignment($form_instance_id)
+    {
+        return Self::where('form_instance_id', $form_instance_id)->delete();
+    }
 }

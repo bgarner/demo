@@ -66,4 +66,9 @@ class FormInstanceUserMap extends Model
             'user_id'           => $user_id
         ]);
     }
+    
+    public static function removeFormAssignment($form_instance_id)
+    {
+        return Self::where('form_instance_id', $form_instance_id)->delete();
+    }
 }

@@ -16,3 +16,4 @@ Route::get('/form/{id}/users', 'Form\ProductRequest\FormUserAdminController@show
 //Assignments
 Route::get('/form/assignment', 'Form\ProductRequest\AssignmentAdminController@index');
 Route::patch('/form/assignment/forminstance/{form_instance_id}' , 'Form\ProductRequest\AssignmentAdminController@update');
+Route::delete('/form/assignment/forminstance/{form_instance_id}' , 'Form\ProductRequest\AssignmentAdminController@destroy');
