@@ -29,7 +29,7 @@ class ProductRequestFormController extends Controller
     public function index()
     {
         $forms = FormData::getFormData($this->formMeta);
-        
+        //dd($forms[0]->lastFormAction->log);
         return view('site.form.productrequestform.index')
                 ->with('forms', $forms);
     }

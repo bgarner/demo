@@ -56,9 +56,33 @@
 
                                                 </td>
 
-                                                <td>
+                                                <td style="">
                                                     @if(isset($form->lastFormAction))
-                                                    {{$form->lastFormAction->log["status_store_name"]}} by {{$form->lastFormAction->log["user_name"]}} ( {{$form->lastFormAction->log["user_position"]}} ) 
+                                                        
+                                                        <div class="status-resolution">
+                                                            <span class="pull-left status-badge {{ $form->lastFormAction->log['status_colour'] }}"><i class="fa {{ $form->lastFormAction->log['status_icon'] }}" aria-hidden="true"></i> {{$form->lastFormAction->log["status_store_name"]}}
+                                                            </span>
+                                                            <p class="pull-left" style="padding-left: 20px;">
+                                                            <small>Resolution<br /></small>
+                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+
+                                                            <br />
+                                                            {{$form->lastFormAction->log["user_name"]}} ( {{$form->lastFormAction->log["user_position"]}} )
+                                                            <br />
+                                                            {{ $form->lastActionSince }} ago
+                                                            </p>
+
+                                                        </div>
+
+                                                        <div class="status-name-time pull-right" style="display: block;">                                                        
+                                                            
+                                                            <small>
+                                                                
+                                                                
+                                                            </small> 
+                                                            
+                                                        </div>
+
                                                     @endif
                                                 </td>
                                             </tr>

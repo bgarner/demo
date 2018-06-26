@@ -1118,6 +1118,18 @@ button.dim:active:before {
   padding-right: 6px;
   text-shadow: none;
 }
+
+.status-badge{
+  font-family: 'Open Sans';
+  font-size: 13px;
+  padding: 4px 8px;
+  margin-top: 5px;
+  text-shadow: none;
+  border-radius: 5px;
+
+
+}
+
 .label-primary,
 .badge-primary {
   background-color: #489bd5;
@@ -8725,4 +8737,8 @@ a:hover span.badge{
 }
 .vote-info .user-group{
   padding-left: 20px;
+}
+
+.status-resolution{
+  float: right;
 }

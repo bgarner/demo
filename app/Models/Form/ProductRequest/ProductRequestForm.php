@@ -63,6 +63,8 @@ class ProductRequestForm extends Model
             $formInstance->assignedToUser = FormInstanceUserMap::getUserByFormInstanceId($formInstance->id);
             $formInstance->assignedToGroup = FormInstanceGroupMap::getGroupByFormInstanceId($formInstance->id);
             $formInstance->lastFormAction = FormActivityLog::getLastFormInstanceAction($formInstance->id);
+            $formInstance->lastActionPrettyDate = Utility::prettifyDateWithTime($formInstance->lastFormAction->updated_at);
+            $formInstance->lastActionSince = Utility::getTimePastSinceDate($formInstance->lastFormAction->updated_at);
             $formInstance->status_id = FormInstanceStatusMap::getFormStatusByInstanceId($formInstance->id);
 		}
 		 
