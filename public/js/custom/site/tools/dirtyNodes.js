@@ -43,7 +43,7 @@ function showModal(el)
 $('button.cleannode').on('click', function() {
 
     $.ajax({
-        url: location.protocol + '//' + location.host + location.pathname + "/clean/",
+        url: DIRTY_NODE_API_ENDPOINT, //set in /public/js/env.js
         type: 'PATCH',
         data: {
             node_id : window.nodeID
