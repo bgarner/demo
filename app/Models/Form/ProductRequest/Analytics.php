@@ -14,6 +14,9 @@ use App\Models\Utility\Utility;
 
 class Analytics extends Model
 {
+    protected static $new_request_status_code_id = 1;
+    protected static $closed_request_status_code_id = 5;
+
     public static function getFormsForDashboard()
     {
     	$user = \Auth::user();
@@ -74,10 +77,10 @@ class Analytics extends Model
         $endDate = Carbon::now();
 
         // Total new forms in last 7 days
-        $analytics["totalNewFormsInLastWeek"] = FormInstanceStatusMap::where('status_code_id', '1')->where('created_at', '>=', $startDate)->get()->count();
+        $analytics["totalNewFormsInLastWeek"] = FormInstanceStatusMap::where('status_code_id', Self::$new_request_status_code_id )->where('created_at', '>=', $startDate)->get()->count();
 
         // In progress forms
-        $inProgress = FormInstanceStatusMap::whereNotIn('status_code_id', ['1', '5'])->orderBy('created_at')->get();    	    
+        $inProgress = FormInstanceStatusMap::whereNotIn('status_code_id', [Self::$new_request_status_code_id , Self::$closed_request_status_code_id])->orderBy('created_at')->get();    	    
 
 
         if(count($inProgress) > 0){
@@ -88,7 +91,7 @@ class Analytics extends Model
 
     	
         //total closed in last 7 days
-        $analytics["closedLastWeek"] = FormInstanceStatusMap::where('status_code_id', '5')->where('updated_at', '>=', $startDate)->get();
+        $analytics["closedLastWeek"] = FormInstanceStatusMap::where('status_code_id', Self::$closed_request_status_code_id)->where('updated_at', '>=', $startDate)->get();
 
         //total time to close
         $time = 0;
@@ -127,7 +130,7 @@ class Analytics extends Model
 
         // Total new forms in last 7 days
         $analytics["totalNewFormsInLastWeek"] = FormInstanceStatusMap::join('form_data', 'form_data.id', '=', 'form_instance_status.form_data_id')
-                                ->where('status_code_id', '1')
+                                ->where('status_code_id', Self::$new_request_status_code_id )
                                 ->where('form_instance_status.created_at', '>=', $startDate)
                                 ->where('form_data.business_unit_id', $business_unit_id)
                                 ->select('form_instance_status.*')
@@ -136,7 +139,7 @@ class Analytics extends Model
 
         // In progress forms
         $inProgress = FormInstanceStatusMap::join('form_data', 'form_data.id', '=', 'form_instance_status.form_data_id')
-                                ->whereNotIn('status_code_id', ['1', '5'])
+                                ->whereNotIn('status_code_id', [Self::$new_request_status_code_id , Self::$closed_request_status_code_id])
                                 ->where('form_data.business_unit_id', $business_unit_id)
                                 ->select('form_instance_status.*')
                                 ->orderBy('form_data.created_at')
@@ -154,7 +157,7 @@ class Analytics extends Model
 
         //total closed in last 7 days
         $analytics["closedLastWeek"] = FormInstanceStatusMap::join('form_data', 'form_data.id', '=', 'form_instance_status.form_data_id')
-                                ->where('status_code_id', '5')
+                                ->where('status_code_id', Self::$closed_request_status_code_id)
                                 ->where('form_instance_status.updated_at', '>=', $startDate)
                                 ->where('form_data.business_unit_id', $business_unit_id)
                                 ->select('form_instance_status.*')

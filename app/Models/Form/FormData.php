@@ -14,6 +14,8 @@ class FormData extends Model
 {
     protected $table = 'form_data';
     protected $fillable = ['form_id', 'store_number', 'submitted_by', 'form_data', 'form_name', 'form_version', 'business_unit_id'];
+    protected static $new_request_status_code_id = 1;
+    protected static $closed_request_status_code_id = 5;
 
     public static function validateFormInstance($request)
     {
@@ -34,10 +36,10 @@ class FormData extends Model
         return $productRequestValidator->validate($validateThis);
     }
 
-    public static function getAdminFormDataByFormNameAndVersion($formMeta)
+    public static function getAdminFormDataByFormNameAndVersion($form_name, $form_version)
     {
-        $form_id = Form::where('form_name', $formMeta['name'])
-                        ->where('version', $formMeta['version'])
+        $form_id = Form::where('form_name', $form_name)
+                        ->where('version', $form_version)
                         ->first()
                         ->id;
         $forms = FormData::where('form_id', $form_id)->get();
@@ -97,8 +99,7 @@ class FormData extends Model
 					            "form_data" => serialize($request->all())
 					        ]);
 
-        $status_code_id_for_new = Status::where('admin_status', 'new')->first()->id;
-        FormInstanceStatusMap::updateFormInstanceStatus($formInstance->id, $status_code_id_for_new);
+        FormInstanceStatusMap::updateFormInstanceStatus($formInstance->id, Self::$new_request_status_code_id);
     	return $formInstance;
     }
 
@@ -106,7 +107,7 @@ class FormData extends Model
     {
         return FormData::join('form_instance_status', 'form_instance_status.form_data_id', '=', 'form_data.id')
                                         ->where('form_id', $form_id)
-                                        ->where('form_instance_status.status_code_id', 1)
+                                        ->where('form_instance_status.status_code_id', Self::$new_request_status_code_id)
                                         ->select('form_data.*')
                                         ->count();
     }
@@ -115,7 +116,7 @@ class FormData extends Model
     {
         return FormData::join('form_instance_status', 'form_instance_status.form_data_id', '=', 'form_data.id')
                                         ->where('form_id', $form_id)
-                                        ->whereNotIn('form_instance_status.status_code_id', [1, 5])
+                                        ->whereNotIn('form_instance_status.status_code_id', [Self::$new_request_status_code_id, Self::$closed_request_status_code_id])
                                         ->select('form_data.*')
                                         ->count();
     }
