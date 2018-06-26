@@ -56,31 +56,15 @@
 
                                                 </td>
 
-                                                <td style="">
+                                                <td>
                                                     @if(isset($form->lastFormAction))
                                                         
                                                         <div class="status-resolution">
                                                             <span class="pull-left status-badge {{ $form->lastFormAction->log['status_colour'] }}"><i class="fa {{ $form->lastFormAction->log['status_icon'] }}" aria-hidden="true"></i> {{$form->lastFormAction->log["status_store_name"]}}
                                                             </span>
-                                                            <p class="pull-left" style="padding-left: 20px;">
-                                                            <small>Resolution<br /></small>
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-
-                                                            <br />
                                                             {{$form->lastFormAction->log["user_name"]}} ( {{$form->lastFormAction->log["user_position"]}} )
-                                                            <br />
                                                             {{ $form->lastActionSince }} ago
-                                                            </p>
 
-                                                        </div>
-
-                                                        <div class="status-name-time pull-right" style="display: block;">                                                        
-                                                            
-                                                            <small>
-                                                                
-                                                                
-                                                            </small> 
-                                                            
                                                         </div>
 
                                                     @endif
@@ -111,7 +95,7 @@
                                     @foreach($forms as $form)
                                         @if($form->status_id == 5)
                                         <tr>
-                                            <td>
+                                            <td style="width: 60%;">
                                                 <p><a href="{{\Request::url()}}/{{$form->id}}">{!! $form->requirement !!}</a> &nbsp;&nbsp;&nbsp; <strong>{{$form->form_data["submitted_by"]}}</strong> <small>({{$form->form_data["submitted_by_position"]}})</small> &nbsp;&nbsp;&nbsp; {{ $form->since }} ago</p>
                                                 <small><a href="{{\Request::url()}}/{{$form->id}}">{{$form->description}}</a></small>
                                                 <p><strong><a href="{{\Request::url()}}/{{$form->id}}">{{ $form->longDesc }}</a></strong></p>
@@ -119,11 +103,29 @@
 
                                             </td>
 
-                                            <td>
-                                                @if(isset($form->lastFormAction))
-                                                {{$form->lastFormAction->log["status_store_name"]}} by {{$form->lastFormAction->log["user_name"]}} ( {{$form->lastFormAction->log["user_position"]}} ) 
-                                                @endif
-                                            </td>
+                                                <td style="width: 40%;">
+                                                    @if(isset($form->lastFormAction))
+                                                        
+                                                        <div class="status-resolution">
+                                                            <span class="pull-left status-badge {{ $form->lastFormAction->log['status_colour'] }}"><i class="fa {{ $form->lastFormAction->log['status_icon'] }}" aria-hidden="true"></i> {{$form->lastFormAction->log["status_store_name"]}}
+                                                            </span>
+                                                            <span class="pull-left" style="padding-left: 20px;">
+                                                                <small>Resolution<br /></small>
+                                                                <p>
+                                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                                                </p>
+                                                                
+                                                                <small>
+                                                                {{$form->lastFormAction->log["user_name"]}} ( {{$form->lastFormAction->log["user_position"]}} )
+                                                                <br />
+                                                                {{ $form->lastActionSince }} ago
+                                                                </small>
+                                                            </span>
+
+                                                        </div>
+
+                                                    @endif
+                                                </td>
                                         </tr>
                                         @endif
                                     @endforeach
