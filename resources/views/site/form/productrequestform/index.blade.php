@@ -6,6 +6,7 @@
     @include('site.includes.head')
     <link rel="stylesheet" type="text/css" href="/css/custom/site/event.css">
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
+    <link rel="stylesheet" href="/css/plugins/dataTables/datatables.min.css">
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 </head>
 
@@ -37,17 +38,18 @@
                         </div>
 
                         <div class="">
-                            <table class="table table-hover table-mail datatable">
-{{--                                     <thead>
-                                        <th>Request</th>
-                                        <th>Status</th>
-                                    </thead> --}}
+                            <table class="table table-hover table-mail">
+                
                                     <tbody>
                                         @foreach($forms as $form)
-                                            
+                                            @if($form->status_id != 5)
                                             <tr>
                                                 <td>
-                                                    <p><a href="{{\Request::url()}}/{{$form->id}}">{!! $form->requirement !!}</a> &nbsp;&nbsp;&nbsp; <strong>{{$form->form_data["submitted_by"]}}</strong> <small>({{$form->form_data["submitted_by_position"]}})</small> &nbsp;&nbsp;&nbsp; {{ $form->since }} ago</p>
+                                                    <p>
+                                                        <a href="{{\Request::url()}}/{{$form->id}}">{!! $form->requirement !!}</a> &nbsp;&nbsp;&nbsp; 
+                                                        <strong>{{$form->form_data["submitted_by"]}}</strong> 
+                                                        <small>({{$form->form_data["submitted_by_position"]}})</small> &nbsp;&nbsp;&nbsp; {{ $form->since }} ago
+                                                    </p>
                                                     <small><a href="{{\Request::url()}}/{{$form->id}}">{{$form->description}}</a></small>
                                                     <p><strong><a href="{{\Request::url()}}/{{$form->id}}">{{ $form->longDesc }}</a></strong></p>
                                                     <p>{{ $form->comments }}</p>
@@ -60,12 +62,12 @@
                                                     @endif
                                                 </td>
                                             </tr>
-
+                                            @endif
                                         @endforeach
                                     </tbody>
-                                </table>
-                            </div>
+                            </table>
                         </div>
+                    </div>
                         <br /><br />
                         
                     <div class="mail-box-header animated fadeInRight">
@@ -77,34 +79,34 @@
 
                         <div class="">
                             <table class="table table-hover table-mail datatable">
-{{--                                     <thead>
-                                        <th>Request</th>
-                                        <th>Status</th>
-                                    </thead> --}}
-                                    <tbody>
-                                        @foreach($forms as $form)
-                                            
-                                            <tr>
-                                                <td>
-                                                    <p><a href="{{\Request::url()}}/{{$form->id}}">{!! $form->requirement !!}</a> &nbsp;&nbsp;&nbsp; <strong>{{$form->form_data["submitted_by"]}}</strong> <small>({{$form->form_data["submitted_by_position"]}})</small> &nbsp;&nbsp;&nbsp; {{ $form->since }} ago</p>
-                                                    <small><a href="{{\Request::url()}}/{{$form->id}}">{{$form->description}}</a></small>
-                                                    <p><strong><a href="{{\Request::url()}}/{{$form->id}}">{{ $form->longDesc }}</a></strong></p>
-                                                    <p>{{ $form->comments }}</p>
+                                <thead>
+                                    <th></th>
+                                    <th></th>
+                                </thead>
+                                <tbody>
+                                    @foreach($forms as $form)
+                                        @if($form->status_id == 5)
+                                        <tr>
+                                            <td>
+                                                <p><a href="{{\Request::url()}}/{{$form->id}}">{!! $form->requirement !!}</a> &nbsp;&nbsp;&nbsp; <strong>{{$form->form_data["submitted_by"]}}</strong> <small>({{$form->form_data["submitted_by_position"]}})</small> &nbsp;&nbsp;&nbsp; {{ $form->since }} ago</p>
+                                                <small><a href="{{\Request::url()}}/{{$form->id}}">{{$form->description}}</a></small>
+                                                <p><strong><a href="{{\Request::url()}}/{{$form->id}}">{{ $form->longDesc }}</a></strong></p>
+                                                <p>{{ $form->comments }}</p>
 
-                                                </td>
+                                            </td>
 
-                                                <td>
-                                                    @if(isset($form->lastFormAction))
-                                                    {{$form->lastFormAction->log["status_store_name"]}} by {{$form->lastFormAction->log["user_name"]}} ( {{$form->lastFormAction->log["user_position"]}} ) 
-                                                    @endif
-                                                </td>
-                                            </tr>
-
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>                        
+                                            <td>
+                                                @if(isset($form->lastFormAction))
+                                                {{$form->lastFormAction->log["status_store_name"]}} by {{$form->lastFormAction->log["user_name"]}} ( {{$form->lastFormAction->log["user_position"]}} ) 
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        @endif
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>                        
 
             </div> <!-- row closes -->
         </div>
@@ -127,8 +129,7 @@
 		<script type="text/javascript" src="/js/plugins/ckeditor-standard/ckeditor.js"></script>
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 		<script src="/js/custom/forms/ProductRequestForm.js"></script>
-
-
+        <script type="text/javascript" src="/js/plugins/dataTables/datatables.min.js"></script>
 
 		<script type="text/javascript">
 
@@ -137,6 +138,13 @@
 		            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		        }
 			});
+            $(".datatable").dataTable({
+                pageLength: 10,
+                searching: false,
+                info: false,
+                lengthChange: false,
+                ordering: false
+            });
 
 		</script>
         @include('site.includes.modal')

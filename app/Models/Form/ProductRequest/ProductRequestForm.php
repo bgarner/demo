@@ -9,6 +9,7 @@ use App\Models\Form\FormData;
 use App\Models\Form\FormActivityLog;
 use App\Models\Form\FormInstanceUserMap;
 use App\Models\Form\FormInstanceGroupMap;
+use App\Models\Form\FormInstanceStatusMap;
 use App\Models\Form\ProductRequest\BusinessUnitTypes;
 
 
@@ -62,6 +63,7 @@ class ProductRequestForm extends Model
             $formInstance->assignedToUser = FormInstanceUserMap::getUserByFormInstanceId($formInstance->id);
             $formInstance->assignedToGroup = FormInstanceGroupMap::getGroupByFormInstanceId($formInstance->id);
             $formInstance->lastFormAction = FormActivityLog::getLastFormInstanceAction($formInstance->id);
+            $formInstance->status_id = FormInstanceStatusMap::getFormStatusByInstanceId($formInstance->id);
 		}
 		 
 		return $forms;                      
