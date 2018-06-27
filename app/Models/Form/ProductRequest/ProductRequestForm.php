@@ -64,13 +64,18 @@ class ProductRequestForm extends Model
             $formInstance->since = Utility::getTimePastSinceDate($formInstance->created_at);
             $formInstance->assignedToUser = FormInstanceUserMap::getUserByFormInstanceId($formInstance->id);
             $formInstance->assignedToGroup = FormInstanceGroupMap::getGroupByFormInstanceId($formInstance->id);
+
+
             $formInstance->lastFormAction = FormActivityLog::getLastFormInstanceAction($formInstance->id);
-            $formInstance->lastActionPrettyDate = Utility::prettifyDateWithTime($formInstance->lastFormAction->updated_at);
-            $formInstance->lastActionSince = Utility::getTimePastSinceDate($formInstance->lastFormAction->updated_at);
-            $formInstance->status_id = FormInstanceStatusMap::getFormStatusByInstanceId($formInstance->id);
-            $resolution = FormInstanceResolutionMap::getResolutionCodeByFormInstanceId($formInstance->id);
-            $formInstance->resolutionCode = $resolution['resolution_code'];
-            // dd($resolutionCode);
+            if($formInstance->lastFormAction){
+                $formInstance->lastActionPrettyDate = Utility::prettifyDateWithTime($formInstance->lastFormAction->updated_at);
+                $formInstance->lastActionSince = Utility::getTimePastSinceDate($formInstance->lastFormAction->updated_at);
+                $formInstance->status_id = FormInstanceStatusMap::getFormStatusByInstanceId($formInstance->id);
+                $resolution = FormInstanceResolutionMap::getResolutionCodeByFormInstanceId($formInstance->id);
+                $formInstance->resolutionCode = $resolution['resolution_code'];    
+            }
+            
+            
 		}
 		 
 		return $forms;                      

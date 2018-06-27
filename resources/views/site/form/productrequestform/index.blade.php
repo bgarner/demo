@@ -39,8 +39,9 @@
 
                         <div class="">
                             <table class="table table-hover table-mail">
-                
+                                
                                     <tbody>
+
                                         @foreach($forms as $form)
                                             @if($form->status_id != 5)
                                             <tr>
