@@ -13,6 +13,8 @@ class FormActivityLog extends Model
 
     protected $fillable = ['form_data_id', 'log', 'allow_response'];
 
+    protected static $question_responded_status_code_id = 7;
+
     public static function getFormInstanceLog($id)
     {
     	$log = Self::where('form_data_id', $id)->orderBy('created_at', 'desc')->get()->each(function($item){
@@ -71,10 +73,9 @@ class FormActivityLog extends Model
         ];
 
 
-        $formLog =FormActivityLog::create([
+        $formLog = FormActivityLog::create([
             "form_data_id" => $formInstanceId,
-            "log" => serialize($log),
-            "status_id" =>$request->status, 
+            "log" => serialize($log), 
             "allow_response" => $reply
         ]);
 
@@ -83,19 +84,41 @@ class FormActivityLog extends Model
 
     public static function updateFormInstanceActivityLog($id, $request)
     {
+        //update the log where question was asked
         $formActivityInstance = FormActivityLog::find($id);
-
+        
         $log = unserialize($formActivityInstance->log);
-
         $log["answer_submitted_by"] = $request->submitted_by;
         $log["answer_submitted_by_position"] = $request->submitted_by_position;
         $log["answer"] = $request->answer;
         $log["answer_time"] = Carbon::now()->toDateTimeString();
 
         $formActivityInstance->allow_response = null;
-
         $formActivityInstance->log = serialize($log);
         $formActivityInstance->save();
+
+        //insert new log for updated status
+        $form_instance_id = $formActivityInstance->form_data_id;
+        $status = Status::find(Self::$question_responded_status_code_id);
+        $log = [
+            
+            "status_id" => $status->id,
+            "status_admin_name" => $status->admin_status,
+            "status_store_name" => $status->store_status,
+            "status_icon" => $status->icon,
+            "status_colour" => $status->colour,
+            "user_name" => $request->submitted_by,
+            "user_position" => $request->submitted_by_position,
+            "comment" => ''
+        ];
+        FormActivityLog::create([
+            "form_data_id" => $form_instance_id,
+            "log" => serialize($log), 
+            "allow_response" => NULL
+        ]);
+        
+        // update form instance status
+        FormInstanceStatusMap::updateFormInstanceStatus($form_instance_id, Self::$question_responded_status_code_id );
 
         return $formActivityInstance;
     }

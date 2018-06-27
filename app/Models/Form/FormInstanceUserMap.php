@@ -34,7 +34,7 @@ class FormInstanceUserMap extends Model
                     ->get()
                     ->each(function($formInstance) {
                         $formInstance->form_data = unserialize($formInstance->form_data);
-                        $formInstance->description = $formInstance->form_data['department'] . " > " . $formInstance->form_data['category'] . " > " . $formInstance->form_data['subcategory']. " > " . $formInstance->form_data['gender'];
+                        $formInstance->description = $formInstance->form_data['department'] . " > " . $formInstance->form_data['category'] . " > " . $formInstance->form_data['subcategory']. " > " . $formInstance->form_data['gender'] . " > " . $formInstance->form_data['requirement'];
                         $formInstance->prettySubmitted = Utility::prettifyDateWithTime($formInstance->created_at);
                         $formInstance->assignedToUser = FormInstanceUserMap::getUserByFormInstanceId($formInstance->id);
                         $formInstance->assignedToGroup = FormInstanceGroupMap::getGroupByFormInstanceId($formInstance->id);
