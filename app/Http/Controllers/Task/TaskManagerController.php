@@ -10,6 +10,9 @@ use App\Models\StoreApi\StoreInfo;
 use App\Models\Task\Task;
 use App\Models\Task\TaskTarget;
 use App\Models\Task\TaskStoreStatus;
+use App\Models\Tools\CustomStoreGroup;
+use App\Models\Auth\User\UserBanner;
+use App\Models\StoreApi\Banner;
 
 class TaskManagerController extends Controller
 {
@@ -20,15 +23,26 @@ class TaskManagerController extends Controller
      */
     public function index()
     {
+        $this->user_id = \Auth::user()->id;
         
-        $user_id = \Auth::user()->id;
-        $storeInfo = StoreInfo::getStoreListingByManagerId($user_id);
+        $storeInfo = StoreInfo::getStoreListingByManagerId($this->user_id);
+        $this->stores = array_column($storeInfo, 'store_number');
+
+        $this->storeGroups = CustomStoreGroup::getStoreGroupsForManager($this->stores);
+
+        $this->banners = UserBanner::getAllBanners()->pluck('id')->toArray();
+        
+        $tasks = Task::getActiveTasksForStoreList($this->stores, $this->banners, $this->storeGroups);
+
+        $banner = Banner::whereIn("id", $this->banners)->get()->pluck("name", "id");
+
         $storeList = [];
         foreach ($storeInfo as $store) {
-            $storeList[$store->store_number] = $store->store_number . " - " . $store->name;
+             
+            $storeList[$store->store_number] = $store->store_id . " " . $store->name . " (" . $banner[$store->banner_id] .")" ;
         }
-        
-        $tasks = Task::getActiveTasksByUserId($user_id);
+
+        // return $tasks;
         return view('manager.task.index')->with('tasks', $tasks)
                                         ->with('stores', $storeList);
     }
@@ -51,6 +65,7 @@ class TaskManagerController extends Controller
      */
     public function store(Request $request)
     {
+        \Log::info( $request->all() );
         return Task::createTask($request);
     }
 
@@ -95,7 +110,7 @@ class TaskManagerController extends Controller
     public function update(Request $request, $id)
     {
         Task::updateTask($id, $request);
-        return redirect('/manager/task/');
+        return redirect('/manager/task');
 
     }
 

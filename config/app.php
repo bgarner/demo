@@ -191,7 +191,8 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         App\Providers\FormUserSidenavServiceProvider::class,
         Adldap\Laravel\AdldapServiceProvider::class,
-        Adldap\Laravel\AdldapAuthServiceProvider::class
+        Adldap\Laravel\AdldapAuthServiceProvider::class,
+        App\Providers\ManagerSidenavServiceProvider::class,
 
     ],
 
@@ -270,7 +271,7 @@ return [
         'App\Http\Controllers\Communication\CommunicationPartialController'     => 'Communications',
         'App\Http\Controllers\Communication\CommunicationTagController'         => 'Communications',
         'App\Http\Controllers\Utilities\CkeditorImageController'                => 'Communications',
-        'App\Http\Controllers\Document\DocumentManagerController'               => 'Library',
+        'App\Http\Controllers\Document\LibraryAdminController'                  => 'Library',
         'App\Http\Controllers\Document\FolderAdminController'                   => 'Library',
         'App\Http\Controllers\Document\DocumentAdminController'                 => 'Library',
         'App\Http\Controllers\Document\DocumentFolderAdminController'           => 'Library',

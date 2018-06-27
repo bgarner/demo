@@ -8,28 +8,27 @@ use App\Models\Communication\Communication;
 use App\Models\Alert\Alert;
 use App\Models\UrgentNotice\UrgentNotice;
 use App\Models\ProductLaunch\ProductLaunch;
+use App\Models\Tools\CustomStoreGroup;
+use App\Models\Auth\User\UserBanner;
+use App\Models\Event\Event;
 
 class ManagerDashboard extends Model
 {
-    public static function compileDashboardDataByDistrictId($id)
+    
+    public static function compileDashboardDataForManager($user_id)
     {
-    	$stores = StoreInfo::getStoresByDistrictId($id);
-    	return ManagerDashboard::compileDashboardDataByStoreList($stores);
-    }
+        $storeList = StoreInfo::getStoreListingByManagerId($user_id);
+        $stores = array_column($storeList, 'store_number');
 
-    public static function compileDashboardDataByRegionId($id)
-    {
-        $stores = StoreInfo::getStoresByRegionId($id);
-        return ManagerDashboard::compileDashboardDataByStoreList($stores);
-    }
+        $storeGroups = CustomStoreGroup::getStoreGroupsForManager($stores);
 
-    public static function compileDashboardDataByStoreList($stores)
-    {
+        $banners = UserBanner::getAllBanners()->pluck( 'id');
+
+
         $compiledData = [];
-        $compiledData["communications"] = Communication::getActiveCommunicationsForStoreList($stores);
-        $compiledData["alerts"] = Alert::getActiveAlertsForStoreList($stores);
-        $compiledData["urgentNotices"] = UrgentNotice::getActiveUrgentNoticesForStoreList($stores);
-        $compiledData["productLaunches"] = ProductLaunch::getActiveProductLaunchesForStoreList($stores);
+        
+        $compiledData["urgentNotices"] = UrgentNotice::getActiveUrgentNoticesForStoreList($stores, $banners, $storeGroups); 
+
         return $compiledData;
     }
 }

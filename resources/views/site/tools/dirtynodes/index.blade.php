@@ -108,6 +108,8 @@
                                     <tbody>
                                         @foreach($data as $d)
                                         <tr id="nodeID_{{ $d->id }}">
+                                            <input type="hidden" name="item_id_sku" class="item_id_sku" value="{{ $d->item_id_sku }}" />
+                                            <input type="hidden" name="node_key" class="node_key" value="{{ $d->node_key }}" />
                                             <td style="display: none;">{{ $d->id }}</td>
                                             <td><input type="button" class="cleannodebutton btn btn-sm btn-primary" value="Clean"></td>
                                             <td>{{ $d->stylecode }}</td>
@@ -190,7 +192,7 @@
     @include('site.includes.footer')
 
     <script type="text/javascript" src="/js/plugins/fullcalendar/moment.min.js"></script>
-    @include('site.includes.scripts')
+    @include('site.includes.scripts-dn')
 
     @include('site.includes.modal')
     <script type="text/javascript" src="/js/vendor/underscore-1.8.3.js"></script>
@@ -204,12 +206,6 @@
     <script>
         $(document).ready(function(){
             //$('<div class="loading">Loading</div>').appendTo('body');
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
 
             $('.dirtynodestable').DataTable({
                 paging: true,

@@ -8738,6 +8738,14 @@ a:hover span.badge{
   padding-left: 20px;
 }
 
+
 .status-resolution{
   float: left; 
+}
+
+.store-row{
+  border: none !important;
+}
+.store-row td{
+  border: none !important;
 }

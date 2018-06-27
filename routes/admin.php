@@ -12,7 +12,7 @@ Route::get('/admin/home', 'AdminController@index');
 //FILES
 Route::get('/admin/document/add-meta-data', 'Document\DocumentAdminController@showMetaDataForm');
 Route::post('/admin/document/add-meta-data', 'Document\DocumentAdminController@updateMetaData');
-Route::get('/admin/document/manager',  ['middleware' => 'admin.auth', 'uses' =>'Document\DocumentManagerController@index' ] );
+Route::get('/admin/document/manager',  ['middleware' => 'admin.auth', 'uses' =>'Document\LibraryAdminController@index' ] );
 
 Route::resource('/admin/document', 'Document\DocumentAdminController');
 Route::post('/admin/document/{id}', 'Document\DocumentAdminController@replaceDocument');
