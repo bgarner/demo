@@ -10,6 +10,8 @@ use App\Models\Form\FormActivityLog;
 use App\Models\Form\FormInstanceUserMap;
 use App\Models\Form\FormInstanceGroupMap;
 use App\Models\Form\FormInstanceStatusMap;
+use App\Models\Form\FormResolution;
+use App\Models\Form\FormInstanceResolutionMap;
 use App\Models\Form\ProductRequest\BusinessUnitTypes;
 
 
@@ -66,6 +68,9 @@ class ProductRequestForm extends Model
             $formInstance->lastActionPrettyDate = Utility::prettifyDateWithTime($formInstance->lastFormAction->updated_at);
             $formInstance->lastActionSince = Utility::getTimePastSinceDate($formInstance->lastFormAction->updated_at);
             $formInstance->status_id = FormInstanceStatusMap::getFormStatusByInstanceId($formInstance->id);
+            $resolution = FormInstanceResolutionMap::getResolutionCodeByFormInstanceId($formInstance->id);
+            $formInstance->resolutionCode = $resolution['resolution_code'];
+            // dd($resolutionCode);
 		}
 		 
 		return $forms;                      
