@@ -2,12 +2,13 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\Form\Status;
+use App\Models\Form\FormStatusMap;
 
 class NewFormStatusCodeSeeder extends Seeder
 {
     private $formStatusCodes = [ 
     	
-        ["store_status" =>  'Question Responded', 'admin_status' => 'Question Responded', 'visible' => '0',  'icon'=>'fa-question', 'colour' => 'green-bg']
+        [ 'id'=> 7, "store_status" =>  'Question Responded', 'admin_status' => 'Question Responded', 'visible' => '0',  'icon'=>'fa-question', 'colour' => 'green-bg']
 
     ];
     /**
@@ -18,7 +19,8 @@ class NewFormStatusCodeSeeder extends Seeder
     public function run()
     {
 		foreach ($this->formStatusCodes as $value) {
-        	Status::create($value);
+        	$status = Status::create($value);
+            FormStatusMap::create(['form_id' => 1, 'status_id' => $status->id]);
         }
     }
 }
