@@ -51,7 +51,10 @@ class DatabaseSeeder extends Seeder
 
 
         // $this->call(UsernameSeeder::class);
-        $this->call(FormResolutionCodeSeeder::class);
+
+        // $this->call(FormResolutionCodeSeeder::class);
+        $this->call(FormStatusCodeVisibilitySeeder::class);
+        $this->call(NewFormStatusCodeSeeder::class);
         
 
     }

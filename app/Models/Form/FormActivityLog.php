@@ -73,8 +73,7 @@ class FormActivityLog extends Model
 
         $formLog =FormActivityLog::create([
             "form_data_id" => $formInstanceId,
-            "log" => serialize($log),
-            "status_id" =>$request->status, 
+            "log" => serialize($log), 
             "allow_response" => $reply
         ]);
 

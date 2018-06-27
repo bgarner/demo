@@ -100,7 +100,8 @@ class FormData extends Model
 					        ]);
 
         FormInstanceStatusMap::updateFormInstanceStatus($formInstance->id, Self::$new_request_status_code_id);
-    	return $formInstance;
+        
+        return $formInstance;
     }
 
     public static function getNewFormInstanceCount($form_id)
