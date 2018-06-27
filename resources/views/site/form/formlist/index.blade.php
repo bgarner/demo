@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    @section('title', 'Product Request Form')
+    @section('title', 'Forms')
     @include('site.includes.head')
     <link rel="stylesheet" type="text/css" href="/css/custom/site/event.css">
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">

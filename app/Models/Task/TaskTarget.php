@@ -120,9 +120,8 @@ class TaskTarget extends Model
             $groupStores = unserialize($group->stores);
             $stores = array_merge($stores, $groupStores);
         }
-                                
-
-        return $stores;
+                                 
+        return Utility::removeHeadOffice($stores);
 	}
 
 

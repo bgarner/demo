@@ -1118,11 +1118,35 @@ button.dim:active:before {
   padding-right: 6px;
   text-shadow: none;
 }
+
+.status-badge{
+  font-family: 'Open Sans';
+  font-size: 13px;
+  padding: 4px 8px;
+  text-shadow: none;
+  border-radius: 5px;
+
+
+}
+
 .label-primary,
 .badge-primary {
   background-color: #489bd5;
   color: #FFFFFF;
 }
+
+.label-more,
+.badge-more {
+  background-color: #090;
+  color: #FFFFFF;
+}
+
+.label-less,
+.badge-less {
+  background-color: #900;
+  color: #FFFFFF;
+}
+
 .label-success,
 .badge-success {
   background-color: #1c84c6;
@@ -8713,10 +8737,15 @@ a:hover span.badge{
 .vote-info .user-group{
   padding-left: 20px;
 }
-/*
+
+
+.status-resolution{
+  float: left; 
+}
+
 .store-row{
   border: none !important;
-}*/
+}
 .store-row td{
   border: none !important;
 }

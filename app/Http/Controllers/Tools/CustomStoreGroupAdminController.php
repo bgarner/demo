@@ -99,8 +99,9 @@ class CustomStoreGroupAdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, Request $request)
+    public function destroy($id)
     {
-        CustomStoreGroup::find($id)->delete();
+        //CustomStoreGroup::find($id)->delete();
+        CustomStoreGroup::archiveGroup($id);
     }
 }

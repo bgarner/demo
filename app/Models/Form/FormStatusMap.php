@@ -13,6 +13,7 @@ class FormStatusMap extends Model
     {
     	$codes = Self::join('form_status_code', 'form_status_map.status_id', 'form_status_code.id')
     				->where('form_status_map.form_id', $id)
+                    ->where('form_status_code.visible', 1)
                     ->select('form_status_code.id', 'form_status_code.admin_status')
     				->get();
 

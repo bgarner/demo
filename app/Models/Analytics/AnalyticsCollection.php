@@ -32,7 +32,11 @@ class AnalyticsCollection extends Model
     							->get()
     							->sortByDesc('communications.send_at')
     							->each(function($item){
-    								$item->readPerc = round (($item->opened_total/$item->sent_to_total)*100);
+
+                                    $item->readPerc = round (($item->opened_total/$item->sent_to_total)*100);
+                                    if($item->readPerc > 100){
+                                        $item->readPerc = 100;
+                                    }
     								$item->opened = json_encode(unserialize($item->opened));
     								$item->unopened = json_encode(unserialize($item->unopened));
     								$item->sent_to = json_encode(unserialize($item->sent_to));
@@ -59,7 +63,10 @@ class AnalyticsCollection extends Model
     							->get()
     							->sortByDesc('urgent_notices.start')
     							->each(function($item){
-    								$item->readPerc = round (($item->opened_total/$item->sent_to_total)*100);
+                                    $item->readPerc = round (($item->opened_total/$item->sent_to_total)*100);
+                                    if($item->readPerc > 100){
+                                        $item->readPerc = 100;
+                                    }
     								$item->opened = json_encode(unserialize($item->opened));
     								$item->unopened = json_encode(unserialize($item->unopened));
     								$item->sent_to = json_encode(unserialize($item->sent_to));
@@ -85,7 +92,11 @@ class AnalyticsCollection extends Model
                                     'analytics_collection.sent_to')
     							->get()
     							->each(function($item){
-    								$item->readPerc = round (($item->opened_total/$item->sent_to_total)*100);
+                               
+                                    $item->readPerc = round (($item->opened_total/$item->sent_to_total)*100);
+                                    if($item->readPerc > 100){
+                                        $item->readPerc = 100;
+                                    }
     								$item->opened = json_encode(unserialize($item->opened));
     								$item->unopened = json_encode(unserialize($item->unopened));
     								$item->sent_to = json_encode(unserialize($item->sent_to));
@@ -114,7 +125,11 @@ class AnalyticsCollection extends Model
     							 )
     							->get()
     							->each(function($item){
-    								$item->readPerc = round (($item->opened_total/$item->sent_to_total)*100);
+                                
+                                    $item->readPerc = round (($item->opened_total/$item->sent_to_total)*100);
+                                    if($item->readPerc > 100){
+                                        $item->readPerc = 100;
+                                    }
     								$item->opened = json_encode(unserialize($item->opened));
     								$item->unopened = json_encode(unserialize($item->unopened));
     								$item->sent_to = json_encode(unserialize($item->sent_to));

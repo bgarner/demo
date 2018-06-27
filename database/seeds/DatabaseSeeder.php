@@ -48,13 +48,17 @@ class DatabaseSeeder extends Seeder
         // $this->call(FormTargetTableSeeder::class);
         // $this->call(UpdateStoreComponentsTableSeeder::class);
         // $this->call(UsernameSeeder::class);
+      
+        $this->call(DistrictTableSeeder::class);
+        $this->call(DistrictStorePivotSeeder::class);
+        $this->call(RegionTableSeeder::class);
+        $this->call(DistrictRegionPivotSeeder::class);
+        $this->call(StoreBannerSeeder::class);      
+      
+        $this->call(FormResolutionCodeSeeder::class);      
+        $this->call(NewFormStatusCodeSeeder::class);
+        $this->call(FormStatusCodeVisibilitySeeder::class);
 
-        // $this->call(DistrictTableSeeder::class);
-        // $this->call(DistrictStorePivotSeeder::class);
-        // $this->call(RegionTableSeeder::class);
-        // $this->call(DistrictRegionPivotSeeder::class);
-        // $this->call(StoreBannerSeeder::class);
-        
 
     }
 }

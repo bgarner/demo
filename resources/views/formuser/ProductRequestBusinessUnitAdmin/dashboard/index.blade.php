@@ -157,6 +157,8 @@
                                         <ul class="dropdown-menu" aria-labelledby="edit_selected">
                                             <li id="assign_to_group"><a>Assign to Group</a></li>
                                             <li id="assign_to_user"><a>Assign to User</a></li>
+                                            <li id="remove_group_assigment"><a>Revoke From Group</a></li>
+                                            <li id="remove_user_assigment"><a>Revoke From User</a></li>
                                         </ul>
                                     </span>
 

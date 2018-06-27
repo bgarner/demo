@@ -36,10 +36,10 @@ class Form extends Model
         return $forms;
     }
 
-    public static function getFormIdByFormNameAndVersion($formName, $formVersion)
+    public static function getFormId($formMeta)
     {
-    	$formId = Form::where('form_name', $formName)
-    				->where('version', $formVersion)
+    	$formId = Form::where('form_name', $formMeta['name'])
+    				->where('version', $formMeta['version'])
     				->first()->id;
 
     	return $formId;

@@ -53,10 +53,8 @@ class DocumentAdminController extends Controller
      */
     public function create()
     {
-
         $banner      = UserSelectedBanner::getBanner();
         $storeList   = StoreInfo::getStoreListing($banner->id);
-        // $storeAndStoreGroups = Utility::getStoreAndStoreGroupList($banner->id);
 
         $packageHash = sha1(time() . time());
         $folders     = Folder::all();
