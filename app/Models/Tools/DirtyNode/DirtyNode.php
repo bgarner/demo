@@ -49,4 +49,5 @@ class DirtyNode extends Model
         DirtyNodeArchive::insert($node->toArray());
 
     }
+
 }

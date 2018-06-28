@@ -33,3 +33,5 @@ Route::get('/manager/document', array('uses' => 'Document\LibraryManagerControll
 Route::get('/manager/folder/{folder_id}', 'Document\FolderManagerController@show');
 
 
+//Tools
+Route::get('/manager/tools/dirtynodes', array('uses' => 'Tools\DirtyNodesManagerController@index'));

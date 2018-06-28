@@ -114,4 +114,23 @@
              
         </li>
 
+
+
+
+        <!-- Tools -->
+        @if (Request::segment(2) == 'tools')
+        <li class="active">
+        @else
+        <li>
+        @endif
+            <a href="#"><i class="fa fa-wrench" aria-hidden="true"></i> <span class="nav-label">Tools</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse" style="height: 0px;">
+                    
+                    <li><a href="/manager/tools/dirtynodes">Dirty Nodes</a></li>
+                    
+
+                </ul>
+        </li>
+
+
 </ul>
