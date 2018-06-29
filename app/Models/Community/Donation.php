@@ -54,6 +54,12 @@ class Donation extends Model
             $donation->donation_details = Self::getDonationDetails($donation->id);
             $donation->pretty_created_at = Utility::prettifyDate($donation->created_at);
 
+            foreach($donation->donation_details as $d){
+                if($d->donation_type == 1){
+                    $d->style_number = self::mask($d->style_number);
+                    dd($d);
+                }
+            }
         }
         return $donations;
     }
@@ -69,10 +75,20 @@ class Donation extends Model
 
     public static function getDonationDetails($id)
     {
-        return DonationItem::join('community_donated_items', 'community_donated_items.id', '=', 'community_donations_items.item_id')
+        $donation = DonationItem::join('community_donated_items', 'community_donated_items.id', '=', 'community_donations_items.item_id')
                             ->where('donation_id', $id)
                             ->select('community_donated_items.*')
                             ->get();
+
+        
+
+        return $donation;
+
+    }
+
+    public static function mask($number, $maskingCharacter = '-') {
+        return substr($number, 0, 6) . " " . str_repeat($maskingCharacter, 5) . " " . substr($number, 11, 8) . " " . str_repeat($maskingCharacter, 1);
+        
     }
 
     public static function getDonationType($id)
