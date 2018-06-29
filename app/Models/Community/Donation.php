@@ -57,7 +57,6 @@ class Donation extends Model
             foreach($donation->donation_details as $d){
                 if($d->donation_type == 1){
                     $d->style_number = self::mask($d->style_number);
-                    dd($d);
                 }
             }
         }
