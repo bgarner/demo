@@ -35,3 +35,7 @@ Route::get('/manager/folder/{folder_id}', 'Document\FolderManagerController@show
 
 //Tools
 Route::get('/manager/tools/dirtynodes', array('uses' => 'Tools\DirtyNodesManagerController@index'));
+
+//Form
+Route::get('/manager/formlist', array('uses' => 'Form\FormListManagerController@index'));
+Route::resource('/manager/form/productrequest', 'Form\ProductRequestFormManagerController');
