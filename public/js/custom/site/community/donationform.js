@@ -306,8 +306,11 @@ $("body").on('click', '#add-product', function(){
 
 var submitForm = function(){
 
-		this.disabled=true;
-		this.value='Submitting...';
+		// this.disabled=true;
+		// this.value='Submitting...';
+		//$(this).find(':input[type=submit]').prop('disabled', true);
+		$('.final-submit').prop('disabled', true);
+		$('.final-submit').html('Submitting...');
 
 		$("input[type='text']").css ('borderColor', '#e5e6e7');
 		$("select").css ('borderColor', '#e5e6e7');
@@ -348,7 +351,11 @@ var submitForm = function(){
 							'style_number': style_number, 
 							'upc': upc, 
 							'product_value':product_value  };
-			products.push(product);
+
+			if(product_name && product_name !=""){
+				products.push(product);	
+			}
+			
 
 
 		});
@@ -368,7 +375,11 @@ var submitForm = function(){
 							'gc_number' : gc_number, 
 							'gc_value': gc_value, 
 							};
-			giftcards.push(giftcard);
+			if(gc_number){
+				console.log("gc " + gc_number);
+				giftcards.push(giftcard);
+			}
+			
 
 		});
 
