@@ -17,10 +17,13 @@ class DirtyNodeArchive extends Model
     	$cleanedLastWeek =  DirtyNodeArchive::whereIn('store', $stores)
 					    		 ->where('updated_at', '>', $lastWeek)
 					    		 ->where('updated_at', '<' , $today)
-					    		 ->select(\DB::raw("store, count (*)"))
+					    		 ->select( \DB::raw('store, count(*) as total'))
 					    		 ->groupBy('store')
-					    		 ->get();
+					    		 ->get()
+					    		 ->pluck('total', 'store')->toArray();
 
-		return ($cleanedLastWeek);
+		return  ($cleanedLastWeek);
     }
+
+    
 }

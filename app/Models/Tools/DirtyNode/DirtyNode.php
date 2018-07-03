@@ -50,4 +50,36 @@ class DirtyNode extends Model
 
     }
 
+    public static function getTotalDirtyNodesOutstanding($stores)
+    {
+        
+        $outstandingDN =  DirtyNode::whereIn('store', $stores)
+                                 ->where('updated_at', '=', NULL)
+                                 ->select( \DB::raw('store, count(*) as total'))
+                                 ->groupBy('store')
+                                 ->get()
+                                 ->pluck('total', 'store')
+                                 ->toArray();
+
+        return ($outstandingDN);
+    }
+
+    public static function getOldestDirtyNode($stores)
+    {   
+        $oldest = [];
+        foreach ($stores as $store ) {
+            $oldestByStore = DirtyNode::where('store', $store)
+                            ->orderBy('starttime','desc')
+                            ->first();
+            $oldest[$store] = NULL;
+            if($oldestByStore){
+                $oldest[$store] = $oldestByStore->starttime;
+            }
+                            
+        }
+        
+
+        return ($oldest);
+    }
+
 }
