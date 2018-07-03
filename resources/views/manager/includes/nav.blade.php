@@ -113,7 +113,15 @@
             <a href="/manager/task"><i class="fa fa-tasks"></i> <span class="nav-label">Tasks</span></a>
              
         </li>
+    
 
+        @if (Request::is('manager/form/*') || Request::is('manager/form') || Request::is('manager/formlist'))
+        <li class="active">
+        @else
+        <li>
+        @endif
+        <a href="/manager/formlist"><i class="fa fa-paper-plane-o"></i> <span class="nav-label">Forms</span></a>
+        </li>
 
 
 
