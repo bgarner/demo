@@ -1,1 +1,0 @@
-var textForPages =["-$89.99 RAISE THE BAR\n     • Bluetooth® Wireless\n     • Up to 9 Hour Battery Life\n     • FlexSportTM Collar\n     • DualLockTM Fit\n     • Sweat Resistant\n     • Pureclean® Protection\n     • Noise Isolating Fit\n     • Built-In Microphone\n     • Call, Track, Volume Control\nBluetooth 9 Hour DualLockTM Sweat Wireless Battery Life Fit Resistant\n"];
