@@ -157,5 +157,12 @@ class AnalyticsCollection extends Model
         return $paginatedVideos;
     }
 
+    public static function getAnalyticsByResource($resource_type_id, $resource_id)
+    {
+        $opened_by =  unserialize( Self::where('asset_type_id', $resource_type_id)
+                        ->where('resource_id', $resource_id)
+                        ->first()->opened);
 
+        return ($opened_by);
+    }
 }

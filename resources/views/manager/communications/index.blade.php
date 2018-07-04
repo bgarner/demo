@@ -1,6 +1,16 @@
 @extends('manager.layouts.master')
 @section('title', 'Communications' )
 
+@section('style')
+    <style>
+    .active-store{
+        background-color: green;
+        border-color: green;
+        color: #ffffff;
+    }
+    </style>
+@endsection
+
 @section('content')
 
 
@@ -90,8 +100,13 @@
                             <td></td>
                             <td colspan="3">
                                 @if( isset($communication->stores) )
+                                
                                 @foreach($communication->stores as $store)
-                                    <span class="badge">{{$store}}</span>
+                                    @if(in_array($store, $communication->opened_by))
+                                    <span class="badge active-store">{{$store}}</span>
+                                    @else
+                                    <span class="badge ">{{$store}}</span>
+                                    @endif
                                 @endforeach
                                 
                                 @elseif( $communication->all_stores == 1 )

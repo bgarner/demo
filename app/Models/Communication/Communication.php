@@ -19,6 +19,7 @@ use App\Models\Auth\User\UserBanner;
 use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Tools\CustomStoreGroup;
 use App\Models\StoreApi\Banner;
+use App\Models\Analytics\AnalyticsCollection;
 
 class Communication extends Model
 {
@@ -602,6 +603,9 @@ class Communication extends Model
 
         $communications->sortByDesc('send_at');
         $communications = Communication::postProcessCommunications($communications);
+        foreach ($communications as $c) {
+        	$c->opened_by = AnalyticsCollection::getAnalyticsByResource(1, $c->id);
+        }
         return ($communications);
 	}
 
