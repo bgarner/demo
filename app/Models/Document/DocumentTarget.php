@@ -4,6 +4,7 @@ namespace App\Models\Document;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\StoreApi\Banner;
+use App\Models\Utility\Utility;
 
 class DocumentTarget extends Model
 {
@@ -39,8 +40,7 @@ class DocumentTarget extends Model
                                             ->toArray();    
         }
 
-        return $stores;    
-                                            
+        return Utility::removeHeadOffice($stores);                                            
     }
 
 }

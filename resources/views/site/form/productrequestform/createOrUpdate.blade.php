@@ -30,7 +30,7 @@
                     	@if(isset($formInstance))
 							<h5>Edit Store Feedback Form</h5>
                     	@else
-                        	<h5>New Store Feedback Form</h5>
+                        	<h5>New Product Request</h5>
                         @endif
                     </div>
                     <div class="ibox-content">

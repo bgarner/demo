@@ -47,11 +47,8 @@ class UrgentNoticeTarget extends Model
             $groupStores = unserialize($group->stores);
             $stores = array_merge($stores, $groupStores);
         }    
-        
 
-        return $stores;
-        
-                                            
+        return Utility::removeHeadOffice($stores);                             
     }
 
     public static function updateTargetStores($request, $id)

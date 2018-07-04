@@ -105,12 +105,20 @@
 
                                 <div class="ibox-content">
                                     <label>Status</label>
-                                        <select class="form-control" id="status_code_id">
-                                            <option value=""></option>
-                                            @foreach($codes as $code)
-                                            <option value="{{$code->id}}">{{$code->admin_status}}</option>
-                                            @endforeach
-                                        </select>
+                                    <select class="form-control" id="status_code_id">
+                                        <option value=""></option>
+                                        @foreach($codes as $code)
+                                        <option value="{{$code->id}}">{{$code->admin_status}}</option>
+                                        @endforeach
+                                    </select>
+                                    
+                                    <label>Resolution</label>
+                                    <select class="form-control" id="resolution_code_id">
+                                        <option value=""></option>
+                                        @foreach($resolutionCodes as $id=>$resolution)
+                                        <option value="{{$id}}">{{$resolution}}</option>
+                                        @endforeach
+                                    </select>
 
                                     <label>Comments</label>
                                     <textarea class="form-control" id="comment"></textarea>
@@ -125,7 +133,9 @@
                         </div>
 
                         <div class="col-md-6" id="logContainer">
+                            
                             @include('admin.form.partials.log')
+
                         </div>
 
                     </div>
