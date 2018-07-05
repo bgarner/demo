@@ -50,7 +50,6 @@
 					            <div class="col-sm-10">
 					            	<select name="department" id="department" class="form-control input-sm">
 					            		<option>Select</option>
-					            		
 					            	</select>
 					            </div>
 							</div>

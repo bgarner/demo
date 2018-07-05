@@ -59,6 +59,5 @@ class DatabaseSeeder extends Seeder
         $this->call(NewFormStatusCodeSeeder::class);
         $this->call(FormStatusCodeVisibilitySeeder::class);
 
-
     }
 }
