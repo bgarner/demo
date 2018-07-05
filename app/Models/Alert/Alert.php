@@ -13,6 +13,7 @@ use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\StoreApi\StoreInfo;
 use App\Models\Validation\AlertValidator;
 use App\Models\StoreApi\Banner;
+use App\Models\Analytics\AnalyticsCollection;
 
 class Alert extends Model
 {
@@ -397,13 +398,14 @@ class Alert extends Model
         return $alerts;
     }
 
-    public static function getAlertsForStoreList($storeNumbersArray, $banners, $storeGroups, $request)
+    public static function getAlertsForStoreList($storesByBanner, $request)
     {
         $now = Carbon::now()->toDatetimeString();
         $archives = false;
         if( isset($request['archives']) && ($request['archives'] == "true") ){
             $archives = true;
         }
+        $storeNumbersArray = $storesByBanner->flatten()->toArray();
         
         $targetedComm = Alert::join('document_target', 'document_target.document_id' ,  '=', 'alerts.document_id')
                         ->join('documents', 'documents.id', '=', 'alerts.document_id')
@@ -434,7 +436,7 @@ class Alert extends Model
 
         $allStoreAlerts = Alert::join('documents', 'alerts.document_id', '=', 'documents.id')
                         ->where('documents.all_stores', 1)
-                        ->whereIn('documents.banner_id', $banners)
+                        ->whereIn('documents.banner_id', $storesByBanner->keys())
                         ->when($archives, function ($query) use ($archives, $now) {
                             return $query->where('documents.start', '<=', $now);
                             //if archives is true get all archives active and archived 
@@ -450,13 +452,17 @@ class Alert extends Model
                         })
                         ->select(\DB::raw('documents.*, alerts.alert_type_id'))
                         ->get()
-                        ->each(function($alert){
+                        ->each(function($alert) use($storesByBanner) {
                             $alert->banner = Banner::find($alert->banner_id)->name;
+                            $alert->stores = $storesByBanner[$alert->banner_id];
                         });
 
         $alerts = $targetedComm->merge($allStoreAlerts)->sortByDesc('start');
         if (count($alerts) >0) {
             Alert::addStoreViewData($alerts);
+        }
+        foreach ($alerts as $a) {
+            $a->opened_by = AnalyticsCollection::getAnalyticsByResource(2, $a->id);
         }
 
         return ($alerts);

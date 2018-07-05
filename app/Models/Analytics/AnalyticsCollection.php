@@ -159,10 +159,13 @@ class AnalyticsCollection extends Model
 
     public static function getAnalyticsByResource($resource_type_id, $resource_id)
     {
-        $opened_by =  unserialize( Self::where('asset_type_id', $resource_type_id)
+        $analytics =  Self::where('asset_type_id', $resource_type_id)
                         ->where('resource_id', $resource_id)
-                        ->first()->opened);
+                        ->first();
+        if($analytics){
+            return unserialize($analytics->opened);
+        }
 
-        return ($opened_by);
+        return[];
     }
 }

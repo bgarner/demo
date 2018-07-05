@@ -2,13 +2,7 @@
 @section('title', 'Communications' )
 
 @section('style')
-    <style>
-    .active-store{
-        background-color: green;
-        border-color: green;
-        color: #ffffff;
-    }
-    </style>
+    
 @endsection
 
 @section('content')

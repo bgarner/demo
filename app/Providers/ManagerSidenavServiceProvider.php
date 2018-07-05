@@ -22,7 +22,7 @@ class ManagerSidenavServiceProvider extends ServiceProvider
         $user_id = \Auth::user()->id;
         
         $storeList = StoreInfo::getStoreListingByManagerId($user_id);
-        $stores = array_column($storeList, 'store_number');
+        $stores = $storeList->pluck('store_number')->toArray();
         
         $storeGroups = CustomStoreGroup::getStoreGroupsForManager($stores);
 
