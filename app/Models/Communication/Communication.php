@@ -99,7 +99,6 @@ class Communication extends Model
 	public static function getCommunicationsForAdmin()
 	{
 		$banner = UserSelectedBanner::getBanner()->id;
-
         $storeList = [];
 
         $storeInfo = StoreInfo::getStoresInfo($banner);
@@ -107,14 +106,15 @@ class Communication extends Model
             array_push($storeList, $store->store_number);
         }
 
+
         $allStoreCommunications = Communication::join('communication_banner', 'communication_banner.communication_id', '=', 'communications.id')
                                 ->where('all_stores', 1)
                                 ->where('communication_banner.banner_id', $banner)
                                 ->select('communications.*', 'communication_banner.banner_id')
                                 ->get();
 
-        $allStoreCommunications = Utility::groupBannersForAllStoreContent($allStoreCommunications);
-
+        //not required
+        // $allStoreCommunications = Utility::groupBannersForAllStoreContent($allStoreCommunications);
 
         $targetedCommunications = Communication::join('communications_target', 'communications_target.communication_id', '=', 'communications.id')
                                 ->whereIn('communications_target.store_id', $storeList)
@@ -125,6 +125,7 @@ class Communication extends Model
                                     $comm->stores = explode(',', $comm->stores);
                                 });
 
+        
         $storeGroups = CustomStoreGroup::getStoreGroupsForAdmin();
         $communicationForStoreGroups = Communication::join('communication_store_group', 'communication_store_group.communication_id', '=', 'communications.id')
                                             ->whereIn('communication_store_group.store_group_id', $storeGroups)
@@ -141,10 +142,13 @@ class Communication extends Model
                                                 $item->stores = array_unique( $item->stores);
                                             });
 
-        $targetedCommunications = Utility::mergeTargetedAndStoreGroupContent($targetedCommunications, $communicationForStoreGroups);
+        //no need for detailed targets in index view
+        // $targetedCommunications = Utility::mergeTargetedAndStoreGroupContent($targetedCommunications, $communicationForStoreGroups);
 
-        $communications = Utility::mergeTargetedAndAllStoreContent($targetedCommunications, $allStoreCommunications);
+        // $communications = Utility::mergeTargetedAndAllStoreContent($targetedCommunications, $allStoreCommunications);
 
+		$communications = $targetedCommunications->merge($allStoreCommunications)->merge($communicationForStoreGroups);                                            
+ 		
         foreach($communications as $c){
 			$c->prettySentAtDate = Utility::prettifyDate( $c->send_at );
 			$c->prettyArchiveAtDate = Utility::prettifyDate( $c->archive_at );
@@ -163,18 +167,18 @@ class Communication extends Model
 		if ($isValidCommunicationType) {
 
 		    $targetedCommunications = Communication::getActiveCommunicationsByCategory($storeNumber, $request['type']);
-		    $targetedCommunications = Communication::processActiveCommunications($targetedCommunications);
+		    $targetedCommunications = Communication::postProcessCommunications($targetedCommunications);
 		}
 		else {
 		    $targetedCommunications = Communication::getActiveCommunicationsByStoreNumber($storeNumber);
-		    $targetedCommunications = Communication::processActiveCommunications($targetedCommunications);
+		    $targetedCommunications = Communication::postProcessCommunications($targetedCommunications);
 		}
 
 		if (isset($request['archives']) && !empty($request['archives'])) {
 
 		    if($isValidCommunicationType){
 		        $archivedCommunication = Communication::getArchivedCommunicationsByCategory($request['type'], $storeNumber);
-		        $archivedCommunication = Communication::processArchivedCommunications($archivedCommunication);
+		        $archivedCommunication = Communication::postProcessCommunications($archivedCommunication);
 		        foreach ($archivedCommunication as $ac) {
 		            $targetedCommunications->add($ac);
 		        }
@@ -183,7 +187,7 @@ class Communication extends Model
 		    else{
 
 		        $archivedCommunication = Communication::getArchivedCommunicationsByStoreNumber($storeNumber);
-		        $archivedCommunication = Communication::processArchivedCommunications($archivedCommunication);
+		        $archivedCommunication = Communication::postProcessCommunications($archivedCommunication);
 		        foreach ($archivedCommunication as $ac) {
 		            $targetedCommunications->add($ac);
 		        }
@@ -523,34 +527,164 @@ class Communication extends Model
 		return $count;
 	}
 
-	public static function getActiveCommunicationsForStoreList($storeNumbersArray)
+	public static function getCommunicationsForStoreList($storeNumbersArray, $banners, $storeGroups, $request)
 	{
 		$now = Carbon::now()->toDatetimeString();
-		$communications = Communication::join('communications_target', 'communications_target.communication_id' ,  '=', 'communications.id')
+		$archives = false;
+		if( isset($request['archives']) && ($request['archives'] == "true") ){
+			$archives = true;
+		}
+		
+
+		$targetedComm = Communication::join('communications_target', 'communications_target.communication_id' ,  '=', 'communications.id')
 								   ->whereIn('communications_target.store_id', $storeNumbersArray)
+								   ->when($archives, function ($query) use ($archives, $now) {
+								   		return $query->where('communications.send_at' , '<=', $now);
+								   		//if archives is true get all communications active and archived 
+					                }, function ($query) use($now) {
+					                    return $query->where('communications.send_at' , '<=', $now)
+								                     ->where('communications.archive_at', '>=', $now);
+					                })
+								   ->whereNull('communications.deleted_at')
+								   ->whereNull('communications_target.deleted_at')
+								   ->select(\DB::raw('communications.*, GROUP_CONCAT(DISTINCT communications_target.store_id) as stores'))
+	                                ->groupBy('communications.id')
+	                                ->get()
+	                                ->each(function($comm){
+	                                    $comm->stores = explode(',', $comm->stores);
+	                                });
+		
+		$allStoreComm = Communication::join('communication_banner', 'communication_banner.communication_id', '=', 'communications.id')
+									->where('all_stores', '=', 1)
+                                    ->whereIn('communication_banner.banner_id', $banners)
+                                    ->when( $archives, function ($query) use ( $archives, $now) {
+					                    return $query->where('communications.send_at' , '<=', $now);
+
+					                }, function ($query) use($now) {
+					                    return $query->where('communications.send_at' , '<=', $now)
+								                     ->where('communications.archive_at', '>=', $now);
+					                })
+                                    ->select('communications.*', 'communication_banner.banner_id')
+                                    ->get()
+                                    ->each(function($comm){
+                                    	$comm->banner = Banner::find($comm->banner_id)->name;
+                                    });
+
+        $storeGroupCommunications = Communication::join('communication_store_group', 'communication_store_group.communication_id', '=', 'communications.id')
+        										->whereIn('communication_store_group.store_group_id', $storeGroups)
+												->when($archives , function ($query) use ($archives, $now) {
+								                    return $query->where('communications.send_at' , '<=', $now);
+								                }, function ($query) use($now) {
+								                    return $query->where('communications.send_at' , '<=', $now)
+											                     ->where('communications.archive_at', '>=', $now);
+								                })
+												->select(\DB::raw('communications.*, GROUP_CONCAT(DISTINCT communication_store_group.store_group_id) as store_groups'))
+												->groupBy('communications.id')
+						                        ->get()
+						                        ->each(function($comm)use ($storeNumbersArray){
+	                                    			$store_groups = explode(',', $comm->store_groups);
+
+	                                                $comm->store_groups = $store_groups;
+	                                                $group_stores = [];
+	                                                foreach ($store_groups as $group) {
+	                                                    $stores = unserialize(CustomStoreGroup::find($group)->stores);
+	                                                    $group_stores = array_merge($group_stores,$stores);
+	                                                }
+	                                                $group_stores = array_unique( $group_stores);
+
+	                                                $comm->stores = array_intersect($storeNumbersArray, $group_stores);
+	                                			});
+
+
+		$targetedComm = Utility::mergeTargetedAndStoreGroupContent($targetedComm, $storeGroupCommunications);
+         
+        $communications = Utility::mergeTargetedAndAllStoreContent($targetedComm, $allStoreComm);
+
+        $communications->sortByDesc('send_at');
+        $communications = Communication::postProcessCommunications($communications);
+        return ($communications);
+	}
+
+	public static function getCommunicationsByTypeForStoreList($storeNumbersArray, $banners, $storeGroups, $type)
+	{
+		$now = Carbon::now()->toDatetimeString();
+		
+
+		$targetedComm = Communication::join('communications_target', 'communications_target.communication_id' ,  '=', 'communications.id')
+								   ->whereIn('communications_target.store_id', $storeNumbersArray)
+								   ->where('communication_type_id', $type)
 								   ->where('communications.send_at' , '<=', $now)
 								   ->where('communications.archive_at', '>=', $now)
 								   ->whereNull('communications.deleted_at')
 								   ->whereNull('communications_target.deleted_at')
-								   ->select('communications.*', 'communications_target.store_id')
-								   ->get()
-								   ->toArray();
-	 	$compiledComm = [];
+								   ->select(\DB::raw('communications.*, GROUP_CONCAT(DISTINCT communications_target.store_id) as stores'))
+	                                ->groupBy('communications.id')
+	                                ->get()
+	                                ->each(function($comm){
+	                                    $comm->stores = explode(',', $comm->stores);
+	                                });
+		
+		$allStoreComm = Communication::join('communication_banner', 'communication_banner.communication_id', '=', 'communications.id')
+									->where('all_stores', '=', 1)
+                                    ->whereIn('communication_banner.banner_id', $banners)
+                                    ->where('communication_type_id', $type)
+					                ->where('communications.send_at' , '<=', $now)
+									->where('communications.archive_at', '>=', $now)
+                                    ->select('communications.*', 'communication_banner.banner_id')
+                                    ->get()
+                                    ->each(function($comm){
+                                    	$comm->banner = Banner::find($comm->banner_id)->name;
+                                    });
+		
+        $storeGroupCommunications = Communication::join('communication_store_group', 'communication_store_group.communication_id', '=', 'communications.id')
+        										->whereIn('communication_store_group.store_group_id', $storeGroups)
+												->where('communication_type_id', $type)
+												->where('communications.send_at' , '<=', $now)
+												->where('communications.archive_at', '>=', $now)
+												->select(\DB::raw('communications.*, GROUP_CONCAT(DISTINCT communication_store_group.store_group_id) as store_groups'))
+												->groupBy('communications.id')
+												->get()
+						                        ->each(function($comm)use ($storeNumbersArray){
+	                                    			$store_groups = explode(',', $comm->store_groups);
 
-		foreach ($communications as $communication) {
-			$index = array_search($communication['id'], array_column($compiledComm, 'id'));
-			if(  $index !== false ){
-				array_push($compiledComm[$index]->stores, $communication["store_id"]);
-			}
-			else{
+	                                                $comm->store_groups = $store_groups;
+	                                                $group_stores = [];
+	                                                foreach ($store_groups as $group) {
+	                                                    $stores = unserialize(CustomStoreGroup::find($group)->stores);
+	                                                    $group_stores = array_merge($group_stores,$stores);
+	                                                }
+	                                                $group_stores = array_unique( $group_stores);
 
-				$communication["stores"] = [];
-				array_push( $communication["stores"] , $communication["store_id"]);
-				array_push( $compiledComm , (object) $communication);
-			}
-		}
-	 	return (object)($compiledComm);
+	                                                $comm->stores = array_intersect($storeNumbersArray, $group_stores);
+	                                			});
+
+		$targetedComm = Utility::mergeTargetedAndStoreGroupContent($targetedComm, $storeGroupCommunications);
+         
+        $communications = Utility::mergeTargetedAndAllStoreContent($targetedComm, $allStoreComm);
+
+        $communications->sortByDesc('send_at');
+        $communications = Communication::postProcessCommunications($communications);
+        return ($communications);
 	}
+
+	public static function filterAllCommunicationByCategory($communications, $request)
+	{
+		$isValidCommunicationType = CommunicationType::isValidCommunicationType($request['type']);
+		$communicationType = $request['type'];
+
+		if ($isValidCommunicationType) {
+			
+			$communications = $communications->filter(function ($item) use($communicationType) {
+
+							    if($item["communication_type_id"] == $communicationType){
+							    	return $item;
+							    }
+							})->values();
+		}
+		return $communications->sortByDesc('send_at');
+
+	}
+
 
 	public static function getCommunicationCategoryName($id)
 	{
@@ -601,9 +735,10 @@ class Communication extends Model
         return( $optGroupSelections );
 	}
 
-	public static function processActiveCommunications($communications)
+	public static function postProcessCommunications($communications)
 	{
-		return $communications->each(function($c){
+		$now = Carbon::now()->toDatetimeString();
+		return $communications->each(function($c) use($now) {
 
             $c->prettyDate = Utility::prettifyDate($c->send_at);
             $c->since = Utility::getTimePastSinceDate($c->send_at);
@@ -612,23 +747,11 @@ class Communication extends Model
             $c->label_colour = Communication::getCommunicationCategoryColour($c->communication_type_id);
             $c->has_attachments = Communication::hasAttachments($c->id);
 
+            if($c->archive_at < $now){
+            	$c->archived        = true;
+            }
+
         });
-	}
-
-	public static function processArchivedCommunications($communications)
-	{
-		return $communications->each(function($c){
-
-					$c->archived        = true;
-					$c->since           = Utility::getTimePastSinceDate($c->send_at);
-					$c->prettyDate      = Utility::prettifyDate($c->send_at);
-					$preview_string     = strip_tags($c->body);
-					$c->trunc           = Utility::truncateHtml($preview_string);
-					$c->label_name      = Communication::getCommunicationCategoryName($c->communication_type_id);
-					$c->label_colour    = Communication::getCommunicationCategoryColour($c->communication_type_id);
-					$c->has_attachments = Communication::hasAttachments($c->id);
-
-				});
 	}
 
 

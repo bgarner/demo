@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Request as RequestFacade; 
 use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Auth\User\UserResource;
+use App\Models\Auth\Role\RoleResource;
+use App\Models\Auth\User\UserRole;
 use App\Models\Auth\Resource\Resource;
 use App\Models\Auth\Resource\ResourceTypes;
 use App\Models\StoreApi\Banner;
@@ -163,11 +165,20 @@ class StoreInfo extends Model
     public static function getStoreListingByManagerId($user_id)
     {
         $storeAPI = env('STORE_API_DOMAIN', false);
-        $resource_id = UserResource::where('user_id', $user_id)->first()->resource_id;
 
-        $resource = Resource::find($resource_id);
-        $resource_type_name = ResourceTypes::find($resource->resource_type_id)->resource_name;
+        $userResource = UserResource::where('user_id', $user_id)->first();
 
+        //user does not have an entry in user_resource_pivot
+        if($userResource) {
+            $resource = Resource::find($userResource->resource_id);
+            $resource_type_name = ResourceTypes::find($resource->resource_type_id)->resource_name;    
+
+        }
+        else{
+            $role_id = UserRole::where('user_id', $user_id)->first()->role_id;
+            $resource_id = RoleResource::where('role_id', $role_id)->first()->resource_type_id;
+            $resource_type_name = ResourceTypes::find($resource_id)->resource_name;    
+        }
 
         switch ($resource_type_name) {
             case 'store':

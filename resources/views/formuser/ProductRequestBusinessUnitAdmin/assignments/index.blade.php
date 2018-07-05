@@ -46,6 +46,8 @@
 											@elseif($loop->last)
                                             <li id="assign_to_user"><a>Assign to User</a></li>
                                             <li id="show_update_status_group_assign"><a>Update Status</a></li>
+                                            <li id="remove_user_assigment"><a>Revoke From User</a></li>
+                                            <li id="remove_group_assigment"><a>Revoke From Group </a></li>
                                             @endif
 
                                         </ul>

@@ -117,25 +117,7 @@
 
                 </li>
 
-                <li>
-                    <a href="#"><i class="fa fa-diamond"></i> <span class="nav-label">Thing 1</span></a>
-                </li>
-
-                <li>
-                    <a href="#"><i class="fa fa-pie-chart"></i> <span class="nav-label">Thing 2</span>  </a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-flask"></i> <span class="nav-label">Thing 3</span></a>
-                </li>
-
-                <li>
-                    <a href="#"><i class="fa fa-laptop"></i> <span class="nav-label">Thing 4</span></a>
-                </li>
-
-
-                <li>
-                    <a href="#"><i class="fa fa-magic"></i> <span class="nav-label">Thing 5 </span><span class="label label-info pull-right">62</span></a>
-                </li>
+                @include('manager.includes.nav')
 
             </ul>
 
@@ -287,14 +269,14 @@
 
 
     <!-- Mainly scripts -->
-    <script src="js/jquery-2.1.1.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
     <!-- Custom and plugin javascript -->
-    <script src="js/inspinia.js"></script>
-    <script src="js/plugins/pace/pace.min.js"></script>
+    <script src="/js/inspinia.js"></script>
+    <script src="/js/plugins/pace/pace.min.js"></script>
 
 </body>
 

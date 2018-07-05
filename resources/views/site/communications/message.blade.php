@@ -28,7 +28,7 @@
 
 
 
-<div class="wrapper wrapper-content">
+    <div class="wrapper wrapper-content">
         <div class="row">
             <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
 
@@ -39,28 +39,28 @@
 
             <div class="col-lg-10 col-md-9 col-sm-8 col-xs-12 animated fadeInRight printable">
 
-            <div class="mail-box-header">
+                <div class="mail-box-header">
 
-                <h2>
-                    {{ $communication->subject }}
-                     <span class="pull-right font-normal" style="font-size: 16px;">{{ $communication->prettyDate }} <small style="font-weight: normal;padding-left: 10px;">({{ $communication->since }} {{__("ago")}})</small></span>
-                </h2>
+                    <h2>
+                        {{ $communication->subject }}
+                         <span class="pull-right font-normal" style="font-size: 16px;">{{ $communication->prettyDate }} <small style="font-weight: normal;padding-left: 10px;">({{ $communication->since }} {{__("ago")}})</small></span>
+                    </h2>
 
 
-                @if(isset($communication->previousCommunicationId))
+                    @if(isset($communication->previousCommunicationId))
 
-                <span class="pull-left">
-                    <a href="/{{ Request::segment(1) }}/communication/show/{{$communication->previousCommunicationId}}"><i class="fa fa-angle-double-left"></i> {{__("Previous")}}</a>
-                </span>
-                @endif
-                @if(isset($communication->nextCommunicationId))
-                <span class="pull-right">
-                    <a href="/{{ Request::segment(1) }}/communication/show/{{$communication->nextCommunicationId}}">{{__("Next")}} <i class="fa fa-angle-double-right"></i></a>
-                </span>
+                    <span class="pull-left">
+                        <a href="/{{ Request::segment(1) }}/communication/show/{{$communication->previousCommunicationId}}"><i class="fa fa-angle-double-left"></i> {{__("Previous")}}</a>
+                    </span>
+                    @endif
+                    @if(isset($communication->nextCommunicationId))
+                    <span class="pull-right">
+                        <a href="/{{ Request::segment(1) }}/communication/show/{{$communication->nextCommunicationId}}">{{__("Next")}} <i class="fa fa-angle-double-right"></i></a>
+                    </span>
 
-                @endif
+                    @endif
 
-            </div>
+                </div> <!-- mail-box-header -->
                 <div class="mail-box">
 
 
@@ -69,114 +69,55 @@
                     </div>
 
                     <div class="mail-attachment">
-                    <h3>
-                        <span><i class="fa fa-paperclip"></i> {{ count($communication_documents) }} {{__("Attachments")}}</span>
-                    </h3>
-
-                    @if(count($communication_documents) > 0)
-                        <table class="table tablesorter table-hover table-mail tablesorter-default" id="file-table" role="grid">
-                            <thead>
-                                <tr>
-                                    <th> {{__("Title")}} </th>
-                                    <th> {{__("Last Updated")}} </th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-
-                            @foreach($communication_documents as $doc)
-                                <tr>
-                                    <td> {!! $doc->link_with_icon !!} </td>
-                                    <td> {!! $doc->prettyDate !!} </td>
-                                </tr>
-                            @endforeach
-                            
-                            </tbody>
-                        </table>
-                    @endif
-
-                    @if(count($tags) > 0)
-                    <hr />
-                    <div class="tag-list">
-                        @foreach($tags as $t)
-                            <a href="../../tag/{{ $t->linkname }}"><span class="badge">{{ $t->name }}</span></a>
-                        @endforeach
-                    </div>
-                    @endif
-
-                            {{--<div class="file-box">
-                                    <div class="file">
-                                        {!! $doc->anchor_only !!}
-
-                                            <div class="icon">
-                                                {!! $doc->icon !!}
-                                            </div>
-
-
-                                            <div class="file-name">
-                                                <div style="font-size: 16px; padding-bottom: 10px;"> {{ $doc->title }}</div>
-
-                                                <small class="clearfix"><span class="text-muted pull-left">{{ $doc->prettyDate }}</span> <span class="text-muted pull-right">{{ $doc->since }} ago</span></small>
-
-                                            </div>
-                                        </a>
-
-                                    </div>
-
-                                </div>    --}}
-
-
-                    <div class="clearfix"></div>
-                    </div>
-
-                    <!-- <div class="mail-attachment">
                         <h3>
-                            <span><i class="fa fa-paperclip"></i> {{ count($communication_packages) }} Packages</span>
+                            <span><i class="fa fa-paperclip"></i> {{ count($communication_documents) }} {{__("Attachments")}}</span>
                         </h3>
 
-                        <div class="row">
-                            <div class="col-lg-4 package-listing">
-                            {{--@foreach($communication_packages as $package)
-                                    @include('site.feature.package-listing', ['package'=>$package])
-                                @endforeach--}}
-                            </div>
+                        @if(count($communication_documents) > 0)
+                            <table class="table tablesorter table-hover table-mail tablesorter-default" id="file-table" role="grid">
+                                <thead>
+                                    <tr>
+                                        <th> {{__("Title")}} </th>
+                                        <th> {{__("Last Updated")}} </th>
+                                    </tr>
+                                </thead>
 
-                            <div class="col-lg-8 package-document-container">
+                                <tbody>
 
+                                @foreach($communication_documents as $doc)
+                                    <tr>
+                                        <td> {!! $doc->link_with_icon !!} </td>
+                                        <td> {!! $doc->prettyDate !!} </td>
+                                    </tr>
+                                @endforeach
+                                
+                                </tbody>
+                            </table>
+                        @endif
 
-                                {{-- @foreach($communication_packages as $package)
-                                    <?php $package_document_listing = $package['details']['package_documents']; ?>
-
-                                    <div  class="package-document-listing hidden" data-packageid= {{$package->id}} >
-
-                                        @foreach ($package_document_listing as $document)
-                                        {!! $document->link_with_icon !!}
-
-
-                                        @endforeach
-                                    </div>
-
-                                    <div class="package-folder-document-listing hidden" data-packageid = {{$package->id}}>
-
-                                    </div>
-
-                                @endforeach--}}
-                            </div>
+                        @if(count($tags) > 0)
+                        <hr />
+                        <div class="tag-list">
+                            @foreach($tags as $t)
+                                <a href="../../tag/{{ $t->linkname }}"><span class="badge">{{ $t->name }}</span></a>
+                            @endforeach
                         </div>
-
-                    <div class="clearfix"></div>
-                    </div> -->
+                        @endif
 
 
+                        <div class="clearfix"></div>
+                    </div> <!-- mail-attachment -->
+
+                </div> <!-- mail box -->
 
             </div>
 
 
+        </div> <!-- row closes -->
+    </div> <!-- wrapper class -->
 
-</div>
-
-
-
+    </div><!-- page wrapper -->
+    </div><!-- wrapper -->
     @include('site.includes.footer')
 
     <script type="text/javascript" src="/js/plugins/fullcalendar/moment.min.js"></script>

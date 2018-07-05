@@ -1,8 +1,7 @@
 $(document).ready(function(){
 	$(".edit_multiple_forms").hide();	
-
-
 });
+
 $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 	$(".edit_multiple_forms").hide();	
 
@@ -68,6 +67,49 @@ $(".assign_to_self").click(function(){
 	}).done(function(response){
 		
 	});   
+	
+});
+
+$("#remove_user_assigment").click(function(){
+
+
+	var selectedForms = $(".select_form:checked");
+	$.each(selectedForms, function(index, form){
+		var form_instance_id = $(this).attr('data-formInstanceId');		
+		$.ajax({
+		    url: '/form/assignment/forminstance/' + form_instance_id ,
+		    type: 'DELETE',
+		    data: { 'user': true  },
+		    // async: false,
+		    success: function(result) {
+		    	acknowledgeUpdate();
+		    }
+		    
+		}).done(function(response){
+			
+		});   
+	});  
+	
+});
+
+$("#remove_group_assigment").click(function(){
+	
+	var selectedForms = $(".select_form:checked");
+	$.each(selectedForms, function(index, form){
+		var form_instance_id = $(this).attr('data-formInstanceId');		
+		$.ajax({
+		    url: '/form/assignment/forminstance/' + form_instance_id ,
+		    type: 'DELETE',
+		    data: { 'group': true  },
+		    // async: false,
+		    success: function(result) {
+		    	acknowledgeUpdate();
+		    }
+		    
+		}).done(function(response){
+			
+		});   
+	});  
 	
 });
 

@@ -9,7 +9,7 @@ $(document).ready(function(){
 	});
 	$(".project-row-detail td").hide();
 	$(".project-row-detail").hide();
-	$(".updated_due_date_selector").datetimepicker({
+	$(".due_date_selector").datetimepicker({
 	
 		format: 'YYYY-MM-DD'
 
@@ -167,8 +167,9 @@ $(".edit-task").click(function(e){
 
 $(".project-completion").click(function(){
 	
+
 	var taskId = $(this).parent().attr('data-task-id');
-	
+
 	if($("#task_status_" + taskId).is(':visible')) {
 		$("#task_status_box_" + taskId ).slideUp(600, function(){
 			$("#task_status_" + taskId).hide();	

@@ -5,13 +5,18 @@
         <div class="vertical-timeline-icon {{ $logItem->log['status_colour'] }}">
             <i class="fa {{ $logItem->log['status_icon'] }}"></i>
         </div>
-
+        
         <div class="vertical-timeline-content">
             <h2>{{$logItem->log['status_admin_name']}}</h2>
 
             @if($logItem->log['comment'])
             <p><i class="fa fa-quote-left" style="color: #ddd;" aria-hidden="true"></i>&nbsp;
             <em>{{ $logItem->log['comment'] }}</em></p>
+            @endif
+            
+            @if(isset($logItem->log['resolution_code_id']))
+            <p><i class="fa fa-quote-left" style="color: #ddd;" aria-hidden="true"></i>&nbsp;
+            <em>{{ $logItem->log['resolution_code'] }}</em></p>
             @endif
 
                 <span class="">

@@ -5,32 +5,29 @@ use Illuminate\Database\Seeder;
 class DistrictTableSeeder extends Seeder
 {
     private $districts = [
-
-	    ["name" => 'Atlantic Canada', "dm_name" => 'Dave Dekkers'],
-		["name" => 'Maritimes', "dm_name" => "Scott Allen"],
-		["name" => 'Ottawa', "dm_name" => "Derek Grange"],
-		["name" => 'Ontario Southwest', "dm_name" => "Ken Van de Wal"],
-		["name" => 'Ontario Southeast', "dm_name" => "Chris Braund"],
-		["name" => 'GTA Southwest', "dm_name" => "Jim Phillip"],
-		["name" => 'GTA East', "dm_name" => "Krista Selfridge"],
-		["name" => 'GTA South', "dm_name" => "Mark Ehrlick"],
-		["name" => 'GTA North', "dm_name" => "Greg Kotsopoulos"],
-		["name" => 'GTA Northwest', "dm_name" => "Jayson McColgan"],
-		["name" => 'Ontario East', "dm_name" => "Bob Legomski"],
-
-		["name" => 'Atmosphere Prairies', "dm_name" => "Rob Conway"],
-		["name" => 'Atmosphere BC', "dm_name" => "Mike Friesen"],
-		["name" => 'Manitoba', "dm_name" => "Gord Bergen"],
-		["name" => 'Saskatchewan',"dm_name" => "Brandon McEachern"],
-		["name" => 'Edmonton West', "dm_name" => "Grant Ranger"],
-		["name" => 'Edmonton East', "dm_name" => "Ashley Baye"],
-		["name" => 'Calgary South', "dm_name" => "Curtis Joly"],
-		["name" => 'Calgary North', "dm_name" => "Will Lauber"],
-		["name" => 'GVA Interior', "dm_name" => "Howard Toering"],
-		["name" => 'GVA Island', "dm_name" => "Chris Owen"],
-		["name" => 'GVA North', "dm_name" => "Lisa Salewski"]
-
-
+		["id" => 1, "name" => "Maritimes"],
+		["id" => 2, "name" => "Atlantic Canada"],
+		["id" => 3, "name" => "Ottawa"],
+		["id" => 4, "name" => "GTA North"],
+		["id" => 5, "name" => "Ontario North"],
+		["id" => 6, "name" => "Ontario East"],
+		["id" => 7, "name" => "Ontario Southwest"],
+		["id" => 8, "name" => "Ontario Southeast"],
+		["id" => 9, "name" => "Ontario West"],
+		["id" => 10, "name" => "GTA Northwest"],
+		["id" => 11, "name" => "GTA South"],
+		["id" => 12, "name" => "GTA Southwest"],
+		["id" => 13, "name" => "Edmonton West"],
+		["id" => 14, "name" => "Edmonton East"],
+		["id" => 15, "name" => "Saskatchewan"],
+		["id" => 16, "name" => "Calgary South"],
+		["id" => 17, "name" => "Calgary North"],
+		["id" => 18, "name" => "Atmosphere Prairies"],
+		["id" => 19, "name" => "Atmosphere B.C."],
+		["id" => 20, "name" => "Manitoba"],
+		["id" => 21, "name" => "GVA Island"],
+		["id" => 22, "name" => "GVA North"],
+		["id" => 23, "name" => "GVA Interior"]
     ];
     /**
      * Run the database seeds.
@@ -39,6 +36,8 @@ class DistrictTableSeeder extends Seeder
      */
     public function run()
     {
+		DB::table('districts')->truncate();
+
         foreach($this->districts as $district)
         {
         	DB::table('districts')->insert($district);

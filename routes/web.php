@@ -132,3 +132,5 @@ Route::post('/setLanguage', 'Locale\LocaleController@setLanguage');
 // Route::get('/admin', function(){
 // //	return view('admin.index');
 // });
+
+Route::get('/{storeno}/notification', 'Notification\NotificationController@index');
