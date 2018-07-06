@@ -354,23 +354,23 @@ class Video extends Model
         return $videos;
     }
 
-    public static function getTrendingVideos($store_id, $limit=0)
+    public static function getTrendingVideos($store_id)
     {
-        if($limit == 0){
-            $videos = Video::getVideosTrendingVideosForStore($store_id)->sortByDesc('views');
-            $videos = Self::paginate($videos, 24)->setPath('popular');
+        // if($limit == 0){
+        //     $videos = Video::getVideosTrendingVideosForStore($store_id)->sortByDesc('views');
+        //     $videos = Self::paginate($videos, 24)->setPath('popular');
 
-        } else {
-            $videos = Video::getVideosForStore($store_id)->sortByDesc('views')->take($limit);
-        }
+        // } else {
+        //     $videos = Video::getVideosTrendingVideosForStore($store_id)->sortByDesc('views')->take($limit);
+        // }
+
+        $videos = Video::getVideosTrendingVideosForStore($store_id)->sortByDesc('views');
 
         foreach($videos as $video){
-            $video->likes = number_format($video->likes);
-            $video->dislikes = number_format($video->dislikes);
             $video->sinceCreated = Utility::getTimePastSinceDate($video->created_at);
             $video->prettyDateCreated = Utility::prettifyDate($video->created_at);
         }
-
+        
         return $videos;
     }    
 
@@ -404,13 +404,14 @@ class Video extends Model
     public static function getVideosTrendingVideosForStore($store_id)
     {
         $banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
-        $lastMonth = Carbon::now()->subMonth();
+        $range = Carbon::now()->subDays(60);
         $allStoreVideosForBanners = Video::join('video_banner', 'videos.id', '=', 'video_banner.video_id' )          
                                             ->where('videos.all_stores', 1)
                                             ->where('video_banner.banner_id', $banner_id)
-                                            ->where('videos.created_at', '>=', $lastMonth)
+                                            ->where('videos.created_at', '>=', $range)
                                             ->select('videos.*')
                                             ->orderBy('videos.views')
+                                            ->take(12)
                                             ->get();
 
         $targetedVideosForStore = Video::join('video_target', 'video_target.video_id', '=', 'videos.id')
@@ -427,7 +428,7 @@ class Video extends Model
 
         $videos = $targetedVideosForStore->merge($allStoreVideosForBanners);
         $videos = $videos->merge($targetedVideosForStoreGroups);
-        
+        //dd($videos);
         return $videos;
     }    
 

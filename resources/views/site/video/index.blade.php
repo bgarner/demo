@@ -128,7 +128,7 @@
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
                                 {{-- <h2><a href="video/popular">{{__("Trending This Month")}}</a></h2> --}}
-                                <h2>{{__("Trending This Month")}}</h2>
+                                <h2>{{__("Trending Now")}}</h2>
                             </div>
                             <div class="ibox-content clearfix">
                                 @foreach($trending as $t)
