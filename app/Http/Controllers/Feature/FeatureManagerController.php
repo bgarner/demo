@@ -24,18 +24,20 @@ class FeatureManagerController extends Controller
     {
 
 		$user_id                = \Auth::user()->id;
-		$storeList              = StoreInfo::getStoreListingByManagerId($user_id);
-		$stores                 = array_column($storeList, 'store_number');
-		$storeGroups            = CustomStoreGroup::getStoreGroupsForManager($stores);
-		$banners                = UserBanner::getAllBanners()->pluck( 'id');
+		$storesByBanner 		= StoreInfo::getStoreListingByManagerId($user_id)->groupBy('banner_id');
+        foreach ($storesByBanner as $key => $value) {
+            $storesByBanner[$key] = $value->flatten()->pluck('store_number')->toArray();
+        }
+
+		$storeGroups 			= CustomStoreGroup::getStoreGroupsForManager($storesByBanner->flatten()->toArray());
 		
 		$feature                = Feature::where('id', $id)->first();
 		
-		$selected_documents  	= FeatureDocument::getFeaturedDocumentsByStoreList($stores, $banners, $storeGroups,$feature->id);
+		$selected_documents  	= FeatureDocument::getFeaturedDocumentsByStoreList($storesByBanner, $storeGroups,$feature->id);
 
 		$selected_packages      = FeaturePackage::getFeaturePackages($feature->id);
 
-		$feature_communications = FeatureCommunication::getFeatureCommunicationsForStoreList($stores, $banners, $storeGroups, $feature->id);
+		$feature_communications = FeatureCommunication::getFeatureCommunicationsForStoreList($storesByBanner, $storeGroups, $feature->id);
 		
 		$flyers                 = FeatureFlyer::getFlyersByFeatureId($feature->id);
 		$events                 = FeatureEvent::getEventsByFeatureId($feature->id);

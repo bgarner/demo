@@ -24,11 +24,11 @@ class ProductRequestFormManagerController extends Controller
     public function index()
     {
     	$this->user_id = \Auth::user()->id;
-        $storeInfo = StoreInfo::getStoreListingByManagerId($this->user_id);
-        $this->stores = array_column($storeInfo, 'store_number');
 
-        $this->stores = array_unique($this->stores);
-        $forms = FormData::getAdminFormDataByFormIdAndStoreList($this->form_id, $this->stores);
+        $storesByBanner = StoreInfo::getStoreListingByManagerId($this->user_id)->groupBy('banner_id');
+        $stores = $storesByBanner->flatten()->toArray();
+
+        $forms = FormData::getAdminFormDataByFormIdAndStoreList($this->form_id, $stores);
         
         return view('manager.form.productrequestform.index')->with('forms', $forms);
     }
