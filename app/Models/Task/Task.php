@@ -326,11 +326,14 @@ class Task extends Model
 			if($task->due_date < $now && $task->percentage_done == 100){
 				$allTasks->forget($key);	
 			}
+			if(isset($task->banners)){
 
-
-			foreach ($task->banners as $banner) {
-				$item->stores = array_merge($item->stores, $storesByBanner[$banner]);
+				foreach ($task->banners as $banner) {
+					$task->stores = array_merge($task->stores, $storesByBanner[$banner]);
+				}	
 			}
+			$task->stores = array_unique($task->stores);
+			
         }
                                            
 

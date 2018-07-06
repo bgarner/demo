@@ -463,6 +463,10 @@ class Alert extends Model
         }
         foreach ($alerts as $a) {
             $a->opened_by = AnalyticsCollection::getAnalyticsByResource(2, $a->id);
+            if(isset($a->banner_id)){
+                
+                $a->stores = $storesByBanner[$a->banner_id];
+            }
         }
 
         return ($alerts);

@@ -266,7 +266,10 @@ class Event extends Model
                             $attachment_link_string .= "<a href='/".$store_id."/document#!/".$a->id."'>". $a->name ."</a><br>";
                         }
                         $event->attachment = $attachment_link_string;
-
+                        if(isset($event->banner_id)){
+                            
+                            $event->stores = $storesByBanner[$event->banner_id];
+                        }
                         
 
                     });
