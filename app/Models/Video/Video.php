@@ -21,6 +21,7 @@ use App\Models\Video\VideoStoreGroup;
 use App\Models\StoreApi\StoreInfo;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\Tools\CustomStoreGroup;
+use Carbon\Carbon;
 
 
 class Video extends Model
@@ -353,6 +354,26 @@ class Video extends Model
         return $videos;
     }
 
+    public static function getTrendingVideos($store_id, $limit=0)
+    {
+        if($limit == 0){
+            $videos = Video::getVideosTrendingVideosForStore($store_id)->sortByDesc('views');
+            $videos = Self::paginate($videos, 24)->setPath('popular');
+
+        } else {
+            $videos = Video::getVideosForStore($store_id)->sortByDesc('views')->take($limit);
+        }
+
+        foreach($videos as $video){
+            $video->likes = number_format($video->likes);
+            $video->dislikes = number_format($video->dislikes);
+            $video->sinceCreated = Utility::getTimePastSinceDate($video->created_at);
+            $video->prettyDateCreated = Utility::prettifyDate($video->created_at);
+        }
+
+        return $videos;
+    }    
+
     public static function getVideosForStore($store_id)
     {
         $banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
@@ -379,6 +400,36 @@ class Video extends Model
         
         return $videos;
     }
+
+    public static function getVideosTrendingVideosForStore($store_id)
+    {
+        $banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
+        $lastMonth = Carbon::now()->subMonth();
+        $allStoreVideosForBanners = Video::join('video_banner', 'videos.id', '=', 'video_banner.video_id' )          
+                                            ->where('videos.all_stores', 1)
+                                            ->where('video_banner.banner_id', $banner_id)
+                                            ->where('videos.created_at', '>=', $lastMonth)
+                                            ->select('videos.*')
+                                            ->orderBy('videos.views')
+                                            ->get();
+
+        $targetedVideosForStore = Video::join('video_target', 'video_target.video_id', '=', 'videos.id')
+                                        ->where('video_target.store_id', $store_id)
+                                        ->select('videos.*')
+                                        ->get();
+
+        $storeGroups = CustomStoreGroup::getStoreGroupsForStore($store_id);
+
+        $targetedVideosForStoreGroups = Video::join('video_store_group', 'video_store_group.video_id', '=', 'videos.id')
+                                            ->whereIn('video_store_group.store_group_id', $storeGroups)
+                                            ->select('videos.*')
+                                            ->get();
+
+        $videos = $targetedVideosForStore->merge($allStoreVideosForBanners);
+        $videos = $videos->merge($targetedVideosForStoreGroups);
+        
+        return $videos;
+    }    
 
 
     public static function getVideosByUploader($uploaderId)

@@ -40,15 +40,17 @@ class VideoController extends Controller
         $storeBanner = $storeInfo->banner_id;
 
         $featured = FeaturedVideo::getFeaturedVideoByBanner($storeBanner);
-        $mostViewed = Video::getMostViewedVideos($storeNumber, 12);
-        $mostLiked = Video::getMostLikedVideos($storeNumber, 4);
+        //$mostViewed = Video::getMostViewedVideos($storeNumber, 12);
+        //$mostLiked = Video::getMostLikedVideos($storeNumber, 4);
         $mostRecent = Video::getMostRecentVideos($storeNumber, 12);
         $latestPlaylists = Playlist::getLatestPlaylists($storeNumber, 3);
+        $trending = Video::getTrendingVideos($storeNumber);
 
         return view('site.video.index')
-            ->with('mostLiked', $mostLiked)
+            // ->with('mostLiked', $mostLiked)
             ->with('mostRecent', $mostRecent)
-            ->with('mostViewed', $mostViewed)
+            // ->with('mostViewed', $mostViewed)
+            ->with('trending', $trending)
             ->with('latestPlaylists', $latestPlaylists)
             ->with('featured', $featured);
     }
