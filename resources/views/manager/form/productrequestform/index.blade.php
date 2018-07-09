@@ -39,7 +39,7 @@
 
                                            <tr>
                                                <td>{{ $form->store_number }}</td>
-                                               <td>{{$form->created_at}}</td>
+                                               <td>{{$form->prettySubmitted}}</td>
                                                <td>{{$form->submitted_by}}</td>
                                                <td>
                                                 <a href="{{\Request::url()}}/{{$form->id}}">{{$form->description}}</a>

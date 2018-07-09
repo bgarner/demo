@@ -73,7 +73,10 @@ class DirtyNode extends Model
                             ->first();
             $oldest[$store] = NULL;
             if($oldestByStore){
-                $oldest[$store] = $oldestByStore->starttime;
+
+                //format the dirty nodes date to match with portal's standard
+                $formattedDate = Carbon::createFromFormat('m-d-Y H:i:s', $oldestByStore->starttime)->toDatetimeString();
+                $oldest[$store] = Utility::prettifyDateWithTime($formattedDate);
             }
                             
         }

@@ -87,8 +87,7 @@ class FormData extends Model
 
                             $formInstance->lastFormAction = FormActivityLog::getLastFormInstanceAction($formInstance->id);
 
-                        })
-                        ->sortBy('store_number');
+                        });
         return $forms;
     }
 

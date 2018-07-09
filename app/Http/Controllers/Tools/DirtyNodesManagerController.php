@@ -15,7 +15,7 @@ class DirtyNodesManagerController extends Controller
     {
     	$this->user_id = \Auth::user()->id;
         $storeInfo = StoreInfo::getStoreListingByManagerId($this->user_id);
-        $this->stores = array_column($storeInfo, 'store_number');
+        $this->stores = $storeInfo->pluck('store_number')->toArray();
 
         foreach ($this->stores as &$store) {
         	$store = ltrim(ltrim($store, '0'), 'A');

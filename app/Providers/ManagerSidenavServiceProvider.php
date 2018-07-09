@@ -21,7 +21,7 @@ class ManagerSidenavServiceProvider extends ServiceProvider
 
         $user_id = \Auth::user()->id;
         
-         $storesByBanner = StoreInfo::getStoreListingByManagerId($user_id)->groupBy('banner_id');
+        $storesByBanner = StoreInfo::getStoreListingByManagerId($user_id)->groupBy('banner_id');
         foreach ($storesByBanner as $key => $value) {
             $storesByBanner[$key] = $value->flatten()->pluck('store_number')->toArray();
         }
