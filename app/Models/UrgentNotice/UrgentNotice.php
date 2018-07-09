@@ -15,6 +15,7 @@ use App\Models\StoreApi\StoreInfo;
 use App\Models\Auth\User\UserBanner;
 use App\Models\Tools\CustomStoreGroup;
 use App\Models\StoreApi\Banner;
+use App\Models\Analytics\AnalyticsCollection;
 
 class UrgentNotice extends Model
 {
@@ -235,6 +236,7 @@ class UrgentNotice extends Model
                                     ->get()
                                     ->each(function($un) use($storesByBanner){
                                         $un->banner = Banner::find($un->banner_id)->name;
+                                        $un->stores = $storesByBanner[$un->banner_id];
 
                                     });
 
@@ -273,10 +275,7 @@ class UrgentNotice extends Model
             $n->prettyDate =  Utility::prettifyDate($n->start);
             $preview_string = strip_tags($n->description);
             $n->trunc = Utility::truncateHtml($preview_string);
-            if(isset($n->banner_id)){
-                
-                $n->stores = $storesByBanner[$n->banner_id];
-            }
+            $n->opened_by = AnalyticsCollection::getAnalyticsByResource(3, $n->id);
         }
 
         return($urgent_notices);

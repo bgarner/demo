@@ -25,8 +25,8 @@ class ProductLaunchManagerController extends Controller
     {	
 
 	    $this->user_id = \Auth::user()->id;
-    	$storesByBanners = StoreInfo::getStoreListingByManagerId($this->user_id);
-        $stores = $storesByBanners->flatten()->toArray();
+    	$storesByBanner = StoreInfo::getStoreListingByManagerId($this->user_id);
+        $stores = $storesByBanner->flatten()->toArray();
     	$productLaunches =  ProductLaunch::getActiveProductLaunchesForStoreList($stores);
         $lastUpdated ="";
         if ( count($productLaunches) > 0){

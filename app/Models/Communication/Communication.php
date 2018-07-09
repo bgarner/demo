@@ -607,10 +607,6 @@ class Communication extends Model
         $communications = Communication::postProcessCommunications($communications);
         foreach ($communications as $c) {
         	$c->opened_by = AnalyticsCollection::getAnalyticsByResource(1, $c->id);
-        	if(isset($c->banner_id)){
-                
-                $c->stores = $storesByBanner[$c->banner_id];
-            }
         }
         return ($communications);
 	}

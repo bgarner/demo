@@ -178,11 +178,11 @@ class Event extends Model
         return $allEvents;
     }
 
-    public static function getActiveEventsAndProductLaunchForCalendarViewByStorelist($storesByBanners, $storeGroups)
+    public static function getActiveEventsAndProductLaunchForCalendarViewByStorelist($storesByBanner, $storeGroups)
     {
         
-        $storelist = $storesByBanners->flatten()->toArray();
-        $events = Event::getActiveEventsForStoreList($storesByBanners, $storeGroups);
+        $storelist = $storesByBanner->flatten()->toArray();
+        $events = Event::getActiveEventsForStoreList($storesByBanner, $storeGroups);
         $productLaunches = ProductLaunch::getActiveProductLaunchByStorelistForCalendar($storelist);
 
         $events = $events->merge($productLaunches);
@@ -213,13 +213,13 @@ class Event extends Model
 
     }
 
-    public static function getActiveEventsForStoreList($storesByBanners, $storeGroups )
+    public static function getActiveEventsForStoreList($storesByBanner, $storeGroups )
     {
 
-        $storeNumbersArray = $storesByBanners->flatten()->toArray();
+        $storeNumbersArray = $storesByBanner->flatten()->toArray();
         $allStoreEvents = Event::join('event_banner', 'event_banner.event_id', '=', 'events.id' )
                             ->where('all_stores', '1')
-                            ->whereIn('event_banner.banner_id', $storesByBanners->keys())
+                            ->whereIn('event_banner.banner_id', $storesByBanner->keys())
                             ->select('events.*', 'event_banner.banner_id')
                             ->orderBy('start')
                             ->get()
@@ -259,18 +259,13 @@ class Event extends Model
                                                 });
 
         $allEvents = $allStoreEvents->merge($targetedEvents)->merge($storeGroupEvents)
-                    ->each(function($event){
+                    ->each(function($event) use($storesByBanner) {
                         $attachments = EventAttachment::getEventAttachments($event->id);
                         $attachment_link_string = "";
                         foreach ($attachments as $a) {
                             $attachment_link_string .= "<a href='/".$store_id."/document#!/".$a->id."'>". $a->name ."</a><br>";
                         }
                         $event->attachment = $attachment_link_string;
-                        if(isset($event->banner_id)){
-                            
-                            $event->stores = $storesByBanner[$event->banner_id];
-                        }
-                        
 
                     });
 
@@ -377,10 +372,10 @@ class Event extends Model
         return $events;
     }
 
-    public static function getListofEventsByStorelistAndMonth($storesByBanners, $storeGroups, $yearMonth)
+    public static function getListofEventsByStorelistAndMonth($storesByBanner, $storeGroups, $yearMonth)
     {
-        $storelist = $storesByBanners->flatten()->toArray();
-        $eventsList = Event::getActiveEventsByStorelistAndMonth($storesByBanners, $storeGroups, $yearMonth);
+        $storelist = $storesByBanner->flatten()->toArray();
+        $eventsList = Event::getActiveEventsByStorelistAndMonth($storesByBanner, $storeGroups, $yearMonth);
         
         $productLaunchList = ProductLaunch::getActiveProductLaunchByStorelistandMonth($storelist, $yearMonth);
 
@@ -404,10 +399,10 @@ class Event extends Model
     }
 
 
-    public static function getActiveEventsByStorelistAndMonth($storesByBanners, $storeGroups, $yearMonth)
+    public static function getActiveEventsByStorelistAndMonth($storesByBanner, $storeGroups, $yearMonth)
     {
         
-        $storelist = $storesByBanners->flatten()->toArray();
+        $storelist = $storesByBanner->flatten()->toArray();
         $targetedEvents = Event::join('events_target', 'events.id', '=', 'events_target.event_id')
                     ->join('event_types', 'events.event_type', '=', 'event_types.id')
                     ->whereIn('events_target.store_id', $storelist)
@@ -428,7 +423,7 @@ class Event extends Model
         $allStoreEvents = Event::join('event_banner', 'event_banner.event_id', '=', 'events.id' )    
                         ->join('event_types', 'events.event_type', '=', 'event_types.id')
                         ->where('all_stores', 1)
-                        ->whereIn('event_banner.banner_id', $storesByBanners->keys())
+                        ->whereIn('event_banner.banner_id', $storesByBanner->keys())
                         ->where('start', 'LIKE', $yearMonth.'%')
                         ->select('events.*', 'event_types.event_type as event_type_name', 'event_types.foreground_colour', 'event_types.background_colour' , 'event_banner.banner_id')
                         

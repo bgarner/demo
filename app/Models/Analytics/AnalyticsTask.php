@@ -70,15 +70,16 @@ class AnalyticsTask extends Model
 										COUNT(DISTINCT `store_number`) as opened_total,
 										GROUP_CONCAT( DISTINCT `store_number` ) as opened_by
 										from `analytics`
-										where `type` = 'file' and `location` = 'alerts'  
+										where `type` = 'file'
 										group by `resource_id`, `type`") 
 								);
+        
 		$asset_type_id  = AnalyticsAssetTypes::where('type', 'alert')->first()->id;
 
         $compiledAnalytics = Self::processAnalytics($compiledAnalytics, 
                                                     $asset_type_id, 
                                                     'App\\Models\\Document\\DocumentTarget', 
-                                                    'App\\Models\\Alert\\Alert');
+                                                    'App\\Models\\Document\\Document');
 
     	return $compiledAnalytics;
 

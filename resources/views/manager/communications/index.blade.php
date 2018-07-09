@@ -72,7 +72,11 @@
 
                         <tr class= "{{ $tr_class }} comm-row" >
                             <td class="check-mail hidden-sm hidden-xs">
+                                @if($communication->archived)
+                                <i class="fa fa-archive-o"></i>
+                                @else
                                 <i class="fa fa-envelope-o"></i>
+                                @endif
                             </td>
 
                             <td  class="mail-subject communication-name col-lg-4 col-md-4 col-sm-4 col-xs-5">

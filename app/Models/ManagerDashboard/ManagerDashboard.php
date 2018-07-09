@@ -27,7 +27,6 @@ class ManagerDashboard extends Model
 
 
         $compiledData = [];
-        dd($storesByBanner);
         $compiledData["urgentNotices"] = UrgentNotice::getActiveUrgentNoticesForStoreList($storesByBanner, $storeGroups); 
 
         return $compiledData;
