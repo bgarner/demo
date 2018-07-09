@@ -67,7 +67,7 @@
                     
 
                     @if(isset($alert->archived))
-                    <tr class="unread archived">
+                    <tr class="unread manager-archived">
                     @else
                     <tr class="unread">
                     @endif
@@ -81,7 +81,7 @@
                         <td class="mail-date col-lg-3 col-md-4 col-sm-4 col-xs-2">{{ $alert->prettyDate }}<!--  <small style="font-weight: normal;padding-left: 10px;">({{ $alert->since }} ago)</small> --></td>
                     </tr>
                      @if(isset($alert->archived))
-                    <tr class="store-row archived">
+                    <tr class="store-row manager-archived">
                     @else
                     <tr class="store-row">
                     @endif

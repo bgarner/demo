@@ -66,16 +66,16 @@
                         <?php $tr_class="" ?>
 
                         @if($communication->archived)
-                            <?php $tr_class .= " archived"; ?>
+                            <?php $tr_class .= " manager-archived"; ?>
                         @endif
 
 
                         <tr class= "{{ $tr_class }} comm-row" >
                             <td class="check-mail hidden-sm hidden-xs">
                                 @if($communication->archived)
-                                <i class="fa fa-archive-o"></i>
+                                <i class="fa fa-archive"></i>
                                 @else
-                                <i class="fa fa-envelope-o"></i>
+                                <i class="fa fa-envelope"></i>
                                 @endif
                             </td>
 

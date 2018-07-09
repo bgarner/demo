@@ -8720,3 +8720,6 @@ a:hover span.badge{
 .store-row td{
   border: none !important;
 }
+.manager-archived{
+  background-color: #dce3e8;
+}
