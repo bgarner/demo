@@ -57,7 +57,7 @@ class DatabaseSeeder extends Seeder
       
         // $this->call(FormResolutionCodeSeeder::class);      
         // $this->call(NewFormStatusCodeSeeder::class);
-        $this->call(FormStatusCodeVisibilitySeeder::class);
+        // $this->call(FormStatusCodeVisibilitySeeder::class);
 
         // $this->call(UpdateStoreDistrictMap::class);
 
