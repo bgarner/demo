@@ -1006,6 +1006,7 @@ return array(
     'UpdateFormsTableAddDescription' => $baseDir . '/database/migrations/2018_03_16_121003_update_forms_table_add_description.php',
     'UpdatePlaylistTable' => $baseDir . '/database/migrations/2017_06_09_202016_update_playlist_table.php',
     'UpdateStoreComponentsTableSeeder' => $baseDir . '/database/seeds/UpdateStoreComponentsTableSeeder.php',
+    'UpdateStoreDistrictMap' => $baseDir . '/database/seeds/UpdateStoreDistrictMap.php',
     'UpdateTagsTable' => $baseDir . '/database/migrations/2017_09_08_214710_update_tags_table.php',
     'UpdateTaskCreatorTable' => $baseDir . '/database/migrations/2017_09_26_211324_update_task_creator_table.php',
     'UpdateTaskTable' => $baseDir . '/database/migrations/2017_05_17_171352_update_task_table.php',
