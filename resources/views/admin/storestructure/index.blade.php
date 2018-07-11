@@ -13,12 +13,10 @@
 		   	flex-wrap: nowrap;
 		    border: thin solid red;
 		    justify-content: center;
-		    height:100%;
+		    height:1000px;
 		    
 		}
-		.listing{
-			border: thin solid yellow;
-		}
+		
 		#store-listing{
 			flex: 3 1 100px;
 			overflow-y: scroll;
