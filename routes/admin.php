@@ -164,3 +164,4 @@ Route::resource('/admin/region', 'StoreApi\RegionAdminController');
 Route::resource('/admin/resource', 'StoreApi\ResourceAdminController');
 Route::resource('/admin/districtstore', 'StoreApi\DistrictStoreAdminController');
 Route::resource('/admin/regiondistrict', 'StoreApi\RegionDistrictAdminController');
+Route::resource('/admin/storestructure', 'StoreApi\StoreStructureAdminController');
