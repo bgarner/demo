@@ -11,15 +11,17 @@
 		.storestructure-container{
 		   	display: flex;
 		   	flex-wrap: nowrap;
-		    border: thin solid red;
 		    justify-content: center;
 		    height:1000px;
 		    
 		}
+		.listing{
+			overflow-y: scroll;
+			border: thin solid grey;
+		}
 		
 		#store-listing{
 			flex: 3 1 100px;
-			overflow-y: scroll;
 		}
 		#district-listing{
 			flex: 2 2 100px;
@@ -30,8 +32,10 @@
 
 		.listing-header{
 			width:100%;
-			border: thin solid grey;
+			/*background-color: #285bbd;*/
+			color: #fff;
 			text-align: center;
+			padding: 10px;
 
 		}
 		
@@ -39,19 +43,37 @@
 		    display: flex; /*parent prop for inner elements;*/
 		   	flex-wrap: wrap; /*parent prop for inner elements;*/
 		    margin: 10px;
-		    border: thin solid lime;
 
 		}						
 
 		.store, .district, .region{
 			padding: 10px;
 			margin: 10px;
-			border: thin solid blue;
-			/*flex-basis: 100px;*/
+			/*border: thin solid blue;*/
 		}
 
 		.store{
 			flex-basis: 270px;
+			background-color: #e9e9e9;
+		}
+		.district{
+			width:270px;
+			border: thin solid #4c4646;
+		}
+
+		.district-header{
+			background-color: orange;
+			text-align: center;
+			color:#4c4646;
+		}
+
+		.district-footer{
+			background-color: yellow;
+			text-align: center;
+		}
+		
+		#show-store-listing{
+			display: none;
 		}
 
 
@@ -80,34 +102,49 @@
                         <div class="ibox-content storestructure-container" >
 							
 							  <div class="listing" id="store-listing">
-							  	<div class="listing-header">
+							  	<div class="listing-header  bg-primary" id='store-listing-header'>
 							  		<h2>Stores</h2>
 							  	</div>
 							  	<div class="listing-body">
 									@foreach($stores as $store)
-									<div class="store">{{$store}}</div>
+									<div class="store draggable">{{$store}}</div>
 									@endforeach
 								</div>
 							  </div>
+							  <div id="show-store-listing">
+							  	<i class="fa fa-chevron-circle-right"></i>
+							  </div>
 							  <div class="listing" id="district-listing">
-							  	<div class="listing-header">
+							  	<div class="listing-header bg-primary">
 							  		<h2>Districts</h2>
 							  	</div>
 							  	<div class="listing-body">
 							  		@foreach($districts as $district)
 									<div class="district">
-										<div>
-											{{$district->dm_details->firstname}} {{$district->dm_details->lastname}} 
+										<div class="district-header">
+											<div>
+												{{$district->dm_details->firstname}} {{$district->dm_details->lastname}} 
+											</div>
+											<div>
+												{{$district->name}}
+											</div>
 										</div>
-										<div>
-											{{$district->name}}
+										
+										@foreach($district->stores as $store)
+											<div class="store">
+											{{$store->store_id}} - {{$store->name}}
+											</div>
+										@endforeach
+
+										<div class="district-footer">
+											{{count($district->stores)}} Stores
 										</div>
 									</div>
 						  			@endforeach
 						  		</div>
 							  </div>
 							  <div class="listing" id="region-listing">
-							  	<div class="listing-header">
+							  	<div class="listing-header bg-primary">
 							  		<h2>Regions</h2>
 							  	</div>
 							  	<div class="listing-body">
@@ -119,6 +156,12 @@
 										<div>
 											{{$region->name}}
 										</div>
+
+										@foreach($region->districts as $district)
+											<div class="district">
+											{{$district->name}}
+											</div>
+										@endforeach
 									</div>
 						  			@endforeach
 							  	</div>
@@ -150,6 +193,15 @@
 	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 	        }
 		});
+
+		$("#store-listing-header").click(function () {
+		    $("#store-listing").animate({width: 'toggle'});
+		    $('#show-store-listing').animate({width:'toggle'});
+		});
+		$("#show-store-listing").click(function(){
+			$(this).animate({width: 'toggle'});
+		    $('#store-listing').animate({width:'toggle'});
+		})
 
 	</script>
 	@include('site.includes.bugreport')
