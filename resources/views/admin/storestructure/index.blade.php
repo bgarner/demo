@@ -7,17 +7,34 @@
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 	<style>
-		.scrolling-wrapper-flexbox {
+		body {
+		  /*background-color: #8e44ad;*/
+		  /*margin: 0;
 		  display: flex;
-		  flex-wrap: nowrap;
-		  overflow-x: auto;
+		  justify-content: center;
+		  align-items: center;*/
 		}
 
-		  .card {
-		  	border: thin solid lime;
-		    flex: 0 0 auto;
-		  }
+
+		.scrolling-wrapper {
+		   	display: flex;
+		   	flex-wrap: nowrap;
+		    overflow-x: scroll;
+		    border: thin solid red;
+		    
+
 		}
+		.scrolling-wrapper::-webkit-scrollbar {
+		  /*display: none;*/
+		}
+		.scrolling-wrapper .card {
+		    flex: 0 0 auto;
+		    height:500px;
+		    /*width:500px;*/
+		    margin: 10px;
+		    border: thin solid lime;
+		}
+		  
 	</style>
 </head>
 
@@ -41,15 +58,10 @@
                         </div>
                         <div class="ibox-content storestructure-container" >
 							<div class="scrolling-wrapper">
-							  <div class="card"><h2>Card</h2></div>
-							  <div class="card"><h2>Card</h2></div>
-							  <div class="card"><h2>Card</h2></div>
-							  <div class="card"><h2>Card</h2></div>
-							  <div class="card"><h2>Card</h2></div>
-							  <div class="card"><h2>Card</h2></div>
-							  <div class="card"><h2>Card</h2></div>
-							  <div class="card"><h2>Card</h2></div>
-							  <div class="card"><h2>Card</h2></div>
+							  <div class="card"><h3>Stores</h3></div>
+							  <div class="card"><h3>Districts</h3></div>
+							  <div class="card"><h3>Regions</h3></div>
+							  
 							</div>
 
                         </div>
