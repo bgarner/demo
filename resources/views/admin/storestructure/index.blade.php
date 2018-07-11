@@ -7,33 +7,56 @@
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 	<style>
-		body {
-		  /*background-color: #8e44ad;*/
-		  /*margin: 0;
-		  display: flex;
-		  justify-content: center;
-		  align-items: center;*/
-		}
-
-
-		.scrolling-wrapper {
+		
+		.storestructure-container{
 		   	display: flex;
 		   	flex-wrap: nowrap;
-		    overflow-x: scroll;
 		    border: thin solid red;
+		    justify-content: center;
+		    height:100%;
 		    
+		}
+		.listing{
+			border: thin solid yellow;
+		}
+		#store-listing{
+			flex: 3 1 100px;
+			overflow-y: scroll;
+		}
+		#district-listing{
+			flex: 2 2 100px;
+		}
+		#region-listing{
+			flex: 1 3 100px;
+		}
+
+		.listing-header{
+			width:100%;
+			border: thin solid grey;
+			text-align: center;
 
 		}
-		.scrolling-wrapper::-webkit-scrollbar {
-		  /*display: none;*/
-		}
-		.scrolling-wrapper .card {
-		    flex: 0 0 auto;
-		    height:500px;
-		    /*width:500px;*/
+		
+		.listing-body {
+		    display: flex; /*parent prop for inner elements;*/
+		   	flex-wrap: wrap; /*parent prop for inner elements;*/
 		    margin: 10px;
 		    border: thin solid lime;
+
+		}						
+
+		.store, .district, .region{
+			padding: 10px;
+			margin: 10px;
+			border: thin solid blue;
+			/*flex-basis: 100px;*/
 		}
+
+		.store{
+			flex-basis: 270px;
+		}
+
+
 		  
 	</style>
 </head>
@@ -57,12 +80,53 @@
 
                         </div>
                         <div class="ibox-content storestructure-container" >
-							<div class="scrolling-wrapper">
-							  <div class="card"><h3>Stores</h3></div>
-							  <div class="card"><h3>Districts</h3></div>
-							  <div class="card"><h3>Regions</h3></div>
+							
+							  <div class="listing" id="store-listing">
+							  	<div class="listing-header">
+							  		<h2>Stores</h2>
+							  	</div>
+							  	<div class="listing-body">
+									@foreach($stores as $store)
+									<div class="store">{{$store}}</div>
+									@endforeach
+								</div>
+							  </div>
+							  <div class="listing" id="district-listing">
+							  	<div class="listing-header">
+							  		<h2>Districts</h2>
+							  	</div>
+							  	<div class="listing-body">
+							  		@foreach($districts as $district)
+									<div class="district">
+										<div>
+											{{$district->dm_details->firstname}} {{$district->dm_details->lastname}} 
+										</div>
+										<div>
+											{{$district->name}}
+										</div>
+									</div>
+						  			@endforeach
+						  		</div>
+							  </div>
+							  <div class="listing" id="region-listing">
+							  	<div class="listing-header">
+							  		<h2>Regions</h2>
+							  	</div>
+							  	<div class="listing-body">
+							  		@foreach($regions as $region)
+									<div class="region">
+										<div>
+											{{$region->avp_details->firstname}} {{$region->avp_details->lastname}} 
+										</div>
+										<div>
+											{{$region->name}}
+										</div>
+									</div>
+						  			@endforeach
+							  	</div>
+							  </div>
 							  
-							</div>
+							
 
                         </div>
                     </div>
