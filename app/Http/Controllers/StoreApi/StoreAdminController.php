@@ -14,6 +14,32 @@ class StoreAdminController extends Controller
     	$banners = Banner::all();
     	$stores = Store::getAllStores();
     	
-        return view('admin.store.index')->('stores', $stores);
+        return view('admin.store.index')->with('stores', $stores);
+    }
+
+    public function create()
+    {
+
+    }
+
+
+    public function store()
+    {
+
+    }
+
+    public function edit()
+    {
+
+    }
+
+    public function update()
+    {
+
+    }
+
+    public function destroy()
+    {
+    	
     }
 }
