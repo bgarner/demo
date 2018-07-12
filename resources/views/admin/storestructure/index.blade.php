@@ -18,11 +18,12 @@
 		.listing{
 			overflow-y: scroll;
 			border: thin solid grey;
+			margin: 10px;
 		}
 		
-		#store-listing{
+		/*#store-listing{
 			flex: 3 1 100px;
-		}
+		}*/
 		#district-listing{
 			flex: 2 2 100px;
 		}
@@ -32,7 +33,6 @@
 
 		.listing-header{
 			width:100%;
-			/*background-color: #285bbd;*/
 			color: #fff;
 			text-align: center;
 			padding: 10px;
@@ -42,39 +42,46 @@
 		.listing-body {
 		    display: flex; /*parent prop for inner elements;*/
 		   	flex-wrap: wrap; /*parent prop for inner elements;*/
-		    margin: 10px;
-
-		}						
-
-		.store, .district, .region{
-			padding: 10px;
-			margin: 10px;
-			/*border: thin solid blue;*/
+		   	margin: 10px;
 		}
 
-		.store{
-			flex-basis: 270px;
-			background-color: #e9e9e9;
-		}
-		.district{
+		
+		.card{
 			width:270px;
 			border: thin solid #4c4646;
+			margin: 10px;
 		}
-
-		.district-header{
+		.card-header{
 			background-color: orange;
 			text-align: center;
 			color:#4c4646;
 		}
+		.card-item{
+			flex-basis: 270px;
+			background-color: #e9e9e9;
+			padding: 10px;
+			margin: 10px;
+		}
 
-		.district-footer{
+		.card-footer{
 			background-color: yellow;
 			text-align: center;
+			padding: 10px;
 		}
 		
-		#show-store-listing{
-			display: none;
+		/*#show-store-listing, #hide-store-listing{
+			
+			height: 35px;
+			width: 40px;
+			margin-right: 10px;
+
 		}
+		#show-store-listing{
+			display: none;	
+		}*/
+		ol, li{
+			list-style: none;
+		}	
 
 
 		  
@@ -101,27 +108,31 @@
                         </div>
                         <div class="ibox-content storestructure-container" >
 							
-							  <div class="listing" id="store-listing">
-							  	<div class="listing-header  bg-primary" id='store-listing-header'>
+							{{--<div class="listing" id="store-listing">
+							  	<div class="listing-header bg-primary">
 							  		<h2>Stores</h2>
+
+							  		<div id="hide-store-listing" class=" btn btn-primary">
+							  			<i class="fa fa-bars"></i>
+									</div>
 							  	</div>
 							  	<div class="listing-body">
 									@foreach($stores as $store)
-									<div class="store draggable">{{$store}}</div>
+									<div class="card-item draggable">{{$store}}</div>
 									@endforeach
 								</div>
-							  </div>
-							  <div id="show-store-listing">
-							  	<i class="fa fa-chevron-circle-right"></i>
-							  </div>
-							  <div class="listing" id="district-listing">
+							</div>
+							<div id="show-store-listing" class=" btn btn-primary">
+							  	<i class="fa fa-bars"></i>
+							</div> --}}
+							<div class="listing" id="district-listing">
 							  	<div class="listing-header bg-primary">
 							  		<h2>Districts</h2>
 							  	</div>
 							  	<div class="listing-body">
 							  		@foreach($districts as $district)
-									<div class="district">
-										<div class="district-header">
+									<div class="card " >
+										<div class="card-header">
 											<div>
 												{{$district->dm_details->firstname}} {{$district->dm_details->lastname}} 
 											</div>
@@ -129,46 +140,47 @@
 												{{$district->name}}
 											</div>
 										</div>
-										
+										<ol class="sortable_list_district connectedSortable-district" id="sortable-district-{{$district->id}}">
 										@foreach($district->stores as $store)
-											<div class="store">
-											{{$store->store_id}} - {{$store->name}}
-											</div>
+											<li class="card-item ui-state-default" id="store-{{$store->store_number}}">
+											{{$banners[$store->banner_id]}} #{{$store->store_id}} - {{$store->name}}
+											</li>
 										@endforeach
+										</ol>
 
-										<div class="district-footer">
+										<div class="card-footer">
 											{{count($district->stores)}} Stores
 										</div>
 									</div>
 						  			@endforeach
 						  		</div>
-							  </div>
-							  <div class="listing" id="region-listing">
+							</div>
+							<div class="listing" id="region-listing">
 							  	<div class="listing-header bg-primary">
 							  		<h2>Regions</h2>
 							  	</div>
 							  	<div class="listing-body">
 							  		@foreach($regions as $region)
-									<div class="region">
-										<div>
-											{{$region->avp_details->firstname}} {{$region->avp_details->lastname}} 
-										</div>
-										<div>
-											{{$region->name}}
-										</div>
-
-										@foreach($region->districts as $district)
-											<div class="district">
-											{{$district->name}}
+									<div class="card">
+										<div class="card-header">
+											<div>
+												{{$region->avp_details->firstname}} {{$region->avp_details->lastname}} 
 											</div>
+											<div>
+												{{$region->name}}
+											</div>
+										</div>
+										<ol class="sortable_list_region connectedSortable-region" id="sortable-region-{{$region->id}}">
+										@foreach($region->districts as $district)
+											<li class="card-item ui-state-default" id="district-{{$district->id}}">
+											{{$district->name}}
+											</li>
 										@endforeach
+										</ol>
 									</div>
 						  			@endforeach
 							  	</div>
-							  </div>
-							  
-							
-
+							</div>
                         </div>
                     </div>
 
@@ -186,6 +198,7 @@
 
 	<script type="text/javascript" src="/js/custom/admin/storegroup/deleteStoreGroup.js"></script>
 	<script type="text/javascript" src="/js/vendor/tablesorter.min.js"></script>
+	<script src="/js/plugins/nestable/jquery.nestable.js"></script>
 	<script type="text/javascript">
 		
 		$.ajaxSetup({
@@ -194,14 +207,33 @@
 	        }
 		});
 
-		$("#store-listing-header").click(function () {
-		    $("#store-listing").animate({width: 'toggle'});
-		    $('#show-store-listing').animate({width:'toggle'});
-		});
-		$("#show-store-listing").click(function(){
-			$(this).animate({width: 'toggle'});
-		    $('#store-listing').animate({width:'toggle'});
+		$(document).ready(function(){
+			
+			$( ".sortable_list_district" ).sortable({
+			    connectWith: ".connectedSortable-district",
+			    containment : $("#district-listing"),
+			    receive: function(event, ui) {
+			        alert("dropped on = "+this.id); // Where the item is dropped
+			        alert("sender = "+ui.sender[0].id); // Where it came from
+			        alert("item = "+ui.item[0].id); //Which item (or ui.item[0].id)
+
+			        // send ajax to update
+			    }         
+			}).disableSelection();
+			$( ".sortable_list_region" ).sortable({
+			    connectWith: ".connectedSortable-region",
+			    containment : $("#region-listing"),
+			    receive: function(event, ui) {
+			        alert("dropped on = "+this.id); // Where the item is dropped
+			        alert("sender = "+ui.sender[0].id); // Where it came from
+			        alert("item = "+ui.item[0].id); //Which item (or ui.item[0].id)
+
+			        // send ajax to update
+			    }         
+			}).disableSelection();
 		})
+
+
 
 	</script>
 	@include('site.includes.bugreport')

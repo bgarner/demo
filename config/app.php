@@ -308,6 +308,7 @@ return [
         'App\Http\Controllers\Form\FormListAdminController'                     => 'Form',
         'App\Http\Controllers\Form\FormLogController'                           => 'Form',
         'App\Http\Controllers\StoreApi\StoreStructureAdminController'           => 'Store Structure',
+        'App\Http\Controllers\StoreApi\StoreAdminController'                    => 'Store Structure',
 
 
     ],

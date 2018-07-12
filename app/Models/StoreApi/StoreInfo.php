@@ -10,9 +10,6 @@ use App\Models\Auth\Role\RoleResource;
 use App\Models\Auth\User\UserRole;
 use App\Models\Auth\Resource\Resource;
 use App\Models\Auth\Resource\ResourceTypes;
-use App\Models\StoreApi\Banner;
-use App\Models\StoreApi\Store;
-use App\Models\StoreApi\Region;
 
 class StoreInfo extends Model
 {
@@ -41,8 +38,6 @@ class StoreInfo extends Model
 
     public static function getStoresInfo($banner_id)
     {
-        // $storeAPI = env('STORE_API_DOMAIN', false);
-        // $storeInfoJson = file_get_contents( $storeAPI . "/banner/" . $banner_id . "/stores");
         $storeInfoJson = Banner::getStoreDetailsByBannerid($banner_id);
         $storeInfo = json_decode($storeInfoJson);
         return $storeInfo;
@@ -50,8 +45,6 @@ class StoreInfo extends Model
 
     public static function getStoreInfoByStoreId($store_id)
     {
-        // $storeAPI = env('STORE_API_DOMAIN', false);
-        // $storeInfoJson = file_get_contents( $storeAPI . "/store/" . $store_id);
         $storeInfoJson = Store::getStoreDetailsByStoreNumber($store_id);
         $storeInfo = json_decode($storeInfoJson);
         return $storeInfo;
@@ -59,8 +52,6 @@ class StoreInfo extends Model
 
     public static function getAllStoreNumbers()
     {
-        // $storeAPI = env('STORE_API_DOMAIN', false);
-        // $storeInfoJson = file_get_contents( $storeAPI . "/stores");
         $storeInfoJson = Store::getAllStores();
         $storeInfo = json_decode($storeInfoJson);
         $storelist = [];
@@ -87,8 +78,6 @@ class StoreInfo extends Model
 
     public static function getStoresByDistrictId($id)
     {
-        // $storeAPI = env('STORE_API_DOMAIN', false);
-        // $storeInfoJson = file_get_contents( $storeAPI . "/district/" . $id . "/stores");
         $storeInfoJson = Store::getStoreDetailsByDistrictId($id);
         $storeInfo = json_decode($storeInfoJson);
         $storeList = [];
@@ -100,8 +89,6 @@ class StoreInfo extends Model
 
     public static function getStoresByRegionGroupedByDistrict($id)
     {
-        // $storeAPI = env('STORE_API_DOMAIN', false);
-        // $districtInfoJson = file_get_contents( $storeAPI . "/region/" . $id );
         $districtInfoJson = Region::getRegionDetailsByDistrictId($id);
         $districtInfo = json_decode($districtInfoJson);
         return $districtInfo;
@@ -109,8 +96,6 @@ class StoreInfo extends Model
 
     public static function getStoresByRegionId($id)
     {
-        // $storeAPI = env('STORE_API_DOMAIN', false);
-        // $districtInfoJson = file_get_contents( $storeAPI . "/region/" . $id . "/districts");
         $districtInfoJson = District::getDistrictDetailsByRegionId($id);
         $districtInfo = json_decode($districtInfoJson);
         $storeList = [];
@@ -125,8 +110,6 @@ class StoreInfo extends Model
 
     public static function getStoreNamesList()
     {
-        // $storeAPI = env('STORE_API_DOMAIN', false);
-        // $storeInfoJson = file_get_contents( $storeAPI . "/stores");
         $storeInfoJson = Store::getAllStores();
         $storeInfo = json_decode($storeInfoJson);
         $storeList = [];
@@ -138,8 +121,6 @@ class StoreInfo extends Model
 
     public static function getDistrictNamesList()
     {
-        // $storeAPI = env('STORE_API_DOMAIN', false);
-        // $districtInfoJson = file_get_contents( $storeAPI . "/districts");
         $districtInfoJson = District::getAllDistricts();
         $districtInfo = json_decode($districtInfoJson);
         $districtList = [];
@@ -151,8 +132,6 @@ class StoreInfo extends Model
 
     public static function getRegionNamesList()
     {
-        // $storeAPI = env('STORE_API_DOMAIN', false);
-        // $regionInfoJson = file_get_contents( $storeAPI . "/regions");
         $regionInfoJson = Region::getAllRegions();
         $regionInfo = json_decode($regionInfoJson);
         $regionList = [];
