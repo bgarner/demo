@@ -257,7 +257,7 @@
                  });
             @endforeach
 
-
+            @if($videoStats)
             @foreach($videoStats as $c)
                 var videoData_{{$c['id']}} = [
                     {
@@ -304,6 +304,7 @@
 
                  });
             @endforeach
+            @endif
 
         });
 

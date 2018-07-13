@@ -140,7 +140,10 @@ class AnalyticsCollection extends Model
     public static function getPaginatedVideoStats($request)
     {
         $allVideoStats = AnalyticsCollection::getVideoStats();        
-        
+        if(count($allVideoStats) < 1){
+            return;
+        }
+
         $videoStatsSlices = array_chunk( $allVideoStats->toArray(), 15);
         
         $videoStats = $videoStatsSlices[0];
