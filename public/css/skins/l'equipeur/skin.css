@@ -1,0 +1,94 @@
+body{
+	background-color: #2B2B2B !important;
+}
+
+.nav-header{
+	background: #2B2B2B url('/images/skin/lequipeur.png') top center no-repeat !important;
+	margin: 20px 0px;
+}
+
+.metismenu > li.active{
+	border: none !important;
+}
+
+.metismenu > li a{
+	border-left: 4px solid #2B2B2B !important;
+	border-left: none;
+	color: #ccc;
+}
+
+.metismenu > li.active a{
+	border-left: 4px solid #E20000 !important;	
+    background: #444444 !important;
+}
+
+.metismenu > li.active a:hover{
+	border-left: 4px solid #E20000 !important;
+}
+
+
+.metismenu > li a:hover{
+	border-left: 4px solid #E20000 !important;	
+	background: #444444 !important;
+}
+
+.metismenu > li.active a:hover{
+	border-left: none;
+}
+
+.metismenu li.urgetnNoticeNav {
+	border: none !important;
+	background-color: red; 
+	color: white;
+}
+
+.metismenu li.urgetnNoticeNav a{
+	border: none !important;
+}
+
+.navbar-minimalize{
+	background-color: #2B2B2B !important;
+	border: #2B2B2B;
+}
+
+.metismenu .label-primary{
+	background-color: #E20000 !important;
+}
+
+.nav-second-level li a{
+	font-weight: normal;
+}
+
+.nav-second-level:after{
+	display: none !important;
+}
+
+.product-price{
+
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #489bd5;
+  padding: 6px 12px;
+  position: absolute;
+  bottom: 0px;
+  right: 0;
+
+	background-color: none;
+	width: 100%;
+	background: transparent url('/images/2B2B2B-0.6.png') top left repeat;
+
+}
+
+
+
+.product-box{ padding: 1px !important; margin: 10px !important; height: 168px; width: 168px; float: left;}
+
+body.mini-navbar .logo-element {
+  background:  #2B2B2B;
+}
+
+/*.nav-header{
+	background: #2B2B2B url('/images/skin/sc.png') top center no-repeat !important;
+	margin: 20px 0px;
+}*/
