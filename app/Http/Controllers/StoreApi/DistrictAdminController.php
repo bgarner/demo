@@ -13,4 +13,29 @@ class DistrictAdminController extends Controller
     	$districts = District::getAllDistricts();
     	return view('admin.district.index')->with('districts', $districts);
     }
+    public function create()
+    {
+
+    }
+
+
+    public function store()
+    {
+
+    }
+
+    public function edit()
+    {
+
+    }
+
+    public function update()
+    {
+
+    }
+
+    public function destroy()
+    {
+    	
+    }
 }
