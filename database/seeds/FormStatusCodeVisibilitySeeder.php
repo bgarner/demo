@@ -14,7 +14,7 @@ class FormStatusCodeVisibilitySeeder extends Seeder
 		['id'=> 4, 'visibility' => 1],
 		['id'=> 5, 'visibility' => 1],
 		['id'=> 6, 'visibility' => 1],
-		['id'=> 7, 'visibility' => 1],
+		['id'=> 7, 'visibility' => 0],
 
 	];
     /**
