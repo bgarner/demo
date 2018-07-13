@@ -140,9 +140,9 @@
 												{{$district->name}}
 											</div>
 										</div>
-										<ol class="sortable_list_district connectedSortable-district" id="sortable-district-{{$district->id}}">
+										<ol class="sortable_list_district connectedSortable-district" id="sortable-district-{{$district->id}}" data-district-id="{{$district->id}}">
 										@foreach($district->stores as $store)
-											<li class="card-item ui-state-default" id="store-{{$store->store_number}}">
+											<li class="card-item ui-state-default" id="store-{{$store->store_number}}" data-store-id="{{$store->store_number}}">
 											{{$banners[$store->banner_id]}} #{{$store->store_id}} - {{$store->name}}
 											</li>
 										@endforeach
@@ -170,9 +170,9 @@
 												{{$region->name}}
 											</div>
 										</div>
-										<ol class="sortable_list_region connectedSortable-region" id="sortable-region-{{$region->id}}">
+										<ol class="sortable_list_region connectedSortable-region" id="sortable-region-{{$region->id}}" data-region-id="{{$region->id}}">
 										@foreach($region->districts as $district)
-											<li class="card-item ui-state-default" id="district-{{$district->id}}">
+											<li class="card-item ui-state-default" id="district-{{$district->id}}" data-district-id="{{$district->id}}">
 											{{$district->name}}
 											</li>
 										@endforeach
@@ -213,22 +213,47 @@
 			    connectWith: ".connectedSortable-district",
 			    containment : $("#district-listing"),
 			    receive: function(event, ui) {
-			        alert("dropped on = "+this.id); // Where the item is dropped
-			        alert("sender = "+ui.sender[0].id); // Where it came from
-			        alert("item = "+ui.item[0].id); //Which item (or ui.item[0].id)
+			    	
+			        var target_district_id = $(this).data('district-id');
+			        var store_id = $(ui.item[0]).data('store-id');
+			        $.ajax({
+					    url: '/admin/districtstore/' + store_id ,
+					    type: 'PATCH',
+					    dataType: 'json',
+					    data: {
+					    	district_id: target_district_id
+					    },
 
-			        // send ajax to update
+					    success: function(result) {
+					      
+					      	console.log(result);
+					      	//update the view
+
+					    }
+					});   
 			    }         
 			}).disableSelection();
 			$( ".sortable_list_region" ).sortable({
 			    connectWith: ".connectedSortable-region",
 			    containment : $("#region-listing"),
 			    receive: function(event, ui) {
-			        alert("dropped on = "+this.id); // Where the item is dropped
-			        alert("sender = "+ui.sender[0].id); // Where it came from
-			        alert("item = "+ui.item[0].id); //Which item (or ui.item[0].id)
+			        var target_region_id = $(this).data('region-id');
+			        var district_id = $(ui.item[0]).data('district-id');
+			        $.ajax({
+					    url: '/admin/regiondistrict/' + district_id ,
+					    type: 'PATCH',
+					    dataType: 'json',
+					    data: {
+					    	region_id: target_region_id
+					    },
 
-			        // send ajax to update
+					    success: function(result) {
+					      
+					      	console.log(result);
+					      	//update the view
+
+					    }
+					});   
 			    }         
 			}).disableSelection();
 		})
