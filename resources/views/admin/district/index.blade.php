@@ -37,22 +37,23 @@
                                             <thead>
         										<tr>
         											
-        											<td>Store Number</td>
-                                                    <td>Store Name</td>
+        											<td>District</td>
+                                                    <td>Manager</td>
                                                     <td></td>
 
         										</tr>
                                             </thead>
 
                                             <tbody>
-    										@foreach($stores as $store)
+    										@foreach($districts as $district)
     										<tr>
 
 
-    											<td>{{ $store->store_number }}</td>
-    											<td><a href="/admin/store/{{ $store->id }}/edit">{{ $store->name }}</a></td>
+    											
+    											<td><a href="/admin/district/{{ $district->id }}/edit">{{ $district->name }}</a></td>
+    											<td>{{ $district->dm_details->firstname }} {{ $district->dm_details->lastname }}</td>
                                                 <td>
-                                                    <a data-store="{{ $store->id }}" id="store{{$store->id}}" class="store-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                                                    <a data-district="{{ $district->id }}" id="district{{$district->id}}" class="district-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
                                                 </td>
     											
                                                
@@ -89,7 +90,7 @@
 
 				</script>
 
-				<script src="/js/custom/admin/stores/deleteStore.js"></script>
+				<script src="/js/custom/admin/districts/deleteStore.js"></script>
 
 				@include('site.includes.bugreport')
 
