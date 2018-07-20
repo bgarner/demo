@@ -27,20 +27,19 @@ class MarksDistrictTableSeeder extends Seeder
 		["id" => 20, "name" => "South West Ontario"],
 		["id" => 21, "name" => "Manitoba"],
 		["id" => 22, "name" => "Toronto N&E"],
-        ["id" => 24, "name" => "Toronto Central/W"],
-        ["id" => 25, "name" => "GTA East"],
-        ["id" => 26, "name" => "Brampton/Burlington"],
-        ["id" => 27, "name" => "Kingston & Region"],
-        ["id" => 28, "name" => "Ottawa East"],
-        ["id" => 29, "name" => "Ottawa West/Hvlands"],
-        ["id" => 30, "name" => "Grand QC"],
-        ["id" => 31, "name" => "Cantons Est/QCNord"],
-        ["id" => 32, "name" => "Grand MTL Est"],
-        ["id" => 33, "name" => "Grand MTL Ouest"],
-        ["id" => 34, "name" => "Atlantic 1"],
-        ["id" => 35, "name" => "Atlantic 2"],
-        ["id" => 36, "name" => "Atlantic 3"]
-
+        ["id" => 23, "name" => "Toronto Central/W"],
+        ["id" => 24, "name" => "GTA East"],
+        ["id" => 25, "name" => "Brampton/Burlington"],
+        ["id" => 26, "name" => "Kingston & Region"],
+        ["id" => 27, "name" => "Ottawa East"],
+        ["id" => 28, "name" => "Ottawa West/Hvlands"],
+        ["id" => 29, "name" => "Grand QC"],
+        ["id" => 30, "name" => "Cantons Est/QCNord"],
+        ["id" => 31, "name" => "Grand MTL Est"],
+        ["id" => 32, "name" => "Grand MTL Ouest"],
+        ["id" => 33, "name" => "Atlantic 1"],
+        ["id" => 34, "name" => "Atlantic 2"],
+        ["id" => 35, "name" => "Atlantic 3"]
     ];
     /**
      * Run the database seeds.
