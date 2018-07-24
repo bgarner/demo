@@ -907,6 +907,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'Hamcrest\\Type\\IsString' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Type/IsString.php',
         'Hamcrest\\Util' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Util.php',
         'Hamcrest\\Xml\\HasXPath' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Xml/HasXPath.php',
+        'MarksDistrcitRegionSeeder' => __DIR__ . '/../..' . '/database/seeds/MarksDistrcitRegionSeeder.php',
         'MarksDistrictStorePivotSeeder' => __DIR__ . '/../..' . '/database/seeds/MarksDistrictStorePivotSeeder.php',
         'MarksDistrictTableSeeder' => __DIR__ . '/../..' . '/database/seeds/MarksDistrictTableSeeder.php',
         'MarksRegionTableSeeder' => __DIR__ . '/../..' . '/database/seeds/MarksRegionTableSeeder.php',
