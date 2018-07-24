@@ -9,7 +9,8 @@ use App\Models\Auth\User\UserResource;
 
 class District extends Model {
 
-    protected $fillable = [];
+    protected $table = 'districts';
+    protected $fillable = ['name'];
 
     protected $dates = [];
 
@@ -25,6 +26,7 @@ class District extends Model {
     	$districts = District::all()
     						->each(function($district){
     							$district->stores = Store::getStoreDetailsByDistrictId($district->id);
+
                                 $resource_id = Resource::getResourceByResourceTypeIdandResourceId(Self::$resource_type_id, $district->id)->id;
                                 $district->dm_details = UserResource::getUserByResourceId($resource_id);
                                 
@@ -60,6 +62,33 @@ class District extends Model {
     	}
     	return [];
     } 
+
+    public static function createDistrict($request)
+    {
+        $district = District::create([
+            'name' => $request->district_name
+        ]);
+
+        RegionDistrict::updateRegionDistrictPivot($district->id, $request->region);
+        Resource::createResource( [ 'resource_type' => Self::$resource_type_id , 
+                                    'resource_id' => $district->id] );
+
+        return $district;
+    }
+
+    public static function updateDistrict($id, $request)
+    {
+        return District::find($id)->update(['name'=> $request->district_name]);
+    }
+
+    public static function deleteDistrict($id)
+    {
+        DistrictStore::where('district_id', $id)->delete();
+        RegionDistrict::where('district_id', $id)->delete();
+        Resource::where('resource_type_id', Self::$resource_type_id)->where('resource_id', $id)->delete();
+        District::find($id)->delete();
+        return;
+    }
 
     
 

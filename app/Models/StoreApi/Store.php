@@ -87,7 +87,7 @@ class Store extends Model {
 
 	public static function getStoreDetailsByDistrictId($id)
     {
-    	$stores = Store::join('district_store', 'district_store.store_id', '=', 'stores.store_number')
+        $stores = Store::join('district_store', 'district_store.store_id', '=', 'stores.store_number')
 		                ->where('district_store.district_id', $id)
 		                ->select('stores.*')
 		                ->get();

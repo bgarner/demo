@@ -83,6 +83,8 @@
 			list-style: none;
 		}	
 
+		
+
 
 		  
 	</style>
@@ -134,18 +136,28 @@
 									<div class="card " >
 										<div class="card-header">
 											<div>
+												@if(isset($district->dm_details->firstname))
 												{{$district->dm_details->firstname}} {{$district->dm_details->lastname}} 
+												@else
+												(Unassigned)
+												@endif
 											</div>
 											<div>
 												{{$district->name}}
 											</div>
 										</div>
 										<ol class="sortable_list_district connectedSortable-district" id="sortable-district-{{$district->id}}" data-district-id="{{$district->id}}">
+										@if(count($district->stores)>0)
 										@foreach($district->stores as $store)
 											<li class="card-item ui-state-default" id="store-{{$store->store_number}}" data-store-id="{{$store->store_number}}">
 											{{$banners[$store->banner_id]}} #{{$store->store_id}} - {{$store->name}}
 											</li>
 										@endforeach
+										@else
+											<li class="card-item ui-state-default empty-card">
+												No Stores added yet
+											</li>
+										@endif
 										</ol>
 
 										<div class="card-footer">
@@ -227,7 +239,8 @@
 					    success: function(result) {
 					      
 					      	console.log(result);
-					      	//update the view
+					      	window.location.reload(); //temp solution
+					      	//To do - update view
 
 					    }
 					});   
@@ -250,7 +263,8 @@
 					    success: function(result) {
 					      
 					      	console.log(result);
-					      	//update the view
+					      	window.location.reload(); //temp solution
+					      	//To do - update view
 
 					    }
 					});   
