@@ -14,29 +14,27 @@ class RegionAdminController extends Controller
         return view('admin.region.index')->with('regions', $regions);
     }
 
-    public function create()
+    public function store(Request $request)
     {
+        Region::createRegion($request);
+        return redirect()->action('StoreApi\RegionAdminController@index');
+    }
+
+    public function edit($id)
+    {
+        $region = Region::find($id);
+        return view('admin.region.edit')->with('region', $region);
 
     }
 
-
-    public function store()
+    public function update($id, Request $request)
     {
-
+        Region::updateRegion($id, $request);
+        return redirect()->action('StoreApi\RegionAdminController@index');
     }
 
-    public function edit()
+    public function destroy($id)
     {
-
-    }
-
-    public function update()
-    {
-
-    }
-
-    public function destroy()
-    {
-    	
+        return Region::deleteDistrict($id);
     }
 }

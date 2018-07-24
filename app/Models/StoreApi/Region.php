@@ -8,7 +8,8 @@ use App\Models\Auth\User\UserResource;
 
 class Region extends Model {
 
-    protected $fillable = [];
+    protected $table = 'regions';
+    protected $fillable = ['name'];
 
     protected $dates = [];
 
@@ -44,4 +45,28 @@ class Region extends Model {
     	return $region;
     }
 
+    public static function createRegion($request)
+    {
+        $region = Region::create([
+            'name' => $request->region_name
+        ]);
+
+        Resource::createResource( [ 'resource_type' => Self::$resource_type_id , 
+                                    'resource_id' => $region->id] );
+
+        return $region;
+    }
+
+    public static function updateRegion($id, $request)
+    {
+        return Region::find($id)->update(['name'=> $request->region_name]);
+    }
+
+    public static function deleteDistrict($id)
+    {
+        RegionDistrict::where('district_id', $id)->delete();
+        Resource::where('resource_type_id', Self::$resource_type_id)->where('resource_id', $id)->delete();
+        Region::find($id)->delete();
+        return;
+    }
 }
