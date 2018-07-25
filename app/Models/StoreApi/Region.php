@@ -62,11 +62,16 @@ class Region extends Model {
         return Region::find($id)->update(['name'=> $request->region_name]);
     }
 
-    public static function deleteDistrict($id)
+    public static function deleteRegion($id)
     {
-        RegionDistrict::where('district_id', $id)->delete();
+        $districtsInRegion = RegionDistrict::where('region_id', $id)->count();
+        
+        if($districtsInRegion > 0) {
+            return json_encode(['success'=>'false', 'description'=>'Region not empty']);
+        }
+        RegionDistrict::where('region_id', $id)->delete();
         Resource::where('resource_type_id', Self::$resource_type_id)->where('resource_id', $id)->delete();
         Region::find($id)->delete();
-        return;
+        return json_encode(['success'=>'true', 'description'=>'Region deleted']);
     }
 }

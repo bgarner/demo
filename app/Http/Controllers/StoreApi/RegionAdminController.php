@@ -35,6 +35,6 @@ class RegionAdminController extends Controller
 
     public function destroy($id)
     {
-        return Region::deleteDistrict($id);
+        return Region::deleteRegion($id);
     }
 }

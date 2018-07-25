@@ -46,8 +46,16 @@ $(".delete-region").click(function(){
             type: 'DELETE',
 
             success: function(result) {
-                $(selector).closest('tr').fadeOut(1000);
-                swal("Deleted!", "region deleted.", "success");
+                result = JSON.parse(result);
+                if(result.success == 'false'){
+                    console.log('hello');
+                    swal("Error!", result.description, "error");    
+                }
+                else{
+                    $(selector).closest('tr').fadeOut(1000);
+                    swal("Deleted!", "region deleted.", "success");
+                }
+                
             }
 
         });

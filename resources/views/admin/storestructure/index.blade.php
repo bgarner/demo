@@ -172,22 +172,33 @@
 							  		<h2>Regions</h2>
 							  	</div>
 							  	<div class="listing-body">
+
 							  		@foreach($regions as $region)
 									<div class="card">
 										<div class="card-header">
 											<div>
+												@if(isset($region->avp_details->firstname))
 												{{$region->avp_details->firstname}} {{$region->avp_details->lastname}} 
+												@else
+												(Unassigned)
+												@endif
 											</div>
 											<div>
 												{{$region->name}}
 											</div>
 										</div>
 										<ol class="sortable_list_region connectedSortable-region" id="sortable-region-{{$region->id}}" data-region-id="{{$region->id}}">
+										@if(count($region->districts)>0)											
 										@foreach($region->districts as $district)
 											<li class="card-item ui-state-default" id="district-{{$district->id}}" data-district-id="{{$district->id}}">
 											{{$district->name}}
 											</li>
 										@endforeach
+										@else
+											<li class="card-item ui-state-default empty-card">
+												No Districts added yet
+											</li>
+										@endif
 										</ol>
 									</div>
 						  			@endforeach

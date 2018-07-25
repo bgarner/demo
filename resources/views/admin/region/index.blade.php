@@ -49,7 +49,7 @@
 										<td></td>
 										@endif
                                         <td>
-                                            <a data-region-id="{{ $region->id }}" id="region{{$region->id}}" class="region-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                                            <a data-region-id="{{ $region->id }}" id="region{{$region->id}}" class="delete-region btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
                                         </td>
 									</tr>
 									@endforeach

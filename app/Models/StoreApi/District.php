@@ -83,11 +83,16 @@ class District extends Model {
 
     public static function deleteDistrict($id)
     {
+        $storesInDistrict = DistrictStore::where('district_id', $id)->count();
+        if($storesInDistrict > 0) {
+            return json_encode(['success'=>'false', 'description'=>'District not empty']);
+        }
+
         DistrictStore::where('district_id', $id)->delete();
         RegionDistrict::where('district_id', $id)->delete();
         Resource::where('resource_type_id', Self::$resource_type_id)->where('resource_id', $id)->delete();
         District::find($id)->delete();
-        return;
+        return json_encode(['success'=>'true', 'description'=>'District deleted']);
     }
 
     
