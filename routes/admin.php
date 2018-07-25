@@ -5,6 +5,13 @@ Route::get('/admin', 'AdminController@index');
 Route::get('/admin/videoanalytics', 'Analytics\AnalyticsAdminController@index');
 Route::get('/admin/paginatedvideos', 'Analytics\AnalyticsAdminController@getVideoAnalyticsByPage');
 
+// Route::get('/admin/loginas/{id}', function($id) {
+//     Auth::loginUsingId($id);
+//     return redirect('/login');
+// });
+
+Route::get('/admin/loginas/{id}', 'Auth\LoginAsUserController@index');
+
 //admin home
 //Route::get('/admin/home',  ['middleware' => 'admin.auth', 'uses' =>'AdminController@index' ] );
 Route::get('/admin/home', 'AdminController@index');

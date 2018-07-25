@@ -11,6 +11,9 @@
 |
 */
 Auth::routes();
+
+
+
 Route::pattern('storeno', '^([A-Z]?[0-9]{4})$');
 Route::pattern('id', '[0-9]+');
 
