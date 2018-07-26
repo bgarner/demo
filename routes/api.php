@@ -31,4 +31,4 @@ Route::get('/api/v1/folder/{id}/archived', 'Api\V1\ApiController@getArchivedDocu
 Route::get('/api/banners', 'StoreApi\StoreApiController@getAllBanners');
 Route::get('/api/banner/{id}/stores', 'StoreApi\StoreApiController@getStoresByBannerid');
 
-Route::get('/api/store/{$storeno}', 'StoreApi\StoreApiController@getStoreDetails');
+Route::get('/api/store/{storeno}', 'StoreApi\StoreApiController@getStoreDetails');

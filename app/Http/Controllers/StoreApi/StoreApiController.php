@@ -19,8 +19,8 @@ class StoreApiController extends Controller
     	return Banner::getStoreDetailsByBannerid($id);
     }
 
-    public function getStoreDetails($storeNumber)
+    public function getStoreDetails($storeno)
     {
-        return Store::getStoreDetailsByStoreNumber($storeNumber);
+        return Store::getStoreDetailsByStoreNumber($storeno);
     }
 }
