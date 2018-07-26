@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notifiable as Notifiable;
 
 class Store extends Model {
   
-	  use SoftDeletes;
+	use SoftDeletes;
     use Notifiable;
 
     protected $table = 'stores';

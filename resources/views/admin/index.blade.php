@@ -90,20 +90,23 @@
 	@include('admin.includes.footer')
 
     @include('admin.includes.scripts')
+    <script>
 
+    </script>
     <!-- Flot -->
-    <script src="/js/plugins/flot/jquery.flot.js"></script>
-    <script src="/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
-    <script src="/js/plugins/flot/jquery.flot.spline.js"></script>
-    <script src="/js/plugins/flot/jquery.flot.resize.js"></script>
-    <script src="/js/plugins/flot/jquery.flot.pie.js"></script>
+    <script type="text/javascript" src="/js/plugins/flot/jquery.flot.js"></script>
+    <script type="text/javascript" src="/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script type="text/javascript" src="/js/plugins/flot/jquery.flot.spline.js"></script>
+    <script type="text/javascript" src="/js/plugins/flot/jquery.flot.resize.js"></script>
+    <script type="text/javascript" src="/js/plugins/flot/jquery.flot.pie.js"></script>
     <script type="text/javascript" src="/js/custom/datetimepicker-with-default-time.js"></script>
     <script type="text/javascript" src="/js/custom/site/launchModal.js" ></script>
     <script type="text/javascript" src="/js/custom/admin/analytics/analytics.js"></script>
     <script type="text/javascript" src="/js/custom/admin/analytics/videoReport.js"></script>
+    <script type="text/javascript" src="/js/custom/admin/dashboard/getStoreDetails.js"></script>
 
    	<!-- ChartJS-->
-	<script src="/js/plugins/chartJs/Chart.min.js"></script>
+	<script type="text/javascript" src="/js/plugins/chartJs/Chart.min.js"></script>
 
     <script type="text/javascript">
         $.ajaxSetup({
@@ -307,7 +310,7 @@
             @endif
 
         });
-
+        
     </script>
 
 	@include('site.includes.bugreport')

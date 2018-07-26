@@ -1,103 +1,121 @@
 $(document).ready(function(){
-var table = $('#communication_analytics').DataTable({
-    "info"   :false,
-    "bPaginate": false,
-    "paging":   false,
-    "columns": [
-       null,
-       {'width': '40%'},
-       null,null,
-       {"visible": false},
-       {"visible": false},
-       {"visible": false}
-     ],
-     "searching": false
+    var table = $('#communication_analytics').DataTable({
+        "info"   :false,
+        "bPaginate": false,
+        "paging":   false,
+        "columns": [
+        null,
+        {'width': '40%'},
+        null,null,
+        {"visible": false},
+        {"visible": false},
+        {"visible": false}
+        ],
+        "searching": false
+    });
+
+    var urgentNoticeTable = $('#urgent_notice_analytics').DataTable({
+        "info"   :false,
+        "bPaginate": false,
+        "paging":   false,
+        "columns": [
+        null,
+        {'width': '40%'},
+        null,null,
+        {"visible": false},
+        {"visible": false},
+        {"visible": false}
+        ],
+        "searching": false
+    });
+
+    var taskTable = $('#task_analytics').DataTable({
+        "info"   :false,
+        "bPaginate": false,
+        "paging":   false,
+        "columns": [
+        null,
+        {'width': '40%'},
+        null,null,
+        {"visible": false},
+        {"visible": false},
+        {"visible": false}
+        ],
+        "searching": false
+    });
+
+
+
+    $('#communication_analytics tbody').on('click', 'tr.details-control', function () {
+        var tr = $(this);
+        var row = table.row( tr );
+
+        if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        }
+        else {
+            // Open this row
+            row.child( format(row.data()) ).show();
+            tr.addClass('shown');
+        }
+    });
+
+    $('#urgent_notice_analytics tbody').on('click', 'tr.un-details-control', function () {
+        var tr = $(this);
+        var row = urgentNoticeTable.row( tr );
+
+        if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        }
+        else {
+            // Open this row
+            row.child( format(row.data()) ).show();
+            tr.addClass('shown');
+        }
+    });
+
+
+    $('#task_analytics tbody').on('click', 'tr.task-details-control', function () {
+        var tr = $(this);
+        var row = taskTable.row( tr );
+
+        if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        }
+        else {
+            // Open this row
+            row.child( format(row.data()) ).show();
+            tr.addClass('shown');
+        }
+    });
+
+    $('.ibox-content tbody').on('click', 'span.store', function () {
+        var store = $(this).text();
+        $.ajax({
+            url: '/api/store/'+ store, //set in /public/js/env.js
+            type: 'GET',
+            success: function(result) {
+                var storeString =  result.address + "\n" + titleCase(result.city) + ", " + result.province;
+                swal(result.store_number + " " + result.name , storeString, "info");
+                }    
+            });
+    });
+
 });
 
-var urgentNoticeTable = $('#urgent_notice_analytics').DataTable({
-    "info"   :false,
-    "bPaginate": false,
-    "paging":   false,
-    "columns": [
-       null,
-       {'width': '40%'},
-       null,null,
-       {"visible": false},
-       {"visible": false},
-       {"visible": false}
-     ],
-     "searching": false
-});
-
-var taskTable = $('#task_analytics').DataTable({
-    "info"   :false,
-    "bPaginate": false,
-    "paging":   false,
-    "columns": [
-       null,
-       {'width': '40%'},
-       null,null,
-       {"visible": false},
-       {"visible": false},
-       {"visible": false}
-     ],
-     "searching": false
-});
-
-
-
-$('#communication_analytics tbody').on('click', 'tr.details-control', function () {
-    var tr = $(this);
-    var row = table.row( tr );
-
-    if ( row.child.isShown() ) {
-        // This row is already open - close it
-        row.child.hide();
-        tr.removeClass('shown');
+function titleCase(str) {
+    str = str.toLowerCase().split(' ');
+    for (var i = 0; i < str.length; i++) {
+      str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1); 
     }
-    else {
-        // Open this row
-        row.child( format(row.data()) ).show();
-        tr.addClass('shown');
-    }
-} );
-
-$('#urgent_notice_analytics tbody').on('click', 'tr.un-details-control', function () {
-    var tr = $(this);
-    var row = urgentNoticeTable.row( tr );
-
-    if ( row.child.isShown() ) {
-        // This row is already open - close it
-        row.child.hide();
-        tr.removeClass('shown');
-    }
-    else {
-        // Open this row
-        row.child( format(row.data()) ).show();
-        tr.addClass('shown');
-    }
-} );
-
-
-$('#task_analytics tbody').on('click', 'tr.task-details-control', function () {
-    var tr = $(this);
-    var row = taskTable.row( tr );
-
-    if ( row.child.isShown() ) {
-        // This row is already open - close it
-        row.child.hide();
-        tr.removeClass('shown');
-    }
-    else {
-        // Open this row
-        row.child( format(row.data()) ).show();
-        tr.addClass('shown');
-    }
-});
-
-
-});
-
+    return str.join(' ');
+}
 
 var format = function( d ) {
 
@@ -128,3 +146,4 @@ var getStoresString = function(sent_to, opened){
 
     return returnString;
 }
+
