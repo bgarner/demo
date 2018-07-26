@@ -95,7 +95,7 @@ $(document).ready(function(){
         }
     });
 
-    $('#task_analytics tbody').on('click', 'span.store', function () {
+    $('.ibox-content tbody').on('click', 'span.store', function () {
         var store = $(this).text();
         $.ajax({
             url: '/api/store/'+ store, //set in /public/js/env.js
