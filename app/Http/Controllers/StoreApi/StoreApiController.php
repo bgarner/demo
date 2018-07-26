@@ -5,6 +5,7 @@ namespace App\Http\Controllers\StoreApi;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\StoreApi\Banner;
+use App\Models\StoreApi\Store;
 
 class StoreApiController extends Controller
 {
@@ -12,8 +13,14 @@ class StoreApiController extends Controller
     {	
     	return Banner::getAllBanners();
     }
+
     public function getStoresByBannerid($id)
     {
     	return Banner::getStoreDetailsByBannerid($id);
+    }
+
+    public function getStoreDetails($storeNumber)
+    {
+        return Store::getStoreDetailsByStoreNumber($storeNumber);
     }
 }
