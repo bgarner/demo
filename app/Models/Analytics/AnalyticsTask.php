@@ -109,6 +109,7 @@ class AnalyticsTask extends Model
     public static function compileTaskAnalytics()
     {
         $today = Carbon::now();
+        $twoweeksago = Carbon::now()->subWeeks(2);
         $tasks = Task::all();
         $asset_type_id  = AnalyticsAssetTypes::where('type', 'task')->first()->id;
 
@@ -124,7 +125,7 @@ class AnalyticsTask extends Model
             $sent_to = $model->getTargetStores($task->id);
             $notCompletedByStores = [];
 
-            if(count($sent_to) == count($completedByStores) && $task->due_date < $today ){
+            if(count($sent_to) == count($completedByStores) && $task->due_date < $twoweeksago ){
                 $tasks->forget($key);
                 continue;
             }
