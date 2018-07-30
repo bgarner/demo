@@ -4,7 +4,7 @@
 <head>
     @section('title', 'Regions')
     @include('admin.includes.head')
-
+	<link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 </head>
 
@@ -81,6 +81,10 @@
                         	<label class="control-label">Region Name <span class="req">*</span></label>
                             <div ><input type="text" class="form-control" name="region_name" id="region_name" value=""></div>
                         </div>
+                        <div class="form-group">
+                        	<label for="districts">Districts <span class="req">*</span></label>
+                        	{!! Form::select('districts', $districts, null, [ 'class'=>'chosen', 'id'=> 'districts', 'multiple'=>'true']) !!}
+                        </div>
 
     	            </div>
     	            <div class="modal-footer">
@@ -117,6 +121,7 @@
 
 		<script src="/js/custom/admin/regions/crudRegions.js"></script>
 		<script type="text/javascript" src="/js/custom/site/launchModal.js" ></script>
+		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 
 		@include('site.includes.bugreport')
 

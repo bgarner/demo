@@ -70,6 +70,7 @@ class District extends Model {
         ]);
 
         RegionDistrict::updateRegionDistrictPivot($district->id, $request->region);
+        DistrictStore::updateDistrictStorePivot($request->stores, $district->id);
         Resource::createResource( [ 'resource_type' => Self::$resource_type_id , 
                                     'resource_id' => $district->id] );
 

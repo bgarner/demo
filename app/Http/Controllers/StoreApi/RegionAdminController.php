@@ -5,13 +5,15 @@ namespace App\Http\Controllers\StoreApi;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\StoreApi\Region;
+use App\Models\StoreApi\District;
 
 class RegionAdminController extends Controller
 {
     public function index()
     {
     	$regions = Region::getAllRegions();
-        return view('admin.region.index')->with('regions', $regions);
+        $districts = District::all()->pluck('name', 'id')->toArray();
+        return view('admin.region.index')->with('regions', $regions)->with('districts', $districts);
     }
 
     public function store(Request $request)

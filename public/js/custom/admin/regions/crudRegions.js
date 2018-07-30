@@ -1,5 +1,9 @@
 $("#add-region").click(function(){
-	$("#add-region-modal").modal('show');
+	$("#add-region-modal").modal('show').on('shown.bs.modal', function () {
+            $(".chosen").chosen({
+                    width:'100%'
+                });
+        });
 });
 
 $(".edit-region").click(function(e){
@@ -30,17 +34,15 @@ $(".delete-region").click(function(){
     console.log(regionId);
     var selector = "#region"+regionId;
     
-    // else{
-        swal({
-        title: "Are you sure?",
-        //text: "You will not be able to recover this imaginary file!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yes, delete it!",
-        closeOnConfirm: false
-        }, function () {
-        
+    swal({
+    title: "Are you sure?",
+    type: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#DD6B55",
+    confirmButtonText: "Yes, delete it!",
+    closeOnConfirm: false
+    }, function () {
+    
         $.ajax({
             url: '/admin/region/'+ regionId,
             type: 'DELETE',

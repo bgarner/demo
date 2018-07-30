@@ -36,17 +36,15 @@ $(".delete-district").click(function(){
     console.log(districtId);
     var selector = "#district"+districtId;
     
-    // else{
-        swal({
-        title: "Are you sure?",
-        //text: "You will not be able to recover this imaginary file!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yes, delete it!",
-        closeOnConfirm: false
-        }, function () {
-        
+    swal({
+    title: "Are you sure?",
+    type: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#DD6B55",
+    confirmButtonText: "Yes, delete it!",
+    closeOnConfirm: false
+    }, function () {
+    
         $.ajax({
             url: '/admin/district/'+ districtId,
             type: 'DELETE',
@@ -64,7 +62,7 @@ $(".delete-district").click(function(){
             }
 
         });
-        
+    
     });
 
 });

@@ -4,7 +4,7 @@
 <head>
     @section('title', 'Stores')
     @include('admin.includes.head')
-
+	<link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 </head>
 
@@ -129,11 +129,12 @@
 			// $(".datatable").DataTable({
 			// 	// "paging" : false
 			// });
-
+			
 		</script>
 
 		<script src="/js/custom/admin/districts/crudDistricts.js"></script>
 		<script type="text/javascript" src="/js/custom/site/launchModal.js" ></script>
+		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 
 		@include('site.includes.bugreport')
 

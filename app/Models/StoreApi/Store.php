@@ -5,6 +5,7 @@ namespace App\Models\StoreApi;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable as Notifiable;
+use App\Models\Utility\Utility;
 
 class Store extends Model {
   
@@ -13,7 +14,7 @@ class Store extends Model {
 
     protected $table = 'stores';
 
-    protected $fillable = [];
+    protected $fillable = ['store_id', 'store_number', 'banner_id', 'is_combo_store', 'name', 'address', 'city', 'province', 'postal_code'];
 
     protected $dates = [];
 
@@ -114,5 +115,44 @@ class Store extends Model {
     	}
     	return [];
     }
+
+    public static function createNewStore($request)
+    {
+        $banners = Banner::all()->pluck('id');
+
+        if($request->is_combo_store == 'on'){
+            foreach($banners as $banner_id){
+                $store = Store::create([
+                    'store_id'       => intval($request->store_number),
+                    'banner_id'      => $banner_id,
+                    'store_number'   => Utility::makeStoreNumber($request->store_number, $banner_id, $request->is_combo_store),
+                    'is_combo_store' => intval(isset($request->is_combo_store)),
+                    'name'           => $request->store_name,
+                    'address'        => $request->address,
+                    'postal_code'    => $request->postal_code,
+                    'city'           => $request->city,
+                    'province'       => $request->province
+
+                ]);
+
+            }
+        }
+        else{
+            $store = Store::create([
+                    'store_id'       => intval($request->store_number),
+                    'banner_id'      => $request->banner_id,
+                    'store_number'   => Utility::makeStoreNumber($request->store_number, $request->banner_id),
+                    'is_combo_store' => intval($request->is_combo_store),
+                    'name'           => $request->store_name,
+                    'address'        => $request->address,
+                    'postal_code'    => $request->postal_code,
+                    'city'           => $request->city,
+                    'province'       => $request->province
+                ]);
+        }
+        return;
+        
+    }
+
 
 }

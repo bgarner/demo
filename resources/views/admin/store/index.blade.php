@@ -6,6 +6,7 @@
     @include('admin.includes.head')
 
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
+    <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
 </head>
 
 <body class="fixed-navigation adminview">
@@ -91,19 +92,10 @@
                     <div class="form-group">
                     	<label class="control-label">Store Number <span class="req">*</span></label>
                         <div >
-                        	<input type="text" class="form-control" name="store_number" id="store_number" value="">
+                        	<input type="text" pattern="\d+" maxlength="4" minlength="3" class="form-control" name="store_number" id="store_number" value="">
                         </div>
                     </div>
-                    <div class="form-group">
-                    	<label class="control-label">Is this a combo store <span class="req">*</span></label>
-                        <div >
-                        	
-                        </div>
-                    </div>
-                    <div class="form-group">
-                    	<label class="control-label">Banner <span class="req">*</span></label>
-                        <div ><input type="text" class="form-control" name="banner" id="banner" value=""></div>
-                    </div>
+                    
 
                     <div class="form-group">
                     	<label class="control-label">Address </label>
@@ -115,21 +107,31 @@
                     </div>
                     <div class="form-group">
                     	<label class="control-label">Province <span class="req">*</span></label>
-                        <div ><input type="text" class="form-control" name="province" id="province" value=""></div>
+                        {!! Form::select('province', $provinces, null, [ 'class'=>'chosen', 'id'=> 'province']) !!}
                     </div>
                     <div class="form-group">
                     	<label class="control-label">Postal Code </label>
                         <div ><input type="text" class="form-control" name="postal_code" id="postal_code" value=""></div>
                     </div>
+
+                    <div class="form-group">
+                        
+                        <div ><input type="checkbox" id="is_combo_store" name="is_combo_store" class="" /> Is this a combo store.</div>
+                    </div>                          
+
+                    <div class="form-group">
+                        <label class="control-label">Banner <span class="req">*</span></label>
+                        {!! Form::select('banner_id', $banners, null, [ 'class'=>'chosen', 'id'=> 'banner_id']) !!}
+                    </div>
                     <div class="form-group">
                     	<label class="control-label">District <span class="req">*</span></label>
-                        <div ><input type="text" class="form-control" name="district" id="district" value=""></div>
+                        {!! Form::select('district_id', $districts, null, [ 'class'=>'chosen', 'id'=> 'district_id']) !!}
                     </div>
 
 	            </div>
 	            <div class="modal-footer">
 	                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	                <button type="submit" class="btn btn-primary" id="create-alerttype">Add Alert Type</button>
+	                <button type="submit" class="btn btn-primary" id="create-alerttype">Add Store</button>
 	            </div>
 	            {!! Form::close() !!}
 	        </div>
@@ -156,6 +158,7 @@
 
 		<script src="/js/custom/admin/stores/crudStore.js"></script>
 		<script type="text/javascript" src="/js/custom/site/launchModal.js" ></script>
+        <script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 
 		@include('site.includes.bugreport')
 

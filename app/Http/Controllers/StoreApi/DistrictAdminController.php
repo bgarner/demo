@@ -14,7 +14,7 @@ class DistrictAdminController extends Controller
     {
     	$districts = District::getAllDistricts();
         $regions = Region::all()->pluck('name', 'id')->prepend('Select one', '')->toArray();
-        $stores = Store::all()->pluck('name', 'store_number')->prepend('Select one', '')->toArray();
+        $stores = Store::all()->pluck('name', 'store_number')->toArray();
     	return view('admin.district.index')->with('districts', $districts)
                                         ->with('regions', $regions)
                                         ->with('stores', $stores);
