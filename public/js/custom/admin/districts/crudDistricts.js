@@ -1,5 +1,9 @@
 $("#add-district").click(function(){
-	$("#add-district-modal").modal('show');
+	$("#add-district-modal").modal('show').on('shown.bs.modal', function () {
+            $(".chosen").chosen({
+                    width:'100%'
+                });
+        });
 });
 
 $(".edit-district").click(function(e){
@@ -16,7 +20,9 @@ $(".edit-district").click(function(e){
         })
         .modal({show:true})
         .on('shown.bs.modal', function () {
-            // $('input[name="district_name"]').focus();
+            $(".chosen").chosen({
+                    width:'100%'
+                });
         })
         .on('hidden.bs.modal', function() {
         });

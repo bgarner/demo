@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\StoreApi\District;
 use App\Models\StoreApi\Region;
+use App\Models\StoreApi\Store;
 
 class DistrictAdminController extends Controller
 {
@@ -13,8 +14,10 @@ class DistrictAdminController extends Controller
     {
     	$districts = District::getAllDistricts();
         $regions = Region::all()->pluck('name', 'id')->prepend('Select one', '')->toArray();
+        $stores = Store::all()->pluck('name', 'store_number')->prepend('Select one', '')->toArray();
     	return view('admin.district.index')->with('districts', $districts)
-                                        ->with('regions', $regions);
+                                        ->with('regions', $regions)
+                                        ->with('stores', $stores);
     }
 
     public function store(Request $request)
