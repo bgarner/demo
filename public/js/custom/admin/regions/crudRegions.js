@@ -6,13 +6,13 @@ $("#add-region").click(function(){
         });
 });
 
-$(".edit-region").click(function(e){
+$(document).on("click", ".edit-region", function(e){
 
     var modal = $('#edit-region-modal');
     var modalBody = $('#edit-region-modal .modal-content');
 
     modalBody.empty();
-    var regionEditLink = e.delegateTarget.href;
+    var regionEditLink = $(this).attr('href');
     
     modal
         .on('show.bs.modal', function() {

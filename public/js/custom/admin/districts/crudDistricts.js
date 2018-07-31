@@ -6,13 +6,13 @@ $("#add-district").click(function(){
         });
 });
 
-$(".edit-district").click(function(e){
+$(document).on("click", ".edit-district", function(e){
 
     var modal = $('#edit-district-modal');
     var modalBody = $('#edit-district-modal .modal-content');
 
     modalBody.empty();
-    var districtEditLink = e.delegateTarget.href;
+    var districtEditLink = $(this).attr('href');
     
     modal
         .on('show.bs.modal', function() {

@@ -6,13 +6,13 @@ $("#add-store").click(function(){
         });
 });
 
-$(".edit-store").click(function(e){
+$(document).on("click", ".edit-store", function(e){
 
     var modal = $('#edit-store-modal');
     var modalBody = $('#edit-store-modal .modal-content');
 
     modalBody.empty();
-    var storeEditLink = e.delegateTarget.href;
+    var storeEditLink = $(this).attr('href');
     
     modal
         .on('show.bs.modal', function() {

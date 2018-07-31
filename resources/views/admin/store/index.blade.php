@@ -159,9 +159,9 @@
 		        }
 			});
 
-            // $(".datatable").DataTable({
+            $(".datatable").DataTable({
                 
-            // });
+            });
 
 		</script>
 

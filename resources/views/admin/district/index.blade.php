@@ -126,9 +126,9 @@
 		        }
 			});
 
-			// $(".datatable").DataTable({
-			// 	// "paging" : false
-			// });
+			$(".datatable").DataTable({
+				
+			});
 			
 		</script>
 
