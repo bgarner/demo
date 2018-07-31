@@ -49,9 +49,9 @@
 
 
 										<td>{{ $store->store_number }}</td>
-										<td><a href="/admin/store/{{ $store->id }}/edit">{{ $store->name }}</a></td>
+										<td><a class="edit-store" href="/admin/store/{{ $store->id }}/edit">{{ $store->name }}</a></td>
                                         <td>
-                                            <a data-store="{{ $store->id }}" id="store{{$store->id}}" class="store-delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                                            <a data-store-id="{{ $store->id }}" id="store{{$store->id}}" class="delete-store btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
                                         </td>
 										
                                        
@@ -138,6 +138,15 @@
 	    </div>
 	</div>
 
+    <div id="edit-store-modal" class="modal inmodal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+
+            </div>
+        </div>
+    </div>
+
 
 		@include('admin.includes.footer')
 
@@ -150,9 +159,9 @@
 		        }
 			});
 
-            $(".datatable").DataTable({
+            // $(".datatable").DataTable({
                 
-            });
+            // });
 
 		</script>
 

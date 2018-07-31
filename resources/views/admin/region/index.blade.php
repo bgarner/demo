@@ -81,10 +81,10 @@
                         	<label class="control-label">Region Name <span class="req">*</span></label>
                             <div ><input type="text" class="form-control" name="region_name" id="region_name" value=""></div>
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                         	<label for="districts">Districts <span class="req">*</span></label>
                         	{!! Form::select('districts', $districts, null, [ 'class'=>'chosen', 'id'=> 'districts', 'multiple'=>'true']) !!}
-                        </div>
+                        </div> --}}
 
     	            </div>
     	            <div class="modal-footer">

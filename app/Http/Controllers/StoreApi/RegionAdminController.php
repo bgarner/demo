@@ -12,8 +12,8 @@ class RegionAdminController extends Controller
     public function index()
     {
     	$regions = Region::getAllRegions();
-        $districts = District::all()->pluck('name', 'id')->toArray();
-        return view('admin.region.index')->with('regions', $regions)->with('districts', $districts);
+        // $districts = District::all()->pluck('name', 'id')->toArray();
+        return view('admin.region.index')->with('regions', $regions);
     }
 
     public function store(Request $request)

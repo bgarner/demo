@@ -51,7 +51,7 @@ class Region extends Model {
             'name' => $request->region_name
         ]);
 
-        RegionDistrict::updateRegionDistrictPivot($request->districts, $region->id);
+        // RegionDistrict::updateRegionDistrictPivot($request->districts, $region->id);
         Resource::createResource( [ 'resource_type' => Self::$resource_type_id , 
                                     'resource_id' => $region->id] );
 

@@ -36,18 +36,24 @@ class StoreAdminController extends Controller
         return redirect()->action('StoreApi\StoreAdminController@index');
     }
 
-    public function edit()
+    public function edit($id)
     {
-
+        $store = Store::find($id);
+        $banners = Banner::all()->pluck('name', 'id')->prepend('Select one', '')->toArray();
+        $provinces = Utility::getAllProvinces();
+        return view('admin.store.edit')->with('store', $store)
+                    ->with('banners', $banners)
+                    ->with('provinces', $provinces);
     }
 
-    public function update()
+    public function update($id, Request $request)
     {
-
+        Store::updateStore($id, $request);
+        return redirect()->action('StoreApi\StoreAdminController@index');
     }
 
-    public function destroy()
+    public function destroy($id)
     {
-    	
+    	return Store::deleteStore($id);
     }
 }
