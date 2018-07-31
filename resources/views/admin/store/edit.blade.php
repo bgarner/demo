@@ -38,12 +38,12 @@
         <div ><input type="text" class="form-control" name="postal_code" id="postal_code" value="{{$store->postal_code}}"></div>
     </div>
     
-    @if($store->is_combo_store)
+    {{--@if($store->is_combo_store)
     <div class="form-group">
         
         <div ><input type="checkbox" id="is_combo_store" name="is_combo_store" class="" checked="checked" /> Is this a combo store.</div>
     </div>                     
-    @endif     
+    @endif --}}
 
     <div class="form-group">
         <label class="control-label">Banner <span class="req">*</span></label>

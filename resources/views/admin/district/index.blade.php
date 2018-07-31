@@ -92,10 +92,10 @@
                         	{!! Form::select('region', $regions , "", ['class'=>'form-control', 'id'=>'region']) !!}
                         </div>
 
-                        <div class="form-group">
+                        {{--<div class="form-group">
                         	<label for="stores">Stores </label>
                         	{!! Form::select('stores[]', $stores, null, [ 'class'=>'chosen', 'id'=> 'stores', 'multiple'=>'true']) !!}
-                        </div>
+                        </div>--}}
 
     	            </div>
     	            <div class="modal-footer">
