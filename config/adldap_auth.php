@@ -258,9 +258,7 @@ return [
     'sync_attributes' => [
 
         'email' => 'userprincipalname', 
-
         // 'name' => 'cn', // Name is not a field in Portal's User Model hence no sync is needed
-
     ],
 
     /*
