@@ -1,0 +1,1 @@
+<li><a href="/{{ Request::segment(1) }}/tools/flashsale" class="trackclick" data-tool-type="flashsaleTracker">DOM Flash Sale Tracker</a></li>

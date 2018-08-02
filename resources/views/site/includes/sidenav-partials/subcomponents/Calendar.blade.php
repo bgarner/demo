@@ -1,0 +1,1 @@
+<li><a href="/{{ Request::segment(1) }}/calendar">{{  __("Calendar") }}</a></li>

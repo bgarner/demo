@@ -1,0 +1,1 @@
+<li><a href="/{{ Request::segment(1) }}/tools/dirtynodes" class="trackclick" data-tool-type="dirtyNodes">Dirty Nodes</a></li>
