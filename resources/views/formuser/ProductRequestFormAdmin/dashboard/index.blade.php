@@ -221,7 +221,8 @@
     			
 				pageLength: 50,
 				responsive: true,
-				fixedHeader: true
+				fixedHeader: true,
+				stateSave: true
 			}
 		);
 		
