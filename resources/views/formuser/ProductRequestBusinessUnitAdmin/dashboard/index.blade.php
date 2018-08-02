@@ -42,6 +42,14 @@
 			    max-height: calc(100% - 120px);
 			    overflow-y: scroll;
 			}
+
+			table{
+				font-size: 12px !important;
+			}
+
+			tbody tr:hover, td.highlighted {
+				background-color: #ffa;
+			}	
         </style>
 </head>
 
@@ -179,7 +187,7 @@
 			                            <div id="tab-{{$loop->iteration}}" class="tab-pane @if ($loop->first) active @endif">
 			                                <div class="panel-body">
 												
-			                                    <table class="table">
+			                                    <table class="table" class="hover">
 			                                    	<thead>
 			                                    		<th>@if(count($formInstances)>0)<input id="select_all" type="checkbox">@endif</th>
 			                                    		<th>Description</th>

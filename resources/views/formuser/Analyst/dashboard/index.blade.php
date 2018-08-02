@@ -10,6 +10,14 @@
             #status_update_modal .modal-body{
             	height: 75% !important;
             }
+
+			table{
+				font-size: 12px !important;
+			}
+
+			tbody tr:hover, td.highlighted {
+				background-color: #ffa;
+			}				
         </style>
 </head>
 
