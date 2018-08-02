@@ -39,7 +39,8 @@ class Analytics extends Model
 
 	    	$user_groups = GroupUser::getGroupsByUserId($user->id);
 	    	
-	    	$forms['My Group Assignments'] = FormInstanceGroupMap::getFormInstancesByGroupId($user_groups);
+            $forms['My Closed Assignments'] = FormInstanceUserMap::getClosedFormInstancesByUserId($user->id);
+            $forms['My Group’s Assignments'] = FormInstanceGroupMap::getFormInstancesByGroupId($user_groups);
 	    	
     	}
 

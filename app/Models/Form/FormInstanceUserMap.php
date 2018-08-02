@@ -28,7 +28,9 @@ class FormInstanceUserMap extends Model
     public static function getFormInstancesByUserId($user_id)
     {
         return Self::join('form_data', 'form_data.id', '=', 'form_user_form_instance.form_instance_id')
+                    ->join('form_instance_status', 'form_data.id', '=', 'form_instance_status.form_data_id')
                     ->where('form_user_form_instance.user_id', $user_id)
+                    ->where('form_instance_status.status_code_id', '!=', 5)
                     ->select('form_data.*')
                     ->orderBy('form_data.created_at', 'desc')
                     ->get()
@@ -42,6 +44,26 @@ class FormInstanceUserMap extends Model
 
                     });
     }
+
+    public static function getClosedFormInstancesByUserId($user_id)
+    {
+        return Self::join('form_data', 'form_data.id', '=', 'form_user_form_instance.form_instance_id')
+                    ->join('form_instance_status', 'form_data.id', '=', 'form_instance_status.form_data_id')
+                    ->where('form_user_form_instance.user_id', $user_id)
+                    ->where('form_instance_status.status_code_id', 5)
+                    ->select('form_data.*')
+                    ->orderBy('form_data.created_at', 'desc')
+                    ->get()
+                    ->each(function($formInstance) {
+                        $formInstance->form_data = unserialize($formInstance->form_data);
+                        $formInstance->description = $formInstance->form_data['department'] . " > " . $formInstance->form_data['category'] . " > " . $formInstance->form_data['subcategory']. " > " . $formInstance->form_data['gender'] . " > " . $formInstance->form_data['requirement'];
+                        $formInstance->prettySubmitted = Utility::prettifyDateWithTime($formInstance->created_at);
+                        $formInstance->assignedToUser = FormInstanceUserMap::getUserByFormInstanceId($formInstance->id);
+                        $formInstance->assignedToGroup = FormInstanceGroupMap::getGroupByFormInstanceId($formInstance->id);
+                        $formInstance->lastFormAction = FormActivityLog::getLastFormInstanceAction($formInstance->id);
+
+                    });
+    }    
 
     public static function getUserByFormInstanceId($formInstanceId)
     {

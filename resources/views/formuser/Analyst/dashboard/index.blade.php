@@ -56,7 +56,8 @@
 			                            
 			                            <li  @if ($loop->first) class="active" @endif><a data-toggle="tab" href="#tab-{{$loop->iteration}}" aria-expanded="false">{{$formCategory}}</a></li>
 
-			                            @endforeach
+										@endforeach
+										
 			                        </ul>
 			                        <div class="tab-content" >
 			                        	@foreach($forms as $formCategory => $formInstances)
@@ -195,12 +196,25 @@
 				    { "visible": false },null,null,null,null,null,null
 				  ],
 
+				pageLength: 25,
+				responsive: true,
+				fixedHeader: true,
+				stateSave: true
+			}
+		);	
+
+		$("#table-3").dataTable(
+        	{
+    			"columns": [
+				    { "visible": false },null,null,null,null,null,null
+				  ],
+
 				pageLength: 50,
 				responsive: true,
 				fixedHeader: true,
 				stateSave: true
 			}
-		);		
+		);				
 		$.ajaxSetup({
 	        headers: {
 	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

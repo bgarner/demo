@@ -15,7 +15,8 @@ class DashboardAdminController extends Controller
 {
     public function index()
     {
-    	$forms = Analytics::getFormsForDashboard();
+        $forms = Analytics::getFormsForDashboard();
+        
     	$analytics = Analytics::getAnalyticsForFormUser();
 
     	$role = preg_replace("/\s+/", "", \Auth::user()->role);
