@@ -302,6 +302,7 @@ return [
         'App\Http\Controllers\Tools\CustomStoreGroupAdminController'            => 'Tools',
         'App\Http\Controllers\Tools\DirtyNodesAdminController'                  => 'Tools',
         'App\Http\Controllers\StoreComponent\StoreComponentAdminController'     => 'Components',
+        'App\Http\Controllers\StoreComponent\SubComponentAdminController'     => 'Components',
         'App\Http\Controllers\Flyer\FlyerAdminController'                       => 'Flyer',
         'App\Http\Controllers\Flyer\FlyerItemAdminController'                   => 'Flyer',
         'App\Http\Controllers\Utilities\BatchFileUploadController'              => 'Batch File Upload',

@@ -27,6 +27,12 @@ class StoreComponent extends Model
                     		$component->state = $config->state;
 
                     	}
+
+                        $subcomponents = StoreSubComponent::getSubcomponentsByParentId($component->id);
+
+                        if(count($subcomponents) > 0){
+                            $component->subcomponents = $subcomponents;
+                        }
                         
                 	});
     

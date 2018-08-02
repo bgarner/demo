@@ -51,14 +51,14 @@ class StoreSubComponentsTableSeeder extends Seeder
 		],
 		[
 			'id' => 7, 
-			'parent_component_id' => 3, 
+			'parent_component_id' => 14, 
 			'subcomponent_name' => 'Calendar', 
 			'subcomponent_label'	 => 'Calendar', 	 
 			'banner_id'  => 2
 		],
 		[
 			'id' => 8, 
-			'parent_component_id' => 3, 
+			'parent_component_id' => 14, 
 			'subcomponent_name' => 'Product Launch', 
 			'subcomponent_label'	 => 'Product Launch', 	 
 			'banner_id'  => 2
@@ -66,28 +66,28 @@ class StoreSubComponentsTableSeeder extends Seeder
 		
 		[
 			'id' => 9, 
-			'parent_component_id' => 11, 
+			'parent_component_id' => 22, 
 			'subcomponent_name' => 'DOM Flash Sale Tracker', 
 			'subcomponent_label'  => 'DOM Flash Sale Tracker', 		 
 			'banner_id'  => 2
 		],
 		[
 			'id' => 10, 
-			'parent_component_id' => 11, 
+			'parent_component_id' => 22, 
 			'subcomponent_name' => 'Dirty Nodes', 
 			'subcomponent_label'  => 'Dirty Nodes', 		 
 			'banner_id'  => 2
 		],
 		[
 			'id' => 11, 
-			'parent_component_id' => 11, 
+			'parent_component_id' => 22, 
 			'subcomponent_name' => 'Aged Inventory', 
 			'subcomponent_label'  => 'Aged Inventory', 		 
 			'banner_id'  => 2
 		],
 		[
 			'id' => 12, 
-			'parent_component_id' => 11, 
+			'parent_component_id' => 22, 
 			'subcomponent_name' => 'Product Deliveries', 
 			'subcomponent_label'  => 'Product Deliveries', 		 
 			'banner_id'  => 2

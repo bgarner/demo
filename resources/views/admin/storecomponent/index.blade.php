@@ -34,23 +34,25 @@
 
 	                        <div class="table-responsive">
 
-								<table class="table datatable">
+								<table class="table datatable componentTable">
 									<thead>
 										<tr>
 											<td>Id</td>
 											<td>Component Name</td>
 											<td>Component Label</td>
 											<td>Action</td>
+											<td></td>
 										</tr>
 									</thead>
 									<tbody>
 									@foreach($store_components as $store_component)
-									<tr>
+									<tr @if(isset($store_component->subcomponents)) class="details-control" @endif>
 										<td >{{ $store_component->id }}</td>
 										<td>{{ $store_component->component_name }}</td>
 										<td>{{ $store_component->component_label }}</td>
 
 										<td>
+											
 											<a  href="#"
 												@if($store_component->state == 'on')
 												class="btn btn-primary btn-xs component-edit"
@@ -70,7 +72,15 @@
 												@endif
 
 											</a>
+											@if(isset($store_component->subcomponents))
+											<a class="btn btn-primary btn-xs ">
+												<span><i class="fa fa-caret-down"></i> </span>
+											</a>
+											@endif
 
+										</td>
+										<td>
+											{{$store_component->subcomponents}}
 										</td>
 									</tr>
 									@endforeach
@@ -97,23 +107,6 @@
 	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 	        }
 		});
-
-        $(".datatable").dataTable(
-        	{
-
-				"columns": [
-				    { "visible": false },
-				    { "width": "45%" },
-				    null,
-				    { "width" : "10%" , "sortable" : false}
-				  ],
-				"bPaginate": false,
-                "paging":   false,
-                "ordering": false,
-                "info":     false,
-                "searching": false
-			}
-		);
 
 	</script>
 
