@@ -1,6 +1,10 @@
 @extends('manager.layouts.master')
 @section('title', 'Communications' )
 
+@section('style')
+    
+@endsection
+
 @section('content')
 
 
@@ -62,13 +66,17 @@
                         <?php $tr_class="" ?>
 
                         @if($communication->archived)
-                            <?php $tr_class .= " archived"; ?>
+                            <?php $tr_class .= " manager-archived"; ?>
                         @endif
 
 
                         <tr class= "{{ $tr_class }} comm-row" >
                             <td class="check-mail hidden-sm hidden-xs">
-                                <i class="fa fa-envelope-o"></i>
+                                @if($communication->archived)
+                                <i class="fa fa-archive"></i>
+                                @else
+                                <i class="fa fa-envelope"></i>
+                                @endif
                             </td>
 
                             <td  class="mail-subject communication-name col-lg-4 col-md-4 col-sm-4 col-xs-5">
@@ -90,8 +98,13 @@
                             <td></td>
                             <td colspan="3">
                                 @if( isset($communication->stores) )
+                                
                                 @foreach($communication->stores as $store)
-                                    <span class="badge">{{$store}}</span>
+                                    @if(in_array($store, $communication->opened_by))
+                                    <span class="badge active-store">{{$store}}</span>
+                                    @else
+                                    <span class="badge ">{{$store}}</span>
+                                    @endif
                                 @endforeach
                                 
                                 @elseif( $communication->all_stores == 1 )

@@ -22,13 +22,17 @@ class ManagerDashboardController extends Controller
     public function index()
     {
 
-    	$user_id = \Auth::user()->id;
-        $storeList = StoreInfo::getStoreListingByManagerId($user_id);
-        $stores = array_column($storeList, 'store_number');
-        $storeGroups = CustomStoreGroup::getStoreGroupsForManager($stores);
-        $banners = UserBanner::getAllBanners()->pluck( 'id');
+        $user_id        = \Auth::user()->id;
+        $storesByBanner = StoreInfo::getStoreListingByManagerId($user_id)->groupBy('banner_id');
+        foreach ($storesByBanner as $key => $value) {
+            $storesByBanner[$key] = $value->flatten()->pluck('store_number')->toArray();
+        }
+        $stores         = $storesByBanner->flatten()->toArray();
 
-    	$features = Feature::getActiveFeatureForStoreList($stores, $banners, $storeGroups);
+        
+        $storeGroups    = CustomStoreGroup::getStoreGroupsForManager($stores);
+
+        $features       = Feature::getActiveFeatureForStoreList($storesByBanner, $storeGroups);
     	
         return view('manager.dashboard.index')->with('features', $features)->with('stores', $stores);
 

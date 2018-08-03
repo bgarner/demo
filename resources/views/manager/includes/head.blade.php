@@ -35,6 +35,13 @@
         }
 
     </style>
+    <style>
+    .active-store{
+        background-color: green;
+        border-color: green;
+        color: #ffffff;
+    }
+    </style>
     <script>
 
     </script>

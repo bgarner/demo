@@ -39,7 +39,11 @@
                                 <td colspan="3">
                                     @if( isset($notice->stores) )
                                     @foreach($notice->stores as $store)
-                                        <span class="badge">{{$store}}</span>
+                                        @if(in_array($store, $notice->opened_by))
+                                            <span class="badge active-store">{{$store}}</span>
+                                        @else
+                                            <span class="badge ">{{$store}}</span>
+                                        @endif
                                     @endforeach
                                     
                                     @elseif( $notice->all_stores == 1 )

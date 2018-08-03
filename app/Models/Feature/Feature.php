@@ -462,14 +462,15 @@ class Feature extends Model
 
     }
 
-    public static function getActiveFeatureForStoreList($storeNumbersArray, $banners, $storeGroups)
+    public static function getActiveFeatureForStoreList($storesByBanner, $storeGroups)
     {
         $now = Carbon::now()->toDatetimeString();
-        // $banner_id = StoreInfo::getStoreInfoByStoreId($storeNumber)->banner_id;
+        $storeNumbersArray = $storesByBanner->flatten()->toArray();
+        
 
         $allStoreFeatures = Feature::join('feature_banner', 'feature_banner.feature_id', '=', 'features.id')
                                     ->where('all_stores', 1)
-                                    ->whereIn('feature_banner.banner_id', $banners)
+                                    ->whereIn('feature_banner.banner_id', $storesByBanner->keys())
                                     ->where('start', '<=', $now)
                                     ->where(function($query) use ($now) {
                                         $query->where('features.end', '>=', $now)

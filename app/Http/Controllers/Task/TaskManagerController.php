@@ -26,21 +26,24 @@ class TaskManagerController extends Controller
         $this->user_id = \Auth::user()->id;
         
         $storeInfo = StoreInfo::getStoreListingByManagerId($this->user_id);
-        $this->stores = array_column($storeInfo, 'store_number');
-
-        $this->storeGroups = CustomStoreGroup::getStoreGroupsForManager($this->stores);
-
-        $this->banners = UserBanner::getAllBanners()->pluck('id')->toArray();
         
-        $tasks = Task::getActiveTasksForStoreList($this->stores, $this->banners, $this->storeGroups);
-
-        $banner = Banner::whereIn("id", $this->banners)->get()->pluck("name", "id");
-
+        $storesByBanner = $storeInfo->groupBy('banner_id');
+        $banner = Banner::whereIn("id", $storesByBanner->keys())->get()->pluck("name", "id");
+        
         $storeList = [];
         foreach ($storeInfo as $store) {
-             
             $storeList[$store->store_number] = $store->store_id . " " . $store->name . " (" . $banner[$store->banner_id] .")" ;
         }
+
+        
+        foreach ($storesByBanner as $key => $value) {
+            $storesByBanner[$key] = $value->flatten()->pluck('store_number')->toArray();
+        }
+
+        $storeGroups = CustomStoreGroup::getStoreGroupsForManager($storesByBanner->flatten()->toArray());
+        
+        $tasks = Task::getActiveTasksForStoreList($storesByBanner, $storeGroups);
+        
 
         // return $tasks;
         return view('manager.task.index')->with('tasks', $tasks)

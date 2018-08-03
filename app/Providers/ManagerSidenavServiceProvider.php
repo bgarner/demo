@@ -21,14 +21,14 @@ class ManagerSidenavServiceProvider extends ServiceProvider
 
         $user_id = \Auth::user()->id;
         
-        $storeList = StoreInfo::getStoreListingByManagerId($user_id);
-        $stores = array_column($storeList, 'store_number');
-        
-        $storeGroups = CustomStoreGroup::getStoreGroupsForManager($stores);
+        $storesByBanner = StoreInfo::getStoreListingByManagerId($user_id)->groupBy('banner_id');
+        foreach ($storesByBanner as $key => $value) {
+            $storesByBanner[$key] = $value->flatten()->pluck('store_number')->toArray();
+        }
 
-        $banners = UserBanner::getAllBanners()->pluck( 'id');           
+        $storeGroups = CustomStoreGroup::getStoreGroupsForManager($storesByBanner->flatten()->toArray());
 
-        $urgentNoticeCount = count(UrgentNotice::getActiveUrgentNoticesForStoreList($stores, $banners, $storeGroups));
+        $urgentNoticeCount = count(UrgentNotice::getActiveUrgentNoticesForStoreList($storesByBanner, $storeGroups));
         
         $view->with('urgentNoticeCount', $urgentNoticeCount);
         });

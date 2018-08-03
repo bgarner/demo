@@ -59,14 +59,14 @@ class FeatureCommunication extends Model
         return $mergedCommunications;
     }
 
-    public static function getFeatureCommunicationsForStoreList($storeList,  $banners, $storeGroups, $feature_id)
+    public static function getFeatureCommunicationsForStoreList($storesByBanner, $storeGroups, $feature_id)
     {
         $featureCommunicationTypes = FeatureCommunicationTypes::getCommunicationTypeId($feature_id);
 
         $mergedCommunications = new Collection();
 
         foreach ($featureCommunicationTypes as $type) {
-            $communications  = Communication::getCommunicationsByTypeForStoreList($storeList, $banners, $storeGroups, $type);
+            $communications  = Communication::getCommunicationsByTypeForStoreList($storesByBanner, $storeGroups, $type);
             $mergedCommunications = $communications->merge($mergedCommunications);
         }
 

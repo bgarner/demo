@@ -19,6 +19,7 @@ use App\Models\Auth\User\UserBanner;
 use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\Tools\CustomStoreGroup;
 use App\Models\StoreApi\Banner;
+use App\Models\Analytics\AnalyticsCollection;
 
 class Communication extends Model
 {
@@ -527,7 +528,7 @@ class Communication extends Model
 		return $count;
 	}
 
-	public static function getCommunicationsForStoreList($storeNumbersArray, $banners, $storeGroups, $request)
+	public static function getCommunicationsForStoreList($storesByBanner, $storeGroups, $request)
 	{
 		$now = Carbon::now()->toDatetimeString();
 		$archives = false;
@@ -535,6 +536,7 @@ class Communication extends Model
 			$archives = true;
 		}
 		
+		$storeNumbersArray = $storesByBanner->flatten()->toArray();
 
 		$targetedComm = Communication::join('communications_target', 'communications_target.communication_id' ,  '=', 'communications.id')
 								   ->whereIn('communications_target.store_id', $storeNumbersArray)
@@ -556,7 +558,7 @@ class Communication extends Model
 		
 		$allStoreComm = Communication::join('communication_banner', 'communication_banner.communication_id', '=', 'communications.id')
 									->where('all_stores', '=', 1)
-                                    ->whereIn('communication_banner.banner_id', $banners)
+                                    ->whereIn('communication_banner.banner_id', $storesByBanner->keys())
                                     ->when( $archives, function ($query) use ( $archives, $now) {
 					                    return $query->where('communications.send_at' , '<=', $now);
 
@@ -566,8 +568,9 @@ class Communication extends Model
 					                })
                                     ->select('communications.*', 'communication_banner.banner_id')
                                     ->get()
-                                    ->each(function($comm){
+                                    ->each(function($comm) use( $storesByBanner ) {
                                     	$comm->banner = Banner::find($comm->banner_id)->name;
+                                    	$comm->stores = $storesByBanner[$comm->banner_id];
                                     });
 
         $storeGroupCommunications = Communication::join('communication_store_group', 'communication_store_group.communication_id', '=', 'communications.id')
@@ -592,7 +595,7 @@ class Communication extends Model
 	                                                }
 	                                                $group_stores = array_unique( $group_stores);
 
-	                                                $comm->stores = array_intersect($storeNumbersArray, $group_stores);
+	                                                $comm->stores = array_intersect($storeNumbersArray , $group_stores);
 	                                			});
 
 
@@ -602,13 +605,16 @@ class Communication extends Model
 
         $communications->sortByDesc('send_at');
         $communications = Communication::postProcessCommunications($communications);
+        foreach ($communications as $c) {
+        	$c->opened_by = AnalyticsCollection::getAnalyticsByResource(1, $c->id);
+        }
         return ($communications);
 	}
 
-	public static function getCommunicationsByTypeForStoreList($storeNumbersArray, $banners, $storeGroups, $type)
+	public static function getCommunicationsByTypeForStoreList($storesByBanner, $storeGroups, $type)
 	{
 		$now = Carbon::now()->toDatetimeString();
-		
+		$storeNumbersArray = $storesByBanner->flatten()->toArray();
 
 		$targetedComm = Communication::join('communications_target', 'communications_target.communication_id' ,  '=', 'communications.id')
 								   ->whereIn('communications_target.store_id', $storeNumbersArray)
@@ -626,7 +632,7 @@ class Communication extends Model
 		
 		$allStoreComm = Communication::join('communication_banner', 'communication_banner.communication_id', '=', 'communications.id')
 									->where('all_stores', '=', 1)
-                                    ->whereIn('communication_banner.banner_id', $banners)
+                                    ->whereIn('communication_banner.banner_id', $storesByBanner->keys())
                                     ->where('communication_type_id', $type)
 					                ->where('communications.send_at' , '<=', $now)
 									->where('communications.archive_at', '>=', $now)

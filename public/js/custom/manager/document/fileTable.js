@@ -67,7 +67,7 @@ var fileFill = function(data, banner_id)
 								' <td><span class="pull-right">'+ i.prettyDateStart +'</span></td>'+
 								' <td></td> </tr>'
 				if(i.archived) {
-					var row = '<tr class="archived archived-blue"> <td class="mail-subject">'+ i.link_with_icon + '</td>'+
+					var row = '<tr class="manager-archived archived-blue"> <td class="mail-subject">'+ i.link_with_icon + '</td>'+
 								' <td><span class="pull-right">'+ i.prettyDateStart +'</span></td>'+
 								' <td></td> </tr>'	
 				}
