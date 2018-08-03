@@ -11,9 +11,17 @@
 
         <?php 
         $component_name = preg_replace('/\s+/', '', $component['component_name']);
-        $partialName = 'site.includes.sidenav-partials.' . $component_name; 
-         ?>
-        @include($partialName, [ 'component_label' => $component['component_label']])
+        $partialName = 'site.includes.sidenav-partials.' . $component_name;
+        $currentSubcomponents = [];
+        if(isset($subcomponents[$component['id']])){
+            $currentSubcomponents =  $subcomponents[$component['id']]; 
+        }
+
+        ?>
+        @include($partialName, [ 
+                        'component_label' => $component['component_label'], 
+                        'subcomponents' => $currentSubcomponents
+                        ])
         
     @endforeach
 

@@ -8,6 +8,7 @@ use App\Models\Communication\Communication;
 use App\Models\UrgentNotice\UrgentNotice;
 use App\Models\Task\Task;
 use App\Models\StoreComponent\StoreComponent;
+use App\Models\StoreComponent\StoreSubComponent;
 use App\Models\Form\Form;
 use App\Models\Form\FormTarget;
 
@@ -39,7 +40,8 @@ class StoreSidenavCreator
         $this->urgentNoticeCount  = UrgentNotice::getUrgentNoticeCount($this->storeNumber);
         $this->allIncompleteTasks = Task::getAllIncompleteTasksByStoreId($this->storeNumber)->count();
         $this->allCompletedTasks  = Task::getAllCompletedTasksByStoreId($this->storeNumber)->count();
-        $this->components         = StoreComponent::getComponents($this->storeNumber);        
+        $this->components         = StoreComponent::getComponents($this->storeNumber);
+        $this->subcomponents      = StoreSubComponent::getComponents($this->storeNumber);
     }
     /**
      * Bind data to the view.
@@ -55,6 +57,7 @@ class StoreSidenavCreator
             ->with('urgentNoticeCount', $this->urgentNoticeCount)
             ->with('incompleteTaskCount', $this->allIncompleteTasks)
             ->with('completedTaskCount', $this->allCompletedTasks)
-            ->with('components', $this->components);
+            ->with('components', $this->components)
+            ->with('subcomponents', $this->subcomponents);
     }
 }

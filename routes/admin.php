@@ -158,6 +158,7 @@ Route::resource('/admin/storegroup', 'Tools\CustomStoreGroupAdminController');
 
 //Store Components
 Route::resource('/admin/storecomponent', 'StoreComponent\StoreComponentAdminController');
+Route::patch('/admin/subcomponent/{id}', 'StoreComponent\SubComponentAdminController@update');
 
 //Dirty Nodes
 Route::get('/admin/dirtynodes', 'Tools\DirtyNodesAdminController@index');
