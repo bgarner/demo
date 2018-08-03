@@ -30,14 +30,16 @@ class CommunicationManagerController extends Controller
     
         $this->user_id = \Auth::user()->id;
         
-        $storeList = StoreInfo::getStoreListingByManagerId($this->user_id);
-        $this->stores = array_column($storeList, 'store_number');
-        $this->storeGroups = CustomStoreGroup::getStoreGroupsForManager($this->stores);
 
-        $this->banners = UserBanner::getAllBanners()->pluck( 'id');           
+        $storesByBanner = StoreInfo::getStoreListingByManagerId($this->user_id)->groupBy('banner_id');
+        foreach ($storesByBanner as $key => $value) {
+            $storesByBanner[$key] = $value->flatten()->pluck('store_number')->toArray();
+        }
 
+        $storeGroups = CustomStoreGroup::getStoreGroupsForManager($storesByBanner->flatten()->toArray());
+        
         //$allCategoryCommunications are active or active+archived comm for storelist
-        $allCategoryCommunications = Communication::getCommunicationsForStoreList($this->stores, $this->banners, $this->storeGroups, $request); 
+        $allCategoryCommunications = Communication::getCommunicationsForStoreList($storesByBanner, $storeGroups, $request); 
 
         //filter communication if type is set
         $communications = Communication::filterAllCommunicationByCategory($allCategoryCommunications, $request); 
@@ -60,14 +62,15 @@ class CommunicationManagerController extends Controller
     {
         $this->user_id = \Auth::user()->id;
         
-        $storeList = StoreInfo::getStoreListingByManagerId($this->user_id);
-        $this->stores = array_column($storeList, 'store_number');
-        $this->storeGroups = CustomStoreGroup::getStoreGroupsForManager($this->stores);
+        $storesByBanner = StoreInfo::getStoreListingByManagerId($this->user_id)->groupBy('banner_id');
+        foreach ($storesByBanner as $key => $value) {
+            $storesByBanner[$key] = $value->flatten()->pluck('store_number')->toArray();
+        }
 
-        $this->banners = UserBanner::getAllBanners()->pluck( 'id');
+        $storeGroups = CustomStoreGroup::getStoreGroupsForManager($storesByBanner->flatten()->toArray());
 
         //$allCategoryCommunications are active or active+archived comm for storelist
-        $allCategoryCommunications = Communication::getCommunicationsForStoreList($this->stores, $this->banners, $this->storeGroups, $request); 
+        $allCategoryCommunications = Communication::getCommunicationsForStoreList($storesByBanner, $storeGroups, $request); 
         
         $communicationTypes = CommunicationType::getCommunicationTypesByStorelist($allCategoryCommunications);
 

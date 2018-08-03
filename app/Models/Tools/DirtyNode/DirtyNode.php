@@ -49,4 +49,40 @@ class DirtyNode extends Model
         DirtyNodeArchive::insert($node->toArray());
 
     }
+
+    public static function getTotalDirtyNodesOutstanding($stores)
+    {
+        
+        $outstandingDN =  DirtyNode::whereIn('store', $stores)
+                                 ->where('updated_at', '=', NULL)
+                                 ->select( \DB::raw('store, count(*) as total'))
+                                 ->groupBy('store')
+                                 ->get()
+                                 ->pluck('total', 'store')
+                                 ->toArray();
+
+        return ($outstandingDN);
+    }
+
+    public static function getOldestDirtyNode($stores)
+    {   
+        $oldest = [];
+        foreach ($stores as $store ) {
+            $oldestByStore = DirtyNode::where('store', $store)
+                            ->orderBy('starttime','desc')
+                            ->first();
+            $oldest[$store] = NULL;
+            if($oldestByStore){
+
+                //format the dirty nodes date to match with portal's standard
+                $formattedDate = Carbon::createFromFormat('m-d-Y H:i:s', $oldestByStore->starttime)->toDatetimeString();
+                $oldest[$store] = Utility::prettifyDateWithTime($formattedDate);
+            }
+                            
+        }
+        
+
+        return ($oldest);
+    }
+
 }

@@ -27,20 +27,21 @@ class CalendarManagerController extends Controller
 
 	    $this->user_id = \Auth::user()->id;
 	    
-    	$storeList = StoreInfo::getStoreListingByManagerId($this->user_id);
-        $this->stores = array_column($storeList, 'store_number');
-        $this->storeGroups = CustomStoreGroup::getStoreGroupsForManager($this->stores);
-        
-        $this->banners = UserBanner::getAllBanners()->pluck( 'id');
+    	$storesByBanner = StoreInfo::getStoreListingByManagerId($this->user_id)->groupBy('banner_id');
+        foreach ($storesByBanner as $key => $value) {
+            $storesByBanner[$key] = $value->flatten()->pluck('store_number')->toArray();
+        }
+
+        $storeGroups = CustomStoreGroup::getStoreGroupsForManager($storesByBanner->flatten()->toArray());
 
         $today = date("Y") . "-" . date("m");
         $today = (string) $today;
 
         //for Calendar View
-    	$events =  Event::getActiveEventsAndProductLaunchForCalendarViewByStorelist($this->stores, $this->banners, $this->storeGroups);
+    	$events =  Event::getActiveEventsAndProductLaunchForCalendarViewByStorelist($storesByBanner, $storeGroups);
         
         //for List View
-        $eventsList = Event::getListofEventsByStorelistAndMonth($this->stores, $this->banners, $this->storeGroups, $today);
+        $eventsList = Event::getListofEventsByStorelistAndMonth($storesByBanner, $storeGroups, $today);
 
         return view('manager.calendar.index')->with('events', $events)
                                             ->with('today', $today)
@@ -51,12 +52,14 @@ class CalendarManagerController extends Controller
     {
         $this->user_id = \Auth::user()->id;
         
-        $storeList = StoreInfo::getStoreListingByManagerId($this->user_id);
-        $this->stores = array_column($storeList, 'store_number');
-        $this->storeGroups = CustomStoreGroup::getStoreGroupsForManager($this->stores);
-        
-        $this->banners = UserBanner::getAllBanners()->pluck( 'id');
-        $eventsList = Event::getListofEventsByStoreListAndMonth($this->stores, $this->banners, $this->storeGroups, $yearMonth);
+        $storesByBanner = StoreInfo::getStoreListingByManagerId($this->user_id)->groupBy('banner_id');
+        foreach ($storesByBanner as $key => $value) {
+            $storesByBanner[$key] = $value->flatten()->pluck('store_number')->toArray();
+        }
+
+        $storeGroups = CustomStoreGroup::getStoreGroupsForManager($storesByBanner->flatten()->toArray());
+
+        $eventsList = Event::getListofEventsByStoreListAndMonth($storesByBanner, $storeGroups, $yearMonth);
         return view('manager.calendar.event-list-partial')->with('eventsList', $eventsList);
     }
 }

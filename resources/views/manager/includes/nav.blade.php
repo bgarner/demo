@@ -113,5 +113,32 @@
             <a href="/manager/task"><i class="fa fa-tasks"></i> <span class="nav-label">Tasks</span></a>
              
         </li>
+    
+
+        @if (Request::is('manager/form/*') || Request::is('manager/form') || Request::is('manager/formlist'))
+        <li class="active">
+        @else
+        <li>
+        @endif
+        <a href="/manager/formlist"><i class="fa fa-paper-plane-o"></i> <span class="nav-label">Forms</span></a>
+        </li>
+
+
+
+        <!-- Tools -->
+        @if (Request::segment(2) == 'tools')
+        <li class="active">
+        @else
+        <li>
+        @endif
+            <a href="#"><i class="fa fa-wrench" aria-hidden="true"></i> <span class="nav-label">Tools</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse" style="height: 0px;">
+                    
+                    <li><a href="/manager/tools/dirtynodes">Dirty Nodes</a></li>
+                    
+
+                </ul>
+        </li>
+
 
 </ul>

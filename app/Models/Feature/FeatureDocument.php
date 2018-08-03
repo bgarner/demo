@@ -66,10 +66,11 @@ class FeatureDocument extends Model
 
 
 
-    public static function getFeaturedDocumentsByStoreList($stores, $banners, $storeGroups, $feature_id)
+    public static function getFeaturedDocumentsByStoreList($storesByBanner, $storeGroups, $feature_id)
     {
 
         $now = Carbon::now()->toDatetimeString();
+        $storeNumbersArray = $storesByBanner->flatten()->toArray();
 
         $targetedFeatureDocuments = FeatureDocument::join('documents', 'documents.id', '=',     'feature_document.document_id')
                                 ->join('document_target', 'document_target.document_id', '=', 'documents.id')
@@ -80,13 +81,13 @@ class FeatureDocument extends Model
                                         ->orWhere('documents.end', '=', '0000-00-00 00:00:00' )
                                         ->orWhere('documents.end', '=', NULL );
                                 })
-                                ->whereIn('document_target.store_id', $stores)
+                                ->whereIn('document_target.store_id', $storeNumbersArray)
                                 ->select('documents.*')
                                 ->get();
 
         $allStoreFeatureDocuments = FeatureDocument::join('documents', 'documents.id', '=',     'feature_document.document_id')
                                     ->where('documents.all_stores', 1)
-                                    ->whereIn('documents.banner_id', $banners)
+                                    ->whereIn('documents.banner_id', $storesByBanner->keys())
                                     ->where('feature_id', $feature_id)
                                     ->where('documents.start', '<=', $now )
                                     ->where(function($query) use ($now) {

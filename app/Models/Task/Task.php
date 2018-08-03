@@ -266,10 +266,12 @@ class Task extends Model
 
 	}
 
-	public static function getActiveTasksForStoreList($stores, $banners, $storeGroups)
+	public static function getActiveTasksForStoreList($storesByBanner, $storeGroups)
 	{
 		$now = Carbon::now();
-		
+		$stores = $storesByBanner->flatten()->toArray();
+		$banners = $storesByBanner->keys();
+
 		$allStoreTasks = Task::join('task_banner', 'task_banner.task_id', '=', 'tasks.id')
 								->join('task_creator', 'task_creator.task_id', '=', 'tasks.id')
                                 ->where('all_stores', 1)
@@ -277,14 +279,12 @@ class Task extends Model
                                 ->select(\DB::raw('tasks.*, GROUP_CONCAT(DISTINCT task_banner.banner_id) as banners, task_creator.creator_id'))
                                 ->groupBy('tasks.id')
                                 ->get()
-                                ->each(function($item)use ($stores, $banners){
+                                ->each(function($item)use ($storesByBanner){
                                 	$item->banners = explode(',', $item->banners);
                                 	$item->stores = [];
                                 	foreach ($item->banners as $banner) {
-                                		$item->stores = array_merge($item->stores, array_column(StoreInfo::getStoresInfo($banner), 'store_number'));
+                                		$item->stores = array_merge($item->stores, $storesByBanner[$banner]);
                                 	}
-
-                                	$item->stores = array_intersect($item->stores, $stores);
                                 	
                                 });
         
@@ -326,6 +326,14 @@ class Task extends Model
 			if($task->due_date < $now && $task->percentage_done == 100){
 				$allTasks->forget($key);	
 			}
+			if(isset($task->banners)){
+
+				foreach ($task->banners as $banner) {
+					$task->stores = array_merge($task->stores, $storesByBanner[$banner]);
+				}	
+			}
+			$task->stores = array_unique($task->stores);
+			
         }
                                            
 

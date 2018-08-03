@@ -13,5 +13,11 @@ class ResourceTypes extends Model
     	return Self::pluck( 'resource_name', 'id')->prepend('Select one' , '');
     }
 
+    public static function getResourceTypeIdByResourceName($resource_name)
+    {
+    	$resourceTypeId = ResourceTypes::where('resource_name', $this->resource_type)->first()->id;
+    	dd($resourceTypeId);
+    }
+
     
 }

@@ -29,14 +29,15 @@ class UrgentNoticeManagerController extends Controller
 
 	    $this->user_id = \Auth::user()->id;
 	    
-    	$storeList = StoreInfo::getStoreListingByManagerId($this->user_id);
-        $this->stores = array_column($storeList, 'store_number');
-        $this->storeGroups = CustomStoreGroup::getStoreGroupsForManager($this->stores);
+    	$storesByBanner = StoreInfo::getStoreListingByManagerId($this->user_id)->groupBy('banner_id');
+        foreach ($storesByBanner as $key => $value) {
+            $storesByBanner[$key] = $value->flatten()->pluck('store_number')->toArray();
+        }
 
-        $this->banners = UserBanner::getAllBanners()->pluck( 'id');
+        $storeGroups = CustomStoreGroup::getStoreGroupsForManager($storesByBanner->flatten()->toArray());
 
-    	$urgentNotices = UrgentNotice::getActiveUrgentNoticesForStoreList($this->stores, $this->banners, $this->storeGroups);
-
+        $urgentNotices = UrgentNotice::getActiveUrgentNoticesForStoreList($storesByBanner, $storeGroups);
+        
         return view('manager.urgentnotice.index')->with('urgentNotices', $urgentNotices);
 
     } 

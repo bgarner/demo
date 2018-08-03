@@ -197,7 +197,7 @@
 
                                         <?php $icon_class="fa fa-envelope-o" ?>
                                         @if($communication->archived)
-                                            <?php $tr_class .= " archived"; ?>
+                                            <?php $tr_class .= " manager-archived"; ?>
                                         @endif
 
                                         <tr class= "{{ $tr_class }}" >

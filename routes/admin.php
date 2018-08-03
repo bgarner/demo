@@ -158,7 +158,17 @@ Route::resource('/admin/storegroup', 'Tools\CustomStoreGroupAdminController');
 
 //Store Components
 Route::resource('/admin/storecomponent', 'StoreComponent\StoreComponentAdminController');
+Route::patch('/admin/subcomponent/{id}', 'StoreComponent\SubComponentAdminController@update');
 
 //Dirty Nodes
 Route::get('/admin/dirtynodes', 'Tools\DirtyNodesAdminController@index');
 Route::get('/admin/dirtynodes/report', 'Tools\DirtyNodesAdminController@show');
+
+
+//Store Structure
+Route::resource('/admin/store', 'StoreApi\StoreAdminController');
+Route::resource('/admin/district', 'StoreApi\DistrictAdminController');
+Route::resource('/admin/region', 'StoreApi\RegionAdminController');
+Route::resource('/admin/districtstore', 'StoreApi\DistrictStoreAdminController');
+Route::resource('/admin/regiondistrict', 'StoreApi\RegionDistrictAdminController');
+Route::resource('/admin/storestructure', 'StoreApi\StoreStructureAdminController');

@@ -52,4 +52,17 @@ class UserResource extends Model
 
 
     }
+
+    public static function getUserByResourceId($resource_id)
+    {
+        $user = UserResource::join('users', 'users.id', '=', 'user_resource.user_id')
+                            ->where('resource_id', $resource_id)
+                            ->select('users.*')
+                            ->get();
+
+        if(!$user){
+            return [];
+        }
+        return $user->first();
+    }
 }

@@ -17,17 +17,17 @@ class ManagerDashboard extends Model
     
     public static function compileDashboardDataForManager($user_id)
     {
-        $storeList = StoreInfo::getStoreListingByManagerId($user_id);
-        $stores = array_column($storeList, 'store_number');
+        
+        $storesByBanner = StoreInfo::getStoreListingByManagerId($user_id)->groupBy('banner_id');
+        foreach ($storesByBanner as $key => $value) {
+            $storesByBanner[$key] = $value->flatten()->pluck('store_number')->toArray();
+        }
 
-        $storeGroups = CustomStoreGroup::getStoreGroupsForManager($stores);
-
-        $banners = UserBanner::getAllBanners()->pluck( 'id');
+        $storeGroups = CustomStoreGroup::getStoreGroupsForManager($storesByBanner->flatten()->toArray());
 
 
         $compiledData = [];
-        
-        $compiledData["urgentNotices"] = UrgentNotice::getActiveUrgentNoticesForStoreList($stores, $banners, $storeGroups); 
+        $compiledData["urgentNotices"] = UrgentNotice::getActiveUrgentNoticesForStoreList($storesByBanner, $storeGroups); 
 
         return $compiledData;
     }

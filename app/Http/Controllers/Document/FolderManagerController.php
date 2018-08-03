@@ -15,8 +15,8 @@ class FolderManagerController extends Controller
     {
 
     	$this->user_id = \Auth::user()->id;
-        $stores = StoreInfo::getStoreListingByManagerId($this->user_id);
-        $storeList = array_column($stores, 'store_number');
+        $storesByBanner = StoreInfo::getStoreListingByManagerId($this->user_id)->groupBy('banner_id');
+        $storeList = $storesByBanner->flatten()->toArray();
 
         $documents = Document::getDocumentsForManager($folder_id, $storeList);
 

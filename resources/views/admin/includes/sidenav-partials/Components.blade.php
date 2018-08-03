@@ -1,4 +1,4 @@
-@if ( Request::is('admin') || Request::is('admin/storecomponents'))
+@if ( Request::is('admin/storecomponent'))
 <li class="active">
 @else
 <li>

@@ -28,14 +28,14 @@ class AlertManagerController extends Controller
 
 	    $this->user_id = \Auth::user()->id;
 	    
-    	$storeList = StoreInfo::getStoreListingByManagerId($this->user_id);
-        $this->stores = array_column($storeList, 'store_number');
-        $this->storeGroups = CustomStoreGroup::getStoreGroupsForManager($this->stores);
-
-        $this->banners = UserBanner::getAllBanners()->pluck( 'id');
+    	$storesByBanner = StoreInfo::getStoreListingByManagerId($this->user_id)->groupBy('banner_id');
+        foreach ($storesByBanner as $key => $value) {
+            $storesByBanner[$key] = $value->flatten()->pluck('store_number')->toArray();
+        }
+        $storeGroups = CustomStoreGroup::getStoreGroupsForManager($storesByBanner->flatten()->toArray());
 
         //$allAlerts are active or active+archived alerts for storelist
-        $allAlerts = Alert::getAlertsForStoreList($this->stores, $this->banners, $this->storeGroups, $request); 
+        $allAlerts = Alert::getAlertsForStoreList($storesByBanner, $request);   
         
         // filter alerts if type is set
         $alerts = Alert::filterAllAlertsByCategory($allAlerts, $request);

@@ -118,4 +118,10 @@ class Resource extends Model
         return array_keys($resourceNamesList);
     }
 
+
+    public static function getResourceByResourceTypeIdandResourceId($resource_type_id, $resource_id)
+    {
+        return Self::where('resource_type_id', $resource_type_id)->where('resource_id', $resource_id)->first();
+    }
+
 }

@@ -1,0 +1,1 @@
+<li><a href="/{{ Request::segment(1) }}/tools/agedinventory" class="trackclick" data-tool-type="agedInventory">Aged Inventory</a></li>

@@ -15,6 +15,7 @@ use App\Models\StoreApi\StoreInfo;
 use App\Models\Auth\User\UserBanner;
 use App\Models\Tools\CustomStoreGroup;
 use App\Models\StoreApi\Banner;
+use App\Models\Analytics\AnalyticsCollection;
 
 class UrgentNotice extends Model
 {
@@ -201,9 +202,13 @@ class UrgentNotice extends Model
 
     }
 
-    public static function getActiveUrgentNoticesForStoreList($storeNumbersArray, $banners, $storeGroups)
+    public static function getActiveUrgentNoticesForStoreList($storesByBanner, $storeGroups)
     {
         $now = Carbon::now()->toDatetimeString();
+
+        $storeNumbersArray = $storesByBanner->flatten()->toArray();
+        $banners = $storesByBanner->keys();
+
         $targetedUN = UrgentNotice::join('urgent_notice_target', 'urgent_notice_target.urgent_notice_id' ,  '=', 'urgent_notices.id')
                     ->whereIn('urgent_notice_target.store_id', $storeNumbersArray)
                     ->where('urgent_notices.start', '<=', $now )
@@ -229,8 +234,10 @@ class UrgentNotice extends Model
                                     })
                                     ->select('urgent_notices.*', 'urgent_notice_banner.banner_id')
                                     ->get()
-                                    ->each(function($un){
+                                    ->each(function($un) use($storesByBanner){
                                         $un->banner = Banner::find($un->banner_id)->name;
+                                        $un->stores = $storesByBanner[$un->banner_id];
+
                                     });
 
 
@@ -268,6 +275,7 @@ class UrgentNotice extends Model
             $n->prettyDate =  Utility::prettifyDate($n->start);
             $preview_string = strip_tags($n->description);
             $n->trunc = Utility::truncateHtml($preview_string);
+            $n->opened_by = AnalyticsCollection::getAnalyticsByResource(3, $n->id);
         }
 
         return($urgent_notices);
