@@ -46,15 +46,20 @@ $(document).ready(function(){
 		    returnString += '<tr>'+
 		        '<td colspan="2">'+value.subcomponent_name+'</td>';
 		    if(value.state == 'on'){
-		    	returnString += '<td><a class="btn btn-primary btn-xs subcomponent-edit"'+
+		    	returnString += '<td colspan="2"><a class="btn btn-primary btn-xs subcomponent-edit"'+
 		    					'title="Toggle Visibility"'+
-		    					'data-state="on"'+
+		    					'data-state="'+ value.state +'"'+
 		    					'id="store_subcomponent_'+ value.id +'"'+
 		    					'data-subcomponent-id="'+ value.id +'"'+
 		    					'<td colspan="2"> <i class="fa fa-eye"></i> </a></td>';
 		    }
 		    else{
-		    	returnString += '<td colspan="2"><i class="fa fa-eye-slash"></i></td>';
+		    	returnString += '<td colspan="2"><a class="btn btn-default btn-xs subcomponent-edit"'+
+		    					'title="Toggle Visibility"'+
+		    					'data-state="'+ value.state +'"'+
+		    					'id="store_subcomponent_'+ value.id +'"'+
+		    					'data-subcomponent-id="'+ value.id +'"'+
+		    					'<td colspan="2"> <i class="fa fa-eye-slash"></i> </a></td>';
 		    }
 		
 						
