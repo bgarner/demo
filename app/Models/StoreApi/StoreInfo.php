@@ -10,9 +10,6 @@ use App\Models\Auth\Role\RoleResource;
 use App\Models\Auth\User\UserRole;
 use App\Models\Auth\Resource\Resource;
 use App\Models\Auth\Resource\ResourceTypes;
-use App\Models\StoreApi\Banner;
-use App\Models\StoreApi\Store;
-use App\Models\StoreApi\Region;
 
 class StoreInfo extends Model
 {

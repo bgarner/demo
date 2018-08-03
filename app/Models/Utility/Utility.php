@@ -662,4 +662,20 @@ class Utility extends Model
     	return $userlist;
     }
 
+    public static function getAllProvinces()
+    {
+    	return ['AB'=>'AB', 'BC'=>'BC', 'MB'=>'MB', 'NB'=>'NB', 'NL'=>'NL', 'NS'=>'NS', 'ON'=>'ON', 'PE'=>'PE', 'QC'=>'QC', 'SK'=>'SK'];
+    }
+
+    public static function makeStoreNumber($store_id, $banner_id, $is_combo_store = null)
+    {	
+    	$store_number = str_pad($store_id, 4, '0', STR_PAD_LEFT);
+    	\Log::info('***674***');
+    	\Log::info($store_number);
+    	if(isset($is_combo_store) && $banner_id == 2 ){
+    		$store_number = 'A' . $store_number;
+    	}
+    	return $store_number;
+    }
+
 }

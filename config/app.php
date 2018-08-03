@@ -307,7 +307,15 @@ return [
         'App\Http\Controllers\Utilities\BatchFileUploadController'              => 'Batch File Upload',
         'App\Http\Controllers\Form\ProductRequestFormAdminController'           => 'Form',
         'App\Http\Controllers\Form\FormListAdminController'                     => 'Form',
-        'App\Http\Controllers\Form\FormLogController'                           => 'Form'
+        'App\Http\Controllers\Form\FormLogController'                           => 'Form',
+        'App\Http\Controllers\StoreApi\StoreStructureAdminController'           => 'Store Structure',
+        'App\Http\Controllers\StoreApi\StoreAdminController'                    => 'Store Structure',
+        'App\Http\Controllers\StoreApi\DistrictAdminController'                 => 'Store Structure',
+        'App\Http\Controllers\StoreApi\DistrictStoreAdminController'            => 'Store Structure',
+        'App\Http\Controllers\StoreApi\RegionAdminController'                   => 'Store Structure',
+        'App\Http\Controllers\StoreApi\RegionDistrictAdminController'           => 'Store Structure',
+        
+
 
     ],
 
