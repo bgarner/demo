@@ -115,7 +115,10 @@ trait AuthenticatesUsers
      */
     protected function authenticated(Request $request, $user)
     {
-        //
+        $user->update([
+            'last_login' => Carbon::now()->toDateTimeString(),
+          //  'last_login_ip' => $request->getClientIp()
+        ]);
     }
 
     /**

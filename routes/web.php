@@ -11,6 +11,9 @@
 |
 */
 Auth::routes();
+
+
+
 Route::pattern('storeno', '^([A-Z]?[0-9]{4})$');
 Route::pattern('id', '[0-9]+');
 
@@ -132,3 +135,5 @@ Route::post('/setLanguage', 'Locale\LocaleController@setLanguage');
 // Route::get('/admin', function(){
 // //	return view('admin.index');
 // });
+
+Route::get('/{storeno}/notification', 'Notification\NotificationController@index');

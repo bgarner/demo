@@ -123,6 +123,28 @@
 
             </div>
 
+            <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                {{-- <h2><a href="video/popular">{{__("Trending This Month")}}</a></h2> --}}
+                                <h2>{{__("Trending Now")}}</h2>
+                            </div>
+                            <div class="ibox-content clearfix">
+                                @foreach($trending as $t)
+                                    <div class="col-xs-4 col-sm-3 col-lg-2 video-list-box">
+                                        <div class="embed-responsive embed-responsive-16by9">
+                                        <a href="video/watch/{{$t->id}}" class="trackclick" data-video-id="{{$t->id}}"><img src="/video/thumbs/{{$t->thumbnail}}" class="embed-responsive-item img-responsive" /></a>
+                                        </div>
+                                        <h4><a href="video/watch/{{$t->id}}" class="trackclick" data-video-id="{{$t->id}}">{{$t->title}}</a></h4>
+                                        <p>{{$t->views}} {{__("views")}} &middot; {{$t->sinceCreated}} {{__("ago")}}</p>
+                                    </div>
+                                @endforeach
+                                <!-- <a class="pull-right" href="video/popular">&raquo; {{__("More Popular Videos")}}</a> -->
+                            </div>
+                        </div>
+                    </div>
+            </div>
 
             <div class="row">
                     <div class="col-lg-12">
@@ -150,7 +172,9 @@
                     </div>
             </div>
 
-            <div class="row">
+
+
+            {{-- <div class="row">
                     <div class="col-lg-12">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
@@ -170,9 +194,9 @@
                             </div>
                         </div>
                     </div>
-            </div>
+            </div>             --}}
 
-            <!-- <div class="row">
+            {{-- <div class="row">
                     <div class="col-lg-12">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
@@ -191,7 +215,7 @@
                             </div>
                         </div>
                     </div>
-            </div> -->
+            </div> --}}
 
 
 

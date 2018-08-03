@@ -20,6 +20,8 @@
                 @include('site.includes.topbar')
             </div>
             <div class="tabs-container wrapper wrapper-content animated fadeInRight">
+                <p class="pull-right"><a href="#" data-toggle="modal" data-target="#calendarLegend"><i class="fa fa-question-circle" aria-hidden="true"></i> Calendar Legend</a>
+                            </p>
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">{{ __("Calendar View") }}</a></li>
                     <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">{{ __("List View") }}</a></li>
@@ -183,6 +185,29 @@
     </script>
 
     @include('site.includes.modal')
+     <div class="modal inmodal" id="calendarLegend" tabindex="-1" role="event" aria-hidden="true" style="display: none;" >
+
+        <div class="modal-dialog">
+            <div class="modal-content animated bounceInRight">
+    <!--                 <div class="modal-header clearfix">
+                        <h4 id="modalTitle" class="modal-title">What's New?</h4>
+                    </div> -->
+                    <div id="modalBody" class="modal-body event-modal-body" style="padding: 20px;">
+
+                    <h4>Calendar Legend</h4>
+                    @foreach($eventTypes as $type)
+                        @if($type->background_colour)
+                        <div style="padding: 5px; margin: 5px; color: #{{ $type->foreground_colour }}; background-color: #{{ $type->background_colour }};">{{ $type->event_type }}</div>
+                        @endif
+                    @endforeach
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-sm btn-outline" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                    </div>
+            </div>
+        </div>
+    </div>    
 
 </body>
 </html>

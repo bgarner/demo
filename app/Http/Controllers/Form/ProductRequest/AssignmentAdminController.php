@@ -24,15 +24,19 @@ class AssignmentAdminController extends Controller
         $user_groups = GroupUser::getGroupsByUserId(\Auth::user()->id);
         
         $assignments['My Group Assignments'] = FormInstanceGroupMap::getFormInstancesByGroupId($user_groups);
-        $role = preg_replace("/\s+/", "", \Auth::user()->role);
-
-        $accessibleRoles = FormRoleHierarchy::getAllAccessibleRoles();
         
-        $businessUnitId = FormUserBusinessUnitMap::getBusinessUnitIdsByFormUserId(\Auth::user()->id);
 
-        $users = User::getUsersByBusinessUnitAndRoles($accessibleRoles, $businessUnitId);
+        // $accessibleRoles = FormRoleHierarchy::getAllAccessibleRoles();
+        
+        // $businessUnitId = FormUserBusinessUnitMap::getBusinessUnitIdsByFormUserId(\Auth::user()->id);
 
+        // $users = User::getUsersByBusinessUnitAndRoles($accessibleRoles, $businessUnitId);
+
+        $users = User::getUserDetailsByUserList(GroupUser::getUsersByGroupIdList($user_groups));
+        
         $codes = FormStatusMap::getStatusCodesByForm(1);
+
+        $role = preg_replace("/\s+/", "", \Auth::user()->role);
 
         return view('formuser.'.$role.'.assignments.index')
                     ->with('assignments', $assignments)
@@ -52,7 +56,19 @@ class AssignmentAdminController extends Controller
     	if(isset($request->group_id) ){
     		return FormInstanceGroupMap::updateFormAssignment($form_instance_id, $request->group_id);
     	}
+        
     }
 
+    public function destroy($id, Request $request)
+    {
+        if(isset($request->user) && $request->user){
+            return FormInstanceUserMap::removeFormAssignment($id);
+        }
+        if(isset($request->group) && $request->group){
+            return FormInstanceGroupMap::removeFormAssignment($id);
+        }
+
+        return ;
+    }
 
 }

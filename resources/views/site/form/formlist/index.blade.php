@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    @section('title', 'Product Request Form')
+    @section('title', 'Forms')
     @include('site.includes.head')
     <link rel="stylesheet" type="text/css" href="/css/custom/site/event.css">
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
@@ -42,7 +42,7 @@
                             <tbody>
                                 <tr>
                                     <td><a href="/{{$store_number}}/form/productrequest">Product Request</a></td>
-                                    <td>This form is for requesting new product or getting more or less of some existing product.</td>
+                                    <td>For allocations, replenishment and new product requests.</td>
                                 </tr>
 
 
@@ -88,6 +88,6 @@
 			});
 
 		</script>
-
+        @include('site.includes.modal')
 	</body>
 	</html>

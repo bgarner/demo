@@ -3,8 +3,13 @@
 namespace App\Models\StoreApi;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable as Notifiable;
 
 class Store extends Model {
+  
+	use SoftDeletes;
+    use Notifiable;
 
     protected $table = 'stores';
 

@@ -35,6 +35,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    @if($videoStats)
                                     @foreach($videoStats as $video)
                                     <tr class="video-details-control">
                                         <td></td>
@@ -50,6 +51,7 @@
                                     </tr>
 
                                     @endforeach
+                                    @endif
                                     </tbody>
                                 </table>
 

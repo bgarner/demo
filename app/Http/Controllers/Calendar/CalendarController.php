@@ -8,7 +8,10 @@ use DB;
 use Carbon\Carbon;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\StoreApi\Store;
+use App\Models\StoreApi\StoreInfo;
 use App\Models\Event\Event;
+use App\Models\Event\EventTypeBanner;
 use App\Models\Event\EventType;
 use App\Models\Utility\Utility;
 use App\Models\Event\EventAttachment;
@@ -35,9 +38,18 @@ class CalendarController extends Controller
         //for the list of events
         $eventsList = Event::getListofEventsByStoreAndMonth($storeNumber, $today);
 
+        //event types
+        //get the current banner
+        $banner = StoreInfo::getStoreInfoByStoreId($storeNumber);
+
+        //get all of the event types that belong to this banner
+        $eventTypesforBanner = EventTypeBanner::where('banner_id', $banner->banner_id)->select('event_type_id')->get()->pluck('event_type_id');   
+        $eventTypes = EventType::whereIn('id', $eventTypesforBanner)->get();
+
         return view('site.calendar.index')
                 ->with('events', $events)
                 ->with('eventsList', $eventsList)
+                ->with('eventTypes', $eventTypes)
                 ->with('today', $today);
     }
 

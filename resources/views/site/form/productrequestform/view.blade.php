@@ -128,6 +128,6 @@
 			});
 
 		</script>
-
+        @include('site.includes.modal')
 	</body>
 	</html>

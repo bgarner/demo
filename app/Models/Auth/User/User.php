@@ -201,4 +201,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
                     ->get();
     }
 
+    public static function getUserDetailsByUserList($userList)
+    {
+        return User::join('user_role', 'users.id' , '=', 'user_role.user_id')
+                    ->join('roles', 'user_role.role_id', '=', 'roles.id')
+                    ->join('form_business_unit_user', 'users.id', '=', 'form_business_unit_user.user_id')
+                    ->join('form_business_unit_types', 'form_business_unit_user.business_unit_id', '=', 'form_business_unit_types.id' )
+                    ->where('users.group_id', 3)
+                    ->whereIn('users.id', $userList)
+                    ->select('users.*', 'roles.role_name', 'roles.id as role_id', 'form_business_unit_types.business_unit' )
+                    ->get();   
+    }
+
 }

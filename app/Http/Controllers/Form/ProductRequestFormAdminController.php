@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Form\FormData;
 use App\Models\Form\FormStatusMap;
 use App\Models\Form\FormActivityLog;
+use App\Models\Form\FormResolution;
+use App\Models\Form\FormInstanceResolutionMap;
 
 class ProductRequestFormAdminController extends Controller
 {
@@ -28,20 +30,21 @@ class ProductRequestFormAdminController extends Controller
    	}
 
 
-
     public function show($id, Request $request)
     {
         $formInstance = FormData::getFormInstanceById($id);
         $log = FormActivityLog::getFormInstanceLog($id);
-        $codes = FormStatusMap::getStatusCodesByForm($formInstance->form_id);
-        
+        $statusCodes = FormStatusMap::getStatusCodesByForm($formInstance->form_id);
+        $resolutionCodes = FormResolution::getResolutionCodesByFormId($formInstance->form_id);
         $formStructure = 'view';
         
         $view = 'admin.form.productrequestform.' . $formStructure;
         return view($view)
             ->with('log', $log)
             ->with('formInstance', $formInstance)
-            ->with('codes', $codes);
+            ->with('codes', $statusCodes)
+            ->with('resolutionCodes', $resolutionCodes);
+            
 
     }
 }

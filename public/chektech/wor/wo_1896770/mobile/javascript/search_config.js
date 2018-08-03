@@ -1,1 +1,0 @@
-var textForPages =["Polar A360\n- Optical heart rate sensor\n- Follow your 24/7 activity (calories, steps & sleep)\n- Smart notifications (calls, messages, calendar)\n- Color touch screen - Vibration feedback - Waterproof 30M\n- Plan, sync and share your training with Polar Flow app\nand web service - 2-3 week battery life\n- Replaceable wrist bands (colors coming soon)\n"];

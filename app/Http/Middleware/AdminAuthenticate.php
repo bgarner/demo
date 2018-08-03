@@ -43,6 +43,12 @@ class AdminAuthenticate
                 return redirect()->to('/login');
             }
         }
+        \Log::info(date("Y-m-d H:i:s"));
+        
+        Auth::user()->update([
+            'last_login' => date("Y-m-d H:i:s")
+        ]);
+
         return $next($request);
     }
 }

@@ -13,7 +13,6 @@
         <div class="row">
             <div class="col-md-12">
 
-
                 <table class="table table-stripped" id="task_analytics">
                     <thead>
                         <tr>

@@ -8,7 +8,8 @@ $("#update_status").on('click', function () {
 var updateFormInstanceStatus =  function(formInstanceId){
 
 
-    var codeSelected = $("#status_code_id").val();
+    var statusCodeSelected = $("#status_code_id").val();
+    var resolutionCodeSelected = $("#resolution_code_id").val();
     var comment = $("#comment").val();
     
     if(formInstanceId == 'undefined'){
@@ -25,7 +26,8 @@ var updateFormInstanceStatus =  function(formInstanceId){
         data: {
             origin: origin,
             form_instance_id: formInstanceId,
-            status_code_id: codeSelected,
+            status_code_id: statusCodeSelected,
+            resolution_code_id : resolutionCodeSelected,
             comment: comment,
             reply: reply
         },
@@ -42,6 +44,11 @@ var updateFormInstanceStatus =  function(formInstanceId){
                     if(errors.hasOwnProperty("status_code_id")){
                         $.each(errors.status_code_id, function(index){
                             errorString += errors.status_code_id[index] + "\n"; 
+                        });     
+                    }
+                    if(errors.hasOwnProperty("resolution_code_id")){
+                        $.each(errors.resolution_code_id, function(index){
+                            errorString += errors.resolution_code_id[index] + "\n"; 
                         });     
                     }
                     console.log(errorString);
@@ -65,6 +72,7 @@ var updateFormInstanceStatus =  function(formInstanceId){
                             $('#logContainer').load("/form/productrequestform/log/"+formInstanceId);
                             $("#comment").val("");
                             $("#status_code_id").val(0);
+                            $("#resolution_code_id").val(0);
                             $('#ask_for_reply').prop('checked', false);    
                         }
                         else{

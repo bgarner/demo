@@ -202,7 +202,7 @@
                 <button type="button" class="btn btn-primary step-3" data-step="3" onclick="sendEvent('#newdonationmodal', 2)" style="display: none;">Back</button>
                 <button type="button" class="btn btn-primary step step-3" data-step="3" onclick="validateStep3()" style="display: none;">Continue</button>
                 <button type="button" class="btn btn-primary step-4" data-step="4" onclick="sendEvent('#newdonationmodal', 3)" style="display: none;">Back</button>
-                <button type="button" class="btn btn-primary step step-4" data-step="4" onclick="validateStep4()" style="display: none;">Submit</button>
+                <button type="button" class="btn btn-primary step step-4 final-submit" data-step="4" onclick="validateStep4()" style="display: none;">Submit</button>
             </div>
         </div>
     </div>

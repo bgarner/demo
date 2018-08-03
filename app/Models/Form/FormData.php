@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Utility\Utility;
 use App\Models\Form\Form;
 use App\Models\Form\FormActivityLog;
+use App\Models\Form\ProductRequest\ProductRequestForm;
 use App\Models\Form\ProductRequest\BusinessUnitTypes;
 use App\Models\Validation\Form\ProductRequestFormInstanceValidator;
 
@@ -13,6 +14,8 @@ class FormData extends Model
 {
     protected $table = 'form_data';
     protected $fillable = ['form_id', 'store_number', 'submitted_by', 'form_data', 'form_name', 'form_version', 'business_unit_id'];
+    protected static $new_request_status_code_id = 1;
+    protected static $closed_request_status_code_id = 5;
 
     public static function validateFormInstance($request)
     {
@@ -33,39 +36,32 @@ class FormData extends Model
         return $productRequestValidator->validate($validateThis);
     }
 
-    public static function getAdminFormDataByFormNameAndVersion($name, $version)
+    public static function getAdminFormDataByFormNameAndVersion($form_name, $form_version)
     {
-        $form_id = Form::where('form_name', $name)
-                        ->where('version', $version)
+        $form_id = Form::where('form_name', $form_name)
+                        ->where('version', $form_version)
                         ->first()
                         ->id;
         $forms = FormData::where('form_id', $form_id)->get();
         return $forms;
     }
 
-    public static function getAdminFormDataByFormNameAndVersionAndStore($name, $version, $store_number)
+    public static function getFormData($formMeta)
     {
-
-		$form_id = Form::where('form_name', $name)
-                        ->where('version', $version)
+		$form_id = Form::where('form_name', $formMeta['name'])
+                        ->where('version', $formMeta['version'])
                         ->first()
                         ->id;
 
         $forms = FormData::where('form_id', $form_id)
-						->where('store_number', $store_number)        				
+						->where('store_number', $formMeta['store_number'])        				
         				->orderBy('created_at', 'desc')
-                        ->get()
-                        ->each(function($formInstance){
-                            $formInstance->form_data = unserialize($formInstance->form_data);
-                            $formInstance->description = $formInstance->form_data['department'] . " > " . $formInstance->form_data['category'] . " > " . $formInstance->form_data['subcategory'];
-                            $formInstance->prettySubmitted = Utility::prettifyDateWithTime($formInstance->created_at);
-                            $formInstance->assignedToUser = FormInstanceUserMap::getUserByFormInstanceId($formInstance->id);
+                        ->get();
 
-                            $formInstance->assignedToGroup = FormInstanceGroupMap::getGroupByFormInstanceId($formInstance->id);
+        $modelInstance = new $formMeta['model'];
 
-                            $formInstance->lastFormAction = FormActivityLog::getLastFormInstanceAction($formInstance->id);
+        $forms = $modelInstance->prepareFormInstanceData($forms);
 
-                        });
         return $forms;
     }
 
@@ -125,16 +121,16 @@ class FormData extends Model
 					            "form_data" => serialize($request->all())
 					        ]);
 
-        $status_code_id_for_new = Status::where('admin_status', 'new')->first()->id;
-        FormInstanceStatusMap::updateFormInstanceStatus($formInstance->id, $status_code_id_for_new);
-    	return $formInstance;
+        FormInstanceStatusMap::updateFormInstanceStatus($formInstance->id, Self::$new_request_status_code_id);
+        
+        return $formInstance;
     }
 
     public static function getNewFormInstanceCount($form_id)
     {
         return FormData::join('form_instance_status', 'form_instance_status.form_data_id', '=', 'form_data.id')
                                         ->where('form_id', $form_id)
-                                        ->where('form_instance_status.status_code_id', 1)
+                                        ->where('form_instance_status.status_code_id', Self::$new_request_status_code_id)
                                         ->select('form_data.*')
                                         ->count();
     }
@@ -143,7 +139,7 @@ class FormData extends Model
     {
         return FormData::join('form_instance_status', 'form_instance_status.form_data_id', '=', 'form_data.id')
                                         ->where('form_id', $form_id)
-                                        ->whereNotIn('form_instance_status.status_code_id', [1, 5])
+                                        ->whereNotIn('form_instance_status.status_code_id', [Self::$new_request_status_code_id, Self::$closed_request_status_code_id])
                                         ->select('form_data.*')
                                         ->count();
     }
@@ -156,7 +152,7 @@ class FormData extends Model
                         ->get()
                         ->each(function($formInstance) {
                             $formInstance->form_data = unserialize($formInstance->form_data);
-                            $formInstance->description = $formInstance->form_data['department'] . " > " . $formInstance->form_data['category'] . " > " . $formInstance->form_data['subcategory'];
+                            $formInstance->description = $formInstance->form_data['department'] . " > " . $formInstance->form_data['category'] . " > " . $formInstance->form_data['subcategory'] . " > " . $formInstance->form_data['gender'] . ">" . $formInstance->form_data['requirement'];
                             $formInstance->prettySubmitted = Utility::prettifyDateWithTime($formInstance->created_at);
                             $formInstance->assignedToUser = FormInstanceUserMap::getUserByFormInstanceId($formInstance->id);
 

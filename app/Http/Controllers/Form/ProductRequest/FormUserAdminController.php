@@ -14,13 +14,10 @@ class FormUserAdminController extends Controller
     public function show($id)
     {
         
-        $employeeRoles = FormRoleHierarchy::getCurrentEmployeeRoleIds();
-        $formRoles =  FormRoleMap::getRoleListByFormId($id);
-        
-        $roles = array_intersect( $employeeRoles, $formRoles);
-
+        // $employeeRoles = FormRoleHierarchy::getCurrentEmployeeRoleIds();
+        $roles =  FormRoleMap::getRoleListByFormId($id);
+        // $roles = array_intersect( $employeeRoles, $formRoles);
         $users = UserRole::getFormUsersByRoleList($roles);    
-        
         return $users;
     }
 }

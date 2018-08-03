@@ -31,9 +31,17 @@
                 padding: 5px 10px 15px 10px;
                 min-height: 60px;
             }
-            #user_assignment_modal .modal-body, #group_assignment_modal .modal-body{
-            	height: 77% !important;
-            }
+            
+            #user_assignment_modal .modal-dialog, #user_assignment_modal .modal-content, #group_assignment_modal .modal-dialog, #group_assignment_modal .modal-content {
+    			/* 80% of window height */
+    			height: 80%;
+			}
+
+			#user_assignment_modal .modal-body, #group_assignment_modal .modal-body {
+			    /* 100% = dialog height, 120px = header + footer */
+			    max-height: calc(100% - 120px);
+			    overflow-y: scroll;
+			}
         </style>
 </head>
 
@@ -149,6 +157,8 @@
                                         <ul class="dropdown-menu" aria-labelledby="edit_selected">
                                             <li id="assign_to_group"><a>Assign to Group</a></li>
                                             <li id="assign_to_user"><a>Assign to User</a></li>
+                                            <li id="remove_group_assigment"><a>Revoke From Group</a></li>
+                                            <li id="remove_user_assigment"><a>Revoke From User</a></li>
                                         </ul>
                                     </span>
 
@@ -185,7 +195,7 @@
 			                                    			<td><input class="select_form" id="select_form" type="checkbox" data-formInstanceId = "{{$formInstance->id}}"></td>
 			                                    			<td><a href="/form/productrequest/{{$formInstance->id}}"> {{$formInstance->description}}</a></td>
 															<td>{{$formInstance->store_number}}</td>
-															<td>{{$formInstance->prettySubmitted}}</td>
+															<td data-sort="{{$formInstance->created_at}}">{{$formInstance->prettySubmitted}}</td>
 															<td class="assignedToUser">
 																@if(isset($formInstance->assignedToUser))
 																{{$formInstance->assignedToUser->firstname}} {{$formInstance->assignedToUser->lastname}}
@@ -278,7 +288,8 @@
     			
 				pageLength: 50,
 				responsive: true,
-				fixedHeader: true
+				fixedHeader: true,
+				stateSave: true
 			}
 		);
 		

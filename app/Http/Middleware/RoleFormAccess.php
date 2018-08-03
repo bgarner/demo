@@ -43,10 +43,13 @@ class RoleFormAccess
         $formNameAndVersion = config('app.controllerFormMap')[$controller];
 
         if($formNameAndVersion){
-            $formName = preg_split('/_v_/',  $formNameAndVersion)[0];
-            $formVersion = preg_split('/_v_/',  $formNameAndVersion)[1];
+            
+            $formMeta = [
+                'name'=>preg_split('/_v_/',  $formNameAndVersion)[0],
+                'version'=>preg_split('/_v_/',  $formNameAndVersion)[1]
+            ];
 
-            $form_id = Form::getFormIdByFormNameAndVersion($formName, $formVersion);
+            $form_id = Form::getFormId($formMeta);
 
             $role_ids = FormRoleMap::getRoleListByFormId($form_id);
             $role_id = UserRole::where('user_id', $this->user->id)->first()->role_id;

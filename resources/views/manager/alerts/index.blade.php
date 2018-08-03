@@ -96,7 +96,7 @@
                                     @endif
                             @endforeach
                             
-                            @elseif( $alert->all_stores == 1 )
+                            @elseif( isset($alert->banner) )
                                 <span class="badge">{{$alert->banner}}</span>
                             @endif
                         </td>

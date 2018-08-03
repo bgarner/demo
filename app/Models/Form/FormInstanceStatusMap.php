@@ -52,4 +52,9 @@ class FormInstanceStatusMap extends Model
         
     }
 
+    public static function getFormStatusByInstanceId($form_instance_id)
+    {
+        return Self::where('form_data_id', $form_instance_id)->first()->status_code_id;
+    }
+
 }

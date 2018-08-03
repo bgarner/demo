@@ -80,7 +80,7 @@
 			                                    			<td><input class="select_form" id="select_form" type="checkbox" data-formInstanceId = "{{$formInstance->id}}"></td>
 			                                    			<td><a href='/form/productrequest/{{$formInstance->id}}'> {{$formInstance->description}} </a></td>
 															<td>{{$formInstance->store_number}}</td>
-															<td>{{$formInstance->prettySubmitted}}</td>
+															<td data-sort="{{$formInstance->created_at}}">{{$formInstance->prettySubmitted}}</td>
 															<td>
 																{{isset($formInstance->assignedTo)}}
 																@if(isset($formInstance->assignedTo))

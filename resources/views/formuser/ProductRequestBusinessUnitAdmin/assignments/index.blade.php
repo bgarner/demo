@@ -41,9 +41,13 @@
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="edit_selected">
                                             
+                                            @if($loop->first)
+                                            <li id="show_update_status"><a>Update Status</a></li>
+											@elseif($loop->last)
                                             <li id="assign_to_user"><a>Assign to User</a></li>
-											@if($loop->last)
                                             <li id="show_update_status_group_assign"><a>Update Status</a></li>
+                                            <li id="remove_user_assigment"><a>Revoke From User</a></li>
+                                            <li id="remove_group_assigment"><a>Revoke From Group </a></li>
                                             @endif
 
                                         </ul>
@@ -89,7 +93,7 @@
 			                                    			<td><input class="select_form" id="select_form" type="checkbox" data-formInstanceId = "{{$formInstance->id}}"></td>
 			                                    			<td><a href='/form/productrequest/{{$formInstance->id}}'> {{$formInstance->description}} </a></td>
 															<td>{{$formInstance->store_number}}</td>
-															<td>{{$formInstance->prettySubmitted}}</td>
+															<td data-sort="{{$formInstance->created_at}}">{{$formInstance->prettySubmitted}}</td>
 															<td>
 																@if(isset($formInstance->assignedToUser))
 																{{$formInstance->assignedToUser->firstname}} {{$formInstance->assignedToUser->lastname}}
@@ -200,7 +204,8 @@
     			
 				pageLength: 50,
 				responsive: true,
-				fixedHeader: true
+				fixedHeader: true,
+				stateSave: true
 			}
 		);
 		

@@ -480,7 +480,6 @@ class Utility extends Model
 
     public static function getStoreGroupsByAdminId()
     {
-    	
     	$banners = UserBanner::getAllBanners()->pluck('id')->toArray();
     	$storeGroups = CustomStoreGroup::getGroupsForMultipleBanners($banners);
     	$groupList = [];
@@ -491,37 +490,10 @@ class Utility extends Model
         		'data-attributes' => [
         				'optionType'  => 'storegroup',
         				'resourceId'  => $group->id
-
         			]
             	];
         }
         return $groupList;
-    }
-
-    public static function getStoreAndStoreGroupList($banner_id)
-    {
-    	$storeList           = StoreInfo::getStoreListing($banner_id);
-        $storeGroups         = CustomStoreGroup::getAllGroups();
-        $storeAndStoreGroups = [];
-        foreach ($storeList as $storeNumber => $storeName) {
-            $temp = [];
-            $temp['id'] = $storeNumber;
-            $temp['name'] = $storeName;
-            array_push($storeAndStoreGroups, $temp);
-            unset($temp);
-        }
-
-        foreach ($storeGroups as $storeGroup) {
-            $temp = [];
-            $temp['id'] = $storeGroup->id;
-            $temp['name'] = $storeGroup->group_name;
-            $temp['isStoreGroup'] = true;
-            $temp['stores'] = json_encode($storeGroup->stores);
-            array_push($storeAndStoreGroups, $temp);
-            unset($temp);
-        }
-
-        return $storeAndStoreGroups;
     }
 
     public static function addHeadOffice($contentId, $table, $pivotColumn)
@@ -540,7 +512,23 @@ class Utility extends Model
 	        'store_id'   => $headOffice
 	    ]);
 
-    }
+	}
+	
+	public static function removeHeadOffice($stores)
+	{
+		$headOfficeStores = ['0940', 'A0940'];
+		foreach($headOfficeStores as $ho){
+
+			$keys = array_keys($stores, $ho);
+
+			if( count($keys) > 0 ){
+				foreach($keys as $k){
+					unset($stores[$k]);
+				}	
+			}
+		}
+		return $stores;
+	}
 
     public static function groupBannersForAllStoreContent($allStoreContent)
     {

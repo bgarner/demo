@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Auth\Group\Group;
 use App\Models\Auth\User\UserRole;
 
+
 class LoginController extends Controller
 {
     /*
@@ -73,6 +74,7 @@ class LoginController extends Controller
 
     protected function validateLogin(Request $request)
     {
+        \Log::info("Attempting login for: " . $request->username);
         $this->validate($request, [
             $this->username() => 'required|string|exists:users,username',
             'password' => 'required|string',
