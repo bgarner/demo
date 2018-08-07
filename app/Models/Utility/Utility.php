@@ -224,6 +224,16 @@ class Utility extends Model
 		return $since;
 	}
 
+	public static function getMonthName($monthNumber)
+    {
+        return date("F", mktime(0, 0, 0, $monthNumber, 1));
+	}
+	
+	public static function getDayName($dayNumber)
+	{
+		return date("l", mktime(0, 0, 0, 0, $dayNumber));
+	}
+
 	public static function truncateHtml($text, $length = 100, $ending = '...', $exact = false, $considerHtml = true)
 	{
 		if ($considerHtml) {

@@ -5,7 +5,8 @@ namespace App\Models\Feature;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Feature\FeatureEventType;
-
+use App\Models\Utility\Utility;
+use Carbon\Carbon;
 
 class FeatureEvent extends Model
 {
@@ -44,6 +45,7 @@ class FeatureEvent extends Model
                                         ->where('feature_id', $feature_id)
                                         ->where('events.start', '<', $feature->end)
                                         ->where('events.end', '>', $feature->start)
+                                        ->where('events.start', '>', now())
                                         ->select('events.*')
                                         ->get();
 
@@ -51,9 +53,17 @@ class FeatureEvent extends Model
                                     ->where('feature_id', $feature_id)
                                     ->where('events.start', '<', $feature->end)
                                     ->where('events.end', '>', $feature->start)
+                                    ->where('events.start', '>', now())
                                     ->select('events.*')
                                     ->get();
-        $featureEvents = $featureEventsByType->merge($featureEvents);
+        $featureEvents = $featureEventsByType->merge($featureEvents)->sortBy('start');
+
+        foreach($featureEvents as $fe){
+            $dt = Carbon::parse($fe->start);
+            $fe->monthName = Utility::getMonthName($dt->month);
+            $fe->dayName = Utility::getDayName($dt->day);
+            $fe->day = $dt->day;
+        }
         return $featureEvents;
     }
 }

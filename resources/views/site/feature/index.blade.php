@@ -293,7 +293,7 @@
                             <div class="col-lg-12">
                                 <div class="ibox">
                                     <div class="ibox-title">
-                                        <h2>Events</h2>
+                                        <h2>Upcoming Events</h2>
                                     </div>
                                     <div class="ibox-content">
                                         <div class="feed-activity-list">
@@ -301,10 +301,20 @@
                                                 @foreach($events as $event)
                                                     <div class="feed-element">
                                                         <div class="media-body">
-                                                            {{$event->title}}
+
+                                                        <time datetime="" class="icon pull-left">
+                                                            <em>{{ $event->dayName }}</em>
+                                                            <strong>{{ $event->monthName }}</strong>
+                                                            <span>{{ $event->day }}</span>
+                                                        </time>
+
+                                                            <strong>{{ $event->title }}</strong>
+                                                            {!! $event->description !!}
                                                         </div>
                                                     </div>
                                                 @endforeach
+                                                @else
+                                                    <p>No Upcoming Events</p>
                                             @endif
                                         </div>
                                     </div>
