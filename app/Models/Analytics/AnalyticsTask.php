@@ -159,7 +159,7 @@ class AnalyticsTask extends Model
                                         COUNT(DISTINCT `store_number`) as opened_total,
                                         GROUP_CONCAT( DISTINCT `store_number` ) as opened_by
                                         from `analytics`
-                                        where `type` = 'video'  
+                                        where `type` = 'video_watch'  
                                         group by `resource_id`, `type`") 
                                 );
         $asset_type_id  = AnalyticsAssetTypes::where('type', 'video')->first()->id;

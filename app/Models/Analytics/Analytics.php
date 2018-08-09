@@ -16,6 +16,7 @@ use App\Models\Video\Video;
 use App\Models\Video\Playlist;
 use App\Models\Dashboard\Quicklinks;
 use App\Models\Analytics\AnalyticsCollection;
+use App\Events\RawAnalyticsUpdated;
 
 class Analytics extends Model
 {
@@ -37,7 +38,8 @@ class Analytics extends Model
  			'location_id' => $request->location_id
  		]);
 
- 		$event->save();
+        //dispatch the event
+ 		event(new RawAnalyticsUpdated($event));
     }
 
 
