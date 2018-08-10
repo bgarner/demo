@@ -16,6 +16,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\RawAnalyticsUpdated' => [
             'App\Listeners\UpdateResourceAnalytics',
         ],
+        'App\Events\TaskStoreStatusUpdated' => [
+            'App\Listeners\UpdateTaskAnalytics',
+        ],
     ];
 
     /**

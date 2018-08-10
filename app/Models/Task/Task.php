@@ -186,17 +186,18 @@ class Task extends Model
 		if($store_status){
 			$store_status['status_type_id'] = $updatedStatus->id;
 			$store_status->save();
-			return $store_status;
 		}
 		else{
 			
-			return TaskStoreStatus::create([
+			$store_status = TaskStoreStatus::create([
 				'store_id' => $storeNumber,
 				'task_id'  => $task_id,
 				'status_type_id' => $updatedStatus->id
 				]);
 		}
-		
+		$store_status->put('asset_type_id', 4); //from analytics_asset_types
+		event(new TaskStoreStatusUpdated($store_status));
+		return $store_status;		
 	}
 
 	public static function deleteTask($task_id)
