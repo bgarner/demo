@@ -509,6 +509,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'AddReqestResponseToLogTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_14_102517_add_reqest_response_to_log_table.php',
         'AddSoftDeletesToCustomStoreGroupTable' => __DIR__ . '/../..' . '/database/migrations/2018_06_18_120339_add_soft_deletes_to_custom_store_group_table.php',
         'AddSportCatToCommunityDonationsTable' => __DIR__ . '/../..' . '/database/migrations/2018_01_29_112304_add_sport_cat_to_community_donations_table.php',
+        'AnalyticsAssetTypeSeeder' => __DIR__ . '/../..' . '/database/seeds/AnalyticsAssetTypeSeeder.php',
         'AnalyticsAssetTypesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AnalyticsAssetTypesTableSeeder.php',
         'App\\Models\\Alert\\Alert' => __DIR__ . '/../..' . '/app/Models/Alert/Alert.php',
         'App\\Models\\Alert\\AlertType' => __DIR__ . '/../..' . '/app/Models/Alert/AlertType.php',

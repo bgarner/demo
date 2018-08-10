@@ -14,7 +14,8 @@ class UpdateAnalyticsAssetTypeTable extends Migration
     public function up()
     {
         Schema::table('analytics_asset_types', function (Blueprint $table) {
-            //
+            $table->string('analytics_table_type')->after('type');
+            $table->string('target_model')->after('type');
         });
     }
 
@@ -26,7 +27,8 @@ class UpdateAnalyticsAssetTypeTable extends Migration
     public function down()
     {
         Schema::table('analytics_asset_types', function (Blueprint $table) {
-            //
+            $table->dropColumn('analytics_table_type');
+            $table->dropColumn('target_model');
         });
     }
 }

@@ -17,6 +17,7 @@ return array(
     'AddReqestResponseToLogTable' => $baseDir . '/database/migrations/2018_03_14_102517_add_reqest_response_to_log_table.php',
     'AddSoftDeletesToCustomStoreGroupTable' => $baseDir . '/database/migrations/2018_06_18_120339_add_soft_deletes_to_custom_store_group_table.php',
     'AddSportCatToCommunityDonationsTable' => $baseDir . '/database/migrations/2018_01_29_112304_add_sport_cat_to_community_donations_table.php',
+    'AnalyticsAssetTypeSeeder' => $baseDir . '/database/seeds/AnalyticsAssetTypeSeeder.php',
     'AnalyticsAssetTypesTableSeeder' => $baseDir . '/database/seeds/AnalyticsAssetTypesTableSeeder.php',
     'App\\Models\\Alert\\Alert' => $baseDir . '/app/Models/Alert/Alert.php',
     'App\\Models\\Alert\\AlertType' => $baseDir . '/app/Models/Alert/AlertType.php',

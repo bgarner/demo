@@ -61,7 +61,8 @@ class DatabaseSeeder extends Seeder
 
         // $this->call(UpdateStoreDistrictMap::class);
 
-        $this->call(StoreSubComponentsTableSeeder::class);        
+        // $this->call(StoreSubComponentsTableSeeder::class); 
+        $this->call(AnalyticsAssetTypeSeeder::class);       
 
     }
 }

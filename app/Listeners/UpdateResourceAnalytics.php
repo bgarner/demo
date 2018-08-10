@@ -1,10 +1,12 @@
-<?php
+<?php 
 
 namespace App\Listeners;
 
 use App\Events\RawAnalyticsUpdated;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Models\Analytics\AnalyticsAssetTypes;
+use App\Models\Analytics\AnalyticsCollection;
 
 class UpdateResourceAnalytics
 {
@@ -26,9 +28,25 @@ class UpdateResourceAnalytics
      */
     public function handle(RawAnalyticsUpdated $event)
     {
-        \Log::info('Coming from listener');
-        \Log::info($event->analytics);
-        \Log::info('***********');
+        $analytics = $event->analytics;
         
+        $assetType = AnalyticsAssetTypes::where('analytics_table_type', $analytics->type)
+                        ->first();
+        if(!$assetType){
+            return;
+        }
+        
+        $analyticsCollection = AnalyticsCollection::where('resource_id', $analytics->resource_id)
+                                                ->where('asset_type_id', $assetType->id)
+                                                ->first();
+        if($analyticsCollection){
+            AnalyticsCollection::updateAnalyticsCollection($analytics, $assetType);
+        }
+        else{
+            AnalyticsCollection::createNewAnalyticsCollection($analytics, $assetType);
+        }
+
+
+            
     }
 }

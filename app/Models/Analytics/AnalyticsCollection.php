@@ -186,4 +186,52 @@ class AnalyticsCollection extends Model
 
         return[];
     }
+
+    public static function createNewAnalyticsCollection($analytics, $assetType)
+    {
+        \Log::info('creating new collection');
+        $targetModel = new $assetType->target_model();
+        $opened = [$analytics->store_number];
+        $sent_to = $targetModel->getTargetStores($analytics->resource_id);
+        $unopened = array_diff($sent_to, $opened);
+
+        AnalyticsCollection::create([
+            'resource_id'    => $analytics->resource_id,
+            'asset_type_id'  => $assetType->id,
+            'opened_total'   => count($opened),
+            'unopened_total' => count($unopened),
+            'sent_to_total'  => count($sent_to),
+            'opened'         => serialize($opened),
+            'unopened'       => serialize($unopened),
+            'sent_to'        => serialize($sent_to),
+        ]);
+
+    }
+
+    public static function updateAnalyticsCollection($analytics, $assetType)
+    {
+        \Log::info('updating collection');
+        $analyticsCollection = AnalyticsCollection::where('asset_type_id', $assetType->id)
+                                    ->where('resource_id', $analytics->resource_id)
+                                    ->first();
+        
+        $opened = unserialize($analyticsCollection->opened);
+
+        if(array_search($analytics->store_number, $opened) === false){
+            array_push($opened, $analytics->store_number);
+            $unopened = array_diff(
+                            unserialize($analyticsCollection->unopened), 
+                            [$analytics->store_number]
+                        );
+
+            $analyticsCollection->update([
+                'opened_total'   => count($opened),
+                'unopened_total' => count($unopened),
+                'opened'         => serialize($opened),
+                'unopened'       => serialize($unopened)
+
+            ]);
+        }
+        
+    }
 }
