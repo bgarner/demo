@@ -189,7 +189,6 @@ class AnalyticsCollection extends Model
 
     public static function createNewAnalyticsCollection($analytics, $assetType)
     {
-        \Log::info('creating new collection');
         $targetModel = new $assetType->target_model();
         $opened = [$analytics->store_number];
         $sent_to = $targetModel->getTargetStores($analytics->resource_id);
@@ -210,7 +209,6 @@ class AnalyticsCollection extends Model
 
     public static function updateAnalyticsCollection($analytics, $assetType)
     {
-        \Log::info('updating collection');
         $analyticsCollection = AnalyticsCollection::where('asset_type_id', $assetType->id)
                                     ->where('resource_id', $analytics->resource_id)
                                     ->first();
@@ -233,5 +231,63 @@ class AnalyticsCollection extends Model
             ]);
         }
         
+    }
+
+    public static function createNewTaskAnalyticsCollection($analytics, $assetType)
+    {   
+        $targetModel = new $assetType->target_model();
+        $opened = [$analytics->store_id];
+        $sent_to = $targetModel->getTargetStores($analytics->task_id);
+        $unopened = array_diff($sent_to, $opened);
+
+        AnalyticsCollection::create([
+            'resource_id'    => $analytics->task_id,
+            'asset_type_id'  => $assetType->id,
+            'opened_total'   => count($opened),
+            'unopened_total' => count($unopened),
+            'sent_to_total'  => count($sent_to),
+            'opened'         => serialize($opened),
+            'unopened'       => serialize($unopened),
+            'sent_to'        => serialize($sent_to),
+        ]);
+    }
+
+    public static function updateTaskAnalyticsCollection($analytics, $assetType)
+    {
+        
+        $analyticsCollection = AnalyticsCollection::where('asset_type_id', $assetType->id)
+                                        ->where('resource_id', $analytics->task_id)
+                                        ->first();
+            
+        $opened = unserialize($analyticsCollection->opened);
+        $unopened = unserialize($analyticsCollection->unopened);
+
+        if($analytics->status_type_id == 2){ //done
+                
+            array_push($opened, $analytics->store_id);
+            $unopened = array_diff(
+                            unserialize($analyticsCollection->unopened), 
+                            [$analytics->store_id]
+                        );
+
+
+        }
+        else if($analytics->status_type_id == 1){ // not done
+            array_push($unopened, $analytics->store_id);
+            $opened = array_diff(
+                            unserialize($analyticsCollection->opened), 
+                            [$analytics->store_id]
+                        );
+        }
+
+
+        $analyticsCollection->update([
+                    'opened_total'   => count($opened),
+                    'unopened_total' => count($unopened),
+                    'opened'         => serialize($opened),
+                    'unopened'       => serialize($unopened)
+
+                ]);
+
     }
 }

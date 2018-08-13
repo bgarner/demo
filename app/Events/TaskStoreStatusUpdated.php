@@ -15,7 +15,7 @@ class TaskStoreStatusUpdated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $taskStoreStatus;
+    public $analytics;
     /**
      * Create a new event instance.
      *
@@ -23,7 +23,7 @@ class TaskStoreStatusUpdated
      */
     public function __construct(TaskStoreStatus $taskStoreStatus)
     {
-        $this->$taskStoreStatus = $taskStoreStatus;
+        $this->analytics = $taskStoreStatus;
     }
 
 }

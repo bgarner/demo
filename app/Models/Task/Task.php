@@ -19,6 +19,7 @@ use App\Models\Auth\User\UserBanner;
 use Carbon\Carbon;
 use App\Models\Tools\CustomStoreGroup;
 use App\Models\Video\Playlist;
+use App\Events\TaskStoreStatusUpdated;
 
 class Task extends Model
 {
@@ -195,7 +196,7 @@ class Task extends Model
 				'status_type_id' => $updatedStatus->id
 				]);
 		}
-		$store_status->put('asset_type_id', 4); //from analytics_asset_types
+		$store_status['asset_type_id'] = 4; //from analytics_asset_types
 		event(new TaskStoreStatusUpdated($store_status));
 		return $store_status;		
 	}
