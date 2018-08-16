@@ -616,6 +616,10 @@ class Document extends Model
             }
         }
 
+        event(new ResouceTargetUpdated([
+            'resource_id'=> $document->id ,
+            'asset_type_id' => 2
+        ]));
         return;
     }
 

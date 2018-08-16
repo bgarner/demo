@@ -113,6 +113,10 @@ class VideoTarget extends Model
             
         } 
         Utility::addHeadOffice($id, 'video_target', 'video_id'); 
+        event(new ResouceTargetUpdated([
+            'resource_id'=> $id ,
+            'asset_type_id' => 5
+        ]));
         return;         
     }
 }

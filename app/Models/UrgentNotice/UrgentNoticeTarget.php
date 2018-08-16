@@ -114,6 +114,10 @@ class UrgentNoticeTarget extends Model
             
         }  
         Utility::addHeadOffice($id, 'urgent_notice_target', 'urgent_notice_id');
+        event(new ResouceTargetUpdated([
+            'resource_id'=> $id ,
+            'asset_type_id' => 3
+        ]));
         return;      
     } 
 }

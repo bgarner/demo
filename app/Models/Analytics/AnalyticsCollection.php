@@ -290,4 +290,21 @@ class AnalyticsCollection extends Model
                 ]);
 
     }
+
+    public static function updateResourceTarget($resource, $assetType)
+    {
+        \Log::info("In Analytics Collection");
+        $targetModel = new $assetType->target_model();
+        $sent_to = $targetModel->getTargetStores($resource['resource_id']);
+
+        $analyticsCollection = AnalyticsCollection::where('resource_id', $resource['resource_id'])
+            ->where('asset_type_id', $assetType->id)
+            ->first();
+
+         $analyticsCollection->update([
+                'sent_to_total'  => count($sent_to),
+                'sent_to'        => serialize($sent_to)
+            ]);
+
+    }
 }

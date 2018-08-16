@@ -79,6 +79,10 @@ class CommunicationTarget extends Model
             
         }  
         Utility::addHeadOffice($id, 'communications_target', 'communication_id');
+        event(new ResouceTargetUpdated([
+            'resource_id'=> $id ,
+            'asset_type_id' => 1
+        ]));
         return; 
     }
 
