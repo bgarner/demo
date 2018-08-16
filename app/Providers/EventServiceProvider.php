@@ -19,6 +19,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\TaskStoreStatusUpdated' => [
             'App\Listeners\UpdateTaskAnalytics',
         ],
+        'App\Events\ResouceTargetUpdated' => [
+            'App\Listeners\UpdateResourceTargetAnalytics',
+        ],
     ];
 
     /**
