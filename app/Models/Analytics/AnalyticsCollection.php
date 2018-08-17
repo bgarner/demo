@@ -293,7 +293,7 @@ class AnalyticsCollection extends Model
 
     public static function updateResourceTarget($resource, $assetType)
     {
-        \Log::info("In Analytics Collection");
+        
         $targetModel = new $assetType->target_model();
         $sent_to = $targetModel->getTargetStores($resource['resource_id']);
 
@@ -301,9 +301,14 @@ class AnalyticsCollection extends Model
             ->where('asset_type_id', $assetType->id)
             ->first();
 
-         $analyticsCollection->update([
+        $opened = unserialize($analyticsCollection->opened);
+        $unopened = array_diff($sent_to, $opened);
+        $analyticsCollection->update([
                 'sent_to_total'  => count($sent_to),
-                'sent_to'        => serialize($sent_to)
+                'sent_to'        => serialize($sent_to),
+                'unopened_total' => count($unopened),
+                'unopened'       => serialize($unopened),
+
             ]);
 
     }

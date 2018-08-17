@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Models\Analytics\AnalyticsAssetTypes;
 use App\Models\Analytics\AnalyticsCollection;
 
-class UpdateResourceAnalytics
+class UpdateResourceAnalytics implements ShouldQueue
 {
     /**
      * Create the event listener.

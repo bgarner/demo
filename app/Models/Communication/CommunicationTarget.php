@@ -11,6 +11,7 @@ use App\Models\StoreApi\StoreInfo;
 use App\Models\Communication\Communication;
 use App\Models\StoreApi\Banner;
 use App\Models\Communication\CommunicationStoreGroup;
+use App\Events\ResouceTargetUpdated;
 
 class CommunicationTarget extends Model
 {

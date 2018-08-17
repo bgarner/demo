@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Models\Analytics\AnalyticsAssetTypes;
 use App\Models\Analytics\AnalyticsCollection;
 
-class UpdateTaskAnalytics
+class UpdateTaskAnalytics implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -26,14 +26,15 @@ class UpdateTaskAnalytics
      * @param  TaskStoreStatusUpdated  $event
      * @return void
      */
-    public function handle(TaskStoreStatusUpdated $event)
+    public function handle($event)
     {
+        
         $analytics = $event->analytics;
-
-        $assetType = AnalyticsAssetTypes::find($analytics->asset_type_id);
+        
+        $assetType = AnalyticsAssetTypes::find(4); //asset_type_id for task
 
         $analyticsCollection = AnalyticsCollection::where('resource_id', $analytics->task_id)
-                                                ->where('asset_type_id', $analytics->asset_type_id)
+                                                ->where('asset_type_id', $assetType->id)
                                                 ->first();
 
         if($analyticsCollection){

@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Models\Analytics\AnalyticsAssetTypes;
 use App\Models\Analytics\AnalyticsCollection;
 
-class UpdateResourceTargetAnalytics
+class UpdateResourceTargetAnalytics implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -28,7 +28,6 @@ class UpdateResourceTargetAnalytics
      */
     public function handle(ResouceTargetUpdated $event)
     {
-        \Log::info('In Listener');
         $resource = $event->resource;
 
         $assetType = AnalyticsAssetTypes::find($resource['asset_type_id']);

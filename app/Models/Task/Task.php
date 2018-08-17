@@ -196,7 +196,7 @@ class Task extends Model
 				'status_type_id' => $updatedStatus->id
 				]);
 		}
-		$store_status['asset_type_id'] = 4; //from analytics_asset_types
+		
 		event(new TaskStoreStatusUpdated($store_status));
 		return $store_status;		
 	}

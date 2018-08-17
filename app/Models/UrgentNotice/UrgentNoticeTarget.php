@@ -8,6 +8,7 @@ use App\Models\StoreApi\Banner;
 use App\Models\UrgentNotice\UrgentNoticeBanner;
 use App\Models\Utility\Utility;
 use App\Models\UrgentNotice\UrgentNoticeStoreGroup;
+use App\Events\ResouceTargetUpdated;
 
 class UrgentNoticeTarget extends Model
 {

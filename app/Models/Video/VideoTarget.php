@@ -9,6 +9,7 @@ use App\Models\Video\VideoBanner;
 use App\Models\Video\VideoTarget;
 use App\Models\Video\VideoStoreGroup;
 use App\Models\Utility\Utility;
+use App\Events\ResouceTargetUpdated;
 
 class VideoTarget extends Model
 {
