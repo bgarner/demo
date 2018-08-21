@@ -12,7 +12,7 @@ class Resource extends Model
     public static function createResource($resource_type_id, $resource_id)
     {
     	\Log::info($resource_type_id);
-    	\Log::info($resource_id)
+    	\Log::info($resource_id);
 
     	$resource = Self::create([
     		'resource_type_id' => $resource_type_id, 

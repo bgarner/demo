@@ -256,6 +256,7 @@ class Search extends Model
                                 ->where('subject', 'LIKE', '%'.$term.'%')
                                 ->where('store_id', '=', $store)
                                 ->where('archive_at', '<=', $today)
+                                ->select('communications.*')
                                 ->get()
                     );
 
@@ -263,6 +264,7 @@ class Search extends Model
                                 Communication::where('subject', 'LIKE', '%'.$term.'%')
                                 ->where('all_stores', 1)
                                 ->where('archive_at', '<=', $today)
+                                ->select('communications.*')
                                 ->get()
                     );
 
