@@ -9,6 +9,7 @@ use App\Models\Video\VideoBanner;
 use App\Models\Video\VideoTarget;
 use App\Models\Video\VideoStoreGroup;
 use App\Models\Utility\Utility;
+use App\Events\ResouceTargetUpdated;
 
 class VideoTarget extends Model
 {
@@ -113,6 +114,10 @@ class VideoTarget extends Model
             
         } 
         Utility::addHeadOffice($id, 'video_target', 'video_id'); 
+        event(new ResouceTargetUpdated([
+            'resource_id'=> $id ,
+            'asset_type_id' => 5
+        ]));
         return;         
     }
 }

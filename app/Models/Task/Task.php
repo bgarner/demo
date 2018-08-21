@@ -19,6 +19,7 @@ use App\Models\Auth\User\UserBanner;
 use Carbon\Carbon;
 use App\Models\Tools\CustomStoreGroup;
 use App\Models\Video\Playlist;
+use App\Events\TaskStoreStatusUpdated;
 
 class Task extends Model
 {
@@ -186,17 +187,18 @@ class Task extends Model
 		if($store_status){
 			$store_status['status_type_id'] = $updatedStatus->id;
 			$store_status->save();
-			return $store_status;
 		}
 		else{
 			
-			return TaskStoreStatus::create([
+			$store_status = TaskStoreStatus::create([
 				'store_id' => $storeNumber,
 				'task_id'  => $task_id,
 				'status_type_id' => $updatedStatus->id
 				]);
 		}
 		
+		event(new TaskStoreStatusUpdated($store_status));
+		return $store_status;		
 	}
 
 	public static function deleteTask($task_id)

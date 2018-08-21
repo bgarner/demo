@@ -22,6 +22,7 @@ use App\Models\Feature\FeatureDocument;
 use App\Models\Communication\CommunicationDocument;
 use App\Models\UrgentNotice\UrgentNoticeDocument;
 use App\Models\StoreApi\StoreInfo;
+use App\Events\ResouceTargetUpdated;
 
 
 class Document extends Model
@@ -616,6 +617,10 @@ class Document extends Model
             }
         }
 
+        event(new ResouceTargetUpdated([
+            'resource_id'=> $document->id ,
+            'asset_type_id' => 2
+        ]));
         return;
     }
 

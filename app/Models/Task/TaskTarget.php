@@ -8,6 +8,7 @@ use App\Models\StoreApi\Banner;
 use App\Models\Task\TaskBanner;
 use App\Models\Task\TaskTarget;
 use App\Models\Task\TaskStoreGroup;
+use App\Events\ResouceTargetUpdated;
 
 class TaskTarget extends Model
 {
@@ -83,6 +84,12 @@ class TaskTarget extends Model
             
         } 
         Utility::addHeadOffice($id, 'tasks_target', 'task_id');
+
+        
+        event(new ResouceTargetUpdated([
+            'resource_id'=> $id ,
+            'asset_type_id' => 4
+        ]));
 
         return;         
 
