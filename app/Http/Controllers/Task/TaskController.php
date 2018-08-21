@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\Task;
 
-use App\Models\Task\Task;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Request as RequestFacade;
-use DB;
-
-use App\Models\StoreApi\StoreInfo;
+use App\Models\Task\Task;
 use App\Models\Task\Tasklist;
 
 class TaskController extends Controller

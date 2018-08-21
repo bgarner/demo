@@ -11,6 +11,7 @@ use App\Models\StoreApi\StoreInfo;
 use App\Models\Communication\Communication;
 use App\Models\StoreApi\Banner;
 use App\Models\Communication\CommunicationStoreGroup;
+use App\Events\ResouceTargetUpdated;
 
 class CommunicationTarget extends Model
 {
@@ -79,6 +80,10 @@ class CommunicationTarget extends Model
             
         }  
         Utility::addHeadOffice($id, 'communications_target', 'communication_id');
+        event(new ResouceTargetUpdated([
+            'resource_id'=> $id ,
+            'asset_type_id' => 1
+        ]));
         return; 
     }
 
