@@ -31,7 +31,7 @@ class FlashSaleController extends Controller
         
         $data = FlashSale::getDataByStoreNumber($this->storeNumber);
         $last_updated = FlashSale::getLastUpdatedDate();
-        $sale_date = FlashSale::getSaleDate();
+        $sale_date = FlashSale::getSaleDate($this->storeNumber);
         if(!$last_updated){
             $last_updated = "";
         }
