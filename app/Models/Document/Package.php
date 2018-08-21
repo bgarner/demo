@@ -180,8 +180,8 @@ class Package extends Model
                             ->get()
                             ->each(function($document){
                                 $document["folder_path"] = Document::getFolderPathForDocument($document->id);
-                                $document->link = Utility::getModalLink($document->filename, $document->title, $document->original_extension, 0);
-                                $document->link_with_icon = Utility::getModalLink($document->filename, $document->title, $document->original_extension, 1);
+                                $document->link = Utility::getModalLink($document->filename, $document->title, $document->original_extension, $document->id, 0);
+                                $document->link_with_icon = Utility::getModalLink($document->filename, $document->title, $document->original_extension, $document->id, 1);
                                 $document->icon = Utility::getIcon($document->original_extension);
                                 $document->prettyDate = Utility::prettifyDate($document->start);
                                 $document->since = Utility::getTimePastSinceDate($document->start);

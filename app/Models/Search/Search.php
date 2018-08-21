@@ -60,7 +60,7 @@ class Search extends Model
 
 
         foreach($docs as $doc){
-            $doc->modalLink = Utility::getModalLink($doc->filename, $doc->title, $doc->original_extension, 1, 0);
+            $doc->modalLink = Utility::getModalLink($doc->filename, $doc->title, $doc->original_extension, $doc->id, 1, 0);
             $doc->since = Utility::getTimePastSinceDate($doc->updated_at);
             $doc->icon = Utility::getIcon($doc->original_extension);
             $folder_info = Document::getFolderInfoByDocumentId($doc->id);
@@ -114,7 +114,7 @@ class Search extends Model
 
         foreach($docs as $doc){
             $doc->archived = true;
-            $doc->modalLink = Utility::getModalLink($doc->filename, $doc->title, $doc->original_extension, 1, 0);
+            $doc->modalLink = Utility::getModalLink($doc->filename, $doc->title, $doc->original_extension, $doc->id, 1, 0);
             $doc->since = Utility::getTimePastSinceDate($doc->updated_at);
             $doc->icon = Utility::getIcon($doc->original_extension);
             $folder_info = Document::getFolderInfoByDocumentId($doc->id);
@@ -327,7 +327,7 @@ class Search extends Model
 
 
         foreach ($alerts as $alert) {
-            $alert->modalLink = Utility::getModalLink($alert->filename, $alert->title, $alert->original_extension, 1, 0);
+            $alert->modalLink = Utility::getModalLink($alert->filename, $alert->title, $alert->original_extension, $alert->id, 1, 0);
             $alert->since = Utility::getTimePastSinceDate($alert->start);
             $alert->rank = 1;
         }
@@ -376,7 +376,7 @@ class Search extends Model
 
         foreach ($alerts as $alert) {
             $alert->archived = true;
-            $alert->modalLink = Utility::getModalLink($alert->filename, $alert->title, $alert->original_extension, 1, 0);
+            $alert->modalLink = Utility::getModalLink($alert->filename, $alert->title, $alert->original_extension, $alert->id, 1, 0);
             $alert->since = Utility::getTimePastSinceDate($alert->start);
             $alert->rank = 1;
         }

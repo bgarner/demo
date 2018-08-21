@@ -25,7 +25,7 @@ class FolderController extends Controller
         $storeNumber = strval(RequestFacade::segment(1));
 
         $documents = Document::getDocuments($folder_id, true, $storeNumber);
-
+        \Log::info($folder_id);
         $folder = Folder::getFolderDescription($folder_id);
         $response = [];
         // $response["files"] = $documents;

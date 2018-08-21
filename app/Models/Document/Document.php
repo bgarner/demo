@@ -79,7 +79,6 @@ class Document extends Model
             if (count($documents) > 0) {
 
                 foreach ($documents as $document) {
-
                     //$document = Document::getDocumentMetaData();
                     $document->link = Utility::getModalLink($document->filename, $document->title, $document->original_extension, $document->id, 0);
                     $document->link_with_icon = Utility::getModalLink($document->filename, $document->title, $document->original_extension, $document->id, 1);
