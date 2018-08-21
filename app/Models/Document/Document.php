@@ -277,7 +277,8 @@ class Document extends Model
         \Log::info($request->all());
 
         $document       = Document::find($id);
-
+        \Log::info($document);
+        
         if(isset($request['title'])){
             $document['title']  = $request->get('title');
         }
