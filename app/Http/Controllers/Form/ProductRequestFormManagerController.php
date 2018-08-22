@@ -26,7 +26,7 @@ class ProductRequestFormManagerController extends Controller
     	$this->user_id = \Auth::user()->id;
 
         $storesByBanner = StoreInfo::getStoreListingByManagerId($this->user_id)->groupBy('banner_id');
-        $stores = $storesByBanner->flatten()->toArray();
+        $stores = $storesByBanner->flatten()->pluck('store_number')->toArray();
 
         $forms = FormData::getAdminFormDataByFormIdAndStoreList($this->form_id, $stores);
         
