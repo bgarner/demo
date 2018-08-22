@@ -126,20 +126,26 @@ class FormData extends Model
         return $formInstance;
     }
 
-    public static function getNewFormInstanceCount($form_id)
+    public static function getNewFormInstanceCount($form_id, $stores = null)
     {
         return FormData::join('form_instance_status', 'form_instance_status.form_data_id', '=', 'form_data.id')
                                         ->where('form_id', $form_id)
                                         ->where('form_instance_status.status_code_id', Self::$new_request_status_code_id)
+                                        ->when($stores, function($query) use ($stores) {
+                                            return $query->whereIn( 'form_data.store_number' , $stores);
+                                        })
                                         ->select('form_data.*')
                                         ->count();
     }
 
-    public static function getInProgressFormInstanceCount($form_id)
+    public static function getInProgressFormInstanceCount($form_id, $stores = null)
     {
         return FormData::join('form_instance_status', 'form_instance_status.form_data_id', '=', 'form_data.id')
                                         ->where('form_id', $form_id)
                                         ->whereNotIn('form_instance_status.status_code_id', [Self::$new_request_status_code_id, Self::$closed_request_status_code_id])
+                                        ->when($stores, function($query) use ($stores) {
+                                            return $query->whereIn( 'form_data.store_number' , $stores);
+                                        })
                                         ->select('form_data.*')
                                         ->count();
     }

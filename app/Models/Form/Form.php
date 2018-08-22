@@ -4,6 +4,8 @@ namespace App\Models\Form;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Auth\User\UserRole;
+use App\Models\Auth\Group\GroupRole;
+use App\Models\StoreApi\StoreInfo;
 
 class Form extends Model
 {
@@ -24,13 +26,32 @@ class Form extends Model
 
         $formIds = FormRoleMap::getFormListByRoleId();
 
+        if( \Auth::user()->group_id == 2 ){ 
+
+            $user_id = \Auth::user()->id;
+            $storesByBanner = StoreInfo::getStoreListingByManagerId($user_id)->groupBy('banner_id');
+            $stores = $storesByBanner->flatten()->pluck('store_number')->toArray();
+        }
+
         $forms = Form::whereIn('id', $formIds)
                     ->select('forms.*')
-                    ->get()
-                    ->each(function($form){
-                        $form->count_new = FormData::getNewFormInstanceCount( $form->id);
+                    ->get();
+
+        if(isset($stores)) {
+            $forms->each(function($form) use($stores) {
+
+                        $form->count_new = FormData::getNewFormInstanceCount($form->id, $stores);
+                        $form->count_in_progress = FormData::getInProgressFormInstanceCount($form->id, $stores);
+                    });
+        }
+        else{
+            $forms->each(function($form){
+
+                        $form->count_new = FormData::getNewFormInstanceCount($form->id);
                         $form->count_in_progress = FormData::getInProgressFormInstanceCount($form->id);
                     });
+        }
+                    
 
         
         return $forms;

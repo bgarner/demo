@@ -12,9 +12,10 @@ class FormListManagerController extends Controller
 {
     public function index()
     {
-        $permissions = RolePermission::getPermissionsByRoleId();
+
         $forms = Form::getFormsByAdminRoleId();
         return view('manager.form.formlist.index')->with('forms', $forms);
     }
     
 }
+
