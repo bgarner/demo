@@ -87,9 +87,6 @@ class FlashSale extends Model
                     FlashSale::insertRecords($request, $csvFile);
                     break;
             }
-
-
-
         }
     }
 
@@ -112,7 +109,7 @@ class FlashSale extends Model
                         'size' => (isset($row[11]) ? $row[11] : ''),
                         'on_hand' => (isset($row[12])? $row[12] : ''),
                         // 'sale_date' => $request->sale_date
-                        'sale_date' => '2018-08-31 00:00:00'
+                        'sale_date' => $request->sale_date
                     )
                 );
                 }

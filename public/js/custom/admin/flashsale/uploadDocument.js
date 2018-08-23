@@ -28,6 +28,7 @@ var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
         formData.append("_token", $('[name=_token').val()); // Laravel expect the token post value to be named _token by default
         // formData.append("banner_id", $('[name=banner_id]').val());
         formData.append("uploadOption", $('#uploadOptionFlashSale option:selected').val());
+        formData.append("sale_date", $('#sale_date').val());
 
     },
     init: function () {

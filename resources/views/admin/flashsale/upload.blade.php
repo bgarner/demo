@@ -38,6 +38,22 @@
                                     </div>
                                 </div>
                                 <div class="ibox-content">
+
+                                    <div class="datepicker-div">
+
+                                        <label class="col-sm-2 control-label">Sale Date</label>
+
+                                        <div class="col-sm-10">
+                                            <div class="" id="datepicker">
+                                                <input type="text" class="input-sm form-control datetimepicker-start" name="sale_date" id="sale_date" value="" />
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <br>
+
                                     <div class="ibox-content form-group form-horizontal">
 
                                         <div id="file-uploader" class="visible">
@@ -148,6 +164,7 @@
 
         <script type="text/javascript" src="/js/vendor/dropzone.js"></script>
         <script type="text/javascript" src="/js/custom/admin/flashsale/uploadDocument.js"></script>
+        <script type="text/javascript" src="/js/custom/datetimepicker-with-default-time.js"></script>
 
         <script type="text/javascript">
 
