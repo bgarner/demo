@@ -56,7 +56,8 @@ $('button.cleannode').on('click', function() {
     console.log( cleanJSON );
 
     $.ajax({
-        url: "http://ordermgmt-qat.cicada.cs.ctc/OrderManagement/manageInventoryNodeControl",
+        //url: "http://ordermgmt-qat.cicada.cs.ctc/OrderManagement/manageInventoryNodeControl",
+        url: "http://ordermgmt.dragonfly.cs.ctc/OrderManagement/manageInventoryNodeControl",
         type: 'POST',
         dataType: "JSON",
         crossDomain: true,
