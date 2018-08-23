@@ -1,17 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Calendar;
+namespace App\Http\Controllers\Tools;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\StoreApi\Banner;
-use App\Models\StoreApi\StoreInfo;
-use App\Models\Auth\User\UserSelectedBanner;
-use App\Models\ProductLaunch\ProductLaunch;
+use App\Models\Tools\FlashSale\FlashSale;
 
-class ProductLaunchAdminController extends Controller
+class FlashSaleAdminController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,8 +15,8 @@ class ProductLaunchAdminController extends Controller
      */
     public function index()
     {
-        $productLaunches = ProductLaunch::getAllProductLaunches();
-        return view('admin.productlaunch.index')->with('productLaunches', $productLaunches);
+        $flashSaleData = FlashSale::getAllFlashSaleData();
+        return view('admin.flashsale.index')->with('flashSaleData', $flashSaleData);
     }
 
     /**
@@ -32,7 +27,7 @@ class ProductLaunchAdminController extends Controller
     public function create()
     {
 
-        return view('admin.productlaunch.upload');
+        return view('admin.flashsale.upload');
     }
 
     /**
@@ -43,8 +38,6 @@ class ProductLaunchAdminController extends Controller
      */
     public function store(Request $request)
     {
-        return ProductLaunch::addProductLaunchData($request);
+        return FlashSale::addFlashSaleData($request);
     }
-
-
 }

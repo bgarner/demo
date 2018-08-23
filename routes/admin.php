@@ -164,6 +164,10 @@ Route::patch('/admin/subcomponent/{id}', 'StoreComponent\SubComponentAdminContro
 Route::get('/admin/dirtynodes', 'Tools\DirtyNodesAdminController@index');
 Route::get('/admin/dirtynodes/report', 'Tools\DirtyNodesAdminController@show');
 
+//Flash Sale
+Route::get('/admin/flashsale', 'Tools\FlashSaleAdminController@index');
+Route::get('/admin/flashsale/create', 'Tools\FlashSaleAdminController@create');
+Route::post('/admin/flashsale', 'Tools\FlashSaleAdminController@store');
 
 //Store Structure
 Route::resource('/admin/store', 'StoreApi\StoreAdminController');
