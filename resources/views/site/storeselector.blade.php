@@ -23,7 +23,11 @@
 
                 <center>
                 <h1 class="animated fadeInDown" style="padding-top: 100px;">
+                @if (env('BANNER') == "FGL")
                     <img src="/images/welcome-logo.png" />
+                @else
+                    <img src="/images/welcome-logo-marks.png" />
+                @endif
                 </h1>
                 </center>
     <div class="middle-box text-center loginscreen animated fadeInDown">
