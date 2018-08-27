@@ -108,7 +108,6 @@ class FlashSale extends Model
                         'colour' => (isset($row[10])? $row[10] : ''),
                         'size' => (isset($row[11]) ? $row[11] : ''),
                         'on_hand' => (isset($row[12])? $row[12] : ''),
-                        // 'sale_date' => $request->sale_date
                         'sale_date' => $request->sale_date
                     )
                 );
