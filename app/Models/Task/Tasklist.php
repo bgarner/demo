@@ -233,13 +233,14 @@ class Tasklist extends Model
 		TasklistTarget::updateTargetStores($tasklist->id, $request);
 
         if ($request['tasks'] != NULL) {
-    		foreach ($request->tasks as $task) {
-
+    		foreach ($request->tasks as $key=>$task) {
+                
     			$request['title'] = $task;
     			$request['send_reminder'] = NULL;
+                $request['description'] = $request->task_descriptions[$key];
     			$task = Task::createTask($request);
     			
-    			//task is a json string if the validation fails while creating task.
+    			//$task is a json string if the validation fails while creating task.
     			//if task is not created, tasklist-task map need not exist. 
     			if(!is_string($task)){ 
     				

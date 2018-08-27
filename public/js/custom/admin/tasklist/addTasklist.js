@@ -6,20 +6,40 @@ var stageTask = function(){
 	}
 	$(".task-table tbody").append(
 		'<tr>'+
-            '<td class="col-sm-10 col-sm-offset-2 task-title" '+
+            '<td class="col-sm-4 col-sm-offset-2 task-title" '+
                 '>'+
                 $("#new_task").val()+
             '</td>'+
-        '<td></td>'+
-        '<td><a '+
+        	'<td class="col-sm-4 task-description">'+ CKEDITOR.instances['task_description'].getData() +'</td>'+
+        	'<td><a '+
                 '" class="remove-staged-task btn btn-danger btn-sm">'+
-                '<i class="fa fa-trash"></i></a></td>'+
+                '<i class="fa fa-trash"></i></a>'+
+            '</td>'+
         '</tr>'
 
 	);
 	$(".task-table").removeClass('hidden').addClass('visible');	
 	$("#new_task").val('');
 };
+
+$('#description_popover').popover({
+   
+    placement: 'bottom',
+    title: 'Description',
+    html: true,
+    content:  $('#description_container').html()
+
+}).on('shown.bs.popover', function () {
+    
+    CKEDITOR.replace('task_description');
+    CKEDITOR.instances['task_description'].on('change', function() {
+        
+        // $("#task_description").val(CKEDITOR.instances['description'].getData());
+        // console.log($("#task_description").val());
+    });
+    
+});
+
 
 $( "#new_task" ).keypress(function( event ) {
   if ( event.which == 13 ) {
@@ -51,7 +71,12 @@ $(document).on('click','.tasklist-create',function(){
 	$(".task-title").each(function(index, value){
 		tasks.push($(this).text());
 	});	
+	var task_descriptions = [];
+	$(".task-description").each(function(index, value){
+		task_descriptions.push($(this).html());
+	});	
 
+	console.log(task_descriptions);
 	console.log( target_stores );
 	console.log( target_banners );
 	console.log( store_groups );
@@ -94,7 +119,8 @@ $(document).on('click','.tasklist-create',function(){
 		  		all_stores     : all_stores,
 		  		target_banners : target_banners,
 		  		store_groups   : store_groups,
-		  		tasks : tasks
+		  		tasks : tasks,
+		  		task_descriptions : task_descriptions
 		    },
 		    success: function(result) {
 		    	console.log(result);

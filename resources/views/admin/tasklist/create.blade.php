@@ -73,6 +73,12 @@
 								<div class="hr-line-dashed"></div>
 								<div class="input-group">
 									<input type="text" class="form-control" name="new_task" id="new_task" value="" placeholder="Add Task..."/>
+									<span class="input-group-addon" 
+											style="width:2%;" 
+											id="description_popover"
+											title="Add Description">
+											<i class="fa fa-comment"></i>
+									</span>
 									<span class="input-group-btn" >
 										<a class="btn btn-primary btn-outline" id="add-task" onclick="stageTask()" >
 										<i class="fa fa-plus"></i> Add Task</a>
@@ -114,6 +120,11 @@
 
 
         </div><!-- wrapper closes -->
+        <div hidden>
+	        <div id="description_container">
+	        	<textarea name="task_description" id="task_description" cols="30" rows="10"></textarea>
+	        </div>
+        </div>
 
 		@include('admin.includes.footer')
 
