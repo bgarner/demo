@@ -162,7 +162,7 @@
 
         <script type="text/javascript" src="/js/vendor/dropzone.js"></script>
         <script type="text/javascript" src="/js/custom/admin/flyers/uploadDocument.js"></script>
-        <script type="text/javascript" src="/js/custom/datetimepicker-with-default-time.js"></script>
+        <script type="text/javascript" src="/js/custom/datetimepicker.js"></script>
 
         <script type="text/javascript">
 
