@@ -23,9 +23,10 @@ class TasklistTask extends Model
 
 		$add_tasks = $request["tasks"];
 		if (isset($add_tasks)) {
-			foreach ($add_tasks as $task) {
+			foreach ($add_tasks as $key=>$task) {
 				$request['title'] = $task;
 				$request['send_reminder'] = NULL;
+				$request['description'] = $request->task_descriptions[$key];
 
 				$task = Task::createTask($request);
 				if(!is_string($task)){ 
@@ -41,7 +42,7 @@ class TasklistTask extends Model
 
 		$tasks = Task::whereIn('id', $task_ids)
 					->update([
-						'description' => $request->description, 
+						// 'description' => $request->description, 
 						'due_date' => $request->due_date
 					]);
 

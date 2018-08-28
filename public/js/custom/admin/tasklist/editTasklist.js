@@ -6,11 +6,11 @@ var stageTask = function(){
 	}
 	$(".task-table tbody").append(
 		'<tr>'+
-            '<td class="col-sm-10 col-sm-offset-2 task-title new_task" '+
+            '<td class="col-sm-4 col-sm-offset-2 task-title new_task" '+
                 '>'+
                 $("#new_task").val()+
             '</td>'+
-        '<td></td>'+
+        '<td class="col-sm-4 task-description new_task_description">'+ CKEDITOR.instances['task_description'].getData() +'</td>'+
         '<td><a '+
                 '" class="remove-staged-task btn btn-danger btn-sm">'+
                 '<i class="fa fa-trash"></i></a></td>'+
@@ -28,6 +28,26 @@ $( "#new_task" ).keypress(function( event ) {
   }  
   
 });
+
+
+$('#description_popover').popover({
+   
+    placement: 'bottom',
+    title: 'Description',
+    html: true,
+    content:  $('#description_container').html()
+
+}).on('shown.bs.popover', function () {
+    
+    CKEDITOR.replace('task_description');
+    CKEDITOR.instances['task_description'].on('change', function() {
+        
+        // $("#task_description").val(CKEDITOR.instances['description'].getData());
+        // console.log($("#task_description").val());
+    });
+    
+});
+
 
 
 $('body').on('click', ".remove-task", function(){
@@ -56,16 +76,16 @@ $(document).on('click','.tasklist-update',function(){
 	var store_groups = getStoreGroups();
 	var all_stores = getAllStoreStatus();
 
-	console.log( target_stores.length );
-	console.log( target_banners.length );
-	console.log( store_groups.length );
-	console.log( all_stores.length );
-
 	var remove_tasks = [];
 	var tasks = [];
+	var task_descriptions = [];
 
 	$(".new_task").each(function(index, value){
 		tasks.push($(this).text());
+	});
+
+	$(".new_task_description").each(function(index, value){
+		task_descriptions.push($(this).html());
 	});
 
 
@@ -95,16 +115,17 @@ $(document).on('click','.tasklist-update',function(){
 		    dataType : 'json',
 		    data: {
 
-		  		title          : title,
-		  		description    : description,
-		  		publish_date   : publish_date,
-		  		due_date       : due_date,
-		  		tasks          : tasks,
-		  		remove_tasks   : remove_tasks,
-		  		target_stores  : target_stores,
-		  		all_stores     : all_stores,
-		  		target_banners : target_banners,
-		  		store_groups   : store_groups,
+		  		title             : title,
+		  		description       : description,
+		  		publish_date      : publish_date,
+		  		due_date          : due_date,
+		  		tasks             : tasks,
+		  		remove_tasks      : remove_tasks,
+		  		target_stores     : target_stores,
+		  		all_stores        : all_stores,
+		  		target_banners    : target_banners,
+		  		store_groups      : store_groups,
+		  		task_descriptions : task_descriptions
 
 		    },
 		    
