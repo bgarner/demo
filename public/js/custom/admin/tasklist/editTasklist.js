@@ -1,52 +1,51 @@
-var stageTask = function(){
+// var stageTask = function(){
 
-	var taskTitle =  $("#new_task").val();
-	if(taskTitle == ''){
-		return false;
-	}
-	$(".task-table tbody").append(
-		'<tr>'+
-            '<td class="col-sm-4 col-sm-offset-2 task-title new_task" '+
-                '>'+
-                $("#new_task").val()+
-            '</td>'+
-        '<td class="col-sm-4 task-description new_task_description">'+ CKEDITOR.instances['task_description'].getData() +'</td>'+
-        '<td><a '+
-                '" class="remove-staged-task btn btn-danger btn-sm">'+
-                '<i class="fa fa-trash"></i></a></td>'+
-        '</tr>'
+// 	var taskTitle =  $("#new_task").val();
+// 	if(taskTitle == ''){
+// 		return false;
+// 	}
+// 	$(".task-table tbody").append(
+// 		'<tr class="tasklist-task">'+
+//             '<td class="col-sm-4 col-sm-offset-2 task-title new_task" '+
+//                 '>'+$("#new_task").val()+
+//             '</td>'+
+//         '<td class="col-sm-4 task-description new_task_description">'+ CKEDITOR.instances['task_description'].getData() +'</td>'+
+//         '<td><a '+
+//                 '" class="remove-staged-task btn btn-danger btn-sm">'+
+//                 '<i class="fa fa-trash"></i></a></td>'+
+//         '</tr>'
 
-	);
-	$(".task-table").removeClass('hidden').addClass('visible');	
-	$("#new_task").val('');
-};
+// 	);
+// 	$(".task-table").removeClass('hidden').addClass('visible');	
+// 	$("#new_task").val('');
+// };
 
-$( "#new_task" ).keypress(function( event ) {
-  if ( event.which == 13 ) {
-    event.preventDefault();
-    stageTask();
-  }  
+// $( "#new_task" ).keypress(function( event ) {
+//   if ( event.which == 13 ) {
+//     event.preventDefault();
+//     stageTask();
+//   }  
   
-});
+// });
 
 
-$('#description_popover').popover({
+// $('#description_popover').popover({
    
-    placement: 'bottom',
-    title: 'Description',
-    html: true,
-    content:  $('#description_container').html()
+//     placement: 'bottom',
+//     title: 'Description',
+//     html: true,
+//     content:  $('#description_container').html()
 
-}).on('shown.bs.popover', function () {
+// }).on('shown.bs.popover', function () {
     
-    CKEDITOR.replace('task_description');
-    CKEDITOR.instances['task_description'].on('change', function() {
+//     CKEDITOR.replace('task_description');
+//     CKEDITOR.instances['task_description'].on('change', function() {
         
-        // $("#task_description").val(CKEDITOR.instances['description'].getData());
-        // console.log($("#task_description").val());
-    });
+//         // $("#task_description").val(CKEDITOR.instances['description'].getData());
+//         // console.log($("#task_description").val());
+//     });
     
-});
+// });
 
 
 
@@ -61,6 +60,44 @@ $("body").on('click', ".remove-staged-task", function(){
 	$(this).closest('tr').fadeOut(500).remove();
 
 });
+
+// $("body").on('click', ".tasklist-task", function(e){
+	
+// 	var taskId = $(this).attr('data-taskid');
+// 	var taskTitle = $(this).find('.task-title').html();
+// 	var taskDescription = $(this).find('.task-description').html();
+
+// 	var modal = $('#edit-task-modal');
+// 	var modalBody = $('#edit-task-modal .modal-content');
+    
+//     modal
+//         .on('show.bs.modal', function() {
+//             modalBody.find('input[name="task_title"]').val(taskTitle);
+//             modalBody.find('input[name="task_description"]').val(taskDescription);
+//             var textarea = document.getElementById('task_description_modal');
+//             CKEDITOR.replace(textarea);
+// 			CKEDITOR.instances['task_description_modal'].setData(taskDescription);
+//         })
+//         .modal({show:true})
+//         .on('shown.bs.modal', function () {
+//             $('input[name="task_title"]').focus();
+//         })
+//         .on('hidden.bs.modal', function(){
+
+//         	var newTitle = $('input[name="task_title"]').val();
+//         	var newDescription = CKEDITOR.instances['task_description_modal'].getData();	
+//         	console.log(newTitle, newDescription);
+//         	CKEDITOR.instances['task_description_modal'].destroy();
+//         })
+    
+//     e.preventDefault();
+
+// });
+
+// var updateTask = function(){
+
+// }
+
 
 $(document).on('click','.tasklist-update',function(){
   	

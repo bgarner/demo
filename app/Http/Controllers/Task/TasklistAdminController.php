@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Task;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Task\Tasklist;
-use App\Models\Task\TasklistTarget;
+use App\Models\Task\Task;
+use App\Models\Task\TasklistTask;
 use App\Models\Utility\Utility;
 use App\Models\StoreApi\StoreInfo;
 class TasklistAdminController extends Controller
@@ -30,9 +31,8 @@ class TasklistAdminController extends Controller
      */
     public function create()
     {
-        
-        $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
-        return view('admin.tasklist.create')->with('optGroupOptions', $optGroupOptions);
+        $tasks = Task::getTasksForAdmin();
+        return view('admin.tasklist.create')->with('tasks', $tasks);
 
     }
 
@@ -67,13 +67,13 @@ class TasklistAdminController extends Controller
     public function edit($id)
     {
 
-        $tasklist = Tasklist::getTasklistById($id);
-        $optGroupOptions = Utility::getStoreAndBannerSelectDropdownOptions();
-        $optGroupSelections = json_encode(Tasklist::getSelectedStoresAndBannersByTasklistId($id));
-        
-        return view('admin.tasklist.edit')->with('tasklist', $tasklist)
-                                        ->with('optGroupOptions', $optGroupOptions)
-                                        ->with('optGroupSelections', $optGroupSelections);
+        $tasklist = Tasklist::find($id);
+        $tasks = Task::getTasksForAdmin();
+        $selected_tasks = TasklistTask::getTasksByTasklistId($id);
+        return view('admin.tasklist.edit')
+            ->with('tasklist', $tasklist)
+            ->with('tasks', $tasks)
+            ->with('selected_tasks', $selected_tasks);
     }
 
     /**
