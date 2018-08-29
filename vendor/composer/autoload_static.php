@@ -826,6 +826,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'DistrictTableSeeder' => __DIR__ . '/../..' . '/database/seeds/DistrictTableSeeder.php',
         'DivisionByZeroError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/DivisionByZeroError.php',
         'DropDistrictRegionRegionIdForeignFromDistrictRegionTable' => __DIR__ . '/../..' . '/database/migrations/2018_06_14_163244_drop_district_region_region_id_foreign_from_district_region_table.php',
+        'DropTasklistTargetTable' => __DIR__ . '/../..' . '/database/migrations/2018_08_29_113150_drop_tasklist_target_table.php',
         'Error' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/Error.php',
         'EventTypeBannerTableSeeder' => __DIR__ . '/../..' . '/database/seeds/EventTypeBannerTableSeeder.php',
         'FeatureBannerTableSeeder' => __DIR__ . '/../..' . '/database/seeds/FeatureBannerTableSeeder.php',

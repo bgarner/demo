@@ -73,11 +73,9 @@ class Tasklist extends Model
         $banner_id = StoreInfo::getStoreInfoByStoreId($store_number)->banner_id;
 
 
-        $tasklist = Tasklist::join('tasklist_banner', 'tasklist_banner.tasklist_id', '=', 'tasklists.id')
-                                ->where('all_stores', 1)
-                                ->where('tasklist_banner.banner_id', $banner_id)
-                                ->select('tasklists.*')
-                                ->get();
+        $tasklists = Tasklist::where('banner_id', $banner_id)
+                            ->select('tasklists.*')
+                            ->get();
         
         foreach ($tasklists as $tasklist) {
             $tasklist->prettyDueDate = Utility::prettifyDate($tasklist->due_date);
@@ -145,15 +143,13 @@ class Tasklist extends Model
 
 		$tasklist->save();
 		TasklistTask::updateTasks($tasklist->id, $request);
-
 		return $tasklist;
     }
 
    
 
     public static function deleteTasklist($id)
-    {
-    	
+    {    	
     	TasklistTask::where('tasklist_id', $id)->delete();
     	Tasklist::find($id)->delete();
     	return;
@@ -193,7 +189,7 @@ class Tasklist extends Model
         $tasks = Tasklist::join('tasklist_tasks', 'tasklist_tasks.tasklist_id', '=', 'tasklists.id')
                         ->join('tasks', 'tasks.id', '=', 'tasklist_tasks.task_id')
                         ->where('tasklists.id', $tasklist_id)
-                        ->where('tasklists.due_date' , "<=", $endOfDayToday)
+                        ->where('tasks.due_date' , "<=", $endOfDayToday)
                         ->select('tasks.*')
                         ->get()
                         ->each(function($task){

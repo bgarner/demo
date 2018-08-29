@@ -1,28 +1,3 @@
-// $("#allStores").change(function(){
-
-// 	if ($("#allStores").is(":checked")) {
-
-// 		$("#storeSelect option").each(function(){
-// 			$(this).removeAttr('selected');
-// 		});
-// 		$("#storeSelect").chosen('chosen:updated');
-
-// 		$("#storeSelect option").each(function(index){			
-// 			$(this).prop('selected', 'selected');
-// 		});
-// 		$("#storeSelect").chosen();
-		
-// 	}
-// 	else if ($("#allStores").not(":checked")) {
-// 		$("#storeSelect option").each(function(){
-// 			$(this).removeAttr('selected');
-// 		});
-// 		$("#storeSelect").chosen();
-		
-// 	}
-// });
-
-
 $("#add-documents").click(function(){
 	$("#document-listing").modal('show');
 });

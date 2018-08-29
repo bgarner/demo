@@ -18,7 +18,6 @@ class TasklistController extends Controller
         $tasksCompleted = Tasklist::getAllCompletedTasksByTasklistId($id, $storeNumber);
         $tasklists = Tasklist::getAllTasklistsByStore($storeNumber);
         $title = Tasklist::getTasklistById($id)->title;
-        $tasklists = Tasklist::getAllTasklistsByStore($storeNumber);
         $allIncompleteTasks = Task::getAllIncompleteTasksByStoreId($storeNumber);
 
         return view('site.tasks.index')
@@ -42,7 +41,6 @@ class TasklistController extends Controller
         $tasksCompleted = Tasklist::getAllCompletedTasksByTasklistId($tasklistId, $storeNumber);
         $tasklists = Tasklist::getAllTasklistsByStore($storeNumber);
         $title = Tasklist::getTasklistById($tasklistId)->title;
-        $tasklists = Tasklist::getAllTasklistsByStore($storeNumber);
         $allIncompleteTasks = Task::getAllIncompleteTasksByStoreId($storeNumber);
 
 

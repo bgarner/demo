@@ -334,6 +334,7 @@ return array(
     'DistrictTableSeeder' => $baseDir . '/database/seeds/DistrictTableSeeder.php',
     'DivisionByZeroError' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/DivisionByZeroError.php',
     'DropDistrictRegionRegionIdForeignFromDistrictRegionTable' => $baseDir . '/database/migrations/2018_06_14_163244_drop_district_region_region_id_foreign_from_district_region_table.php',
+    'DropTasklistTargetTable' => $baseDir . '/database/migrations/2018_08_29_113150_drop_tasklist_target_table.php',
     'Error' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/Error.php',
     'EventTypeBannerTableSeeder' => $baseDir . '/database/seeds/EventTypeBannerTableSeeder.php',
     'FeatureBannerTableSeeder' => $baseDir . '/database/seeds/FeatureBannerTableSeeder.php',

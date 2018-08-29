@@ -4,7 +4,7 @@
 <head>
     @section('title', 'Edit Task List')
     @include('admin.includes.head')
-    <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
+    <!-- <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css"> -->
     <link rel="stylesheet" type="text/css" href="/css/custom/tree.css">
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 </head>
@@ -101,45 +101,27 @@
 
 
         </div><!-- wrapper closes -->
-        <!-- <div hidden>
-	        <div id="description_container">
-	        	<textarea name="task_description" id="task_description" cols="30" rows="10"></textarea>
-	        </div>
-        </div>
 
-        <div id="edit-task-modal" class="modal inmodal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-					<div class="modal-header">
-					    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					    <h4 class="modal-title">Edit Task </h4>
-					</div>
-
-					<div class="modal-body">
-					    
-					    <div class="form-group">
-					        <h5 class="clearfix">Title <span class="req">*</span></h5>
-					        <input type="text" name="task_title" class="form-control" >
-					    </div>
-
-					    <div class="form-group">
-					        <h5 class="clearfix">Decription <span class="req">*</span></h5>
-					        <input type="text" name="task_description" id="task_description_modal" class="form-control">
-					    </div>
-					    
-					    
-					</div>
-
-					<div class="modal-footer">
-
-					    <button type="button" class="btn btn-white cancel-modal" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
-					    <button class="btn btn-primary"><i class='fa fa-check'></i> Save changes</button>
-					</div>
-
-                </div>
-            </div>
-        </div>
- -->
+        <div id="task-listing" class="modal fade">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		                <h4 class="modal-title">Select Tasks</h4>
+		            </div>
+		            <div class="modal-body">
+		            	<ul class="tree">
+						@include('admin.tasklist.task-listing-partial', ['tasks' =>$tasks])
+						</ul>
+		            </div>
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		                <button type="button" data-dismiss="modal" class="btn btn-primary attach-selected-tasks" id="attach-selected-tasks">Select Tasks</button>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+        
 
 		@include('admin.includes.footer')
 
@@ -149,14 +131,8 @@
 
 
 		<script type="text/javascript" src="/js/custom/admin/tasklist/editTasklist.js"></script>
-		<!-- <script type="text/javascript" src="/js/vendor/moment.js"></script> -->
-		<!-- <script type="text/javascript" src="/js/vendor/bootstrap-datetimepicker.min.js"></script> -->
 		<script type="text/javascript" src="/js/plugins/ckeditor-custom/ckeditor.js"></script>
-		<!-- <script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script> -->
 		<script type="text/javascript" src="/js/custom/tree.js"></script>
-		<!-- <script type="text/javascript" src="/js/custom/datetimepicker.js"></script> -->
-		<!-- <script type="text/javascript" src="/js/custom/admin/global/storeAndBannerSelector.js"></script> -->
-
 
 		<script type="text/javascript">
 			$.ajaxSetup({
@@ -165,9 +141,6 @@
 		        }
 			});
 
-		    $(".chosen").chosen({
-				  width:'75%'
-			});
 
     		CKEDITOR.replace('description');
 
