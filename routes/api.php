@@ -13,22 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
-//get navigation
-Route::get('/api/v1/banner/{id}/navigation', 'Api\V1\ApiController@getNavigation');
-//get files in folder : query parameter (boolean)isWeek e.g. ?isWeek=false
-Route::get('/api/v1/folder/{id}', 'Api\V1\ApiController@getDocumentsInFolder');
-//get document by id
-Route::get('/api/v1/document/{id}', 'Api\V1\ApiController@getDocumentById');
-//get recent documents
-Route::get('/api/v1/banner/{id}/document/recent/{days}', 'Api\V1\ApiController@getRecentDocuments');
-//get all douments in a folder
-Route::get('/api/v1/folder/{id}/archived', 'Api\V1\ApiController@getArchivedDocuments');
-
 Route::get('/api/banners', 'StoreApi\StoreApiController@getAllBanners');
 Route::get('/api/banner/{id}/stores', 'StoreApi\StoreApiController@getStoresByBannerid');
-
 Route::get('/api/store/{storeno}', 'StoreApi\StoreApiController@getStoreDetails');
+
+//Dirty Node Scanner
+Route::post('/api/scanner/node', 'Scanner\ScannerApiController@show');
+Route::patch('/api/scanner/node', 'Scanner\ScannerApiController@update');
