@@ -160,25 +160,15 @@ class Tasklist extends Model
     {
         
         
-        $tasks = Tasklist::join('tasklist_tasks', 'tasklist_tasks.tasklist_id', '=', 'tasklists.id')
-                        ->join('tasks', 'tasks.id', '=', 'tasklist_tasks.task_id')
+        $task_ids = Tasklist::join('tasklist_tasks', 'tasklist_tasks.tasklist_id', '=', 'tasklists.id')
                         ->where('tasklists.id', $tasklist_id)
-                        ->select('tasks.*')
+                        ->select('tasklist_tasks.task_id')
                         ->get()
-                        ->each(function($task){
-                            $task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
-                        });
+                        ->pluck('task_id')
+                        ->toArray();
 
-        foreach ($tasks as $key => $task) {
-            
-            $isTaskDoneByStore = Task::isTaskDoneByStore($task->id, $store_id);
-            
-            if($isTaskDoneByStore){
-                $tasks->forget($key);
-            }
-
-        }
-        return ( $tasks );
+        return Task::getAllIncompleteTasksByStoreId($store_id, $task_ids);
+        
 
     }
 
