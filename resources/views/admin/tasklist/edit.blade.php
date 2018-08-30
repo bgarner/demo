@@ -4,7 +4,7 @@
 <head>
     @section('title', 'Edit Task List')
     @include('admin.includes.head')
-    <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
+    <!-- <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css"> -->
     <link rel="stylesheet" type="text/css" href="/css/custom/tree.css">
 	<meta name="csrf-token" content="{!! csrf_token() !!}"/>
 </head>
@@ -36,24 +36,12 @@
 							<form class="form-horizontal" id="updateTaskForm">
 
 								<input type="hidden" id="tasklistId" name="tasklistId" value={{$tasklist->id}}>
-								<input type="hidden" name="optGroupSelections" id="optGroupSelections" value="{{$optGroupSelections}}">
+								
 								<div class="form-group">
 									<label class="col-sm-2 control-label">Title</label>
 						            <div class="col-sm-10"><input type="text" id="title" name="title" class="form-control" value="{{ $tasklist->title }}"></div>
 								</div>
 
-								<div class="form-group">
-
-						                <label class="col-sm-2 control-label">Publish Date</label>
-
-						                <div class="col-sm-10">
-						                    <div class="input-daterange input-group" id="datepicker">
-						                        <input type="text" class="input-sm form-control datetimepicker-start" name="publish_date" id="publish_date" value="{{$tasklist->publish_date}}" />
-
-
-						                    </div>
-						                </div>
-						        </div>
 						        <div class="form-group">
 									<label class="col-sm-2 control-label">Description</label>
 										<div class="col-sm-10">
@@ -64,22 +52,6 @@
 
 										</div>
 								</div>
-
-						        <div class="form-group">
-
-						                <label class="col-sm-2 control-label">Due Date</label>
-
-						                <div class="col-sm-10">
-						                    <div class="input-daterange input-group" id="datepicker">
-						                        <input type="text" class="input-sm form-control datetimepicker-end" name="due_date" id="due_date" value="{{$tasklist->due_date}}" />
-
-
-						                    </div>
-						                </div>
-						        </div>
-
-								@include('admin.includes.the-ultimate-store-selector')
-						        
 
 								<div class="hr-line-dashed"></div>
 								
@@ -93,40 +65,35 @@
 
                     </div><!-- ibox closes -->
 
-                    <div class="ibox">
-                        <div class="ibox-title">
-                            <h5>Tasks</h5>
+                   <div class="ibox">
+                    	<div class="ibox-title">
+                    		<h5> Tasks </h5>
+                    		<div class="ibox-tools">
 
-                            <div class="ibox-tools">
+                    			<div id="add-more-tasks" class="btn btn-primary btn-outline col-md-offset-8" role="button" ><i class="fa fa-plus"></i> Add More Tasks</div>
+                    		</div>
 
-                        	</div>
-
-
-                        </div>
-
-                        <div class="ibox-content">
-
-			                <div class="input-group">
-									<input type="text" class="form-control" name="new_task" id="new_task" value="" placeholder="Add Task..."/>
-									<span class="input-group-btn" >
-										<a class="btn btn-primary btn-outline" id="add-task" onclick="stageTask()" >
-										<i class="fa fa-plus"></i> Add Task</a>
-									</span>
-							    </div>
-
-							<div >
-                        		@include('admin.tasklist.task-partial', ['tasklist_tasks'=>$tasklist->tasks])
-							</div>
-							<div id="tasks-staged-to-remove"></div>
+                    	</div>
+                    	<div class="ibox-content">
+                        <div class="existing-tasks row" >
 							
+							<div class="existing-task-container">
+								@include('admin.tasklist.task-partial', ['tasklist_tasks'=>$selected_tasks])
 
-                        </div>
+							</div>
+							
+							<div id="tasks-staged-to-remove"></div>
 
-                    </div><!-- ibox closes-->
+						</div>
+						<div id="tasks-selected" class="row"></div>
+						</div>
+
+                    </div>
+
                     <div class="form-group">
 						<div class="col-sm-10 col-sm-offset-2">
 							<a class="btn btn-white" href="/admin/tasklist"><i class="fa fa-close"></i> Cancel</a>
-							<button class="btn btn-primary tasklist-update"><i class="fa fa-check"></i> Update Task</button>
+							<button class="btn btn-primary tasklist-update"><i class="fa fa-check"></i> Update Task List</button>
 			            </div>
 			        </div>
                 </div> <!-- col-lg-12 closes -->
@@ -134,6 +101,27 @@
 
 
         </div><!-- wrapper closes -->
+
+        <div id="task-listing" class="modal fade">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		                <h4 class="modal-title">Select Tasks</h4>
+		            </div>
+		            <div class="modal-body">
+		            	<ul class="tree">
+						@include('admin.tasklist.task-listing-partial', ['tasks' =>$tasks])
+						</ul>
+		            </div>
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		                <button type="button" data-dismiss="modal" class="btn btn-primary attach-selected-tasks" id="attach-selected-tasks">Select Tasks</button>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+        
 
 		@include('admin.includes.footer')
 
@@ -143,14 +131,8 @@
 
 
 		<script type="text/javascript" src="/js/custom/admin/tasklist/editTasklist.js"></script>
-		<script type="text/javascript" src="/js/vendor/moment.js"></script>
-		<script type="text/javascript" src="/js/vendor/bootstrap-datetimepicker.min.js"></script>
 		<script type="text/javascript" src="/js/plugins/ckeditor-custom/ckeditor.js"></script>
-		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 		<script type="text/javascript" src="/js/custom/tree.js"></script>
-		<script type="text/javascript" src="/js/custom/datetimepicker.js"></script>
-		<script type="text/javascript" src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
-
 
 		<script type="text/javascript">
 			$.ajaxSetup({
@@ -159,9 +141,6 @@
 		        }
 			});
 
-		    $(".chosen").chosen({
-				  width:'75%'
-			});
 
     		CKEDITOR.replace('description');
 

@@ -13,42 +13,32 @@ class TasklistTask extends Model
 
     public static function updateTasks($tasklist_id, $request )
     {
-    	$remove_tasks = $request["remove_tasks"];
-		if (isset($remove_tasks)) {
-			foreach ($remove_tasks as $task) {
+    	
+		if (isset($request["remove_tasks"])) {
+			foreach ($request["remove_tasks"] as $task) {
 			   TasklistTask::where('tasklist_id', $tasklist_id)->where('task_id', intval($task))->delete();
-			   Task::find($task)->delete();
 			}
 		}
 
-		$add_tasks = $request["tasks"];
-		if (isset($add_tasks)) {
-			foreach ($add_tasks as $task) {
-				$request['title'] = $task;
-				$request['send_reminder'] = NULL;
-
-				$task = Task::createTask($request);
-				if(!is_string($task)){ 
-					TasklistTask::create([
-					  'tasklist_id' => $tasklist_id,
-					  'task_id'     => $task->id
-					]);
-				}
+		if (isset($request["tasks"])) {
+			foreach ($request["tasks"] as $task) {
+				
+				TasklistTask::create([
+				  'tasklist_id' => $tasklist_id,
+				  'task_id'     => $task
+				]);
+				
 			}
-		}
-
-		$task_ids = TasklistTask::where('tasklist_id', $tasklist_id)->get()->pluck('task_id');
-
-		$tasks = Task::whereIn('id', $task_ids)
-					->update([
-						'description' => $request->description, 
-						'due_date' => $request->due_date
-					]);
-
-		foreach ($task_ids as $task_id) {
-			TaskTarget::updateTargetStores($task_id, $request);
 		}
 		
 		return;
+    }
+
+    public static function getTasksByTasklistId($tasklist_id)
+    {
+    	return TasklistTask::join('tasks', 'tasklist_tasks.task_id', '=', 'tasks.id')
+    				->where('tasklist_id', $tasklist_id)
+    				->select('tasks.*')
+    				->get();
     }
 }

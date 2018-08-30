@@ -1,33 +1,26 @@
-var stageTask = function(){
-
-	var taskTitle =  $("#new_task").val();
-	if(taskTitle == ''){
-		return false;
-	}
-	$(".task-table tbody").append(
-		'<tr>'+
-            '<td class="col-sm-10 col-sm-offset-2 task-title" '+
-                '>'+
-                $("#new_task").val()+
-            '</td>'+
-        '<td></td>'+
-        '<td><a '+
-                '" class="remove-staged-task btn btn-danger btn-sm">'+
-                '<i class="fa fa-trash"></i></a></td>'+
-        '</tr>'
-
-	);
-	$(".task-table").removeClass('hidden').addClass('visible');	
-	$("#new_task").val('');
-};
-
-$( "#new_task" ).keypress(function( event ) {
-  if ( event.which == 13 ) {
-    event.preventDefault();
-    stageTask();
-  }  
-  
+$("#add-tasks").click(function(){
+	$("#task-listing").modal('show');
 });
+
+$('body').on('click', '#attach-selected-tasks', function(){
+	
+	if($('.tasklist-tasks-table').hasClass('hidden')){
+		$(".tasklist-tasks-table").removeClass('hidden').addClass('visible');
+	}
+	$(".tasklist-tasks-table").find("tbody").empty();
+	$('input[name^="tasklist_tasks"]').each(function(){
+		
+		if($(this).is(":checked")){
+			
+			$(".tasklist-tasks-table").find("tbody").append('<tr class="tasklist_task"> '+
+													'<td data-taskid='+ $(this).val() +'>'+$(this).attr("data-tasktitle")+'</td>'+
+													'<td></td>'+
+													'<td class="align-right"> <a data-task-id="'+ $(this).val()+'" id="task'+ $(this).val()+'" class="remove-staged-task btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>'+
+												'</tr>');
+		}
+	});
+});
+
  
 
 $('body').on('click', ".remove-staged-task", function(){
@@ -40,23 +33,10 @@ $(document).on('click','.tasklist-create',function(){
  
 	var title = $("#title").val();
 	var description = CKEDITOR.instances['description'].getData();
-	var publish_date = $("#publish_date").val();
-	var due_date = $("#due_date").val();
-	var banner_id = $("input[name='banner_id']").val();
-	var target_stores  = getTargetStores();
-	var target_banners = getTargetBanners();
-	var store_groups = getStoreGroups();
-	var all_stores = getAllStoreStatus();
 	var tasks = [];
-	$(".task-title").each(function(index, value){
-		tasks.push($(this).text());
-	});	
-
-	console.log( target_stores );
-	console.log( target_banners );
-	console.log( store_groups );
-	console.log( all_stores );
-
+	$(".tasklist_task").each(function(){
+		tasks.push($(this).find('td:first').attr('data-taskid'));
+	});
  
     if(title == '' ) {
 		swal("Oops!", "We need a title for the tasklist.", "error"); 
@@ -64,19 +44,7 @@ $(document).on('click','.tasklist-create',function(){
 		$(window).scrollTop(0);
 		return false;
 	}
-	if(due_date == '' ) {
-		swal("Oops!", "We need a due date for the tasklist.", "error"); 
-		hasError = true;
-		$(window).scrollTop(0);
-		return false;
-	}
-	
-	if( target_stores == null || all_stores == null || store_groups == null ) {
-		swal("Oops!", "Target stores not selected.", "error"); 
-		hasError = true;
-		$(window).scrollTop(0);
-		return false;
-	}
+
 
     if(hasError == false) {
 
@@ -85,16 +53,9 @@ $(document).on('click','.tasklist-create',function(){
 		    type: 'POST',
 		    dataType: 'json',
 		    data: {
-		  		title : title,
-		  		description : description,
-		  		publish_date : publish_date,
-		  		due_date : due_date,
-		  		banner_id : banner_id,
-		  		target_stores  : target_stores,
-		  		all_stores     : all_stores,
-		  		target_banners : target_banners,
-		  		store_groups   : store_groups,
-		  		tasks : tasks
+		  		title             : title,
+		  		description       : description,
+		  		tasks             : tasks
 		    },
 		    success: function(result) {
 		    	console.log(result);
@@ -105,17 +66,7 @@ $(document).on('click','.tasklist-create',function(){
 		        			$("#title").parent().append('<div class="req">' + errors.title[index]  + '</div>');	
 		        		}); 	
 		        	}
-		        	if(errors.hasOwnProperty("due_date")) {
-		        		$.each(errors.due_date, function(index){
-		        			$("#due_date").parent().append('<div class="req">' + errors.due_date[index]  + '</div>');	
-		        		}); 	
-		        	}
 		        	
-			        if(errors.hasOwnProperty("target_stores")) {
-			        	$.each(errors.target_stores, function(index){
-			        		$("#storeSelect").parent().append('<div class="req">' + errors.target_stores[index]  + '</div>');	
-			        	});
-			        }
 			        if(errors.hasOwnProperty("tasks")) {
 			        	$.each(errors.tasks, function(index){
 			        		$("#new_task").parent().append('<div class="req">' + errors.tasks[index]  + '</div>');	
@@ -137,8 +88,7 @@ $(document).on('click','.tasklist-create',function(){
 		        
 		    }
 		}).done(function(response){
-			// $(".search-field").find('input').val('');
-			// processStorePaste();
+			
 		});    	
     }
 
