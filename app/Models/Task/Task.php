@@ -203,6 +203,7 @@ class Task extends Model
 
 	public static function deleteTask($task_id)
 	{
+		TasklistTask::where('task_id', $task_id)->delete();
 		Task::find($task_id)->delete();
 	}
 	
@@ -259,9 +260,6 @@ class Task extends Model
 
         foreach ($tasks as $key=>$task) {
 			$task->prettyDueDate = Utility::prettifyDate($task->due_date);
-			if(TasklistTask::where('task_id', $task->id)->exists()){
-				$tasks->forget($key);
-			}
         }
         return $tasks;
 
