@@ -37,29 +37,30 @@
 	                        <div class="table-responsive">
 
 								<table class="table table-hover issue-tracker">
+									<thead>
+										<tr>
+											<td>Title</td>
+											<td>Description</td>
+											<td>Due Date</td>
+											<td>Action</td>
+										</tr>
+									</thead>
+									<tbody>
+									@foreach($tasks as $task)
+									<tr>
 
-								<tr>
-									<td>Title</td>
-									<td>Description</td>
-									<td>Due Date</td>
-									<td>Action</td>
-								</tr>
+										<td><a href="/admin/task/{{ $task->id }}/edit">{{ $task->title }}</a></td>
+										<td>{!! $task->description !!}</td>
+										<td>{{ $task->prettyDueDate }}</td>
 
-								@foreach($tasks as $task)
-								<tr>
+										<td>
 
-									<td><a href="/admin/task/{{ $task->id }}/edit">{{ $task->title }}</a></td>
-									<td>{!! $task->description !!}</td>
-									<td>{{ $task->prettyDueDate }}</td>
+											<a data-task="{{ $task->id }}" id="task{{ $task->id }}" class="delete-task btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 
-									<td>
-
-										<a data-task="{{ $task->id }}" id="task{{ $task->id }}" class="delete-task btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
-
-									</td>
-								</tr>
-								@endforeach
-
+										</td>
+									</tr>
+									@endforeach
+									</tbody>
 								</table>
 
 	                        </div>
@@ -81,6 +82,10 @@
 		        headers: {
 		            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		        }
+			});
+
+			$(".table").DataTable({
+
 			});
 
 		</script>
