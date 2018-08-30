@@ -99,7 +99,7 @@
     <script type="text/javascript" src="/js/plugins/flot/jquery.flot.spline.js"></script>
     <script type="text/javascript" src="/js/plugins/flot/jquery.flot.resize.js"></script>
     <script type="text/javascript" src="/js/plugins/flot/jquery.flot.pie.js"></script>
-    <script type="text/javascript" src="/js/custom/datetimepicker-with-default-time.js"></script>
+    <script type="text/javascript" src="/js/custom/datetimepicker.js"></script>
     <script type="text/javascript" src="/js/custom/site/launchModal.js" ></script>
     <script type="text/javascript" src="/js/custom/admin/analytics/analytics.js"></script>
     <script type="text/javascript" src="/js/custom/admin/analytics/videoReport.js"></script>
