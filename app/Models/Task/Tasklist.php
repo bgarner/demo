@@ -78,7 +78,7 @@ class Tasklist extends Model
                             ->get();
         
         foreach ($tasklists as $tasklist) {
-            $tasklist->prettyDueDate = Utility::prettifyDate($tasklist->due_date);
+            // $tasklist->prettyDueDate = Utility::prettifyDate($tasklist->due_date);
             $tasklist->incompleteTasksInList = Tasklist::getAllIncompleteTasksByTasklistId($tasklist->id, $store_number);
 
         }
@@ -158,66 +158,34 @@ class Tasklist extends Model
     
     public static function getAllIncompleteTasksByTasklistId($tasklist_id, $store_id)
     {
-        
-        
-        $task_ids = Tasklist::join('tasklist_tasks', 'tasklist_tasks.tasklist_id', '=', 'tasklists.id')
-                        ->where('tasklists.id', $tasklist_id)
-                        ->select('tasklist_tasks.task_id')
-                        ->get()
-                        ->pluck('task_id')
-                        ->toArray();
-
+        $task_ids = Self::getTasksForTasklist($tasklist_id);
         return Task::getAllIncompleteTasksByStoreId($store_id, $task_ids);
         
 
     }
 
     public static function getTaskDueTodaybyTasklistId($tasklist_id, $store_id)
-    {
-        $endOfDayToday = Carbon::today()->endOfDay()->format('Y-m-d H:i:s');
-
-        $tasks = Tasklist::join('tasklist_tasks', 'tasklist_tasks.tasklist_id', '=', 'tasklists.id')
-                        ->join('tasks', 'tasks.id', '=', 'tasklist_tasks.task_id')
-                        ->where('tasklists.id', $tasklist_id)
-                        ->where('tasks.due_date' , "<=", $endOfDayToday)
-                        ->select('tasks.*')
-                        ->get()
-                        ->each(function($task){
-                            $task->pretty_due_date = Task::getTaskPrettyDueDate($task->due_date);
-                            
-                        });
-
-        foreach ($tasks as $key=>$task) {
-
-            $isTaskDoneByStore = Task::isTaskDoneByStore($task->id, $store_id);
-            
-            if($isTaskDoneByStore){
-                $tasks->forget($key);
-            }
-        }
-
-        return( $tasks );
+    {   
+        $task_ids = Self::getTasksForTasklist($tasklist_id);
+        return Task::getTaskDueTodaybyStoreId($store_id, $task_ids);
     }
 
     public static function getAllCompletedTasksByTasklistId( $tasklist_id, $store_id)
     {
-        $banner_id = StoreInfo::getStoreInfoByStoreId($store_id)->banner_id;
-        $endOfDayToday = Carbon::today()->endOfDay()->format('Y-m-d H:i:s');
-
-
-        $tasks = Tasklist::join('tasklist_tasks', 'tasklist_tasks.tasklist_id', '=', 'tasklists.id')
-                        ->join('tasks', 'tasks.id', '=', 'tasklist_tasks.task_id')
-                        ->join('task_store_status' , 'task_store_status.task_id' , '=', 'tasks.id' )
-                        ->where('tasklists.id', $tasklist_id)
-                        ->where('task_store_status.store_id', $store_id)
-                        ->where('task_store_status.status_type_id', '2')
-                        ->select('tasks.*', 'task_store_status.created_at as completed_on')
-                        ->get()
-                        ->each(function($task){
-                            $task->pretty_due_date = Utility::prettifyDate($task->due_date);
-                            $task->pretty_completed_date = "Completed on " . Utility::prettifyDate($task->completed_on);
-                        });
-
-        return ( $tasks );
+        $task_ids = Self::getTasksForTasklist($tasklist_id);
+        return Task::getAllCompletedTasksByStoreId($store_id, $task_ids = null);
     }
+
+    public static function getTasksForTasklist($tasklist_id)
+    {
+        $task_ids = Tasklist::join('tasklist_tasks', 'tasklist_tasks.tasklist_id', '=', 'tasklists.id')
+                        ->where('tasklists.id', $tasklist_id)
+                        ->select('tasklist_tasks.task_id')
+                        ->get()
+                        ->pluck('task_id')
+                        ->toArray();
+        return $task_ids;
+
+    }
+
 }
