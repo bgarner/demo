@@ -37,7 +37,7 @@
     </div>
 
 {!! Form::close() !!}
-<script type="text/javascript" src="/js/custom/datetimepicker-with-default-time.js"></script>
+<script type="text/javascript" src="/js/custom/datetimepicker.js"></script>
 
 	
 
