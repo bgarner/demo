@@ -260,6 +260,7 @@ class Task extends Model
 
         foreach ($tasks as $key=>$task) {
 			$task->prettyDueDate = Utility::prettifyDate($task->due_date);
+			$task->creator = TaskCreator::getTaskCreatorForTask($task->id);
         }
         return $tasks;
 

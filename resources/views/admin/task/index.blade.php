@@ -39,8 +39,10 @@
 								<table class="table table-hover issue-tracker">
 									<thead>
 										<tr>
+											<td></td>
 											<td>Title</td>
 											<td>Description</td>
+											<td>Created By</td>
 											<td>Due Date</td>
 											<td>Action</td>
 										</tr>
@@ -48,10 +50,11 @@
 									<tbody>
 									@foreach($tasks as $task)
 									<tr>
-
+										<td>{{$task->id}}</td>
 										<td><a href="/admin/task/{{ $task->id }}/edit">{{ $task->title }}</a></td>
 										<td>{!! $task->description !!}</td>
-										<td>{{ $task->prettyDueDate }}</td>
+										<td>{{ $task->creator }}</td>
+										<td data-order="{{$task->due_date}}">{{ $task->prettyDueDate }}</td>
 
 										<td>
 
@@ -85,7 +88,19 @@
 			});
 
 			$(".table").DataTable({
+				"order": [[ 0, 'desc' ]],
 
+				"columns": [
+				    { "visible": false },
+				    { "width": "30%" },
+				    { "width": "45%" },
+				    { "width": "10%" },
+				    { "width": "10%" },
+				    { "width": "5%" , "sortable" : false}
+				  ],
+				pageLength: 50,
+				responsive: true,
+				fixedHeader: true
 			});
 
 		</script>
