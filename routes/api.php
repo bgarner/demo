@@ -18,5 +18,5 @@ Route::get('/api/banner/{id}/stores', 'StoreApi\StoreApiController@getStoresByBa
 Route::get('/api/store/{storeno}', 'StoreApi\StoreApiController@getStoreDetails');
 
 //Dirty Node Scanner
-Route::post('/api/scanner/node', 'Scanner\ScannerApiController@show');
-Route::patch('/api/scanner/node', 'Scanner\ScannerApiController@update');
+Route::post('/api/v1/scanner/node', 'Scanner\ScannerApiController@show');
+Route::patch('/api/v1/scanner/node', 'Scanner\ScannerApiController@update');
