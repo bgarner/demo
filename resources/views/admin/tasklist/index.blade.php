@@ -37,14 +37,15 @@
 	                        <div class="table-responsive">
 
 								<table class="table table-hover issue-tracker">
-
-								<tr>
-									<td>Title</td>
-									<td>Description</td>
-									<td>Due Date</td>
-									<td>Action</td>
-								</tr>
-
+								<thead>
+									<tr>
+										<td>Title</td>
+										<td>Description</td>
+										<td>Due Date</td>
+										<td>Action</td>
+									</tr>
+								</thead>
+								<tbody>
 								@foreach($tasklists as $tasklist)
 								<tr>
 
@@ -59,7 +60,7 @@
 									</td>
 								</tr>
 								@endforeach
-
+								</tbody>
 								</table>
 
 	                        </div>
@@ -86,9 +87,12 @@
 		</script>
 		<script type="text/javascript" src="/js/plugins/ckeditor-custom/ckeditor.js"></script>
 		<script type="text/javascript" src="/js/custom/admin/tasklist/deleteTasklist.js"></script>
-
+		<script>
+			$(".table").DataTable({});
+		</script>
 
 		@include('site.includes.bugreport')
+
 
 	</body>
 </html>

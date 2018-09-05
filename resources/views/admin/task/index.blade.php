@@ -37,29 +37,33 @@
 	                        <div class="table-responsive">
 
 								<table class="table table-hover issue-tracker">
+									<thead>
+										<tr>
+											<td></td>
+											<td>Title</td>
+											<td>Description</td>
+											<td>Created By</td>
+											<td>Due Date</td>
+											<td>Action</td>
+										</tr>
+									</thead>
+									<tbody>
+									@foreach($tasks as $task)
+									<tr>
+										<td>{{$task->id}}</td>
+										<td><a href="/admin/task/{{ $task->id }}/edit">{{ $task->title }}</a></td>
+										<td>{!! $task->description !!}</td>
+										<td>{{ $task->creator }}</td>
+										<td data-order="{{$task->due_date}}">{{ $task->prettyDueDate }}</td>
 
-								<tr>
-									<td>Title</td>
-									<td>Description</td>
-									<td>Due Date</td>
-									<td>Action</td>
-								</tr>
+										<td>
 
-								@foreach($tasks as $task)
-								<tr>
+											<a data-task="{{ $task->id }}" id="task{{ $task->id }}" class="delete-task btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 
-									<td><a href="/admin/task/{{ $task->id }}/edit">{{ $task->title }}</a></td>
-									<td>{!! $task->description !!}</td>
-									<td>{{ $task->prettyDueDate }}</td>
-
-									<td>
-
-										<a data-task="{{ $task->id }}" id="task{{ $task->id }}" class="delete-task btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
-
-									</td>
-								</tr>
-								@endforeach
-
+										</td>
+									</tr>
+									@endforeach
+									</tbody>
 								</table>
 
 	                        </div>
@@ -81,6 +85,22 @@
 		        headers: {
 		            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		        }
+			});
+
+			$(".table").DataTable({
+				"order": [[ 0, 'desc' ]],
+
+				"columns": [
+				    { "visible": false },
+				    { "width": "30%" },
+				    { "width": "45%" },
+				    { "width": "10%" },
+				    { "width": "10%" },
+				    { "width": "5%" , "sortable" : false}
+				  ],
+				pageLength: 50,
+				responsive: true,
+				fixedHeader: true
 			});
 
 		</script>
