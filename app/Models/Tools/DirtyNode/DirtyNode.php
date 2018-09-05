@@ -29,6 +29,19 @@ class DirtyNode extends Model
         return $data;
     }
 
+    public static function getNodeForScanner($store_number, $upc)
+    {
+        $node = DirtyNode::where('store', $store_number)
+                        ->where('upccode', $upc)
+                        ->first();
+        if(!$node){
+            return json_encode((object) null);   
+        }
+
+        return $node;
+    
+    }
+
     public static function getCleanNodesByStoreNumber($store_number)
     {
         $store_number = ltrim($store_number, 'A');
