@@ -37,9 +37,7 @@ class DirtyNode extends Model
         if(!$node){
             return json_encode((object) null);   
         }
-
-        return $node;
-    
+        return json_encode($node);
     }
 
     public static function getCleanNodesByStoreNumber($store_number)
