@@ -613,6 +613,7 @@ class Task extends Model
                                             ->join('task_store_status' , 'task_store_status.task_id' , '=', 'tasks.id' )
                                             ->whereIn('task_store_group.store_group_id', $storeGroups)
                                             ->where('task_store_status.status_type_id', '2')
+                                            ->where('task_store_status.store_id', $store_id)
                                             ->where(function($q) use ($endOfDayToday, $now, $dayAgo, $store_id) {
 								                $q->where(function($query) use ($endOfDayToday){
 								                        $query->where('due_date' , ">=", $endOfDayToday);
