@@ -57,16 +57,16 @@ class FeatureController extends Controller
      */
     public function show(Request $request)
     {
-        $storeNumber                  = RequestFacade::segment(1);
-        $id                           = $request->id;
-        $feature                      = Feature::where('id', $id)->first();
-        $selected_documents           = FeatureDocument::getFeaturedDocuments($feature->id, $storeNumber);
-        $selected_packages            = FeaturePackage::getFeaturePackages($feature->id);
-        $feature_communications       = FeatureCommunication::getFeatureCommunications($feature->id, $storeNumber);
-        $notifications                = Notification::getNotificationsByFeature($feature->id, $storeNumber);
-        $flyers = FeatureFlyer::getFlyersByFeatureId($feature->id);
-        $events = FeatureEvent::getEventsByFeatureId($feature->id);
-        $tasklists = FeatureTasklist::getTasklistsByFeatureId($feature->id);
+        $storeNumber            = RequestFacade::segment(1);
+        $id                     = $request->id;
+        $feature                = Feature::where('id', $id)->first();
+        $selected_documents     = FeatureDocument::getFeaturedDocuments($feature->id, $storeNumber);
+        $selected_packages      = FeaturePackage::getFeaturePackages($feature->id);
+        $feature_communications = FeatureCommunication::getFeatureCommunications($feature->id, $storeNumber);
+        $notifications          = Notification::getNotificationsByFeature($feature->id, $storeNumber);
+        $flyers                 = FeatureFlyer::getFlyersByFeatureId($feature->id);
+        $events                 = FeatureEvent::getEventsByFeatureId($feature->id);
+        $tasklists              = FeatureTasklist::getTasklistsByFeatureId($feature->id, $storeNumber);
 
         return view('site.feature.index')
 			->with('notifications', $notifications)

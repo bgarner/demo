@@ -19,7 +19,7 @@
             <ul class="todo-list m-t">
                 @foreach($tasksDueToday as $task)
                     <li class="due-today-list-item">
-                        <a href="" class="check-link trackclick pull-left" data-task-id="{{$task->id}}" data-task-completed="not done"><i class="fa fa-square-o"></i></a>
+                        <a href="" class="check-link pull-left" data-task-id="{{$task->id}}" data-task-completed="not done"><i class="fa fa-square-o"></i></a>
                         <span class="m-l-xs pull-left task-title"><strong>{{$task->title}} </strong></span>
 
                         <small class="label label-danger due-date pull-right">
@@ -45,7 +45,7 @@
             <ul class="todo-list m-t">
                 @foreach($tasksDue as $task)
                     <li>
-                        <a href="" class="check-link trackclick pull-left" data-task-id="{{$task->id}}" data-task-completed="not done"><i class="fa fa-square-o"></i></a>
+                        <a href="" class="check-link pull-left" data-task-id="{{$task->id}}" data-task-completed="not done"><i class="fa fa-square-o"></i></a>
                         <span class="m-l-xs pull-left task-title"><strong>{{$task->title}} </strong></span>
 
                         <div class="label label-primary due-date pull-right">
@@ -71,7 +71,7 @@
             <ul class="todo-list m-t">
                 @foreach($tasksCompleted as $task)
                     <li>
-                        <a href="" class="check-link trackclick pull-left" data-task-id="{{$task->id}}" data-task-completed="done"><i class="fa fa-check-square"></i></a>
+                        <a href="" class="check-link pull-left" data-task-id="{{$task->id}}" data-task-completed="done"><i class="fa fa-check-square"></i></a>
                         <span class="m-l-xs todo-completed pull-left task-title"><strong>{{$task->title}} </strong></span>
 
                         <small class="label label-default pull-right due-date">
