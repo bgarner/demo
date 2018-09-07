@@ -11,7 +11,6 @@ class FeatureTasklistController extends Controller
 {
     public function show($storeNumber, $featureId)
     {
-    	\Log::info('requesting to update feature tasklist');
     	$tasklists = FeatureTasklist::getTasklistsByFeatureId($featureId, $storeNumber);
     	return view('site.feature.tasklist-partial')->with('tasklists', $tasklists);
     }
