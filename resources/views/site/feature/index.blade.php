@@ -324,7 +324,7 @@
                         
                         <div class="row">
                             <div class="col-lg-12">
-                                @include('site.feature.tasklist-partial', ['tasklists' => $tasklists]);
+                                @include('site.feature.tasklist-partial', ['tasklists' => $tasklists])
                             </div>
                         </div>
 
