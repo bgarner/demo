@@ -60,6 +60,7 @@ $("body").on('paste', '.search-field input', function(e) {
 var processStorePaste = function(){
 
     	var storesString = $(".search-field").find('input').val();
+
     	var stores = storesString.split(',');
     	$(stores).each(function(i){
     		stores[i]= stores[i].replace(/\s/g, '');
@@ -68,7 +69,7 @@ var processStorePaste = function(){
     			stores[i] = "0"+stores[i];
     		}
     		
-			$("#targets option[value='"+  stores[i] +"']").attr('selected', 'true');
+			$("#targets option[value='store"+  stores[i] +"']").attr('selected', 'true');
 
     	});
     	$("#targets").trigger("chosen:updated");
