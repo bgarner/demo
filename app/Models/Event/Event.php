@@ -68,7 +68,7 @@ class Event extends Model
 
 
     		'banner_id' => $banner->id,
-            'title' => $request['title'],
+            'title' => addslashes($request['title']),
             'event_type' => $request['event_type'],
             'description' => $desc,
             'start' => $request['start'],
