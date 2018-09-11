@@ -31,6 +31,7 @@ class DirtyNode extends Model
 
     public static function getNodeForScanner($store_number, $upc)
     {
+        $store_number = ltrim($store_number, '0');
         $node = DirtyNode::where('store', $store_number)
                         ->where('upccode', $upc)
                         ->first();
