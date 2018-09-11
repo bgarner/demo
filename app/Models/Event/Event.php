@@ -175,7 +175,7 @@ class Event extends Model
                                     ->get();
 
         $allEvents = $allStoreEvents->merge($targetedEvents)->merge($storeGroupEvents)
-                    ->each(function($event){
+                    ->each(function($event)use($store_id){
                         $attachments = EventAttachment::getEventAttachments($event->id);
                         $attachment_link_string = "";
                         foreach ($attachments as $a) {
