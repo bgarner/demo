@@ -15,12 +15,14 @@ class DirtyNodeCapsule extends Model
     {
         
         \Log::info("*************************************");
-        \Log::info(env('DIRTY_NODE_ENDPOINT'));
         \Log::info($request);
+
+        $endpoint = env('DIRTY_NODE_ENDPOINT');
+        \Log::info($endpoint);
 
         $capsule = Self::makeCapsule($request);
         $client = new Client();
-        $response = $client->request('POST', env('DIRTY_NODE_ENDPOINT'), $capsule);
+        $response = $client->request('POST', $endpoint, $capsule);
 
         return $response;
 
