@@ -14,7 +14,8 @@ class DirtyNodeCapsule extends Model
     public static function sendCapsule($request)
     {
         $capsule = Self::makeCapsule($request);
-
+        \Log::info("*************************************");
+        \Log::info(env('DIRTY_NODE_ENDPOINT'));
         $client = new Client();
         $response = $client->request('POST', env('DIRTY_NODE_ENDPOINT'), $capsule);
 
@@ -36,6 +37,8 @@ class DirtyNodeCapsule extends Model
             "RequestedBy" => $request->store,
             "OrganizationCode" => env('BANNER')
         ];
+
+        \Log::info($capsule);
 
         return $capsule;
     }
