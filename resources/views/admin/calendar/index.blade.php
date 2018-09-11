@@ -36,7 +36,7 @@
 										<table class="table datatable">
                                             <thead>
         										<tr>
-        											
+        											<td></td>
         											<td>Title</td>
         											<td>Description</td>
                                                     <td>Event Type</td>
