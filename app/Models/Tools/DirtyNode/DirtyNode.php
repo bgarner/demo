@@ -63,6 +63,8 @@ class DirtyNode extends Model
 
     public static function cleanNodeFromScanner($request)
     {
+        \Log::info("this is the node you are looking for");
+        \Log::info($request);
         $node = DirtyNode::where('item_id_sku', $request->item_id_sku)
                             ->where('node_key', $request->node_key)
                             ->where('store', $request->store)
