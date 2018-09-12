@@ -162,7 +162,7 @@
                 @foreach($events as $event)
                 {
                     // {{ $event->event_id }}
-                    title: "{{ $event->title }}",
+                    title: "{!! $event->title !!}",
                     @if( $event->all_day == 0)
                     allDay: false,
                     @else
