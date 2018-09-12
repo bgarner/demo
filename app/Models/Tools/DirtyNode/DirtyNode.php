@@ -29,6 +29,19 @@ class DirtyNode extends Model
         return $data;
     }
 
+    public static function getNodeForScanner($store_number, $upc)
+    {
+        $store_number = ltrim($store_number, '0');
+        $node = DirtyNode::where('store', $store_number)
+                        ->where('upccode', $upc)
+                        ->where('updated_at', null)
+                        ->first();
+        if(!$node){
+            return json_encode((object) null);   
+        }
+        return json_encode($node);
+    }
+
     public static function getCleanNodesByStoreNumber($store_number)
     {
         $store_number = ltrim($store_number, 'A');
@@ -47,7 +60,21 @@ class DirtyNode extends Model
         $node->API_response = $request->DOM_API_result;
         $node->save();
         DirtyNodeArchive::insert($node->toArray());
+    }
 
+    public static function cleanNodeFromScanner($request)
+    {
+        $node = DirtyNode::where('item_id_sku', $request->item_id_sku)
+                            ->where('node_key', $request->node_key)
+                            ->where('store', $request->store)
+                            ->where('updated_at', null)
+                            ->first();
+        if($node){
+            $node->touch();
+            $node->API_response = $request->DOM_API_result;
+            $node->save();
+            DirtyNodeArchive::insert($node->toArray());
+        }   
     }
 
     public static function getTotalDirtyNodesOutstanding($stores)
