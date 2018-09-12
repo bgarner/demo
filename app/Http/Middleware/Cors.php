@@ -14,11 +14,18 @@ class Cors
      * @param  \Closure  $next
      * @return mixed
      */
+    public function __construct(Request $request)
+    {
+        $request->header('Access-Control-Allow-Origin', '*')
+                ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
+                ->header('Access-Control-Allow-Headers', '*');
+    }
+
     public function handle(Request $request, Closure $next)
     {
-        return $next($request)
-            ->header('Access-Control-Allow-Origin', '*')
-            ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
-            ->header('Access-Control-Allow-Headers', '*');
+        return $next($request);
+            // ->header('Access-Control-Allow-Origin', '*')
+            // ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
+            // ->header('Access-Control-Allow-Headers', '*');
     }
 }
