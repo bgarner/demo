@@ -66,7 +66,7 @@ class DirtyNode extends Model
         $node = DirtyNode::where('item_id_sku', $request->item_id_sku)
                             ->where('node_key', $request->node_key)
                             ->where('store', $request->store)
-                            ->whereIsNull('API_response')
+                            ->where('API_response', null)
                             ->first();
         if($node){
             $node->touch();
