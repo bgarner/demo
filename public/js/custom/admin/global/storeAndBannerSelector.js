@@ -50,6 +50,7 @@ $("#targets").on('change', function (event,el) {
 	
 $("body").on('paste', '.search-field input', function(e) {
 	
+	console.log("this is pasting");
 	setTimeout(function(e) {
 	    processStorePaste();
 	  }, 5);
@@ -60,6 +61,7 @@ $("body").on('paste', '.search-field input', function(e) {
 var processStorePaste = function(){
 
     	var storesString = $(".search-field").find('input').val();
+
     	var stores = storesString.split(',');
     	$(stores).each(function(i){
     		stores[i]= stores[i].replace(/\s/g, '');
@@ -67,12 +69,12 @@ var processStorePaste = function(){
     		if(stores[i].length == 3) {
     			stores[i] = "0"+stores[i];
     		}
-    		
-			$("#targets option[value='"+  stores[i] +"']").attr('selected', 'true');
+			$("#targets option[value='store"+  stores[i] +"']").prop('selected', 'true');
 
     	});
     	$("#targets").trigger("chosen:updated");
     	var selectedStoresCount = $('#targets option:selected').length;
+    	console.log(selectedStoresCount);
 };
 
 var getTargetStores = function(){
