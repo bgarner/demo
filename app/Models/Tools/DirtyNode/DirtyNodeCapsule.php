@@ -13,14 +13,9 @@ class DirtyNodeCapsule extends Model
 {
     public static function sendCapsule($request)
     {
-        
+        $endpoint = env('DIRTY_NODE_ENDPOINT');
         \Log::info("*************************************");
         \Log::info($request);
-
-        $hello = "hello";
-        \Log::info($hello);
-        $endpoint = env('DIRTY_NODE_ENDPOINT');
-        \Log::info($endpoint);
 
         $capsule = Self::makeCapsule($request);
         $client = new Client();
