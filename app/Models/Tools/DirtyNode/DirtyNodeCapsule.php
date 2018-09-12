@@ -17,6 +17,8 @@ class DirtyNodeCapsule extends Model
         \Log::info("*************************************");
         \Log::info($request);
 
+        $hello = "hello";
+        \Log::info($hello);
         $endpoint = env('DIRTY_NODE_ENDPOINT');
         \Log::info($endpoint);
 
