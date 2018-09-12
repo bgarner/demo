@@ -46,7 +46,7 @@
             </div>
 
             <div class="wrapper wrapper-content">
-
+            <input type="text" id="featureID" hidden value="{{$feature->id}}">
             <h1 style="color: #fff; font-size: 65px; text-transform: uppercase; font-family: GalaxiePolarisCondensed-Bold;text-shadow: 3px 3px 23px rgba(0, 0, 0, 1);padding-bottom: 10px;">{{ $feature->title }}</h1>
 
                 <div class="row">
@@ -324,29 +324,7 @@
                         
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="ibox">
-                                    <div class="ibox-title">
-                                        <h2>Tasks</h2>
-                                    </div>
-                                    <div class="ibox-content">
-                                        <div class="feed-activity-list">
-                                            @if(count($tasklists)>0)
-                                                @foreach($tasklists as $tasklist)
-                                                    <div class="feed-element">
-                                                        <div class="media-body">
-                                                            {{$tasklist->title}}
-                                                            <ul>
-                                                            @foreach($tasklist->tasks as $task)
-                                                                <li>{{$task->title}}</li>
-                                                            @endforeach
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                @endforeach
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
+                                @include('site.feature.tasklist-partial', ['tasklists' => $tasklists])
                             </div>
                         </div>
 
@@ -368,6 +346,7 @@
     <script type="text/javascript" src="/js/vendor/lightbox.min.js"></script>
     <script type="text/javascript" src="/js/custom/site/documents/fileTable.js?<?=time();?>"></script>
     <script type="text/javascript" src="/js/custom/site/features/showFeaturePackageDetails.js?<?=time();?>"></script>
+    <script type="text/javascript" src="/js/custom/site/features/completeTask.js?<?=time();?>"></script>
     <script type="text/javascript">
         $(".tree").treed({openedClass : 'fa-folder-open', closedClass : 'fa-folder'});
     </script>

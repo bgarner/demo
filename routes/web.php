@@ -53,6 +53,8 @@ Route::get('/{storeno}/document', array('uses' => 'Document\DocumentController@i
 
 //FEATURES
 Route::get('/{storeno}/feature/show/{id}', 'Feature\FeatureController@show');
+Route::get('/{storeno}/feature/{feature_id}/tasklist', 'Feature\FeatureTasklistController@show');
+Route::patch('/{storeno}/feature/{feature_id}/task/{task_id}', 'Feature\FeatureTasklistController@update');
 
 //FLYER
 Route::get('/{storeno}/flyer', array('uses' => 'Flyer\FlyerController@index'));

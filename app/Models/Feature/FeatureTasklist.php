@@ -4,24 +4,25 @@ namespace App\Models\Feature;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Task\TasklistTask;
+use App\Models\Task\Tasklist;
 
 class FeatureTasklist extends Model
 {
     protected $table = 'feature_tasklist';
     protected $fillable = ['feature_id', 'tasklist_id'];
 
-    public static function getTasklistsByFeatureId($feature_id)
+    public static function getTasklistsByFeatureId($feature_id, $storeNumber)
     {
-    	return FeatureTasklist::join('tasklists', 'tasklists.id', '=', 'feature_tasklist.tasklist_id')
+    	$featureTasklist = FeatureTasklist::join('tasklists', 'tasklists.id', '=', 'feature_tasklist.tasklist_id')
     					->where('feature_id', $feature_id)
     					->select('tasklists.*')
     					->get()
-    					->each(function($tasklist){
-    						$tasklist->tasks = TasklistTask::join('tasks', 'tasks.id', '=', 'tasklist_tasks.task_id')
-    														->where('tasklist_tasks.tasklist_id', $tasklist->id)
-    														->select('tasks.*')
-    														->get();
+    					->each(function($tasklist) use($storeNumber){
+
+                            $tasklist->incompleteTasks = Tasklist::getAllIncompleteTasksByTasklistId($tasklist->id, $storeNumber);
+                            $tasklist->completedTasks = Tasklist::getAllCompletedTasksByTasklistId($tasklist->id, $storeNumber);
     					});
+        return ($featureTasklist);
 
     }
 

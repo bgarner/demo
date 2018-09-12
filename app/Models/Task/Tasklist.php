@@ -173,7 +173,7 @@ class Tasklist extends Model
     public static function getAllCompletedTasksByTasklistId( $tasklist_id, $store_id)
     {
         $task_ids = Self::getTasksForTasklist($tasklist_id);
-        return Task::getAllCompletedTasksByStoreId($store_id, $task_ids = null);
+        return Task::getAllCompletedTasksByStoreId($store_id, $task_ids);
     }
 
     public static function getTasksForTasklist($tasklist_id)
