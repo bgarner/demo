@@ -4,6 +4,7 @@ namespace App\Models\Tools\DirtyNode;
 
 use Illuminate\Database\Eloquent\Model;
 use GuzzleHttp\Client;
+use App\Models\Tools\DirtyNode\DirtyNode;
 
 // use App\Models\Utility\Utility;
 // use App\Models\Tools\DirtyNode\DirtyNodeArchive;
@@ -20,15 +21,10 @@ class DirtyNodeCapsule extends Model
         $capsule = Self::makeCapsule($request);
         $client = new Client();
         $response = $client->request('POST', $endpoint, $capsule);
+        $request->DOM_API_result = $response;
+        DirtyNode::cleanNodeFromScanner($request);
 
         return $response;
-
-        // url: "http://ordermgmt.dragonfly.cs.ctc/OrderManagement/manageInventoryNodeControl",
-        // type: 'POST',
-        // dataType: "JSON",
-        // crossDomain: true,
-        // contentType: "application/json; charset=utf-8",
-        // data: cleanJSON,
     }
        
     public static function makeCapsule($request)

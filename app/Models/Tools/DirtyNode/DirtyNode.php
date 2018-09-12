@@ -59,7 +59,18 @@ class DirtyNode extends Model
         $node->API_response = $request->DOM_API_result;
         $node->save();
         DirtyNodeArchive::insert($node->toArray());
+    }
 
+    public static function cleanNodeFromScanner($request)
+    {
+        $node = DirtyNode::where('item_id_sku', $request->item_id_sku)
+                            ->where('node_key', $request->node_key)
+                            ->where('store', $request->store)
+                            ->first();
+        $node->touch();
+        $node->API_response = $request->DOM_API_result;
+        $node->save();
+        DirtyNodeArchive::insert($node->toArray());
     }
 
     public static function getTotalDirtyNodesOutstanding($stores)
