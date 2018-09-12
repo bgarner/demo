@@ -15,13 +15,18 @@ class DirtyNodeCapsule extends Model
     public static function sendCapsule($request)
     {
         $endpoint = env('DIRTY_NODE_ENDPOINT');
-        \Log::info("*************************************");
-        \Log::info($request);
 
         $capsule = Self::makeCapsule($request);
-        $client = new Client();
-        $response = $client->request('POST', $endpoint, $capsule);
-        $request->DOM_API_result = $response;
+
+        $client = new Client([
+            'headers' => [ 'Content-Type' => 'application/json' ]
+        ]);
+        
+        $response = $client->post($endpoint,
+            ['body' => json_encode($capsule)]
+        );
+
+        $request->DOM_API_result = $response->getBody();
         DirtyNode::cleanNodeFromScanner($request);
 
         return $response;
@@ -35,8 +40,6 @@ class DirtyNodeCapsule extends Model
             "RequestedBy" => $request->store,
             "OrganizationCode" => env('BANNER')
         ];
-
-        \Log::info($capsule);
 
         return $capsule;
     }
