@@ -34,6 +34,7 @@ class DirtyNode extends Model
         $store_number = ltrim($store_number, '0');
         $node = DirtyNode::where('store', $store_number)
                         ->where('upccode', $upc)
+                        ->where('updated_at', null)
                         ->first();
         if(!$node){
             return json_encode((object) null);   
