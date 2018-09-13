@@ -183,6 +183,9 @@ class FeatureAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
+        \Log::info("----- here is where they are editing a feature -----");
+        \Log::info($request->all());
+        \Log::info("----- end -----");
         return Feature::updateFeature($request, $id);
     }
 
