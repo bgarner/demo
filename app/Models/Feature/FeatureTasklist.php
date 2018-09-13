@@ -23,7 +23,15 @@ class FeatureTasklist extends Model
                             $tasklist->completedTasks = Tasklist::getAllCompletedTasksByTasklistId($tasklist->id, $storeNumber);
     					});
         return ($featureTasklist);
+    }
 
+    public static function getTasklistsByFeatureIdForAdmin($feature_id)
+    {
+        return FeatureTasklist::join('tasklists', 'tasklists.id', '=', 'feature_tasklist.tasklist_id')
+                    ->where('feature_id', $feature_id)
+                    ->select('tasklists.id')
+                    ->get()
+                    ->toArray();
     }
 
     public static function updateFeatureTasklists($tasklists, $feature_id)

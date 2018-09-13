@@ -148,7 +148,7 @@ class FeatureAdminController extends Controller
         $selected_events              = FeatureEvent::getEventId($id);
 
         $tasklists                    = Tasklist::getTasklistsForAdmin()->pluck('title', 'id')->toArray();
-        $selected_tasklists           = FeatureTasklist::getTasklistsByFeatureId($id);
+        $selected_tasklists           = FeatureTasklist::getTasklistsByFeatureIdForAdmin($id);
 
         return view('admin.feature.edit')->with('feature', $feature)
                                     
