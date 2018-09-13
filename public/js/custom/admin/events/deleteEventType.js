@@ -12,15 +12,19 @@ $(document).on('click','.eventtype-delete',function(){
         confirmButtonText: "Yes, delete it!",
         closeOnConfirm: false
     }, function () {
-    	$.ajax({
-		    url: '/admin/eventtypes/'+eventtypeidVal,
-		    type: 'DELETE',
-		    success: function(result) {
-		        $(selector).closest('tr').fadeOut(1000);
-		        swal("Deleted!", "This Event Type has been deleted.", "success");
-		    }
-		});
-        
+        $.ajax({
+            url: '/admin/eventtypes/'+eventtypeidVal,
+            type: 'DELETE',
+            success: function(result) {
+                var didDelete = JSON.parse(result);
+                if(didDelete.success){
+                    $(selector).closest('tr').fadeOut(1000);
+                    swal("Deleted!", "This Event Type has been deleted.", "success");
+                } else {
+                    swal("Sorry", "We can't remove this event type, there are still active events using it.", "error");
+                }
+            }
+        });
     });
 
     return false;

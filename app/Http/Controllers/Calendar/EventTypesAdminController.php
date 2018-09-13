@@ -105,7 +105,8 @@ class EventTypesAdminController extends Controller
      */
     public function destroy($id)
     {
-        EventType::find($id)->delete();
+        //EventType::find($id)->delete();
+        return EventType::deleteEventType($id);
     }
 
     public function getEventTypesByTarget(Request $request)
