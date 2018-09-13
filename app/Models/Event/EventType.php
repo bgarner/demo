@@ -14,20 +14,20 @@ use App\Models\Auth\User\UserSelectedBanner;
 
 class EventType extends Model
 {
-	use SoftDeletes;
+    use SoftDeletes;
     protected $table = 'event_types';
     protected $dates = ['deleted_at'];
     protected $fillable = ['event_type', 'background_colour', 'foreground_colour', 'banner_id'];
 
     public static function validateEventType($request)
     {
-    	$validateThis = [
-    						'event_type' => $request['event_type'],
+        $validateThis = [
+                            'event_type' => $request['event_type'],
                             'banners'    => $request['banners']
-    					];
+                        ];
 
-    	$v = new EventTypeValidator();
-		return $v->validate($validateThis);
+        $v = new EventTypeValidator();
+        return $v->validate($validateThis);
     }
 
     public static function getName($id)
@@ -36,26 +36,26 @@ class EventType extends Model
         return $event_type->event_type;
     }
 
-	public static function getBackground($id)
-	{
-		$event_type = EventType::find($id);
-		return $event_type->background_colour;
-	}
+    public static function getBackground($id)
+    {
+        $event_type = EventType::find($id);
+        return $event_type->background_colour;
+    }
 
 	public static function getForeground($id)
 	{
-		$event_type = EventType::find($id);
-		return $event_type->foreground_colour;
-	}
+        $event_type = EventType::find($id);
+        return $event_type->foreground_colour;
+    }
 
-	public static function getEventTypeIdByName($name, $banner)
-	{
-		$event_type = EventType::join('event_type_banner', 'event_type_banner.event_type_id', '=', 'event_types.id')
+    public static function getEventTypeIdByName($name, $banner)
+    {
+        $event_type = EventType::join('event_type_banner', 'event_type_banner.event_type_id', '=', 'event_types.id')
                                 ->where("event_type", $name)
-								->where("banner_id", $banner)
+                                ->where("banner_id", $banner)
                                 ->select('event_types.*')
-								->first();
-		return $event_type->id;
+                                ->first();
+        return $event_type->id;
 	}
 
     public static function getEventTypeListByBannerId($banner_id)
@@ -77,8 +77,8 @@ class EventType extends Model
 
         $eventTypeDetails = array(
             'event_type' => $request['event_type'],
-			'background_colour' => $request['background_colour'],
-			'foreground_colour' => $request['foreground_colour']
+            'background_colour' => $request['background_colour'],
+            'foreground_colour' => $request['foreground_colour']
         );
 
         $eventType = EventType::create($eventTypeDetails);
@@ -108,8 +108,8 @@ class EventType extends Model
         $eventType =  EventType::find($id);
 
         $eventType->event_type = $request['event_type'];
-		$eventType->background_colour = $request['background_colour'];
-		$eventType->foreground_colour = $request['foreground_colour'];
+        $eventType->background_colour = $request['background_colour'];
+        $eventType->foreground_colour = $request['foreground_colour'];
 
         $eventType->save();
 
@@ -124,6 +124,27 @@ class EventType extends Model
         }
 
         return $eventType;
+    }
+
+    public static function deleteEventType($id)
+    {
+        $events = Event::where("event_type", $id)->get();
+        //if yes, return message
+        if(count($events) > 0){
+            //we have events
+            $result = [
+                "success" => false
+            ];
+            return json_encode($result);
+        } else {
+            Self::find($id)->delete();
+            $result = [
+                "success" => true
+            ];
+
+            return json_encode($result);
+        }
+
     }
 
     public static function getEventTypesForAdmin()
