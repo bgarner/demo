@@ -17,13 +17,24 @@ var handleTaskUpdate = function(elem){
 
     var pathname = window.location.pathname;
 
-    var module = new RegExp('/\*\/tasklist\/\*/');
+    var isTasklistTask = new RegExp('/\*\/tasklist\/\*/');
 
-    if (module.test(pathname)) {
+    if (isTasklistTask.test(pathname)) {
         var url =  window.location.href + "/task/" + task_id ;            
     }
     else{
-        var url =  window.location.href + "/" + task_id ;
+
+        var isManagerTask = new RegExp(/getTasksBy/);
+        
+        if (isManagerTask.test(window.location.href)){
+            var url = window.location.href.split('/');
+            url.pop(); //remove getTasksBy* segment 
+            url = url.join('/') + "/" + task_id;
+        }
+        else{
+            var url =  window.location.href + "/" + task_id ;    
+        }
+        
     }
 
     var task_checkbox_status = elem.attr('data-task-completed');

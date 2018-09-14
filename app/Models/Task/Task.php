@@ -734,4 +734,14 @@ class Task extends Model
         return( $optGroupSelections );
     }
 
+    public static function getTasksByUserId($user_id)
+    {
+    	return Task::join('task_creator', 'task_creator.task_id', '=', 'tasks.id')
+                        ->where('creator_id', $user_id)
+                        ->select('tasks.id')
+                        ->get()
+                        ->pluck('id')
+                        ->toArray();
+    }
+
 }

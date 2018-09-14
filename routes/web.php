@@ -87,6 +87,9 @@ Route::get('/{storeno}/task', 'Task\TaskController@index');
 Route::get('/{storeno}/tasklist/{id}', 'Task\TasklistController@index');
 Route::patch('/{storeno}/task/{id}', 'Task\TaskController@update');
 Route::patch('/{storeno}/tasklist/{id}/task/{taskId}', 'Task\TasklistController@update');
+Route::get('/{storeno}/task/getTasksByDM', 'Task\TaskController@getTasksForStoreByDM');
+Route::get('/{storeno}/task/getTasksByAVP', 'Task\TaskController@getTasksForStoreByAVP');
+
 
 //TOOLS
 Route::post('/getFlyerBoxes', 'Tools\FlyerPageSelectionController@show');
