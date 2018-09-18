@@ -72,7 +72,9 @@ class PlaylistVideoOrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $playlistitem = PlaylistVideo::find($id);
+        $playlistitem = PlaylistVideo::where('video_id', $id)
+                                    ->where('playlist_id', $request['playlist_id'])
+                                    ->first();
         $playlistitem->order = $request['order'];
         $playlistitem->save();
     }

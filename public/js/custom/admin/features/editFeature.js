@@ -292,7 +292,7 @@ $(document).on('click','.feature-update',function(){
 		$(window).scrollTop(0);
 		return false;
 	}
-	console.log(remove_flyer);
+	
 
     if(hasError == false) {
      	var dataObj = {};

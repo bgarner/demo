@@ -1,7 +1,7 @@
 function updateVideoOrder(data){
 	// console.log("made it over here");
 	// console.log(data);
-
+	var playlist_id = $('#playlistID').val();
 	for(var i=0;i<data.length;i++){
         var obj = data[i];
         for(var key in obj){
@@ -14,6 +14,7 @@ function updateVideoOrder(data){
 			    url: '/admin/playlistorder/' + attrValue ,
 			    type: 'PATCH',
 			    data: {
+					playlist_id: playlist_id,
 			  		order: i
 			    }
 			});
