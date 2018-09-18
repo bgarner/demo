@@ -19,9 +19,9 @@ class StoreTaskSidebarCreator
     protected $allIncompleteTasks;
     protected $tasklists;
     protected $dmTasks;
-    protected $incompleteDMTasks;
+    protected $incompleteDMTasks = [];
     protected $avpTasks;
-    protected $incompleteAVPTasks;
+    protected $incompleteAVPTasks = [];
 
     /**
      * Create a new profile composer.
@@ -35,9 +35,16 @@ class StoreTaskSidebarCreator
         $this->allIncompleteTasks = Task::getAllIncompleteTasksByStoreId($this->storeNumber);
         $this->tasklists = Tasklist::getAllTasklistsByStore($this->storeNumber);
         $this->dmTasks = Task::getDMTasks($this->storeNumber);
-        $this->incompleteDMTasks = Task::getAllIncompleteTasksByStoreId($this->storeNumber, $this->dmTasks);
+        
+        if($this->dmTasks){
+            $this->incompleteDMTasks = Task::getAllIncompleteTasksByStoreId($this->storeNumber, $this->dmTasks);
+        }
         $this->avpTasks = Task::getAVPTasks($this->storeNumber);
-        $this->incompleteAVPTasks = Task::getAllIncompleteTasksByStoreId($this->storeNumber, $this->avpTasks);
+
+        if($this->avpTasks){
+            $this->incompleteAVPTasks = Task::getAllIncompleteTasksByStoreId($this->storeNumber, $this->avpTasks);    
+        }
+        
     }
 
     /**

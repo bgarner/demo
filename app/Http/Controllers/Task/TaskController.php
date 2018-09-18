@@ -57,10 +57,7 @@ class TaskController extends Controller
                     ->with('allIncompleteTasks', $allIncompleteTasks)
                     ->render();
 
-        return response()->json(array('html'=>$returnHTML, 
-                                    // 'tasksCompleted'=> count($tasksCompleted), 
-                                    // 'allIncompleteTasks'=> count($allIncompleteTasks)
-                                ));
+        return response()->json(['html'=>$returnHTML]);
         
     }
 
@@ -68,10 +65,18 @@ class TaskController extends Controller
     {
         $task_ids = Task::getDMTasks($storeNumber);
 
-        $incompleteTasksInList = Task::getAllIncompleteTasksByStoreId($storeNumber, $task_ids);
-        $tasksDueToday = Task::getTaskDueTodaybyStoreId($storeNumber, $task_ids);
-        $tasksNotDueToday = $incompleteTasksInList->diff($tasksDueToday);
-        $tasksCompleted = Task::getAllCompletedTasksByStoreId($storeNumber, $task_ids);
+        $incompleteTasksInList = [];
+        $tasksDueToday = [];
+        $tasksNotDueToday = [];
+        $tasksCompleted = [];
+
+        if($task_ids){
+            $incompleteTasksInList = Task::getAllIncompleteTasksByStoreId($storeNumber, $task_ids);
+            $tasksDueToday = Task::getTaskDueTodaybyStoreId($storeNumber, $task_ids);
+            $tasksNotDueToday = $incompleteTasksInList->diff($tasksDueToday);
+            $tasksCompleted = Task::getAllCompletedTasksByStoreId($storeNumber, $task_ids);    
+        }
+        
         $title = "DM Tasks";
         return view('site.tasks.index')
                     ->with('tasksDueToday', $tasksDueToday)
@@ -88,10 +93,17 @@ class TaskController extends Controller
         $store_task_status = Task::updateTaskStoreStatus($request, $storeNumber, $id);
         $task_ids = Task::getDMTasks($storeNumber);
 
-        $incompleteTasksInList = Task::getAllIncompleteTasksByStoreId($storeNumber, $task_ids);
-        $tasksDueToday = Task::getTaskDueTodaybyStoreId($storeNumber, $task_ids);
-        $tasksNotDueToday = $incompleteTasksInList->diff($tasksDueToday);
-        $tasksCompleted = Task::getAllCompletedTasksByStoreId($storeNumber, $task_ids);
+        $incompleteTasksInList = [];
+        $tasksDueToday = [];
+        $tasksNotDueToday = [];
+        $tasksCompleted = [];
+
+        if($task_ids){
+            $incompleteTasksInList = Task::getAllIncompleteTasksByStoreId($storeNumber, $task_ids);
+            $tasksDueToday = Task::getTaskDueTodaybyStoreId($storeNumber, $task_ids);
+            $tasksNotDueToday = $incompleteTasksInList->diff($tasksDueToday);
+            $tasksCompleted = Task::getAllCompletedTasksByStoreId($storeNumber, $task_ids);
+        }
         $title = "DM Tasks";
         $returnHTML =  view('site.tasks.task-list-partial')
                     ->with('tasksDueToday', $tasksDueToday)
@@ -102,10 +114,7 @@ class TaskController extends Controller
                     ->render();
 
 
-        return response()->json(array('html'=>$returnHTML, 
-                                    // 'tasksCompleted'=> count($tasksCompleted), 
-                                    // 'allIncompleteTasks'=> count($allIncompleteTasks)
-                                ));
+        return response()->json(array('html'=>$returnHTML));
 
     }
 
@@ -113,10 +122,20 @@ class TaskController extends Controller
     {
         $task_ids = Task::getAVPTasks($storeNumber);
         
-        $incompleteTasksInList = Task::getAllIncompleteTasksByStoreId($storeNumber, $task_ids);
-        $tasksDueToday = Task::getTaskDueTodaybyStoreId($storeNumber, $task_ids);
-        $tasksNotDueToday = $incompleteTasksInList->diff($tasksDueToday);
-        $tasksCompleted = Task::getAllCompletedTasksByStoreId($storeNumber, $task_ids);
+        $incompleteTasksInList = [];
+        $tasksDueToday = [];
+        $tasksNotDueToday = [];
+        $tasksCompleted = [];
+
+        if($task_ids){
+            $incompleteTasksInList = Task::getAllIncompleteTasksByStoreId($storeNumber, $task_ids);
+            $tasksDueToday = Task::getTaskDueTodaybyStoreId($storeNumber, $task_ids);
+            $tasksNotDueToday = $incompleteTasksInList->diff($tasksDueToday);
+            $tasksCompleted = Task::getAllCompletedTasksByStoreId($storeNumber, $task_ids);
+        }
+        else{
+            
+        }
         $title = "AVP Tasks";
         return view('site.tasks.index')
                     ->with('tasksDueToday', $tasksDueToday)
@@ -133,10 +152,17 @@ class TaskController extends Controller
         $store_task_status = Task::updateTaskStoreStatus($request, $storeNumber, $id);
         $task_ids = Task::getAVPTasks($storeNumber);
 
-        $incompleteTasksInList = Task::getAllIncompleteTasksByStoreId($storeNumber, $task_ids);
-        $tasksDueToday = Task::getTaskDueTodaybyStoreId($storeNumber, $task_ids);
-        $tasksNotDueToday = $incompleteTasksInList->diff($tasksDueToday);
-        $tasksCompleted = Task::getAllCompletedTasksByStoreId($storeNumber, $task_ids);
+        $incompleteTasksInList = [];
+        $tasksDueToday = [];
+        $tasksNotDueToday = [];
+        $tasksCompleted = [];
+
+        if($task_ids){
+            $incompleteTasksInList = Task::getAllIncompleteTasksByStoreId($storeNumber, $task_ids);
+            $tasksDueToday = Task::getTaskDueTodaybyStoreId($storeNumber, $task_ids);
+            $tasksNotDueToday = $incompleteTasksInList->diff($tasksDueToday);
+            $tasksCompleted = Task::getAllCompletedTasksByStoreId($storeNumber, $task_ids);
+        }
         $title = "AVP Tasks";
 
         $returnHTML =  view('site.tasks.task-list-partial')
@@ -148,10 +174,7 @@ class TaskController extends Controller
                     ->render();
 
 
-        return response()->json(array('html'=>$returnHTML, 
-                                    // 'tasksCompleted'=> count($tasksCompleted), 
-                                    // 'allIncompleteTasks'=> count($allIncompleteTasks)
-                                ));
+        return response()->json(array('html'=>$returnHTML));
 
     }
 

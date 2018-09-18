@@ -37,7 +37,7 @@ var handleTaskUpdate = function(elem){
     else{
             var url =  window.location.href + "/" + task_id ;    
     }
-    
+
     var task_checkbox_status = elem.attr('data-task-completed');
 
     $.ajax({
@@ -52,7 +52,6 @@ var handleTaskUpdate = function(elem){
         }
     }).done(function(response){
 
-        // $("#sidenav-task-count").text(response.allIncompleteTasks + " / " + (response.tasksCompleted + response.allIncompleteTasks) );
         $("#task-container").html(response.html);
 
     });     
