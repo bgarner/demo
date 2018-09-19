@@ -16,10 +16,15 @@ class Tag extends Model
 
     public static function storeTag($request)
     {
+        
+        $tag = Tag::where("name", "=", $request["tag_name"])->first();
         $banner = UserSelectedBanner::getBanner();
-        $tag = Tag::create([
-            'name' => $request['tag_name']
-        ]);
+        if(!$tag){
+            $tag = Tag::create([
+                'name' => $request['tag_name']
+            ]);    
+        }
+        
         return $tag;
     }
 
