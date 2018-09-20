@@ -43,15 +43,26 @@ $("body").on('select2:select', $("#tags_new"), function (evt) {
 
 	var communication_id = 'new';
     if(evt.params.data.newTag){
+
+		console.log(evt.params.data);
     	$.post("/admin/tag",{ tag_name: evt.params.data.text })
     	.done(function(tag){
+    		console.log(tag.id);
+    		console.log(tag.name);
     		// change the id of the newly added tag to be the id from db
-			$('#tags_new option[value="'+tag.name+'"]').val(tag.id);	
-			var selectedTags = $("#tags_new").val();
 
+    		if(tag.existence_status == 'new'){
+    			$('#tags_new option[value="'+tag.name+'"]').val(tag.id);		
+    		}
+    		if(tag.existence_status == 'existing'){
+    			//fix this
+    			$('#tags_new option[value="'+tag.id+'"]').val(tag.id);		
+    		}
+			
+			var selectedTags = $("#tags_new").val();
 			$('#tags_new').select2('destroy');
 			$("#tag-selector-container").load("/admin/communicationtag/"+communication_id, function(response){
-				console.log(response);
+				// console.log(response);
 				initializeTagSelector(selectedTags);
 				$("#tags_new").focus();
 

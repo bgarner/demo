@@ -18,6 +18,7 @@ class CreateNewTagsTable extends Migration
             $table->string('name');
             $table->mediumText('old_ids');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
