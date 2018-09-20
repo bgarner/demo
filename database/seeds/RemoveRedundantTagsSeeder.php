@@ -13,17 +13,19 @@ class RemoveRedundantTagsSeeder extends Seeder
     public function run()
     {
         //get unique tags 
-    // 	$tags = \DB::select( 
-				// 	\DB::raw( 
-				// 		"select distinct(`name`) as name , group_concat(`id`) as old_ids from tags group by `name`"
-				// 	) 
-				// );
+    	$tags = \DB::select( 
+					\DB::raw( 
+						"select distinct(`name`) as name , group_concat(`id`) as old_ids from tags group by `name`"
+					) 
+				);
 
-    // 	//create new tags table with unique tags
-    // 	foreach ($tags as $tag) {
-    // 		\DB::table('new_tags')->insert((array)$tag);
-    // 	}
+    	//create new tags table with unique tags
+    	foreach ($tags as $tag) {
+    		\DB::table('new_tags')->insert((array)$tag);
+    	}
 
+
+    	//update tag_id in content_tag table to use unique tags
 
     	$new_tags = \DB::table('new_tags')->get();
 
@@ -44,10 +46,6 @@ class RemoveRedundantTagsSeeder extends Seeder
     					
     		}
     	}
-
-
-    	//drop tags, content_tag
-    	//rename new_tags to tags, new_content_tag to content_tag
         
     }
 }
