@@ -162,7 +162,11 @@
 			                                    	</thead>
 			                                    	<tbody>
 			                                    		@foreach($formInstances as $formInstance)
-			                                    		<tr>
+														@if( in_array($formInstance->store_number, $highlights))
+			                                    		<tr class="formStoreHighlight">
+														@else
+														<tr>
+														@endif
 			                                    			
 			                                    			<td><a href="/form/productrequest/{{$formInstance->id}}">{{$formInstance->description}}</a></td>
 															<td>{{$formInstance->store_number}}</td>
@@ -218,7 +222,6 @@
 	<script type="text/javascript">
 		$(".table").dataTable(
         	{
-    			
 				pageLength: 50,
 				responsive: true,
 				fixedHeader: true,

@@ -82,7 +82,11 @@
 			                                    	</thead>
 			                                    	<tbody>
 			                                    		@foreach($formInstances as $formInstance)
-			                                    		<tr>
+														@if( in_array($formInstance->store_number, $highlights))
+			                                    		<tr class="formStoreHighlight">
+														@else
+														<tr>
+														@endif
 			                                    			
 			                                    			<td>
 			                                    				@if(count($formInstances)>0)

@@ -191,7 +191,13 @@
 			                                    	</thead>
 			                                    	<tbody>
 			                                    		@foreach($formInstances as $formInstance)
-			                                    		<tr>
+
+														@if( in_array($formInstance->store_number, $highlights))
+			                                    		<tr class="formStoreHighlight">
+														@else
+														<tr>
+														@endif
+														
 			                                    			<td><input class="select_form" id="select_form" type="checkbox" data-formInstanceId = "{{$formInstance->id}}"></td>
 			                                    			<td><a href="/form/productrequest/{{$formInstance->id}}"> {{$formInstance->description}}</a></td>
 															<td>{{$formInstance->store_number}}</td>

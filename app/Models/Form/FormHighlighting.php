@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class FormHighlighting extends Model
 {
-    protected $table = 'store_form_highlight';
+    protected $table = 'form_store_highlight';
     protected $fillable = ['store_number'];
 
 }
