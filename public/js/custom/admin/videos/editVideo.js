@@ -34,14 +34,22 @@ $("body").on('select2:select', $("#tags_" + videoId), function (evt) {
 	    	$.post("/admin/tag",{ tag_name: evt.params.data.text })
 	    	.done(function(tag){
 	    		
-	    		console.log(tag);
-	    		//change the id of the newly added tag to be the id from db
-	    		var video_id = $("#videoId").val();
-				$('#tags_' + video_id+' option[value="'+tag.name+'"]').val(tag.id);
-				var selectedTags = $("#tags_" + video_id).val();
+	    		if(tag.existence_status == 'new'){
+    			// change the id of the newly added tag to be the id from db
+    			$('#tags_'+ videoId +' option[value="'+tag.name+'"]').val(tag.id);
+	    		}
+	    		if(tag.existence_status == 'existing'){
+
+	    			var selectedTags = $('#tags_'+ videoId).val();
+	    			selectedTags.splice(-1,1);
+	    			selectedTags.push( tag.id );
+	    			$('#tags_'+ videoId).val(selectedTags);
+	    		}
+
+				var selectedTags = $("#tags_" + videoId).val();
 				
 				//update tag video mapping
-				$.post("/admin/videotag",{ 'video_id' : video_id, 'tags': selectedTags })
+				$.post("/admin/videotag",{ 'video_id' : videoId, 'tags': selectedTags })
 				.done(function(){
 
 					var video_id = $("#videoId").val();

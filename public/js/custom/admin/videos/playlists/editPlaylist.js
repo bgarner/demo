@@ -29,11 +29,20 @@ $("body").on('select2:select', $("#tags_" + playlistId), function (evt) {
     	$.post("/admin/tag",{ tag_name: evt.params.data.text })
     	.done(function(tag){
     		
-    		//change the id of the newly added tag to be the id from db
-			$('#tags_'+ playlist_id +' option[value="'+tag.name+'"]').val(tag.id);
-			
+			if(tag.existence_status == 'new'){
+    			// change the id of the newly added tag to be the id from db
+    			$('#tags_'+ playlist_id +' option[value="'+tag.name+'"]').val(tag.id);
+    		}
+    		if(tag.existence_status == 'existing'){
+
+    			var selectedTags = $('#tags_'+ playlist_id).val();
+    			selectedTags.splice(-1,1);
+    			selectedTags.push( tag.id );
+    			$('#tags_'+ playlist_id).val(selectedTags);
+    		}
+
 			var selectedTags = $("#tags_" + playlist_id).val();
-			//update tag playlist mapping
+			//update tag communication mapping
 			$.post("/admin/playlisttag",{ 'playlist_id' : playlist_id, 'tags': selectedTags })
 			.done(function(){
 				$("#tags_" + playlist_id).select2('destroy');
@@ -42,7 +51,7 @@ $("body").on('select2:select', $("#tags_" + playlistId), function (evt) {
 					$("#tags_" + playlist_id).focus();
 
 				});	
-			});				
+			});	
 
     	});
     }

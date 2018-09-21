@@ -39,21 +39,34 @@ $("body").on('select2:select', $("#tags_" + document_id ), function (evt) {
     if(evt.params.data.newTag){
     	$.post("/admin/tag",{ tag_name: evt.params.data.text })
     	.done(function(tag){
-    		
-    		//change the id of the newly added tag to be the id from db
-			$('#tags_'  + document_id + ' option[value="'+tag.name+'"]').val(tag.id);
-			
-			var selectedTags = $("#tags_" + document_id ).val();
-			//update tag document mapping
+
+			if(tag.existence_status == 'new'){
+    			// change the id of the newly added tag to be the id from db
+    			$('#tags_'+ document_id +' option[value="'+tag.name+'"]').val(tag.id);
+    		}
+    		if(tag.existence_status == 'existing'){
+
+    			var selectedTags = $('#tags_'+ document_id).val();
+    			selectedTags.splice(-1,1);
+    			selectedTags.push( tag.id );
+    			$('#tags_'+ document_id).val(selectedTags);
+    		}
+
+			var selectedTags = $("#tags_" + document_id).val();
+			//update tag communication mapping
 			$.post("/admin/documenttag",{ 'document_id' : document_id, 'tags': selectedTags })
 			.done(function(){
-				$('#tags_' + document_id ).select2('destroy');
+				$("#tags_" + document_id).select2('destroy');
 				$("#tag-selector-container").load("/admin/documenttag/"+document_id, function(){
 					initializeTagSelector();
-					$("#tags_" + document_id ).focus();
+					$("#tags_" + document_id).focus();
 
 				});	
-			});				
+			});
+
+
+
+
 
     	});
     }

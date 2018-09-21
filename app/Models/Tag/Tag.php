@@ -17,13 +17,10 @@ class Tag extends Model
     public static function storeTag($request)
     {
         
-        $tag = Tag::where("name", "like", "%{$request['tag_name']}%")
+        $tag = Tag::where("name", "like", "{$request['tag_name']}")
                     ->first();
-
         
         if(!$tag){
-
-            \Log::info('tag not found');
             $tag = Tag::create([
                 'name' => $request['tag_name']
             ]);   

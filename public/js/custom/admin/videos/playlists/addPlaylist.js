@@ -31,20 +31,41 @@ $("body").on('select2:select', $("#tags_new"), function (evt) {
 
 	var playlist_id = 'new';
     if(evt.params.data.newTag){
+
     	$.post("/admin/tag",{ tag_name: evt.params.data.text })
     	.done(function(tag){
-    		// change the id of the newly added tag to be the id from db
-			$('#tags_new option[value="'+tag.name+'"]').val(tag.id);	
-			var selectedTags = $("#tags_new").val();
+    		
+    		if(tag.existence_status == 'new'){
+    			// change the id of the newly added tag to be the id from db
+    			$('#tags_new option[value="'+tag.name+'"]').val(tag.id);		
+    		}
+    		if(tag.existence_status == 'existing'){
+    			
+    			//selectedTags's last item is the newly created tag name
+    			//which might be in a different case than what it is stored as in db
+    			//we remove the last item in selected Tags
+    			// and replace it with the id from matching tag in db
 
+    			var selectedTags = $("#tags_new").val();
+    			selectedTags.splice(-1,1);
+    			selectedTags.push( tag.id );
+    			$('#tags_new').val(selectedTags);
+
+    		}
+			
+			var selectedTags = $("#tags_new").val();
 			$('#tags_new').select2('destroy');
-			$("#tag-selector-container").load("/admin/playlisttag/"+playlist_id, function(){
+			$("#tag-selector-container").load("/admin/playlisttag/"+playlist_id, function(response){
 				initializeTagSelector(selectedTags);
 				$("#tags_new").focus();
 
 			});
 			
     	});
+
+
+
+
     }
 
 });

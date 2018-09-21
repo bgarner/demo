@@ -55,15 +55,24 @@ $("body").on('select2:select', $("#tags_" + communication_id), function (evt) {
     if(evt.params.data.newTag){
     	$.post("/admin/tag",{ tag_name: evt.params.data.text })
     	.done(function(tag){
-    		
-    		//change the id of the newly added tag to be the id from db
-			$('#tags_'+ communication_id +' option[value="'+tag.name+'"]').val(tag.id);
-			
+
+			if(tag.existence_status == 'new'){
+    			// change the id of the newly added tag to be the id from db
+    			$('#tags_'+ communication_id +' option[value="'+tag.name+'"]').val(tag.id);
+    		}
+    		if(tag.existence_status == 'existing'){
+
+    			var selectedTags = $('#tags_'+ communication_id).val();
+    			selectedTags.splice(-1,1);
+    			selectedTags.push( tag.id );
+    			$('#tags_'+ communication_id).val(selectedTags);
+    		}
+
 			var selectedTags = $("#tags_" + communication_id).val();
 			//update tag communication mapping
 			$.post("/admin/communicationtag",{ 'communication_id' : communication_id, 'tags': selectedTags })
 			.done(function(){
-				$('#tags').select2('destroy');
+				$("#tags_" + communication_id).select2('destroy');
 				$("#tag-selector-container").load("/admin/communicationtag/"+communication_id, function(){
 					initializeTagSelector();
 					$("#tags_" + communication_id).focus();
