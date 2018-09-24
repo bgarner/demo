@@ -41,7 +41,7 @@ class FeatureManagerController extends Controller
 		
 		$flyers                 = FeatureFlyer::getFlyersByFeatureId($feature->id);
 		$events                 = FeatureEvent::getEventsByFeatureId($feature->id);
-		$tasklists              = FeatureTasklist::getTasklistsByFeatureId($feature->id);
+		$tasklists              = FeatureTasklist::getTasklistsByFeatureIdForAdmin($feature->id);
 
         return view('manager.feature.message')
             ->with('feature', $feature)
