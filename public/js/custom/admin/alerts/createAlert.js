@@ -1,6 +1,6 @@
 var document_id = $("#documentID").val();
 $(document).ready(function(){
-	
+
 	if($("#allStores").prop('checked')) {
 		$("#storeSelect option").each(function(index){			
 			$(this).attr('selected', 'selected');
@@ -13,7 +13,7 @@ $(document).ready(function(){
 });
 
 $("body").on('select2:select', $("#tags_" + document_id), function (evt) {	
-	addTagToResource(document_id, 'playlist', evt);
+	addTagToResource(document_id, 'document', evt);
 });
 
 
