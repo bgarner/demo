@@ -1,52 +1,7 @@
-var initializeTagSelector = function(selectedTags){
-	
-	$("#tags_new").select2({ 
-		width: '100%' , 
-		tags: true,
-		multiple: true,
-		createTag: function (params) {
-    		var term = $.trim(params.term);
-
-		    if (term === '' && $("#tags_new").find('option').attr("tagname", term).length >0) {
-		      return null;
-		    }
-
-		    return {
-		      id: term, //id of new option 
-		      text: term, //text of new option 
-		      newTag: true
-		    }
-		}
-	});
-	if(typeof(selectedTags) !== 'undefined'){
-		$(selectedTags).each(function(index, tag){
-			$('#tags_new').val(selectedTags);
-			$('#tags_new').trigger('change');
-		});
-	}
-
-}
-
 $("body").on('select2:select', $("#tags_new"), function (evt) {
-
-	var playlist_id = 'new';
-    if(evt.params.data.newTag){
-    	$.post("/admin/tag",{ tag_name: evt.params.data.text })
-    	.done(function(tag){
-    		// change the id of the newly added tag to be the id from db
-			$('#tags_new option[value="'+tag.name+'"]').val(tag.id);	
-			var selectedTags = $("#tags_new").val();
-
-			$('#tags_new').select2('destroy');
-			$("#tag-selector-container").load("/admin/playlisttag/"+playlist_id, function(){
-				initializeTagSelector(selectedTags);
-				$("#tags_new").focus();
-
-			});
-			
-    	});
-    }
-
+	var resource_id = 'new';
+	var resource_type = 'playlist';
+	addTagToResource(resource_id, resource_type, evt)
 });
 
 $("#add-videos").click(function(){

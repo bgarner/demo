@@ -1,64 +1,22 @@
 var document_id = $("#documentID").val();
 $(document).ready(function(){
+
 	if($("#allStores").prop('checked')) {
 		$("#storeSelect option").each(function(index){			
 			$(this).attr('selected', 'selected');
 		});
 		$("#storeSelect").chosen();
 	}
-	initializeTagSelector();
+	initializeTagSelector(document_id);
 
 
 });
-var initializeTagSelector = function(){
-	
-	$("#tags_" + document_id ).select2({ 
-		width: '100%' , 
-		tags: true,
-		multiple: true,
-		createTag: function (params) {
-    		var term = $.trim(params.term);
 
-		    if (term === ''  && $("#tags_" + document_id ).find('option').attr("tagname", term).length >0) {
-		      return null;
-		    }
-
-		    return {
-		      id: term, //id of new option 
-		      text: term, //text of new option 
-		      newTag: true
-		    }
-		}
-	});
-	
-}
-
-$("body").on('select2:select', $("#tags_" + document_id ), function (evt) {
-
-	var document_id = $("#documentID").val();
-    if(evt.params.data.newTag){
-    	$.post("/admin/tag",{ tag_name: evt.params.data.text })
-    	.done(function(tag){
-    		
-    		//change the id of the newly added tag to be the id from db
-			$('#tags_'  + document_id + ' option[value="'+tag.name+'"]').val(tag.id);
-			
-			var selectedTags = $("#tags_" + document_id ).val();
-			//update tag document mapping
-			$.post("/admin/documenttag",{ 'document_id' : document_id, 'tags': selectedTags })
-			.done(function(){
-				$('#tags_' + document_id ).select2('destroy');
-				$("#tag-selector-container").load("/admin/documenttag/"+document_id, function(){
-					initializeTagSelector();
-					$("#tags_" + document_id ).focus();
-
-				});	
-			});				
-
-    	});
-    }
-
+$("body").on('select2:select', $("#tags_" + document_id), function (evt) {	
+	addTagToResource(document_id, 'document', evt);
 });
+
+
 
 $("#allStores").change(function(){
 

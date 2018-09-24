@@ -249,6 +249,7 @@
     <script type="text/javascript" src="/js/custom/admin/documents/changeFolder.js"></script>
     <script type="text/javascript" src="/js/custom/admin/documents/replaceDocument.js"></script>
     <script type="text/javascript" src="/js/custom/site/launchModal.js"></script>
+    <script type="text/javascript" src="/js/custom/admin/tags/addTagToContent.js"></script>
     @include('site.includes.bugreport')
     @include('site.includes.modal')
 
