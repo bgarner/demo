@@ -31,6 +31,13 @@
                 padding: 5px 10px 15px 10px;
                 min-height: 60px;
             }
+			table{
+				font-size: 12px !important;
+			}
+
+			tbody tr:hover, td.highlighted {
+				background-color: #ffa;
+			}	
         </style>
 </head>
 
@@ -150,7 +157,7 @@
 
 			                            <div id="tab-{{$loop->iteration}}" class="tab-pane @if ($loop->first) active @endif">
 			                                <div class="panel-body">
-			                                    <table class="table">
+			                                    <table class="table hover">
 			                                    	<thead>
 			                                    		
 			                                    		<th>Description</th>
@@ -218,7 +225,6 @@
 	<script type="text/javascript">
 		$(".table").dataTable(
         	{
-    			
 				pageLength: 50,
 				responsive: true,
 				fixedHeader: true,

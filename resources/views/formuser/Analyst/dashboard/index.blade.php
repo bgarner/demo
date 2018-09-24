@@ -10,6 +10,14 @@
             #status_update_modal .modal-body{
             	height: 75% !important;
             }
+
+			table{
+				font-size: 12px !important;
+			}
+
+			tbody tr:hover, td.highlighted {
+				background-color: #ffa;
+			}				
         </style>
 </head>
 
@@ -56,7 +64,8 @@
 			                            
 			                            <li  @if ($loop->first) class="active" @endif><a data-toggle="tab" href="#tab-{{$loop->iteration}}" aria-expanded="false">{{$formCategory}}</a></li>
 
-			                            @endforeach
+										@endforeach
+										
 			                        </ul>
 			                        <div class="tab-content" >
 			                        	@foreach($forms as $formCategory => $formInstances)
@@ -195,12 +204,25 @@
 				    { "visible": false },null,null,null,null,null,null
 				  ],
 
+				pageLength: 25,
+				responsive: true,
+				fixedHeader: true,
+				stateSave: true
+			}
+		);	
+
+		$("#table-3").dataTable(
+        	{
+    			"columns": [
+				    { "visible": false },null,null,null,null,null,null
+				  ],
+
 				pageLength: 50,
 				responsive: true,
 				fixedHeader: true,
 				stateSave: true
 			}
-		);		
+		);				
 		$.ajaxSetup({
 	        headers: {
 	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
