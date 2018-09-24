@@ -27,63 +27,11 @@ $('body').on( 'click', ".comm_type_dropdown_item", function(){
 	$(".selected_comm_type").append('<i class="fa fa-circle text-'+ comm_typeColour + '"> </i> '+ comm_type);
 });
 
-var initializeTagSelector = function(selectedTags){
-	
-	$("#tags_" + communication_id).select2({ 
-		width: '100%' , 
-		tags: true,
-		multiple: true,
-		createTag: function (params) {
-    		var term = $.trim(params.term);
 
-		    if (term === ''  && $("#tags_" + communication_id).find('option').attr("tagname", term).length >0) {
-		      return null;
-		    }
-
-		    return {
-		      id: term, //id of new option 
-		      text: term, //text of new option 
-		      newTag: true
-		    }
-		}
-	});
-}
-
-$("body").on('select2:select', $("#tags_" + communication_id), function (evt) {
-
-	var communication_id = $("#communicationId").val();
-    if(evt.params.data.newTag){
-    	$.post("/admin/tag",{ tag_name: evt.params.data.text })
-    	.done(function(tag){
-
-			if(tag.existence_status == 'new'){
-    			// change the id of the newly added tag to be the id from db
-    			$('#tags_'+ communication_id +' option[value="'+tag.name+'"]').val(tag.id);
-    		}
-    		if(tag.existence_status == 'existing'){
-
-    			var selectedTags = $('#tags_'+ communication_id).val();
-    			selectedTags.splice(-1,1);
-    			selectedTags.push( tag.id );
-    			$('#tags_'+ communication_id).val(selectedTags);
-    		}
-
-			var selectedTags = $("#tags_" + communication_id).val();
-			//update tag communication mapping
-			$.post("/admin/communicationtag",{ 'communication_id' : communication_id, 'tags': selectedTags })
-			.done(function(){
-				$("#tags_" + communication_id).select2('destroy');
-				$("#tag-selector-container").load("/admin/communicationtag/"+communication_id, function(){
-					initializeTagSelector();
-					$("#tags_" + communication_id).focus();
-
-				});	
-			});				
-
-    	});
-    }
-
+$("body").on('select2:select', $("#tags_" + communication_id), function (evt) {	
+	addTagToResource(communication_id, 'communication', evt);
 });
+
 
 
 $(document).on('click','.communication-update',function(){

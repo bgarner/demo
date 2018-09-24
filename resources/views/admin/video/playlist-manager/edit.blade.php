@@ -153,6 +153,7 @@
     <script type="text/javascript" src="/js/custom/admin/videos/playlists/editPlaylist.js"></script>
     <script src="/js/custom/admin/videos/playlists/changeVideoOrder.js"></script>
     <script src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
+    <script type="text/javascript" src="/js/custom/admin/tags/addTagToContent.js"></script>
 
 
 	<script type="text/javascript">
@@ -169,21 +170,21 @@
 
     <script type="text/javascript">
 
-    	 $(document).ready(function(){
+    $(document).ready(function(){
 
-    		var serializeVideoData = function (e) {
-    			 var list = e.length ? e : $(e.target);
-    			 var data = list.nestable('serialize');
-    			 updateVideoOrder(data);
-    		 };
+        var serializeVideoData = function (e) {
+            var list = e.length ? e : $(e.target);
+            var data = list.nestable('serialize');
+            updateVideoOrder(data);
+        };
 
-    		 $('#videoplaylist').nestable({
-    			 group: 1
-    		 }).on('change', serializeVideoData);
+        $('#videoplaylist').nestable({
+            group: 1
+        }).on('change', serializeVideoData);
 
-             initializeTagSelector();
+        initializeTagSelector(playlistId);
 
-    	 });
+    });
     </script>
 
 </body>

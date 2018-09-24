@@ -1,62 +1,9 @@
 var playlistId = $("#playlistID").val();
-var initializeTagSelector = function(selectedTags){
-	
-	$("#tags_" + playlistId ).select2({ 
-		width: '100%' , 
-		tags: true,
-		multiple: true,
-		createTag: function (params) {
-    		var term = $.trim(params.term);
-
-		    if (term === ''  && $("#tags_" + playlistId).find('option').attr("tagname", term).length >0) {
-		      return null;
-		    }
-
-		    return {
-		      id: term, //id of new option 
-		      text: term, //text of new option 
-		      newTag: true
-		    }
-		}
-	});
-}
-
 
 $("body").on('select2:select', $("#tags_" + playlistId), function (evt) {	
-
-	var playlist_id = $("#playlistID").val();
-    if(evt.params.data.newTag){
-    	$.post("/admin/tag",{ tag_name: evt.params.data.text })
-    	.done(function(tag){
-    		
-			if(tag.existence_status == 'new'){
-    			// change the id of the newly added tag to be the id from db
-    			$('#tags_'+ playlist_id +' option[value="'+tag.name+'"]').val(tag.id);
-    		}
-    		if(tag.existence_status == 'existing'){
-
-    			var selectedTags = $('#tags_'+ playlist_id).val();
-    			selectedTags.splice(-1,1);
-    			selectedTags.push( tag.id );
-    			$('#tags_'+ playlist_id).val(selectedTags);
-    		}
-
-			var selectedTags = $("#tags_" + playlist_id).val();
-			//update tag communication mapping
-			$.post("/admin/playlisttag",{ 'playlist_id' : playlist_id, 'tags': selectedTags })
-			.done(function(){
-				$("#tags_" + playlist_id).select2('destroy');
-				$("#tag-selector-container").load("/admin/playlisttag/"+playlist_id, function(){
-					initializeTagSelector();
-					$("#tags_" + playlist_id).focus();
-
-				});	
-			});	
-
-    	});
-    }
-
+	addTagToResource(playlistId, 'playlist', evt);
 });
+
 $("#add-more-videos").click(function(){
 	$("#video-listing").modal('show');
 });

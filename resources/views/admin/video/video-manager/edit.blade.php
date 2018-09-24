@@ -118,6 +118,7 @@
         <script type="text/javascript" src="/js/plugins/select/select2.min.js"></script>
         <script type="text/javascript" src="/js/custom/admin/global/storeAndBannerSelector.js"></script>
         <script type="text/javascript" src="/js/custom/admin/videos/editVideo.js"></script>
+        <script type="text/javascript" src="/js/custom/admin/tags/addTagToContent.js"></script>
 
         <script type="text/javascript">
             $(".chosen").chosen({
