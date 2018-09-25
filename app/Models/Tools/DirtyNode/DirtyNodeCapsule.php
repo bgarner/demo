@@ -22,7 +22,7 @@ class DirtyNodeCapsule extends Model
             'headers' => [ 'Content-Type' => 'application/json' ]
         ]);
         
-        $response = $client->post($endpoint,
+        $response = $client->post($endpoint, 
             ['body' => json_encode($capsule)]
         );
 
