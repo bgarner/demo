@@ -2,13 +2,16 @@
 @section('title', 'Product Request Report' )
 
 @section('style')
-    <link rel="stylesheet" href="/css/plugins/TableExport/tableexport.min.css">
+    <!-- <link rel="stylesheet" href="/css/plugins/TableExport/tableexport.min.css"> -->
     <style>
         .blank_row
         {
             height: 25px !important;
             background-color: #FFFFFF !important;
             border: 0 !important;
+        }
+        .table{
+            margin-top: 10px;
         }
     </style>
 @endsection

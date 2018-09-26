@@ -79,8 +79,6 @@ class FormInstanceResolutionMap extends Model
                 $report[$bu->business_unit][$key]['total'] = $total;
             }
 
-
-
         }
 
         return ( $report );
