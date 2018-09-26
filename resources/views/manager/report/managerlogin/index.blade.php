@@ -48,6 +48,7 @@
                                     </thead>
                                 
                                     <tbody>
+                                        @if(count($users)>0)
                                         @foreach($users as $user)
                                         <tr>
                                             <td>
@@ -57,12 +58,12 @@
                                                 {{$user->last_login}}
                                             </td>
                                             <td>
-                                                $resolution_code_data['percentage']
+                                                {{$user->count}}
                                             </td>
 
                                         </tr>
                                         @endforeach
-
+                                        @endif
                                    </tbody>
                                </table>
                            </div>

@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Controllers\Controller;
 use App\Models\Auth\Group\Group;
 use App\Models\Auth\User\UserRole;
+use App\Models\Auth\User\UserLogin;
 
 
 class LoginController extends Controller
@@ -44,6 +45,9 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         $group_id = $user->group_id;
+        if($group_id == 2){
+            UserLogin::addUserLogin($user->id);
+        }
         $group = Group::where('id', $group_id)->first()->name;
 
         return redirect("/". strtolower($group));
