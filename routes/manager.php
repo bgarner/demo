@@ -41,5 +41,5 @@ Route::get('/manager/formlist', array('uses' => 'Form\FormListManagerController@
 Route::resource('/manager/form/productrequest', 'Form\ProductRequestFormManagerController');
 
 //Report
-Route::get('/manager/report/productrequest', 'Report\ProductRequestReportController@index');
-Route::get('/manager/report/managerlogin', 'Report\ManagerLoginReportController@index');
+Route::get('/manager/report/productrequest', 'Report\ProductRequestReportController@index')->middleware('role:Exec');
+Route::get('/manager/report/managerlogin', 'Report\ManagerLoginReportController@index')->middleware('role:Exec');

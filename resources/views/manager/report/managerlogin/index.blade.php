@@ -4,12 +4,6 @@
 @section('style')
     <!-- <link rel="stylesheet" href="/css/plugins/TableExport/tableexport.min.css"> -->
     <style>
-        .blank_row
-        {
-            height: 25px !important;
-            background-color: #FFFFFF !important;
-            border: 0 !important;
-        }
         .table{
             margin-top: 10px;
         }
@@ -43,7 +37,7 @@
                                         <tr role="row">
                                            <th>User</th>
                                            <th>Last Login</th>
-                                           <th>Login Count since last week</th>
+                                           <th>Login Count (since last week)</th>
                                         </tr>
                                     </thead>
                                 

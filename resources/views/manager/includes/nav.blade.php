@@ -139,7 +139,8 @@
 
                 </ul>
         </li>
-    
+        
+        @if(Auth::user()->role == "Exec")
         <!-- Custom Reports -->
         @if (  Request::is('manager/report/*') || 
             Request::is('manager/report') || 
@@ -156,5 +157,7 @@
                 <li><a href="/manager/report/managerlogin">Manager Login</a></li>
             </ul>
         </li>
+
+        @endif
 
 </ul>
