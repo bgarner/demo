@@ -193,6 +193,7 @@ return [
         Adldap\Laravel\AdldapServiceProvider::class,
         Adldap\Laravel\AdldapAuthServiceProvider::class,
         App\Providers\ManagerSidenavServiceProvider::class,
+        App\Providers\StoreTaskSidebarServiceProvider::class,
 
     ],
 

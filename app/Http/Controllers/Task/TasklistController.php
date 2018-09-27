@@ -26,7 +26,6 @@ class TasklistController extends Controller
                     ->with('tasksCompleted', $tasksCompleted)
                     ->with('tasklists', $tasklists)
                     ->with('title', $title)
-                    ->with('tasklists', $tasklists)
                     ->with('incompleteTasksInList', $incompleteTasksInList)
                     ->with('allIncompleteTasks', $allIncompleteTasks);
     }

@@ -9,6 +9,11 @@ use App\Models\Auth\User\UserSelectedBanner;
 use App\Models\StoreApi\StoreInfo;
 use App\Models\Tools\CustomStoreGroup;
 use App\Models\StoreApi\Store;
+use App\Models\StoreApi\DistrictStore;
+use App\Models\StoreApi\RegionDistrict;
+use App\Models\Auth\Resource\ResourceTypes;
+use App\Models\Auth\Resource\Resource;
+use App\Models\Auth\User\UserResource;
 
 class Utility extends Model
 {
@@ -680,12 +685,29 @@ class Utility extends Model
     public static function makeStoreNumber($store_id, $banner_id, $is_combo_store = null)
     {	
     	$store_number = str_pad($store_id, 4, '0', STR_PAD_LEFT);
-    	\Log::info('***674***');
-    	\Log::info($store_number);
     	if(isset($is_combo_store) && $banner_id == 2 ){
     		$store_number = 'A' . $store_number;
     	}
     	return $store_number;
+    }
+
+    public static function getDMForStore($storeNumber)
+    {
+    	$district_id = DistrictStore::where('store_id', $storeNumber)->first()->district_id;
+        $resource_type_id = ResourceTypes::where('resource_name', 'district')->first()->id;
+        $resource = Resource::getResourceByResourceTypeIdandResourceId($resource_type_id, $district_id);
+        $user = UserResource::getUserByResourceId($resource->id);
+        return $user;
+    }
+
+    public static function getAVPForStore($storeNumber)
+    {
+    	$district_id = DistrictStore::where('store_id', $storeNumber)->first()->district_id;
+    	$region_id = RegionDistrict::where('district_id', $district_id)->first()->region_id;
+        $resource_type_id = ResourceTypes::where('resource_name', 'region')->first()->id;
+        $resource = Resource::getResourceByResourceTypeIdandResourceId($resource_type_id, $region_id);
+        $user = UserResource::getUserByResourceId($resource->id);
+        return $user;
     }
 
 }

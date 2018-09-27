@@ -734,4 +734,29 @@ class Task extends Model
         return( $optGroupSelections );
     }
 
+
+    public static function getDMTasks($storeNumber)
+    {
+    	$user = Utility::getDMForStore($storeNumber);
+    	$task_ids = Self::getTasksByUserId($user->id);
+    	return $task_ids;
+    }
+
+    public static function getAVPTasks($storeNumber)
+    {
+    	$user = Utility::getAVPForStore($storeNumber);
+    	$task_ids = Self::getTasksByUserId($user->id);
+    	return $task_ids;
+    }
+
+    public static function getTasksByUserId($user_id)
+    {
+    	return Task::join('task_creator', 'task_creator.task_id', '=', 'tasks.id')
+                        ->where('creator_id', $user_id)
+                        ->select('tasks.id')
+                        ->get()
+                        ->pluck('id')
+                        ->toArray();
+    }
+
 }

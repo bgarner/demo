@@ -23,6 +23,16 @@
             @endforeach
             </ul>
 
+            <ul class="category-list " style="padding: 0">
+
+                <li><a class="tasklist_title" href="/{{ Request::segment(1) }}/task/getTasksByDM">DM Tasks<span class="label pull-right"> {{ count($incompleteDMTasks) }}</span> </a></li>
+
+                <li><a class="tasklist_title" href="/{{ Request::segment(1) }}/task/getTasksByAVP">AVP Tasks<span class="label pull-right"> {{ count($incompleteAVPTasks) }}</span> </a></li>
+
+
+
+            </ul>
+
             <div class="clearfix"></div>
         </div>
     </div>

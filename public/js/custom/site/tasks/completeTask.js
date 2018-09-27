@@ -17,13 +17,25 @@ var handleTaskUpdate = function(elem){
 
     var pathname = window.location.pathname;
 
-    var module = new RegExp('/\*\/tasklist\/\*/');
+    var isTasklistTask = new RegExp('/\*\/tasklist\/\*/');
+    var isDMTask = new RegExp(/getTasksByDM/);
+    var isAVPTask = new RegExp(/getTasksByAVP/);
 
-    if (module.test(pathname)) {
+    if (isTasklistTask.test(pathname)) {
         var url =  window.location.href + "/task/" + task_id ;            
     }
+    else if (isDMTask.test(window.location.href)){
+        var url = window.location.href.split('/');
+        url.pop(); //remove getTasksByDM segment 
+        url = url.join('/') + "/updateTasksByDM/" + task_id;
+    }
+    else if (isAVPTask.test(window.location.href)){
+        var url = window.location.href.split('/');
+        url.pop(); //remove getTasksByAVP segment 
+        url = url.join('/') + "/updateTasksByAVP/" + task_id;
+    }
     else{
-        var url =  window.location.href + "/" + task_id ;
+            var url =  window.location.href + "/" + task_id ;    
     }
 
     var task_checkbox_status = elem.attr('data-task-completed');
@@ -40,7 +52,6 @@ var handleTaskUpdate = function(elem){
         }
     }).done(function(response){
 
-        $("#sidenav-task-count").text(response.allIncompleteTasks + " / " + (response.tasksCompleted + response.allIncompleteTasks) );
         $("#task-container").html(response.html);
 
     });     
