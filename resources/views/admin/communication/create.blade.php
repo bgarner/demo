@@ -67,7 +67,7 @@
 									</div>
 							</div>
 
-              <div id="tag-selector-container">
+              				<div id="tag-selector-container">
 								@include('admin.tag.tag-partial')
 							</div>
 

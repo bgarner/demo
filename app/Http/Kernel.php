@@ -63,7 +63,9 @@ class Kernel extends HttpKernel
         'admin.auth'      => \App\Http\Middleware\AdminAuthenticate::class,
         'banner'          => \App\Http\Middleware\SetInitialBanner::class,
         'componentaccess' => \App\Http\Middleware\RoleComponentAccess::class,
-        'formaccess'      => \App\Http\Middleware\RoleFormAccess::class
+        'formaccess'      => \App\Http\Middleware\RoleFormAccess::class,
+        'role'            => \App\Http\Middleware\CheckRole::class
+
     ];
 
 }

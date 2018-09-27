@@ -139,6 +139,25 @@
 
                 </ul>
         </li>
+        
+        @if(Auth::user()->role == "Exec")
+        <!-- Custom Reports -->
+        @if (  Request::is('manager/report/*') || 
+            Request::is('manager/report') || 
+            Request::is('manager/report/productrequest') || 
+            Request::is('manager/report/managerlogin')
+            ) 
+        <li class="active">
+        @else
+        <li>
+        @endif
+            <a href="/manager/report"><i class="fa fa-line-chart"></i> <span class="nav-label">Reports</span><span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level collapse">
+                <li><a href="/manager/report/productrequest">Product Request</a></li>
+                <li><a href="/manager/report/managerlogin">Manager Login</a></li>
+            </ul>
+        </li>
 
+        @endif
 
 </ul>
