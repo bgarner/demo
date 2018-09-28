@@ -29,6 +29,10 @@ class DirtyNodeCapsule extends Model
         $request->DOM_API_result = $response->getBody();
         DirtyNode::cleanNodeFromScanner($request);
 
+        \Log::info("**** DN Scanner ****");
+        \Log::info($capsule);
+        \Log::info($request->DOM_API_result);
+
         return $response;
     }
        
