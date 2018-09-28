@@ -31,6 +31,11 @@ class DirtyNode extends Model
 
     public static function getNodeForScanner($store_number, $upc)
     {
+
+        \Log::info("**** DN Scanner - attempted scan ****");
+        \Log::info($store_number);
+        \Log::info($upc);
+
         $store_number = ltrim($store_number, '0');
         $node = DirtyNode::where('store', $store_number)
                         ->where('upccode', $upc)
@@ -64,10 +69,6 @@ class DirtyNode extends Model
 
     public static function cleanNodeFromScanner($request)
     {
-
-        \Log::info("**** DN Scanner - attempted scan ****");
-        \Log::info($request);
-
         $node = DirtyNode::where('item_id_sku', $request->item_id_sku)
                             ->where('node_key', $request->node_key)
                             ->where('store', $request->store)
