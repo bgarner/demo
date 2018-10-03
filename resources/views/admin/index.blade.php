@@ -102,9 +102,10 @@
     <script type="text/javascript" src="/js/custom/datetimepicker.js"></script>
     <script type="text/javascript" src="/js/custom/site/launchModal.js" ></script>
     <script type="text/javascript" src="/js/custom/admin/analytics/analytics.js"></script>
-    <script type="text/javascript" src="/js/custom/admin/analytics/videoReport.js"></script>
     <script type="text/javascript" src="/js/custom/admin/dashboard/getStoreDetails.js"></script>
     <script type="text/javascript" src="/js/custom/JSONToCSVConvertor.js"></script>
+    <script type="text/javascript" src="/js/custom/admin/analytics/videoReport.js"></script>
+
 
 
    	<!-- ChartJS-->

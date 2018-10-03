@@ -84,4 +84,44 @@ class FormInstanceResolutionMap extends Model
         return ( $report );
         
     }
+
+    public static function getResolutionCodeCountByFilter($filters, $since = null)
+    {
+
+        $report = [];
+
+        $report = FormData::leftJoin('form_instance_resolution_code_map', 'form_data.id', '=', 'form_instance_resolution_code_map.form_instance_id')
+            ->leftJoin('form_resolution_code', 'form_instance_resolution_code_map.resolution_code_id', '=', 'form_resolution_code.id')
+            ->when($since, function($query) use($since) {
+                return $query->where('form_instance_resolution_code_map.updated_at', '>=', $since);
+            }, function($query){
+                $query->where('form_instance_resolution_code_map.updated_at', '>=', Self::$launch_date);
+            })
+            ->when($filters["department"], function($query) use($filters){
+                $query->where('form_data.json_form_data->department', $filters["department"]);
+            })
+            ->select(\DB::raw(' form_resolution_code.resolution_code, 
+                count(form_instance_resolution_code_map.resolution_code_id) as count,
+                count(form_instance_resolution_code_map.resolution_code_id) as percentage
+                '))
+            ->groupBy('form_resolution_code.resolution_code')
+            ->get();
+        
+        $total = 0;
+        
+        // foreach ($report[$bu->business_unit] as $resolution) {
+        //     $total += $resolution->count;
+        // }
+        
+
+        // foreach ($report[$bu->business_unit] as $key=>$resolution) {
+        //     $report[$bu->business_unit][$key]['percentage'] = round(($resolution['count'] * 100)/ $total, 2);
+        //     $report[$bu->business_unit][$key]['total'] = $total;
+        // }
+
+        // }
+
+        return ( $report );
+    }
+
 }
