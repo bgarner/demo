@@ -88,6 +88,20 @@ class FormInstanceResolutionMap extends Model
     public static function getResolutionCodeCountByFilter($filters, $since = null)
     {
 
+        
+        $department = '';
+        $category = '';
+        $subcategory = '';
+
+        if(isset($filters["department"])){
+            $department = $filters["department"];
+        }
+        if(isset($filters["category"])){
+            $category = $filters["category"];
+        }
+        if(isset($filters["subcategory"])){
+            $subcategory = $filters["subcategory"];
+        }
         $report = [];
 
         $report = FormData::leftJoin('form_instance_resolution_code_map', 'form_data.id', '=', 'form_instance_resolution_code_map.form_instance_id')
@@ -97,8 +111,14 @@ class FormInstanceResolutionMap extends Model
             }, function($query){
                 $query->where('form_instance_resolution_code_map.updated_at', '>=', Self::$launch_date);
             })
-            ->when($filters["department"], function($query) use($filters){
-                $query->where('form_data.json_form_data->department', $filters["department"]);
+            ->when($department, function($query) use($department){
+                $query->where('form_data.json_form_data->department', $department);
+            })
+            ->when($category, function($query) use($category){
+                $query->where('form_data.json_form_data->category', $category);
+            })
+            ->when($subcategory, function($query) use($subcategory){
+                $query->where('form_data.json_form_data->subcategory', $subcategory);
             })
             ->select(\DB::raw(' form_resolution_code.resolution_code, 
                 count(form_instance_resolution_code_map.resolution_code_id) as count,
@@ -109,17 +129,15 @@ class FormInstanceResolutionMap extends Model
         
         $total = 0;
         
-        // foreach ($report[$bu->business_unit] as $resolution) {
-        //     $total += $resolution->count;
-        // }
+        foreach ($report as $data) {
+            $total += $data->count;
+        }
         
 
-        // foreach ($report[$bu->business_unit] as $key=>$resolution) {
-        //     $report[$bu->business_unit][$key]['percentage'] = round(($resolution['count'] * 100)/ $total, 2);
-        //     $report[$bu->business_unit][$key]['total'] = $total;
-        // }
-
-        // }
+        foreach ($report as $key=>$resolution) {
+            $report[$key]['percentage'] = round(($resolution['count'] * 100)/ $total, 2);
+            $report[$key]['total'] = $total;
+        }
 
         return ( $report );
     }
