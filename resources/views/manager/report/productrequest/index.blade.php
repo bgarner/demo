@@ -22,6 +22,19 @@
         .current-filter{
             padding-top: 15px;
         }
+        .tableexport-caption{
+            float: right !important;
+        }
+        .tableexport-caption button{
+            padding: 6px 12px !important;
+            border-radius: 3px !important;
+            background-color: #489bd5;
+            border-color: #489bd5;
+            color: #FFFFFF;
+        }
+        .breadcrumb{
+            background-color:inherit !important;
+        }
     </style>
 @endsection
 @section('content')
@@ -69,11 +82,13 @@
                         <button class="btn btn-primary" id="filter_report"><i class="fa fa-check"></i> Filter</button>
                     </div>
                 </div>
-                <div class="current-filter"> <h4>Selected Filter :</h4>
+                <!-- <div class="current-filter"> <h4>Selected Filter :</h4>
+                    
                     <ol class="breadcrumb">
                         <li>No Filters</li>
                     </ol>
-                </div>
+                    
+                </div> -->
 
             </div>        
             <div class="tabs-container wrapper wrapper-content animated fadeInRight">
@@ -103,6 +118,12 @@
                                         
                                        <table class="table table-striped table-bordered datatable" id="toDateTable" >
                                         <thead>
+                                            <tr>
+                                                <th colspan="3" class="current-filter">
+                                                    Selected Filter : No Filter
+                                                        
+                                                </th>
+                                            </tr>
                                             <tr role="row">
                                                <th>Resolution Code</th>
                                                <th>Count</th>
@@ -164,15 +185,20 @@
                                <div class="col-md-12">
 
                                    <div class="table-responsive clearfix" id="lastWeekProductRequestReport">
-                                    <span class="pull-right"> Since : {{$lastWeek}}</span>
+                                    <span class="pull-left"> Since : {{$lastWeek}}</span>
                                     <table class="table table-striped table-bordered datatable" id="sinceLastWeekTable" >   
                                         <thead>
-                                        
-                                           <tr role="row">                                   
+                                            <tr>
+                                                <th colspan="3" class="current-filter">
+                                                    Selected Filter : No Filter
+                                                        
+                                                </th>
+                                            </tr>
+                                            <tr role="row">                                   
                                                <th>Resolution Code</th>
                                                <th>Count</th>
                                                <th>Percentage</th>
-                                           </tr>
+                                            </tr>
                                         </thead>
                                         {{--@foreach($sinceLastWeek as $bu=>$data)
                                         
@@ -210,7 +236,7 @@
                                             <tr>
                                                 <td>{{$data->resolution_code}}</td>
                                                 <td>{{$data->count}}</td>
-                                                <td>{{$data->percentage}} %</td>
+                                                <td>{{$data->percentage}}%</td>
                                             </tr>
                                             
                                         @endforeach
@@ -240,12 +266,7 @@
     <script src="/js/custom/forms/ProductRequestFormOptions.js"></script>
     <script src="/js/custom/manager/reports/ProductRequestFormReport.js"></script>
     <script>
-        $("#toDateProductRequestReport").tableExport({
-            formats: [ 'csv'], 
-        });
-        $("#lastWeekProductRequestReport").tableExport({
-            formats: ['csv'], 
-        });
+        
 
         
     </script>  

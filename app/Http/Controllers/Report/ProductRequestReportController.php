@@ -14,11 +14,6 @@ class ProductRequestReportController extends Controller
      	
      	$lastWeek = Carbon::now()->subDays(7)->startOfDay()->toDateTimeString();
         $filters = [];
-        // $filters = [
-        //     'department' => 'Softgoods',
-        //     // 'category' => 'Casual Apparel',
-        //     // 'subcategory' => 'Outdoor Apparel'
-        // ];
      	$toDate = FormInstanceResolutionMap::getResolutionCodeCountByFilter($filters);
      	$sinceLastWeek = FormInstanceResolutionMap::getResolutionCodeCountByFilter($filters, $lastWeek);
      	
