@@ -22,6 +22,7 @@
     <script src="/js/custom/trackEvent.js?<?=time();?>"></script>
     <script src="/js/custom/sendBugReport.js?<?=time();?>"></script>
     <script src="/js/custom/setLang.js?<?=time();?>"></script>
+    <script src="/js/custom/site/showHelpSection.js?<?=time();?>"></script>
 
     <script type="text/javascript">
         $.ajaxSetup({

@@ -98,9 +98,12 @@
                 }
             }
         }
+        #notification_container{
+            padding-right: 10px;
+        }
         .notifications{
             color: #999c9e;
-            padding-right : 10px;
+            margin-right : -10px;
         }
         .count-info .label {
             line-height: 12px;
@@ -129,8 +132,14 @@
 
         <div class="col-lg-6 col-md-6 col-sm-5 col-xs-6">
             <div class="" style="padding-right: 20px;margin:10px 0px;">
+
                 @include('site.includes.search')
+                
             </div>
+
+        </div>
+        <div class="col-xs-1" style="top: 10px; right: 25px;">
+        @include('site.includes.help-icon', ['parentView' => 'site.dashboard.index', 'section' => 'help_dashboard_search'])
         </div>
 
 
@@ -140,6 +149,7 @@
             <div class="" style="padding: 15px 30px 0px 0px; float:right">
                 <span id="notification_container">            
                     @include('site.includes.notification-partial')
+                    
                 </span>
 
                 <span class="truncate" id="store-name">
@@ -166,7 +176,9 @@
                 @endif
 
                 &nbsp;&nbsp;<a id="storeswitch" style="display: inline;"><i class="fa fa-sitemap "></i><span id="storeswitch-text"> {{__("Change Store")}}</span></a>
+                @include('site.includes.help-icon', ['parentView' => 'site.dashboard.index', 'section' => 'help_dashboard_bannerSwitch'])
             </div>
+
         </div>
 
     </div>

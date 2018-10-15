@@ -3,6 +3,7 @@
 <a class="faa-parent animated-hover notifications count-info" id="notification_popover">
     <i class="fa fa-bell faa-shake "></i>
     <span class="label label-danger">{{count($notifications)}}</span>
+    @include('site.includes.help-icon', ['parentView' => 'site.dashboard.index', 'section' => 'help_dashboard_notifications'])
 </a>
 </span>
 
@@ -26,7 +27,7 @@
         </div>
     </div>
     @endforeach
-    
+
     <!-- <div>
         <div class="text-center link-block">
             <a href="/">

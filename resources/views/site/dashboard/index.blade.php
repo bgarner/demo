@@ -43,7 +43,9 @@
                     <div class="ibox float-e-margins">
 
                         <div class="ibox-title">
-                            <h2>{{__("Featured Content")}}</h2>
+                            <h2>{{__("Featured Content")}}
+                            @include('site.includes.help-icon', ['parentView' => 'site.dashboard.index', 'section' => 'help_dashboard_featuredTile'])
+                            </h2>
                         </div>
 
                         <div class="ibox-content clearfix features">
@@ -90,7 +92,9 @@
                 <div class="col-lg-4">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h2>{{__("Featured Video")}}</h2>
+                            <h2>{{__("Featured Video")}}
+                            @include('site.includes.help-icon', ['parentView' => 'site.dashboard.index', 'section' => 'help_dashboard_featuredVideo'])
+                        </h2>
                         </div>
 
                         <a href="/{{ Request::segment(1) }}/video/watch/{{$featuredVideo->id}}"><img src="/video/thumbs/{{$featuredVideo->thumbnail}}" data-video-id="{{$featuredVideo->id}}" class="trackclick img-responsive" style="width: 100%" /></a>
@@ -129,7 +133,9 @@
                 <div class="col-lg-4">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h2>{{__("Quick Links")}}</h2>
+                            <h2>{{__("Quick Links")}}
+                            @include('site.includes.help-icon', ['parentView' => 'site.dashboard.index', 'section' => 'help_dashboard_quicklinks'])
+                            </h2>
                         </div>
 
                         <div class="ibox-content" id="ql-container">
@@ -153,7 +159,9 @@
                 <div class="col-lg-4">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h2>{{__("Latest Communications")}}</h2>
+                            <h2>{{__("Latest Communications")}}
+                            @include('site.includes.help-icon', ['parentView' => 'site.dashboard.index', 'section' => 'help_dashboard_latestCommunication'])
+                            </h2>
                         </div>
 
                         <div class="ibox-content" id="comm-container">
@@ -197,7 +205,9 @@
             <div class="col-lg-4">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h2>{{__("Recent Uploads")}}</h2>
+                        <h2>{{__("Recent Uploads")}}
+                        @include('site.includes.help-icon', ['parentView' => 'site.dashboard.index', 'section' => 'help_dashboard_recentUploads'])
+                        </h2>
                     </div>
 
                     <div class="ibox-content" id="notification-container" >

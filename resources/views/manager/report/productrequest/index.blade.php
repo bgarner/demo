@@ -113,6 +113,7 @@
                                        <th>Percentage</th>
                                    </tr>
                                 </thead>
+                                
                                 @foreach($sinceLastWeek as $bu=>$data)
                                 
                                 <tr class="blank_row">
