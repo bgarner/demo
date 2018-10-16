@@ -499,6 +499,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
 
     public static $classMap = array (
         'AddAllDayToEventsTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_28_152315_add_all_day_to_events_table.php',
+        'AddAllStoresToSurveyTable' => __DIR__ . '/../..' . '/database/migrations/2018_10_16_164707_add_all_stores_to_survey_table.php',
         'AddArchivedAtToCustomStoreGroups' => __DIR__ . '/../..' . '/database/migrations/2018_06_21_111944_add_archived_at_to_custom_store_groups.php',
         'AddBannerIdToStoresTable' => __DIR__ . '/../..' . '/database/migrations/2018_06_15_131207_add_banner_id_to_stores_table.php',
         'AddChangesColumnToProdLaunchTable' => __DIR__ . '/../..' . '/database/migrations/2018_05_15_105631_add_changes_column_to_prod_launch_table.php',
@@ -629,6 +630,8 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'App\\Models\\StoreFeedback\\FeedbackResponse' => __DIR__ . '/../..' . '/app/Models/StoreFeedback/FeedbackResponse.php',
         'App\\Models\\StoreFeedback\\FeedbackStatus' => __DIR__ . '/../..' . '/app/Models/StoreFeedback/FeedbackStatus.php',
         'App\\Models\\StoreFeedback\\FeedbackStatusTypes' => __DIR__ . '/../..' . '/app/Models/StoreFeedback/FeedbackStatusTypes.php',
+        'App\\Models\\Surveys\\Survey' => __DIR__ . '/../..' . '/app/Models/Surveys/Survey.php',
+        'App\\Models\\Surveys\\SurveyTarget' => __DIR__ . '/../..' . '/app/Models/Surveys/SurveyTarget.php',
         'App\\Models\\Tag\\ContentTag' => __DIR__ . '/../..' . '/app/Models/Tag/ContentTag.php',
         'App\\Models\\Tag\\Tag' => __DIR__ . '/../..' . '/app/Models/Tag/Tag.php',
         'App\\Models\\Task\\StoreStatusTypes' => __DIR__ . '/../..' . '/app/Models/Task/StoreStatusTypes.php',
@@ -798,6 +801,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'CreateStoreComponentSubcomponentTable' => __DIR__ . '/../..' . '/database/migrations/2018_08_02_092739_create_store_component_subcomponent_table.php',
         'CreateStoreComponentTable' => __DIR__ . '/../..' . '/database/migrations/2017_07_26_162219_create_store_component_table.php',
         'CreateStoresTable' => __DIR__ . '/../..' . '/database/migrations/2017_08_14_164716_create_stores_table.php',
+        'CreateSurveyTargetTable' => __DIR__ . '/../..' . '/database/migrations/2018_10_16_163547_create_survey_target_table.php',
         'CreateSurveysTable' => __DIR__ . '/../..' . '/database/migrations/2018_10_16_150541_create_surveys_table.php',
         'CreateTaskBannerTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_26_211025_create_task_banner_table.php',
         'CreateTaskCreatorPivotTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_17_135440_createTaskCreatorPivotTable.php',

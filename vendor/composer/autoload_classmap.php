@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AddAllDayToEventsTable' => $baseDir . '/database/migrations/2017_06_28_152315_add_all_day_to_events_table.php',
+    'AddAllStoresToSurveyTable' => $baseDir . '/database/migrations/2018_10_16_164707_add_all_stores_to_survey_table.php',
     'AddArchivedAtToCustomStoreGroups' => $baseDir . '/database/migrations/2018_06_21_111944_add_archived_at_to_custom_store_groups.php',
     'AddBannerIdToStoresTable' => $baseDir . '/database/migrations/2018_06_15_131207_add_banner_id_to_stores_table.php',
     'AddChangesColumnToProdLaunchTable' => $baseDir . '/database/migrations/2018_05_15_105631_add_changes_column_to_prod_launch_table.php',
@@ -137,6 +138,8 @@ return array(
     'App\\Models\\StoreFeedback\\FeedbackResponse' => $baseDir . '/app/Models/StoreFeedback/FeedbackResponse.php',
     'App\\Models\\StoreFeedback\\FeedbackStatus' => $baseDir . '/app/Models/StoreFeedback/FeedbackStatus.php',
     'App\\Models\\StoreFeedback\\FeedbackStatusTypes' => $baseDir . '/app/Models/StoreFeedback/FeedbackStatusTypes.php',
+    'App\\Models\\Surveys\\Survey' => $baseDir . '/app/Models/Surveys/Survey.php',
+    'App\\Models\\Surveys\\SurveyTarget' => $baseDir . '/app/Models/Surveys/SurveyTarget.php',
     'App\\Models\\Tag\\ContentTag' => $baseDir . '/app/Models/Tag/ContentTag.php',
     'App\\Models\\Tag\\Tag' => $baseDir . '/app/Models/Tag/Tag.php',
     'App\\Models\\Task\\StoreStatusTypes' => $baseDir . '/app/Models/Task/StoreStatusTypes.php',
@@ -306,6 +309,7 @@ return array(
     'CreateStoreComponentSubcomponentTable' => $baseDir . '/database/migrations/2018_08_02_092739_create_store_component_subcomponent_table.php',
     'CreateStoreComponentTable' => $baseDir . '/database/migrations/2017_07_26_162219_create_store_component_table.php',
     'CreateStoresTable' => $baseDir . '/database/migrations/2017_08_14_164716_create_stores_table.php',
+    'CreateSurveyTargetTable' => $baseDir . '/database/migrations/2018_10_16_163547_create_survey_target_table.php',
     'CreateSurveysTable' => $baseDir . '/database/migrations/2018_10_16_150541_create_surveys_table.php',
     'CreateTaskBannerTable' => $baseDir . '/database/migrations/2017_09_26_211025_create_task_banner_table.php',
     'CreateTaskCreatorPivotTable' => $baseDir . '/database/migrations/2017_02_17_135440_createTaskCreatorPivotTable.php',

@@ -79,6 +79,9 @@ Route::patch('/form/updateStatus/{id}', 'Form\FormInstanceStatusController@updat
 //Route::post('/{storeno}/search', array('uses' => 'Search\SearchController@index'));
 Route::get('/{storeno}/search', array('uses' => 'Search\SearchController@index'));
 
+Route::get('/{storeno}/surveys', array('uses' => 'Surveys\SurveyController@index'));
+Route::get('/{storeno}/survey/{id}', array('uses' => 'Surveys\SurveyController@show'));
+
 //TAGS
 Route::get('/{storeno}/tag/{tag}', 'Tag\TagController@index');
 
