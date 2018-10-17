@@ -63,7 +63,8 @@ class DatabaseSeeder extends Seeder
 
         // $this->call(StoreSubComponentsTableSeeder::class); 
         // $this->call(AnalyticsAssetTypeSeeder::class);       
-        // $this->call(RemoveRedundantTagsSeeder::class);       
+        // $this->call(RemoveRedundantTagsSeeder::class);      
+        $this->call(HelpSectionTableSeeder::class);
         
     }
 }

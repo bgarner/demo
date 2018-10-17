@@ -8804,3 +8804,9 @@ time.icon span
   padding-top: 12px;
   color: #2f2f2f;
 }
+.help_container{
+  font-size: 13px !important;
+}
+.archive-onoffswitch{
+  margin-right: 5px;
+}

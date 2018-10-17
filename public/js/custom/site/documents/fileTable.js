@@ -94,7 +94,19 @@ var fileFill = function(data)
 
 		if(data.files.length > 0) {
 			$('#file-table').append('<thead>'+
-									'<tr> <th> Title </th>'+
+									'<tr>'+
+										'<th> Title '+
+										'<span class="help_container">'+
+											'<a href="#" '+
+												'data-toggle="modal" '+
+												'data-target="#"'+
+												'data-parent-view="site.documents.index"'+
+												'data-section="help_document_documents"'+
+												'class="helpSection">'+
+												'<i class="fa fa-question-circle" aria-hidden="true"></i>'+
+												'</a>'+
+												'</span>'+
+										'</th>'+ 
 									// ' <th> Description </th>'+
 									' <th><span class="pull-right" style="padding-right: 50px;"> Added </span></th>'+
 									// ' <th> Start </th>' +
@@ -127,11 +139,11 @@ var fileFill = function(data)
 
 			$('#file-table').append('</tbody>');
 
-			$("#file-table").tablesorter({
-				sortReset : true,
-				cssAsc: 'up',
-	    		cssDesc: 'down'
-			});
+			// $("#file-table").tablesorter({
+			// 	sortReset : true,
+			// 	cssAsc: 'up',
+	  //   		cssDesc: 'down'
+			// });
 		}
 	}
 

@@ -1,4 +1,4 @@
-$(".helpSection").click(function(){
+$("body").on("click", ".helpSection", function(){
 	var parentView = $(this).attr('data-parent-view');
 	var section = $(this).attr('data-section');
 

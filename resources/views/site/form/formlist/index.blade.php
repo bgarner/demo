@@ -27,7 +27,9 @@
             <div class="col-lg-12">
                 <div class="ibox">
                     <div class="ibox-title">
-                        <h1>Forms</h1>
+                        <h1>Forms
+                        @include('site.includes.help-icon', ['parentView' => 'site.form.formlist.index', 'section' => 'help_formlist_overall'])
+                        </h1>
                     </div>
                     <div class="ibox-content">
 
@@ -41,7 +43,10 @@
 
                             <tbody>
                                 <tr>
-                                    <td><a href="/{{$store_number}}/form/productrequest">Product Request</a></td>
+                                    <td>
+                                        <a href="/{{$store_number}}/form/productrequest">Product Request</a>
+                                        @include('site.includes.help-icon', ['parentView' => 'site.form.formlist.index', 'section' => 'help_formlist_productrequest'])
+                                    </td>
                                     <td>For allocations, replenishment and new product requests.</td>
                                 </tr>
 

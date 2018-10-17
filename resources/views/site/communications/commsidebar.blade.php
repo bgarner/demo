@@ -14,7 +14,9 @@
                 </li>
 
             </ul>
-            <h5>{{__("Categories")}}</h5>
+            <h5>{{__("Categories")}}
+            @include('site.includes.help-icon', ['parentView' => 'site.communications.index', 'section' => 'help_communication_categorycount'])
+            </h5>
             <ul class="category-list" style="padding: 0">
             @foreach($communicationTypes as $c)
 

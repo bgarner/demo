@@ -38,7 +38,9 @@
                             <p class="pull-right"><a href="#" data-toggle="modal" data-target="#productLaunchModal"><i class="fa fa-question-circle" aria-hidden="true"></i> Footwear Release vs. Footwear Launch</a>
                                 <br /><small>{{ __("Last Updated")}} : {{$lastUpdated}}</small>
                             </p>
-                            <h2>{{ __("Product Launches") }}</h2>
+                            <h2>{{ __("Product Launches") }}
+							@include('site.includes.help-icon', ['parentView' => 'site.calendar.productlaunch.index', 'section' => 'help_productlaunch_overall'])
+                            </h2>
                             <hr />
 	                    	<table class="table dataTable" id="productLaunchDataTable">
 

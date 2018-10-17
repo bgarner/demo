@@ -27,6 +27,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="">Product Requests
+                    @include('site.includes.help-icon', ['parentView' => 'site.form.productrequestform.index', 'section' => 'help_productrequests_overall'])
                     <a href="{{\Request::url()}}/create" class="pull-right btn btn-outline btn-primary dim" ><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;&nbsp;{{__("Create New Request")}}</a></h1>
 
                 

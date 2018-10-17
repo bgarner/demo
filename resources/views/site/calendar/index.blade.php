@@ -20,10 +20,18 @@
                 @include('site.includes.topbar')
             </div>
             <div class="tabs-container wrapper wrapper-content animated fadeInRight">
-                <p class="pull-right"><a href="#" data-toggle="modal" data-target="#calendarLegend"><i class="fa fa-question-circle" aria-hidden="true"></i> Calendar Legend</a>
-                            </p>
+                <div class="pull-right">
+                    @include('site.includes.help-icon', ['parentView' => 'site.calendar.index', 'section' => 'help_calendar_overall', 'label'=>'Help'])
+                </div>
+                <br>
+                <div class="pull-right"><a href="#" data-toggle="modal" data-target="#calendarLegend"><i class="fa fa-question-circle" aria-hidden="true"></i> Calendar Legend</a>
+                </div>
+
+
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">{{ __("Calendar View") }}</a></li>
+                    <li class="active">
+                        <a data-toggle="tab" href="#tab-1" aria-expanded="true">{{ __("Calendar View") }}</a>
+                    </li>
                     <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">{{ __("List View") }}</a></li>
                 </ul>
                 <div class="tab-content">

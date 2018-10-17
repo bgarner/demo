@@ -28,7 +28,9 @@
             <div class="col-lg-12">
                 <div class="ibox">
                     <div class="ibox-title">
-                    	<h2>Product Request: {{ $formInstance->store_number }} submitted on {{ $formInstance->prettySubmitted }} <small>({{ $formInstance->sinceSubmitted }} ago)</small></h2>
+                    	<h2>Product Request: {{ $formInstance->store_number }} submitted on {{ $formInstance->prettySubmitted }} <small>({{ $formInstance->sinceSubmitted }} ago)</small>
+                        @include('site.includes.help-icon', ['parentView' => 'site.form.productrequestform.view', 'section' => 'help_productrequest_requestDetails'])
+                        </h2>
                     </div>
                     <div class="ibox-content">
                         <table class="table">

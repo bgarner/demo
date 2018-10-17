@@ -14,7 +14,9 @@
                 </li>
 
             </ul>
-            <h5>{{ trans('Categories') }}</h5>
+            <h5>{{ trans('Categories') }}
+            @include('site.includes.help-icon', ['parentView' => 'site.alerts.index', 'section' => 'help_alert_categorycount'])
+            </h5>
             <ul class="category-list" style="padding: 0">
             @foreach($alertTypes as $at)
 

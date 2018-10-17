@@ -41,8 +41,10 @@
                                     <h2>
                                     	@if($title == "")
                                     		{{ __("All Alerts") }}
+                                            @include('site.includes.help-icon', ['parentView' => 'site.alerts.index', 'section' => 'help_alert_overall'])
                                     	@else
                                     		{{ $title }}
+                                            @include('site.includes.help-icon', ['parentView' => 'site.alerts.index', 'section' => 'help_alert_category'])
                                     	@endif
 
                                     </h2>
@@ -54,6 +56,9 @@
                                         <div class="pull-right">
 
                                             <small style="font-weight: bold; padding-right: 5px;">{{ __("Show Archive") }}</small>
+                                                <div class="pull-right">
+                                                    @include('site.includes.help-icon', ['parentView' => 'site.alerts.index', 'section' => 'help_alert_archives'])
+                                                </div>
 
                                                 <div class="switch pull-right">
                                                     <div class="archive-onoffswitch onoffswitch">

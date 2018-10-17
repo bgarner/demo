@@ -30,7 +30,9 @@
                     	@if(isset($formInstance))
 							<h5>Edit Store Feedback Form</h5>
                     	@else
-                        	<h5>New Product Request</h5>
+                        	<h5>New Product Request
+                        		@include('site.includes.help-icon', ['parentView' => 'site.form.productrequestform.createOrUpdate', 'section' => 'help_productrequest_newRequest'])
+                        	</h5>
                         @endif
                     </div>
                     <div class="ibox-content">

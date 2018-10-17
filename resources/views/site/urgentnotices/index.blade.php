@@ -38,7 +38,10 @@
 
                 <h2>
                 	{{__("Urgent Notices")}}
+                    @include('site.includes.help-icon', ['parentView' => 'site.urgentnotices.index', 'section' => 'help_urgentnotice_overall'])
                 </h2>
+
+
 
             </div>
                 <div class="mail-box">

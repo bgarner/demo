@@ -31,7 +31,9 @@
 	   <div class="row wrapper border-bottom white-bg page-heading">
 
             <div class="col-lg-8 col-md-8 col-sm-6 col-xs-6">
-                <h2>{{__("Library")}}</h2>
+                <h2>{{__("Library")}}
+                @include('site.includes.help-icon', ['parentView' => 'site.documents.index', 'section' => 'help_document_overall'])
+                </h2>
 
                 <ol class="breadcrumb">
                     <li><a href="/{{ Request::segment(1) }}">{{__("Home")}}</a></li>
@@ -44,6 +46,11 @@
                     <div class="pull-right">
 
                         <small style="font-weight: bold; padding-right: 5px;">{{__("Show Archive")}}</small>
+
+                            <div class="pull-right">
+                                @include('site.includes.help-icon', ['parentView' => 'site.documents.index', 'section' => 'help_document_archives'])
+                            </div>
+
 
                             <div class="switch pull-right">
                                 <div class="archive-onoffswitch onoffswitch">
@@ -70,7 +77,9 @@
                         <div class="ibox-content">
                             <div class="file-manager">
 
-                                <h5>{{__("Folders")}}</h5>
+                                <h5>{{__("Folders")}}
+                                @include('site.includes.help-icon', ['parentView' => 'site.documents.index', 'section' => 'help_document_folders'])
+                                </h5>
 
                                 <ul class="tree" id="navigation-structure">
 

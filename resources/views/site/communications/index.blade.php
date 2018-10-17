@@ -36,9 +36,13 @@
                             <h2>
                                 @if($title == "")
                                     {{__("All Messages")}} {{-- <small>({{ $communicationCount }} unread)</small> --}}
+                                    @include('site.includes.help-icon', ['parentView' => 'site.communications.index', 'section' => 'help_communication_overall'])
                                 @else
                                     {{ $title }}
+                                    @include('site.includes.help-icon', ['parentView' => 'site.communications.index', 'section' => 'help_communication_category'])
                                 @endif
+                                
+                                
                             </h2>
                         </div>
 
@@ -47,6 +51,9 @@
                                 <div class="pull-right">
 
                                     <small style="font-weight: bold; padding-right: 5px;">{{__("Show Archive")}}</small>
+                                        <div class="pull-right">
+                                            @include('site.includes.help-icon', ['parentView' => 'site.communications.index', 'section' => 'help_communication_archives'])
+                                        </div>
 
                                         <div class="switch pull-right">
                                             <div class="archive-onoffswitch onoffswitch">
@@ -63,6 +70,7 @@
                                                 </label>
                                             </div>
                                         </div>
+
 
                                 </div>
                             </form>

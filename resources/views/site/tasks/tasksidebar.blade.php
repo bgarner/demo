@@ -14,7 +14,9 @@
                 </li>
 
             </ul>
-            <h5>{{__("task lists")}}</h5>
+            <h5>{{__("task lists")}}
+            @include('site.includes.help-icon', ['parentView' => 'site.tasks.index', 'section' => 'help_task_managerTask'])
+            </h5>
             <ul class="category-list" style="padding: 0">
             @foreach($tasklists as $tasklist)
 

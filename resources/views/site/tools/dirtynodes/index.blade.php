@@ -62,7 +62,9 @@
 
 <div class="ibox">
     <div class="ibox-title">
-        <h2>DOM Nodes</h2>
+        <h2>DOM Nodes
+        @include('site.includes.help-icon', ['parentView' => 'site.tools.dirtynodes.index', 'section' => 'help_dirtynodes_overall'])
+        </h2>
         <div class="ibox-tools">
             <!-- <a class="btn btn-xs" id="videoReportModal">View Report by Date</a> -->
             <a class="collapse-link">
@@ -202,6 +204,7 @@
     <script src="/js/plugins/dataTables/dataTables.bootstrap.js"></script>
     <script src="/js/custom/site/tools/dirtyNodes.js?<?=time();?>"></script>
     <script src="/js/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="/js/custom/site/showHelpSection.js?<?=time();?>"></script>
 
     <script>
         $(document).ready(function(){

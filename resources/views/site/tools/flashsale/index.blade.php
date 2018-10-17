@@ -23,7 +23,9 @@
 
        <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-12">
-                <h2>DOM Flash Sale Tracker</h2>
+                <h2>DOM Flash Sale Tracker
+                    @include('site.includes.help-icon', ['parentView' => 'site.tools.flashsale.index', 'section' => 'help_flashsale_domSaleDates'])
+                </h2>
                 <p>Sale Date: {{ $sale_date }}</p>
                 <small class="pull-right"> Last Updated : {{ $last_updated }} </small>
             </div>

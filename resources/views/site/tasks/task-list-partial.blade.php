@@ -7,15 +7,19 @@
         <h2>
         @if(!isset($title))
             {{__("All Tasks")}} <small>({{ count($allIncompleteTasks) }} incomplete)</small>
+            @include('site.includes.help-icon', ['parentView' => 'site.tasks.index', 'section' => 'help_task_overall'])
         @else
             {{ $title }}  <small>({{ count($incompleteTasksInList) }} incomplete) </small>
+            @include('site.includes.help-icon', ['parentView' => 'site.tasks.index', 'section' => 'help_task_tasklist'])
         @endif
         </h2>
     </div>
     <div class="mail-box clearfix">
 
 
-            <h4>{{__("Tasks Due Today")}}</h4>
+            <h4>{{__("Tasks Due Today")}}
+                @include('site.includes.help-icon', ['parentView' => 'site.tasks.index', 'section' => 'help_task_dueToday'])
+            </h4>
             <ul class="todo-list m-t">
                 @foreach($tasksDueToday as $task)
                     <li class="due-today-list-item">
@@ -41,7 +45,9 @@
             </ul>
             <br>
 
-            <h4>{{__("Upcoming Tasks")}}</h4>
+            <h4>{{__("Upcoming Tasks")}}
+                @include('site.includes.help-icon', ['parentView' => 'site.tasks.index', 'section' => 'help_task_upcoming'])
+            </h4>
             <ul class="todo-list m-t">
                 @foreach($tasksDue as $task)
                     <li>
@@ -67,7 +73,9 @@
             </ul>
             <br>
 
-            <h4>{{__("Completed Tasks")}}</h4>
+            <h4>{{__("Completed Tasks")}}
+                @include('site.includes.help-icon', ['parentView' => 'site.tasks.index', 'section' => 'help_task_complete'])
+            </h4>
             <ul class="todo-list m-t">
                 @foreach($tasksCompleted as $task)
                     <li>

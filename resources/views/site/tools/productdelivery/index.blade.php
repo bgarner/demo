@@ -85,7 +85,9 @@
                             <div class="col-md-12">
                                 <div class="table-responsive clearfix">
 
-                                    <h2>Product Deliveries: {{ ucfirst($division) }}</h2>
+                                    <h2>Product Deliveries: {{ ucfirst($division) }}
+                                        @include('site.includes.help-icon', ['parentView' => 'site.tools.productdelivery.index', 'section' => 'help_productdeliveries_overall'])
+                                    </h2>
 
                                     <table class="table table-bordered departmenttable">
                                         <tr>

@@ -65,7 +65,9 @@
 
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h2>{{__("Featured Video")}}</h2>
+                            <h2>{{__("Featured Video")}}
+                                @include('site.includes.help-icon', ['parentView' => 'site.video.index', 'section' => 'help_video_featured'])
+                            </h2>
                         </div>
 
                         <a href="video/watch/{{$featured->id}}"><img src="/video/thumbs/{{$featured->thumbnail}}" data-video-id="{{$featured->id}}" class="trackclick img-responsive" style="width: 100%" /></a>
@@ -96,7 +98,10 @@
                 <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h2><a href="video/playlists">{{__("Latest Playlists")}}</a></h2>
+                            <h2><a href="video/playlists">{{__("Latest Playlists")}}</a>
+                            @include('site.includes.help-icon', ['parentView' => 'site.video.index', 'section' => 'help_video_playlists'])
+                            </h2>
+
                         </div>
 
                         <div class="ibox-content clearfix playlist-container">
@@ -128,7 +133,9 @@
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
                                 {{-- <h2><a href="video/popular">{{__("Trending This Month")}}</a></h2> --}}
-                                <h2>{{__("Trending Now")}}</h2>
+                                <h2>{{__("Trending Now")}}
+                                @include('site.includes.help-icon', ['parentView' => 'site.video.index', 'section' => 'help_video_trending'])
+                                </h2>
                             </div>
                             <div class="ibox-content clearfix">
                                 @foreach($trending as $t)
@@ -150,7 +157,9 @@
                     <div class="col-lg-12">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
-                                <h2><a href="video/latest">{{__("Most Recent")}}</a></h2>
+                                <h2><a href="video/latest">{{__("Most Recent")}}</a>
+                                    @include('site.includes.help-icon', ['parentView' => 'site.video.index', 'section' => 'help_video_mostRecent'])
+                                </h2>
                             </div>
                             <div class="ibox-content clearfix">
                                 @foreach($mostRecent as $mr)
