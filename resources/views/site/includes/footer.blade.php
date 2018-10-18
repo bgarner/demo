@@ -5,7 +5,8 @@
 
     </div>
     <div class="pull-right">
-    	<small>{{__("Application Last Updated")}}: @include('site.includes.release-date')</small>&nbsp;&nbsp;&nbsp;
+    	<small>{{__("Application Last Updated")}}: @include('site.includes.release-date')</small>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="#" id="toggleHelp" title="Toggle Help"><i class="fa fa-question-circle"></i> {{__("Help")}}</a>&nbsp;&nbsp;&nbsp;
     	<a href="#" data-toggle="modal" data-target="#changelogmodal"><i class="fa fa-rocket"></i> {{__("What's New?")}}</a>&nbsp;&nbsp;&nbsp;
     	<a href="#" data-toggle="modal" data-target="#bugreportmodal"><i class="fa fa-comment"></i> {{__("Feedback")}}</a>&nbsp;&nbsp;&nbsp;
         {{-- <a href="#" data-toggle="modal" data-target="#langmodal"><i class="fa fa-language"></i> Language</a> --}}

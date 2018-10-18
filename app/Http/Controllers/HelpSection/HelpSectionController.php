@@ -11,13 +11,7 @@ class HelpSectionController extends Controller
     public function show(Request $request)
     {
     	
-    	$parentView = $request->parentView;
-    	$section = $request->section;
-
-    	return HelpSection::where('parent_view', $parentView)
-    				->where('section', $section)
-    				->first();
-
+    	return HelpSection::getHelpSection($request->parentView, $request->section);
 
     }
 }
