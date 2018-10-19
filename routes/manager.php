@@ -43,3 +43,7 @@ Route::resource('/manager/form/productrequest', 'Form\ProductRequestFormManagerC
 //Report
 Route::get('/manager/report/productrequest', 'Report\ProductRequestReportController@index')->middleware('role:Exec,AVP');
 Route::get('/manager/report/managerlogin', 'Report\ManagerLoginReportController@index')->middleware('role:Exec,AVP');
+
+
+//Store Visit Report
+Route::resource('/manager/storevisitreport', 'StoreVisitReport\ManagerStoreVisitReportController')->except(['delete']);
