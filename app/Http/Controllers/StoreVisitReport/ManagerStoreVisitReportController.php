@@ -4,6 +4,7 @@ namespace App\Http\Controllers\StoreVisitReport;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\StoreVisitReport\StoreVisitReportInstance;
 
 class ManagerStoreVisitReportController extends Controller
 {
@@ -35,7 +36,8 @@ class ManagerStoreVisitReportController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        \Log::info($request->all());
+        StoreVisitReportInstance::saveReport($request);
     }
 
     /**
