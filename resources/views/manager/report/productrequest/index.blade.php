@@ -85,13 +85,6 @@
                     </div>
 
                 </div>
-                <!-- <div class="current-filter"> <h4>Selected Filter :</h4>
-                    
-                    <ol class="breadcrumb">
-                        <li>No Filters</li>
-                    </ol>
-                    
-                </div> -->
 
             </div>        
             <div class="tabs-container wrapper wrapper-content animated fadeInRight">

@@ -13,7 +13,7 @@ use App\Models\Validation\Form\ProductRequestFormInstanceValidator;
 class FormData extends Model
 {
     protected $table = 'form_data';
-    protected $fillable = ['form_id', 'store_number', 'submitted_by', 'form_data', 'form_name', 'form_version', 'business_unit_id'];
+    protected $fillable = ['form_id', 'store_number', 'submitted_by', 'form_data', 'form_name', 'form_version', 'business_unit_id', 'json_form_data'];
     protected static $new_request_status_code_id = 1;
     protected static $closed_request_status_code_id = 5;
 
@@ -101,7 +101,7 @@ class FormData extends Model
     public static function createNewFormInstance($request)
     {
     	
-        \Log::info($request);
+        \Log::info($request->all());
         $validate = Self::validateFormInstance($request);
 
         if($validate['validation_result'] == 'false') {
@@ -118,7 +118,8 @@ class FormData extends Model
 					            "form_version" => $form->version,
 					            "submitted_by" => $request->submitted_by,
                                 "business_unit_id" => $business_unit_id,
-					            "form_data" => serialize($request->all())
+					            "form_data" => serialize($request->all()),
+                                "json_form_data" =>json_encode($request->all())
 					        ]);
 
         FormInstanceStatusMap::updateFormInstanceStatus($formInstance->id, Self::$new_request_status_code_id);
