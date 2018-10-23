@@ -1,6 +1,3 @@
-var toDateProductRequestTable;
-var lastWeekProductRequestTable;
-
 $(document).ready(function(){
     var departments = getDepartments();
     $("#department").empty();
@@ -8,15 +5,16 @@ $(document).ready(function(){
     $(departments).each(function(i,item){
         $("#department").append('<option data-dept="' + item.dept_abbr + '" value="' + item.department_name + '">'+ item.department_name+ '</option>');     
     });
-
-    toDateProductRequestTable = $("#toDateProductRequestReport").tableExport({
-        formats: [ 'csv'], 
-    });
-    lastWeekProductRequestTable = $("#lastWeekProductRequestReport").tableExport({
-        formats: ['csv'], 
-    });
 });
 
+var downloadReport = function(rawToDateData){
+    console.log(rawToDateData);
+    var data = rawToDateData;
+    if(data == '')
+        return;
+    var fileName = "ProductRequestReport_";
+    JSONToCSVConvertor(data, "Product Request Report", true, fileName);
+}
 
 $("#filter_report").click(function(){
 	var dept = $("#department").val();
@@ -55,6 +53,8 @@ $("#filter_report").click(function(){
 	    success: function(data) {
 	      	var toDate = data.toDate;
 			var sinceLastWeek = data.sinceLastWeek;
+			var rawToDateData = data.rawToDateData;
+			// console.table(rawToDateData);
 		       
 			$("#toDateTable tbody").empty();
 			$(toDate).each(function(){
@@ -76,15 +76,14 @@ $("#filter_report").click(function(){
 		      			"</tr>");
 			});
 
-	       	toDateProductRequestTable.update({
-	       		formats: [ 'csv']
-	       	});
-	       	lastWeekProductRequestTable.update({
-	       		formats: [ 'csv']
-	       	});
+	       	$('#download_report').removeClass('hidden');
+       		$('#download_report').click(function(){
+       			downloadReport(rawToDateData);
+       		});
 	      
 	    }
 	});
 
 
 });
+

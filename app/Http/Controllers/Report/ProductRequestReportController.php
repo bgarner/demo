@@ -16,6 +16,8 @@ class ProductRequestReportController extends Controller
         $filters = [];
      	$toDate = FormInstanceResolutionMap::getResolutionCodeCountByFilter($filters);
      	$sinceLastWeek = FormInstanceResolutionMap::getResolutionCodeCountByFilter($filters, $lastWeek);
+
+        $rawToDateData = FormInstanceResolutionMap::getResolutionDetailsByFilter($filters);
      	
         return view('manager.report.productrequest.index')
             ->with('toDate', $toDate)
@@ -31,8 +33,14 @@ class ProductRequestReportController extends Controller
         $lastWeek = Carbon::now()->subDays(7)->startOfDay()->toDateTimeString();
         $toDate = FormInstanceResolutionMap::getResolutionCodeCountByFilter($filters);
         $sinceLastWeek = FormInstanceResolutionMap::getResolutionCodeCountByFilter($filters, $lastWeek);
-        
-        return json_encode(["toDate" => $toDate, "sinceLastWeek" => $sinceLastWeek]);
+
+        $rawToDateData = FormInstanceResolutionMap::getResolutionDetailsByFilter($filters);
+
+        return json_encode([
+            "toDate" => $toDate, 
+            "sinceLastWeek" => $sinceLastWeek,
+            "rawToDateData" => $rawToDateData
+        ]);
 
 
     }

@@ -77,10 +77,13 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-md-2 col-sm-2">
+                    <div class="form-group col-md-3 col-sm-3">
                         <br>
                         <button class="btn btn-primary" id="filter_report"><i class="fa fa-check"></i> Filter</button>
+                        <button class="btn btn-primary hidden" id="download_report"><i class="fa fa-download"></i> Download</button>
+
                     </div>
+
                 </div>
                 <!-- <div class="current-filter"> <h4>Selected Filter :</h4>
                     
@@ -260,9 +263,10 @@
 @endsection
 @section('scripts')
     
-    <script type="text/javascript" src="/js/plugins/js-xlsx-master/xlsx.js"></script>
-    <script type="text/javascript" src="/js/plugins/FileSaver/FileSaver.min.js"></script>
-    <script type="text/javascript" src="/js/plugins/TableExport/tableexport.min.js"></script>
+    <!-- <script type="text/javascript" src="/js/plugins/js-xlsx-master/xlsx.js"></script> -->
+    <!-- <script type="text/javascript" src="/js/plugins/FileSaver/FileSaver.min.js"></script> -->
+    <!-- <script type="text/javascript" src="/js/plugins/TableExport/tableexport.min.js"></script> -->
+    <script type="text/javascript" src="/js/custom/JSONToCSVConvertor.js"></script>
     <script src="/js/custom/forms/ProductRequestFormOptions.js"></script>
     <script src="/js/custom/manager/reports/ProductRequestFormReport.js"></script>
     <script>
