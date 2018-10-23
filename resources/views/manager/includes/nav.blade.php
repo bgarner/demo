@@ -140,7 +140,7 @@
                 </ul>
         </li>
         
-        @if(Auth::user()->role == "Exec")
+        @if(Auth::user()->role == "Exec" || Auth::user()->role == "AVP")
         <!-- Custom Reports -->
         @if (  Request::is('manager/report/*') || 
             Request::is('manager/report') || 
