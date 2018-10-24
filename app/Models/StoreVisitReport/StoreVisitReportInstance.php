@@ -45,6 +45,13 @@ class StoreVisitReportInstance extends Model
 
     public static function getReportById($id)
     {
-    	// StoreVisitReportInstance::join('')
+    	$report = StoreVisitReportInstance::find($id);
+    	$report->fields = StoreVisitReportResponse::join('store_visit_report_field', 'store_visit_report_response.field_id', '=', 'store_visit_report_field.id')
+    						->where('report_instance_id', $id)
+    						->select('field_alias', 'response')
+    						->get();
+
+    	return $report;
+    	
     }
 }

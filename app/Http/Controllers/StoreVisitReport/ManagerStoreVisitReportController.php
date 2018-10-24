@@ -80,6 +80,8 @@ class ManagerStoreVisitReportController extends Controller
         }
 
         $storeVisitReport = StoreVisitReportInstance::getReportById($id);
+
+        dd($storeVisitReport);
         return view('manager.storevisitreport.createOrUpdate')
                 ->with('report', $storeVisitReport)
                 ->with('stores', $storeList);
