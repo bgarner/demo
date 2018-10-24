@@ -25,7 +25,8 @@ class StoreVisitReportInstance extends Model
 
     public static function saveReport($request)
     {
-    	\Log::info($request->all());
+    	\Log::info("save Report Instance");
+    	\Log::info("save Report instance Responses");
     }
 
     public static function getReportById($id)

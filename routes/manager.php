@@ -46,4 +46,4 @@ Route::get('/manager/report/managerlogin', 'Report\ManagerLoginReportController@
 
 
 //Store Visit Report
-Route::resource('/manager/storevisitreport', 'StoreVisitReport\ManagerStoreVisitReportController')->except(['delete']);
+Route::resource('/manager/storevisitreport', 'StoreVisitReport\ManagerStoreVisitReportController');

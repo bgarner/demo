@@ -17,7 +17,12 @@ class ManagerStoreVisitReportController extends Controller
      */
     public function index()
     {
+        //if  user is dm
         //list of previous report by the dm
+
+        //if user is avp 
+        //consolidated reports
+
     }
 
     /**
@@ -31,7 +36,7 @@ class ManagerStoreVisitReportController extends Controller
         $storeInfo = StoreInfo::getStoreListingByManagerId($this->user_id);
         $storesByBanner = $storeInfo->groupBy('banner_id');
         $banner = Banner::whereIn("id", $storesByBanner->keys())->get()->pluck("name", "id");
-        $storeList = [];
+        $storeList = [ '' => 'Select One' ];
         foreach ($storeInfo as $store) {
             $storeList[$store->store_number] = $store->store_id . " " . $store->name . " (" . $banner[$store->banner_id] .")" ;
         }
@@ -64,6 +69,7 @@ class ManagerStoreVisitReportController extends Controller
     public function show($id)
     {
         // read only version of the form once it is submitted
+        dd('hello');
     }
 
     /**
@@ -79,7 +85,7 @@ class ManagerStoreVisitReportController extends Controller
         $storeInfo = StoreInfo::getStoreListingByManagerId($this->user_id);
         $storesByBanner = $storeInfo->groupBy('banner_id');
         $banner = Banner::whereIn("id", $storesByBanner->keys())->get()->pluck("name", "id");
-        $storeList = [];
+        $storeList = [ '' => 'Select One'];
         foreach ($storeInfo as $store) {
             $storeList[$store->store_number] = $store->store_id . " " . $store->name . " (" . $banner[$store->banner_id] .")" ;
         }
@@ -100,6 +106,7 @@ class ManagerStoreVisitReportController extends Controller
      */
     public function update(Request $request, $id)
     {
+        \Log::info('updating the form');
         \Log::info($request->all());
         StoreVisitReportInstance::saveReport($request);
     }

@@ -21,7 +21,10 @@
     <div class="wrapper wrapper-content  animated fadeInRight">
         <div class="row">
             <div class="col-lg-12">
-                {!! Form::open(['action' => 'StoreVisitReport\ManagerStoreVisitReportController@update']) !!}
+                {!! Form::open([
+                    'action' => ['StoreVisitReport\ManagerStoreVisitReportController@update',
+                    $report->id],
+                    'method' => 'PATCH']) !!}
                 <div class="ibox">
                     <div class="ibox-title">
                         <h2>TABLET SALES</h2>
@@ -56,7 +59,15 @@
                             <div class="form-group">
                                     <label class=" control-label">Are PDTs and Tablets in use in each dept?</label>
                                     <div>
-                                        <input type="text" class="form-control" name="field_3">
+                                        <input type="radio" name="field_3" value="0">
+                                        <label class=" control-label">
+                                            &nbsp;No
+                                        </label>
+                                        &nbsp;
+                                        <input type="radio" name="field_3" value="1">
+                                        <label class=" control-label">
+                                            &nbsp;Yes
+                                        </label>
                                     </div>
                             </div>                                      
                             <div class="form-group">
@@ -79,7 +90,7 @@
                                     </div>
                             </div>
 
-                            <">
+                            <div>
                             <button type="submit" class="btn btn-primary store-visit-save-progress"><i class="fa fa-check"></i> Save</button></div>
 
                     </div>   
@@ -97,21 +108,47 @@
                     <div class="ibox-content">             
                         <div class="form-group">
                            <label class=" control-label">Reviewed hiring needs and open postings:</label>
+
                            <div>
-                               <input type="radio" class="form-control" name="field_7">
-                           </div>
+                                <input type="radio" name="field_7" value="0">
+                                <label class=" control-label">
+                                    &nbsp;No
+                                </label>
+                                &nbsp;
+                                <input type="radio" name="field_7" value="1">
+                                <label class=" control-label">
+                                    &nbsp;Yes
+                                </label>
+                            </div>
                        </div>                                     
                        <div class="form-group">
-                               <label class=" control-label">Are schedules being posted 3 weeks out?                </label>
+                               <label class=" control-label">Are schedules being posted 3 weeks out?</label>
                                <div>
-                                   <input type="radio" class="form-control" name="field_8">
-                               </div>
+                                    <input type="radio" name="field_8" value="0">
+                                    <label class=" control-label">
+                                        &nbsp;No
+                                    </label>
+                                    &nbsp;
+                                    <input type="radio" name="field_8" value="1">
+                                    <label class=" control-label">
+                                        &nbsp;Yes
+                                    </label>
+                                </div>
                        </div>                                      
                        <div class="form-group">
                                <label class=" control-label">Is Autofill being used weekly:</label>
+
                                <div>
-                                   <input type="text" class="form-control" name="field_9">
-                               </div>
+                                    <input type="radio" name="field_9" value="0">
+                                    <label class=" control-label">
+                                        &nbsp;No
+                                    </label>
+                                    &nbsp;
+                                    <input type="radio" name="field_9" value="1">
+                                    <label class=" control-label">
+                                        &nbsp;Yes
+                                    </label>
+                                </div>
                        </div>                                      
                        <div class="form-group">
                                <label class=" control-label">Validate that the management schedule aligns with business needs. Provide findings and coaching notes:</label>
@@ -152,14 +189,30 @@
                         <div class="form-group">
                            <label class=" control-label">MOD Schedule is in place and posted?</label>
                            <div>
-                               <input type="text" class="form-control" name="field_13">
-                           </div>
+                                <input type="radio" name="field_13" value="0">
+                                <label class=" control-label">
+                                    &nbsp;No
+                                </label>
+                                &nbsp;
+                                <input type="radio" name="field_13" value="1">
+                                <label class=" control-label">
+                                    &nbsp;Yes
+                                </label>
+                            </div>
                        </div>                                     
                        <div class="form-group">
                                <label class=" control-label">MOD Show Me Steps are at 100%?</label>
                                <div>
-                                   <input type="text" class="form-control" name="field_14">
-                               </div>
+                                    <input type="radio" name="field_14" value="0">
+                                    <label class=" control-label">
+                                        &nbsp;No
+                                    </label>
+                                    &nbsp;
+                                    <input type="radio" name="field_14" value="1">
+                                    <label class=" control-label">
+                                        &nbsp;Yes
+                                    </label>
+                                </div>
                        </div>                                      
                        <div class="form-group">
                                <label class=" control-label">Validate management understanding and coach Winning Habits. Provide findings and coaching notes:</label>
@@ -223,16 +276,33 @@
                        </div> 
                        <div class="form-group">
                                <label class=" control-label">Is store using DOM Staffing Tool for scheduling? Determine packer/picking hours?</label>
+
                                <div>
-                                   <input type="text" class="form-control" name="field_22">
-                                   <br>
-                               </div>
+                                    <input type="radio" name="field_22" value="0">
+                                    <label class=" control-label">
+                                        &nbsp;No
+                                    </label>
+                                    &nbsp;
+                                    <input type="radio" name="field_22" value="1">
+                                    <label class=" control-label">
+                                        &nbsp;Yes
+                                    </label>
+                                </div>
                        </div> 
                        <div class="form-group">
                                <label class=" control-label">Has the store reviewed upcoming order forecast to assess supply needs?</label>
+
                                <div>
-                                   <input type="text" class="form-control" name="field_23">
-                               </div>
+                                    <input type="radio" name="field_23" value="0">
+                                    <label class=" control-label">
+                                        &nbsp;No
+                                    </label>
+                                    &nbsp;
+                                    <input type="radio" name="field_23" value="1">
+                                    <label class=" control-label">
+                                        &nbsp;Yes
+                                    </label>
+                                </div>
                        </div>                                      
                        <div class="form-group">
                                <label class=" control-label">Validate dirty nodes list on portal and weekly use of dirty node scanning app. Provide findings, notes:</label>
@@ -284,15 +354,34 @@
                        </div> 
                        <div class="form-group">
                                <label class=" control-label">Are thorough, accurate Self Audits being completed by SGM monthly?</label>
+
                                <div>
-                                   <input type="text" class="form-control" name="field_29">
-                               </div>
+                                    <input type="radio" name="field_29" value="0">
+                                    <label class=" control-label">
+                                        &nbsp;No
+                                    </label>
+                                    &nbsp;
+                                    <input type="radio" name="field_29" value="1">
+                                    <label class=" control-label">
+                                        &nbsp;Yes
+                                    </label>
+                                </div>
+
                        </div> 
                        <div class="form-group">
                                <label class=" control-label">Are thorough bag checks are being completed every night?</label>
+
                                <div>
-                                   <input type="text" class="form-control" name="field_30">
-                               </div>
+                                    <input type="radio" name="field_30" value="0">
+                                    <label class=" control-label">
+                                        &nbsp;No
+                                    </label>
+                                    &nbsp;
+                                    <input type="radio" name="field_30" value="1">
+                                    <label class=" control-label">
+                                        &nbsp;Yes
+                                    </label>
+                                </div>
                        </div> 
                        
                        <div class="form-group">
@@ -422,8 +511,9 @@
 				
                 <div class="form-group">
                     <div class=" col-sm-offset-2">
+                        <input type="text" hidden name="is_draft" value="1">
                         <a class="btn btn-white" href="/manager/storevisitreport"><i class="fa fa-close"></i> Cancel</a>
-                        <button type="submit" class="btn btn-primary store-visit-create"><i class="fa fa-check"></i> Submit Report</button>
+                        <button type="submit" class="btn btn-primary store-visit-submit"><i class="fa fa-check"></i> Submit Report</button>
                     </div>
                 </div>
 				{!! Form::close() !!}
@@ -446,7 +536,6 @@
         width:'100%'
     });
 
-    // var description_fields = [ "field_4","field_5","field_6","field_10","field_11","field_12","field_15","field_16","field_17","field_24","field_25","field_26","field_31","field_32","field_33","field_34","field_35","field_36","field_37" ];
 
     var description_fields = $("textarea");
 
@@ -455,7 +544,12 @@
         CKEDITOR.replace(this.name);
     })
 
-    
+    $(document).ready(function(){
+        $(".store-visit-submit").click(function(){
+            $("input[name=is_draft]").val(0);
+        });
+
+    })
 
     
 
