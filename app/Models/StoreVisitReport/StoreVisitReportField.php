@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class StoreVisitReportField extends Model
 {
     protected $table = 'store_visit_report_field';
-    protected $fillable = ['field'];
+    protected $fillable = ['field', 'field_alias'];
 }

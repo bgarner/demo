@@ -16,6 +16,7 @@ class CreateStoreVisitReportFieldTable extends Migration
         Schema::create('store_visit_report_field', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('field', 1000);
+            $table->string('field_alias', 20);
             $table->timestamps();
         });
     }

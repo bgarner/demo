@@ -39,7 +39,7 @@ class StoreVisitReportInstance extends Model
     		]);
     	}
 
-    	StoreVisitReportResponse::updateResponses($id, $request);
+    	StoreVisitReportResponse::updateResponses($id, $request->all());
 
     }
 

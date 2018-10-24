@@ -13,5 +13,18 @@ class StoreVisitReportResponse extends Model
     public static function updateResponses($report_id, $request)
     {
     	
+    	foreach ($request as $key => $value) {
+    		if(StoreVisitReportField::where('field_alias', $key)->first()){
+    			$field_id = StoreVisitReportField::where('field_alias', $key)->first()->id;
+    			StoreVisitReportResponse::create([
+    				'report_instance_id' => $report_id,
+    				'field_id' => $field_id,
+    				'response' => $value
+    			]);
+    		}
+    	}
+
+    	return;
+    	
     }
 }
