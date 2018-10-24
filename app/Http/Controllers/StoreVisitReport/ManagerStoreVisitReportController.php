@@ -5,6 +5,8 @@ namespace App\Http\Controllers\StoreVisitReport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\StoreVisitReport\StoreVisitReportInstance;
+use App\Models\StoreApi\StoreInfo;
+use App\Models\StoreApi\Banner;
 
 class ManagerStoreVisitReportController extends Controller
 {
@@ -15,7 +17,7 @@ class ManagerStoreVisitReportController extends Controller
      */
     public function index()
     {
-        dd("hello");
+        //list of previous report by the dm
     }
 
     /**
@@ -25,7 +27,20 @@ class ManagerStoreVisitReportController extends Controller
      */
     public function create()
     {
-        return view('manager.storevisitreport.create');
+        $this->user_id = \Auth::user()->id;
+        $storeInfo = StoreInfo::getStoreListingByManagerId($this->user_id);
+        $storesByBanner = $storeInfo->groupBy('banner_id');
+        $banner = Banner::whereIn("id", $storesByBanner->keys())->get()->pluck("name", "id");
+        $storeList = [];
+        foreach ($storeInfo as $store) {
+            $storeList[$store->store_number] = $store->store_id . " " . $store->name . " (" . $banner[$store->banner_id] .")" ;
+        }
+
+        $newStoreVisitReport = StoreVisitReportInstance::getNewReport();
+        return view('manager.storevisitreport.createOrUpdate')
+                ->with('report', $newStoreVisitReport)
+                ->with('stores', $storeList);
+
     }
 
     /**
@@ -37,7 +52,7 @@ class ManagerStoreVisitReportController extends Controller
     public function store(Request $request)
     {
         \Log::info($request->all());
-        StoreVisitReportInstance::saveReport($request);
+        
     }
 
     /**
@@ -48,7 +63,7 @@ class ManagerStoreVisitReportController extends Controller
      */
     public function show($id)
     {
-        //
+        // read only version of the form once it is submitted
     }
 
     /**
@@ -59,7 +74,21 @@ class ManagerStoreVisitReportController extends Controller
      */
     public function edit($id)
     {
-        //
+        //editable version of the form until it is not submitted
+        $this->user_id = \Auth::user()->id;
+        $storeInfo = StoreInfo::getStoreListingByManagerId($this->user_id);
+        $storesByBanner = $storeInfo->groupBy('banner_id');
+        $banner = Banner::whereIn("id", $storesByBanner->keys())->get()->pluck("name", "id");
+        $storeList = [];
+        foreach ($storeInfo as $store) {
+            $storeList[$store->store_number] = $store->store_id . " " . $store->name . " (" . $banner[$store->banner_id] .")" ;
+        }
+
+        $storeVisitReport = StoreVisitReportInstance::getReportById($id);
+        return view('manager.storevisitreport.createOrUpdate')
+                ->with('report', $storeVisitReport)
+                ->with('stores', $storeList);
+
     }
 
     /**
@@ -71,7 +100,8 @@ class ManagerStoreVisitReportController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        \Log::info($request->all());
+        StoreVisitReportInstance::saveReport($request);
     }
 
 

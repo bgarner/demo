@@ -3,7 +3,7 @@
 @section('title', 'New Store Visit Report')
 
 @section('style')
-
+    <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
 
 @endsection
 
@@ -21,7 +21,7 @@
     <div class="wrapper wrapper-content  animated fadeInRight">
         <div class="row">
             <div class="col-lg-12">
-                {!! Form::open(['action' => 'StoreVisitReport\ManagerStoreVisitReportController@store']) !!}
+                {!! Form::open(['action' => 'StoreVisitReport\ManagerStoreVisitReportController@update']) !!}
                 <div class="ibox">
                     <div class="ibox-title">
                         <h2>TABLET SALES</h2>
@@ -30,6 +30,14 @@
                                 <i class="fa fa-chevron-up"></i>
                             </a>
                         </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="form-group">
+                                    <label class=" control-label">Store Number</label>
+                                    <div>
+                                        {!! Form::select('stores', $stores, null, [ 'class'=>'chosen', 'id'=> 'storeSelect']) !!}
+                                    </div>
+                            </div>  
                     </div>
                     <div class="ibox-content">
 
@@ -55,23 +63,23 @@
                                     <label class=" control-label">Validate staff understanding and coach Winning Habits. Provide findings and coaching notes:</label>
                                     <div>
                                         
-                                        <textarea name="" id="" cols="30" rows="10" name="field_4"></textarea> 
+                                        <textarea id="" cols="30" rows="10" name="field_4"></textarea> 
                                     </div>
                             </div>                                      
                             <div class="form-group">
                                     <label class=" control-label">How is Tablet Sales being coached / communicated on a daily basis?</label>
                                     <div>
-                                        <textarea name="" id="" cols="30" rows="10" name="field_5"></textarea>
+                                        <textarea id="" cols="30" rows="10" name="field_5"></textarea>
                                     </div>
                             </div>                                      
                             <div class="form-group">
                                     <label class=" control-label">IMPROVEMENT PLAN</label>
                                     <div>
-                                        <textarea name="" id="" cols="30" rows="10" name="field_6"></textarea>
+                                        <textarea id="" cols="30" rows="10" name="field_6"></textarea>
                                     </div>
                             </div>
 
-                            <div class="pull-right">
+                            <">
                             <button type="submit" class="btn btn-primary store-visit-save-progress"><i class="fa fa-check"></i> Save</button></div>
 
                     </div>   
@@ -109,22 +117,22 @@
                                <label class=" control-label">Validate that the management schedule aligns with business needs. Provide findings and coaching notes:</label>
                                <div>
                                    
-                                   <textarea name="" id="" cols="30" rows="10" name="field_10"></textarea> 
+                                   <textarea id="" cols="30" rows="10" name="field_10"></textarea> 
                                </div>
                        </div>                                      
                        <div class="form-group">
                                <label class=" control-label">Validate that staff schedule aligns with business needs. Provide findings and coaching notes:</label>
                                <div>
-                                   <textarea name="" id="" cols="30" rows="10" name="field_11"></textarea>
+                                   <textarea id="" cols="30" rows="10" name="field_11"></textarea>
                                </div>
                        </div>                                      
                        <div class="form-group">
                                <label class=" control-label">IMPROVEMENT PLAN</label>
                                <div>
-                                   <textarea name="" id="" cols="30" rows="10" name="field_12"></textarea>
+                                   <textarea id="" cols="30" rows="10" name="field_12"></textarea>
                                </div>
                        </div>                                      
-						<div class="pull-right">
+						<div class="">
 						<button type="submit" class="btn btn-primary store-visit-save-progress"><i class="fa fa-check"></i> Save</button></div>
 
                     </div> <!-- ibox-content closes -->
@@ -157,23 +165,23 @@
                                <label class=" control-label">Validate management understanding and coach Winning Habits. Provide findings and coaching notes:</label>
                                <div>
                                    
-                                   <textarea name="" id="" cols="30" rows="10" name="field_15"></textarea> 
+                                   <textarea id="" cols="30" rows="10" name="field_15"></textarea> 
                                </div>
                        </div>                                      
                        <div class="form-group">
                                <label class=" control-label">How well is this executed in store? Is it effective, making an impact? Provide findings, coaching notes:</label>
                                <div>
-                                   <textarea name="" id="" cols="30" rows="10" name="field_16"></textarea>
+                                   <textarea id="" cols="30" rows="10" name="field_16"></textarea>
                                </div>
                        </div>                                      
                        <div class="form-group">
                                <label class=" control-label">IMPROVEMENT PLAN</label>
                                <div>
-                                   <textarea name="" id="" cols="30" rows="10" name="field_17"></textarea>
+                                   <textarea id="" cols="30" rows="10" name="field_17"></textarea>
                                </div>
                        </div>                                      
 
-						<div class="pull-right">
+						<div class="">
 						<button type="submit" class="btn btn-primary store-visit-save-progress"><i class="fa fa-check"></i> Save</button></div>
                     </div> <!-- ibox-content closes -->
 
@@ -230,22 +238,22 @@
                                <label class=" control-label">Validate dirty nodes list on portal and weekly use of dirty node scanning app. Provide findings, notes:</label>
                                <div>
                                    
-                                   <textarea name="" id="" cols="30" rows="10" name="field_24"></textarea> 
+                                   <textarea id="" cols="30" rows="10" name="field_24"></textarea> 
                                </div>
                        </div>                                      
                        <div class="form-group">
                                <label class=" control-label">Validate that Stock Locator setup is underway or in place (where applicable). Provide findings, notes:</label>
                                <div>
-                                   <textarea name="" id="" cols="30" rows="10" name="field_25"></textarea>
+                                   <textarea id="" cols="30" rows="10" name="field_25"></textarea>
                                </div>
                        </div>                                      
                        <div class="form-group">
                                <label class=" control-label">IMPROVEMENT PLAN</label>
                                <div>
-                                   <textarea name="" id="" cols="30" rows="10" name="field_26"></textarea>
+                                   <textarea id="" cols="30" rows="10" name="field_26"></textarea>
                                </div>
                        </div>                                      
-						<div class="pull-right">
+						<div class="">
 						<button type="submit" class="btn btn-primary store-visit-save-progress"><i class="fa fa-check"></i> Save</button></div>
 
                     </div> <!-- ibox-content closes -->
@@ -291,18 +299,18 @@
                                <label class=" control-label">Audit 5 new hire employee files for ALL necessary forms, signatures, etc. Provide findings, notes:</label>
                                <div>
                                    
-                                   <textarea name="" id="" cols="30" rows="10" name="field_31"></textarea> 
+                                   <textarea id="" cols="30" rows="10" name="field_31"></textarea> 
                                </div>
                        </div>                                      
                        
                        <div class="form-group">
                                <label class=" control-label">IMPROVEMENT PLAN</label>
                                <div>
-                                   <textarea name="" id="" cols="30" rows="10" name="field_32"></textarea>
+                                   <textarea id="" cols="30" rows="10" name="field_32"></textarea>
                                </div>
                        </div>                                      
 
-						<div class="pull-right">
+						<div class="">
 						<button type="submit" class="btn btn-primary store-visit-save-progress"><i class="fa fa-check"></i> Save</button></div>
                     </div> <!-- ibox-content closes -->
 
@@ -323,18 +331,18 @@
                                <label class=" control-label">Validate the following where applicable: Category Store Setup, Helly Shops, Woods Shops, Gym Bag fixture, Holiday Impulse Lanes, Sports Nutrition. Provide findings and notes:</label>
                                <div>
                                    
-                                   <textarea name="" id="" cols="30" rows="10" name="field_33"></textarea> 
+                                   <textarea id="" cols="30" rows="10" name="field_33"></textarea> 
                                </div>
                        </div>                                      
                        
                        <div class="form-group">
                                <label class=" control-label">IMPROVEMENT PLAN on INVENTORY INTENSITY</label>
                                <div>
-                                   <textarea name="" id="" cols="30" rows="10" name="field_34"></textarea>
+                                   <textarea id="" cols="30" rows="10" name="field_34"></textarea>
                                </div>
                        </div>                                      
 
-						<div class="pull-right">
+						<div class="">
 						<button type="submit" class="btn btn-primary store-visit-save-progress"><i class="fa fa-check"></i> Save</button></div>
                     </div> <!-- ibox-content closes -->
 
@@ -354,10 +362,10 @@
                        <div class="form-group">
                                <label class=" control-label">IMPROVEMENT PLAN</label>
                                <div>
-                                   <textarea name="" id="" cols="30" rows="10" name="field_35"></textarea>
+                                   <textarea id="" cols="30" rows="10" name="field_35"></textarea>
                                </div>
                        </div>                                      
-						<div class="pull-right">
+						<div class="">
 						<button type="submit" class="btn btn-primary store-visit-save-progress"><i class="fa fa-check"></i> Save</button></div>
 
                     </div> <!-- ibox-content closes -->
@@ -378,10 +386,10 @@
                        <div class="form-group">
                                <label class=" control-label">IMPROVEMENT PLAN</label>
                                <div>
-                                   <textarea name="" id="" cols="30" rows="10" name="field_36"></textarea>
+                                   <textarea id="" cols="30" rows="10" name="field_36"></textarea>
                                </div>
                        </div>                                      
-						<div class="pull-right">
+						<div class="">
 						<button type="submit" class="btn btn-primary store-visit-save-progress"><i class="fa fa-check"></i> Save</button></div>
 
                     </div> <!-- ibox-content closes -->
@@ -402,10 +410,10 @@
                        <div class="form-group">
                                <label class=" control-label"></label>
                                <div>
-                                   <textarea name="" id="" cols="30" rows="10" name="field_37"></textarea>
+                                   <textarea id="" cols="30" rows="10" name="field_37"></textarea>
                                </div>
                        </div>                                      
-						<div class="pull-right">
+						<div class="">
 						<button type="submit" class="btn btn-primary store-visit-save-progress"><i class="fa fa-check"></i> Save</button></div>
 
                     </div> <!-- ibox-content closes -->
@@ -429,5 +437,28 @@
 
 @section('scripts')
 
+    
+    <script type="text/javascript" src="/js/plugins/ckeditor-custom/ckeditor.js"></script>
+    <script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
+    <script>
+
+    $(".chosen").chosen({
+        width:'100%'
+    });
+
+    // var description_fields = [ "field_4","field_5","field_6","field_10","field_11","field_12","field_15","field_16","field_17","field_24","field_25","field_26","field_31","field_32","field_33","field_34","field_35","field_36","field_37" ];
+
+    var description_fields = $("textarea");
+
+    $(description_fields).each(function(){
+        
+        CKEDITOR.replace(this.name);
+    })
+
+    
+
+    
+
+    </script>
 
 @endsection

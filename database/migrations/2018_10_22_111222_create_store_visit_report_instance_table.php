@@ -18,7 +18,7 @@ class CreateStoreVisitReportInstanceTable extends Migration
             $table->string('store_number');
             $table->integer('dm_id')->unsigned();
             $table->boolean('is_draft');
-            $table->dateTime('submitted_at');
+            $table->dateTime('submitted_at')->nullable();
             $table->timestamps();
         });
     }
