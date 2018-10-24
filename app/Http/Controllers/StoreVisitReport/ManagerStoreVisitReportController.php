@@ -48,17 +48,6 @@ class ManagerStoreVisitReportController extends Controller
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        \Log::info($request->all());
-        
-    }
 
     /**
      * Display the specified resource.
@@ -106,9 +95,7 @@ class ManagerStoreVisitReportController extends Controller
      */
     public function update(Request $request, $id)
     {
-        \Log::info('updating the form');
-        \Log::info($request->all());
-        StoreVisitReportInstance::saveReport($request);
+        StoreVisitReportInstance::saveReport($id, $request);
     }
 
 

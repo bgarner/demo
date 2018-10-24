@@ -3,6 +3,7 @@
 namespace App\Models\StoreVisitReport;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class StoreVisitReportInstance extends Model
 {
@@ -23,10 +24,23 @@ class StoreVisitReportInstance extends Model
     	return $newStoreVisitReport;
     }
 
-    public static function saveReport($request)
+    public static function saveReport($id, $request)
     {
-    	\Log::info("save Report Instance");
-    	\Log::info("save Report instance Responses");
+    	\Log::info($request);
+    	$storeVisitReport = StoreVisitReportInstance::find($id);
+    	$storeVisitReport->update([
+    		'store_number' => $request->store_number,
+    		'is_draft' => $request->is_draft
+    	]);
+
+    	if(!$request->is_draft){
+    		$storeVisitReport->update([
+    			'submitted_at' => Carbon::now()->toDateTimeString()
+    		]);
+    	}
+
+    	StoreVisitReportResponse::updateResponses($id, $request);
+
     }
 
     public static function getReportById($id)
