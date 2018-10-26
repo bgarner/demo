@@ -17,7 +17,7 @@ class CreateStoreVisitReportResponseTable extends Migration
             $table->increments('id');
             $table->integer('report_instance_id')->unsigned();
             $table->integer('field_id')->unsigned();
-            $table->mediumText('response');
+            $table->mediumText('response')->nullable();
             $table->timestamps();
             $table->foreign('report_instance_id')->references('id')->on('store_visit_report_instance');
             $table->foreign('field_id')->references('id')->on('store_visit_report_field');

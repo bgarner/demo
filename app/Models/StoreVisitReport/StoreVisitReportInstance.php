@@ -10,21 +10,26 @@ class StoreVisitReportInstance extends Model
     protected $table = 'store_visit_report_instance';
     protected $fillable = ['store_number', 'dm_id', 'is_draft', 'submitted_at'];
 
-    public static function getNewReport()
+    public static function saveReport($request)
     {
     	$dm_id = \Auth::user()->id;
     	$newStoreVisitReport = StoreVisitReportInstance::create([
-    		'store_number' => '',
+    		'store_number' => $request->store_number,
     		'dm_id'        => $dm_id,
-    		'is_draft'     => 1,
-    		'submitted_at' => NULL
-
+    		'is_draft'     => $request->is_draft,
     	]);
 
+    	if(!$request->is_draft){
+    		$storeVisitReport->update([
+    			'submitted_at' => Carbon::now()->toDateTimeString()
+    		]);
+    	}
+
+    	StoreVisitReportResponse::updateResponses($newStoreVisitReport->id, $request->all());
     	return $newStoreVisitReport;
     }
 
-    public static function saveReport($id, $request)
+    public static function updateReport($id, $request)
     {
     	\Log::info($request);
     	$storeVisitReport = StoreVisitReportInstance::find($id);
@@ -40,16 +45,14 @@ class StoreVisitReportInstance extends Model
     	}
 
     	StoreVisitReportResponse::updateResponses($id, $request->all());
+    	return;
 
     }
 
     public static function getReportById($id)
     {
     	$report = StoreVisitReportInstance::find($id);
-    	$report->fields = StoreVisitReportResponse::join('store_visit_report_field', 'store_visit_report_response.field_id', '=', 'store_visit_report_field.id')
-    						->where('report_instance_id', $id)
-    						->select('field_alias', 'response')
-    						->get();
+    	$report->fields = StoreVisitReportResponse::getFieldResonseMap($id);
 
     	return $report;
     	

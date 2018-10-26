@@ -41,13 +41,24 @@ class ManagerStoreVisitReportController extends Controller
             $storeList[$store->store_number] = $store->store_id . " " . $store->name . " (" . $banner[$store->banner_id] .")" ;
         }
 
-        $newStoreVisitReport = StoreVisitReportInstance::getNewReport();
-        return view('manager.storevisitreport.createOrUpdate')
-                ->with('report', $newStoreVisitReport)
+        // $newStoreVisitReport = StoreVisitReportInstance::getNewReport();
+        return view('manager.storevisitreport.create')
+                // ->with('report', $newStoreVisitReport)
                 ->with('stores', $storeList);
 
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        StoreVisitReportInstance::saveReport($request);
+        
+    }
 
     /**
      * Display the specified resource.
@@ -80,9 +91,7 @@ class ManagerStoreVisitReportController extends Controller
         }
 
         $storeVisitReport = StoreVisitReportInstance::getReportById($id);
-
-        dd($storeVisitReport);
-        return view('manager.storevisitreport.createOrUpdate')
+        return view('manager.storevisitreport.update')
                 ->with('report', $storeVisitReport)
                 ->with('stores', $storeList);
 
@@ -97,7 +106,7 @@ class ManagerStoreVisitReportController extends Controller
      */
     public function update(Request $request, $id)
     {
-        StoreVisitReportInstance::saveReport($id, $request);
+        StoreVisitReportInstance::updateReport($id, $request);
     }
 
 

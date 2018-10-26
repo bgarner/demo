@@ -21,10 +21,8 @@
     <div class="wrapper wrapper-content  animated fadeInRight">
         <div class="row">
             <div class="col-lg-12">
-                {!! Form::open([
-                    'action' => ['StoreVisitReport\ManagerStoreVisitReportController@update',
-                    $report->id],
-                    'method' => 'PATCH']) !!}
+                
+                {{ Form::open(['action' => 'StoreVisitReport\ManagerStoreVisitReportController@store', 'method' => 'POST']) }}
                 <div class="ibox">
                     <div class="ibox-title">
                         <h2>TABLET SALES</h2>
@@ -47,13 +45,13 @@
                             <div class="form-group">
                                     <label class=" control-label">Last Week's Tablet Sales Result:</label>
                                     <div>
-                                        <input type="text" class="form-control" name="field_1">
+                                        <input type="text" class="form-control" name="field_1" value="" >
                                     </div>
                             </div>                                     
                             <div class="form-group">
                                     <label class=" control-label">6Wk Trend Tablet Sales Result:</label>
                                     <div>
-                                        <input type="text" class="form-control" name="field_2">
+                                        <input type="text" class="form-control" name="field_2" value="">
                                     </div>
                             </div>                                      
                             <div class="form-group">
@@ -74,19 +72,19 @@
                                     <label class=" control-label">Validate staff understanding and coach Winning Habits. Provide findings and coaching notes:</label>
                                     <div>
                                         
-                                        <textarea id="" cols="30" rows="10" name="field_4"></textarea> 
+                                        <textarea id="" cols="30" rows="10" name="field_4" ></textarea> 
                                     </div>
                             </div>                                      
                             <div class="form-group">
                                     <label class=" control-label">How is Tablet Sales being coached / communicated on a daily basis?</label>
                                     <div>
-                                        <textarea id="" cols="30" rows="10" name="field_5"></textarea>
+                                        <textarea id="" cols="30" rows="10" name="field_5" ></textarea>
                                     </div>
                             </div>                                      
                             <div class="form-group">
                                     <label class=" control-label">IMPROVEMENT PLAN</label>
                                     <div>
-                                        <textarea id="" cols="30" rows="10" name="field_6"></textarea>
+                                        <textarea id="" cols="30" rows="10" name="field_6" ></textarea>
                                     </div>
                             </div>
 
@@ -115,7 +113,7 @@
                                     &nbsp;No
                                 </label>
                                 &nbsp;
-                                <input type="radio" name="field_7" value="1">
+                                <input type="radio" name="field_7" value="1" >
                                 <label class=" control-label">
                                     &nbsp;Yes
                                 </label>
@@ -139,12 +137,12 @@
                                <label class=" control-label">Is Autofill being used weekly:</label>
 
                                <div>
-                                    <input type="radio" name="field_9" value="0">
+                                    <input type="radio" name="field_9" value="0" >
                                     <label class=" control-label">
                                         &nbsp;No
                                     </label>
                                     &nbsp;
-                                    <input type="radio" name="field_9" value="1">
+                                    <input type="radio" name="field_9" value="1" >
                                     <label class=" control-label">
                                         &nbsp;Yes
                                     </label>
@@ -154,13 +152,13 @@
                                <label class=" control-label">Validate that the management schedule aligns with business needs. Provide findings and coaching notes:</label>
                                <div>
                                    
-                                   <textarea id="" cols="30" rows="10" name="field_10"></textarea> 
+                                   <textarea id="" cols="30" rows="10" name="field_10" ></textarea> 
                                </div>
                        </div>                                      
                        <div class="form-group">
                                <label class=" control-label">Validate that staff schedule aligns with business needs. Provide findings and coaching notes:</label>
                                <div>
-                                   <textarea id="" cols="30" rows="10" name="field_11"></textarea>
+                                   <textarea id="" cols="30" rows="10" name="field_11" ></textarea>
                                </div>
                        </div>                                      
                        <div class="form-group">
@@ -189,12 +187,12 @@
                         <div class="form-group">
                            <label class=" control-label">MOD Schedule is in place and posted?</label>
                            <div>
-                                <input type="radio" name="field_13" value="0">
+                                <input type="radio" name="field_13" value="0" >
                                 <label class=" control-label">
                                     &nbsp;No
                                 </label>
                                 &nbsp;
-                                <input type="radio" name="field_13" value="1">
+                                <input type="radio" name="field_13" value="1" >
                                 <label class=" control-label">
                                     &nbsp;Yes
                                 </label>
@@ -203,12 +201,12 @@
                        <div class="form-group">
                                <label class=" control-label">MOD Show Me Steps are at 100%?</label>
                                <div>
-                                    <input type="radio" name="field_14" value="0">
+                                    <input type="radio" name="field_14" value="0" >
                                     <label class=" control-label">
                                         &nbsp;No
                                     </label>
                                     &nbsp;
-                                    <input type="radio" name="field_14" value="1">
+                                    <input type="radio" name="field_14" value="1" >
                                     <label class=" control-label">
                                         &nbsp;Yes
                                     </label>
@@ -253,25 +251,25 @@
                         <div class="form-group">
                            <label class=" control-label">Last Week's Aged Orders %:</label>
                            <div>
-                               <input type="text" class="form-control" name="field_18">
+                               <input type="text" class="form-control" name="field_18" value="">
                            </div>
                        </div>                                     
                        <div class="form-group">
                                <label class=" control-label">6Wk Trend Aged Orders %:</label>
                                <div>
-                                   <input type="text" class="form-control" name="field_19">
+                                   <input type="text" class="form-control" name="field_19" value="">
                                </div>
                        </div> 
                        <div class="form-group">
                                <label class=" control-label">Last Week's Dirty Node %:</label>
                                <div>
-                                   <input type="text" class="form-control" name="field_20">
+                                   <input type="text" class="form-control" name="field_20" value="">
                                </div>
                        </div> 
                        <div class="form-group">
                                <label class=" control-label">6Wk Trend Dirty Node %:</label>
                                <div>
-                                   <input type="text" class="form-control" name="field_21">
+                                   <input type="text" class="form-control" name="field_21" value="">
                                </div>
                        </div> 
                        <div class="form-group">
@@ -293,12 +291,12 @@
                                <label class=" control-label">Has the store reviewed upcoming order forecast to assess supply needs?</label>
 
                                <div>
-                                    <input type="radio" name="field_23" value="0">
+                                    <input type="radio" name="field_23" value="0" >
                                     <label class=" control-label">
                                         &nbsp;No
                                     </label>
                                     &nbsp;
-                                    <input type="radio" name="field_23" value="1">
+                                    <input type="radio" name="field_23" value="1" >
                                     <label class=" control-label">
                                         &nbsp;Yes
                                     </label>
@@ -343,13 +341,13 @@
                         <div class="form-group">
                            <label class=" control-label">Last Month's Self Audit %:</label>
                            <div>
-                               <input type="text" class="form-control" name="field_27">
+                               <input type="text" class="form-control" name="field_27" value="">
                            </div>
                        </div>                                     
                        <div class="form-group">
                                <label class=" control-label">Last Official Full Store Audit %</label>
                                <div>
-                                   <input type="text" class="form-control" name="field_28">
+                                   <input type="text" class="form-control" name="field_28" value="">
                                </div>
                        </div> 
                        <div class="form-group">
@@ -361,7 +359,7 @@
                                         &nbsp;No
                                     </label>
                                     &nbsp;
-                                    <input type="radio" name="field_29" value="1">
+                                    <input type="radio" name="field_29" value="1" >
                                     <label class=" control-label">
                                         &nbsp;Yes
                                     </label>
@@ -372,12 +370,12 @@
                                <label class=" control-label">Are thorough bag checks are being completed every night?</label>
 
                                <div>
-                                    <input type="radio" name="field_30" value="0">
+                                    <input type="radio" name="field_30" value="0" >
                                     <label class=" control-label">
                                         &nbsp;No
                                     </label>
                                     &nbsp;
-                                    <input type="radio" name="field_30" value="1">
+                                    <input type="radio" name="field_30" value="1" >
                                     <label class=" control-label">
                                         &nbsp;Yes
                                     </label>
@@ -395,7 +393,8 @@
                        <div class="form-group">
                                <label class=" control-label">IMPROVEMENT PLAN</label>
                                <div>
-                                   <textarea id="" cols="30" rows="10" name="field_32"></textarea>
+                                   <textarea id="" cols="30" rows="10" name="field_32">
+                                   </textarea>
                                </div>
                        </div>                                      
 
@@ -499,7 +498,8 @@
                        <div class="form-group">
                                <label class=" control-label"></label>
                                <div>
-                                   <textarea id="" cols="30" rows="10" name="field_37"></textarea>
+                                   <textarea id="" cols="30" rows="10" name="field_37">
+                                   </textarea>
                                </div>
                        </div>                                      
 						<div class="">
@@ -538,6 +538,8 @@
 
 
     var description_fields = $("textarea");
+
+    console.log(description_fields);
 
     $(description_fields).each(function(){
         
