@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Utility\Utility;
 use App\Models\Tools\DirtyNode\DirtyNodeArchive;
 use Carbon\Carbon;
+use DB;
 
 
 class DirtyNode extends Model
@@ -56,6 +57,38 @@ class DirtyNode extends Model
                         ->get();
 
         return $data;       
+    }
+
+    public static function getTopDirtyNodeItems($store_number)
+    {
+        $store_number = ltrim($store_number, 'A');
+        $store_number = ltrim($store_number, '0');
+        return DirtyNode::where('store', $store_number)
+                ->where('quantity', '>=', 3)
+                ->orderBy('quantity', 'DESC')
+                ->limit(10)
+                ->get();
+    }
+
+    public static function getTopDirtyNodeCategories($store_number)
+    {
+        $store_number = ltrim($store_number, 'A');
+        $store_number = ltrim($store_number, '0');
+        return DirtyNode::select( \DB::raw('`department`, `sub_department`, count(*) as `count`'))
+                ->where('store', $store_number)
+                ->groupBy('department', 'sub_department')
+                ->orderBy('count', 'DESC')
+                ->limit(10)->get();
+                
+        // dd($stuff);
+
+        
+        // $stuff = DB::select("
+        //     select department, sub_department
+        //     from dirty_nodes
+        //     where store = ".$store_number );
+
+ 
     }
 
     public static function cleanNode($request)

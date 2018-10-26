@@ -62,17 +62,77 @@
 
 <div class="ibox">
     <div class="ibox-title">
-        <h2>DOM Nodes</h2>
+        <h1>DOM Nodes</h1>
         <div class="ibox-tools">
             <!-- <a class="btn btn-xs" id="videoReportModal">View Report by Date</a> -->
-            <a class="collapse-link">
+            <!-- <a class="collapse-link">
                 <i class="fa fa-chevron-up"></i>
-            </a>
+            </a> -->
         </div>
 
     </div>
 
     <div class="ibox-content">
+
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Top Categories</h3>
+                <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th><small>Dept</small></th>
+                        <th><small>SubDept</small></th>
+                        <th><small>Count</small></th>
+                    </tr>
+                </thead>
+                @foreach($topCategories as $cat)
+                    <tr>
+                        <td>{{ $cat->department }}</td>
+                        <td>{{ $cat->sub_department }}</td>
+                        <td>{{ $cat->count }}</td>
+                        
+                    </tr>
+
+                @endforeach
+                </table>
+
+
+            </div>
+            <div class="col-md-6">
+                <h3>Top 10 SKUs By Count</h3>
+                <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th><small>Description</small></th>
+                        <th><small>Colour</small></th>
+                        <th><small>Size</small></th>
+                        <th><small>Dept SubDept</small></th>
+                        <th><small>Style</small></th>
+                        <th><small>UPC</small></th>
+
+                        <th><small>Qty</small></th>
+                    </tr>
+                </thead>
+                @foreach($topItems as $item)
+                    <tr>
+                        <td>{{ $item->styledesc }}</td>
+                        <td>{{ $item->color }}</td>
+                        <td>{{ $item->sizename }}</td>
+                        <td>{{ $item->department }} <br /> {{ $item->sub_department }}</td>
+                        <td>{{ $item->stylecode }}</td>
+                        <td>{{ $item->upccode }}</td>
+                        <td>{{ $item->quantity }}</td>
+                    </tr>
+
+                @endforeach
+                </table>
+            </div>
+        </div>
+
+</div>
+<br />
+
+<div class="ibox">
 
         <div class="tabs-container">
             <ul class="nav nav-tabs">

@@ -21,8 +21,13 @@ class DirtyNodesController extends Controller
     {
         $data = DirtyNode::getDataByStoreNumber($this->storeNumber);
         $cleanNodes = DirtyNode::getCleanNodesByStoreNumber($this->storeNumber);
+        $topItems = DirtyNode::getTopDirtyNodeItems($this->storeNumber);
+        $topCategories = DirtyNode::getTopDirtyNodeCategories($this->storeNumber);
+
         return view('site.tools.dirtynodes.index')
             ->with('data', $data)
+            ->with('topItems', $topItems)
+            ->with('topCategories', $topCategories)
             ->with('cleanNodes', $cleanNodes);
     }
 
