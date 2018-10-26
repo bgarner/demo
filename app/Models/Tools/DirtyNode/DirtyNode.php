@@ -79,16 +79,6 @@ class DirtyNode extends Model
                 ->groupBy('department', 'sub_department')
                 ->orderBy('count', 'DESC')
                 ->limit(10)->get();
-                
-        // dd($stuff);
-
-        
-        // $stuff = DB::select("
-        //     select department, sub_department
-        //     from dirty_nodes
-        //     where store = ".$store_number );
-
- 
     }
 
     public static function cleanNode($request)
