@@ -49,13 +49,13 @@
                             <div class="form-group">
                                     <label class=" control-label">Last Week's Tablet Sales Result:</label>
                                     <div>
-                                        <input type="text" class="form-control" name="field_1" value="{{$report->fields['field_1']}}" >
+                                        <input type="text" class="form-control" name="field_1" value="{{$report->fieldResponses['field_1']}}" >
                                     </div>
                             </div>                                     
                             <div class="form-group">
                                     <label class=" control-label">6Wk Trend Tablet Sales Result:</label>
                                     <div>
-                                        <input type="text" class="form-control" name="field_2" value="{{$report->fields['field_2']}}">
+                                        <input type="text" class="form-control" name="field_2" value="{{$report->fieldResponses['field_2']}}">
                                     </div>
                             </div>                                      
                             <div class="form-group">
@@ -76,19 +76,19 @@
                                     <label class=" control-label">Validate staff understanding and coach Winning Habits. Provide findings and coaching notes:</label>
                                     <div>
                                         
-                                        <textarea id="" cols="30" rows="10" name="field_4" >{!! $report->fields['field_4'] !!}</textarea> 
+                                        <textarea id="" cols="30" rows="10" name="field_4" >{!! $report->fieldResponses['field_4'] !!}</textarea> 
                                     </div>
                             </div>                                      
                             <div class="form-group">
                                     <label class=" control-label">How is Tablet Sales being coached / communicated on a daily basis?</label>
                                     <div>
-                                        <textarea id="" cols="30" rows="10" name="field_5" >{!! $report->fields['field_5']!!}</textarea>
+                                        <textarea id="" cols="30" rows="10" name="field_5" >{!! $report->fieldResponses['field_5']!!}</textarea>
                                     </div>
                             </div>                                      
                             <div class="form-group">
                                     <label class=" control-label">IMPROVEMENT PLAN</label>
                                     <div>
-                                        <textarea id="" cols="30" rows="10" name="field_6" >{!! $report->fields['field_6'] !!}</textarea>
+                                        <textarea id="" cols="30" rows="10" name="field_6" >{!! $report->fieldResponses['field_6'] !!}</textarea>
                                     </div>
                             </div>
 
@@ -156,19 +156,19 @@
                                <label class=" control-label">Validate that the management schedule aligns with business needs. Provide findings and coaching notes:</label>
                                <div>
                                    
-                                   <textarea id="" cols="30" rows="10" name="field_10" >{!! $report->fields['field_10'] !!}</textarea> 
+                                   <textarea id="" cols="30" rows="10" name="field_10" >{!! $report->fieldResponses['field_10'] !!}</textarea> 
                                </div>
                        </div>                                      
                        <div class="form-group">
                                <label class=" control-label">Validate that staff schedule aligns with business needs. Provide findings and coaching notes:</label>
                                <div>
-                                   <textarea id="" cols="30" rows="10" name="field_11" >{!!$report->fields['field_11']!!}</textarea>
+                                   <textarea id="" cols="30" rows="10" name="field_11" >{!!$report->fieldResponses['field_11']!!}</textarea>
                                </div>
                        </div>                                      
                        <div class="form-group">
                                <label class=" control-label">IMPROVEMENT PLAN</label>
                                <div>
-                                   <textarea id="" cols="30" rows="10" name="field_12">{!! $report->fields['field_12'] !!}</textarea>
+                                   <textarea id="" cols="30" rows="10" name="field_12">{!! $report->fieldResponses['field_12'] !!}</textarea>
                                </div>
                        </div>                                      
 						<div class="">
@@ -220,20 +220,20 @@
                                <label class=" control-label">Validate management understanding and coach Winning Habits. Provide findings and coaching notes:</label>
                                <div>
                                    
-                                   <textarea id="" cols="30" rows="10" name="field_15"> {!!$report->fields['field_15']!!} </textarea> 
+                                   <textarea id="" cols="30" rows="10" name="field_15"> {!!$report->fieldResponses['field_15']!!} </textarea> 
                                </div>
                        </div>                                      
                        <div class="form-group">
                                <label class=" control-label">How well is this executed in store? Is it effective, making an impact? Provide findings, coaching notes:</label>
                                <div>
-                                   <textarea id="" cols="30" rows="10" name="field_16">{!!$report->fields['field_16']!!}</textarea>
+                                   <textarea id="" cols="30" rows="10" name="field_16">{!!$report->fieldResponses['field_16']!!}</textarea>
                                </div>
                        </div>                                      
                        <div class="form-group">
                                <label class=" control-label">IMPROVEMENT PLAN</label>
                                <div>
                                    <textarea id="" cols="30" rows="10" name="field_17">
-                                       {!!$report->fields['field_17']!!}
+                                       {!!$report->fieldResponses['field_17']!!}
                                    </textarea>
                                </div>
                        </div>                                      
@@ -257,25 +257,25 @@
                         <div class="form-group">
                            <label class=" control-label">Last Week's Aged Orders %:</label>
                            <div>
-                               <input type="text" class="form-control" name="field_18" value="{{$report->fields['field_18']}}">
+                               <input type="text" class="form-control" name="field_18" value="{{$report->fieldResponses['field_18']}}">
                            </div>
                        </div>                                     
                        <div class="form-group">
                                <label class=" control-label">6Wk Trend Aged Orders %:</label>
                                <div>
-                                   <input type="text" class="form-control" name="field_19" value="{{$report->fields['field_19']}}">
+                                   <input type="text" class="form-control" name="field_19" value="{{$report->fieldResponses['field_19']}}">
                                </div>
                        </div> 
                        <div class="form-group">
                                <label class=" control-label">Last Week's Dirty Node %:</label>
                                <div>
-                                   <input type="text" class="form-control" name="field_20" value="{{$report->fields['field_20']}}">
+                                   <input type="text" class="form-control" name="field_20" value="{{$report->fieldResponses['field_20']}}">
                                </div>
                        </div> 
                        <div class="form-group">
                                <label class=" control-label">6Wk Trend Dirty Node %:</label>
                                <div>
-                                   <input type="text" class="form-control" name="field_21" value="{{$report->fields['field_21']}}">
+                                   <input type="text" class="form-control" name="field_21" value="{{$report->fieldResponses['field_21']}}">
                                </div>
                        </div> 
                        <div class="form-group">
@@ -312,19 +312,19 @@
                                <label class=" control-label">Validate dirty nodes list on portal and weekly use of dirty node scanning app. Provide findings, notes:</label>
                                <div>
                                    
-                                   <textarea id="" cols="30" rows="10" name="field_24">{!!$report->fields['field_24']!!}</textarea> 
+                                   <textarea id="" cols="30" rows="10" name="field_24">{!!$report->fieldResponses['field_24']!!}</textarea> 
                                </div>
                        </div>                                      
                        <div class="form-group">
                                <label class=" control-label">Validate that Stock Locator setup is underway or in place (where applicable). Provide findings, notes:</label>
                                <div>
-                                   <textarea id="" cols="30" rows="10" name="field_25">{!!$report->fields['field_25']!!}</textarea>
+                                   <textarea id="" cols="30" rows="10" name="field_25">{!!$report->fieldResponses['field_25']!!}</textarea>
                                </div>
                        </div>                                      
                        <div class="form-group">
                                <label class=" control-label">IMPROVEMENT PLAN</label>
                                <div>
-                                   <textarea id="" cols="30" rows="10" name="field_26">{!!$report->fields['field_26']!!}</textarea>
+                                   <textarea id="" cols="30" rows="10" name="field_26">{!!$report->fieldResponses['field_26']!!}</textarea>
                                </div>
                        </div>                                      
 						<div class="">
@@ -347,13 +347,13 @@
                         <div class="form-group">
                            <label class=" control-label">Last Month's Self Audit %:</label>
                            <div>
-                               <input type="text" class="form-control" name="field_27" value="{{$report->fields['field_27']}}">
+                               <input type="text" class="form-control" name="field_27" value="{{$report->fieldResponses['field_27']}}">
                            </div>
                        </div>                                     
                        <div class="form-group">
                                <label class=" control-label">Last Official Full Store Audit %</label>
                                <div>
-                                   <input type="text" class="form-control" name="field_28" value="{{$report->fields['field_28']}}">
+                                   <input type="text" class="form-control" name="field_28" value="{{$report->fieldResponses['field_28']}}">
                                </div>
                        </div> 
                        <div class="form-group">
@@ -392,7 +392,7 @@
                                <label class=" control-label">Audit 5 new hire employee files for ALL necessary forms, signatures, etc. Provide findings, notes:</label>
                                <div>
                                    
-                                   <textarea id="" cols="30" rows="10" name="field_31">{!!$report->fields['field_31']!!}</textarea> 
+                                   <textarea id="" cols="30" rows="10" name="field_31">{!!$report->fieldResponses['field_31']!!}</textarea> 
                                </div>
                        </div>                                      
                        
@@ -400,7 +400,7 @@
                                <label class=" control-label">IMPROVEMENT PLAN</label>
                                <div>
                                    <textarea id="" cols="30" rows="10" name="field_32">
-                                       {!!$report->fields['field_32']!!}
+                                       {!!$report->fieldResponses['field_32']!!}
                                    </textarea>
                                </div>
                        </div>                                      
@@ -426,14 +426,14 @@
                                <label class=" control-label">Validate the following where applicable: Category Store Setup, Helly Shops, Woods Shops, Gym Bag fixture, Holiday Impulse Lanes, Sports Nutrition. Provide findings and notes:</label>
                                <div>
                                    
-                                   <textarea id="" cols="30" rows="10" name="field_33">{!!$report->fields['field_33']!!}</textarea> 
+                                   <textarea id="" cols="30" rows="10" name="field_33">{!!$report->fieldResponses['field_33']!!}</textarea> 
                                </div>
                        </div>                                      
                        
                        <div class="form-group">
                                <label class=" control-label">IMPROVEMENT PLAN on INVENTORY INTENSITY</label>
                                <div>
-                                   <textarea id="" cols="30" rows="10" name="field_34">{!!$report->fields['field_34']!!}</textarea>
+                                   <textarea id="" cols="30" rows="10" name="field_34">{!!$report->fieldResponses['field_34']!!}</textarea>
                                </div>
                        </div>                                      
 
@@ -457,7 +457,7 @@
                        <div class="form-group">
                                <label class=" control-label">IMPROVEMENT PLAN</label>
                                <div>
-                                   <textarea id="" cols="30" rows="10" name="field_35">{!!$report->fields['field_35']!!}</textarea>
+                                   <textarea id="" cols="30" rows="10" name="field_35">{!!$report->fieldResponses['field_35']!!}</textarea>
                                </div>
                        </div>                                      
 						<div class="">
@@ -481,7 +481,7 @@
                        <div class="form-group">
                                <label class=" control-label">IMPROVEMENT PLAN</label>
                                <div>
-                                   <textarea id="" cols="30" rows="10" name="field_36">{!!$report->fields['field_36']!!}</textarea>
+                                   <textarea id="" cols="30" rows="10" name="field_36">{!!$report->fieldResponses['field_36']!!}</textarea>
                                </div>
                        </div>                                      
 						<div class="">
@@ -506,7 +506,7 @@
                                <label class=" control-label"></label>
                                <div>
                                    <textarea id="" cols="30" rows="10" name="field_37">
-                                       {!!$report->fields['field_37']!!}
+                                       {!!$report->fieldResponses['field_37']!!}
                                    </textarea>
                                </div>
                        </div>                                      

@@ -4,6 +4,7 @@ namespace App\Models\StoreVisitReport;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\Models\Utility\Utility;
 
 class StoreVisitReportInstance extends Model
 {
@@ -52,9 +53,34 @@ class StoreVisitReportInstance extends Model
     public static function getReportById($id)
     {
     	$report = StoreVisitReportInstance::find($id);
-    	$report->fields = StoreVisitReportResponse::getFieldResonseMap($id);
+        if($report->submitted_at){
+            $report->prettySubmitted = Utility::prettifyDateWithTime($report->submitted_at);
+            $report->sinceSubmitted = Utility::getTimePastSinceDate($report->submitted_at);
+        }
+        $report->fields = StoreVisitReportField::getStoreVisitReportFields();
+    	$report->fieldResponses = StoreVisitReportResponse::getFieldResonseMap($id);
 
     	return $report;
     	
+    }
+
+    public static function getReportsByManager()
+    {
+        $user_id = \Auth::user()->id;
+        $role = \Auth::user()->role;
+
+        if($role == 'District Manager'){
+            $reports = Self::where('dm_id', $user_id)->get();
+
+        }
+        else if($role == 'AVP'){
+
+        }
+        else if($role == 'Exec'){
+
+        }
+
+        return $reports;
+
     }
 }

@@ -160,4 +160,15 @@
 
         @endif
 
+
+        @if (  Request::is('manager/storevisitreport/*') || 
+            Request::is('manager/storevisitreport')
+            ) 
+        <li class="active">
+        @else
+        <li>
+        @endif
+            <a href="/manager/storevisitreport"><i class="fa fa-clipboard"></i> <span class="nav-label">Store Visit Report</span></a>
+        </li>
+
 </ul>

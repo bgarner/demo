@@ -17,11 +17,10 @@ class ManagerStoreVisitReportController extends Controller
      */
     public function index()
     {
-        //if  user is dm
-        //list of previous report by the dm
+        
+        $reports = StoreVisitReportInstance::getReportsByManager();
 
-        //if user is avp 
-        //consolidated reports
+        return view('manager.storevisitreport.index')->with('reports', $reports);
 
     }
 
@@ -41,9 +40,7 @@ class ManagerStoreVisitReportController extends Controller
             $storeList[$store->store_number] = $store->store_id . " " . $store->name . " (" . $banner[$store->banner_id] .")" ;
         }
 
-        // $newStoreVisitReport = StoreVisitReportInstance::getNewReport();
         return view('manager.storevisitreport.create')
-                // ->with('report', $newStoreVisitReport)
                 ->with('stores', $storeList);
 
     }
@@ -68,8 +65,9 @@ class ManagerStoreVisitReportController extends Controller
      */
     public function show($id)
     {
-        // read only version of the form once it is submitted
-        dd('hello');
+        $storeVisitReport = StoreVisitReportInstance::getReportById($id);
+        
+        return view('manager.storevisitreport.view')->with('report', $storeVisitReport);
     }
 
     /**
@@ -107,6 +105,8 @@ class ManagerStoreVisitReportController extends Controller
     public function update(Request $request, $id)
     {
         StoreVisitReportInstance::updateReport($id, $request);
+
+        return redirect()->action('StoreVisitReport\ManagerStoreVisitReportController@edit',  ['id' => $id]);
     }
 
 
