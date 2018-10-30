@@ -14,13 +14,28 @@ class StoreVisitReportResponse extends Model
     {
     	
     	foreach ($request as $key => $value) {
+
+
     		if(StoreVisitReportField::where('field_alias', $key)->first()){
     			$field_id = StoreVisitReportField::where('field_alias', $key)->first()->id;
-    			StoreVisitReportResponse::create([
-    				'report_instance_id' => $report_id,
-    				'field_id' => $field_id,
-    				'response' => $value
-    			]);
+
+                $existingResponse = StoreVisitReportResponse::where('report_instance_id', $report_id)
+                                            ->where('field_id', $field_id)
+                                            ->first();
+
+                if($existingResponse){
+                    
+                    $existingResponse->update(['response' => $value]);
+                    
+                }
+                else{
+                    StoreVisitReportResponse::create([
+                        'report_instance_id' => $report_id,
+                        'field_id' => $field_id,
+                        'response' => $value
+                    ]);    
+                }
+    			
     		}
     	}
 

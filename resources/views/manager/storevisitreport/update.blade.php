@@ -61,12 +61,12 @@
                             <div class="form-group">
                                     <label class=" control-label">Are PDTs and Tablets in use in each dept?</label>
                                     <div>
-                                        <input type="radio" name="field_3" value="0" @if($report['fields']['field_3'] == 0)   checked = "checked" @endif>
+                                        <input type="radio" name="field_3" value="0" @if(isset($report['fieldResponses']['field_3']) && $report['fieldResponses']['field_3'] == 0)   checked = "checked" @endif>
                                         <label class=" control-label">
                                             &nbsp;No
                                         </label>
                                         &nbsp;
-                                        <input type="radio" name="field_3" value="1" @if($report['fields']['field_3'] == 1) checked="checked" @endif>
+                                        <input type="radio" name="field_3" value="1" @if(isset($report['fieldResponses']['field_3']) && $report['fieldResponses']['field_3'] == 1) checked="checked" @endif>
                                         <label class=" control-label">
                                             &nbsp;Yes
                                         </label>
@@ -112,12 +112,12 @@
                            <label class=" control-label">Reviewed hiring needs and open postings:</label>
 
                            <div>
-                                <input type="radio" name="field_7" value="0" @if($report['fields']['field_7'] == 0)   checked = "checked" @endif>
+                                <input type="radio" name="field_7" value="0" @if(isset($report['fieldResponses']['field_7']) && $report['fieldResponses']['field_7'] == 0)   checked = "checked" @endif>
                                 <label class=" control-label">
                                     &nbsp;No
                                 </label>
                                 &nbsp;
-                                <input type="radio" name="field_7" value="1" @if($report['fields']['field_7'] == 1)   checked = "checked" @endif>
+                                <input type="radio" name="field_7" value="1" @if(isset($report['fieldResponses']['field_7']) && $report['fieldResponses']['field_7'] == 1)   checked = "checked" @endif>
                                 <label class=" control-label">
                                     &nbsp;Yes
                                 </label>
@@ -126,12 +126,12 @@
                        <div class="form-group">
                                <label class=" control-label">Are schedules being posted 3 weeks out?</label>
                                <div>
-                                    <input type="radio" name="field_8" value="0" @if($report['fields']['field_8'] == 0)   checked = "checked" @endif>
+                                    <input type="radio" name="field_8" value="0" @if(isset($report['fieldResponses']['field_8']) && $report['fieldResponses']['field_8'] == 0)   checked = "checked" @endif>
                                     <label class=" control-label">
                                         &nbsp;No
                                     </label>
                                     &nbsp;
-                                    <input type="radio" name="field_8" value="1" @if($report['fields']['field_8'] == 1)   checked = "checked" @endif>
+                                    <input type="radio" name="field_8" value="1" @if(isset($report['fieldResponses']['field_8']) && $report['fieldResponses']['field_8'] == 1)   checked = "checked" @endif>
                                     <label class=" control-label">
                                         &nbsp;Yes
                                     </label>
@@ -141,12 +141,12 @@
                                <label class=" control-label">Is Autofill being used weekly:</label>
 
                                <div>
-                                    <input type="radio" name="field_9" value="0" @if($report['fields']['field_9'] == 0)   checked = "checked" @endif>
+                                    <input type="radio" name="field_9" value="0" @if(isset($report['fieldResponses']['field_9']) && $report['fieldResponses']['field_9'] == 0)   checked = "checked" @endif>
                                     <label class=" control-label">
                                         &nbsp;No
                                     </label>
                                     &nbsp;
-                                    <input type="radio" name="field_9" value="1" @if($report['fields']['field_9'] == 1)   checked = "checked" @endif>
+                                    <input type="radio" name="field_9" value="1" @if(isset($report['fieldResponses']['field_9']) && $report['fieldResponses']['field_9'] == 1)   checked = "checked" @endif>
                                     <label class=" control-label">
                                         &nbsp;Yes
                                     </label>
@@ -191,12 +191,12 @@
                         <div class="form-group">
                            <label class=" control-label">MOD Schedule is in place and posted?</label>
                            <div>
-                                <input type="radio" name="field_13" value="0" @if($report['fields']['field_13'] == 0)   checked = "checked" @endif>
+                                <input type="radio" name="field_13" value="0" @if(isset($report['fieldResponses']['field_13']) && $report['fieldResponses']['field_13'] == 0)   checked = "checked" @endif>
                                 <label class=" control-label">
                                     &nbsp;No
                                 </label>
                                 &nbsp;
-                                <input type="radio" name="field_13" value="1" @if($report['fields']['field_13'] == 1)   checked = "checked" @endif>
+                                <input type="radio" name="field_13" value="1" @if(isset($report['fieldResponses']['field_13']) && $report['fieldResponses']['field_13'] == 1)   checked = "checked" @endif>
                                 <label class=" control-label">
                                     &nbsp;Yes
                                 </label>
@@ -205,12 +205,12 @@
                        <div class="form-group">
                                <label class=" control-label">MOD Show Me Steps are at 100%?</label>
                                <div>
-                                    <input type="radio" name="field_14" value="0" @if($report['fields']['field_14'] == 0)   checked = "checked" @endif>
+                                    <input type="radio" name="field_14" value="0" @if(isset($report['fieldResponses']['field_14']) &&  $report['fieldResponses']['field_14'] == 0)   checked = "checked" @endif>
                                     <label class=" control-label">
                                         &nbsp;No
                                     </label>
                                     &nbsp;
-                                    <input type="radio" name="field_14" value="1" @if($report['fields']['field_14'] == 1)   checked = "checked" @endif>
+                                    <input type="radio" name="field_14" value="1" @if(isset($report['fieldResponses']['field_14']) && $report['fieldResponses']['field_14'] == 1)   checked = "checked" @endif>
                                     <label class=" control-label">
                                         &nbsp;Yes
                                     </label>
@@ -282,12 +282,12 @@
                                <label class=" control-label">Is store using DOM Staffing Tool for scheduling? Determine packer/picking hours?</label>
 
                                <div>
-                                    <input type="radio" name="field_22" value="0" @if($report['fields']['field_22'] == 0)   checked = "checked" @endif>
+                                    <input type="radio" name="field_22" value="0" @if(isset($report['fieldResponses']['field_22']) && $report['fieldResponses']['field_22'] == 0)   checked = "checked" @endif>
                                     <label class=" control-label">
                                         &nbsp;No
                                     </label>
                                     &nbsp;
-                                    <input type="radio" name="field_22" value="1" @if($report['fields']['field_22'] == 1)   checked = "checked" @endif>
+                                    <input type="radio" name="field_22" value="1" @if(isset($report['fieldResponses']['field_22']) && $report['fieldResponses']['field_22'] == 1)   checked = "checked" @endif>
                                     <label class=" control-label">
                                         &nbsp;Yes
                                     </label>
@@ -297,12 +297,12 @@
                                <label class=" control-label">Has the store reviewed upcoming order forecast to assess supply needs?</label>
 
                                <div>
-                                    <input type="radio" name="field_23" value="0" @if($report['fields']['field_23'] == 0)   checked = "checked" @endif>
+                                    <input type="radio" name="field_23" value="0" @if(isset($report['fieldResponses']['field_23']) && $report['fieldResponses']['field_23'] == 0)   checked = "checked" @endif>
                                     <label class=" control-label">
                                         &nbsp;No
                                     </label>
                                     &nbsp;
-                                    <input type="radio" name="field_23" value="1" @if($report['fields']['field_23'] == 1)   checked = "checked" @endif>
+                                    <input type="radio" name="field_23" value="1" @if(isset($report['fieldResponses']['field_23']) && $report['fieldResponses']['field_23'] == 1)   checked = "checked" @endif>
                                     <label class=" control-label">
                                         &nbsp;Yes
                                     </label>
@@ -360,12 +360,12 @@
                                <label class=" control-label">Are thorough, accurate Self Audits being completed by SGM monthly?</label>
 
                                <div>
-                                    <input type="radio" name="field_29" value="0" @if($report['fields']['field_29'] == 0)   checked = "checked" @endif>
+                                    <input type="radio" name="field_29" value="0" @if(isset($report['fieldResponses']['field_29']) && $report['fieldResponses']['field_29'] == 0)   checked = "checked" @endif>
                                     <label class=" control-label">
                                         &nbsp;No
                                     </label>
                                     &nbsp;
-                                    <input type="radio" name="field_29" value="1" @if($report['fields']['field_29'] == 1)   checked = "checked" @endif>
+                                    <input type="radio" name="field_29" value="1" @if(isset($report['fieldResponses']['field_29']) && $report['fieldResponses']['field_29'] == 1)   checked = "checked" @endif>
                                     <label class=" control-label">
                                         &nbsp;Yes
                                     </label>
@@ -376,12 +376,12 @@
                                <label class=" control-label">Are thorough bag checks are being completed every night?</label>
 
                                <div>
-                                    <input type="radio" name="field_30" value="0" @if($report['fields']['field_30'] == 0)   checked = "checked" @endif>
+                                    <input type="radio" name="field_30" value="0" @if(isset($report['fieldResponses']['field_30']) && $report['fieldResponses']['field_30'] == 0)   checked = "checked" @endif>
                                     <label class=" control-label">
                                         &nbsp;No
                                     </label>
                                     &nbsp;
-                                    <input type="radio" name="field_30" value="1" @if($report['fields']['field_30'] == 1)   checked = "checked" @endif>
+                                    <input type="radio" name="field_30" value="1" @if(isset($report['fieldResponses']['field_30']) && $report['fieldResponses']['field_30'] == 1)   checked = "checked" @endif>
                                     <label class=" control-label">
                                         &nbsp;Yes
                                     </label>

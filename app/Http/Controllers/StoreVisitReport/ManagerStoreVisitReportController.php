@@ -66,7 +66,7 @@ class ManagerStoreVisitReportController extends Controller
     public function show($id)
     {
         $storeVisitReport = StoreVisitReportInstance::getReportById($id);
-        
+
         return view('manager.storevisitreport.view')->with('report', $storeVisitReport);
     }
 
@@ -78,7 +78,7 @@ class ManagerStoreVisitReportController extends Controller
      */
     public function edit($id)
     {
-        //editable version of the form until it is not submitted
+        
         $this->user_id = \Auth::user()->id;
         $storeInfo = StoreInfo::getStoreListingByManagerId($this->user_id);
         $storesByBanner = $storeInfo->groupBy('banner_id');
