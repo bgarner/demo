@@ -4,7 +4,7 @@ namespace App\Http\Controllers\StoreVisitReport;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\StoreVisitReport\StoreVisitReportInstance;
+use App\Models\StoreVisitReport\StoreVisitReport;
 use App\Models\StoreApi\StoreInfo;
 use App\Models\StoreApi\Banner;
 
@@ -18,7 +18,7 @@ class ManagerStoreVisitReportController extends Controller
     public function index()
     {
         
-        $reports = StoreVisitReportInstance::getReportsByManager();
+        $reports = StoreVisitReport::getReportsByManager();
 
         return view('manager.storevisitreport.index')->with('reports', $reports);
 
@@ -53,7 +53,7 @@ class ManagerStoreVisitReportController extends Controller
      */
     public function store(Request $request)
     {
-        $report = StoreVisitReportInstance::saveReport($request);
+        $report = StoreVisitReport::saveReport($request);
         return redirect()->action('StoreVisitReport\ManagerStoreVisitReportController@index');
         
     }
@@ -66,7 +66,7 @@ class ManagerStoreVisitReportController extends Controller
      */
     public function show($id)
     {
-        $storeVisitReport = StoreVisitReportInstance::getReportById($id);
+        $storeVisitReport = StoreVisitReport::getReportById($id);
 
         return view('manager.storevisitreport.view')->with('report', $storeVisitReport);
     }
@@ -80,7 +80,7 @@ class ManagerStoreVisitReportController extends Controller
     public function edit($id)
     {
         
-        $storeVisitReport = StoreVisitReportInstance::getReportById($id);
+        $storeVisitReport = StoreVisitReport::getReportById($id);
         if(!$storeVisitReport->is_draft){
             return redirect()->action('StoreVisitReport\ManagerStoreVisitReportController@index');   
         }
@@ -110,7 +110,7 @@ class ManagerStoreVisitReportController extends Controller
      */
     public function update(Request $request, $id)
     {
-        StoreVisitReportInstance::updateReport($id, $request);
+        StoreVisitReport::updateReport($id, $request);
 
         if($request->is_draft){
 

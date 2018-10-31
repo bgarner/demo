@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Gate;
 use App\Models\Auth\Group\GroupRole;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\Models\StoreVisitReport\StoreVisitReport;
+use App\Policies\StoreVisitReportPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -14,7 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
+        StoreVisitReport::class => StoreVisitReportPolicy::class,
     ];
 
     /**

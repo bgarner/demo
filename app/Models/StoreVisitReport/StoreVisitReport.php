@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use App\Models\Utility\Utility;
 
-class StoreVisitReportInstance extends Model
+class StoreVisitReport extends Model
 {
     protected $table = 'store_visit_report_instance';
     protected $fillable = ['store_number', 'dm_id', 'is_draft', 'submitted_at'];
@@ -14,7 +14,7 @@ class StoreVisitReportInstance extends Model
     public static function saveReport($request)
     {
     	$dm_id = \Auth::user()->id;
-    	$newStoreVisitReport = StoreVisitReportInstance::create([
+    	$newStoreVisitReport = StoreVisitReport::create([
     		'store_number' => $request->store_number,
     		'dm_id'        => $dm_id,
     		'is_draft'     => $request->is_draft,
@@ -33,7 +33,7 @@ class StoreVisitReportInstance extends Model
     public static function updateReport($id, $request)
     {
     	\Log::info($request);
-    	$storeVisitReport = StoreVisitReportInstance::find($id);
+    	$storeVisitReport = StoreVisitReport::find($id);
     	$storeVisitReport->update([
     		'store_number' => $request->store_number,
     		'is_draft' => $request->is_draft
@@ -52,7 +52,7 @@ class StoreVisitReportInstance extends Model
 
     public static function getReportById($id)
     {
-    	$report = StoreVisitReportInstance::find($id);
+    	$report = StoreVisitReport::find($id);
         if($report->submitted_at){
             $report->prettySubmitted = Utility::prettifyDateWithTime($report->submitted_at);
             $report->sinceSubmitted = Utility::getTimePastSinceDate($report->submitted_at);
@@ -92,7 +92,7 @@ class StoreVisitReportInstance extends Model
 
     public static function deleteReport($id)
     {
-        $report = StoreVisitReportInstance::find($id);
+        $report = StoreVisitReport::find($id);
         if($report->is_draft){
             StoreVisitReportResponse::where('report_instance_id', $id)->delete();
             $report->delete();

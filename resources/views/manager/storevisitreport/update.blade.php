@@ -568,8 +568,6 @@
 
     var description_fields = $("textarea");
 
-    console.log(description_fields);
-
     $(description_fields).each(function(){
         
         CKEDITOR.replace(this.name);
