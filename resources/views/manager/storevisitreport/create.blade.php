@@ -22,7 +22,20 @@
         <div class="row">
             <div class="col-lg-12">
                 
+
                 {{ Form::open(['action' => 'StoreVisitReport\ManagerStoreVisitReportController@store', 'method' => 'POST']) }}
+                
+                <div class="ibox">
+                    
+                    <div class="ibox-content">
+                        <div class="form-group">
+                                    <label class=" control-label">Store Number</label>
+                                    <div>
+                                        {!! Form::select('store_number', $stores, null, [ 'class'=>'chosen', 'id'=> 'storeSelect']) !!}
+                                    </div>
+                            </div>  
+                    </div>
+                </div>
                 <div class="ibox">
                     <div class="ibox-title">
                         <h2>TABLET SALES</h2>
@@ -32,14 +45,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="ibox-content">
-                        <div class="form-group">
-                                    <label class=" control-label">Store Number</label>
-                                    <div>
-                                        {!! Form::select('store_number', $stores, null, [ 'class'=>'chosen', 'id'=> 'storeSelect']) !!}
-                                    </div>
-                            </div>  
-                    </div>
+                    
                     <div class="ibox-content">
 
                             <div class="form-group">

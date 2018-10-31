@@ -9,23 +9,24 @@
 
 @section('content')
     
-    <div class="row wrapper border-bottom white-bg page-heading">
-
-        <div class="col-lg-8 col-md-8 col-sm-6 col-xs-6">
-            <h2>{{__("Store Visit Report")}}</h2>
-
-        </div>
-
-    </div>
+    
     <div class="wrapper wrapper-content  animated fadeInRight">
         <div class="row">
 
            <div class="col-lg-12 animated fadeInRight">
-               <!-- <div class="mail-box-header">
-                   <h2>
-                        Store Visit Reports
-                    </h2>
-                </div> -->
+               <div class="mail-box-header">
+                    <span class="pull-left">
+                        <h2>
+                            Store Visit Reports
+                        </h2>    
+                    </span>
+                   
+                    
+                    <span class="pull-right">
+                        <a href="/manager/storevisitreport/create" class="btn btn-primary btn"><i class="fa fa-plus"></i> New Report</a>
+                    </span>
+
+                </div>
                 <div class="mail-box">
                    <div class="row">
                        <div class="col-md-12">
@@ -56,7 +57,7 @@
                                                     <a href="storevisitreport/{{ $report->id }}/">Delete</a>
                                                 </td>
                                             @else
-                                                <td>{{$report->submitted_at}}</td>
+                                                <td>{{$report->prettySubmitted}}</td>
                                                 <td><a href="storevisitreport/{{ $report->id }}">View</a></td>
                                             @endif
                                        </tr>

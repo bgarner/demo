@@ -79,6 +79,11 @@ class ManagerStoreVisitReportController extends Controller
     public function edit($id)
     {
         
+        $storeVisitReport = StoreVisitReportInstance::getReportById($id);
+        if(!$storeVisitReport->is_draft){
+            return redirect()->action('StoreVisitReport\ManagerStoreVisitReportController@index');   
+        }
+
         $this->user_id = \Auth::user()->id;
         $storeInfo = StoreInfo::getStoreListingByManagerId($this->user_id);
         $storesByBanner = $storeInfo->groupBy('banner_id');
@@ -88,7 +93,7 @@ class ManagerStoreVisitReportController extends Controller
             $storeList[$store->store_number] = $store->store_id . " " . $store->name . " (" . $banner[$store->banner_id] .")" ;
         }
 
-        $storeVisitReport = StoreVisitReportInstance::getReportById($id);
+        
         return view('manager.storevisitreport.update')
                 ->with('report', $storeVisitReport)
                 ->with('stores', $storeList);
@@ -106,7 +111,13 @@ class ManagerStoreVisitReportController extends Controller
     {
         StoreVisitReportInstance::updateReport($id, $request);
 
-        return redirect()->action('StoreVisitReport\ManagerStoreVisitReportController@edit',  ['id' => $id]);
+        if($request->is_draft){
+
+            return redirect()->action('StoreVisitReport\ManagerStoreVisitReportController@edit',  ['id' => $id]);
+        }
+        else{
+            return redirect()->action('StoreVisitReport\ManagerStoreVisitReportController@index');   
+        }
     }
 
 

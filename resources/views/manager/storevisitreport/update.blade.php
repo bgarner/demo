@@ -28,14 +28,7 @@
                     'method' => 'PATCH']) !!}
                     
                 <div class="ibox">
-                    <div class="ibox-title">
-                        <h2>TABLET SALES</h2>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                        </div>
-                    </div>
+                    
                     <div class="ibox-content">
                         <div class="form-group">
                                     <label class=" control-label">Store Number</label>
@@ -43,6 +36,16 @@
                                         {!! Form::select('store_number', $stores, $report->store_number, [ 'class'=>'chosen', 'id'=> 'storeSelect']) !!}
                                     </div>
                             </div>  
+                    </div>
+                </div>
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h2>TABLET SALES</h2>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
                     </div>
                     <div class="ibox-content">
 

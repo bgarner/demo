@@ -70,7 +70,8 @@ class StoreVisitReportInstance extends Model
         $role = \Auth::user()->role;
 
         if($role == 'District Manager'){
-            $reports = Self::where('dm_id', $user_id)->get();
+            $reports = Self::where('dm_id', $user_id)
+                        ->get();
 
         }
         else if($role == 'AVP'){
@@ -80,7 +81,12 @@ class StoreVisitReportInstance extends Model
 
         }
 
-        return $reports;
+        return $reports->each(function($report){
+                            if($report->submitted_at){
+                                $report->prettySubmitted = Utility::prettifyDateWithTime($report->submitted_at);
+                                $report->sinceSubmitted = Utility::getTimePastSinceDate($report->submitted_at);
+                            }
+                        });
 
     }
 }
