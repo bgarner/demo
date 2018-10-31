@@ -53,7 +53,8 @@ class ManagerStoreVisitReportController extends Controller
      */
     public function store(Request $request)
     {
-        StoreVisitReportInstance::saveReport($request);
+        $report = StoreVisitReportInstance::saveReport($request);
+        return redirect()->action('StoreVisitReport\ManagerStoreVisitReportController@index');
         
     }
 
@@ -118,6 +119,21 @@ class ManagerStoreVisitReportController extends Controller
         else{
             return redirect()->action('StoreVisitReport\ManagerStoreVisitReportController@index');   
         }
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        
+        StoreVisitReport::deleteReport($id);
+        return;
+
     }
 
 

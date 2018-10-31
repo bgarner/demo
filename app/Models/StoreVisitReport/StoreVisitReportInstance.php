@@ -84,9 +84,20 @@ class StoreVisitReportInstance extends Model
         return $reports->each(function($report){
                             if($report->submitted_at){
                                 $report->prettySubmitted = Utility::prettifyDateWithTime($report->submitted_at);
-                                $report->sinceSubmitted = Utility::getTimePastSinceDate($report->submitted_at);
                             }
+                            $report->prettyUpdated = Utility::prettifyDateWithTime($report->updated_at);
                         });
 
+    }
+
+    public static function deleteReport($id)
+    {
+        $report = StoreVisitReportInstance::find($id);
+        if($report->is_draft){
+            StoreVisitReportResponse::where('report_instance_id', $id)->delete();
+            $report->delete();
+        }
+
+        return;
     }
 }

@@ -26,6 +26,9 @@
                         <a href="/manager/storevisitreport/create" class="btn btn-primary btn"><i class="fa fa-plus"></i> New Report</a>
                     </span>
 
+                    <br>
+                    <br>
+                    
                 </div>
                 <div class="mail-box">
                    <div class="row">
@@ -37,7 +40,7 @@
                                    <thead>
                                        <tr>
                                            <th>Store Number</th>
-                                           <th>Submitted At</th>
+                                           <th>Last Action On</th>
                                            <th></th>
                                            
                                        </tr>
@@ -51,14 +54,19 @@
                                             </td>
 
                                             @if($report->is_draft)
-                                                <td></td>
+                                                
+                                                <td data-order="{{$report->updated_at}}">
+                                                    <a href="storevisitreport/{{ $report->id }}/edit">Last Saved : {{$report->prettyUpdated}}</a>
+                                                </td>
                                                 <td>
-                                                    <a href="storevisitreport/{{ $report->id }}/edit">Edit</a>
-                                                    <a href="storevisitreport/{{ $report->id }}/">Delete</a>
+                                                    <a class="btn btn-danger" href="storevisitreport/{{ $report->id }}/">
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
                                                 </td>
                                             @else
-                                                <td>{{$report->prettySubmitted}}</td>
-                                                <td><a href="storevisitreport/{{ $report->id }}">View</a></td>
+                                                
+                                                <td data-order="{{$report->submitted_at}}"><a  href="storevisitreport/{{ $report->id }}">Submitted : {{$report->prettySubmitted}}</a></td>
+                                                <td></td>
                                             @endif
                                        </tr>
                                        @endforeach
@@ -85,8 +93,12 @@
 @endsection        
 
 @section('scripts')
-
-
+<script>
+$("table").dataTable({
+    "order": [[ 1, "desc" ]]
+});
+</script>
+<script src=""></script>
 
 
 @endsection
