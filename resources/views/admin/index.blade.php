@@ -107,7 +107,6 @@
     <script type="text/javascript" src="/js/custom/admin/analytics/videoReport.js"></script>
 
 
-
    	<!-- ChartJS-->
 	<script type="text/javascript" src="/js/plugins/chartJs/Chart.min.js"></script>
 
