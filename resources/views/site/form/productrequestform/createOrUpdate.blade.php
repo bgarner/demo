@@ -187,6 +187,7 @@
 		<script type="text/javascript" src="/js/vendor/bootstrap-datetimepicker.min.js"></script>
 		<script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
 		<script src="/js/custom/forms/ProductRequestForm.js"></script>
+		<script src="/js/custom/forms/ProductRequestFormOptions.js"></script>
 		<script src="/js/custom/forms/respondToQuestion.js"></script>
 
 

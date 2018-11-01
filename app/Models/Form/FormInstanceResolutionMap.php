@@ -84,4 +84,112 @@ class FormInstanceResolutionMap extends Model
         return ( $report );
         
     }
+
+    public static function getResolutionCodeCountByFilter($filters, $since = null)
+    {
+
+        
+        $department = '';
+        $category = '';
+        $subcategory = '';
+
+        if(isset($filters["department"])){
+            $department = $filters["department"];
+        }
+        if(isset($filters["category"])){
+            $category = $filters["category"];
+        }
+        if(isset($filters["subcategory"])){
+            $subcategory = $filters["subcategory"];
+        }
+        $report = [];
+
+        $report = FormData::leftJoin('form_instance_resolution_code_map', 'form_data.id', '=', 'form_instance_resolution_code_map.form_instance_id')
+            ->leftJoin('form_resolution_code', 'form_instance_resolution_code_map.resolution_code_id', '=', 'form_resolution_code.id')
+            ->when($since, function($query) use($since) {
+                return $query->where('form_instance_resolution_code_map.updated_at', '>=', $since);
+            }, function($query){
+                $query->where('form_instance_resolution_code_map.updated_at', '>=', Self::$launch_date);
+            })
+            ->when($department, function($query) use($department){
+                $query->where('form_data.json_form_data->department', $department);
+            })
+            ->when($category, function($query) use($category){
+                $query->where('form_data.json_form_data->category', $category);
+            })
+            ->when($subcategory, function($query) use($subcategory){
+                $query->where('form_data.json_form_data->subcategory', $subcategory);
+            })
+            ->select(\DB::raw(' form_resolution_code.resolution_code, 
+                count(form_instance_resolution_code_map.resolution_code_id) as count,
+                count(form_instance_resolution_code_map.resolution_code_id) as percentage
+                '))
+            ->groupBy('form_resolution_code.resolution_code')
+            ->get();
+        
+        $total = 0;
+        
+        foreach ($report as $data) {
+            $total += $data->count;
+        }
+        
+
+        foreach ($report as $key=>$resolution) {
+            $report[$key]['percentage'] = round(($resolution['count'] * 100)/ $total, 2);
+            $report[$key]['total'] = $total;
+        }
+
+        return ( $report );
+    }
+
+    public static function getResolutionDetailsByFilter($filters, $since= null)
+    {
+
+        $department = '';
+        $category = '';
+        $subcategory = '';
+
+        if(isset($filters["department"])){
+            $department = $filters["department"];
+        }
+        if(isset($filters["category"])){
+            $category = $filters["category"];
+        }
+        if(isset($filters["subcategory"])){
+            $subcategory = $filters["subcategory"];
+        }
+        $report = [];
+
+        $report = FormData::leftJoin('form_instance_resolution_code_map', 'form_data.id', '=', 'form_instance_resolution_code_map.form_instance_id')
+            ->leftJoin('form_resolution_code', 'form_instance_resolution_code_map.resolution_code_id', '=', 'form_resolution_code.id')
+            ->leftJoin('form_user_form_instance', 'form_data.id', '=', 'form_user_form_instance.form_instance_id')
+            ->leftJoin('users', 'form_user_form_instance.user_id', '=', 'users.id')
+            ->when($since, function($query) use($since) {
+                return $query->where('form_instance_resolution_code_map.updated_at', '>=', $since);
+            }, function($query){
+                $query->where('form_instance_resolution_code_map.updated_at', '>=', Self::$launch_date);
+            })
+            ->when($department, function($query) use($department){
+                $query->where('form_data.json_form_data->department', $department);
+            })
+            ->when($category, function($query) use($category){
+                $query->where('form_data.json_form_data->category', $category);
+            })
+            ->when($subcategory, function($query) use($subcategory){
+                $query->where('form_data.json_form_data->subcategory', $subcategory);
+            })
+            ->select('form_data.form_data', 'form_resolution_code.resolution_code', 'form_data.created_at as submitted_at', 'form_instance_resolution_code_map.updated_at as resolved_at', \DB::raw('CONCAT(users.firstname," ",users.lastname) AS closed_by') )
+            ->get()
+            ->each(function($form_data){
+                $unserialized_form_data = unserialize($form_data->form_data);
+                foreach ($unserialized_form_data as $key => $value) {
+                    $form_data->$key = $value;
+                }
+                unset($form_data->form_data);
+                unset($form_data->form_id);
+            });
+
+        return $report;
+    }
+
 }

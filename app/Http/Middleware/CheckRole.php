@@ -18,7 +18,6 @@ class CheckRole
         if ( !in_array($request->user()->role, $role) ) {
             return redirect()->to('/manager/dashboard');
         }
-
         return $next($request);
     }
 }
