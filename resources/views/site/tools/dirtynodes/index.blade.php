@@ -99,7 +99,7 @@
 
             </div>
             <div class="col-md-6">
-                <h3>Top 10 SKUs By Count</h3>
+                <h3>Top SKUs By Count</h3>
                 <table class="table table-striped">
                 <thead>
                     <tr>
@@ -118,10 +118,10 @@
                         <td>{{ $item->styledesc }}</td>
                         <td>{{ $item->color }}</td>
                         <td>{{ $item->sizename }}</td>
-                        <td>{{ $item->department }} <br /> {{ $item->sub_department }}</td>
+                        <td>{{ $item->department }} <br />&boxur; <div style="padding-left: 15px; position: relative; bottom: 15px;">{{ $item->sub_department }}</div></td>
                         <td>{{ $item->stylecode }}</td>
                         <td>{{ $item->upccode }}</td>
-                        <td>{{ $item->quantity }}</td>
+                        <td><strong>{{ $item->quantity }}</strong></td>
                     </tr>
 
                 @endforeach

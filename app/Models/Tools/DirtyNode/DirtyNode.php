@@ -66,7 +66,7 @@ class DirtyNode extends Model
         return DirtyNode::where('store', $store_number)
                 ->where('quantity', '>=', 3)
                 ->orderBy('quantity', 'DESC')
-                ->limit(10)
+                ->limit(5)
                 ->get();
     }
 
