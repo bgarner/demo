@@ -65,4 +65,13 @@ class UserResource extends Model
         }
         return $user->first();
     }
+
+    public static function getUserListByResourceList($resource_ids)
+    {
+        return Self::join('users', 'users.id', '=', 'user_resource.user_id')
+            ->whereIn('resource_id', $resource_ids)
+            ->select('users.id')
+            ->get()
+            ->toArray();
+    }
 }

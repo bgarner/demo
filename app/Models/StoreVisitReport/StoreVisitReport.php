@@ -5,6 +5,7 @@ namespace App\Models\StoreVisitReport;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use App\Models\Utility\Utility;
+use App\Models\StoreApi\RegionDistrict;
 
 class StoreVisitReport extends Model
 {
@@ -75,10 +76,14 @@ class StoreVisitReport extends Model
 
         }
         else if($role == 'AVP'){
-
+            
+            $dmList = Utility::getDmListForAvp($user_id);
+            $reports = Self::whereIn('dm_id', $dmList)
+                        ->where('is_draft', 0)
+                        ->get();
         }
         else if($role == 'Exec'){
-
+            $reports = Self::where('is_draft', 0)->get();
         }
 
         return $reports->each(function($report){

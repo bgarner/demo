@@ -31,17 +31,26 @@ class ManagerStoreVisitReportController extends Controller
      */
     public function create()
     {
-        $this->user_id = \Auth::user()->id;
-        $storeInfo = StoreInfo::getStoreListingByManagerId($this->user_id);
-        $storesByBanner = $storeInfo->groupBy('banner_id');
-        $banner = Banner::whereIn("id", $storesByBanner->keys())->get()->pluck("name", "id");
-        $storeList = [ '' => 'Select One' ];
-        foreach ($storeInfo as $store) {
-            $storeList[$store->store_number] = $store->store_id . " " . $store->name . " (" . $banner[$store->banner_id] .")" ;
-        }
+        
+        $user = \Auth::user();
+        if ($user->can('create', StoreVisitReport::class)) {
 
-        return view('manager.storevisitreport.create')
+        
+            $storeInfo = StoreInfo::getStoreListingByManagerId($user->id);
+            $storesByBanner = $storeInfo->groupBy('banner_id');
+            $banner = Banner::whereIn("id", $storesByBanner->keys())->get()->pluck("name", "id");
+            $storeList = [ '' => 'Select One' ];
+            foreach ($storeInfo as $store) {
+                $storeList[$store->store_number] = $store->store_id . " " . $store->name . " (" . $banner[$store->banner_id] .")" ;
+            }
+
+            return view('manager.storevisitreport.create')
                 ->with('stores', $storeList);
+        }
+        else{
+            \Log::info( "User " . $user->id . ' not authorized to create report');
+            return redirect()->action('StoreVisitReport\ManagerStoreVisitReportController@index');
+        }
 
     }
 
@@ -53,8 +62,15 @@ class ManagerStoreVisitReportController extends Controller
      */
     public function store(Request $request)
     {
-        $report = StoreVisitReport::saveReport($request);
-        return redirect()->action('StoreVisitReport\ManagerStoreVisitReportController@index');
+        $user = \Auth::user();
+        if ($user->can('store', StoreVisitReport::class)) {
+            $report = StoreVisitReport::saveReport($request);
+        }
+        else{
+            \Log::info( "User " . $user->id . ' not authorized to store report');
+        }
+        return redirect()->action('StoreVisitReport\ManagerStoreVisitReportController@index');    
+        
         
     }
 
@@ -66,9 +82,14 @@ class ManagerStoreVisitReportController extends Controller
      */
     public function show($id)
     {
+        $user = \Auth::user();
+        
         $storeVisitReport = StoreVisitReport::getReportById($id);
-
-        return view('manager.storevisitreport.view')->with('report', $storeVisitReport);
+        if(!$storeVisitReport->is_draft){
+            return view('manager.storevisitreport.view')->with('report', $storeVisitReport);    
+        }
+        return redirect()->action('StoreVisitReport\ManagerStoreVisitReportController@index');
+        
     }
 
     /**
@@ -79,25 +100,30 @@ class ManagerStoreVisitReportController extends Controller
      */
     public function edit($id)
     {
-        
-        $storeVisitReport = StoreVisitReport::getReportById($id);
-        if(!$storeVisitReport->is_draft){
-            return redirect()->action('StoreVisitReport\ManagerStoreVisitReportController@index');   
-        }
+        $user = \Auth::user();
 
-        $this->user_id = \Auth::user()->id;
-        $storeInfo = StoreInfo::getStoreListingByManagerId($this->user_id);
-        $storesByBanner = $storeInfo->groupBy('banner_id');
-        $banner = Banner::whereIn("id", $storesByBanner->keys())->get()->pluck("name", "id");
-        $storeList = [ '' => 'Select One'];
-        foreach ($storeInfo as $store) {
-            $storeList[$store->store_number] = $store->store_id . " " . $store->name . " (" . $banner[$store->banner_id] .")" ;
-        }
+        if ($user->can('edit', StoreVisitReport::find($id))) { // check the policy
 
-        
-        return view('manager.storevisitreport.update')
+            $storeVisitReport = StoreVisitReport::getReportById($id);
+
+            $storeInfo = StoreInfo::getStoreListingByManagerId($user->id);
+            $storesByBanner = $storeInfo->groupBy('banner_id');
+            $banner = Banner::whereIn("id", $storesByBanner->keys())->get()->pluck("name", "id");
+            $storeList = [ '' => 'Select One'];
+            foreach ($storeInfo as $store) {
+                $storeList[$store->store_number] = $store->store_id . " " . $store->name . " (" . $banner[$store->banner_id] .")" ;
+            }
+
+            
+            return view('manager.storevisitreport.update')
                 ->with('report', $storeVisitReport)
                 ->with('stores', $storeList);
+        }
+        else{
+            \Log::info( "User " . $user->id . ' not authorized to edit report ' . $id);
+            return redirect()->action('StoreVisitReport\ManagerStoreVisitReportController@index');
+        }
+
 
     }
 
@@ -110,15 +136,24 @@ class ManagerStoreVisitReportController extends Controller
      */
     public function update(Request $request, $id)
     {
-        StoreVisitReport::updateReport($id, $request);
+        
+        $user = \Auth::user();
+        if ($user->can('update', StoreVisitReport::find($id))) { 
+            StoreVisitReport::updateReport($id, $request);
 
-        if($request->is_draft){
-
-            return redirect()->action('StoreVisitReport\ManagerStoreVisitReportController@edit',  ['id' => $id]);
+            if($request->is_draft){
+                return redirect()->action('StoreVisitReport\ManagerStoreVisitReportController@edit',  ['id' => $id]);
+            }
+            else{
+                return redirect()->action('StoreVisitReport\ManagerStoreVisitReportController@index');   
+            }
         }
         else{
-            return redirect()->action('StoreVisitReport\ManagerStoreVisitReportController@index');   
+            \Log::info( "User " . $user->id . ' not authorized to update report ' . $id);
+            return redirect()->action('StoreVisitReport\ManagerStoreVisitReportController@index');     
         }
+        
+
     }
 
 
@@ -131,8 +166,16 @@ class ManagerStoreVisitReportController extends Controller
     public function destroy($id)
     {
         
-        StoreVisitReport::deleteReport($id);
-        return;
+        $user = \Auth::user();
+        if($user->can('delete', StoreVisitReport::find($id))){
+            StoreVisitReport::deleteReport($id);
+            return;    
+        }
+        else{
+            \Log::info( "User " . $user->id . ' not authorized to delete report ' . $id);
+            return;
+        }
+        
 
     }
 

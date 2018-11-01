@@ -59,7 +59,7 @@
                                                     <a href="storevisitreport/{{ $report->id }}/edit">Last Saved : {{$report->prettyUpdated}}</a>
                                                 </td>
                                                 <td>
-                                                    <a class="btn btn-danger" href="storevisitreport/{{ $report->id }}/">
+                                                    <a class="btn btn-danger delete-report" data-report-id="{{$report->id}}" id="report{{$report->id}}">
                                                         <i class="fa fa-trash"></i>
                                                     </a>
                                                 </td>
@@ -98,7 +98,7 @@ $("table").dataTable({
     "order": [[ 1, "desc" ]]
 });
 </script>
-<script src=""></script>
+<script type="text/javascript" src="/js/custom/manager/storevisitreport/deleteReport.js"></script>
 
 
 @endsection

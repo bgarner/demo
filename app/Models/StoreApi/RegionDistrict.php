@@ -21,5 +21,10 @@ class RegionDistrict extends Model
 			    	]);
 
     	return $pivot;
-    }    //
+    } 
+
+    public static function getDistrictIdByRegionId($regionId)
+    {
+        return Self::where('region_id', $regionId)->get()->pluck('district_id')->toArray();
+    }
 }

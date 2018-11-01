@@ -710,4 +710,20 @@ class Utility extends Model
         return $user;
     }
 
+    public static function getDmListForAvp($userId)
+    {
+        $regionResourceId = UserResource::getResourceIdByUserId($userId);
+        $regionId = Resource::find($regionResourceId)->resource_id;
+        $districtList = RegionDistrict::getDistrictIdByRegionId($regionId);
+
+        $districtResourcesList = Resource::where('resource_type_id', 2)
+                        ->whereIn('resource_id', $districtList)
+                        ->get()->pluck('id')->toArray();
+
+        $dmList = UserResource::whereIn('resource_id', $districtResourcesList)->get()->pluck('user_id')->toArray();
+
+
+        return $dmList;
+
+    }
 }
