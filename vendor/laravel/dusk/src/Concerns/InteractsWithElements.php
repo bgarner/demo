@@ -33,34 +33,6 @@ trait InteractsWithElements
     }
 
     /**
-     * Click the element at the given selector.
-     *
-     * @param  string  $selector
-     * @return $this
-     */
-    public function click($selector)
-    {
-        $this->resolver->findOrFail($selector)->click();
-
-        return $this;
-    }
-
-    /**
-     * Right click the element at the given selector.
-     *
-     * @param  string  $selector
-     * @return $this
-     */
-    public function rightClick($selector)
-    {
-        (new WebDriverActions($this->driver))->contextClick(
-            $this->resolver->findOrFail($selector)
-        )->perform();
-
-        return $this;
-    }
-
-    /**
      * Click the link with the given text.
      *
      * @param  string  $link
@@ -71,7 +43,7 @@ trait InteractsWithElements
     {
         $this->ensurejQueryIsAvailable();
 
-        $selector = addslashes(trim($this->resolver->format("{$element}:contains({$link})")));
+        $selector = addslashes(trim($this->resolver->format("{$element}:contains({$link}):visible")));
 
         $this->driver->executeScript("jQuery.find(\"{$selector}\")[0].click();");
 
@@ -210,13 +182,11 @@ trait InteractsWithElements
     {
         $element = $this->resolver->resolveForSelection($field);
 
-        $options = $element->findElements(WebDriverBy::tagName('option'));
+        $options = $element->findElements(WebDriverBy::cssSelector('option:not([disabled])'));
 
         if (is_null($value)) {
             $options[array_rand($options)]->click();
-        }
-
-        else {
+        } else {
             foreach ($options as $option) {
                 if ((string) $option->getAttribute('value') === (string) $value) {
                     $option->click();

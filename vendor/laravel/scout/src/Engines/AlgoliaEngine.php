@@ -55,7 +55,7 @@ class AlgoliaEngine extends Engine
                 return;
             }
 
-            return array_merge(['objectID' => $model->getKey()], $array);
+            return array_merge(['objectID' => $model->getScoutKey()], $array);
         })->filter()->values()->all());
     }
 
@@ -71,7 +71,7 @@ class AlgoliaEngine extends Engine
 
         $index->deleteObjects(
             $models->map(function ($model) {
-                return $model->getKey();
+                return $model->getScoutKey();
             })->values()->all()
         );
     }
@@ -159,29 +159,26 @@ class AlgoliaEngine extends Engine
     /**
      * Map the given results to instances of the given model.
      *
+     * @param  \Laravel\Scout\Builder  $builder
      * @param  mixed  $results
      * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function map($results, $model)
+    public function map(Builder $builder, $results, $model)
     {
         if (count($results['hits']) === 0) {
             return Collection::make();
         }
 
-        $builder = in_array(SoftDeletes::class, class_uses_recursive($model))
-                    ? $model->withTrashed() : $model->newQuery();
+        $models = $model->getScoutModelsByIds(
+            $builder, collect($results['hits'])->pluck('objectID')->values()->all()
+        )->keyBy(function ($model) {
+            return $model->getScoutKey();
+        });
 
-        $models = $builder->whereIn(
-            $model->getQualifiedKeyName(),
-            collect($results['hits'])->pluck('objectID')->values()->all()
-        )->get()->keyBy($model->getKeyName());
-
-        return Collection::make($results['hits'])->map(function ($hit) use ($model, $models) {
-            $key = $hit['objectID'];
-
-            if (isset($models[$key])) {
-                return $models[$key];
+        return Collection::make($results['hits'])->map(function ($hit) use ($models) {
+            if (isset($models[$hit['objectID']])) {
+                return $models[$hit['objectID']];
             }
         })->filter()->values();
     }
@@ -195,6 +192,19 @@ class AlgoliaEngine extends Engine
     public function getTotalCount($results)
     {
         return $results['nbHits'];
+    }
+
+    /**
+     * Flush all of the model's records from the engine.
+     *
+     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @return void
+     */
+    public function flush($model)
+    {
+        $index = $this->algolia->initIndex($model->searchableAs());
+
+        $index->clearIndex();
     }
 
     /**

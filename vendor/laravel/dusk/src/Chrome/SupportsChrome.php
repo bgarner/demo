@@ -2,10 +2,6 @@
 
 namespace Laravel\Dusk\Chrome;
 
-use RuntimeException;
-use Symfony\Component\Process\Process;
-use Symfony\Component\Process\ProcessBuilder;
-
 trait SupportsChrome
 {
     /**
@@ -25,14 +21,14 @@ trait SupportsChrome
     /**
      * Start the Chromedriver process.
      *
-     * @param  int  $port
-     * @throws \RuntimeException if the driver file path doesn't exist.
-     *
+     * @param  array  $arguments
      * @return void
+     *
+     * @throws \RuntimeException
      */
-    public static function startChromeDriver($port = null)
+    public static function startChromeDriver(array $arguments = [])
     {
-        static::$chromeProcess = static::buildChromeProcess($port);
+        static::$chromeProcess = static::buildChromeProcess($arguments);
 
         static::$chromeProcess->start();
 
@@ -56,15 +52,14 @@ trait SupportsChrome
     /**
      * Build the process to run the Chromedriver.
      *
-     * @param  int     $port
-     *
-     * @throws \RuntimeException if the driver file path doesn't exist.
-     *
+     * @param  array  $arguments
      * @return \Symfony\Component\Process\Process
+     *
+     * @throws \RuntimeException
      */
-    protected static function buildChromeProcess(int $port = null)
+    protected static function buildChromeProcess(array $arguments = [])
     {
-        return (new ChromeProcess(static::$chromeDriver, $port))->toProcess();
+        return (new ChromeProcess(static::$chromeDriver))->toProcess($arguments);
     }
 
     /**

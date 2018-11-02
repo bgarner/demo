@@ -19,11 +19,21 @@
             "name": "Patrik Karisch",
             "email": "patrik@karisch.guru",
             "homepage": "http://www.karisch.guru"
+        },
+        {
+            "name": "Romain Biard",
+            "email": "romain.biard@gmail.com",
+            "homepage": "https://www.strime.io/"
+        },
+        {
+            "name": "Jens Hausdorf",
+            "email": "hello@jens-hausdorf.de",
+            "homepage": "https://jens-hausdorf.de"
         }
     ],
     "require": {
         "php": "^5.3.9 || ^7.0",
-        "alchemy/binary-driver": "^1.5",
+        "alchemy/binary-driver": "^1.5 || ~2.0.0",
         "doctrine/cache": "^1.0",
         "evenement/evenement": "^2.0 || ^1.0",
         "neutron/temporary-filesystem": "^2.1.1"
@@ -34,7 +44,7 @@
     "require-dev": {
         "sami/sami": "~1.0",
         "silex/silex": "~1.0",
-        "phpunit/phpunit": "^4.8"
+        "phpunit/phpunit": "^4.8.36"
     },
     "autoload": {
         "psr-0": {
@@ -48,7 +58,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.6-dev"
+            "dev-master": "0.7-dev"
         }
     }
 }

@@ -5,7 +5,6 @@ namespace Laravel\Dusk\Chrome;
 use RuntimeException;
 use Illuminate\Support\Str;
 use Symfony\Component\Process\Process;
-use Symfony\Component\Process\ProcessBuilder;
 
 class ChromeProcess
 {
@@ -17,22 +16,13 @@ class ChromeProcess
     protected $driver;
 
     /**
-     * The port to run the Chromedriver on.
-     *
-     * @var int
-     */
-    protected $port;
-
-    /**
      * Create a new ChromeProcess instance.
      *
      * @param  string  $driver
-     * @param  int     $port
      * @return void
      */
-    public function __construct($driver = null, $port = 9515)
+    public function __construct($driver = null)
     {
-        $this->port = $port;
         $this->driver = $driver;
 
         if (! is_null($driver) && realpath($driver) === false) {
@@ -43,51 +33,39 @@ class ChromeProcess
     /**
      * Build the process to run Chromedriver.
      *
+     * @param  array  $arguments
      * @return \Symfony\Component\Process\Process
      */
-    public function toProcess()
+    public function toProcess(array $arguments = [])
     {
         if ($this->driver) {
-            return $this->fromProcessBuilder();
+            return $this->process($arguments);
         }
 
         if ($this->onWindows()) {
             $this->driver = realpath(__DIR__.'/../../bin/chromedriver-win.exe');
 
-            return $this->fromProcessBuilder();
+            return $this->process($arguments);
         }
 
         $this->driver = $this->onMac()
                         ? realpath(__DIR__.'/../../bin/chromedriver-mac')
                         : realpath(__DIR__.'/../../bin/chromedriver-linux');
 
-        return $this->process();
+        return $this->process($arguments);
     }
 
     /**
      * Build the Chromedriver with Symfony Process.
      *
+     * @param  array  $arguments
      * @return \Symfony\Component\Process\Process
      */
-    protected function process()
+    protected function process(array $arguments = [])
     {
         return (new Process(
-            [realpath($this->driver), " --port={$this->port}"], null, $this->chromeEnvironment()
+            array_merge([realpath($this->driver)], $arguments), null, $this->chromeEnvironment()
         ));
-    }
-
-    /**
-     * Build the Chrome process through Symfony ProcessBuilder component.
-     *
-     * @return \Symfony\Component\Process\Process
-     */
-    protected function fromProcessBuilder()
-    {
-        return (new ProcessBuilder)
-            ->setPrefix(realpath($this->driver))
-            ->add("--port={$this->port}")
-            ->getProcess()
-            ->setEnv($this->chromeEnvironment());
     }
 
     /**

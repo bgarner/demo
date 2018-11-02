@@ -4,6 +4,7 @@ namespace Laravel\Scout;
 
 use Laravel\Scout\Jobs\MakeSearchable;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection as BaseCollection;
 
 trait Searchable
@@ -84,15 +85,27 @@ trait Searchable
     }
 
     /**
+     * Determine if the model should be searchable.
+     *
+     * @return bool
+     */
+    public function shouldBeSearchable()
+    {
+        return true;
+    }
+
+    /**
      * Perform a search against the model's indexed data.
      *
      * @param  string  $query
      * @param  Closure  $callback
      * @return \Laravel\Scout\Builder
      */
-    public static function search($query, $callback = null)
+    public static function search($query = '', $callback = null)
     {
-        return new Builder(new static, $query, $callback);
+        return new Builder(
+            new static, $query, $callback, config('scout.soft_delete', false)
+        );
     }
 
     /**
@@ -134,9 +147,7 @@ trait Searchable
     {
         $self = new static();
 
-        $self->newQuery()
-            ->orderBy($self->getKeyName())
-            ->unsearchable();
+        $self->searchableUsing()->flush($self);
     }
 
     /**
@@ -147,6 +158,27 @@ trait Searchable
     public function unsearchable()
     {
         Collection::make([$this])->unsearchable();
+    }
+
+    /**
+     * Get the requested models from an array of object IDs;
+     *
+     * @param  \Laravel\Scout\Builder  $builder
+     * @param  array  $ids
+     * @return mixed
+     */
+    public function getScoutModelsByIds(Builder $builder, array $ids)
+    {
+        $query = in_array(SoftDeletes::class, class_uses_recursive($this))
+                        ? $this->withTrashed() : $this->newQuery();
+
+        if ($builder->queryCallback) {
+            call_user_func($builder->queryCallback, $query);
+        }
+
+        return $query->whereIn(
+            $this->getScoutKeyName(), $ids
+        )->get();
     }
 
     /**
@@ -229,7 +261,7 @@ trait Searchable
     /**
      * Get the queue that should be used with syncing
      *
-     * @return  string
+     * @return string
      */
     public function syncWithSearchUsingQueue()
     {
@@ -268,5 +300,25 @@ trait Searchable
         $this->scoutMetadata[$key] = $value;
 
         return $this;
+    }
+
+    /**
+     * Get the value used to index the model.
+     *
+     * @return mixed
+     */
+    public function getScoutKey()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Get the key name used to index the model.
+     *
+     * @return mixed
+     */
+    public function getScoutKeyName()
+    {
+        return $this->getQualifiedKeyName();
     }
 }

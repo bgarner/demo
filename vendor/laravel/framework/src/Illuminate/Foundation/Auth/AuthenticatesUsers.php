@@ -25,10 +25,11 @@ trait AuthenticatesUsers
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function login(Request $request)
     {
-
         $this->validateLogin($request);
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
@@ -57,6 +58,8 @@ trait AuthenticatesUsers
      *
      * @param  \Illuminate\Http\Request  $request
      * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
      */
     protected function validateLogin(Request $request)
     {
@@ -115,10 +118,7 @@ trait AuthenticatesUsers
      */
     protected function authenticated(Request $request, $user)
     {
-        $user->update([
-            'last_login' => Carbon::now()->toDateTimeString(),
-          //  'last_login_ip' => $request->getClientIp()
-        ]);
+        //
     }
 
     /**
@@ -127,7 +127,7 @@ trait AuthenticatesUsers
      * @param  \Illuminate\Http\Request  $request
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @throws ValidationException
+     * @throws \Illuminate\Validation\ValidationException
      */
     protected function sendFailedLoginResponse(Request $request)
     {
@@ -158,7 +158,18 @@ trait AuthenticatesUsers
 
         $request->session()->invalidate();
 
-        return redirect('/');
+        return $this->loggedOut($request) ?: redirect('/');
+    }
+
+    /**
+     * The user has logged out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return mixed
+     */
+    protected function loggedOut(Request $request)
+    {
+        //
     }
 
     /**

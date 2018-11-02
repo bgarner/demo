@@ -5,6 +5,7 @@ namespace Laravel\Dusk;
 use Closure;
 use BadMethodCallException;
 use Illuminate\Support\Str;
+use Facebook\WebDriver\WebDriverPoint;
 use Illuminate\Support\Traits\Macroable;
 use Facebook\WebDriver\WebDriverDimension;
 use Facebook\WebDriver\Remote\WebDriverBrowserType;
@@ -17,6 +18,7 @@ class Browser
         Concerns\InteractsWithJavascript,
         Concerns\InteractsWithMouse,
         Concerns\MakesAssertions,
+        Concerns\MakesUrlAssertions,
         Concerns\WaitsForElements,
         Macroable {
             __call as macroCall;
@@ -50,7 +52,6 @@ class Browser
      */
     public static $supportsRemoteLogs = [
         WebDriverBrowserType::CHROME,
-        WebDriverBrowserType::SAFARI,
         WebDriverBrowserType::PHANTOMJS,
     ];
 
@@ -113,7 +114,7 @@ class Browser
     /**
      * Browse to the given URL.
      *
-     * @param  string  $url
+     * @param  string|Page  $url
      * @return $this
      */
     public function visit($url)
@@ -233,6 +234,22 @@ class Browser
     }
 
     /**
+     * Move the browser window.
+     *
+     * @param  int  $x
+     * @param  int  $y
+     * @return $this
+     */
+    public function move($x, $y)
+    {
+        $this->driver->manage()->window()->setPosition(
+            new WebDriverPoint($x, $y)
+        );
+
+        return $this;
+    }
+
+    /**
      * Take a screenshot and store it with the given name.
      *
      * @param  string  $name
@@ -265,6 +282,24 @@ class Browser
                 );
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * Switch to a specified frame in the browser and execute the given callback.
+     *
+     * @param  string  $selector
+     * @param  \Closure  $callback
+     * @return $this
+     */
+    public function withinFrame($selector, Closure $callback)
+    {
+        $this->driver->switchTo()->frame($this->resolver->findOrFail($selector));
+
+        $callback($this);
+
+        $this->driver->switchTo()->defaultContent();
 
         return $this;
     }
@@ -307,6 +342,13 @@ class Browser
         return $this;
     }
 
+    /**
+     * Set the current component state.
+     *
+     * @param  \Laravel\Dusk\Component  $component
+     * @param  \Laravel\Dusk\ElementResolver  $parentResolver
+     * @return void
+     */
     public function onComponent($component, $parentResolver)
     {
         $this->component = $component;
