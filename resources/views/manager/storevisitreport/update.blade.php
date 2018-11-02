@@ -542,7 +542,7 @@
                     <div class=" col-sm-offset-2">
                         <input type="text" hidden name="is_draft" value="1">
                         <a class="btn btn-white" href="/manager/storevisitreport"><i class="fa fa-close"></i> Cancel</a>
-                        <button type="submit" class="btn btn-primary store-visit-submit"><i class="fa fa-check"></i> Submit Report</button>
+                        <button type="submit" class="btn btn-primary" id="store-visit-submit"><i class="fa fa-check"></i> Submit Report</button>
                     </div>
                 </div>
 				{!! Form::close() !!}
@@ -561,24 +561,47 @@
     <script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
     <script>
 
-    $(".chosen").chosen({
-        width:'100%'
-    });
-
-
-    var description_fields = $("textarea");
-
-    $(description_fields).each(function(){
-        
-        CKEDITOR.replace(this.name);
-    })
-
     $(document).ready(function(){
-        $(".store-visit-submit").click(function(){
-            $("input[name=is_draft]").val(0);
+
+        $(".chosen").chosen({
+            width:'100%'
         });
 
+        var description_fields = $("textarea");
+
+        $(description_fields).each(function(){
+            
+            CKEDITOR.replace(this.name);
+        })
+
     })
+
+    $('#store-visit-submit').click(function(e){        
+        e.preventDefault();
+        swal({
+            title: "Are you sure you want to submit?",
+            text: "You will not be able to edit the report!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, submit it!",
+            closeOnConfirm: true,
+            closeOnCancel: true
+        }, function (isConfirm) {
+            
+            if (isConfirm) {
+                console.log(isConfirm);
+                $("input[name=is_draft]").val(0);
+                $("form").submit();
+                return true;
+            } else {
+                return false;
+            }
+            
+        });
+        
+    });
+
 
     
 

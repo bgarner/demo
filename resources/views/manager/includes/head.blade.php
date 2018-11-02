@@ -41,6 +41,9 @@
         border-color: green;
         color: #ffffff;
     }
+    .mail-box{
+        padding: 10px;
+    }
     </style>
     <script>
 

@@ -66,6 +66,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(RemoveRedundantTagsSeeder::class); 
 
         $this->call(StoreVisitReportFieldTableSeeder::class);
+        $this->call(UpdateStoreComponentsTableSeeder_V2::class);
         
     }
 }

@@ -144,3 +144,7 @@ Route::post('/setLanguage', 'Locale\LocaleController@setLanguage');
 // });
 
 Route::get('/{storeno}/notification', 'Notification\NotificationController@index');
+
+
+Route::get('/{storeno}/storevisitreport', 'StoreVisitReport\StoreVisitReportController@index');
+Route::get('/{storeno}/storevisitreport/{id}', 'StoreVisitReport\StoreVisitReportController@show');

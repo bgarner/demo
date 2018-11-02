@@ -22,7 +22,7 @@ class StoreVisitReport extends Model
     	]);
 
     	if(!$request->is_draft){
-    		$storeVisitReport->update([
+    		$newStoreVisitReport->update([
     			'submitted_at' => Carbon::now()->toDateTimeString()
     		]);
     	}
@@ -104,5 +104,18 @@ class StoreVisitReport extends Model
         }
 
         return;
+    }
+
+    public static function getReportsByStoreNumber($storeNumber)
+    {
+        return Self::where('store_number', $storeNumber)
+            ->where('is_draft', 0)
+            ->get()
+            ->each(function($report){
+                if($report->submitted_at){
+                    $report->prettySubmitted = Utility::prettifyDateWithTime($report->submitted_at);
+                }
+                $report->prettyUpdated = Utility::prettifyDateWithTime($report->updated_at);
+            });
     }
 }

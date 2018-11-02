@@ -44,7 +44,7 @@
                                            <th></th>
                                            
                                        </tr>
-                                   <thead>
+                                   </thead>
 
                                    <tbody>
                                        @foreach($reports as $report)
