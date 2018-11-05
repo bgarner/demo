@@ -4,6 +4,11 @@
 
 @section('style')
     <link rel="stylesheet" type="text/css" href="/css/plugins/chosen/chosen.css">
+    <style>
+    .sweet-alert p {
+        color: #a91f1f !important;
+    }
+    </style>
 
 @endsection
 

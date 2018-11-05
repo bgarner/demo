@@ -28,12 +28,11 @@ var getEmptyFields = function(){
     textFields.each(function(index, value){
         var textData = CKEDITOR.instances[this.name].getData();
         if(textData == ''){
-            console.log(this.name);
             emptyFields += $(this).closest('.form-group').find('label').html() + "\n";
         }
     })
 
-    // console.log( CKEDITOR.instances['field_4'].getData());
+
     
     if($("input[name='field_3']:checked").val() == undefined){
         emptyFields += $("input[name='field_3']").closest('.form-group').find('label').html() + "\n";
@@ -73,15 +72,14 @@ var getEmptyFields = function(){
 $('#store-visit-submit').click(function(e){        
     e.preventDefault();
     var storeNumber = $("#storeSelect").val();
-    // if(storeNumber == '') {
-    //     swal("Oops!", "Store Number cannot be empty", "error"); 
-    //     $(window).scrollTop(0);
-    //     return false;
-    // }
+    if(storeNumber == '') {
+        swal("Oops!", "Store Number cannot be empty", "error"); 
+        $(window).scrollTop(0);
+        return false;
+    }
     var emptyFields = getEmptyFields();
     var text = "You will not be able to edit the report!";
 
-        
     if(emptyFields.length > 1){
 
         text += "\nThe following fields are still empty : \n" + emptyFields;
@@ -96,7 +94,8 @@ $('#store-visit-submit').click(function(e){
         confirmButtonColor: "#DD6B55",
         confirmButtonText: "Yes, submit it!",
         closeOnConfirm: true,
-        closeOnCancel: true
+        closeOnCancel: true,
+        closeOnClickOutside: true,
     }, function (isConfirm) {
         
         if (isConfirm) {

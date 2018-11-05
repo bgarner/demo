@@ -40,7 +40,7 @@
                                    <thead>
                                        <tr>
                                            <th>Store Number</th>
-                                           <th>Last Action On</th>
+                                           <th>Last Action</th>
                                            <th></th>
                                            
                                        </tr>
