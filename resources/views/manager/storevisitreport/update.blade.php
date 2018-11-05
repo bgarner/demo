@@ -50,19 +50,19 @@
                     <div class="ibox-content">
 
                         <div class="form-group">
-                                <label class=" control-label">Last Week's Tablet Sales Result:</label>
+                                <label class=" control-label">{{$report->fields['field_1']}}</label>
                                 <div>
-                                    <input type="number" class="form-control" name="field_1" value="{{$report->fieldResponses['field_1']}}" >
+                                    <input type="number" class="form-control form-field" name="field_1" value="{{$report->fieldResponses['field_1']}}" >
                                 </div>
                         </div>                                     
                         <div class="form-group">
-                                <label class=" control-label">6Wk Trend Tablet Sales Result:</label>
+                                <label class=" control-label">{{$report->fields['field_2']}}</label>
                                 <div>
-                                    <input type="number" class="form-control" name="field_2" value="{{$report->fieldResponses['field_2']}}">
+                                    <input type="number" class="form-control form-field" name="field_2" value="{{$report->fieldResponses['field_2']}}">
                                 </div>
                         </div>                                      
                         <div class="form-group">
-                                <label class=" control-label">Are PDTs and Tablets in use in each dept?</label>
+                                <label class=" control-label">{{$report->fields['field_3']}}</label>
                                 <div>
                                     <input type="radio" name="field_3" value="0" @if(isset($report['fieldResponses']['field_3']) && $report['fieldResponses']['field_3'] == 0)   checked = "checked" @endif>
                                     <label class=" control-label">
@@ -76,22 +76,22 @@
                                 </div>
                         </div>                                      
                         <div class="form-group">
-                                <label class=" control-label">Validate staff understanding and coach Winning Habits. Provide findings and coaching notes:</label>
+                                <label class=" control-label">{{$report->fields['field_4']}}</label>
                                 <div>
                                     
-                                    <textarea id="" cols="30" rows="10" name="field_4" >{!! $report->fieldResponses['field_4'] !!}</textarea> 
+                                    <textarea id="" cols="30" rows="10" name="field_4" class="form-field" >{!! $report->fieldResponses['field_4'] !!}</textarea> 
                                 </div>
                         </div>                                      
                         <div class="form-group">
-                                <label class=" control-label">How is Tablet Sales being coached / communicated on a daily basis?</label>
+                                <label class=" control-label">{{$report->fields['field_5']}}</label>
                                 <div>
-                                    <textarea id="" cols="30" rows="10" name="field_5" >{!! $report->fieldResponses['field_5']!!}</textarea>
+                                    <textarea id="" cols="30" rows="10" name="field_5" class="form-field">{!! $report->fieldResponses['field_5']!!}</textarea>
                                 </div>
                         </div>                                      
                         <div class="form-group">
-                                <label class=" control-label">IMPROVEMENT PLAN</label>
+                                <label class=" control-label">{{$report->fields['field_6']}}</label>
                                 <div>
-                                    <textarea id="" cols="30" rows="10" name="field_6" >{!! $report->fieldResponses['field_6'] !!}</textarea>
+                                    <textarea id="" cols="30" rows="10" name="field_6" class="form-field">{!! $report->fieldResponses['field_6'] !!}</textarea>
                                 </div>
                         </div>
 
@@ -114,7 +114,7 @@
                     </div>
                     <div class="ibox-content">             
                         <div class="form-group">
-                           <label class=" control-label">Reviewed hiring needs and open postings:</label>
+                           <label class=" control-label">{{$report->fields['field_7']}}</label>
 
                            <div>
                                 <input type="radio" name="field_7" value="0" @if(isset($report['fieldResponses']['field_7']) && $report['fieldResponses']['field_7'] == 0)   checked = "checked" @endif>
@@ -129,7 +129,7 @@
                             </div>
                        </div>                                     
                        <div class="form-group">
-                               <label class=" control-label">Are schedules being posted 3 weeks out?</label>
+                               <label class=" control-label">{{$report->fields['field_8']}}</label>
                                <div>
                                     <input type="radio" name="field_8" value="0" @if(isset($report['fieldResponses']['field_8']) && $report['fieldResponses']['field_8'] == 0)   checked = "checked" @endif>
                                     <label class=" control-label">
@@ -143,7 +143,7 @@
                                 </div>
                        </div>                                      
                        <div class="form-group">
-                            <label class=" control-label">Is Autofill being used weekly:</label>
+                            <label class=" control-label">{{$report->fields['field_9']}}</label>
 
                             <div>
                                 <input type="radio" name="field_9" value="0" @if(isset($report['fieldResponses']['field_9']) && $report['fieldResponses']['field_9'] == 0)   checked = "checked" @endif>
@@ -158,22 +158,22 @@
                             </div>
                        </div>                                      
                        <div class="form-group">
-                            <label class=" control-label">Validate that the management schedule aligns with business needs. Provide findings and coaching notes:</label>
+                            <label class=" control-label">{{$report->fields['field_10']}}</label>
                             <div>
                                
-                                <textarea id="" cols="30" rows="10" name="field_10" >{!! $report->fieldResponses['field_10'] !!}</textarea> 
+                                <textarea id="" cols="30" rows="10" name="field_10" class="form-field" >{!! $report->fieldResponses['field_10'] !!}</textarea> 
                             </div>
                        </div>                                      
                        <div class="form-group">
-                            <label class=" control-label">Validate that staff schedule aligns with business needs. Provide findings and coaching notes:</label>
+                            <label class=" control-label">{{$report->fields['field_11']}}</label>
                             <div>
-                                <textarea id="" cols="30" rows="10" name="field_11" >{!!$report->fieldResponses['field_11']!!}</textarea>
+                                <textarea id="" cols="30" rows="10" name="field_11" class="form-field">{!!$report->fieldResponses['field_11']!!}</textarea>
                             </div>
                        </div>                                      
                        <div class="form-group">
-                            <label class=" control-label">IMPROVEMENT PLAN</label>
+                            <label class=" control-label">{{$report->fields['field_12']}}</label>
                             <div>
-                                <textarea id="" cols="30" rows="10" name="field_12">{!! $report->fieldResponses['field_12'] !!}</textarea>
+                                <textarea id="" cols="30" rows="10" name="field_12" class="form-field">{!! $report->fieldResponses['field_12'] !!}</textarea>
                             </div>
                        </div>                                      
 						<div class="">
@@ -196,7 +196,7 @@
                     </div>
                     <div class="ibox-content">             
                         <div class="form-group">
-                           <label class=" control-label">MOD Schedule is in place and posted?</label>
+                           <label class=" control-label">{{$report->fields['field_13']}}</label>
                            <div>
                                 <input type="radio" name="field_13" value="0" @if(isset($report['fieldResponses']['field_13']) && $report['fieldResponses']['field_13'] == 0)   checked = "checked" @endif>
                                 <label class=" control-label">
@@ -210,7 +210,7 @@
                             </div>
                        </div>                                     
                        <div class="form-group">
-                            <label class=" control-label">MOD Show Me Steps are at 100%?</label>
+                            <label class=" control-label">{{$report->fields['field_14']}}</label>
                             <div>
                                 <input type="radio" name="field_14" value="0" @if(isset($report['fieldResponses']['field_14']) &&  $report['fieldResponses']['field_14'] == 0)   checked = "checked" @endif>
                                 <label class=" control-label">
@@ -224,22 +224,22 @@
                             </div>
                        </div>                                      
                        <div class="form-group">
-                            <label class=" control-label">Validate management understanding and coach Winning Habits. Provide findings and coaching notes:</label>
+                            <label class=" control-label">{{$report->fields['field_15']}}</label>
                             <div>
                                    
-                                <textarea id="" cols="30" rows="10" name="field_15"> {!!$report->fieldResponses['field_15']!!} </textarea> 
+                                <textarea id="" cols="30" rows="10" name="field_15" class="form-field"> {!!$report->fieldResponses['field_15']!!} </textarea> 
                             </div>
                        </div>                                      
                        <div class="form-group">
-                            <label class=" control-label">How well is this executed in store? Is it effective, making an impact? Provide findings, coaching notes:</label>
+                            <label class=" control-label">{{$report->fields['field_16']}}</label>
                             <div>
-                                <textarea id="" cols="30" rows="10" name="field_16">{!!$report->fieldResponses['field_16']!!}</textarea>
+                                <textarea id="" cols="30" rows="10" name="field_16" class="form-field">{!!$report->fieldResponses['field_16']!!}</textarea>
                             </div>
                        </div>                                      
                        <div class="form-group">
-                            <label class=" control-label">IMPROVEMENT PLAN</label>
+                            <label class=" control-label">{{$report->fields['field_17']}}</label>
                             <div>
-                                <textarea id="" cols="30" rows="10" name="field_17">
+                                <textarea id="" cols="30" rows="10" name="field_17" class="form-field">
                                        {!!$report->fieldResponses['field_17']!!}
                                 </textarea>
                             </div>
@@ -264,31 +264,31 @@
                     </div>
                     <div class="ibox-content">             
                         <div class="form-group">
-                           <label class=" control-label">Last Week's Aged Orders %:</label>
+                           <label class=" control-label">{{$report->fields['field_18']}}</label>
                            <div>
-                               <input type="number" class="form-control" name="field_18" value="{{$report->fieldResponses['field_18']}}">
+                               <input type="number" class="form-control form-field" name="field_18" value="{{$report->fieldResponses['field_18']}}">
                            </div>
                        </div>                                     
                        <div class="form-group">
-                            <label class=" control-label">6Wk Trend Aged Orders %:</label>
+                            <label class=" control-label">{{$report->fields['field_19']}}</label>
                             <div>
-                                <input type="number" class="form-control" name="field_19" value="{{$report->fieldResponses['field_19']}}">
+                                <input type="number" class="form-control form-field" name="field_19" value="{{$report->fieldResponses['field_19']}}">
                             </div>
                        </div> 
                        <div class="form-group">
-                            <label class=" control-label">Last Week's Dirty Node %:</label>
+                            <label class=" control-label">{{$report->fields['field_20']}}</label>
                             <div>
-                                <input type="number" class="form-control" name="field_20" value="{{$report->fieldResponses['field_20']}}">
+                                <input type="number" class="form-control form-field" name="field_20" value="{{$report->fieldResponses['field_20']}}">
                             </div>
                        </div> 
                        <div class="form-group">
-                            <label class=" control-label">6Wk Trend Dirty Node %:</label>
+                            <label class=" control-label">{{$report->fields['field_21']}}</label>
                             <div>
-                                <input type="number" class="form-control" name="field_21" value="{{$report->fieldResponses['field_21']}}">
+                                <input type="number" class="form-control form-field" name="field_21" value="{{$report->fieldResponses['field_21']}}">
                             </div>
                        </div> 
                        <div class="form-group">
-                            <label class=" control-label">Is store using DOM Staffing Tool for scheduling? Determine packer/picking hours?</label>
+                            <label class=" control-label">{{$report->fields['field_22']}}</label>
 
                             <div>
                                 <input type="radio" name="field_22" value="0" @if(isset($report['fieldResponses']['field_22']) && $report['fieldResponses']['field_22'] == 0)   checked = "checked" @endif>
@@ -303,7 +303,7 @@
                             </div>
                        </div> 
                        <div class="form-group">
-                            <label class=" control-label">Has the store reviewed upcoming order forecast to assess supply needs?</label>
+                            <label class=" control-label">{{$report->fields['field_23']}}</label>
 
                             <div>
                                 <input type="radio" name="field_23" value="0" @if(isset($report['fieldResponses']['field_23']) && $report['fieldResponses']['field_23'] == 0)   checked = "checked" @endif>
@@ -318,22 +318,22 @@
                             </div>
                        </div>                                      
                        <div class="form-group">
-                            <label class=" control-label">Validate dirty nodes list on portal and weekly use of dirty node scanning app. Provide findings, notes:</label>
+                            <label class=" control-label">{{$report->fields['field_24']}}</label>
                             <div>
                                    
-                                <textarea id="" cols="30" rows="10" name="field_24">{!!$report->fieldResponses['field_24']!!}</textarea> 
+                                <textarea id="" cols="30" rows="10" name="field_24" class="form-field">{!!$report->fieldResponses['field_24']!!}</textarea> 
                             </div>
                        </div>                                      
                        <div class="form-group">
-                            <label class=" control-label">Validate that Stock Locator setup is underway or in place (where applicable). Provide findings, notes:</label>
+                            <label class=" control-label">{{$report->fields['field_25']}}</label>
                             <div>
-                                <textarea id="" cols="30" rows="10" name="field_25">{!!$report->fieldResponses['field_25']!!}</textarea>
+                                <textarea id="" cols="30" rows="10" name="field_25" class="form-field">{!!$report->fieldResponses['field_25']!!}</textarea>
                             </div>
                        </div>                                      
                        <div class="form-group">
-                            <label class=" control-label">IMPROVEMENT PLAN</label>
+                            <label class=" control-label">I{{$report->fields['field_26']}}</label>
                             <div>
-                                <textarea id="" cols="30" rows="10" name="field_26">{!!$report->fieldResponses['field_26']!!}</textarea>
+                                <textarea id="" cols="30" rows="10" name="field_26" class="form-field">{!!$report->fieldResponses['field_26']!!}</textarea>
                             </div>
                        </div>                                      
 						<div class="">
@@ -356,19 +356,19 @@
                     </div>
                     <div class="ibox-content">             
                         <div class="form-group">
-                           <label class=" control-label">Last Month's Self Audit %:</label>
+                           <label class=" control-label">{{$report->fields['field_27']}}</label>
                            <div>
-                               <input type="number" class="form-control" name="field_27" value="{{$report->fieldResponses['field_27']}}">
+                               <input type="number" class="form-control form-field" name="field_27" value="{{$report->fieldResponses['field_27']}}">
                            </div>
                        </div>                                     
                        <div class="form-group">
-                               <label class=" control-label">Last Official Full Store Audit %</label>
+                               <label class=" control-label">{{$report->fields['field_28']}}</label>
                                <div>
-                                   <input type="number" class="form-control" name="field_28" value="{{$report->fieldResponses['field_28']}}">
+                                   <input type="number" class="form-control form-field" name="field_28" value="{{$report->fieldResponses['field_28']}}">
                                </div>
                        </div> 
                        <div class="form-group">
-                           <label class=" control-label">Are thorough, accurate Self Audits being completed by SGM monthly?</label>
+                           <label class=" control-label">{{$report->fields['field_29']}}</label>
 
                            <div>
                                 <input type="radio" name="field_29" value="0" @if(isset($report['fieldResponses']['field_29']) && $report['fieldResponses']['field_29'] == 0)   checked = "checked" @endif>
@@ -384,7 +384,7 @@
 
                        </div> 
                        <div class="form-group">
-                           <label class=" control-label">Are thorough bag checks are being completed every night?</label>
+                           <label class=" control-label">{{$report->fields['field_30']}}</label>
 
                            <div>
                                 <input type="radio" name="field_30" value="0" @if(isset($report['fieldResponses']['field_30']) && $report['fieldResponses']['field_30'] == 0)   checked = "checked" @endif>
@@ -400,17 +400,17 @@
                        </div> 
                        
                        <div class="form-group">
-                           <label class=" control-label">Audit 5 new hire employee files for ALL necessary forms, signatures, etc. Provide findings, notes:</label>
+                           <label class=" control-label">{{$report->fields['field_31']}}</label>
                            <div>
                                
-                               <textarea id="" cols="30" rows="10" name="field_31">{!!$report->fieldResponses['field_31']!!}</textarea> 
+                               <textarea id="" cols="30" rows="10" name="field_31" class="form-field">{!!$report->fieldResponses['field_31']!!}</textarea> 
                            </div>
                        </div>                                      
                        
                        <div class="form-group">
-                           <label class=" control-label">IMPROVEMENT PLAN</label>
+                           <label class=" control-label">{{$report->fields['field_32']}}</label>
                            <div>
-                               <textarea id="" cols="30" rows="10" name="field_32">
+                               <textarea id="" cols="30" rows="10" name="field_32" class="form-field">
                                    {!!$report->fieldResponses['field_32']!!}
                                </textarea>
                            </div>
@@ -436,17 +436,17 @@
                     <div class="ibox-content">             
                        
                        <div class="form-group">
-                            <label class=" control-label">Validate the following where applicable: Category Store Setup, Helly Shops, Woods Shops, Gym Bag fixture, Holiday Impulse Lanes, Sports Nutrition. Provide findings and notes:</label>
+                            <label class=" control-label">{{$report->fields['field_33']}}</label>
                             <div>
                                    
-                                <textarea id="" cols="30" rows="10" name="field_33">{!!$report->fieldResponses['field_33']!!}</textarea> 
+                                <textarea id="" cols="30" rows="10" name="field_33" class="form-field">{!!$report->fieldResponses['field_33']!!}</textarea> 
                             </div>
                        </div>                                      
                        
                        <div class="form-group">
-                            <label class=" control-label">IMPROVEMENT PLAN on INVENTORY INTENSITY</label>
+                            <label class=" control-label">{{$report->fields['field_34']}}</label>
                             <div>
-                                <textarea id="" cols="30" rows="10" name="field_34">{!!$report->fieldResponses['field_34']!!}</textarea>
+                                <textarea id="" cols="30" rows="10" name="field_34" class="form-field">{!!$report->fieldResponses['field_34']!!}</textarea>
                             </div>
                        </div>                                      
 
@@ -470,9 +470,9 @@
                     <div class="ibox-content">             
                        
                        <div class="form-group">
-                            <label class=" control-label">IMPROVEMENT PLAN</label>
+                            <label class=" control-label">{{$report->fields['field_35']}}</label>
                             <div>
-                                <textarea id="" cols="30" rows="10" name="field_35">{!!$report->fieldResponses['field_35']!!}</textarea>
+                                <textarea id="" cols="30" rows="10" name="field_35" class="form-field">{!!$report->fieldResponses['field_35']!!}</textarea>
                             </div>
                        </div>                                      
 						<div class="">
@@ -496,9 +496,9 @@
                     <div class="ibox-content">             
                        
                        <div class="form-group">
-                            <label class=" control-label">IMPROVEMENT PLAN</label>
+                            <label class=" control-label">{{$report->fields['field_36']}}</label>
                             <div>
-                                <textarea id="" cols="30" rows="10" name="field_36">{!!$report->fieldResponses['field_36']!!}</textarea>
+                                <textarea id="" cols="30" rows="10" name="field_36" class="form-field">{!!$report->fieldResponses['field_36']!!}</textarea>
                             </div>
                        </div>                                      
 						<div class="">
@@ -522,9 +522,9 @@
                     <div class="ibox-content">             
                        
                        <div class="form-group">
-                            <label class=" control-label"></label>
+                            <label class=" hidden control-label">{{$report->fields['field_37']}}</label>
                             <div>
-                                <textarea id="" cols="30" rows="10" name="field_37">
+                                <textarea id="" cols="30" rows="10" name="field_37" class="form-field">
                                        {!!$report->fieldResponses['field_37']!!}
                                 </textarea>
                             </div>

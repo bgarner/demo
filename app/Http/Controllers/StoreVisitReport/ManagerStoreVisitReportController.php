@@ -5,6 +5,7 @@ namespace App\Http\Controllers\StoreVisitReport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\StoreVisitReport\StoreVisitReport;
+use App\Models\StoreVisitReport\StoreVisitReportField;
 use App\Models\StoreApi\StoreInfo;
 use App\Models\StoreApi\Banner;
 
@@ -44,8 +45,11 @@ class ManagerStoreVisitReportController extends Controller
                 $storeList[$store->store_number] = $store->store_id . " " . $store->name . " (" . $banner[$store->banner_id] .")" ;
             }
 
+            $reportFields = StoreVisitReportField::getStoreVisitReportFields();
+
             return view('manager.storevisitreport.create')
-                ->with('stores', $storeList);
+                ->with('stores', $storeList)
+                ->with('fields', $reportFields );
         }
         else{
             \Log::info( "User " . $user->id . ' not authorized to create report');

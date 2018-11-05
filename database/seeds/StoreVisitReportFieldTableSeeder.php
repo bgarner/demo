@@ -44,7 +44,7 @@ class StoreVisitReportFieldTableSeeder extends Seeder
 				"field_alias" => "field_8"
 			],
 			[
-				"field" => "Is Autofill being used weekly",
+				"field" => "Is Autofill being used weekly?",
 				"field_alias" => "field_9"
 			],
 			[
