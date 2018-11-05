@@ -52,13 +52,13 @@
                         <div class="form-group">
                                 <label class=" control-label">Last Week's Tablet Sales Result:</label>
                                 <div>
-                                    <input type="text" class="form-control" name="field_1" value="{{$report->fieldResponses['field_1']}}" >
+                                    <input type="number" class="form-control" name="field_1" value="{{$report->fieldResponses['field_1']}}" >
                                 </div>
                         </div>                                     
                         <div class="form-group">
                                 <label class=" control-label">6Wk Trend Tablet Sales Result:</label>
                                 <div>
-                                    <input type="text" class="form-control" name="field_2" value="{{$report->fieldResponses['field_2']}}">
+                                    <input type="number" class="form-control" name="field_2" value="{{$report->fieldResponses['field_2']}}">
                                 </div>
                         </div>                                      
                         <div class="form-group">
@@ -266,25 +266,25 @@
                         <div class="form-group">
                            <label class=" control-label">Last Week's Aged Orders %:</label>
                            <div>
-                               <input type="text" class="form-control" name="field_18" value="{{$report->fieldResponses['field_18']}}">
+                               <input type="number" class="form-control" name="field_18" value="{{$report->fieldResponses['field_18']}}">
                            </div>
                        </div>                                     
                        <div class="form-group">
                             <label class=" control-label">6Wk Trend Aged Orders %:</label>
                             <div>
-                                <input type="text" class="form-control" name="field_19" value="{{$report->fieldResponses['field_19']}}">
+                                <input type="number" class="form-control" name="field_19" value="{{$report->fieldResponses['field_19']}}">
                             </div>
                        </div> 
                        <div class="form-group">
                             <label class=" control-label">Last Week's Dirty Node %:</label>
                             <div>
-                                <input type="text" class="form-control" name="field_20" value="{{$report->fieldResponses['field_20']}}">
+                                <input type="number" class="form-control" name="field_20" value="{{$report->fieldResponses['field_20']}}">
                             </div>
                        </div> 
                        <div class="form-group">
                             <label class=" control-label">6Wk Trend Dirty Node %:</label>
                             <div>
-                                <input type="text" class="form-control" name="field_21" value="{{$report->fieldResponses['field_21']}}">
+                                <input type="number" class="form-control" name="field_21" value="{{$report->fieldResponses['field_21']}}">
                             </div>
                        </div> 
                        <div class="form-group">
@@ -358,13 +358,13 @@
                         <div class="form-group">
                            <label class=" control-label">Last Month's Self Audit %:</label>
                            <div>
-                               <input type="text" class="form-control" name="field_27" value="{{$report->fieldResponses['field_27']}}">
+                               <input type="number" class="form-control" name="field_27" value="{{$report->fieldResponses['field_27']}}">
                            </div>
                        </div>                                     
                        <div class="form-group">
                                <label class=" control-label">Last Official Full Store Audit %</label>
                                <div>
-                                   <input type="text" class="form-control" name="field_28" value="{{$report->fieldResponses['field_28']}}">
+                                   <input type="number" class="form-control" name="field_28" value="{{$report->fieldResponses['field_28']}}">
                                </div>
                        </div> 
                        <div class="form-group">
@@ -559,52 +559,7 @@
     
     <script type="text/javascript" src="/js/plugins/ckeditor-custom/ckeditor.js"></script>
     <script type="text/javascript" src="/js/plugins/chosen/chosen.jquery.js"></script>
-    <script>
+    <script type="text/javascript" src="/js/custom/manager/storevisitreport/validateReport.js"></script>
 
-    $(document).ready(function(){
-
-        $(".chosen").chosen({
-            width:'100%'
-        });
-
-        var description_fields = $("textarea");
-
-        $(description_fields).each(function(){
-            
-            CKEDITOR.replace(this.name);
-        })
-
-    })
-
-    $('#store-visit-submit').click(function(e){        
-        e.preventDefault();
-        swal({
-            title: "Are you sure you want to submit?",
-            text: "You will not be able to edit the report!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, submit it!",
-            closeOnConfirm: true,
-            closeOnCancel: true
-        }, function (isConfirm) {
-            
-            if (isConfirm) {
-                console.log(isConfirm);
-                $("input[name=is_draft]").val(0);
-                $("form").submit();
-                return true;
-            } else {
-                return false;
-            }
-            
-        });
-        
-    });
-
-
-    
-
-    </script>
 
 @endsection
