@@ -1526,6 +1526,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'UpdatePlaylistTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_09_202016_update_playlist_table.php',
         'UpdateStoreComponentsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/UpdateStoreComponentsTableSeeder.php',
         'UpdateStoreDistrictMap' => __DIR__ . '/../..' . '/database/seeds/UpdateStoreDistrictMap.php',
+        'UpdateStoreSubComponentsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/UpdateStoreSubComponentsTableSeeder.php',
         'UpdateTagsTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_08_214710_update_tags_table.php',
         'UpdateTaskCreatorTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_26_211324_update_task_creator_table.php',
         'UpdateTaskTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_17_171352_update_task_table.php',
