@@ -29,7 +29,7 @@
 
        <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-12">
-                <h2>Boxing Day Doorcrasher Tracker</h2>
+                <h2>Doorcrasher Tracker</h2>
             </div>
         </div>
 
@@ -70,7 +70,7 @@
 {{--                     <table class="table table-striped table-bordered table-hover dataTable addSelector" id="" style="display: none;" aria-describedby="DataTables_Table_0_info" role="grid">
                     </table> --}}
 
-                        <p>Last Updated: Friday, December 23, 2016 - 9:25 AM MST</p>
+                        <p>Last Updated: {{ $last_updated }}</p>
 
                     <table class="table table-bordered table-hover" id="">
                         <thead>
