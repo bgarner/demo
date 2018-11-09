@@ -342,6 +342,7 @@ return array(
     'DistrictTableSeeder' => $baseDir . '/database/seeds/DistrictTableSeeder.php',
     'DivisionByZeroError' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/DivisionByZeroError.php',
     'DropDistrictRegionRegionIdForeignFromDistrictRegionTable' => $baseDir . '/database/migrations/2018_06_14_163244_drop_district_region_region_id_foreign_from_district_region_table.php',
+    'DropOldDoorcrasherTable' => $baseDir . '/database/migrations/2018_11_09_104303_drop_old_doorcrasher_table.php',
     'DropOldIdsFromTags' => $baseDir . '/database/migrations/post_tag_cleanup/2018_09_20_132833_drop_old_ids_from_tags.php',
     'DropTasklistTargetTable' => $baseDir . '/database/migrations/2018_08_29_113150_drop_tasklist_target_table.php',
     'Error' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/Error.php',

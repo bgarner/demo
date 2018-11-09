@@ -834,6 +834,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'DistrictTableSeeder' => __DIR__ . '/../..' . '/database/seeds/DistrictTableSeeder.php',
         'DivisionByZeroError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/DivisionByZeroError.php',
         'DropDistrictRegionRegionIdForeignFromDistrictRegionTable' => __DIR__ . '/../..' . '/database/migrations/2018_06_14_163244_drop_district_region_region_id_foreign_from_district_region_table.php',
+        'DropOldDoorcrasherTable' => __DIR__ . '/../..' . '/database/migrations/2018_11_09_104303_drop_old_doorcrasher_table.php',
         'DropOldIdsFromTags' => __DIR__ . '/../..' . '/database/migrations/post_tag_cleanup/2018_09_20_132833_drop_old_ids_from_tags.php',
         'DropTasklistTargetTable' => __DIR__ . '/../..' . '/database/migrations/2018_08_29_113150_drop_tasklist_target_table.php',
         'Error' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/Error.php',
