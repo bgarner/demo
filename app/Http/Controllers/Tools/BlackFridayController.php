@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Request as RequestFacade;
 use DB;
 use App\Models\Tools\BlackFriday\BlackFriday;
+use App\Models\Utility\Utility;
 
 class BlackFridayController extends Controller
 {
@@ -31,7 +32,9 @@ class BlackFridayController extends Controller
     {
         $pages = BlackFriday::getAdPages($this->storeNumber);
         $data = BlackFriday::getDataByStoreNumber($this->storeNumber);
+        $last_updated = Utility::prettifyDateWithTime(BlackFriday::find(1)->updated_at);
         return view('site.tools.blackfriday.index')
+            ->with('last_updated', $last_updated)
             ->with('pages', $pages)
             ->with('data', $data);;
     }

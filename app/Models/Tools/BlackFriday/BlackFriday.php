@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class BlackFriday extends Model
 {
-    protected $table = 'doorcrasher_tracker';
+    protected $table = 'doorcrasher';
     protected $fillable = array();
 
     public static function getAdPages($store_number)
