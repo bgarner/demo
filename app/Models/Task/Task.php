@@ -450,6 +450,10 @@ class Task extends Model
 		$tasks = $targetedTasks->merge($allStoreTasks);
 		$tasks = $tasks->merge($targetedTasksForStoreGroups);
 
+        $tasks = $tasks->sortBy(function ($task, $key) {
+                    return Carbon::parse($task['due_date'])->getTimestamp(); 
+                });
+
 		foreach ($tasks as $key => $task) {
 			
 			$isTaskDoneByStore = Self::isTaskDoneByStore($task->id, $store_id);
@@ -524,6 +528,9 @@ class Task extends Model
 
 		$tasks = $tasks->merge($allStoreTasks);
 		$tasks = $tasks->merge($targetedTasksForStoreGroups);
+        $tasks = $tasks->sortBy(function ($task, $key) {
+                    return Carbon::parse($task['due_date'])->getTimestamp(); 
+                });
 
 		foreach ($tasks as $key=>$task) {
 
