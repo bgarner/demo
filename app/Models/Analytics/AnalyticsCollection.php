@@ -80,6 +80,7 @@ class AnalyticsCollection extends Model
 
     public static function getTaskStats()
     {
+        $today = Carbon::now()->toDatetimeString();
     	
     	return AnalyticsCollection::join('tasks', 'tasks.id', '=', 'analytics_collection.resource_id' )
     							->where('asset_type_id', 4)
@@ -98,6 +99,7 @@ class AnalyticsCollection extends Model
                                         $item->readPerc = 100;
                                     }
     								$item->opened = json_encode(unserialize($item->opened));
+                                    
     								$item->unopened = json_encode(unserialize($item->unopened));
     								$item->sent_to = json_encode(unserialize($item->sent_to));
                                     $item->banners = explode(',', $item->banners);
@@ -111,7 +113,10 @@ class AnalyticsCollection extends Model
                                     if($item->all_stores == 1){
                                         $item->banners = TaskBanner::where('task_id', $item->id)->get()->pluck('banner_id');
                                     }
-    							});
+    							})
+                                ->filter(function ($item) use($today) {
+                                    return ($item->due_date < $today && $item->readPerc < 100) || ( $item->publish_date <= $today && $item->due_date >= $today) ;
+                                })->values();
     	
     }
 
@@ -222,6 +227,9 @@ class AnalyticsCollection extends Model
                             [$analytics->store_number]
                         );
 
+            $opened = array_values(array_unique($opened));
+            $unopened = array_values(array_unique($unopened));
+
             $analyticsCollection->update([
                 'opened_total'   => count($opened),
                 'unopened_total' => count($unopened),
@@ -269,6 +277,7 @@ class AnalyticsCollection extends Model
                             unserialize($analyticsCollection->unopened), 
                             [$analytics->store_id]
                         );
+            
 
 
         }
@@ -278,7 +287,11 @@ class AnalyticsCollection extends Model
                             unserialize($analyticsCollection->opened), 
                             [$analytics->store_id]
                         );
+            
         }
+
+        $opened = array_values(array_unique($opened));
+        $unopened = array_values(array_unique($unopened));
 
 
         $analyticsCollection->update([
