@@ -34,7 +34,7 @@ class AdminController extends Controller
         $commStats = AnalyticsCollection::getActiveCommunicationStats();
         $urgentNoticeStats = AnalyticsCollection::getActiveUrgentNoticeStats();
         $taskStats = AnalyticsCollection::getTaskStats();
-
+        
         $paginatedVideos = AnalyticsCollection::getPaginatedVideoStats($request);        
         $videoStats = $paginatedVideos['videoStats'];
         $videoNextPageIndex = $paginatedVideos['nextPage'];
