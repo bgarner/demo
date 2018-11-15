@@ -112,13 +112,16 @@ class FormInstanceResolutionMap extends Model
                 $query->where('form_instance_resolution_code_map.updated_at', '>=', Self::$launch_date);
             })
             ->when($department, function($query) use($department){
-                $query->where('form_data.json_form_data->department', $department);
+                // $query->where('form_data.json_form_data->department', $department);
+                $query->whereRaw("json_contains(`json_form_data`, '{\"department\" : \"$department\"}')");
             })
             ->when($category, function($query) use($category){
-                $query->where('form_data.json_form_data->category', $category);
+            //     $query->where('form_data.json_form_data->category', $category);
+                $query->whereRaw("json_contains(`json_form_data`, '{\"category\" : \"$category\"}')");
             })
             ->when($subcategory, function($query) use($subcategory){
-                $query->where('form_data.json_form_data->subcategory', $subcategory);
+            //     $query->where('form_data.json_form_data->subcategory', $subcategory);
+                $query->whereRaw("json_contains(`json_form_data`, '{\"subcategory\" : \"$subcategory\"}')");
             })
             ->select(\DB::raw(' form_resolution_code.resolution_code, 
                 count(form_instance_resolution_code_map.resolution_code_id) as count,
@@ -170,13 +173,16 @@ class FormInstanceResolutionMap extends Model
                 $query->where('form_instance_resolution_code_map.updated_at', '>=', Self::$launch_date);
             })
             ->when($department, function($query) use($department){
-                $query->where('form_data.json_form_data->department', $department);
+                // $query->where('form_data.json_form_data->department', $department);
+                $query->whereRaw("json_contains(`json_form_data`, '{\"department\" : \"$department\"}')");
             })
             ->when($category, function($query) use($category){
-                $query->where('form_data.json_form_data->category', $category);
+                // $query->where('form_data.json_form_data->category', $category);
+                $query->whereRaw("json_contains(`json_form_data`, '{\"category\" : \"$category\"}')");
             })
             ->when($subcategory, function($query) use($subcategory){
-                $query->where('form_data.json_form_data->subcategory', $subcategory);
+                // $query->where('form_data.json_form_data->subcategory', $subcategory);
+                $query->whereRaw("json_contains(`json_form_data`, '{\"subcategory\" : \"$subcategory\"}')");
             })
             ->select('form_data.form_data', 'form_resolution_code.resolution_code', 'form_data.created_at as submitted_at', 'form_instance_resolution_code_map.updated_at as resolved_at', \DB::raw('CONCAT(users.firstname," ",users.lastname) AS closed_by') )
             ->get()
