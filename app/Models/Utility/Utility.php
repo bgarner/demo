@@ -234,9 +234,9 @@ class Utility extends Model
         return date("F", mktime(0, 0, 0, $monthNumber, 1));
 	}
 	
-	public static function getDayName($dayNumber)
+	public static function getDayName($monthNumber, $dayNumber)
 	{
-		return date("l", mktime(0, 0, 0, 0, $dayNumber));
+		return date("l", mktime(0, 0, 0, $monthNumber, $dayNumber));
 	}
 
 	public static function truncateHtml($text, $length = 100, $ending = '...', $exact = false, $considerHtml = true)

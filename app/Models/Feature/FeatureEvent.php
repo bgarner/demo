@@ -61,7 +61,7 @@ class FeatureEvent extends Model
         foreach($featureEvents as $fe){
             $dt = Carbon::parse($fe->start);
             $fe->monthName = Utility::getMonthName($dt->month);
-            $fe->dayName = Utility::getDayName($dt->day);
+            $fe->dayName = Utility::getDayName($dt->month, $dt->day);
             $fe->day = $dt->day;
         }
         return $featureEvents;
