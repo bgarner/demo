@@ -11,6 +11,7 @@ use App\Models\Task\TaskDocument;
 use App\Models\Task\TaskStatusTypes;
 use App\Models\Task\StoreStatusTypes;
 use App\Models\Auth\Role\Role;
+use App\Models\Auth\User\UserRole;
 use App\Models\Auth\User\UserResource;
 use App\Models\StoreApi\StoreInfo;
 use App\Models\Utility\Utility;
@@ -741,29 +742,6 @@ class Task extends Model
         return( $optGroupSelections );
     }
 
-
-    public static function getDMTasks($storeNumber)
-    {
-		$user = Utility::getDMForStore($storeNumber);
-		//this is for the case of NO DM set for a district
-		if(!$user){
-			return [];
-		}		
-    	$task_ids = Self::getTasksByUserId($user->id);
-    	return $task_ids;
-    }
-
-    public static function getAVPTasks($storeNumber)
-    {
-		$user = Utility::getAVPForStore($storeNumber);
-		//this is for the case of NO AVP set for a region
-		if(!$user){
-			return [];
-		}
-    	$task_ids = Self::getTasksByUserId($user->id);
-    	return $task_ids;
-    }
-
     public static function getTasksByUserId($user_id)
     {
     	return Task::join('task_creator', 'task_creator.task_id', '=', 'tasks.id')
@@ -772,6 +750,50 @@ class Task extends Model
                         ->get()
                         ->pluck('id')
                         ->toArray();
-    }
+	}
+	
+	public static function getTaskByUserList($userList)
+	{
+    	return Task::join('task_creator', 'task_creator.task_id', '=', 'tasks.id')
+                        ->whereIn('creator_id', $userList)
+                        ->select('tasks.id')
+                        ->get()
+                        ->pluck('id')
+                        ->toArray();		
+	}
 
+	public static function getDMTasks($storeNumber)
+    {
+		if($storeNumber == "0940" || $storeNumber == "A0940"){
+			return Task::getAllTasksByRoleId(6); //6 is the DM role id
+		}
+
+		$user = Utility::getDMForStore($storeNumber);
+		//this is for the case of NO DM set for a district
+		if(!$user){
+			return [];
+		}		
+    	$task_ids = Self::getTasksByUserId($user->id);
+    	return $task_ids;
+	}
+
+    public static function getAVPTasks($storeNumber)
+    {
+		if($storeNumber == "0940" || $storeNumber == "A0940"){
+			return Task::getAllTasksByRoleId(5);  //5 is the AVP role id
+		}		
+		$user = Utility::getAVPForStore($storeNumber);
+		//this is for the case of NO AVP set for a region
+		if(!$user){
+			return [];
+		}
+    	$task_ids = Self::getTasksByUserId($user->id);
+    	return $task_ids;
+    }	
+
+	public static function getAllTasksByRoleId($roleId)
+	{
+		$userIds = UserRole::getUserListByRoleId($roleId);
+		return Self::getTaskByUserList($userIds);
+	}
 }

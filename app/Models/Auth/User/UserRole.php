@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserRole extends Model
 {
-     protected $table = 'user_role';
+    protected $table = 'user_role';
 
     protected $fillable = ['user_id', 'role_id'];
 
@@ -25,6 +25,12 @@ class UserRole extends Model
                         ->where('users.group_id', 3)
                         ->select('users.*')
                         ->get();  
+    }
+
+    public static function getUserListByRoleId($RoleId)
+    {
+        return Self::where('role_id', $RoleId)
+            ->get()->pluck('user_id')->toArray();
     }
 
 }
