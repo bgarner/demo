@@ -744,14 +744,22 @@ class Task extends Model
 
     public static function getDMTasks($storeNumber)
     {
-    	$user = Utility::getDMForStore($storeNumber);
+		$user = Utility::getDMForStore($storeNumber);
+		//this is for the case of NO DM set for a district
+		if(!$user){
+			return [];
+		}		
     	$task_ids = Self::getTasksByUserId($user->id);
     	return $task_ids;
     }
 
     public static function getAVPTasks($storeNumber)
     {
-    	$user = Utility::getAVPForStore($storeNumber);
+		$user = Utility::getAVPForStore($storeNumber);
+		//this is for the case of NO AVP set for a region
+		if(!$user){
+			return [];
+		}
     	$task_ids = Self::getTasksByUserId($user->id);
     	return $task_ids;
     }
