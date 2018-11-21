@@ -259,7 +259,7 @@
     <!-- <script type="text/javascript" src="/js/plugins/js-xlsx-master/xlsx.js"></script> -->
     <!-- <script type="text/javascript" src="/js/plugins/FileSaver/FileSaver.min.js"></script> -->
     <!-- <script type="text/javascript" src="/js/plugins/TableExport/tableexport.min.js"></script> -->
-    <script type="text/javascript" src="/js/custom/JSONToCSVConvertor.js"></script>
+    <script type="text/javascript" src="/js/custom/JsonToCSVConvertor.js"></script>
     <script src="/js/custom/forms/ProductRequestFormOptions.js"></script>
     <script src="/js/custom/manager/reports/ProductRequestFormReport.js"></script>
     <script>
