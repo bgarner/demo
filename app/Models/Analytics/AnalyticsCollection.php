@@ -31,6 +31,10 @@ class AnalyticsCollection extends Model
                                     'analytics_collection.sent_to')
     							->get()
     							->sortByDesc('communications.send_at')
+                                ->filter(function ($value, $key) {
+                                    return $value->sent_to_total > 0;
+                                    
+                                })
     							->each(function($item){
 
                                     $item->readPerc = round (($item->opened_total/$item->sent_to_total)*100);
@@ -62,6 +66,10 @@ class AnalyticsCollection extends Model
                                     'analytics_collection.sent_to')
     							->get()
     							->sortByDesc('urgent_notices.start')
+                                ->filter(function ($value, $key) {
+                                    return $value->sent_to_total > 0;
+                                    
+                                })
     							->each(function($item){
                                     $item->readPerc = round (($item->opened_total/$item->sent_to_total)*100);
                                     if($item->readPerc > 100){
@@ -92,6 +100,10 @@ class AnalyticsCollection extends Model
                                     'analytics_collection.unopened',
                                     'analytics_collection.sent_to')
     							->get()
+                                ->filter(function ($value, $key) {
+                                    return $value->sent_to_total > 0;
+                                    
+                                })
     							->each(function($item){
                                
                                     $item->readPerc = round (($item->opened_total/$item->sent_to_total)*100);
@@ -129,6 +141,10 @@ class AnalyticsCollection extends Model
     								'analytics_collection.opened', 'analytics_collection.unopened', 'analytics_collection.sent_to'
     							 )
     							->get()
+                                ->filter(function ($value, $key) {
+                                    return $value->sent_to_total > 0;
+                                    
+                                })
     							->each(function($item){
                                 
                                     $item->readPerc = round (($item->opened_total/$item->sent_to_total)*100);
