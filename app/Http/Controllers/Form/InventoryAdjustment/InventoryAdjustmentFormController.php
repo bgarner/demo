@@ -41,7 +41,6 @@ class InventoryAdjustmentFormController extends Controller
 
     public function create()
     {
-        return 'create new inventory adjustment form';
         $form_id = Form::getFormId($this->formMeta);
         return view('site.form.inventoryadjustmentform.create')
             ->with('storeNumber', $this->formMeta['store_number'])
@@ -50,7 +49,6 @@ class InventoryAdjustmentFormController extends Controller
 
     public function store(Request $request)
     {
-        $form = FormData::createNewFormInstance($request);
-        return $form;
+        return 'store the form';
     }
 }
