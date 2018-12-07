@@ -18,7 +18,10 @@ class FormListController extends Controller
 
     public function index()
     {
-        return view('site.form.formlist.index')->with('store_number', $this->store_number);
+        $forms = Form::all();
+        return view('site.form.formlist.index')
+                ->with('store_number', $this->store_number)
+                ->with('forms', $forms);
 
     }
 }

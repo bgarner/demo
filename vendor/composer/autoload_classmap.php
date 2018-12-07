@@ -1032,6 +1032,7 @@ return array(
     'UpdateFormDataTableAddBusinessUnit' => $baseDir . '/database/migrations/2018_04_16_104634_update_form_data_table_add_business_unit.php',
     'UpdateFormGroupFormInstanceTableAddCascade' => $baseDir . '/database/migrations/2018_05_30_145850_update_form_group_form_instance_table_add_cascade.php',
     'UpdateFormStatusTable' => $baseDir . '/database/migrations/2018_06_27_111316_update_form_status_table.php',
+    'UpdateFormTableSeeder' => $baseDir . '/database/seeds/UpdateFormTableSeeder.php',
     'UpdateFormsTableAddDescription' => $baseDir . '/database/migrations/2018_03_16_121003_update_forms_table_add_description.php',
     'UpdatePlaylistTable' => $baseDir . '/database/migrations/2017_06_09_202016_update_playlist_table.php',
     'UpdateStoreComponentsTableSeeder' => $baseDir . '/database/seeds/UpdateStoreComponentsTableSeeder.php',

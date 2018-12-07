@@ -40,10 +40,13 @@
                             <thead>
 
                             <tbody>
-                                <tr>
-                                    <td><a href="/{{$store_number}}/form/productrequest">Product Request</a></td>
-                                    <td>For allocations, replenishment and new product requests.</td>
-                                </tr>
+                                @foreach($forms as $form)
+                                    <tr>
+                                        <td><a href="/{{$store_number}}/form/{{$form->form_path}}">{{$form->form_label}}</a></td>
+                                        <td>{{$form->description}}</td>
+                                    </tr>
+                                @endforeach
+                                
 
 
                             </tbody>

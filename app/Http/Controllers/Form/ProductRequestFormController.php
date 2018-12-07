@@ -12,9 +12,6 @@ use App\Models\Form\FormActivityLog;
 class ProductRequestFormController extends Controller
 {
     protected $formMeta;
-    // protected $form_name;
-    // protected $current_version;
-    // protected $store_number;
 
     public function __construct()
     {
@@ -29,7 +26,6 @@ class ProductRequestFormController extends Controller
     public function index()
     {
         $forms = FormData::getFormData($this->formMeta);
-        //dd($forms[0]->lastFormAction->log);
         return view('site.form.productrequestform.index')
                 ->with('forms', $forms);
     }

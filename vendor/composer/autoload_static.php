@@ -1524,6 +1524,7 @@ class ComposerStaticInit235cce204c435aec5a5c3c7acba25b13
         'UpdateFormDataTableAddBusinessUnit' => __DIR__ . '/../..' . '/database/migrations/2018_04_16_104634_update_form_data_table_add_business_unit.php',
         'UpdateFormGroupFormInstanceTableAddCascade' => __DIR__ . '/../..' . '/database/migrations/2018_05_30_145850_update_form_group_form_instance_table_add_cascade.php',
         'UpdateFormStatusTable' => __DIR__ . '/../..' . '/database/migrations/2018_06_27_111316_update_form_status_table.php',
+        'UpdateFormTableSeeder' => __DIR__ . '/../..' . '/database/seeds/UpdateFormTableSeeder.php',
         'UpdateFormsTableAddDescription' => __DIR__ . '/../..' . '/database/migrations/2018_03_16_121003_update_forms_table_add_description.php',
         'UpdatePlaylistTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_09_202016_update_playlist_table.php',
         'UpdateStoreComponentsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/UpdateStoreComponentsTableSeeder.php',

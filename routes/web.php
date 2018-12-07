@@ -67,6 +67,8 @@ Route::get('/{storeno}/folder/{id}', ['uses' => 'Document\FolderController@show'
 Route::get('/{storeno}/form', 'Form\FormListController@index');
 Route::resource('/{storeno}/form/productrequest', 'Form\ProductRequestFormController');
 Route::get('/form/productrequest/log/{id}', 'Form\FormLogController@show');
+Route::resource('/{storeno}/form/inventoryadjustment', 'Form\InventoryAdjustment\InventoryAdjustmentFormController');
+
 
 //FORM API ROUTES
 Route::post('/form/updateStatus', 'Form\FormInstanceStatusController@create');
